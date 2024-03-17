@@ -31,7 +31,7 @@
                             <asp:Label ID="lbl_companyname" runat="server" Text="Automation & Technical Services"></asp:Label></h1>
                         <div class="form-horizontal">
                             <div class="form-group row">
-                                <asp:Label ID="Label1" runat="server" CssClass="control-label col-md-4 col-sm-6 label-align" Font-Bold="true" Text="USER ID"></asp:Label>
+                                <asp:Label ID="Label1" runat="server" AssociatedControlID="txt_loginid" CssClass="control-label col-md-4 col-sm-6 label-align" Font-Bold="true" Text="USER ID"></asp:Label>
                                 <div class="col-md-8 col-sm-6">
                                     <asp:TextBox ID="txt_loginid" runat="server" CssClass="form-control" placeholder="AHO__"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required" ForeColor="Red" ControlToValidate="txt_loginid" SetFocusOnError="true" Display="Dynamic"></asp:RequiredFieldValidator>
@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <asp:Label ID="Label2" runat="server" CssClass="control-label col-md-4 col-sm-6 label-align" Font-Bold="true" Text="Password"></asp:Label>
+                                <asp:Label ID="Label2" runat="server" AssociatedControlID="txt_password" CssClass="control-label col-md-4 col-sm-6 label-align" Font-Bold="true" Text="Password"></asp:Label>
                                 <div class="col-md-8 col-sm-6 ">
                                     <asp:TextBox ID="txt_password" runat="server" class="form-control" placeholder="Enter your Password" TextMode="Password"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required" ForeColor="Red" ControlToValidate="txt_password" SetFocusOnError="true" Display="Dynamic"></asp:RequiredFieldValidator>

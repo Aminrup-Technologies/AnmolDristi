@@ -20,7 +20,7 @@ namespace AnmolDristi
 
         protected void btn_signin_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("home.aspx");
         }
     }
 }

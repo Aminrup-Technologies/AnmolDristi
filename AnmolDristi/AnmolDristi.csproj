@@ -68,7 +68,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="home.aspx" />
     <Content Include="packages.config" />
+    <Content Include="qaqc\qaqc_inspector_rpt.aspx" />
     <Content Include="Resources\animate.css\.bower.json" />
     <Content Include="Resources\animate.css\animate-config.json" />
     <Content Include="Resources\animate.css\bower.json" />
@@ -150,7 +152,6 @@
     <Content Include="Resources\bootstrap\build\ship.sh" />
     <Content Include="Resources\bootstrap\build\svgo.yml" />
     <Content Include="Resources\bootstrap\CNAME" />
-    <Content Include="Resources\bootstrap\CODE_OF_CONDUCT.md" />
     <Content Include="Resources\bootstrap\composer.json" />
     <Content Include="Resources\bootstrap\dist\css\bootstrap-grid.css.map" />
     <Content Include="Resources\bootstrap\dist\css\bootstrap-grid.min.css.map" />
@@ -1097,6 +1098,7 @@
     <Content Include="Resources\validator\.bower.json" />
     <Content Include="Resources\validator\package.json" />
     <Content Include="Resources\validator\README.md" />
+    <Content Include="Dristi.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1105,6 +1107,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="blank.aspx" />
     <Content Include="login.aspx" />
     <Content Include="Resources\animate.css\animate.css" />
     <Content Include="Resources\animate.css\animate.min.css" />
@@ -1593,7 +1596,9 @@
     <Content Include="Resources\cropper\src\js\utilities.js" />
     <Content Include="Resources\cropper\src\js\variables.js" />
     <Content Include="Resources\custom\custom.css" />
+    <Content Include="Resources\custom\custom.js" />
     <Content Include="Resources\custom\custom.min.css" />
+    <Content Include="Resources\custom\custom.min.js" />
     <Content Include="Resources\datatables.net-bs\css\dataTables.bootstrap.css" />
     <Content Include="Resources\datatables.net-bs\css\dataTables.bootstrap.min.css" />
     <Content Include="Resources\datatables.net-bs\js\dataTables.bootstrap.js" />
@@ -3804,6 +3809,7 @@
     <Content Include="Resources\jszip\lib\zipEntries.js" />
     <Content Include="Resources\jszip\lib\zipEntry.js" />
     <Content Include="Resources\jszip\vendor\FileSaver.js" />
+    <Content Include="Resources\loader\loader.css" />
     <Content Include="Resources\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.concat.min.js" />
     <Content Include="Resources\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.css" />
     <Content Include="Resources\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.js" />
@@ -4474,6 +4480,14 @@
     <Content Include="Resources\raphael\raphael.no-deps.min.js" />
     <Content Include="Resources\raphael\webpack.config.js" />
     <Content Include="Resources\requirejs\require.js" />
+    <Content Include="WebData\No_Image.jpg" />
+    <None Include="Resources\Scripts\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Resources\Scripts\jquery-1.6.4.js" />
+    <Content Include="Resources\Scripts\jquery-1.6.4.min.js" />
+    <Content Include="Resources\Scripts\jquery-1.7.2.min.js" />
+    <Content Include="Resources\Scripts\jquery-3.6.4.min.js" />
+    <Content Include="Resources\Scripts\jquery.signalR-2.4.3.js" />
+    <Content Include="Resources\Scripts\jquery.signalR-2.4.3.min.js" />
     <Content Include="Resources\select2\.gitignore" />
     <Content Include="Resources\select2\dist\css\select2.css" />
     <Content Include="Resources\select2\dist\css\select2.min.css" />
@@ -4831,8 +4845,54 @@
     <Content Include="Resources\validator\validator.js" />
     <Content Include="Web.config" />
     <Content Include="WebData\Anmol_Logo.png" />
+    <Content Include="WebData\Internal\ats_logo.jpg" />
+    <Content Include="WebData\Internal\ats_translogo.png" />
+    <Content Include="WebData\Internal\ats_webheader.png" />
+    <Content Include="WebData\Internal\bank.jpg" />
+    <Content Include="WebData\Internal\crossgif.gif" />
+    <Content Include="WebData\Internal\cross_icon.png" />
+    <Content Include="WebData\Internal\delete_icon.png" />
+    <Content Include="WebData\Internal\DoneRight.gif" />
+    <Content Include="WebData\Internal\edit.png" />
+    <Content Include="WebData\Internal\fi-sr-cross-circle.svg" />
+    <Content Include="WebData\Internal\fi-sr-disk.svg" />
+    <Content Include="WebData\Internal\fi-sr-pencil.svg" />
+    <Content Include="WebData\Internal\fi-sr-trash.svg" />
+    <Content Include="WebData\Internal\Hourglass.gif" />
+    <Content Include="WebData\Internal\pending.png" />
+    <Content Include="WebData\Internal\piggy.png" />
+    <Content Include="WebData\Internal\printer.png" />
+    <Content Include="WebData\Internal\right.png" />
+    <Content Include="WebData\Internal\rightarrow.gif" />
+    <Content Include="WebData\Internal\SingleTick.gif" />
+    <Content Include="WebData\Internal\success_gif.gif" />
+    <Content Include="WebData\Internal\tick-icon.png" />
+    <Content Include="WebData\Internal\TSLBSL.jpg" />
+    <Content Include="WebData\Internal\tsllogo.png" />
+    <Content Include="WebData\Internal\view.svg" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="blank.aspx.cs">
+      <DependentUpon>blank.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="blank.aspx.designer.cs">
+      <DependentUpon>blank.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Dristi.Master.cs">
+      <DependentUpon>Dristi.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dristi.Master.designer.cs">
+      <DependentUpon>Dristi.Master</DependentUpon>
+    </Compile>
+    <Compile Include="home.aspx.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="home.aspx.designer.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4841,6 +4901,13 @@
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="qaqc\qaqc_inspector_rpt.aspx.cs">
+      <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc\qaqc_inspector_rpt.aspx.designer.cs">
+      <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Resources\devbridge-autocomplete\src\jquery.autocomplete.d.ts" />
