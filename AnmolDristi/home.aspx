@@ -30,7 +30,7 @@
                             </p>
 
                             <p>
-                                <strong>Deputed Company :</strong>
+                                <strong>Deputed Location :</strong>
                                 <asp:Label ID="lbl_wrkcopmany" runat="server" Text="N/A"></asp:Label>,
 								<asp:Label ID="lbl_region" runat="server" Text="N/A"></asp:Label>,
 								<asp:Label ID="lbl_state" runat="server" Text="N/A"></asp:Label>.
@@ -42,7 +42,7 @@
                             </p>
 
                             <ul class="list-unstyled">
-                                <li><i class="fa fa-calendar">&nbsp;</i>DOJ :
+                                <li><i class="fa fa-calendar">&nbsp;</i><strong>DOJ :</strong> :
 									<asp:Label ID="lbl_doj" runat="server" Text="N/A"></asp:Label></li>
                                 <li><i class="fa fa-clock-o">&nbsp;</i>Work Tenure :
 									<asp:Label ID="lbl_workage" runat="server" Text="N/A"></asp:Label></li>

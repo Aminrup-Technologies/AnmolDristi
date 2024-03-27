@@ -14,7 +14,7 @@ namespace AnmolDristi
             string PN_WelcomeBack_script = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Regular Success',
-                                text: 'Welcome back to ATS Web Portal',
+                                text: 'Welcome Back!!',
                                 type: 'success',
                                 styling: 'bootstrap3'
                             });

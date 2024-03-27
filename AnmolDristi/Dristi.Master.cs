@@ -13,5 +13,10 @@ namespace AnmolDristi
         {
 
         }
+
+        protected void btn_lgout_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

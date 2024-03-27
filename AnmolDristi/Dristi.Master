@@ -37,7 +37,7 @@
 
         function startIdleTimer() {
             idleTimeout = setTimeout(function () {
-                location.href = 'https://www.anmolindustries.com/';
+                location.href = 'login.aspx';
             }, 5 * 60 * 1000); // 5 minutes in milliseconds
 
             // Calculate the logout time
@@ -133,7 +133,7 @@
                                         <li id="HomePage" runat="server" visible="true"><a><i class="fa fa-home"></i>Home <span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li id="Home1" runat="server" visible="true"><a href="home.aspx">Dashboard-1<span class="label label-success pull-right">Click !!</span></a></li>
-                                                <li id="AttendnaceCal" runat="server" visible="true"><a href="vw_emp_attencal.aspx">Attendance<span class="label label-success pull-right">Click !!</span></a></li>
+                                                <li id="QualityForms" runat="server" visible="true"><a href="qaqc_home.aspx">QA/QC<span class="label label-success pull-right">Click !!</span></a></li>
                                             </ul>
                                         </li>
 
@@ -228,7 +228,7 @@
                                             <label><span class="text text-danger">Click to Close the Session</span></label>
                                         </div>
                                         <div class="col-md-6 col-sm-12 form-group">
-                                            <asp:Button ID="btn_lgout" runat="server" CausesValidation="false" Text="Yes" CssClass="btn btn-danger btn-sm" />
+                                            <asp:Button ID="btn_lgout" runat="server" CausesValidation="false" Text="Yes" CssClass="btn btn-danger btn-sm" OnClick="btn_lgout_Click" />
                                             <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">No</button>
                                         </div>
                                     </div>
@@ -265,46 +265,10 @@
 			</div>
 			<!-- Small Modal - END---->
             <script type="text/javascript">
-                //document.addEventListener("DOMContentLoaded", function () {
-                //    document.getElementById('content').style.display = 'block';
-                //    document.getElementById('loader').style.display = 'none';
-                //});
-
-                //document.addEventListener("DOMContentLoaded", function () {
-                //    // Simulate a delay of 2 seconds (2000 milliseconds)
-                //    setTimeout(function () {
-                //        document.getElementById('content').style.display = 'block';
-                //        document.getElementById('loader').style.display = 'none';
-                //    }, 1000); // Change 2000 to the desired delay time in milliseconds
-                //});
-
                 document.addEventListener("DOMContentLoaded", function () {
-                    // Function to show loader
-                    function showLoader() {
-                        document.getElementById('content').style.display = 'none';
-                        document.getElementById('loader').style.display = 'block';
-                    }
-
-                    // Function to hide loader
-                    function hideLoader() {
-                        document.getElementById('content').style.display = 'block';
-                        document.getElementById('loader').style.display = 'none';
-                    }
-
-                    // Show loader initially (optional)
-                    showLoader();
-
-                    // Trigger loader when button is clicked
-                    document.getElementById('myButton').addEventListener('click', function () {
-                        showLoader();
-
-                        // Simulate some asynchronous task (e.g., fetching data)
-                        setTimeout(function () {
-                            hideLoader();
-                        }, 2000); // Simulating a 2-second delay. Adjust as needed.
-                    });
+                    document.getElementById('content').style.display = 'block';
+                    document.getElementById('loader').style.display = 'none';
                 });
-
 
                 function ShowPopup(title, body) {
                     $("#MyPopup .modal-title").html(title);

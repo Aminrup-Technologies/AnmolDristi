@@ -70,7 +70,8 @@
   <ItemGroup>
     <Content Include="home.aspx" />
     <Content Include="packages.config" />
-    <Content Include="qaqc\qaqc_inspector_rpt.aspx" />
+    <Content Include="qaqc_home.aspx" />
+    <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Resources\animate.css\.bower.json" />
     <Content Include="Resources\animate.css\animate-config.json" />
     <Content Include="Resources\animate.css\bower.json" />
@@ -4901,11 +4902,18 @@
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="qaqc\qaqc_inspector_rpt.aspx.cs">
+    <Compile Include="qaqc_home.aspx.cs">
+      <DependentUpon>qaqc_home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_home.aspx.designer.cs">
+      <DependentUpon>qaqc_home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_inspector_rpt.aspx.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="qaqc\qaqc_inspector_rpt.aspx.designer.cs">
+    <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -4915,6 +4923,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="qaqc\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
