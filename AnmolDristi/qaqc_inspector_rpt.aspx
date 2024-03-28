@@ -12,7 +12,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
-        function toggleRemarksDiv(radioButtonList) {
+        function toggleRemarksDiv1(radioButtonList) {
             console.log("showTextbox function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("FlavTxt_RemarksDIV");
@@ -24,7 +24,7 @@
             }
         }
 
-        function toggleSpSzRemarksDiv(radioButtonList) {
+        function toggleSpSzRemarksDiv1(radioButtonList) {
             console.log("toggleSpSzRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("SpSz_RemarksDIV");
@@ -35,6 +35,46 @@
                 remarksDiv.style.display = "none";
             }
         }
+
+        function toggleRemarksDiv(radioButtonList) {
+            console.log("showTextbox function called");
+            var selectedValue = radioButtonList.querySelector("input:checked").value;
+            var remarksDiv = document.getElementById("FlavTxt_RemarksDIV");
+            var remarksTextBox = document.getElementById("TXB_RBL_FlavTst_Rmrks");
+            var remarksValidator = document.getElementById("RequiredFieldValidator12");
+
+            console.log("Selected value: " + selectedValue);
+            if (selectedValue === "0") {
+                remarksDiv.style.display = "block";
+                remarksValidator.style.display = "block"; // Show the validator
+                remarksTextBox.required = true; // Make the textbox required
+            } else {
+                remarksDiv.style.display = "none";
+                remarksValidator.style.display = "none"; // Hide the validator
+                remarksTextBox.required = false; // Remove the required attribute
+            }
+        }
+
+        function toggleSpSzRemarksDiv(radioButtonList) {
+            console.log("toggleSpSzRemarksDiv function called");
+            var selectedValue = radioButtonList.querySelector("input:checked").value;
+            var remarksDiv = document.getElementById("SpSz_RemarksDIV");
+            var remarksTextBox = document.getElementById("TB_RBL_SpSz_Rmrks");
+            var remarksValidator = document.getElementById("RFV_TB_RBL_SpSz_Rmrks");
+
+            console.log("Selected value: " + selectedValue);
+            if (selectedValue === "0") {
+                remarksDiv.style.display = "block";
+                remarksValidator.style.display = "block"; // Show the validator
+                remarksTextBox.required = true; // Make the textbox required
+            } else {
+                remarksDiv.style.display = "none";
+                remarksValidator.style.display = "none"; // Hide the validator
+                remarksTextBox.required = false; // Remove the required attribute
+            }
+        }
+
+
 
     </script>
 
@@ -61,11 +101,10 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue=""></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded">
-                                            <asp:ListItem Text="Dankuni">Dankuni</asp:ListItem>
-                                        </asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="DDL_Plant" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_Plant_SelectedIndexChanged"></asp:DropDownList>
+
                                     </div>
 
                                 </div>
@@ -74,11 +113,10 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label2" runat="server" AssociatedControlID="DDL_PlantLine" Text="Select Line" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_DDL_PlantLine" runat="server" ErrorMessage="*" ControlToValidate="DDL_PlantLine" Display="Dynamic" InitialValue=""></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded">
-                                            <asp:ListItem Text="Line-4">Line-4</asp:ListItem>
-                                        </asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="DDL_PlantLine" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_PlantLine_SelectedIndexChanged"></asp:DropDownList>
+
                                     </div>
                                 </div>
                             </div>
@@ -86,11 +124,10 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label3" runat="server" AssociatedControlID="DDL_ProductCategory" Text="Select Product Category" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_DDL_ProductCategory" runat="server" ErrorMessage="*" InitialValue="" ControlToValidate="DDL_ProductCategory" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded">
-                                            <asp:ListItem Text="Line-4">Line-4</asp:ListItem>
-                                        </asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="DDL_ProductCategory" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductCategory_SelectedIndexChanged"></asp:DropDownList>
+
                                     </div>
                                 </div>
                             </div>
@@ -98,11 +135,9 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Select Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="*" ControlToValidate="DDL_ProductBrand" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded">
-                                            <asp:ListItem Text="Line-4">Line-4</asp:ListItem>
-                                        </asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="DDL_ProductBrand" Display="Dynamic"></asp:RequiredFieldValidator>
+                                        <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
@@ -206,9 +241,9 @@
                             <div class="col-md-3" id="FlavTxt_RemarksDIV" style="display: none;">
                                 <div class="mb-3">
                                     <asp:Label ID="Label12" runat="server" AssociatedControlID="TXB_RBL_FlavTst_Rmrks" Text="Flavour & Taste (Not Ok)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_RBL_FlavTst_Rmrks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_RBL_FlavTst_Rmrks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXB_RBL_FlavTst_Rmrks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="DDL_PlantLine" Display="Dynamic"></asp:RequiredFieldValidator>
                                     </div>
                                 </div>
                             </div>
@@ -231,9 +266,10 @@
                             <div class="col-md-3" id="SpSz_RemarksDIV" style="display: none;">
                                 <div class="mb-3">
                                     <asp:Label ID="Label14" runat="server" AssociatedControlID="TB_RBL_SpSz_Rmrks" Text="Shape & Size (Not OK)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_RBL_SpSz_Rmrks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TB_RBL_SpSz_Rmrks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_RBL_SpSz_Rmrks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                                        <asp:RequiredFieldValidator ID="RFV_TB_RBL_SpSz_Rmrks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TextBox8" Display="Dynamic"></asp:RequiredFieldValidator>
+
                                     </div>
                                 </div>
                             </div>
@@ -260,6 +296,18 @@
                                     <asp:RangeValidator ID="RV_TB_Moisture" runat="server" ControlToValidate="TB_Moisture" ErrorMessage="Moisture should be between 0.00% and 100.00%" ForeColor="Red" MinimumValue="0.00" MaximumValue="100.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_Moisture" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Moisture (0.00% - 100.00%)"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_GaugeLen" runat="server" AssociatedControlID="TB_GaugeLen" Text="Gauge Length :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_GaugeLen" runat="server" ErrorMessage="*" ControlToValidate="TB_GaugeLen" ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_GaugeLen" runat="server" ControlToValidate="TB_GaugeLen" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RangeValidator ID="RV_TB_GaugeLen" runat="server" ControlToValidate="TB_GaugeLen" ErrorMessage="[0.00 - 100.00]" ForeColor="Red" MinimumValue="0.00" MaximumValue="100.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_GaugeLen" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Gauge Length [0.00 - 100.00]"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -353,7 +401,7 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="Click to SUBMIT" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group input-group-sm">
-                                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" />
+                                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" CausesValidation="true" OnClick="btnSubmit_Click" />
                                         <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" PostBackUrl="~/qaqc_inspector_rpt.aspx" />
                                     </div>
                                 </div>
