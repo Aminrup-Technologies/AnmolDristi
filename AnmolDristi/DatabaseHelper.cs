@@ -86,7 +86,7 @@ namespace AnmolDristi
             }
 
             // Add a default item to the DropDownList
-            ddl.Items.Insert(0, new ListItem("Select", ""));
+            ddl.Items.Insert(0, new ListItem("Select", "0"));
         }
 
 
@@ -199,7 +199,7 @@ namespace AnmolDristi
                 }
             }
             // Add a default item to the DropDownList
-            ddl.Items.Insert(0, new ListItem("Select", ""));
+            ddl.Items.Insert(0, new ListItem("Select", "0"));
         }
 
         public static void BindDropDownList(string query, DropDownList ddl, string textField, string valueField, SqlParameter[] parameters, out bool recordsBound)
@@ -250,7 +250,7 @@ namespace AnmolDristi
                 }
             }
             // Add a default item to the DropDownList
-            ddl.Items.Insert(0, new ListItem("Select", ""));
+            ddl.Items.Insert(0, new ListItem("Select", "0"));
         }
 
 

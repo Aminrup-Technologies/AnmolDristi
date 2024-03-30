@@ -823,6 +823,15 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.TextBox TB_PktWgt;
         
         /// <summary>
+        /// FU_DesgImp_Upldr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FU_DesgImp_Upldr;
+        
+        /// <summary>
         /// Lbl_FU_DesgImp control.
         /// </summary>
         /// <remarks>
@@ -841,6 +850,24 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_FU_DesgImp;
         
         /// <summary>
+        /// CV_FU_DesgImp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_FU_DesgImp;
+        
+        /// <summary>
+        /// lblErrorMessage2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorMessage2;
+        
+        /// <summary>
         /// FU_DesgImp control.
         /// </summary>
         /// <remarks>
@@ -850,13 +877,13 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.FileUpload FU_DesgImp;
         
         /// <summary>
-        /// BtnUpload control.
+        /// BtnUploadFU_DesgImp control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnUpload;
+        protected global::System.Web.UI.WebControls.Button BtnUploadFU_DesgImp;
         
         /// <summary>
         /// FU_DesgImp_Img control.
@@ -868,13 +895,22 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl FU_DesgImp_Img;
         
         /// <summary>
-        /// uploadedImage control.
+        /// uploadedImage1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image uploadedImage;
+        protected global::System.Web.UI.WebControls.Image uploadedImage1;
+        
+        /// <summary>
+        /// FU_ClrApp_Upldr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FU_ClrApp_Upldr;
         
         /// <summary>
         /// Lbl_FU_ClrApp control.
@@ -895,6 +931,24 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_FU_ClrApp;
         
         /// <summary>
+        /// CV_FU_ClrApp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_FU_ClrApp;
+        
+        /// <summary>
+        /// lblErrorMessage1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorMessage1;
+        
+        /// <summary>
         /// FU_ClrApp control.
         /// </summary>
         /// <remarks>
@@ -911,6 +965,24 @@ namespace AnmolDristi.qaqc {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnUploadClrApp;
+        
+        /// <summary>
+        /// FU_ClrApp_Img control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FU_ClrApp_Img;
+        
+        /// <summary>
+        /// uploadedImage2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image uploadedImage2;
         
         /// <summary>
         /// Lbl_btnSubmit control.

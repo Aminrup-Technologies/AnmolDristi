@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,11 +14,13 @@ namespace AnmolDristi.qaqc
 {
     public partial class qaqc_inspector_rpt : System.Web.UI.Page
     {
+        public static string ImgLink1 = string.Empty;
+        public static string ImgLink2 = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                lbl_docname.Text = "QC - Inspector Report";
+                lbl_docname.Text = "QC - Inspection Report";
                 lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/02";
 
 
@@ -507,10 +512,10 @@ namespace AnmolDristi.qaqc
             decimal packetWeight = Convert.ToDecimal(TB_PktWgt.Text);
             // Retrieve other values in a similar manner
 
-            string designAndImplementation = "";
-            string colourAndAppearance = "";
+            //string designAndImplementation = "";
+            //string colourAndAppearance = "";
             int submittedById = 1;
-            string SubmittedByPNo = "";
+            string SubmittedByPNo = "AHO445";
 
             QCInspectorDataAccess dataAccess = new QCInspectorDataAccess();
 
@@ -522,14 +527,347 @@ namespace AnmolDristi.qaqc
                       varietyOrLotNo, bakingTime, flavourAndTaste, commentsForFlavourAndTaste,
                       textureBite, shapeOrSize, commentsForShapeOrSize, moisture,
                       gaugeLength, weightWithoutOil, weightWithOil, oilPercentage,
-                      packetWeight, designAndImplementation, colourAndAppearance,
+                      packetWeight, ImgLink1, ImgLink2,
                       submittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay, SubmittedByPNo);
+
+                //Make the inputs readonly
+                MakeInputsReadOnly();
             }
             catch (Exception ex)
             {
                 // Handle any exceptions that might occur during the insertion process
                 // For example, you can log the exception and display an error message to the user
                 // For simplicity, here we are just displaying the exception message
+            }
+        }
+
+        private void MakeInputsReadOnly()
+        {
+            DDL_Plant.Enabled = false;
+            DDL_PlantLine.Enabled = false;
+            DDL_ProductCategory.Enabled = false;
+            DDL_ProductBrand.Enabled = false;
+            TB_NoOfPcs.ReadOnly = true;
+            TB_GaugeVal.ReadOnly = true;
+            TB_DryWeight.ReadOnly = true;
+            TB_DippedWeight.ReadOnly = true;
+            TB_VartyPkt.ReadOnly = true;
+            TB_BakingTime.ReadOnly = true;
+            RBL_FlavTst.Enabled = false;
+            TXB_RBL_FlavTst_Rmrks.ReadOnly = true;
+            TB_TextureBite.ReadOnly = true;
+            RBL_SpSz.Enabled = false;
+            TB_RBL_SpSz_Rmrks.ReadOnly = true;
+            TB_Moisture.ReadOnly = true;
+            TB_GaugeLen.ReadOnly = true;
+            TB_wgtwtoil.ReadOnly = true;
+            TB_wgtwoil.ReadOnly = true;
+            TB_oilpercent.ReadOnly = true;
+            TB_PktWgt.ReadOnly = true;
+
+            btnSubmit.Enabled = false;
+            btnSubmit.Text = "SAVED";
+            btnSubmit.CssClass = "btn btn-sm btn-success";
+
+            string Data_SuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Data Success',
+                                text: 'Recorded Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+            // RegisterStartupScript adds the JavaScript code to the page
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+        }
+
+        protected void BtnUploadFU_DesgImp_Click(object sender, EventArgs e)
+        {
+
+            if (UploadImage1() == true)
+            {
+                string UI_1_Successscript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Upload Success',
+                                text: 'Image Saved!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                // RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowImage1SuccessNotification", UI_1_Successscript, false);
+            }
+            //if (FU_DesgImp.HasFile)
+            //{
+            //    try
+            //    {
+            //        // Get the file name and extension
+            //        string fileName = Path.GetFileNameWithoutExtension(FU_DesgImp.FileName);
+            //        string fileExtension = Path.GetExtension(FU_DesgImp.FileName);
+
+                //        // Rename the file with a unique name
+                //        string uniqueFileName = $"{fileName}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+
+                //        // Check if the directory exists, if not, create it
+                //        string uploadFolderPath = Server.MapPath("~/UploadedFiles/");
+                //        if (!Directory.Exists(uploadFolderPath))
+                //        {
+                //            Directory.CreateDirectory(uploadFolderPath);
+                //        }
+
+                //        // Save the file to the server
+                //        string filePath = Path.Combine(uploadFolderPath, uniqueFileName);
+                //        FU_DesgImp.SaveAs(filePath);
+
+                //        // Optimize the image size (optional)
+                //        // You can use third-party libraries like ImageMagick or .NET built-in classes
+                //        // For simplicity, I'll assume you're using System.Drawing
+                //        using (System.Drawing.Image image = System.Drawing.Image.FromFile(filePath))
+                //        {
+                //            // Resize the image (e.g., to a maximum width of 800 pixels)
+                //            int maxWidth = 800;
+                //            int newWidth = image.Width > maxWidth ? maxWidth : image.Width;
+                //            int newHeight = (int)((double)newWidth / image.Width * image.Height);
+                //            using (System.Drawing.Image resizedImage = image.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero))
+                //            {
+                //                // Save the resized image back to the file system
+                //                resizedImage.Save(filePath);
+                //            }
+                //        }
+
+                //        // Display the uploaded image
+                //        FU_DesgImp_Img.Visible = true;
+                //        uploadedImage.Visible = true;
+                //        uploadedImage.ImageUrl = "~/UploadedFiles/" + uniqueFileName;
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        // Handle any exceptions
+                //        lblErrorMessage2.Text = "Error: " + ex.Message;
+                //    }
+                //}
+                //else
+                //{
+                //    lblErrorMessage2.Text = "Please select a file to upload.";
+                //}
+        }
+
+
+        private bool UploadImage1()
+        {
+            bool imgSaved = false;
+
+            try
+            {
+                string TBPhotoId = "QCIR";
+                DateTime now = DateTime.Now;
+
+                // Define the target folder path
+                string targetFolderPath = Server.MapPath("~/UploadedFiles/QCIR/DesignImp/");
+
+                // Check if the target folder exists, if not, create it
+                if (!Directory.Exists(targetFolderPath))
+                {
+                    Directory.CreateDirectory(targetFolderPath);
+                }
+
+                // Check if a file is posted
+                if (FU_DesgImp.PostedFile != null)
+                {
+                    // Check the extension of the image
+                    string extension = Path.GetExtension(FU_DesgImp.FileName);
+                    if (extension.ToLower() == ".png" || extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg")
+                    {
+                        // Get the uploaded image stream
+                        Stream strm = FU_DesgImp.PostedFile.InputStream;
+                        using (var uploadedImage = System.Drawing.Image.FromStream(strm))
+                        {
+                            // Resize the image
+                            //int newWidth = 440; // New Width of Image in Pixel
+                            //int newHeight = 540; // New Height of Image in Pixel
+                            //using (var resizedImage = new Bitmap(newWidth, newHeight))
+                            //{
+                            //    using (var graphics = Graphics.FromImage(resizedImage))
+                            //    {
+                            //        graphics.CompositingQuality = CompositingQuality.HighQuality;
+                            //        graphics.SmoothingMode = SmoothingMode.HighQuality;
+                            //        graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            //        var imgRectangle = new Rectangle(0, 0, newWidth, newHeight);
+                            //        graphics.DrawImage(uploadedImage, imgRectangle);
+
+                            //        // Save the resized image to the target folder
+                            //        string fileName = $"{TBPhotoId}_{imgDate}.jpg";
+                            //        string targetPath = Path.Combine(targetFolderPath, fileName);
+                            //        resizedImage.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                            //        // Set the image link for database
+                            //        string imglink = "~/UploadedFiles" + fileName;
+                            //        //imgfilename = fileName;
+
+                            //        // Show the image instantly
+                            //        uploadedImage1.ImageUrl = imglink;
+
+                            //        // Image saved successfully
+                            //        imgSaved = true;
+                            //    }
+                            //}
+
+                            // Resize the image
+                            int maxWidth = 800;
+                            int newWidth = uploadedImage.Width > maxWidth ? maxWidth : uploadedImage.Width;
+                            int newHeight = (int)((double)newWidth / uploadedImage.Width * uploadedImage.Height);
+                            using (var resizedImage = uploadedImage.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero))
+                            {
+                                string fileName = $"{TBPhotoId}_{DateTime.Now:yyyyMMddHHmmss}.jpg";
+                                // Save the resized image to the target folder
+                                string targetPath = Path.Combine(targetFolderPath, fileName);
+                                resizedImage.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                                // Set the image link for database
+                                ImgLink1 = "~/UploadedFiles/QCIR/DesignImp/" + fileName;
+                                //imgfilename = fileName;
+
+                                // Show the image instantly
+                                FU_DesgImp_Img.Visible = true;
+                                uploadedImage1.ImageUrl = ImgLink1;
+
+                                // Image saved successfully
+                                imgSaved = true;
+
+                                FU_DesgImp_Upldr.Visible = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Display error notification for inappropriate file type
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or display an error message
+            }
+
+            return imgSaved;
+        }
+
+        private bool UploadImage2()
+        {
+            bool imgSaved = false;
+
+            try
+            {
+                string TBPhotoId = "QCIR";
+                DateTime now = DateTime.Now;
+
+                // Define the target folder path
+                string targetFolderPath = Server.MapPath("~/UploadedFiles/QCIR/ClrApp/");
+
+                // Check if the target folder exists, if not, create it
+                if (!Directory.Exists(targetFolderPath))
+                {
+                    Directory.CreateDirectory(targetFolderPath);
+                }
+
+                // Check if a file is posted
+                if (FU_ClrApp.PostedFile != null)
+                {
+                    // Check the extension of the image
+                    string extension = Path.GetExtension(FU_ClrApp.FileName);
+                    if (extension.ToLower() == ".png" || extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg")
+                    {
+                        // Get the uploaded image stream
+                        Stream strm = FU_ClrApp.PostedFile.InputStream;
+                        using (var uploadedImage = System.Drawing.Image.FromStream(strm))
+                        {
+                            // Resize the image
+                            //int newWidth = 440; // New Width of Image in Pixel
+                            //int newHeight = 540; // New Height of Image in Pixel
+                            //using (var resizedImage = new Bitmap(newWidth, newHeight))
+                            //{
+                            //    using (var graphics = Graphics.FromImage(resizedImage))
+                            //    {
+                            //        graphics.CompositingQuality = CompositingQuality.HighQuality;
+                            //        graphics.SmoothingMode = SmoothingMode.HighQuality;
+                            //        graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            //        var imgRectangle = new Rectangle(0, 0, newWidth, newHeight);
+                            //        graphics.DrawImage(uploadedImage, imgRectangle);
+
+                            //        // Save the resized image to the target folder
+                            //        string fileName = $"{TBPhotoId}_{imgDate}.jpg";
+                            //        string targetPath = Path.Combine(targetFolderPath, fileName);
+                            //        resizedImage.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                            //        // Set the image link for database
+                            //        string imglink = "~/UploadedFiles" + fileName;
+                            //        //imgfilename = fileName;
+
+                            //        // Show the image instantly
+                            //        uploadedImage1.ImageUrl = imglink;
+
+                            //        // Image saved successfully
+                            //        imgSaved = true;
+                            //    }
+                            //}
+
+                            // Resize the image
+                            int maxWidth = 800;
+                            int newWidth = uploadedImage.Width > maxWidth ? maxWidth : uploadedImage.Width;
+                            int newHeight = (int)((double)newWidth / uploadedImage.Width * uploadedImage.Height);
+                            using (var resizedImage = uploadedImage.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero))
+                            {
+                                string fileName = $"{TBPhotoId}_{DateTime.Now:yyyyMMddHHmmss}.jpg";
+                                // Save the resized image to the target folder
+                                string targetPath = Path.Combine(targetFolderPath, fileName);
+                                resizedImage.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                                // Set the image link for database
+                                ImgLink2 = "~/UploadedFiles/QCIR/ClrApp/" + fileName;
+                                //imgfilename = fileName;
+
+                                // Show the image instantly
+                                FU_ClrApp_Img.Visible = true;
+                                uploadedImage2.ImageUrl = ImgLink2;
+
+                                // Image saved successfully
+                                imgSaved = true;
+
+                                FU_ClrApp_Upldr.Visible = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Display error notification for inappropriate file type
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or display an error message
+            }
+
+            return imgSaved;
+        }
+
+        protected void BtnUploadClrApp_Click(object sender, EventArgs e)
+        {
+            if (UploadImage2() == true)
+            {
+                string UI_2_Successscript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Upload Success',
+                                text: 'Image Saved!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                // RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowImage2SuccessNotification", UI_2_Successscript, false);
             }
         }
     }

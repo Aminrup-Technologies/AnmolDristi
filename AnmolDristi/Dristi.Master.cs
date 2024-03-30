@@ -18,5 +18,10 @@ namespace AnmolDristi
         {
 
         }
+
+        protected void btn_Logout_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

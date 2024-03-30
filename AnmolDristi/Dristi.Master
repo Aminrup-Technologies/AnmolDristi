@@ -189,7 +189,8 @@
                                             <a class="dropdown-item" href="manage_profile.aspx">Manage Profile</a>
                                             <a class="dropdown-item" target="_blank" href="#">Support</a>
                                             <%--<a class="dropdown-item" href="#"><i class="fa fa-sign-out pull-right"></i>Log Out</a>--%>
-                                            <button type="button" class="dropdown-item btn btn-primary btn-sm" id="btn_Logout" data-toggle="modal" data-target="#MyModal_Logout">Logout</button>
+                                            <%--<button type="button" class="dropdown-item btn btn-primary btn-sm" id="btn_Logout" data-toggle="modal" data-target="#MyModal_Logout">Logout</button>--%>
+                                            <asp:Button ID="btn_Logout" runat="server" Text="Button" CssClass="dropdown-item btn btn-primary btn-sm" data-toggle="modal" data-target="#MyModal_Logout" OnClick="btn_Logout_Click"/>
                                         </div>
                                     </li>
                                 </ul>
