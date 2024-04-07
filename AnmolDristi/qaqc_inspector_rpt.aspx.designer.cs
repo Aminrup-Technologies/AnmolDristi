@@ -139,6 +139,33 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.DropDownList DDL_ProductBrand;
         
         /// <summary>
+        /// Label5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label5;
+        
+        /// <summary>
+        /// RFV_DDL_BrandSKU control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_BrandSKU;
+        
+        /// <summary>
+        /// DDL_BrandSKU control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDL_BrandSKU;
+        
+        /// <summary>
         /// Lbl_TB_NoOfPcs control.
         /// </summary>
         /// <remarks>

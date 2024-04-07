@@ -939,5 +939,53 @@ namespace AnmolDristi.qaqc
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowImage2SuccessNotification", UI_2_Successscript, false);
             }
         }
+
+        protected void DDL_ProductBrand_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (DDL_ProductBrand.SelectedIndex != 0)
+            {
+                string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
+                BrandSKUBinder(selectedProductBrandValue);
+            }
+            else
+            {
+                DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
+
+                string DDL_ProductBrand_Error_script = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Error',
+                                text: 'Invalid Selection!',
+                                type: 'error',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowSKUInvalidErrorNotification", DDL_ProductBrand_Error_script, false);
+            }
+        }
+
+        private void BrandSKUBinder(string selectedProductBrandValue)
+        {
+            string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKUs WHERE brand_id = @SelectedPlantValue";
+            string textField = "SKU_name";
+            string valueField = "SKUId";
+
+            bool recordsBound;
+            DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedProductBrandValue), out recordsBound);
+
+            if (!recordsBound)
+            {
+                DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
+
+                string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Error',
+                                text: 'An error occurred!',
+                                type: 'error',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
+            }
+        }
     }
 }
