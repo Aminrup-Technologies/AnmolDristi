@@ -409,13 +409,13 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.Label Label11;
         
         /// <summary>
-        /// RequiredFieldValidator11 control.
+        /// RFV_RBL_FlavTst control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator11;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_RBL_FlavTst;
         
         /// <summary>
         /// RBL_FlavTst control.

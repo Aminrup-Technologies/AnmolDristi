@@ -25,8 +25,8 @@ namespace AnmolDristi.qaqc
 
 
                 PlantBinder();
-
-                NoOfPcs();
+                SetValidatorPropertiesFromDatabase();
+                //NoOfPcs();
                 GaugeValue();
                 GaugeLength();
                 SetDryWeightValidators();
@@ -38,6 +38,8 @@ namespace AnmolDristi.qaqc
                 SetWeightWithoutOilValidators();
                 SetOilPercentageValidators();
                 SetPacketWeightValidators();
+
+
             }
 
 
@@ -71,6 +73,73 @@ namespace AnmolDristi.qaqc
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
 
             }
+        }
+
+        private void SetValidatorPropertiesFromDatabase()
+        {
+            // Fetch validation criteria from the database for NoOfPcs
+            ValidationCriteria noOfPcsValidationCriteria = GetValidationCriteriaFromDatabase("NoOfPcs");
+
+            // Set properties for NoOfPcs validators
+            RFV_TB_NoOfPcs.ErrorMessage = noOfPcsValidationCriteria.RequiredFieldErrorMessage;
+            RFV_TB_NoOfPcs.Enabled = noOfPcsValidationCriteria.IsRequired;
+            REV_TB_NoOfPcs.ErrorMessage = noOfPcsValidationCriteria.RegularExpressionErrorMessage;
+            REV_TB_NoOfPcs.ValidationExpression = noOfPcsValidationCriteria.RegularExpression;
+            REV_TB_NoOfPcs.Enabled = noOfPcsValidationCriteria.IsRegularExpressionRequired;
+            RV_TB_NoOfPcs.ErrorMessage = noOfPcsValidationCriteria.RangeErrorMessage;
+            RV_TB_NoOfPcs.MinimumValue = noOfPcsValidationCriteria.MinimumValue;
+            RV_TB_NoOfPcs.MaximumValue = noOfPcsValidationCriteria.MaximumValue;
+            RV_TB_NoOfPcs.Enabled = noOfPcsValidationCriteria.IsRangeRequired;
+
+            //// Fetch validation criteria from the database for GaugeVal
+            //ValidationCriteria gaugeValValidationCriteria = GetValidationCriteriaFromDatabase("GaugeVal");
+
+            //// Set properties for GaugeVal validators
+            //RFV_TB_GaugeVal.ErrorMessage = gaugeValValidationCriteria.RequiredFieldErrorMessage;
+            //RFV_TB_GaugeVal.Enabled = gaugeValValidationCriteria.IsRequired;
+            //REV_TB_GaugeVal.ErrorMessage = gaugeValValidationCriteria.RegularExpressionErrorMessage;
+            //REV_TB_GaugeVal.ValidationExpression = gaugeValValidationCriteria.RegularExpression;
+            //REV_TB_GaugeVal.Enabled = gaugeValValidationCriteria.IsRegularExpressionRequired;
+            //RV_TB_GaugeVal.ErrorMessage = gaugeValValidationCriteria.RangeErrorMessage;
+            //RV_TB_GaugeVal.MinimumValue = gaugeValValidationCriteria.MinimumValue;
+            //RV_TB_GaugeVal.MaximumValue = gaugeValValidationCriteria.MaximumValue;
+            //RV_TB_GaugeVal.Enabled = gaugeValValidationCriteria.IsRangeRequired;
+        }
+
+
+        public class ValidationCriteria
+        {
+            public string RequiredFieldErrorMessage { get; set; }
+            public string RegularExpressionErrorMessage { get; set; }
+            public string RegularExpression { get; set; }
+            public string RangeErrorMessage { get; set; }
+            public string MinimumValue { get; set; }
+            public string MaximumValue { get; set; }
+            public bool IsRequired { get; set; }
+            public bool IsRegularExpressionRequired { get; set; }
+            public bool IsRangeRequired { get; set; }
+        }
+
+        private ValidationCriteria GetValidationCriteriaFromDatabase(string fieldName)
+        {
+            // Query the database to fetch validation criteria based on the field name
+            // Implement database querying logic here, and return the fetched data
+            // For example:
+            // SELECT * FROM ValidationCriteria WHERE FieldName = fieldName
+
+            // Simulated data for demonstration
+            ValidationCriteria criteria = new ValidationCriteria();
+            criteria.RequiredFieldErrorMessage = "*";
+            criteria.RegularExpressionErrorMessage = "[30-40]";
+            criteria.RegularExpression = @"\d+";
+            criteria.RangeErrorMessage = "[30-40]";
+            criteria.MinimumValue = "30";
+            criteria.MaximumValue = "40";
+            criteria.IsRequired = true;
+            criteria.IsRegularExpressionRequired = true;
+            criteria.IsRangeRequired = false;
+
+            return criteria;
         }
 
 
