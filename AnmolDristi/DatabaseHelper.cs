@@ -187,15 +187,17 @@ namespace AnmolDristi
                             ddl.Items.Clear();
                             ddl.Items.Add(new ListItem("No records found", ""));
                         }
-
+                        connection.Close();
                         reader.Close();
                     }
                     catch (Exception ex)
                     {
+                        connection.Close();
                         // Handle the exception (e.g., log the error, display a message)
                         // For simplicity, you can just rethrow the exception
                         throw new Exception("An error occurred while executing the query: " + ex.Message, ex);
                     }
+                    
                 }
             }
             // Add a default item to the DropDownList
@@ -253,6 +255,35 @@ namespace AnmolDristi
             ddl.Items.Insert(0, new ListItem("Select", "0"));
         }
 
+
+        public static DataTable GetBrandFieldsControlByBrandId(int brandId)
+        {
+            DataTable dataTable = new DataTable();
+
+            // Create a SqlConnection
+            using (SqlConnection connection = GetConnection())
+            {
+                // Open the connection
+
+                // Create a SqlCommand for the stored procedure
+                using (SqlCommand command = new SqlCommand("GetBrandFieldsControlByBrandId", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add parameters
+                    command.Parameters.AddWithValue("@brand_id", brandId);
+
+                    // Execute the SqlCommand and load results into the DataTable
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        dataTable.Load(reader);
+                    }
+                }
+                connection.Close();
+            }
+
+            return dataTable;
+        }
 
 
     }

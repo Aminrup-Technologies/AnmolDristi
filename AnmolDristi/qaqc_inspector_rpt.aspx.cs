@@ -1,6 +1,7 @@
 ﻿using AnmolDristi.DAL;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -20,29 +21,33 @@ namespace AnmolDristi.qaqc
         {
             if (!IsPostBack)
             {
-                lbl_docname.Text = "QC - Inspection Report";
-                lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/02";
+                if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
+                {
+                    Response.Redirect("login.aspx");
+                }
+                else
+                {
 
+                    lbl_docname.Text = "QC - Inspection Report";
+                    lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/02";
 
-                PlantBinder();
-                SetValidatorPropertiesFromDatabase();
-                //NoOfPcs();
-                GaugeValue();
-                GaugeLength();
-                SetDryWeightValidators();
-                SetDippedWeightValidators();
-                SetVartyPktValidators();
-                SetTextureBiteValidators();
-                SetMoistureValidators();
-                SetWeightWithOilValidators();
-                SetWeightWithoutOilValidators();
-                SetOilPercentageValidators();
-                SetPacketWeightValidators();
-
+                    PlantBinder();
+                    //SetValidatorPropertiesFromDatabase();
+                    //NoOfPcs();
+                    //GaugeValue();
+                    //GaugeLength();
+                    //SetDryWeightValidators();
+                    //SetDippedWeightValidators();
+                    //SetVartyPktValidators();
+                    //SetTextureBiteValidators();
+                    //SetMoistureValidators();
+                    //SetWeightWithOilValidators();
+                    //SetWeightWithoutOilValidators();
+                    //SetOilPercentageValidators();
+                    //SetPacketWeightValidators();
+                }
 
             }
-
-
         }
 
         private void PlantBinder()
@@ -164,20 +169,20 @@ namespace AnmolDristi.qaqc
 
         private void GaugeValue()
         {
-            // Set properties of RequiredFieldValidator
-            RFV_TB_GaugeVal.ErrorMessage = "*";
-            RFV_TB_GaugeVal.ForeColor = System.Drawing.Color.Red;
+            //// Set properties of RequiredFieldValidator
+            //RFV_TB_GaugeVal.ErrorMessage = "*";
+            //RFV_TB_GaugeVal.ForeColor = System.Drawing.Color.Red;
 
-            // Set properties of RegularExpressionValidator
-            REV_TB_GaugeVal.ErrorMessage = "Decimal Only";
-            REV_TB_GaugeVal.ForeColor = System.Drawing.Color.Red;
-            REV_TB_GaugeVal.ValidationExpression = @"\d+(\.\d{1,2})?"; // Regular expression for decimal input
+            //// Set properties of RegularExpressionValidator
+            //REV_TB_GaugeVal.ErrorMessage = "Decimal Only";
+            //REV_TB_GaugeVal.ForeColor = System.Drawing.Color.Red;
+            //REV_TB_GaugeVal.ValidationExpression = @"\d+(\.\d{1,2})?"; // Regular expression for decimal input
 
-            // Set properties of RangeValidator
-            RV_TB_GaugeVal.ErrorMessage = "[10.00 - 100.00]";
-            RV_TB_GaugeVal.ForeColor = System.Drawing.Color.Red;
-            RV_TB_GaugeVal.MinimumValue = "10.00";
-            RV_TB_GaugeVal.MaximumValue = "100.00";
+            //// Set properties of RangeValidator
+            //RV_TB_GaugeVal.ErrorMessage = "[10.00 - 100.00]";
+            //RV_TB_GaugeVal.ForeColor = System.Drawing.Color.Red;
+            //RV_TB_GaugeVal.MinimumValue = "10.00";
+            //RV_TB_GaugeVal.MaximumValue = "100.00";
         }
 
         private void GaugeLength()
@@ -192,47 +197,47 @@ namespace AnmolDristi.qaqc
             REV_TB_GaugeLen.ValidationExpression = @"\d+(\.\d{1,2})?"; // Regular expression for decimal input
 
             // Set properties of RangeValidator
-            RV_TB_GaugeLen.ErrorMessage = "[10.00 - 100.00]";
-            RV_TB_GaugeLen.ForeColor = System.Drawing.Color.Red;
-            RV_TB_GaugeLen.MinimumValue = "10.00";
-            RV_TB_GaugeLen.MaximumValue = "100.00";
+            CV_TB_GaugeLen.ErrorMessage = "[10.00 - 100.00]";
+            CV_TB_GaugeLen.ForeColor = System.Drawing.Color.Red;
+            //RV_TB_GaugeLen.MinimumValue = "10.00";
+            //RV_TB_GaugeLen.MaximumValue = "100.00";
         }
 
 
         private void SetDryWeightValidators()
         {
-            // Set properties of RequiredFieldValidator
-            RFV_TB_DryWeight.ErrorMessage = "*";
-            RFV_TB_DryWeight.ForeColor = System.Drawing.Color.Red;
+            //// Set properties of RequiredFieldValidator
+            //RFV_TB_DryWeight.ErrorMessage = "*";
+            //RFV_TB_DryWeight.ForeColor = System.Drawing.Color.Red;
 
-            // Set properties of RegularExpressionValidator
-            REV_TB_DryWeight.ErrorMessage = "Decimal Only";
-            REV_TB_DryWeight.ForeColor = System.Drawing.Color.Red;
-            REV_TB_DryWeight.ValidationExpression = @"\d+(\.\d{1,2})?"; // Regular expression for decimal input
+            //// Set properties of RegularExpressionValidator
+            //REV_TB_DryWeight.ErrorMessage = "Decimal Only";
+            //REV_TB_DryWeight.ForeColor = System.Drawing.Color.Red;
+            //REV_TB_DryWeight.ValidationExpression = @"\d+(\.\d{1,2})?"; // Regular expression for decimal input
 
-            // Set properties of RangeValidator
-            RV_TB_DryWeight.ErrorMessage = "[10.00 - 100.00]";
-            RV_TB_DryWeight.ForeColor = System.Drawing.Color.Red;
-            RV_TB_DryWeight.MinimumValue = "10.00";
-            RV_TB_DryWeight.MaximumValue = "100.00";
+            //// Set properties of RangeValidator
+            ////RV_TB_DryWeight.ErrorMessage = "[10.00 - 100.00]";
+            ////RV_TB_DryWeight.ForeColor = System.Drawing.Color.Red;
+            ////RV_TB_DryWeight.MinimumValue = "10.00";
+            ////RV_TB_DryWeight.MaximumValue = "100.00";
         }
 
         private void SetDippedWeightValidators()
         {
-            // Set properties of RequiredFieldValidator
-            RFV_TB_DippedWeight.ErrorMessage = "*";
-            RFV_TB_DippedWeight.ForeColor = System.Drawing.Color.Red;
+            //// Set properties of RequiredFieldValidator
+            //RFV_TB_DippedWeight.ErrorMessage = "*";
+            //RFV_TB_DippedWeight.ForeColor = System.Drawing.Color.Red;
 
-            // Set properties of RegularExpressionValidator
-            REV_TB_DippedWeight.ErrorMessage = "Decimal Only";
-            REV_TB_DippedWeight.ForeColor = System.Drawing.Color.Red;
-            REV_TB_DippedWeight.ValidationExpression = @"\d+(\.\d{1,2})?"; // Regular expression for decimal input
+            //// Set properties of RegularExpressionValidator
+            //REV_TB_DippedWeight.ErrorMessage = "Decimal Only";
+            //REV_TB_DippedWeight.ForeColor = System.Drawing.Color.Red;
+            //REV_TB_DippedWeight.ValidationExpression = @"\d+(\.\d{1,2})?"; // Regular expression for decimal input
 
-            // Set properties of RangeValidator
-            RV_TB_DippedWeight.ErrorMessage = "[0.00 - 1000.00]";
-            RV_TB_DippedWeight.ForeColor = System.Drawing.Color.Red;
-            RV_TB_DippedWeight.MinimumValue = "0.00";
-            RV_TB_DippedWeight.MaximumValue = "1000.00";
+            //// Set properties of RangeValidator
+            //RV_TB_DippedWeight.ErrorMessage = "[0.00 - 1000.00]";
+            //RV_TB_DippedWeight.ForeColor = System.Drawing.Color.Red;
+            //RV_TB_DippedWeight.MinimumValue = "0.00";
+            //RV_TB_DippedWeight.MaximumValue = "1000.00";
         }
 
 
@@ -251,20 +256,20 @@ namespace AnmolDristi.qaqc
 
         private void SetTextureBiteValidators()
         {
-            // Set properties of RequiredFieldValidator
-            RFV_TB_TextureBite.ErrorMessage = "*";
-            RFV_TB_TextureBite.ForeColor = System.Drawing.Color.Red;
+            //// Set properties of RequiredFieldValidator
+            //RFV_TB_TextureBite.ErrorMessage = "*";
+            //RFV_TB_TextureBite.ForeColor = System.Drawing.Color.Red;
 
-            // Set properties of RegularExpressionValidator
-            REV_TB_TextureBite.ErrorMessage = "Decimal Only";
-            REV_TB_TextureBite.ForeColor = System.Drawing.Color.Red;
-            REV_TB_TextureBite.ValidationExpression = @"\d+(\.\d{1,2})?"; // Regular expression for decimal input
+            //// Set properties of RegularExpressionValidator
+            //REV_TB_TextureBite.ErrorMessage = "Decimal Only";
+            //REV_TB_TextureBite.ForeColor = System.Drawing.Color.Red;
+            //REV_TB_TextureBite.ValidationExpression = @"\d+(\.\d{1,2})?"; // Regular expression for decimal input
 
-            // Set properties of RangeValidator
-            RV_TB_TextureBite.ErrorMessage = "Texture bite should be between 0.00 and 10.00";
-            RV_TB_TextureBite.ForeColor = System.Drawing.Color.Red;
-            RV_TB_TextureBite.MinimumValue = "0.00";
-            RV_TB_TextureBite.MaximumValue = "10.00";
+            //// Set properties of RangeValidator
+            //RV_TB_TextureBite.ErrorMessage = "Texture bite should be between 0.00 and 10.00";
+            //RV_TB_TextureBite.ForeColor = System.Drawing.Color.Red;
+            //RV_TB_TextureBite.MinimumValue = "0.00";
+            //RV_TB_TextureBite.MaximumValue = "10.00";
         }
 
         private void SetMoistureValidators()
@@ -563,28 +568,54 @@ namespace AnmolDristi.qaqc
             string productCategory = DDL_ProductCategory.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue; // Assuming DDL_ProductBrand is a DropDownList
             int numberOfPieces = Convert.ToInt32(TB_NoOfPcs.Text);
-            decimal gaugeValue = Convert.ToDecimal(TB_GaugeVal.Text);
-            decimal dryWeight = Convert.ToDecimal(TB_DryWeight.Text);
-            decimal dippedWeight = Convert.ToDecimal(TB_DippedWeight.Text);
-            string varietyOrLotNo = TB_VartyPkt.Text;
-            int bakingTime = Convert.ToInt32(TB_BakingTime.Text);
+            decimal gaugeValue = 0;
+            decimal dryWeight =0;
+            decimal dippedWeight = 0;
+            string varietyOrLotNo = !string.IsNullOrEmpty(TB_VartyPkt.Text) ? TB_VartyPkt.Text : null;
+            string bakingTime = !string.IsNullOrEmpty(TB_BakingTime.Text) ? TB_BakingTime.Text : null;
             int flavourAndTaste = Convert.ToInt32(RBL_FlavTst.SelectedValue);
             string commentsForFlavourAndTaste = TXB_RBL_FlavTst_Rmrks.Text;
-            decimal textureBite = Convert.ToDecimal(TB_TextureBite.Text);
-            int shapeOrSize = Convert.ToInt32(RBL_SpSz.SelectedValue);
-            string commentsForShapeOrSize = TB_RBL_SpSz_Rmrks.Text;
+            decimal textureBite = 0;
+            //decimal textureBite = Convert.ToDecimal(TB_TextureBite.Text);
+            int shapeOrSize = 1;
+            string commentsForShapeOrSize = string.Empty;
             decimal moisture = Convert.ToDecimal(TB_Moisture.Text);
             decimal gaugeLength = Convert.ToDecimal(TB_GaugeLen.Text);
-            decimal weightWithoutOil = Convert.ToDecimal(TB_wgtwtoil.Text);
-            decimal weightWithOil = Convert.ToDecimal(TB_wgtwoil.Text);
-            decimal oilPercentage = Convert.ToDecimal(TB_oilpercent.Text);
+            decimal weightWithoutOil;
+            decimal result;
+            if (decimal.TryParse(TB_wgtwtoil.Text, out result))
+            {
+                weightWithoutOil = result;
+            }
+            else
+            {
+                weightWithoutOil = 0; // Or any other default value you choose
+            }
+
+
+            decimal weightWithOil;
+            decimal result1;
+            if (decimal.TryParse(TB_wgtwtoil.Text, out result1))
+            {
+                weightWithOil = result1;
+            }
+            else
+            {
+                weightWithOil = 0; // Or any other default value you choose
+            }
+
+            decimal oilPercentValue;
+            if (!decimal.TryParse(TB_oilpercent.Text, out oilPercentValue))
+            {
+                oilPercentValue = 0; // Set to a default value if parsing fails
+            }
             decimal packetWeight = Convert.ToDecimal(TB_PktWgt.Text);
             // Retrieve other values in a similar manner
 
             //string designAndImplementation = "";
             //string colourAndAppearance = "";
             int submittedById = 1;
-            string SubmittedByPNo = "AHO445";
+            string SubmittedByPNo = Session["USERID"].ToString();
 
             QCInspectorDataAccess dataAccess = new QCInspectorDataAccess();
 
@@ -595,7 +626,7 @@ namespace AnmolDristi.qaqc
                       numberOfPieces, gaugeValue, dryWeight, dippedWeight,
                       varietyOrLotNo, bakingTime, flavourAndTaste, commentsForFlavourAndTaste,
                       textureBite, shapeOrSize, commentsForShapeOrSize, moisture,
-                      gaugeLength, weightWithoutOil, weightWithOil, oilPercentage,
+                      gaugeLength, weightWithoutOil, weightWithOil, oilPercentValue,
                       packetWeight, ImgLink1, ImgLink2,
                       submittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay, SubmittedByPNo);
 
@@ -604,10 +635,19 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that might occur during the insertion process
-                // For example, you can log the exception and display an error message to the user
-                // For simplicity, here we are just displaying the exception message
+                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                string errorScript = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{errorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
             }
+
+
         }
 
         private void MakeInputsReadOnly()
@@ -617,16 +657,16 @@ namespace AnmolDristi.qaqc
             DDL_ProductCategory.Enabled = false;
             DDL_ProductBrand.Enabled = false;
             TB_NoOfPcs.ReadOnly = true;
-            TB_GaugeVal.ReadOnly = true;
-            TB_DryWeight.ReadOnly = true;
-            TB_DippedWeight.ReadOnly = true;
+            //TB_GaugeVal.ReadOnly = true;
+            //TB_DryWeight.ReadOnly = true;
+            //TB_DippedWeight.ReadOnly = true;
             TB_VartyPkt.ReadOnly = true;
             TB_BakingTime.ReadOnly = true;
             RBL_FlavTst.Enabled = false;
             TXB_RBL_FlavTst_Rmrks.ReadOnly = true;
-            TB_TextureBite.ReadOnly = true;
-            RBL_SpSz.Enabled = false;
-            TB_RBL_SpSz_Rmrks.ReadOnly = true;
+            //TB_TextureBite.ReadOnly = true;
+            //RBL_SpSz.Enabled = false;
+            //TB_RBL_SpSz_Rmrks.ReadOnly = true;
             TB_Moisture.ReadOnly = true;
             TB_GaugeLen.ReadOnly = true;
             TB_wgtwtoil.ReadOnly = true;
@@ -946,6 +986,47 @@ namespace AnmolDristi.qaqc
             {
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
                 BrandSKUBinder(selectedProductBrandValue);
+
+                DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
+
+
+                // Example: Querying the DataTable for a specific field name
+                //string fieldName = "no_of_pcs"; // Specify the field name you want to query
+                //DataRow[] rows = dataTable.Select($"brand_id = {selectedProductBrandValue} AND field_name = '{fieldName}'");
+
+                // Iterate through the filtered rows and extract validation criteria
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    // Extract field name from the current row
+                    string fieldName = row["field_name"].ToString();
+
+                    // Extract validation criteria from the DataRow
+                    bool rfvEnabled = Convert.ToBoolean(row["RFV_YesNo"]);
+                    string rfvErrorMessage = row["RFV_ErrorMsg"].ToString();
+                    bool revEnabled = Convert.ToBoolean(row["REV_YesNo"]);
+                    string revErrorMessage = row["REV_ErrorMsg"].ToString();
+                    string revExpression = row["REV_Expression"].ToString();
+                    bool rvEnabled = Convert.ToBoolean(row["RV_Yesno"]);
+                    string rvErrorMessage = row["RV_ErrorMsg"].ToString();
+                    string rvMinValue = row["RV_MinValue"].ToString();
+                    string rvMaxValue = row["RV_MaxValue"].ToString();
+
+                    // Create a new instance of ValidationCriteria and populate it with data from the DataRow
+                    ValidationCriteria criteria = new ValidationCriteria();
+                    criteria.RequiredFieldErrorMessage = rfvErrorMessage;
+                    criteria.IsRequired = rfvEnabled;
+                    criteria.RegularExpressionErrorMessage = revErrorMessage;
+                    criteria.IsRegularExpressionRequired = revEnabled;
+                    criteria.RegularExpression = revExpression;
+                    criteria.RangeErrorMessage = rvErrorMessage;
+                    criteria.IsRangeRequired = rvEnabled;
+                    criteria.MinimumValue = rvMinValue;
+                    criteria.MaximumValue = rvMaxValue;
+
+                    // Use the criteria as needed
+                    // For example, you can pass it to a method to set up validators
+                    SetUpValidatorsForField(fieldName, criteria);                   
+                }
             }
             else
             {
@@ -965,7 +1046,7 @@ namespace AnmolDristi.qaqc
 
         private void BrandSKUBinder(string selectedProductBrandValue)
         {
-            string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKUs WHERE brand_id = @SelectedPlantValue";
+            string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue";
             string textField = "SKU_name";
             string valueField = "SKUId";
 
@@ -986,6 +1067,293 @@ namespace AnmolDristi.qaqc
                         </script>";
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
             }
+        }
+
+
+        private void SetUpValidatorsForField(string fieldName, ValidationCriteria criteria)
+        {
+            switch (fieldName)
+            {
+                case "no_of_pcs":
+
+                    RFV_TB_NoOfPcs.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_NoOfPcs.Enabled = criteria.IsRequired;
+
+                    TB_NoOfPcs.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_NoOfPcs.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_NoOfPcs.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_NoOfPcs.Enabled = criteria.IsRegularExpressionRequired;
+
+                    RV_TB_NoOfPcs.ErrorMessage = criteria.RangeErrorMessage;
+                    RV_TB_NoOfPcs.MinimumValue = criteria.MinimumValue;
+                    RV_TB_NoOfPcs.MaximumValue = criteria.MaximumValue;
+                    RV_TB_NoOfPcs.Enabled = criteria.IsRangeRequired;
+
+                    //hdnMinNoOfPcs.Value = criteria.MinimumValue.ToString();
+                    //hdnMaxNoOfPcs.Value = criteria.MaximumValue.ToString();
+
+                    break;
+
+                case "GaugeVal":
+
+                    //RFV_TB_GaugeVal.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    //RFV_TB_GaugeVal.Enabled = criteria.IsRequired;
+
+                    //TB_GaugeVal.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    //REV_TB_GaugeVal.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    //REV_TB_GaugeVal.ValidationExpression = criteria.RegularExpression;
+                    //REV_TB_GaugeVal.Enabled = criteria.IsRegularExpressionRequired;
+
+                    //RV_TB_GaugeVal.ErrorMessage = criteria.RangeErrorMessage;
+                    //RV_TB_GaugeVal.MinimumValue = criteria.MinimumValue;
+                    //RV_TB_GaugeVal.MaximumValue = criteria.MaximumValue;
+                    //RV_TB_GaugeVal.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                case "DryWeight":
+
+                    //RFV_TB_DryWeight.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    //RFV_TB_DryWeight.Enabled = criteria.IsRequired;
+
+                    //TB_DryWeight.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    //REV_TB_DryWeight.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    //REV_TB_DryWeight.ValidationExpression = criteria.RegularExpression;
+                    //REV_TB_DryWeight.Enabled = criteria.IsRegularExpressionRequired;
+
+                    ////RV_TB_DryWeight.ErrorMessage = criteria.RangeErrorMessage;
+                    ////RV_TB_DryWeight.MinimumValue = criteria.MinimumValue;
+                    ////RV_TB_DryWeight.MaximumValue = criteria.MaximumValue;
+                    ////RV_TB_DryWeight.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                case "DippedWeight":
+
+                    //RFV_TB_DippedWeight.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    //RFV_TB_DippedWeight.Enabled = criteria.IsRequired;
+
+                    //TB_DippedWeight.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    //REV_TB_DippedWeight.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    //REV_TB_DippedWeight.ValidationExpression = criteria.RegularExpression;
+                    //REV_TB_DippedWeight.Enabled = criteria.IsRegularExpressionRequired;
+
+                    //RV_TB_DippedWeight.ErrorMessage = criteria.RangeErrorMessage;
+                    //RV_TB_DippedWeight.MinimumValue = criteria.MinimumValue;
+                    //RV_TB_DippedWeight.MaximumValue = criteria.MaximumValue;
+                    //RV_TB_DippedWeight.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                case "VartyPkt":
+
+                    RFV_TB_VartyPkt.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_VartyPkt.Enabled = criteria.IsRequired;
+
+                    TB_VartyPkt.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_VartyPkt.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_VartyPkt.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_VartyPkt.Enabled = criteria.IsRegularExpressionRequired;
+
+                    //RV_TB_VartyPkt.ErrorMessage = criteria.RangeErrorMessage;
+                    //RV_TB_VartyPkt.MinimumValue = criteria.MinimumValue;
+                    //RV_TB_VartyPkt.MaximumValue = criteria.MaximumValue;
+                    //RV_TB_VartyPkt.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                case "BakingTime":
+
+                    RFV_TB_BakingTime.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_BakingTime.Enabled = criteria.IsRequired;
+
+                    TB_BakingTime.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_BakingTime.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_BakingTime.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_BakingTime.Enabled = criteria.IsRegularExpressionRequired;
+
+                    RV_TB_BakingTime.ErrorMessage = criteria.RangeErrorMessage;
+                    RV_TB_BakingTime.MinimumValue = criteria.MinimumValue;
+                    RV_TB_BakingTime.MaximumValue = criteria.MaximumValue;
+                    RV_TB_BakingTime.Enabled = criteria.IsRangeRequired;
+
+                    hdnMinBakingTime.Value = criteria.MinimumValue.ToString();
+                    hdnMaxBakingTime.Value = criteria.MaximumValue.ToString();
+
+                    break;
+
+                case "FlavTst":
+
+                    RFV_RBL_FlavTst.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_RBL_FlavTst.Enabled = criteria.IsRequired;
+
+                    //RBL_FlavTst.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    //REV_RBL_FlavTst.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    //REV_RBL_FlavTst.ValidationExpression = criteria.RegularExpression;
+                    //REV_RBL_FlavTst.Enabled = criteria.IsRegularExpressionRequired;
+
+                    //RV_TB_DippedWeight.ErrorMessage = criteria.RangeErrorMessage;
+                    //RV_TB_DippedWeight.MinimumValue = criteria.MinimumValue;
+                    //RV_TB_DippedWeight.MaximumValue = criteria.MaximumValue;
+                    //RV_TB_DippedWeight.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                case "SpSz":
+
+                    RFV_TB_ShapeSize.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_ShapeSize.Enabled = criteria.IsRequired;
+
+                    TB_ShapeSize.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_ShapeSize.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_ShapeSize.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_ShapeSize.Enabled = criteria.IsRegularExpressionRequired;
+
+                    CV_TB_ShapeSize.ErrorMessage = criteria.RangeErrorMessage;
+                    //RV_TB_ShapeSize.ErrorMessage = criteria.RangeErrorMessage;
+                    //RV_TB_ShapeSize.MinimumValue = criteria.MinimumValue;
+                    //RV_TB_ShapeSize.MaximumValue = criteria.MaximumValue;
+                    //RV_TB_ShapeSize.Enabled = criteria.IsRangeRequired;
+
+                    hdnMinShapeSize.Value = criteria.MinimumValue.ToString();
+                    hdnMaxShapeSize.Value = criteria.MaximumValue.ToString();
+                    break;
+
+                case "TextureBite":
+
+                    //RFV_TB_TextureBite.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    //RFV_TB_TextureBite.Enabled = criteria.IsRequired;
+
+                    //TB_TextureBite.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    //REV_TB_TextureBite.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    //REV_TB_TextureBite.ValidationExpression = criteria.RegularExpression;
+                    //REV_TB_TextureBite.Enabled = criteria.IsRegularExpressionRequired;
+
+                    //RV_TB_TextureBite.ErrorMessage = criteria.RangeErrorMessage;
+                    //RV_TB_TextureBite.MinimumValue = criteria.MinimumValue;
+                    //RV_TB_TextureBite.MaximumValue = criteria.MaximumValue;
+                    //RV_TB_TextureBite.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                case "Moisture":
+
+                    RFV_TB_Moisture.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_Moisture.Enabled = criteria.IsRequired;
+
+                    TB_Moisture.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_Moisture.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_Moisture.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_Moisture.Enabled = criteria.IsRegularExpressionRequired;
+
+                    RV_TB_Moisture.ErrorMessage = criteria.RangeErrorMessage;
+                    RV_TB_Moisture.MinimumValue = criteria.MinimumValue;
+                    RV_TB_Moisture.MaximumValue = criteria.MaximumValue;
+                    RV_TB_Moisture.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                case "GaugeLen":
+
+                    RFV_TB_GaugeLen.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_GaugeLen.Enabled = criteria.IsRequired;
+
+                    TB_GaugeLen.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_GaugeLen.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_GaugeLen.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_GaugeLen.Enabled = criteria.IsRegularExpressionRequired;
+
+                    CV_TB_GaugeLen.ErrorMessage = criteria.RangeErrorMessage;
+                    //CV_TB_GaugeLen.MinimumValue = criteria.MinimumValue;
+                    //RV_TB_GaugeLen.MaximumValue = criteria.MaximumValue;
+                    CV_TB_GaugeLen.Enabled = criteria.IsRangeRequired;
+
+                    hdnMinGaugelen.Value = criteria.MinimumValue.ToString();
+                    hdnMaxGaugelen.Value = criteria.MaximumValue.ToString();
+
+                    break;
+
+                case "wgtwtoil":
+                    //weight without oil or dry weight
+                    RFV_TB_wgtwtoil.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_wgtwtoil.Enabled = criteria.IsRequired;
+
+                    TB_wgtwtoil.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_wgtwtoil.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_wgtwtoil.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_wgtwtoil.Enabled = criteria.IsRegularExpressionRequired;
+
+                    RV_TB_wgtwtoil.ErrorMessage = criteria.RangeErrorMessage;
+                    RV_TB_wgtwtoil.MinimumValue = criteria.MinimumValue;
+                    RV_TB_wgtwtoil.MaximumValue = criteria.MaximumValue;
+                    RV_TB_wgtwtoil.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                case "wgtwoil":
+                    //weight with oil or dipped weight
+                    RFV_TB_wgtwoil.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_wgtwoil.Enabled = criteria.IsRequired;
+
+                    TB_wgtwoil.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_wgtwoil.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_wgtwoil.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_wgtwoil.Enabled = criteria.IsRegularExpressionRequired;
+
+                    RV_TB_wgtwoil.ErrorMessage = criteria.RangeErrorMessage;
+                    RV_TB_wgtwoil.MinimumValue = criteria.MinimumValue;
+                    RV_TB_wgtwoil.MaximumValue = criteria.MaximumValue;
+                    RV_TB_wgtwoil.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                case "oilpercent":
+
+                    RFV_TB_oilpercent.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_oilpercent.Enabled = criteria.IsRequired;
+
+                    TB_oilpercent.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_oilpercent.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_oilpercent.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_oilpercent.Enabled = criteria.IsRegularExpressionRequired;
+
+                    RV_TB_oilpercent.ErrorMessage = criteria.RangeErrorMessage;
+                    RV_TB_oilpercent.MinimumValue = criteria.MinimumValue;
+                    RV_TB_oilpercent.MaximumValue = criteria.MaximumValue;
+                    RV_TB_oilpercent.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                case "PktWgt":
+
+                    RFV_TB_PktWgt.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_PktWgt.Enabled = criteria.IsRequired;
+
+                    TB_PktWgt.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_PktWgt.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_PktWgt.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_PktWgt.Enabled = criteria.IsRegularExpressionRequired;
+
+                    RV_TB_PktWgt.ErrorMessage = criteria.RangeErrorMessage;
+                    RV_TB_PktWgt.MinimumValue = criteria.MinimumValue;
+                    RV_TB_PktWgt.MaximumValue = criteria.MaximumValue;
+                    RV_TB_PktWgt.Enabled = criteria.IsRangeRequired;
+                    break;
+
+                default:
+                    // Handle unrecognized field names
+                    break;
+            }
+        }
+
+        protected void btnReset_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("qaqc_inspector_rpt.aspx");
         }
     }
 }

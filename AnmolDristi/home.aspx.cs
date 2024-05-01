@@ -11,7 +11,14 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string PN_WelcomeBack_script = @"<script type='text/javascript'>
+            if (!IsPostBack)
+            {
+                if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
+                {
+
+                    lbl_username.Text = Session["USERNAME"].ToString();
+
+                    string PN_WelcomeBack_script = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Regular Success',
                                 text: 'Welcome Back!!',
@@ -20,8 +27,13 @@ namespace AnmolDristi
                             });
                         </script>";
 
-            // RegisterStartupScript adds the JavaScript code to the page
-            ClientScript.RegisterStartupScript(this.GetType(), "ShowWelcomeNotification", PN_WelcomeBack_script, false);
+                    // RegisterStartupScript adds the JavaScript code to the page
+                    ClientScript.RegisterStartupScript(this.GetType(), "ShowWelcomeNotification", PN_WelcomeBack_script, false);
+                }
+                else
+                {
+                }
+            }                    
         }
     }
 }

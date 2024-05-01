@@ -21,7 +21,7 @@ namespace AnmolDristi.DAL
 
         public void InsertQCInspectorData(string plantName, string line, string productCategory, string productBrand,
                                       int numberOfPieces, decimal gaugeValue, decimal dryWeight, decimal dippedWeight,
-                                      string varietyOrLotNo, int bakingTime, int flavourAndTaste, string commentsForFlavourAndTaste,
+                                      string varietyOrLotNo, string bakingTime, int flavourAndTaste, string commentsForFlavourAndTaste,
                                       decimal textureBite, int shapeOrSize, string commentsForShapeOrSize, decimal moisture,
                                       decimal gaugeLength, decimal weightWithoutOil, decimal weightWithOil, decimal oilPercentage,
                                       decimal packetWeight, string designAndImplementation, string colourAndAppearance,
