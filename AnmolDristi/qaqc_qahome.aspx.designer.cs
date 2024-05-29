@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AnmolDristi.qaqc {
+namespace AnmolDristi {
     
     
-    public partial class qaqc_home {
+    public partial class qaqc_qahome {
         
         /// <summary>
         /// Div1 control.

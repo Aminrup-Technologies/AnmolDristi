@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -19,14 +20,10 @@ namespace AnmolDristi.DAL
         }
 
 
-        public void InsertQCInspectorData(string plantName, string line, string productCategory, string productBrand,
-                                      int numberOfPieces, decimal gaugeValue, decimal dryWeight, decimal dippedWeight,
-                                      string varietyOrLotNo, string bakingTime, int flavourAndTaste, string commentsForFlavourAndTaste,
-                                      decimal textureBite, int shapeOrSize, string commentsForShapeOrSize, decimal moisture,
-                                      decimal gaugeLength, decimal weightWithoutOil, decimal weightWithOil, decimal oilPercentage,
-                                      decimal packetWeight, string designAndImplementation, string colourAndAppearance,
-                                      int submittedById, DateTime submittedDate, TimeSpan submittedTime, string SubmittedByPNo)
+        public void InsertQCInspectorData(string plantName, string line, string productCategory, string productBrand, string SKUId, int numberOfPieces, decimal gaugeValue, decimal dryWeight, decimal dippedWeight, string varietyOrLotNo, string bakingTime, int ColorAppearance, string CommentsForColorAppearance,  int flavourAndTaste, string commentsForFlavourAndTaste, int DesignImplementation, string CommentsForDesignImplementation,int TextureBite,string CommentsForTextureBite, string shapeOrSize, string commentsForShapeOrSize, decimal moisture, decimal gaugeLength, string CommentsGaugeLength, decimal weightWithoutOil, decimal weightWithOil, decimal oilPercentage, decimal packetWeight, string designAndImplementation, string colourAndAppearance, int submittedById, DateTime submittedDate, TimeSpan submittedTime, string Shift, string SubmittedByPNo)
         {
+            
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand command = new SqlCommand("InsertQCInspectorData", connection))
@@ -38,19 +35,26 @@ namespace AnmolDristi.DAL
                     command.Parameters.AddWithValue("@Line", line);
                     command.Parameters.AddWithValue("@ProductCategory", productCategory);
                     command.Parameters.AddWithValue("@ProductBrand", productBrand);
+                    command.Parameters.AddWithValue("@SKUId", SKUId);
                     command.Parameters.AddWithValue("@NumberOfPieces", numberOfPieces);
                     command.Parameters.AddWithValue("@GaugeValue", gaugeValue);
                     command.Parameters.AddWithValue("@DryWeight", dryWeight);
                     command.Parameters.AddWithValue("@DippedWeight", dippedWeight);
                     command.Parameters.AddWithValue("@VarietyOrLotNo", varietyOrLotNo);
                     command.Parameters.AddWithValue("@BakingTime", bakingTime);
+                    command.Parameters.AddWithValue("@ColorAppearance", ColorAppearance);
+                    command.Parameters.AddWithValue("@CommentsForColorAppearance", CommentsForColorAppearance);
                     command.Parameters.AddWithValue("@FlavourAndTaste", flavourAndTaste);
                     command.Parameters.AddWithValue("@CommentsForFlavourAndTaste", commentsForFlavourAndTaste);
-                    command.Parameters.AddWithValue("@TextureBite", textureBite);
+                    command.Parameters.AddWithValue("@DesignImplementation", DesignImplementation);
+                    command.Parameters.AddWithValue("@CommentsForDesignImplementation", CommentsForDesignImplementation);
+                    command.Parameters.AddWithValue("@TextureBite", TextureBite);
+                    command.Parameters.AddWithValue("@CommentsForTextureBite", CommentsForTextureBite);
                     command.Parameters.AddWithValue("@ShapeOrSize", shapeOrSize);
                     command.Parameters.AddWithValue("@CommentsForShapeOrSize", commentsForShapeOrSize);
                     command.Parameters.AddWithValue("@Moisture", moisture);
                     command.Parameters.AddWithValue("@GaugeLength", gaugeLength);
+                    command.Parameters.AddWithValue("@CommentsGaugeLength", CommentsGaugeLength);
                     command.Parameters.AddWithValue("@WeightWithoutOil", weightWithoutOil);
                     command.Parameters.AddWithValue("@WeightWithOil", weightWithOil);
                     command.Parameters.AddWithValue("@OilPercentage", oilPercentage);
@@ -60,6 +64,7 @@ namespace AnmolDristi.DAL
                     command.Parameters.AddWithValue("@SubmittedById", submittedById);
                     command.Parameters.AddWithValue("@SubmittedDate", submittedDate);
                     command.Parameters.AddWithValue("@SubmittedTime", submittedTime);
+                    command.Parameters.AddWithValue("@Shift", Shift);
                     command.Parameters.AddWithValue("@SubmittedByPNo", SubmittedByPNo);
 
                     // Open the connection and execute the command
@@ -68,5 +73,38 @@ namespace AnmolDristi.DAL
                 }
             }
         }
+
+
+        
+
+
+        //private void LogToTextFile(params object[] data)
+        //{
+        //    string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+        //    string directoryPath = "QCInspectorLogs";
+        //    string filePath = Path.Combine(directoryPath, $"QCInspectorLog_{currentDate}.txt");
+
+        //    // Check if the directory exists, if not, create it
+        //    if (!Directory.Exists(directoryPath))
+        //    {
+        //        Directory.CreateDirectory(directoryPath);
+        //    }
+
+        //    // Check if the file exists, if not, create it
+        //    if (!File.Exists(filePath))
+        //    {
+        //        string headers = string.Join(", ", data.Select((param, index) => $"@param{index + 1}"));
+        //        using (StreamWriter writer = File.CreateText(filePath))
+        //        {
+        //            writer.WriteLine(headers);
+        //        }
+        //    }
+
+        //    // Write data to text file
+        //    using (StreamWriter writer = File.AppendText(filePath))
+        //    {
+        //        writer.WriteLine(string.Join(", ", data));
+        //    }
+        //}
     }
 }

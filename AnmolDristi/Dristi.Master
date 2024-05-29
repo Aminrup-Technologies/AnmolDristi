@@ -133,21 +133,42 @@
                                         <li id="HomePage" runat="server" visible="true"><a><i class="fa fa-home"></i>Home <span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li id="Home1" runat="server" visible="true"><a href="home.aspx">Dashboard-1<span class="label label-success pull-right">Click !!</span></a></li>
-                                                <li id="QualityForms" runat="server" visible="true"><a href="qaqc_home.aspx">QA/QC<span class="label label-success pull-right">Click !!</span></a></li>
                                             </ul>
                                         </li>
 
-                                        <li id="DataMastering" runat="server" visible="false"><a><i class="fa fa-database"></i>Data Mastering <span class="fa fa-chevron-down"></span></a>
+                                        <li id="ImputForms" runat="server" visible="true"><a><i class="fa fa-pencil-square-o"></i>Forms<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
-                                                <li id="Works" runat="server" visible="false"><a>Works<span class="fa fa-chevron-down"></span></a>
+                                                <li id="frms_quality" runat="server" visible="true"><a>Quality<span class="fa fa-chevron-down"></span></a>
                                                     <ul class="nav child_menu">
-                                                        <li id="WorkCountry" runat="server" class="sub_menu"><a href="work_country.aspx">Work Country</a></li>
-                                                        <li id="WorkState" runat="server"><a href="work_states.aspx">Work States</a></li>
-                                                        <li id="WorkRegion" runat="server"><a href="work_region.aspx">Work Regions</a></li>
+                                                        <li id="frms_qa" runat="server" class="sub_menu"><a href="qaqc_qchome.aspx">Quality Control</a></li>
+                                                        <li id="frms_qc" runat="server"><a href="qaqc_qahome.aspx">Quality Assurance</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
                                         </li>
+
+                                        <li id="Reports" runat="server" visible="true"><a><i class="fa fa-file-text"></i>Reports<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li id="rpts_quality" runat="server" visible="true"><a>Quality<span class="fa fa-chevron-down"></span></a>
+                                                    <ul class="nav child_menu">
+                                                        <li id="rpts_qa" runat="server" class="sub_menu"><a href="#">Quality Assurance</a></li>
+                                                        <li id="rpts_qc" runat="server"><a href="qaqc_qchome_rpt.aspx">Quality Control</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <%--<li id="Li1" runat="server" visible="true"><a><i class="fa fa-database"></i>Reports<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li id="Li2" runat="server" visible="true"><a>Works<span class="fa fa-chevron-down"></span></a>
+                                                    <ul class="nav child_menu">
+                                                        <li id="Li3" runat="server" class="sub_menu"><a href="work_country.aspx">Work Country</a></li>
+                                                        <li id="Li4" runat="server"><a href="work_states.aspx">Work States</a></li>
+                                                        <li id="Li5" runat="server"><a href="work_region.aspx">Work Regions</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>--%>
 
                                     </ul>
                                 </div>
@@ -245,26 +266,26 @@
             <%--- Logout Modal -------- END --%>
 
             <!-- Small modal -->
-			<asp:Button ID="ShowPopup" runat="server" Text="Button" class="btn btn-primary" Visible="false" data-toggle="modal" data-target=".bs-example-modal-sm" />
-			<div id="MyPopup" class="modal fade bs-example-modal-sm" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-dialog modal-sm">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title" id="myModalLabel2"></h4>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-						</div>
+            <asp:Button ID="ShowPopup" runat="server" Text="Button" class="btn btn-primary" Visible="false" data-toggle="modal" data-target=".bs-example-modal-sm" />
+            <div id="MyPopup" class="modal fade bs-example-modal-sm" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel2"></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                        </div>
 
-					</div>
-				</div>
-			</div>
-			<!-- Small Modal - END---->
+                    </div>
+                </div>
+            </div>
+            <!-- Small Modal - END---->
             <script type="text/javascript">
                 document.addEventListener("DOMContentLoaded", function () {
                     document.getElementById('content').style.display = 'block';

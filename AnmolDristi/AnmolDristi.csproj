@@ -95,36 +95,13 @@
   <ItemGroup>
     <Content Include="blank.aspx" />
     <Content Include="login.aspx" />
-    <Content Include="WebData\No_Image.jpg" />
+    <Content Include="qaqc_qahome.aspx" />
+    <Content Include="qaqc_qchome.aspx" />
+    <Content Include="qaqc_qchome_rpt.aspx" />
+    <Content Include="qaqc_qcinspector_rpt_.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="WebData\Anmol_Logo.png" />
-    <Content Include="WebData\Internal\ats_logo.jpg" />
-    <Content Include="WebData\Internal\ats_translogo.png" />
-    <Content Include="WebData\Internal\ats_webheader.png" />
-    <Content Include="WebData\Internal\bank.jpg" />
-    <Content Include="WebData\Internal\crossgif.gif" />
-    <Content Include="WebData\Internal\cross_icon.png" />
-    <Content Include="WebData\Internal\delete_icon.png" />
-    <Content Include="WebData\Internal\DoneRight.gif" />
-    <Content Include="WebData\Internal\edit.png" />
-    <Content Include="WebData\Internal\fi-sr-cross-circle.svg" />
-    <Content Include="WebData\Internal\fi-sr-disk.svg" />
-    <Content Include="WebData\Internal\fi-sr-pencil.svg" />
-    <Content Include="WebData\Internal\fi-sr-trash.svg" />
-    <Content Include="WebData\Internal\Hourglass.gif" />
-    <Content Include="WebData\Internal\pending.png" />
-    <Content Include="WebData\Internal\piggy.png" />
-    <Content Include="WebData\Internal\printer.png" />
-    <Content Include="WebData\Internal\right.png" />
-    <Content Include="WebData\Internal\rightarrow.gif" />
-    <Content Include="WebData\Internal\SingleTick.gif" />
-    <Content Include="WebData\Internal\success_gif.gif" />
-    <Content Include="WebData\Internal\tick-icon.png" />
-    <Content Include="WebData\Internal\TSLBSL.jpg" />
-    <Content Include="WebData\Internal\tsllogo.png" />
-    <Content Include="WebData\Internal\view.svg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="blank.aspx.cs">
@@ -172,6 +149,34 @@
     </Compile>
     <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_qahome.aspx.cs">
+      <DependentUpon>qaqc_qahome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_qahome.aspx.designer.cs">
+      <DependentUpon>qaqc_qahome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_qchome.aspx.cs">
+      <DependentUpon>qaqc_qchome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_qchome.aspx.designer.cs">
+      <DependentUpon>qaqc_qchome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_qchome_rpt.aspx.cs">
+      <DependentUpon>qaqc_qchome_rpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_qchome_rpt.aspx.designer.cs">
+      <DependentUpon>qaqc_qchome_rpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_qcinspector_rpt_.aspx.cs">
+      <DependentUpon>qaqc_qcinspector_rpt_.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_qcinspector_rpt_.aspx.designer.cs">
+      <DependentUpon>qaqc_qcinspector_rpt_.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -141,12 +141,8 @@
 
         // Function to calculate oil percentage
         function calculateOilPercentage() {
-            var weightWithOilInput = parseFloat(document.getElementById('<%= TB_wgtwtoil.ClientID %>').value) || 0;
-            var weightWithoutOilInput = parseFloat(document.getElementById('<%= TB_wgtwoil.ClientID %>').value) || 0;
-
-            console.log("Weight with oil input:", weightWithOilInput);
-            console.log("Weight without oil input:", weightWithoutOilInput);
-
+            var weightWithOilInput = parseFloat(document.getElementById('<%= TB_wgtwoil.ClientID %>').value) || 0;
+            var weightWithoutOilInput = parseFloat(document.getElementById('<%= TB_wgtwtoil.ClientID %>').value) || 0;
             if (weightWithOilInput && weightWithoutOilInput) {
                 var oilPercentage = ((weightWithOilInput - weightWithoutOilInput) / weightWithOilInput) * 100;
                 console.log("Weight with oil input:", oilPercentage);
@@ -234,9 +230,6 @@
             var minShapeSize = parseFloat(document.getElementById('<%= hdnMinShapeSize.ClientID %>').value);
             var maxShapeSize = parseFloat(document.getElementById('<%= hdnMaxShapeSize.ClientID %>').value);
 
-            console.log("minShapeSize", minShapeSize);
-            console.log("minShapeSize", maxShapeSize);
-
             // Check if shape size field is empty
             if (shapeSize === '' || isNaN(shapeSize)) {
                 args.IsValid = false;
@@ -248,7 +241,7 @@
                 //var maxShapeSize = 10.00;
 
                 // Check if shape size is within the valid range
-                if (shapeSize < minShapeSize || shapeSize > maxShapeSize) {
+                if (shapeSize <= minShapeSize || shapeSize >= maxShapeSize) {
                     args.IsValid = false;
                     document.getElementById('ShapeSizeRemarksDIV').style.display = 'block'; // Show the remarks div
 
@@ -326,7 +319,7 @@
                 //var maxGaugeLen = 30.00;
 
                 // Check if gauge length is within the valid range
-                if (gaugeLen < minGaugeLen || gaugeLen > maxGaugeLen) {
+                if (gaugeLen <= minGaugeLen || gaugeLen >= maxGaugeLen) {
                     args.IsValid = false;
                     document.getElementById('GaugeLenRemarksDIV').style.display = 'block'; // Show the remarks div
 
@@ -387,7 +380,7 @@
 
     <asp:HiddenField ID="hdnMinShapeSize" runat="server" />
     <asp:HiddenField ID="hdnMaxShapeSize" runat="server" />
-  
+
     <asp:HiddenField ID="hdnMinBakingTime" runat="server" />
     <asp:HiddenField ID="hdnMaxBakingTime" runat="server" />
 
@@ -782,7 +775,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
 
 
                             <div class="col-md-3">
@@ -797,7 +790,7 @@
                                 </div>
                             </div>
 
-                            
+
 
 
                             <div class="col-md-3">

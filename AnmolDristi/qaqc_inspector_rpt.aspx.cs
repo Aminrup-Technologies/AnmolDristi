@@ -567,20 +567,42 @@ namespace AnmolDristi.qaqc
             string line = DDL_PlantLine.SelectedValue;
             string productCategory = DDL_ProductCategory.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue; // Assuming DDL_ProductBrand is a DropDownList
+            string brandSKU = DDL_BrandSKU.SelectedValue;
+
             int numberOfPieces = Convert.ToInt32(TB_NoOfPcs.Text);
+
             decimal gaugeValue = 0;
             decimal dryWeight =0;
             decimal dippedWeight = 0;
+
             string varietyOrLotNo = !string.IsNullOrEmpty(TB_VartyPkt.Text) ? TB_VartyPkt.Text : null;
+
             string bakingTime = !string.IsNullOrEmpty(TB_BakingTime.Text) ? TB_BakingTime.Text : null;
+
             int flavourAndTaste = Convert.ToInt32(RBL_FlavTst.SelectedValue);
             string commentsForFlavourAndTaste = TXB_RBL_FlavTst_Rmrks.Text;
-            decimal textureBite = 0;
+
+            int ColorAppearance = Convert.ToInt32(RBL_ColorApp.SelectedValue);
+            string CommentsForColorAppearance = TXB_ColorApp_Remarks.Text;
+
+            int DesignImplementation = Convert.ToInt32(RBL_DesignImp.SelectedValue);
+            string CommentsForDesignImplementation = TXB_DesignImp_Remarks.Text;
+
+            int TextureBite = Convert.ToInt32(RBL_TextureBite.SelectedValue);
+            string CommentsForTextureBite = TXB_TextureBite_Remarks.Text;
+
+            //decimal textureBite = 0;
             //decimal textureBite = Convert.ToDecimal(TB_TextureBite.Text);
-            int shapeOrSize = 1;
+
+            //int shapeOrSize = 1;
+            string shapeOrSize = TB_ShapeSize.Text.ToString();
             string commentsForShapeOrSize = string.Empty;
+
             decimal moisture = Convert.ToDecimal(TB_Moisture.Text);
+
             decimal gaugeLength = Convert.ToDecimal(TB_GaugeLen.Text);
+            string CommentsGaugeLength = TXB_GaugeLen_Remarks.Text;
+
             decimal weightWithoutOil;
             decimal result;
             if (decimal.TryParse(TB_wgtwtoil.Text, out result))
@@ -595,7 +617,7 @@ namespace AnmolDristi.qaqc
 
             decimal weightWithOil;
             decimal result1;
-            if (decimal.TryParse(TB_wgtwtoil.Text, out result1))
+            if (decimal.TryParse(TB_wgtwoil.Text, out result1))
             {
                 weightWithOil = result1;
             }
@@ -605,9 +627,14 @@ namespace AnmolDristi.qaqc
             }
 
             decimal oilPercentValue;
-            if (!decimal.TryParse(TB_oilpercent.Text, out oilPercentValue))
+            decimal result2;
+            if (decimal.TryParse(TB_oilpercent.Text, out result2))
             {
-                oilPercentValue = 0; // Set to a default value if parsing fails
+                oilPercentValue = result2; // Set to a default value if parsing fails
+            }
+            else
+            {
+                oilPercentValue = 0;
             }
             decimal packetWeight = Convert.ToDecimal(TB_PktWgt.Text);
             // Retrieve other values in a similar manner
@@ -617,18 +644,28 @@ namespace AnmolDristi.qaqc
             int submittedById = 1;
             string SubmittedByPNo = Session["USERID"].ToString();
 
+            string Shift = string.Empty;
+
             QCInspectorDataAccess dataAccess = new QCInspectorDataAccess();
 
             try
             {
-                // Call the InsertQCInspectorData method with the retrieved values
-                dataAccess.InsertQCInspectorData(plantName, line, productCategory, productBrand,
+                LogToTextFile(plantName, line, productCategory, productBrand, brandSKU,
                       numberOfPieces, gaugeValue, dryWeight, dippedWeight,
-                      varietyOrLotNo, bakingTime, flavourAndTaste, commentsForFlavourAndTaste,
-                      textureBite, shapeOrSize, commentsForShapeOrSize, moisture,
-                      gaugeLength, weightWithoutOil, weightWithOil, oilPercentValue,
+                      varietyOrLotNo, bakingTime, ColorAppearance, CommentsForColorAppearance, flavourAndTaste, commentsForFlavourAndTaste, DesignImplementation, CommentsForDesignImplementation,
+                      TextureBite, CommentsForTextureBite, shapeOrSize, commentsForShapeOrSize, moisture,
+                      gaugeLength, CommentsGaugeLength, weightWithoutOil, weightWithOil, oilPercentValue,
                       packetWeight, ImgLink1, ImgLink2,
-                      submittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay, SubmittedByPNo);
+                      submittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay, Shift, SubmittedByPNo);
+
+                // Call the InsertQCInspectorData method with the retrieved values
+                dataAccess.InsertQCInspectorData(plantName, line, productCategory, productBrand, brandSKU,
+                      numberOfPieces, gaugeValue, dryWeight, dippedWeight,
+                      varietyOrLotNo, bakingTime, ColorAppearance, CommentsForColorAppearance,  flavourAndTaste, commentsForFlavourAndTaste, DesignImplementation, CommentsForDesignImplementation, 
+                      TextureBite, CommentsForTextureBite, shapeOrSize, commentsForShapeOrSize, moisture,
+                      gaugeLength, CommentsGaugeLength, weightWithoutOil, weightWithOil, oilPercentValue,
+                      packetWeight, ImgLink1, ImgLink2,
+                      submittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay, Shift, SubmittedByPNo);
 
                 //Make the inputs readonly
                 MakeInputsReadOnly();
@@ -648,6 +685,35 @@ namespace AnmolDristi.qaqc
             }
 
 
+        }
+
+        private void LogToTextFile(params object[] data)
+        {
+            string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+            string targetFolderPath = Server.MapPath("~/UploadedFiles/Logs/");
+            string filePath = Path.Combine(targetFolderPath, $"QCInspectorLog_{currentDate}.txt");
+
+            // Check if the directory exists, if not, create it
+            if (!Directory.Exists(targetFolderPath))
+            {
+                Directory.CreateDirectory(targetFolderPath);
+            }
+
+            // Check if the file exists, if not, create it
+            if (!File.Exists(filePath))
+            {
+                string headers = string.Join(", ", data.Select((param, index) => $"@param{index + 1}"));
+                using (StreamWriter writer = File.CreateText(filePath))
+                {
+                    writer.WriteLine(headers);
+                }
+            }
+
+            // Write data to text file
+            using (StreamWriter writer = File.AppendText(filePath))
+            {
+                writer.WriteLine(string.Join(", ", data));
+            }
         }
 
         private void MakeInputsReadOnly()
