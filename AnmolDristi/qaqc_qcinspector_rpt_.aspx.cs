@@ -1,22 +1,16 @@
-﻿using AnmolDristi.DAL;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace AnmolDristi
 {
     public partial class qaqc_qcinspector_rpt_ : System.Web.UI.Page
     {
         DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
+        DataTable dt_exportdata = new DataTable();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -49,12 +43,140 @@ namespace AnmolDristi
                     {
                         DataTable dt = new DataTable();
                         sda.Fill(dt);
-                        GridView1.DataSource = dt;
-                        GridView1.DataBind();
+                        ViewState["ExportData"] = dt;
+                        if (dt.Rows.Count > 0)
+                        {
+                            GridView1.DataSource = dt;
+                            GridView1.DataBind();
+                        }
+                        else
+                        {
+                            // Handle no records found
+                            GridView1.DataSource = null;
+                            GridView1.DataBind();
+                            //lblMessage.Text = "No records found for the selected plant.";
+                            //lblMessage.Visible = true;
+
+                            // Define the PNotify script for no records found
+                            string noRecordsScript = @"<script type='text/javascript'>
+                                    new PNotify({
+                                        title: 'No Records Found',
+                                        text: 'No records found for the selected plant.',
+                                        type: 'info',
+                                        styling: 'bootstrap3'
+                                    });
+                                </script>";
+
+                            // Register the script to show the notification
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification", noRecordsScript, false);
+
+                        }
                     }
                 }
             }
         }
+
+        private void BindGridView(string plantName)
+        {
+            // Get the connection string from Web.config
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecordsByPlant", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Add the PlantName parameter and its value
+                    cmd.Parameters.Add(new SqlParameter("@PlantName", plantName));
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        ViewState["ExportData"] = dt;
+                        if (dt.Rows.Count > 0)
+                        {
+                            GridView1.DataSource = dt;
+                            GridView1.DataBind();
+                        }
+                        else
+                        {
+                            // Handle no records found
+                            GridView1.DataSource = null;
+                            GridView1.DataBind();
+                            //lblMessage.Text = "No records found for the selected plant.";
+                            //lblMessage.Visible = true;
+
+                            // Define the PNotify script for no records found
+                            string noRecordsScript2 = @"<script type='text/javascript'>
+                                    new PNotify({
+                                        title: 'No Records Found',
+                                        text: 'No records found for the selected plant.',
+                                        type: 'info',
+                                        styling: 'bootstrap3'
+                                    });
+                                </script>";
+
+                            // Register the script to show the notification
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification2", noRecordsScript2, false);
+
+                        }
+                    }
+                }
+            }
+        }
+
+        private void BindGridView(string plantName, string plantLine)
+        {
+            // Get the connection string from Web.config
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecordsByPlantLine", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Add the PlantName and PlantLine parameters and their values
+                    cmd.Parameters.Add(new SqlParameter("@PlantName", plantName));
+                    cmd.Parameters.Add(new SqlParameter("@PlantLine", plantLine));
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        ViewState["ExportData"] = dt;
+                        if (dt.Rows.Count > 0)
+                        {
+                            GridView1.DataSource = dt;
+                            GridView1.DataBind();
+                        }
+                        else
+                        {
+                            // Handle no records found
+                            GridView1.DataSource = null;
+                            GridView1.DataBind();
+
+                            // Define the PNotify script for no records found
+                            string noRecordsScript3 = @"<script type='text/javascript'>
+                                    new PNotify({
+                                        title: 'No Records Found',
+                                        text: 'No records found for the selected plant and line.',
+                                        type: 'info',
+                                        styling: 'bootstrap3'
+                                    });
+                                </script>";
+
+                            // Register the script to show the notification
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification3", noRecordsScript3, false);
+                        }
+                    }
+                }
+            }
+        }
+
+
 
         protected string BindSubmittedTime(object submittedTime)
         {
@@ -114,6 +236,8 @@ namespace AnmolDristi
             {
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 PlantLinesBinder(selectedPlantValue);
+
+                BindGridView(selectedPlantValue);
             }
             else
             {
@@ -164,6 +288,8 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
+
+                BindGridView(selectedPlantValue, selectedPlantLineValue);
             }
             else
             {
@@ -216,6 +342,57 @@ namespace AnmolDristi
             }
         }
 
+        private void BindGridView(string plantName, string plantLine, string productCategory)
+        {
+            // Get the connection string from Web.config
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecordsByPlantLineProduct", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Add the parameters and their values
+                    cmd.Parameters.Add(new SqlParameter("@PlantName", plantName));
+                    cmd.Parameters.Add(new SqlParameter("@PlantLine", plantLine));
+                    cmd.Parameters.Add(new SqlParameter("@ProductCategory", productCategory));
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        ViewState["ExportData"] = dt;
+                        if (dt.Rows.Count > 0)
+                        {
+                            GridView1.DataSource = dt;
+                            GridView1.DataBind();
+                        }
+                        else
+                        {
+                            // Handle no records found
+                            GridView1.DataSource = null;
+                            GridView1.DataBind();
+
+                            // Define the PNotify script for no records found
+                            string noRecordsScript4 = @"<script type='text/javascript'>
+                                    new PNotify({
+                                        title: 'No Records Found',
+                                        text: 'No records found for the selected plant, line, and product category.',
+                                        type: 'info',
+                                        styling: 'bootstrap3'
+                                    });
+                                </script>";
+
+                            // Register the script to show the notification
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification4", noRecordsScript4, false);
+                        }
+                    }
+                }
+            }
+        }
+
+
         protected void DDL_ProductCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_ProductCategory.SelectedIndex != 0)
@@ -224,6 +401,8 @@ namespace AnmolDristi
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
                 ProductBrandsBinder(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue);
+
+                BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue);
             }
             else
             {
@@ -278,12 +457,70 @@ namespace AnmolDristi
             }
         }
 
+
+        private void BindGridView(string plantName, string plantLine, string productCategory, string brandName)
+        {
+            // Get the connection string from Web.config
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecordsByPlantLineProductBrand", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Add the parameters and their values
+                    cmd.Parameters.Add(new SqlParameter("@PlantName", plantName));
+                    cmd.Parameters.Add(new SqlParameter("@PlantLine", plantLine));
+                    cmd.Parameters.Add(new SqlParameter("@ProductCategory", productCategory));
+                    cmd.Parameters.Add(new SqlParameter("@BrandName", brandName));
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        ViewState["ExportData"] = dt;
+                        if (dt.Rows.Count > 0)
+                        {
+                            GridView1.DataSource = dt;
+                            GridView1.DataBind();
+                        }
+                        else
+                        {
+                            // Handle no records found
+                            GridView1.DataSource = null;
+                            GridView1.DataBind();
+
+                            // Define the PNotify script for no records found
+                            string noRecordsScript5 = @"<script type='text/javascript'>
+                                    new PNotify({
+                                        title: 'No Records Found',
+                                        text: 'No records found for the selected plant, line, product category, and brand.',
+                                        type: 'info',
+                                        styling: 'bootstrap3'
+                                    });
+                                </script>";
+
+                            // Register the script to show the notification
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification5", noRecordsScript5, false);
+                        }
+                    }
+                }
+            }
+        }
+
+
         protected void DDL_ProductBrand_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_ProductBrand.SelectedIndex != 0)
             {
+                string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
+                string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
+                string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
                 BrandSKUBinder(selectedProductBrandValue);
+
+                BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue, selectedProductBrandValue);
             }
             else
             {
@@ -313,7 +550,7 @@ namespace AnmolDristi
             {
                 DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
 
-                string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
+                string BrandSKUBinder_Error_script6 = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Error',
                                 text: 'An error occurred!',
@@ -321,7 +558,7 @@ namespace AnmolDristi
                                 styling: 'bootstrap3'
                             });
                         </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification6", BrandSKUBinder_Error_script6, false);
             }
         }
 
@@ -330,7 +567,14 @@ namespace AnmolDristi
         {
             string startdate = txt_date1.Text.ToString();
             string enddate = txt_date2.Text.ToString();
-            string CmdString2 = "";
+
+            string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
+            string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
+            string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
+            string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
+            string selectedBrandSKU = DDL_BrandSKU.SelectedValue.ToString();
+
+
 
             if (DDL_Plant.SelectedIndex != 0)
             {
@@ -338,22 +582,87 @@ namespace AnmolDristi
                 {
                     if (DDL_ProductBrand.SelectedIndex != 0)
                     {
-
                         if (txt_date1.Text != "" && txt_date1.Text != "")
                         {
-                            CmdString2 = "";
+                            BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue, selectedProductBrandValue, selectedBrandSKU, startdate, enddate);
                         }
                         else
                         {
-                            CmdString2 = "";
+                            // Define the PNotify script for no records found
+                            string noRecordsScript9 = @"<script type='text/javascript'>
+                                new PNotify({
+                                    title: 'No Records Found',
+                                    text: 'No Calender Date Selection by User',
+                                    type: 'info',
+                                    styling: 'bootstrap3'
+                                });
+                            </script>";
+
+                            // Register the script to show the notification
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification9", noRecordsScript9, false);
+
+                            BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue, selectedProductBrandValue, selectedBrandSKU);
                         }
-
-
-                        BindGrid(CmdString2);
                     }
                 }
             }
         }
+
+
+        private void BindGridView(string plantName, string plantLine, string productCategory, string brandName, string skuid, string startDate, string endDate)
+        {
+            // Get the connection string from Web.config
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecordsByPlantLineProductBrandSKUDates", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Add the parameters and their values
+                    cmd.Parameters.Add(new SqlParameter("@PlantName", plantName));
+                    cmd.Parameters.Add(new SqlParameter("@PlantLine", plantLine));
+                    cmd.Parameters.Add(new SqlParameter("@ProductCategory", productCategory));
+                    cmd.Parameters.Add(new SqlParameter("@BrandName", brandName));
+                    cmd.Parameters.Add(new SqlParameter("@SKUId", skuid));
+                    cmd.Parameters.Add(new SqlParameter("@StartDate", startDate));
+                    cmd.Parameters.Add(new SqlParameter("@EndDate", endDate));
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        ViewState["ExportData"] = dt;
+                        if (dt.Rows.Count > 0)
+                        {
+                            GridView1.DataSource = dt;
+                            GridView1.DataBind();
+                        }
+                        else
+                        {
+                            // Handle no records found
+                            GridView1.DataSource = null;
+                            GridView1.DataBind();
+
+                            // Define the PNotify script for no records found
+                            string noRecordsScript8 = @"<script type='text/javascript'>
+                                new PNotify({
+                                    title: 'No Records Found',
+                                    text: 'No records found for the selected plant, line, product category, brand, and dates.',
+                                    type: 'info',
+                                    styling: 'bootstrap3'
+                                });
+                            </script>";
+
+                            // Register the script to show the notification
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification8", noRecordsScript8, false);
+                        }
+                    }
+                }
+            }
+        }
+
 
         private void BindGrid(string cmdString)
         {
@@ -368,6 +677,110 @@ namespace AnmolDristi
             dbcl.Conn.Close();
         }
 
+        protected void DDL_BrandSKU_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (DDL_Plant.SelectedIndex != 0)
+            {
+                if (DDL_PlantLine.SelectedIndex != 0)
+                {
+                    if (DDL_ProductBrand.SelectedIndex != 0)
+                    {
+                        if (DDL_BrandSKU.SelectedIndex != 0)
+                        {
+                            string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
+                            string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
+                            string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
+                            string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
+                            string selectedBrandSKU = DDL_BrandSKU.SelectedValue.ToString();
 
+                            BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue, selectedProductBrandValue, selectedBrandSKU);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void BindGridView(string plantName, string plantLine, string productCategory, string brandName, string skuid)
+        {
+            // Get the connection string from Web.config
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecordsByPlantLineProductBrandSKU", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Add the parameters and their values
+                    cmd.Parameters.Add(new SqlParameter("@PlantName", plantName));
+                    cmd.Parameters.Add(new SqlParameter("@PlantLine", plantLine));
+                    cmd.Parameters.Add(new SqlParameter("@ProductCategory", productCategory));
+                    cmd.Parameters.Add(new SqlParameter("@BrandName", brandName));
+                    cmd.Parameters.Add(new SqlParameter("@SKUId", skuid));
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        ViewState["ExportData"] = dt;
+                        if (dt.Rows.Count > 0)
+                        {
+                            GridView1.DataSource = dt;
+                            GridView1.DataBind();
+                        }
+                        else
+                        {
+                            // Handle no records found
+                            GridView1.DataSource = null;
+                            GridView1.DataBind();
+
+                            // Define the PNotify script for no records found
+                            string noRecordsScript7 = @"<script type='text/javascript'>
+                                    new PNotify({
+                                        title: 'No Records Found',
+                                        text: 'No records found for the selected plant, line, product category, brand and SKU',
+                                        type: 'info',
+                                        styling: 'bootstrap3'
+                                    });
+                                </script>";
+
+                            // Register the script to show the notification
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification7", noRecordsScript7, false);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        protected void ExportExcel(object sender, EventArgs e)
+        {
+            //if (ViewState["ExportData"] != null)
+            //{
+            //    DataTable dt_exportdata = (DataTable)ViewState["ExportData"];
+            //    if ((dt_exportdata != null) && (dt_exportdata.Rows.Count > 0))
+            //    {
+            //        using (XLWorkbook wb = new XLWorkbook())
+            //        {
+            //            wb.Worksheets.Add(dt_exportdata, "QCInspectionReport");
+
+            //            Response.Clear();
+            //            Response.Buffer = true;
+            //            Response.Charset = "";
+            //            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            //            Response.AddHeader("content-disposition", "attachment;filename=QCInspectorRpt_Export.xlsx");
+            //            using (MemoryStream MyMemoryStream = new MemoryStream())
+            //            {
+            //                wb.SaveAs(MyMemoryStream);
+            //                MyMemoryStream.WriteTo(Response.OutputStream);
+            //                Response.Flush();
+            //                Response.End();
+            //            }
+            //        }
+            //    }
+            //}
+
+
+        }
     }
 }
