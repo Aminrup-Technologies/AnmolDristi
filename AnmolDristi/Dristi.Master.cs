@@ -24,6 +24,15 @@ namespace AnmolDristi
 
                     Label lbl2 = (Label)Page.Master.FindControl("lbl_loginusername1");
                     lbl2.Text = Session["USERFNAME"].ToString();
+
+                    if (Session["USERID"].ToString() == "AHO445")
+                    {
+                        DataMastering.Visible = true;
+                    }
+                    else
+                    {
+                        DataMastering.Visible = false;
+                    }
                 }
             }
         }

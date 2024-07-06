@@ -158,17 +158,23 @@
                                             </ul>
                                         </li>
 
-                                        <%--<li id="Li1" runat="server" visible="true"><a><i class="fa fa-database"></i>Reports<span class="fa fa-chevron-down"></span></a>
+                                        <li id="DataMastering" runat="server" visible="false"><a><i class="fa fa-database"></i>Data Mastering<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
-                                                <li id="Li2" runat="server" visible="true"><a>Works<span class="fa fa-chevron-down"></span></a>
+                                                <li id="Master" runat="server" visible="true"><a>Masters<span class="fa fa-chevron-down"></span></a>
                                                     <ul class="nav child_menu">
-                                                        <li id="Li3" runat="server" class="sub_menu"><a href="work_country.aspx">Work Country</a></li>
-                                                        <li id="Li4" runat="server"><a href="work_states.aspx">Work States</a></li>
-                                                        <li id="Li5" runat="server"><a href="work_region.aspx">Work Regions</a></li>
+                                                        <li id="mst_company" runat="server" class="sub_menu"><a href="add_company.aspx">Manage Company</a></li>
+                                                        <li id="mst_region" runat="server" class="sub_menu"><a href="add_region.aspx">Manage Region</a></li>
+                                                        <li id="mst_branch" runat="server" class="sub_menu"><a href="add_branch.aspx">Manage Branch</a></li>
+                                                        <li id="mst_brand_sku" runat="server" class="sub_menu"><a href="qaqc_mst_sku.aspx">Brand SKU Master</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li id="Controllers" runat="server" visible="true"><a>Controllers<span class="fa fa-chevron-down"></span></a>
+                                                    <ul class="nav child_menu">
+                                                        <li id="ctrl_qcinspector_Frm" runat="server" class="sub_menu"><a href="qaqc_qcinspector_frmctrl.aspx">QC Insp. Report</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
-                                        </li>--%>
+                                        </li>
 
                                     </ul>
                                 </div>

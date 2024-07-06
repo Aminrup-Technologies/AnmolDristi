@@ -13,10 +13,11 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
+                if (Session["USERID"] != null || Session["USERNAME"] != null || Session["WORKMAN"] != null)
                 {
 
                     lbl_username.Text = Session["USERNAME"].ToString();
+                    lbl_empcode.Text = lbl_workmansl.Text = Session["USERID"].ToString();
 
                     string PN_WelcomeBack_script = @"<script type='text/javascript'>
                             new PNotify({

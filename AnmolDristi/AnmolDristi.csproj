@@ -63,6 +63,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -79,11 +80,39 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="add_branch.aspx" />
+    <Content Include="add_company.aspx" />
+    <Content Include="add_region.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="qaqc_add_users.aspx" />
+    <Content Include="qaqc_mst_sku.aspx" />
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
+    <Content Include="qaqc_qcinspector_frmctrl.aspx" />
+    <Content Include="WebData\Anmol_Logo.png" />
+    <Content Include="WebData\Internal\bank.jpg" />
+    <Content Include="WebData\Internal\crossgif.gif" />
+    <Content Include="WebData\Internal\cross_icon.png" />
+    <Content Include="WebData\Internal\delete_icon.png" />
+    <Content Include="WebData\Internal\DoneRight.gif" />
+    <Content Include="WebData\Internal\edit.png" />
+    <Content Include="WebData\Internal\fi-sr-cross-circle.svg" />
+    <Content Include="WebData\Internal\fi-sr-disk.svg" />
+    <Content Include="WebData\Internal\fi-sr-pencil.svg" />
+    <Content Include="WebData\Internal\fi-sr-trash.svg" />
+    <Content Include="WebData\Internal\Hourglass.gif" />
+    <Content Include="WebData\Internal\pending.png" />
+    <Content Include="WebData\Internal\piggy.png" />
+    <Content Include="WebData\Internal\printer.png" />
+    <Content Include="WebData\Internal\right.png" />
+    <Content Include="WebData\Internal\rightarrow.gif" />
+    <Content Include="WebData\Internal\SingleTick.gif" />
+    <Content Include="WebData\Internal\success_gif.gif" />
+    <Content Include="WebData\Internal\tick-icon.png" />
+    <Content Include="WebData\Internal\view.svg" />
+    <Content Include="WebData\No_Image.jpg" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -104,6 +133,27 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="add_branch.aspx.cs">
+      <DependentUpon>add_branch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="add_branch.aspx.designer.cs">
+      <DependentUpon>add_branch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="add_company.aspx.cs">
+      <DependentUpon>add_company.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="add_company.aspx.designer.cs">
+      <DependentUpon>add_company.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="add_region.aspx.cs">
+      <DependentUpon>add_region.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="add_region.aspx.designer.cs">
+      <DependentUpon>add_region.aspx</DependentUpon>
+    </Compile>
     <Compile Include="blank.aspx.cs">
       <DependentUpon>blank.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -134,6 +184,20 @@
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_add_users.aspx.cs">
+      <DependentUpon>qaqc_add_users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_add_users.aspx.designer.cs">
+      <DependentUpon>qaqc_add_users.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_mst_sku.aspx.cs">
+      <DependentUpon>qaqc_mst_sku.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_mst_sku.aspx.designer.cs">
+      <DependentUpon>qaqc_mst_sku.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="qaqc_home.aspx.cs">
@@ -170,6 +234,13 @@
     </Compile>
     <Compile Include="qaqc_qchome_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_qchome_rpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_qcinspector_frmctrl.aspx.cs">
+      <DependentUpon>qaqc_qcinspector_frmctrl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_qcinspector_frmctrl.aspx.designer.cs">
+      <DependentUpon>qaqc_qcinspector_frmctrl.aspx</DependentUpon>
     </Compile>
     <Compile Include="qaqc_qcinspector_rpt_.aspx.cs">
       <DependentUpon>qaqc_qcinspector_rpt_.aspx</DependentUpon>

@@ -86,7 +86,14 @@ namespace AnmolDristi
                         string BranchId = dt.Rows[0]["BranchId"].ToString();
                         string PlantId = dt.Rows[0]["PlantId"].ToString();
                         string Workman = dt.Rows[0]["EmployeeCode"].ToString();
-                        string User_FirstName = dt.Rows[0]["EmployeeName"].ToString();
+                        //string User_FirstName = dt.Rows[0]["EmployeeName"].ToString();
+
+                        // Assuming the input string is in dt.Rows[0]["EmployeeName"]
+                        string fullName = dt.Rows[0]["EmployeeName"].ToString();
+
+                        // Split the full name by spaces and take the first part
+                        string User_FirstName = fullName.Split(' ')[0];
+
                         string User_FullName = dt.Rows[0]["EmployeeName"].ToString();
 
                         //string User_Type = dt.Rows[0]["User_RoleType"].ToString();

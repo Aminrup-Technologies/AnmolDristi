@@ -7,9 +7,12 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Transactions;
 
 namespace AnmolDristi.qaqc
 {
@@ -50,7 +53,7 @@ namespace AnmolDristi.qaqc
             }
         }
 
-        private void PlantBinder()
+        public void PlantBinder()
         {
             string query = "SELECT plant_id, CONCAT(plant_name, '[', sap_code, ']') AS plant_name FROM MST_PlantDetails";
             string textField = "plant_name";
@@ -79,7 +82,6 @@ namespace AnmolDristi.qaqc
 
             }
         }
-
         private void SetValidatorPropertiesFromDatabase()
         {
             // Fetch validation criteria from the database for NoOfPcs
@@ -110,8 +112,6 @@ namespace AnmolDristi.qaqc
             //RV_TB_GaugeVal.MaximumValue = gaugeValValidationCriteria.MaximumValue;
             //RV_TB_GaugeVal.Enabled = gaugeValValidationCriteria.IsRangeRequired;
         }
-
-
         public class ValidationCriteria
         {
             public string RequiredFieldErrorMessage { get; set; }
@@ -124,7 +124,6 @@ namespace AnmolDristi.qaqc
             public bool IsRegularExpressionRequired { get; set; }
             public bool IsRangeRequired { get; set; }
         }
-
         private ValidationCriteria GetValidationCriteriaFromDatabase(string fieldName)
         {
             // Query the database to fetch validation criteria based on the field name
@@ -146,8 +145,6 @@ namespace AnmolDristi.qaqc
 
             return criteria;
         }
-
-
         private void NoOfPcs()
         {
             // Set properties of RequiredFieldValidator
@@ -166,7 +163,6 @@ namespace AnmolDristi.qaqc
             RV_TB_NoOfPcs.MinimumValue = "30";
             RV_TB_NoOfPcs.MaximumValue = "40";
         }
-
         private void GaugeValue()
         {
             //// Set properties of RequiredFieldValidator
@@ -184,7 +180,6 @@ namespace AnmolDristi.qaqc
             //RV_TB_GaugeVal.MinimumValue = "10.00";
             //RV_TB_GaugeVal.MaximumValue = "100.00";
         }
-
         private void GaugeLength()
         {
             // Set properties of RequiredFieldValidator
@@ -202,8 +197,6 @@ namespace AnmolDristi.qaqc
             //RV_TB_GaugeLen.MinimumValue = "10.00";
             //RV_TB_GaugeLen.MaximumValue = "100.00";
         }
-
-
         private void SetDryWeightValidators()
         {
             //// Set properties of RequiredFieldValidator
@@ -221,7 +214,6 @@ namespace AnmolDristi.qaqc
             ////RV_TB_DryWeight.MinimumValue = "10.00";
             ////RV_TB_DryWeight.MaximumValue = "100.00";
         }
-
         private void SetDippedWeightValidators()
         {
             //// Set properties of RequiredFieldValidator
@@ -239,8 +231,6 @@ namespace AnmolDristi.qaqc
             //RV_TB_DippedWeight.MinimumValue = "0.00";
             //RV_TB_DippedWeight.MaximumValue = "1000.00";
         }
-
-
         private void SetVartyPktValidators()
         {
             // Set properties of RequiredFieldValidator
@@ -252,8 +242,6 @@ namespace AnmolDristi.qaqc
             REV_TB_VartyPkt.ForeColor = System.Drawing.Color.Red;
             REV_TB_VartyPkt.ValidationExpression = "^[a-zA-Z0-9]*$"; // Regular expression for alphanumeric input
         }
-
-
         private void SetTextureBiteValidators()
         {
             //// Set properties of RequiredFieldValidator
@@ -271,7 +259,6 @@ namespace AnmolDristi.qaqc
             //RV_TB_TextureBite.MinimumValue = "0.00";
             //RV_TB_TextureBite.MaximumValue = "10.00";
         }
-
         private void SetMoistureValidators()
         {
             // Set properties of RequiredFieldValidator
@@ -289,7 +276,6 @@ namespace AnmolDristi.qaqc
             RV_TB_Moisture.MinimumValue = "0.00";
             RV_TB_Moisture.MaximumValue = "100.00";
         }
-
         private void SetWeightWithOilValidators()
         {
             // Set properties of RequiredFieldValidator
@@ -307,7 +293,6 @@ namespace AnmolDristi.qaqc
             RV_TB_wgtwtoil.MinimumValue = "0.00";
             RV_TB_wgtwtoil.MaximumValue = "1000.00";
         }
-
         private void SetWeightWithoutOilValidators()
         {
             // Set properties of RequiredFieldValidator
@@ -325,7 +310,6 @@ namespace AnmolDristi.qaqc
             RV_TB_wgtwoil.MinimumValue = "0.00";
             RV_TB_wgtwoil.MaximumValue = "1000.00";
         }
-
         private void SetOilPercentageValidators()
         {
             // Set properties of RequiredFieldValidator
@@ -343,7 +327,6 @@ namespace AnmolDristi.qaqc
             RV_TB_oilpercent.MinimumValue = "0.00";
             RV_TB_oilpercent.MaximumValue = "100.00";
         }
-
         private void SetPacketWeightValidators()
         {
             // Set properties of RequiredFieldValidator
@@ -367,6 +350,7 @@ namespace AnmolDristi.qaqc
             if (DDL_Plant.SelectedIndex != 0)
             {
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
+                lbl_DDL_Plant_Value.Text = selectedPlantValue;
                 PlantLinesBinder(selectedPlantValue);
             }
             else
@@ -387,7 +371,7 @@ namespace AnmolDristi.qaqc
 
         private void PlantLinesBinder(string selectedPlantValue)
         {
-            string query = "SELECT line_id, line_name FROM MST_Plant_Lines WHERE plant_id = @SelectedPlantValue";
+            string query = "SELECT line_id, line_name FROM MST_Plant_Lines WHERE plant_id = @SelectedPlantValue and view_status=1 and delete_status=0 order by plant_id";
             string textField = "line_name";
             string valueField = "line_id";
 
@@ -416,6 +400,7 @@ namespace AnmolDristi.qaqc
             {
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
+                lbl_DDL_PlantLine_Value.Text = selectedPlantLineValue;
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
             }
             else
@@ -437,7 +422,7 @@ namespace AnmolDristi.qaqc
         private void LineProductsBinder(string selectedPlantValue, string selectedPlantLineValue)
         {
             // Construct the SQL query with parameters
-            string query = "SELECT category_id, category_name FROM MST_LineCategory WHERE plant_id = @PlantId AND line_id = @LineId";
+            string query = "SELECT category_id, category_name FROM MST_LineCategory WHERE plant_id = @PlantId AND line_id = @LineId and view_status=1 and delete_status=0 order by category_id";
             string textField = "category_name"; // Assuming this is the correct field for displaying in the DropDownList
             string valueField = "category_id"; // Assuming this is the correct field for storing in the DropDownList
 
@@ -476,6 +461,7 @@ namespace AnmolDristi.qaqc
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
+                lbl_DDL_ProductCategory_Value.Text = selectedProductCategoryValue;
                 ProductBrandsBinder(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue);
             }
             else
@@ -498,7 +484,7 @@ namespace AnmolDristi.qaqc
         private void ProductBrandsBinder(string selectedPlantValue, string selectedPlantLineValue, string selectedProductCategoryValue)
         {
             // Construct the SQL query with parameters
-            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId AND line_id = @LineId and category_id=@CategoryId";
+            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId AND line_id = @LineId and category_id=@CategoryId and view_status=1 and delete_status=0 order by brand_id";
             string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
             string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
 
@@ -531,161 +517,161 @@ namespace AnmolDristi.qaqc
             }
         }
 
-        protected void btnSubmit_Click(object sender, EventArgs e)
-        {
-            //// Retrieve values from DropDownList controls
-            //string selectedPlant = DDL_Plant.SelectedValue;
-            //string selectedPlantLine = DDL_PlantLine.SelectedValue;
-            //string selectedProductCategory = DDL_ProductCategory.SelectedValue;
+        //protected void btnSubmit_Click(object sender, EventArgs e)
+        //{
+        //    //// Retrieve values from DropDownList controls
+        //    //string selectedPlant = DDL_Plant.SelectedValue;
+        //    //string selectedPlantLine = DDL_PlantLine.SelectedValue;
+        //    //string selectedProductCategory = DDL_ProductCategory.SelectedValue;
 
-            //// Retrieve values from TextBox controls
-            //string noOfPcs = TB_NoOfPcs.Text;
-            //string gaugeVal = TB_GaugeVal.Text;
-            //string dryWeight = TB_DryWeight.Text;
-            //string dippedWeight = TB_DippedWeight.Text;
-            //string vartyPkt = TB_VartyPkt.Text;
-            //string bakingTime = TB_BakingTime.Text;
-            //string textureBite = TB_TextureBite.Text;
-            //string moisture = TB_Moisture.Text;
-            //string gaugeVal = TB_GaugeLen.Text;
-            //string wgtwtoil = TB_wgtwtoil.Text;
-            //string wgtwoil = TB_wgtwoil.Text;
-            //string oilPercent = TB_oilpercent.Text;
-            //string pktWgt = TB_PktWgt.Text;
+        //    //// Retrieve values from TextBox controls
+        //    //string noOfPcs = TB_NoOfPcs.Text;
+        //    //string gaugeVal = TB_GaugeVal.Text;
+        //    //string dryWeight = TB_DryWeight.Text;
+        //    //string dippedWeight = TB_DippedWeight.Text;
+        //    //string vartyPkt = TB_VartyPkt.Text;
+        //    //string bakingTime = TB_BakingTime.Text;
+        //    //string textureBite = TB_TextureBite.Text;
+        //    //string moisture = TB_Moisture.Text;
+        //    //string gaugeVal = TB_GaugeLen.Text;
+        //    //string wgtwtoil = TB_wgtwtoil.Text;
+        //    //string wgtwoil = TB_wgtwoil.Text;
+        //    //string oilPercent = TB_oilpercent.Text;
+        //    //string pktWgt = TB_PktWgt.Text;
 
-            //// Retrieve values from RadioButtonList controls
-            //string flavTst = RBL_FlavTst.SelectedValue;
-            //string flavTstRemarks = TXB_RBL_FlavTst_Rmrks.Text;
-            //string spSz = RBL_SpSz.SelectedValue;
-            //string spSzRemarks = TB_RBL_SpSz_Rmrks.Text;
+        //    //// Retrieve values from RadioButtonList controls
+        //    //string flavTst = RBL_FlavTst.SelectedValue;
+        //    //string flavTstRemarks = TXB_RBL_FlavTst_Rmrks.Text;
+        //    //string spSz = RBL_SpSz.SelectedValue;
+        //    //string spSzRemarks = TB_RBL_SpSz_Rmrks.Text;
 
-            // Further processing or saving logic here
-
-
-            // Retrieve values from controls
-            string plantName = DDL_Plant.SelectedValue;
-            string line = DDL_PlantLine.SelectedValue;
-            string productCategory = DDL_ProductCategory.SelectedValue;
-            string productBrand = DDL_ProductBrand.SelectedValue; // Assuming DDL_ProductBrand is a DropDownList
-            string brandSKU = DDL_BrandSKU.SelectedValue;
-
-            int numberOfPieces = Convert.ToInt32(TB_NoOfPcs.Text);
-
-            decimal gaugeValue = 0;
-            decimal dryWeight =0;
-            decimal dippedWeight = 0;
-
-            string varietyOrLotNo = !string.IsNullOrEmpty(TB_VartyPkt.Text) ? TB_VartyPkt.Text : null;
-
-            string bakingTime = !string.IsNullOrEmpty(TB_BakingTime.Text) ? TB_BakingTime.Text : null;
-
-            int flavourAndTaste = Convert.ToInt32(RBL_FlavTst.SelectedValue);
-            string commentsForFlavourAndTaste = TXB_RBL_FlavTst_Rmrks.Text;
-
-            int ColorAppearance = Convert.ToInt32(RBL_ColorApp.SelectedValue);
-            string CommentsForColorAppearance = TXB_ColorApp_Remarks.Text;
-
-            int DesignImplementation = Convert.ToInt32(RBL_DesignImp.SelectedValue);
-            string CommentsForDesignImplementation = TXB_DesignImp_Remarks.Text;
-
-            int TextureBite = Convert.ToInt32(RBL_TextureBite.SelectedValue);
-            string CommentsForTextureBite = TXB_TextureBite_Remarks.Text;
-
-            //decimal textureBite = 0;
-            //decimal textureBite = Convert.ToDecimal(TB_TextureBite.Text);
-
-            //int shapeOrSize = 1;
-            string shapeOrSize = TB_ShapeSize.Text.ToString();
-            string commentsForShapeOrSize = string.Empty;
-
-            decimal moisture = Convert.ToDecimal(TB_Moisture.Text);
-
-            decimal gaugeLength = Convert.ToDecimal(TB_GaugeLen.Text);
-            string CommentsGaugeLength = TXB_GaugeLen_Remarks.Text;
-
-            decimal weightWithoutOil;
-            decimal result;
-            if (decimal.TryParse(TB_wgtwtoil.Text, out result))
-            {
-                weightWithoutOil = result;
-            }
-            else
-            {
-                weightWithoutOil = 0; // Or any other default value you choose
-            }
+        //    // Further processing or saving logic here
 
 
-            decimal weightWithOil;
-            decimal result1;
-            if (decimal.TryParse(TB_wgtwoil.Text, out result1))
-            {
-                weightWithOil = result1;
-            }
-            else
-            {
-                weightWithOil = 0; // Or any other default value you choose
-            }
+        //    // Retrieve values from controls
+        //    string plantName = DDL_Plant.SelectedValue;
+        //    string line = DDL_PlantLine.SelectedValue;
+        //    string productCategory = DDL_ProductCategory.SelectedValue;
+        //    string productBrand = DDL_ProductBrand.SelectedValue; // Assuming DDL_ProductBrand is a DropDownList
+        //    string brandSKU = DDL_BrandSKU.SelectedValue;
 
-            decimal oilPercentValue;
-            decimal result2;
-            if (decimal.TryParse(TB_oilpercent.Text, out result2))
-            {
-                oilPercentValue = result2; // Set to a default value if parsing fails
-            }
-            else
-            {
-                oilPercentValue = 0;
-            }
-            decimal packetWeight = Convert.ToDecimal(TB_PktWgt.Text);
-            // Retrieve other values in a similar manner
+        //    int numberOfPieces = Convert.ToInt32(TB_NoOfPcs.Text);
 
-            //string designAndImplementation = "";
-            //string colourAndAppearance = "";
-            int submittedById = 1;
-            string SubmittedByPNo = Session["USERID"].ToString();
+        //    decimal gaugeValue = 0;
+        //    decimal dryWeight =0;
+        //    decimal dippedWeight = 0;
 
-            string Shift = string.Empty;
+        //    string varietyOrLotNo = !string.IsNullOrEmpty(TB_VartyPkt.Text) ? TB_VartyPkt.Text : null;
 
-            QCInspectorDataAccess dataAccess = new QCInspectorDataAccess();
+        //    string bakingTime = !string.IsNullOrEmpty(TB_BakingTime.Text) ? TB_BakingTime.Text : null;
 
-            try
-            {
-                LogToTextFile(plantName, line, productCategory, productBrand, brandSKU,
-                      numberOfPieces, gaugeValue, dryWeight, dippedWeight,
-                      varietyOrLotNo, bakingTime, ColorAppearance, CommentsForColorAppearance, flavourAndTaste, commentsForFlavourAndTaste, DesignImplementation, CommentsForDesignImplementation,
-                      TextureBite, CommentsForTextureBite, shapeOrSize, commentsForShapeOrSize, moisture,
-                      gaugeLength, CommentsGaugeLength, weightWithoutOil, weightWithOil, oilPercentValue,
-                      packetWeight, ImgLink1, ImgLink2,
-                      submittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay, Shift, SubmittedByPNo);
+        //    int flavourAndTaste = Convert.ToInt32(RBL_FlavTst.SelectedValue);
+        //    string commentsForFlavourAndTaste = TXB_RBL_FlavTst_Rmrks.Text;
 
-                // Call the InsertQCInspectorData method with the retrieved values
-                dataAccess.InsertQCInspectorData(plantName, line, productCategory, productBrand, brandSKU,
-                      numberOfPieces, gaugeValue, dryWeight, dippedWeight,
-                      varietyOrLotNo, bakingTime, ColorAppearance, CommentsForColorAppearance,  flavourAndTaste, commentsForFlavourAndTaste, DesignImplementation, CommentsForDesignImplementation, 
-                      TextureBite, CommentsForTextureBite, shapeOrSize, commentsForShapeOrSize, moisture,
-                      gaugeLength, CommentsGaugeLength, weightWithoutOil, weightWithOil, oilPercentValue,
-                      packetWeight, ImgLink1, ImgLink2,
-                      submittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay, Shift, SubmittedByPNo);
+        //    int ColorAppearance = Convert.ToInt32(RBL_ColorApp.SelectedValue);
+        //    string CommentsForColorAppearance = TXB_ColorApp_Remarks.Text;
 
-                //Make the inputs readonly
-                MakeInputsReadOnly();
-            }
-            catch (Exception ex)
-            {
-                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
-                string errorScript = "<script type='text/javascript'>\n" +
-                                     $"new PNotify({{\n" +
-                                     "    title: 'Error',\n" +
-                                     $"    text: '{errorMessage}',\n" +
-                                     "    type: 'error',\n" +
-                                     "    styling: 'bootstrap3'\n" +
-                                     "});\n" +
-                                     "</script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
-            }
+        //    int DesignImplementation = Convert.ToInt32(RBL_DesignImp.SelectedValue);
+        //    string CommentsForDesignImplementation = TXB_DesignImp_Remarks.Text;
+
+        //    int TextureBite = Convert.ToInt32(RBL_TextureBite.SelectedValue);
+        //    string CommentsForTextureBite = TXB_TextureBite_Remarks.Text;
+
+        //    //decimal textureBite = 0;
+        //    //decimal textureBite = Convert.ToDecimal(TB_TextureBite.Text);
+
+        //    //int shapeOrSize = 1;
+        //    string shapeOrSize = TB_ShapeSize.Text.ToString();
+        //    string commentsForShapeOrSize = string.Empty;
+
+        //    decimal moisture = Convert.ToDecimal(TB_Moisture.Text);
+
+        //    decimal gaugeLength = Convert.ToDecimal(TB_GaugeLen.Text);
+        //    string CommentsGaugeLength = TXB_GaugeLen_Remarks.Text;
+
+        //    decimal weightWithoutOil;
+        //    decimal result;
+        //    if (decimal.TryParse(TB_wgtwtoil.Text, out result))
+        //    {
+        //        weightWithoutOil = result;
+        //    }
+        //    else
+        //    {
+        //        weightWithoutOil = 0; // Or any other default value you choose
+        //    }
 
 
-        }
+        //    decimal weightWithOil;
+        //    decimal result1;
+        //    if (decimal.TryParse(TB_wgtwoil.Text, out result1))
+        //    {
+        //        weightWithOil = result1;
+        //    }
+        //    else
+        //    {
+        //        weightWithOil = 0; // Or any other default value you choose
+        //    }
+
+        //    decimal oilPercentValue;
+        //    decimal result2;
+        //    if (decimal.TryParse(TB_oilpercent.Text, out result2))
+        //    {
+        //        oilPercentValue = result2; // Set to a default value if parsing fails
+        //    }
+        //    else
+        //    {
+        //        oilPercentValue = 0;
+        //    }
+        //    decimal packetWeight = Convert.ToDecimal(TB_PktWgt.Text);
+        //    // Retrieve other values in a similar manner
+
+        //    //string designAndImplementation = "";
+        //    //string colourAndAppearance = "";
+        //    int submittedById = 1;
+        //    string SubmittedByPNo = Session["USERID"].ToString();
+
+        //    string Shift = string.Empty;
+
+        //    QCInspectorDataAccess dataAccess = new QCInspectorDataAccess();
+
+        //    try
+        //    {
+        //        LogToTextFile(plantName, line, productCategory, productBrand, brandSKU,
+        //              numberOfPieces, gaugeValue, dryWeight, dippedWeight,
+        //              varietyOrLotNo, bakingTime, ColorAppearance, CommentsForColorAppearance, flavourAndTaste, commentsForFlavourAndTaste, DesignImplementation, CommentsForDesignImplementation,
+        //              TextureBite, CommentsForTextureBite, shapeOrSize, commentsForShapeOrSize, moisture,
+        //              gaugeLength, CommentsGaugeLength, weightWithoutOil, weightWithOil, oilPercentValue,
+        //              packetWeight, ImgLink1, ImgLink2,
+        //              submittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay, Shift, SubmittedByPNo);
+
+        //        // Call the InsertQCInspectorData method with the retrieved values
+        //        dataAccess.InsertQCInspectorData(plantName, line, productCategory, productBrand, brandSKU,
+        //              numberOfPieces, gaugeValue, dryWeight, dippedWeight,
+        //              varietyOrLotNo, bakingTime, ColorAppearance, CommentsForColorAppearance,  flavourAndTaste, commentsForFlavourAndTaste, DesignImplementation, CommentsForDesignImplementation, 
+        //              TextureBite, CommentsForTextureBite, shapeOrSize, commentsForShapeOrSize, moisture,
+        //              gaugeLength, CommentsGaugeLength, weightWithoutOil, weightWithOil, oilPercentValue,
+        //              packetWeight, ImgLink1, ImgLink2,
+        //              submittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay, Shift, SubmittedByPNo);
+
+        //        //Make the inputs readonly
+        //        MakeInputsReadOnly();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+        //        string errorScript = "<script type='text/javascript'>\n" +
+        //                             $"new PNotify({{\n" +
+        //                             "    title: 'Error',\n" +
+        //                             $"    text: '{errorMessage}',\n" +
+        //                             "    type: 'error',\n" +
+        //                             "    styling: 'bootstrap3'\n" +
+        //                             "});\n" +
+        //                             "</script>";
+        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+        //    }
+
+
+        //}
 
         private void LogToTextFile(params object[] data)
         {
@@ -740,6 +726,9 @@ namespace AnmolDristi.qaqc
             TB_oilpercent.ReadOnly = true;
             TB_PktWgt.ReadOnly = true;
 
+            ImgLink1 = string.Empty;
+            ImgLink2 = string.Empty;
+
             btnSubmit.Enabled = false;
             btnSubmit.Text = "SAVED";
             btnSubmit.CssClass = "btn btn-sm btn-success";
@@ -759,78 +748,104 @@ namespace AnmolDristi.qaqc
 
         protected void BtnUploadFU_DesgImp_Click(object sender, EventArgs e)
         {
+            Page.RegisterAsyncTask(new PageAsyncTask(UploadImage1Task));
+        }
 
-            if (UploadImage1() == true)
+        private async Task UploadImage1Task()
+        {
+            if (await UploadImage1Async())
             {
                 string UI_1_Successscript = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Upload Success',
-                                text: 'Image Saved!!',
-                                type: 'success',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
+                    new PNotify({
+                        title: 'Upload Success',
+                        text: 'Image Saved!!',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+                </script>";
 
                 // RegisterStartupScript adds the JavaScript code to the page
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowImage1SuccessNotification", UI_1_Successscript, false);
             }
-            //if (FU_DesgImp.HasFile)
-            //{
-            //    try
-            //    {
-            //        // Get the file name and extension
-            //        string fileName = Path.GetFileNameWithoutExtension(FU_DesgImp.FileName);
-            //        string fileExtension = Path.GetExtension(FU_DesgImp.FileName);
-
-                //        // Rename the file with a unique name
-                //        string uniqueFileName = $"{fileName}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
-
-                //        // Check if the directory exists, if not, create it
-                //        string uploadFolderPath = Server.MapPath("~/UploadedFiles/");
-                //        if (!Directory.Exists(uploadFolderPath))
-                //        {
-                //            Directory.CreateDirectory(uploadFolderPath);
-                //        }
-
-                //        // Save the file to the server
-                //        string filePath = Path.Combine(uploadFolderPath, uniqueFileName);
-                //        FU_DesgImp.SaveAs(filePath);
-
-                //        // Optimize the image size (optional)
-                //        // You can use third-party libraries like ImageMagick or .NET built-in classes
-                //        // For simplicity, I'll assume you're using System.Drawing
-                //        using (System.Drawing.Image image = System.Drawing.Image.FromFile(filePath))
-                //        {
-                //            // Resize the image (e.g., to a maximum width of 800 pixels)
-                //            int maxWidth = 800;
-                //            int newWidth = image.Width > maxWidth ? maxWidth : image.Width;
-                //            int newHeight = (int)((double)newWidth / image.Width * image.Height);
-                //            using (System.Drawing.Image resizedImage = image.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero))
-                //            {
-                //                // Save the resized image back to the file system
-                //                resizedImage.Save(filePath);
-                //            }
-                //        }
-
-                //        // Display the uploaded image
-                //        FU_DesgImp_Img.Visible = true;
-                //        uploadedImage.Visible = true;
-                //        uploadedImage.ImageUrl = "~/UploadedFiles/" + uniqueFileName;
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        // Handle any exceptions
-                //        lblErrorMessage2.Text = "Error: " + ex.Message;
-                //    }
-                //}
-                //else
-                //{
-                //    lblErrorMessage2.Text = "Please select a file to upload.";
-                //}
         }
 
+        private static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
-        private bool UploadImage1()
+        private async Task<bool> UploadImage1Async()
+        {
+            bool imgSaved = false;
+
+            await semaphore.WaitAsync();
+            try
+            {
+                string TBPhotoId = "QCIR";
+                DateTime now = DateTime.Now;
+
+                // Define the target folder path
+                string targetFolderPath = Server.MapPath("~/UploadedFiles/QCIR/DesignImp/");
+
+                // Check if the target folder exists, if not, create it
+                if (!Directory.Exists(targetFolderPath))
+                {
+                    Directory.CreateDirectory(targetFolderPath);
+                }
+
+                // Check if a file is posted
+                if (FU_DesgImp.PostedFile != null)
+                {
+                    // Check the extension of the image
+                    string extension = Path.GetExtension(FU_DesgImp.FileName);
+                    if (extension.ToLower() == ".png" || extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg")
+                    {
+                        // Get the uploaded image stream
+                        Stream strm = FU_DesgImp.PostedFile.InputStream;
+                        using (var uploadedImage = System.Drawing.Image.FromStream(strm))
+                        {
+                            // Resize the image
+                            int maxWidth = 800;
+                            int newWidth = uploadedImage.Width > maxWidth ? maxWidth : uploadedImage.Width;
+                            int newHeight = (int)((double)newWidth / uploadedImage.Width * uploadedImage.Height);
+                            using (var resizedImage = uploadedImage.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero))
+                            {
+                                string fileName = $"{TBPhotoId}_{DateTime.Now:yyyyMMddHHmmss}.jpg";
+                                // Save the resized image to the target folder
+                                string targetPath = Path.Combine(targetFolderPath, fileName);
+                                resizedImage.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                                // Set the image link for database
+                                ImgLink1 = "~/UploadedFiles/QCIR/DesignImp/" + fileName;
+                                //imgfilename = fileName;
+
+                                // Show the image instantly
+                                FU_DesgImp_Img.Visible = true;
+                                uploadedImage1.ImageUrl = ImgLink1;
+
+                                // Image saved successfully
+                                imgSaved = true;
+
+                                FU_DesgImp_Upldr.Visible = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Display error notification for inappropriate file type
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or display an error message
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+
+            return imgSaved;
+        }
+
+        private bool UploadImage1_old()
         {
             bool imgSaved = false;
 
@@ -928,6 +943,8 @@ namespace AnmolDristi.qaqc
 
             return imgSaved;
         }
+
+        private static readonly SemaphoreSlim semaphore2 = new SemaphoreSlim(1, 1);
 
         private bool UploadImage2()
         {
@@ -1028,22 +1045,121 @@ namespace AnmolDristi.qaqc
             return imgSaved;
         }
 
+        //protected void BtnUploadClrApp_Click(object sender, EventArgs e)
+        //{
+        //    if (UploadImage2() == true)
+        //    {
+        //        string UI_2_Successscript = @"<script type='text/javascript'>
+        //                    new PNotify({
+        //                        title: 'Upload Success',
+        //                        text: 'Image Saved!!',
+        //                        type: 'success',
+        //                        styling: 'bootstrap3'
+        //                    });
+        //                </script>";
+
+        //        // RegisterStartupScript adds the JavaScript code to the page
+        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowImage2SuccessNotification", UI_2_Successscript, false);
+        //    }
+        //}
+
+
         protected void BtnUploadClrApp_Click(object sender, EventArgs e)
         {
-            if (UploadImage2() == true)
+            Page.RegisterAsyncTask(new PageAsyncTask(UploadImage2Task));
+        }
+
+        private async Task UploadImage2Task()
+        {
+            if (await UploadImage2Async())
             {
                 string UI_2_Successscript = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Upload Success',
-                                text: 'Image Saved!!',
-                                type: 'success',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
+                    new PNotify({
+                        title: 'Upload Success',
+                        text: 'Image Saved!!',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+                </script>";
 
                 // RegisterStartupScript adds the JavaScript code to the page
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowImage2SuccessNotification", UI_2_Successscript, false);
             }
+        }
+
+
+        private async Task<bool> UploadImage2Async()
+        {
+            bool imgSaved = false;
+
+            await semaphore2.WaitAsync();
+            try
+            {
+                string TBPhotoId = "QCIR";
+                DateTime now = DateTime.Now;
+
+                // Define the target folder path
+                string targetFolderPath = Server.MapPath("~/UploadedFiles/QCIR/ClrApp/");
+
+                // Check if the target folder exists, if not, create it
+                if (!Directory.Exists(targetFolderPath))
+                {
+                    Directory.CreateDirectory(targetFolderPath);
+                }
+
+                // Check if a file is posted
+                if (FU_ClrApp.PostedFile != null)
+                {
+                    // Check the extension of the image
+                    string extension = Path.GetExtension(FU_ClrApp.FileName);
+                    if (extension.ToLower() == ".png" || extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg")
+                    {
+                        // Get the uploaded image stream
+                        Stream strm = FU_ClrApp.PostedFile.InputStream;
+                        using (var uploadedImage = System.Drawing.Image.FromStream(strm))
+                        {
+                            // Resize the image
+                            int maxWidth = 800;
+                            int newWidth = uploadedImage.Width > maxWidth ? maxWidth : uploadedImage.Width;
+                            int newHeight = (int)((double)newWidth / uploadedImage.Width * uploadedImage.Height);
+                            using (var resizedImage = uploadedImage.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero))
+                            {
+                                string fileName = $"{TBPhotoId}_{DateTime.Now:yyyyMMddHHmmss}.jpg";
+                                // Save the resized image to the target folder
+                                string targetPath = Path.Combine(targetFolderPath, fileName);
+                                resizedImage.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                                // Set the image link for database
+                                ImgLink2 = "~/UploadedFiles/QCIR/ClrApp/" + fileName;
+                                //imgfilename = fileName;
+
+                                // Show the image instantly
+                                FU_ClrApp_Img.Visible = true;
+                                uploadedImage2.ImageUrl = ImgLink2;
+
+                                // Image saved successfully
+                                imgSaved = true;
+
+                                FU_ClrApp_Upldr.Visible = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Display error notification for inappropriate file type
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorNotification(ex.Message);
+            }
+            finally
+            {
+                semaphore2.Release();
+            }
+
+            return imgSaved;
         }
 
         protected void DDL_ProductBrand_SelectedIndexChanged(object sender, EventArgs e)
@@ -1051,6 +1167,7 @@ namespace AnmolDristi.qaqc
             if (DDL_ProductBrand.SelectedIndex != 0)
             {
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
+                lbl_DDL_ProductBrand_Value.Text = selectedProductBrandValue;
                 BrandSKUBinder(selectedProductBrandValue);
 
                 DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
@@ -1091,7 +1208,7 @@ namespace AnmolDristi.qaqc
 
                     // Use the criteria as needed
                     // For example, you can pass it to a method to set up validators
-                    SetUpValidatorsForField(fieldName, criteria);                   
+                    SetUpValidatorsForField(fieldName, criteria);
                 }
             }
             else
@@ -1112,7 +1229,7 @@ namespace AnmolDristi.qaqc
 
         private void BrandSKUBinder(string selectedProductBrandValue)
         {
-            string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue";
+            string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue and ViewMode=1 order by SKUId";
             string textField = "SKU_name";
             string valueField = "SKUId";
 
@@ -1421,5 +1538,167 @@ namespace AnmolDristi.qaqc
         {
             Response.Redirect("qaqc_inspector_rpt.aspx");
         }
+
+
+        //-------------------------------- SUBMIT Code redefined ---------------------------------------//
+
+        private static readonly object _lockObject = new object();
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            lock (_lockObject)
+            {
+                try
+                {
+                    var qcData = RetrieveFormData();
+                    LogFormData(qcData);
+                    InsertQCDataWithTransaction(qcData);
+
+                }
+                catch (Exception ex)
+                {
+                    DisplayErrorNotification(ex.Message);
+                }
+            }
+        }
+
+        private QCInspectorData RetrieveFormData()
+        {
+            return new QCInspectorData
+            {
+                PlantName = DDL_Plant.SelectedValue,
+                Line = DDL_PlantLine.SelectedValue,
+                ProductCategory = DDL_ProductCategory.SelectedValue,
+                ProductBrand = DDL_ProductBrand.SelectedValue,
+                BrandSKU = DDL_BrandSKU.SelectedValue,
+                NumberOfPieces = Convert.ToInt32(TB_NoOfPcs.Text),
+                VarietyOrLotNo = !string.IsNullOrEmpty(TB_VartyPkt.Text) ? TB_VartyPkt.Text : null,
+                BakingTime = !string.IsNullOrEmpty(TB_BakingTime.Text) ? TB_BakingTime.Text : null,
+                FlavourAndTaste = Convert.ToInt32(RBL_FlavTst.SelectedValue),
+                CommentsForFlavourAndTaste = TXB_RBL_FlavTst_Rmrks.Text,
+                ColorAppearance = Convert.ToInt32(RBL_ColorApp.SelectedValue),
+                CommentsForColorAppearance = TXB_ColorApp_Remarks.Text,
+                DesignImplementation = Convert.ToInt32(RBL_DesignImp.SelectedValue),
+                CommentsForDesignImplementation = TXB_DesignImp_Remarks.Text,
+                TextureBite = Convert.ToInt32(RBL_TextureBite.SelectedValue),
+                CommentsForTextureBite = TXB_TextureBite_Remarks.Text,
+                ShapeOrSize = TB_ShapeSize.Text,
+                CommentsForShapeOrSize = string.Empty,
+                Moisture = Convert.ToDecimal(TB_Moisture.Text),
+                GaugeLength = Convert.ToDecimal(TB_GaugeLen.Text),
+                CommentsGaugeLength = TXB_GaugeLen_Remarks.Text,
+                WeightWithoutOil = TryParseDecimal(TB_wgtwtoil.Text),
+                WeightWithOil = TryParseDecimal(TB_wgtwoil.Text),
+                OilPercentValue = TryParseDecimal(TB_oilpercent.Text),
+                PacketWeight = Convert.ToDecimal(TB_PktWgt.Text),
+                DesignAndImplementation = ImgLink1,
+                ColourAndAppearance = ImgLink2,
+                SubmittedByPNo = Session["USERID"].ToString(),
+                SubmittedById = 1,
+                Shift = string.Empty
+            };
+        }
+
+        private decimal TryParseDecimal(string value)
+        {
+            decimal result;
+            return decimal.TryParse(value, out result) ? result : 0;
+        }
+
+
+        private void LogFormData(QCInspectorData qcData)
+        {
+            LogToTextFile(
+                qcData.PlantName, qcData.Line, qcData.ProductCategory, qcData.ProductBrand, qcData.BrandSKU,
+                qcData.NumberOfPieces, qcData.GaugeValue, qcData.DryWeight, qcData.DippedWeight,
+                qcData.VarietyOrLotNo, qcData.BakingTime, qcData.ColorAppearance, qcData.CommentsForColorAppearance,
+                qcData.FlavourAndTaste, qcData.CommentsForFlavourAndTaste, qcData.DesignImplementation,
+                qcData.CommentsForDesignImplementation, qcData.TextureBite, qcData.CommentsForTextureBite,
+                qcData.ShapeOrSize, qcData.CommentsForShapeOrSize, qcData.Moisture, qcData.GaugeLength,
+                qcData.CommentsGaugeLength, qcData.WeightWithoutOil, qcData.WeightWithOil, qcData.OilPercentValue,
+                qcData.PacketWeight, qcData.DesignAndImplementation, qcData.ColourAndAppearance, qcData.SubmittedById, DateTime.Now.Date,
+                DateTime.Now.TimeOfDay, qcData.Shift, qcData.SubmittedByPNo
+            );
+        }
+
+        private void InsertQCDataWithTransaction(QCInspectorData qcData)
+        {
+            using (var transaction = new TransactionScope())
+            {
+                try
+                {
+                    var dataAccess = new QCInspectorDataAccess();
+                    dataAccess.InsertQCInspectorData(
+                        qcData.PlantName, qcData.Line, qcData.ProductCategory, qcData.ProductBrand, qcData.BrandSKU,
+                        qcData.NumberOfPieces, qcData.GaugeValue, qcData.DryWeight, qcData.DippedWeight, qcData.VarietyOrLotNo,
+                        qcData.BakingTime, qcData.ColorAppearance, qcData.CommentsForColorAppearance, qcData.FlavourAndTaste,
+                        qcData.CommentsForFlavourAndTaste, qcData.DesignImplementation, qcData.CommentsForDesignImplementation,
+                        qcData.TextureBite, qcData.CommentsForTextureBite, qcData.ShapeOrSize, qcData.CommentsForShapeOrSize,
+                        qcData.Moisture, qcData.GaugeLength, qcData.CommentsGaugeLength, qcData.WeightWithoutOil,
+                        qcData.WeightWithOil, qcData.OilPercentValue, qcData.PacketWeight, qcData.DesignAndImplementation,
+                        qcData.ColourAndAppearance, qcData.SubmittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay,
+                        qcData.Shift, qcData.SubmittedByPNo
+                    );
+
+                    transaction.Complete();
+                    MakeInputsReadOnly();
+                }
+                catch (Exception ex)
+                {
+                    DisplayErrorNotification(ex.Message);
+                }
+            }
+        }
+
+        private void DisplayErrorNotification(string errorMessage)
+        {
+            string errorScript = "<script type='text/javascript'>\n" +
+                                 $"new PNotify({{\n" +
+                                 "    title: 'Error',\n" +
+                                 $"    text: '{errorMessage.Replace("'", "\\'")}',\n" +
+                                 "    type: 'error',\n" +
+                                 "    styling: 'bootstrap3'\n" +
+                                 "});\n" +
+                                 "</script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+        }
+
+        public class QCInspectorData
+        {
+            public string PlantName { get; set; }
+            public string Line { get; set; }
+            public string ProductCategory { get; set; }
+            public string ProductBrand { get; set; }
+            public string BrandSKU { get; set; }
+            public int NumberOfPieces { get; set; }
+            public decimal GaugeValue { get; set; }
+            public decimal DryWeight { get; set; }
+            public decimal DippedWeight { get; set; }
+            public string VarietyOrLotNo { get; set; }
+            public string BakingTime { get; set; }
+            public int ColorAppearance { get; set; }
+            public string CommentsForColorAppearance { get; set; }
+            public int FlavourAndTaste { get; set; }
+            public string CommentsForFlavourAndTaste { get; set; }
+            public int DesignImplementation { get; set; }
+            public string CommentsForDesignImplementation { get; set; }
+            public int TextureBite { get; set; }
+            public string CommentsForTextureBite { get; set; }
+            public string ShapeOrSize { get; set; }
+            public string CommentsForShapeOrSize { get; set; }
+            public decimal Moisture { get; set; }
+            public decimal GaugeLength { get; set; }
+            public string CommentsGaugeLength { get; set; }
+            public decimal WeightWithoutOil { get; set; }
+            public decimal WeightWithOil { get; set; }
+            public decimal OilPercentValue { get; set; }
+            public decimal PacketWeight { get; set; }
+            public string DesignAndImplementation { get; set; }
+            public string ColourAndAppearance { get; set; }
+            public int SubmittedById { get; set; }
+            public string SubmittedByPNo { get; set; }
+            public string Shift { get; set; }
+        }
+
     }
 }

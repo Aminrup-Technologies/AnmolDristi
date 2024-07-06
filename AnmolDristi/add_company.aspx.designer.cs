@@ -10,114 +10,123 @@
 namespace AnmolDristi {
     
     
-    public partial class home {
+    public partial class add_company {
         
         /// <summary>
-        /// lbl_empcode control.
+        /// lbl_docnumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_empcode;
+        protected global::System.Web.UI.WebControls.Label lbl_docnumber;
         
         /// <summary>
-        /// ProfilePic_3 control.
+        /// Lbl_Company_Description control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic_3;
+        protected global::System.Web.UI.WebControls.Label Lbl_Company_Description;
         
         /// <summary>
-        /// lbl_workmansl control.
+        /// RFV_Company_Description control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_workmansl;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Company_Description;
         
         /// <summary>
-        /// lbl_username control.
+        /// REV_Company_Description control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_username;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Company_Description;
         
         /// <summary>
-        /// lbl_desg control.
+        /// TB_Company_Description control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_desg;
+        protected global::System.Web.UI.WebControls.TextBox TB_Company_Description;
         
         /// <summary>
-        /// lbl_skillcat control.
+        /// Lbl_Company_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_skillcat;
+        protected global::System.Web.UI.WebControls.Label Lbl_Company_ID;
         
         /// <summary>
-        /// lbl_wrkcopmany control.
+        /// RFV_Company_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_wrkcopmany;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Company_ID;
         
         /// <summary>
-        /// lbl_region control.
+        /// REV_Company_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_region;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Company_ID;
         
         /// <summary>
-        /// lbl_state control.
+        /// TB_Company_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_state;
+        protected global::System.Web.UI.WebControls.TextBox TB_Company_ID;
         
         /// <summary>
-        /// lbl_wrksite control.
+        /// lbl_msg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_wrksite;
+        protected global::System.Web.UI.WebControls.Label lbl_msg;
         
         /// <summary>
-        /// lbl_doj control.
+        /// btn_insert control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_doj;
+        protected global::System.Web.UI.WebControls.Button btn_insert;
         
         /// <summary>
-        /// lbl_workage control.
+        /// btn_submit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_workage;
+        protected global::System.Web.UI.WebControls.Button btn_submit;
+        
+        /// <summary>
+        /// GridView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView1;
     }
 }

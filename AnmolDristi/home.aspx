@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="home.aspx.cs" Inherits="AnmolDristi.home" %>
+﻿<%@ Page Title="Anmol Industries | Home" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="home.aspx.cs" Inherits="AnmolDristi.home" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -9,7 +9,7 @@
                 <div class="well profile_view col-sm-12 col-lg-12">
                     <div class="col-sm-12">
                         <h4 class="brief"><b>Employee Card</b> :
-							<asp:Label ID="lbl_id" runat="server" Text="N/A"></asp:Label>
+							<asp:Label ID="lbl_empcode" runat="server" Text="N/A"></asp:Label>
                         </h4>
 
                         <div class="right col-md-6 col-sm-4 text-center">

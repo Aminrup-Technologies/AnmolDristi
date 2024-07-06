@@ -4,8 +4,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head runat="server">
-    <title>Quality Reporting</title>
+    <title>Quality Reporting - Anmol Industries</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" type="image/x-icon" href="WebData/Anmol_Logo.png" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -58,7 +59,7 @@
                                     <p>
                                         © 2023-<asp:Label ID="lbl_currentyr" runat="server" Text="2024"></asp:Label>
                                         All Rights Reserved. <span style="font-weight: bold; color:red;">
-                                            <asp:Label ID="lbl_compfooter" runat="server" Text="N/A"></asp:Label><br /></span> Powered by <a href="#" target="_blank">
+                                            <a href="https://www.anmolindustries.com/" target="_blank"><asp:Label ID="lbl_compfooter" runat="server" Text="N/A"></asp:Label></a><br /></span> Powered by <a href="#" target="_blank">
                                                 <asp:Label ID="lbl_owner" runat="server" Text="N/A"></asp:Label></a>
                                     </p>
                                 </div>

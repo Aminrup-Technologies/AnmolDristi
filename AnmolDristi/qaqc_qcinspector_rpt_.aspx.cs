@@ -235,6 +235,7 @@ namespace AnmolDristi
             if (DDL_Plant.SelectedIndex != 0)
             {
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
+                lbl_DDL_Plant_Value.Text = selectedPlantValue;
                 PlantLinesBinder(selectedPlantValue);
 
                 BindGridView(selectedPlantValue);
@@ -288,7 +289,7 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
-
+                lbl_DDL_PlantLine_Value.Text = selectedPlantLineValue;
                 BindGridView(selectedPlantValue, selectedPlantLineValue);
             }
             else
@@ -401,7 +402,7 @@ namespace AnmolDristi
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
                 ProductBrandsBinder(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue);
-
+                lbl_DDL_ProductCategory_Value.Text = selectedProductCategoryValue;
                 BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue);
             }
             else
@@ -519,7 +520,7 @@ namespace AnmolDristi
                 string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
                 BrandSKUBinder(selectedProductBrandValue);
-
+                lbl_DDL_ProductBrand_Value.Text = selectedProductBrandValue;
                 BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue, selectedProductBrandValue);
             }
             else
