@@ -77,8 +77,10 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
-                    // Rollback transaction if there's an error
-                    transaction.Rollback();
+                    if (transaction != null)
+                    {
+                        transaction.Rollback();
+                    }
                     lbl_msg.Text = "Error: " + ex.Message;
                 }
                 finally
@@ -184,5 +186,9 @@ namespace AnmolDristi
             BindGridView();
         }
 
+        protected void btn_cancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("datamastering_home.aspx");
+        }
     }
 }

@@ -67,6 +67,24 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.HiddenField hdnMaxBakingTime;
         
         /// <summary>
+        /// hdnMinBakingTime2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnMinBakingTime2;
+        
+        /// <summary>
+        /// hdnMaxBakingTime2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnMaxBakingTime2;
+        
+        /// <summary>
         /// hdnMinGaugelen control.
         /// </summary>
         /// <remarks>
@@ -310,6 +328,15 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.DropDownList DDL_BrandSKU;
         
         /// <summary>
+        /// TB_NoOfPcs_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_NoOfPcs_DIV;
+        
+        /// <summary>
         /// Lbl_TB_NoOfPcs control.
         /// </summary>
         /// <remarks>
@@ -355,6 +382,15 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.TextBox TB_NoOfPcs;
         
         /// <summary>
+        /// TB_VartyPkt_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_VartyPkt_DIV;
+        
+        /// <summary>
         /// Lbl_TB_VartyPkt control.
         /// </summary>
         /// <remarks>
@@ -389,6 +425,15 @@ namespace AnmolDristi.qaqc {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_VartyPkt;
+        
+        /// <summary>
+        /// TB_BakingTime_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_BakingTime_DIV;
         
         /// <summary>
         /// Lbl_TB_BakingTime control.
@@ -434,6 +479,60 @@ namespace AnmolDristi.qaqc {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_BakingTime;
+        
+        /// <summary>
+        /// TB_BakingTime2_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_BakingTime2_DIV;
+        
+        /// <summary>
+        /// Lbl_TB_BakingTime2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_BakingTime2;
+        
+        /// <summary>
+        /// RFV_TB_BakingTime2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_BakingTime2;
+        
+        /// <summary>
+        /// REV_TB_BakingTime2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_BakingTime2;
+        
+        /// <summary>
+        /// RV_TB_BakingTime2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_BakingTime2;
+        
+        /// <summary>
+        /// TB_BakingTime2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_BakingTime2;
         
         /// <summary>
         /// LabelColorApp control.
@@ -490,13 +589,13 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.TextBox TXB_ColorApp_Remarks;
         
         /// <summary>
-        /// Label11 control.
+        /// Lbl_RBL_FlavTst control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label11;
+        protected global::System.Web.UI.WebControls.Label Lbl_RBL_FlavTst;
         
         /// <summary>
         /// RFV_RBL_FlavTst control.
@@ -607,13 +706,13 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.TextBox TXB_DesignImp_Remarks;
         
         /// <summary>
-        /// LabelTextureBite control.
+        /// Lbl_RBL_TextureBite control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelTextureBite;
+        protected global::System.Web.UI.WebControls.Label Lbl_RBL_TextureBite;
         
         /// <summary>
         /// RFV_RBL_TextureBite control.
@@ -659,6 +758,15 @@ namespace AnmolDristi.qaqc {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TXB_TextureBite_Remarks;
+        
+        /// <summary>
+        /// TB_ShapeSize_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_ShapeSize_DIV;
         
         /// <summary>
         /// Lbl_TB_ShapeSize control.
@@ -733,6 +841,15 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.TextBox TXB_ShapeSize_Remarks;
         
         /// <summary>
+        /// TB_Moisture_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_Moisture_DIV;
+        
+        /// <summary>
         /// Lbl_TB_Moisture control.
         /// </summary>
         /// <remarks>
@@ -776,6 +893,285 @@ namespace AnmolDristi.qaqc {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_Moisture;
+        
+        /// <summary>
+        /// TB_aWMAX_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_aWMAX_DIV;
+        
+        /// <summary>
+        /// Lbl_TB_aWMAX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_aWMAX;
+        
+        /// <summary>
+        /// RFV_TB_aWMAX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_aWMAX;
+        
+        /// <summary>
+        /// REV_TB_aWMAX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_aWMAX;
+        
+        /// <summary>
+        /// RV_TB_aWMAX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_aWMAX;
+        
+        /// <summary>
+        /// TB_aWMAX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_aWMAX;
+        
+        /// <summary>
+        /// TB_pHvalue_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_pHvalue_DIV;
+        
+        /// <summary>
+        /// Lbl_TB_pHvalue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_pHvalue;
+        
+        /// <summary>
+        /// RFV_TB_pHvalue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_pHvalue;
+        
+        /// <summary>
+        /// REV_TB_pHvalue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_pHvalue;
+        
+        /// <summary>
+        /// RV_TB_pHvalue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_pHvalue;
+        
+        /// <summary>
+        /// TB_pHvalue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_pHvalue;
+        
+        /// <summary>
+        /// TB_Length_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_Length_DIV;
+        
+        /// <summary>
+        /// Lbl_TB_Length control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_Length;
+        
+        /// <summary>
+        /// RFV_TB_Length control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Length;
+        
+        /// <summary>
+        /// REV_TB_Length control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Length;
+        
+        /// <summary>
+        /// RV_TB_Length control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_Length;
+        
+        /// <summary>
+        /// TB_Length control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Length;
+        
+        /// <summary>
+        /// TB_Breadth_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_Breadth_DIV;
+        
+        /// <summary>
+        /// Lbl_TB_Breadth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_Breadth;
+        
+        /// <summary>
+        /// RFV_TB_Breadth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Breadth;
+        
+        /// <summary>
+        /// REV_TB_Breadth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Breadth;
+        
+        /// <summary>
+        /// RV_TB_Breadth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_Breadth;
+        
+        /// <summary>
+        /// TB_Breadth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Breadth;
+        
+        /// <summary>
+        /// TB_Height_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_Height_DIV;
+        
+        /// <summary>
+        /// Lbl_TB_Height control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_Height;
+        
+        /// <summary>
+        /// RFV_TB_Height control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Height;
+        
+        /// <summary>
+        /// REV_TB_Height control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Height;
+        
+        /// <summary>
+        /// RV_TB_Height control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_Height;
+        
+        /// <summary>
+        /// TB_Height control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Height;
+        
+        /// <summary>
+        /// TB_GaugeLen_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_GaugeLen_DIV;
         
         /// <summary>
         /// Lbl_TB_GaugeLen control.
@@ -850,6 +1246,15 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.TextBox TXB_GaugeLen_Remarks;
         
         /// <summary>
+        /// TB_wgtwtoil_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_wgtwtoil_DIV;
+        
+        /// <summary>
         /// Lbl_TB_wgtwtoil control.
         /// </summary>
         /// <remarks>
@@ -895,6 +1300,15 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.TextBox TB_wgtwtoil;
         
         /// <summary>
+        /// TB_wgtwoil_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_wgtwoil_DIV;
+        
+        /// <summary>
         /// Lbl_TB_wgtwoil control.
         /// </summary>
         /// <remarks>
@@ -938,6 +1352,15 @@ namespace AnmolDristi.qaqc {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_wgtwoil;
+        
+        /// <summary>
+        /// TB_oilpercent_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TB_oilpercent_DIV;
         
         /// <summary>
         /// Lbl_TB_oilpercent control.
@@ -1217,5 +1640,14 @@ namespace AnmolDristi.qaqc {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnReset;
+        
+        /// <summary>
+        /// Label6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label6;
     }
 }

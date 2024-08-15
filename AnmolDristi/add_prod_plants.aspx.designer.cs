@@ -10,7 +10,7 @@
 namespace AnmolDristi {
     
     
-    public partial class add_company {
+    public partial class add_prod_plants {
         
         /// <summary>
         /// lbl_docnumber control.
@@ -22,76 +22,148 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Label lbl_docnumber;
         
         /// <summary>
-        /// Lbl_Company_Description control.
+        /// Lbl_plant_id control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_Company_Description;
+        protected global::System.Web.UI.WebControls.Label Lbl_plant_id;
         
         /// <summary>
-        /// RFV_Company_Description control.
+        /// RFV_plant_id control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Company_Description;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_plant_id;
         
         /// <summary>
-        /// REV_Company_Description control.
+        /// REV_plant_id control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Company_Description;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_plant_id;
         
         /// <summary>
-        /// TB_Company_Description control.
+        /// TB_plant_id control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Company_Description;
+        protected global::System.Web.UI.WebControls.TextBox TB_plant_id;
         
         /// <summary>
-        /// Lbl_Company_ID control.
+        /// Lbl_plant_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_Company_ID;
+        protected global::System.Web.UI.WebControls.Label Lbl_plant_name;
         
         /// <summary>
-        /// RFV_Company_ID control.
+        /// RFV_plant_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Company_ID;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_plant_name;
         
         /// <summary>
-        /// REV_Company_ID control.
+        /// REV_plant_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Company_ID;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_plant_name;
         
         /// <summary>
-        /// TB_Company_ID control.
+        /// TB_plant_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Company_ID;
+        protected global::System.Web.UI.WebControls.TextBox TB_plant_name;
+        
+        /// <summary>
+        /// Lbl_SapCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_SapCode;
+        
+        /// <summary>
+        /// RFV_SapCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_SapCode;
+        
+        /// <summary>
+        /// REV_SapCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_SapCode;
+        
+        /// <summary>
+        /// TB_SapCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_SapCode;
+        
+        /// <summary>
+        /// Lbl_LocalName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_LocalName;
+        
+        /// <summary>
+        /// RFV_LocalName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_LocalName;
+        
+        /// <summary>
+        /// REV_LocalName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_LocalName;
+        
+        /// <summary>
+        /// TB_LocalName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_LocalName;
         
         /// <summary>
         /// lbl_msg control.
@@ -130,12 +202,12 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Button btn_submit;
         
         /// <summary>
-        /// GridView1 control.
+        /// GridViewProdPlants control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView GridViewProdPlants;
     }
 }

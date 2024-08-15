@@ -173,5 +173,10 @@ namespace AnmolDristi
         {
             // Optional: You can customize row data binding, e.g., for formatting or additional logic
         }
+
+        protected void btn_cancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("datamastering_home.aspx");
+        }
     }
 }

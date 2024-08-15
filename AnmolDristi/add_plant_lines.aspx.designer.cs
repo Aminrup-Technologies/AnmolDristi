@@ -10,240 +10,240 @@
 namespace AnmolDristi {
     
     
-    public partial class Dristi {
+    public partial class add_plant_lines {
         
         /// <summary>
-        /// head control.
+        /// lbl_docnumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.Label lbl_docnumber;
         
         /// <summary>
-        /// form1 control.
+        /// lbl_DDL_Plant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Label lbl_DDL_Plant;
         
         /// <summary>
-        /// Image1 control.
+        /// RFV_DDL_Plant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Plant;
         
         /// <summary>
-        /// ProfilePic_1 control.
+        /// lbl_DDL_Plant_Value control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic_1;
+        protected global::System.Web.UI.WebControls.Label lbl_DDL_Plant_Value;
         
         /// <summary>
-        /// lbl_loginusername1 control.
+        /// DDL_Plant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_loginusername1;
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Plant;
         
         /// <summary>
-        /// HomePage control.
+        /// Lbl_Line_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HomePage;
+        protected global::System.Web.UI.WebControls.Label Lbl_Line_ID;
         
         /// <summary>
-        /// Home1 control.
+        /// RFV_Line_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Home1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Line_ID;
         
         /// <summary>
-        /// ImputForms control.
+        /// REV_Line_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ImputForms;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Line_ID;
         
         /// <summary>
-        /// frms_quality control.
+        /// TB_Line_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl frms_quality;
+        protected global::System.Web.UI.WebControls.TextBox TB_Line_ID;
         
         /// <summary>
-        /// frms_qa control.
+        /// Lbl_Line_Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl frms_qa;
+        protected global::System.Web.UI.WebControls.Label Lbl_Line_Name;
         
         /// <summary>
-        /// frms_qc control.
+        /// RFV_Line_Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl frms_qc;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Line_Name;
         
         /// <summary>
-        /// Reports control.
+        /// REV_Line_Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Reports;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Line_Name;
         
         /// <summary>
-        /// rpts_quality control.
+        /// TB_Line_Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rpts_quality;
+        protected global::System.Web.UI.WebControls.TextBox TB_Line_Name;
         
         /// <summary>
-        /// rpts_qa control.
+        /// Lbl_Local_Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rpts_qa;
+        protected global::System.Web.UI.WebControls.Label Lbl_Local_Name;
         
         /// <summary>
-        /// rpts_qc control.
+        /// RFV_Local_Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rpts_qc;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Local_Name;
         
         /// <summary>
-        /// AdminControl control.
+        /// REV_Local_Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AdminControl;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Local_Name;
         
         /// <summary>
-        /// DataMST control.
+        /// TB_Local_Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DataMST;
+        protected global::System.Web.UI.WebControls.TextBox TB_Local_Name;
         
         /// <summary>
-        /// FormMST control.
+        /// Lbl_Line_Sap_Code control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FormMST;
+        protected global::System.Web.UI.WebControls.Label Lbl_Line_Sap_Code;
         
         /// <summary>
-        /// ProfilePic_2 control.
+        /// RFV_Line_Sap_Code control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic_2;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Line_Sap_Code;
         
         /// <summary>
-        /// lbl_loginusername2 control.
+        /// REV_Line_Sap_Code control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_loginusername2;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Line_Sap_Code;
         
         /// <summary>
-        /// ContentPlaceHolder1 control.
+        /// TB_Line_Sap_Code control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.TextBox TB_Line_Sap_Code;
         
         /// <summary>
-        /// lblTime1 control.
+        /// lbl_msg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTime1;
+        protected global::System.Web.UI.WebControls.Label lbl_msg;
         
         /// <summary>
-        /// lblTime control.
+        /// btn_cancel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTime;
+        protected global::System.Web.UI.WebControls.Button btn_cancel;
         
         /// <summary>
-        /// Label1 control.
+        /// btn_insert control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Button btn_insert;
         
         /// <summary>
-        /// btn_lgout control.
+        /// btn_submit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_lgout;
+        protected global::System.Web.UI.WebControls.Button btn_submit;
         
         /// <summary>
-        /// ShowPopup control.
+        /// GridViewPlantLines control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ShowPopup;
+        protected global::System.Web.UI.WebControls.GridView GridViewPlantLines;
     }
 }

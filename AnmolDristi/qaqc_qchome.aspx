@@ -26,19 +26,19 @@
                         </div>
                         <div class="x_content">
                             <a class="btn btn-app" href="qaqc_inspector_rpt.aspx">
-                                <span class="badge bg-red">Shift : 2
+                                <span class="badge bg-orange">Shift-2
                                     <asp:Label ID="lbl_tbttodaycount" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Inspector Report
 
                             </a>
                             <a class="btn btn-app" href="#">
-                                <span class="badge bg-red">Batch : 1
+                                <span class="badge bg-orange">Batch-1
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Wheat Flour report
 
                             </a>
                             <a class="btn btn-app" href="#">
-                                <span class="badge bg-orange">Consignment : 1
+                                <span class="badge bg-orange">Consignment-1
                                     <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>CB Box Report
 

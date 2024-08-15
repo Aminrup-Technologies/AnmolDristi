@@ -17,7 +17,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="Add Region Details"></asp:Label></h2>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="Add Company Branches Details"></asp:Label></h2>
                             <div class="clearfix"></div>
                         </div>
 
@@ -39,7 +39,7 @@
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_Branch_ID" runat="server" AssociatedControlID="TB_Branch_ID" Text="Branch ID :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_Branch_ID" runat="server" ErrorMessage="*" ControlToValidate="TB_Branch_ID" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:RegularExpressionValidator ID="REV_Branch_ID" runat="server" ControlToValidate="TB_Branch_ID" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                        <asp:RegularExpressionValidator ID="REV_Branch_ID" runat="server" ControlToValidate="TB_Branch_ID" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Numeric Only" ValidationExpression="^[0-9]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="TB_Branch_ID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Branch ID (3-20 characters)" MaxLength="20"></asp:TextBox>
                                         </div>
@@ -58,7 +58,7 @@
                                 <asp:Label ID="lbl_msg" runat="server" Text="Click SUBMIT to view Data!!"></asp:Label>
                             </div>
                             <div class="col-md-6 col-sm-12">
-                                <button type="button" class="btn btn-danger btn-sm collapse-link">Cancel</button>
+                                <asp:Button ID="btn_cancel" runat="server" Text="Cancel" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btn_cancel_Click"/>
                                 <asp:Button ID="btn_insert" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" />
                                 <asp:Button ID="btn_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="true" ValidationGroup="Submit" OnClick="btn_submit_Click" />
                             </div>
@@ -84,7 +84,7 @@
                                             OnRowUpdating="GridViewBranches_RowUpdating"
                                             OnRowDeleting="GridViewBranches_RowDeleting"
                                             OnRowCancelingEdit="GridViewBranches_RowCancelingEdit"
-                                            OnRowDataBound="GridViewBranches_RowDataBound">
+                                            OnRowDataBound="GridViewBranches_RowDataBound" OnPageIndexChanging="GridViewBranches_PageIndexChanging" >
                                             <Columns>
                                                 <asp:BoundField DataField="Id" HeaderText="ID" ReadOnly="True" />
                                                 <asp:BoundField DataField="Branch_Description" HeaderText="Branch Description" />

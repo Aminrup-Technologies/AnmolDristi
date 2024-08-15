@@ -17,7 +17,7 @@
                 <div class="col-md-12" id="QC_Panel" runat="server" visible="true">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Quality Control Online Forms</h2>
+                            <h2>Quality Control Online Reports</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>

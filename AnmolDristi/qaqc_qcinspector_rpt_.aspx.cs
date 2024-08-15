@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using ClosedXML.Excel;
 
 namespace AnmolDristi
 {
@@ -754,34 +755,91 @@ namespace AnmolDristi
         }
 
 
+        protected void ExportExcel_Old(object sender, EventArgs e)
+        {
+            try
+            {
+                string constr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(constr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecords", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                        {
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                using (XLWorkbook wb = new XLWorkbook())
+                                {
+                                    wb.Worksheets.Add(dt, "QCInspectorReport");
+
+                                    Response.Clear();
+                                    Response.Buffer = true;
+                                    Response.Charset = "";
+                                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                                    Response.AddHeader("content-disposition", "attachment;filename=QCInspectorRecords.xlsx");
+                                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                                    {
+                                        wb.SaveAs(MyMemoryStream);
+                                        MyMemoryStream.WriteTo(Response.OutputStream);
+                                        Response.Flush();
+                                        Response.End();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error or handle it appropriately
+                Response.Write("An error occurred: " + ex.Message);
+            }
+        }
+
         protected void ExportExcel(object sender, EventArgs e)
         {
-            //if (ViewState["ExportData"] != null)
-            //{
-            //    DataTable dt_exportdata = (DataTable)ViewState["ExportData"];
-            //    if ((dt_exportdata != null) && (dt_exportdata.Rows.Count > 0))
-            //    {
-            //        using (XLWorkbook wb = new XLWorkbook())
-            //        {
-            //            wb.Worksheets.Add(dt_exportdata, "QCInspectionReport");
+            if (ViewState["ExportData"] != null)
+            {
+                DataTable dt = ViewState["ExportData"] as DataTable;
 
-            //            Response.Clear();
-            //            Response.Buffer = true;
-            //            Response.Charset = "";
-            //            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            //            Response.AddHeader("content-disposition", "attachment;filename=QCInspectorRpt_Export.xlsx");
-            //            using (MemoryStream MyMemoryStream = new MemoryStream())
-            //            {
-            //                wb.SaveAs(MyMemoryStream);
-            //                MyMemoryStream.WriteTo(Response.OutputStream);
-            //                Response.Flush();
-            //                Response.End();
-            //            }
-            //        }
-            //    }
-            //}
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        wb.Worksheets.Add(dt, "QCInspectorReport");
 
+                        Response.Clear();
+                        Response.Buffer = true;
+                        Response.Charset = "";
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        Response.AddHeader("content-disposition", "attachment;filename=QCInspectorRecords.xlsx");
 
+                        using (MemoryStream MyMemoryStream = new MemoryStream())
+                        {
+                            wb.SaveAs(MyMemoryStream);
+                            MyMemoryStream.WriteTo(Response.OutputStream);
+                            Response.Flush();
+                            Response.End();
+                        }
+                    }
+                }
+                else
+                {
+                    // Handle the case where the DataTable is empty
+                    Response.Write("No data available to export.");
+                }
+            }
+            else
+            {
+                // Handle the case where ViewState["ExportData"] is null
+                Response.Write("No data available to export.");
+            }
         }
+
+
     }
 }

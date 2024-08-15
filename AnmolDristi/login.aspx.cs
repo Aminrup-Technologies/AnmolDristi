@@ -81,7 +81,7 @@ namespace AnmolDristi
 
                     if (WorkStatus == "Active")
                     {
-                        string EmployeeCode = dt.Rows[0]["EmployeeCode"].ToString();
+                        string EmployeeCode = dt.Rows[0]["Id"].ToString();
                         string RegionId = dt.Rows[0]["RegionId"].ToString();
                         string BranchId = dt.Rows[0]["BranchId"].ToString();
                         string PlantId = dt.Rows[0]["PlantId"].ToString();
