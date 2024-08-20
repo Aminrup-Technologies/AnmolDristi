@@ -106,7 +106,7 @@ namespace AnmolDristi.DAL
             string CommentsGaugeLength, decimal weightWithoutOil, decimal weightWithOil,
             decimal oilPercentage, decimal packetWeight, string designAndImplementation,
             string colourAndAppearance, int submittedById, DateTime submittedDate,
-            TimeSpan submittedTime, string Shift, string SubmittedByPNo)
+            TimeSpan submittedTime, string Shift, string SubmittedByPNo, int FormID, string Approver1EmployeeCode, string Approver2EmployeeCode, string DottedLineApproverEmployeeCode)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -154,6 +154,11 @@ namespace AnmolDristi.DAL
                     command.Parameters.AddWithValue("@Shift", Shift);
                     command.Parameters.AddWithValue("@SubmittedByPNo", SubmittedByPNo);
 
+                    command.Parameters.AddWithValue("@FormID", FormID);
+                    command.Parameters.AddWithValue("@SubmittedByEmployeeCode", SubmittedByPNo);
+                    command.Parameters.AddWithValue("@Approver1EmployeeCode", Approver1EmployeeCode);
+                    command.Parameters.AddWithValue("@Approver2EmployeeCode", Approver2EmployeeCode);
+                    command.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", DottedLineApproverEmployeeCode);
                     // Open the connection and execute the command
                     connection.Open();
                     command.ExecuteNonQuery();

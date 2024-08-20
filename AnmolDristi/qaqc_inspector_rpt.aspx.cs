@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Transactions;
+using System.Configuration;
 
 namespace AnmolDristi.qaqc
 {
@@ -35,21 +36,65 @@ namespace AnmolDristi.qaqc
                     lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/02";
 
                     PlantBinder();
-                    //SetValidatorPropertiesFromDatabase();
-                    //NoOfPcs();
-                    //GaugeValue();
-                    //GaugeLength();
-                    //SetDryWeightValidators();
-                    //SetDippedWeightValidators();
-                    //SetVartyPktValidators();
-                    //SetTextureBiteValidators();
-                    //SetMoistureValidators();
-                    //SetWeightWithOilValidators();
-                    //SetWeightWithoutOilValidators();
-                    //SetOilPercentageValidators();
-                    //SetPacketWeightValidators();
+                    DisplayCurrentShift();
                 }
 
+            }
+        }
+
+        private void DisplayCurrentShift()
+        {
+            ShiftManager shiftManager = new ShiftManager();
+            string currentShift = shiftManager.GetCurrentShiftType();
+            hdn_shiftvalue.Value =currentShift;
+        }
+
+        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
+        {
+            // Replace with your actual connection string
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Set parameters for the stored procedure
+                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue); // Replace with actual value
+                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);  // Replace with actual value
+                    cmd.Parameters.AddWithValue("@FormID", 1); // Replace with actual value
+                    cmd.Parameters.AddWithValue("@FormName", "qaqc_inspector_rpt"); // Replace with actual value
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        // Bind the data to a GridView or another control
+                        GridViewApprovers.DataSource = dt;
+                        GridViewApprovers.DataBind();
+
+                        // Bind data to Flow Diagram if needed
+                        if (dt.Rows.Count > 0)
+                        {
+                            DataRow row = dt.Rows[0];
+
+                            // Set data for flow diagram
+                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString(); // Adjust field name for photo
+
+                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString(); // Adjust field name for photo
+
+                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString(); // Adjust field name for photo
+                        }
+                    }
+                }
             }
         }
 
@@ -404,6 +449,8 @@ namespace AnmolDristi.qaqc
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 lbl_DDL_PlantLine_Value.Text = selectedPlantLineValue;
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
+
+                LoadApprovers(selectedPlantValue, selectedPlantLineValue);
             }
             else
             {
@@ -920,6 +967,8 @@ namespace AnmolDristi.qaqc
 
                                 // Set the image link for database
                                 ImgLink1 = "~/UploadedFiles/QCIR/DesignImp/" + fileName;
+                                hdn_img1.Value = ImgLink1;
+
                                 //imgfilename = fileName;
 
                                 // Show the image instantly
@@ -1134,6 +1183,7 @@ namespace AnmolDristi.qaqc
 
                                 // Set the image link for database
                                 ImgLink2 = "~/UploadedFiles/QCIR/ClrApp/" + fileName;
+                                hdn_img2.Value = ImgLink2;
                                 //imgfilename = fileName;
 
                                 // Show the image instantly
@@ -1807,7 +1857,7 @@ namespace AnmolDristi.qaqc
                     TextureBite = Convert.ToInt32(RBL_TextureBite.SelectedValue), // Changed to decimal
                     CommentsForTextureBite = TXB_TextureBite_Remarks.Text,
 
-                    ShapeOrSize= !string.IsNullOrEmpty(TB_ShapeSize.Text) ? TB_ShapeSize.Text : null,
+                    ShapeOrSize = !string.IsNullOrEmpty(TB_ShapeSize.Text) ? TB_ShapeSize.Text : null,
                     //ShapeOrSize = TB_ShapeSize.Text,
                     CommentsForShapeOrSize = string.Empty,
 
@@ -1822,8 +1872,8 @@ namespace AnmolDristi.qaqc
                     GaugeLength = TryParseDecimal(TB_GaugeLen.Text) ?? 0,
                     CommentsGaugeLength = TXB_GaugeLen_Remarks.Text,
 
-                    WeightWithoutOil = TryParseDecimal(TB_wgtwtoil.Text)??0,
-                    WeightWithOil = TryParseDecimal(TB_wgtwoil.Text)??0,
+                    WeightWithoutOil = TryParseDecimal(TB_wgtwtoil.Text) ?? 0,
+                    WeightWithOil = TryParseDecimal(TB_wgtwoil.Text) ?? 0,
                     OilPercentValue = TryParseDecimal(TB_oilpercent.Text) ?? 0, // Changed to OilPercentage
 
                     PacketWeight = TryParseDecimal(TB_PktWgt.Text) ?? 0,
@@ -1834,7 +1884,13 @@ namespace AnmolDristi.qaqc
                     SubmittedByPNo = Session["WORKMAN"].ToString(),
                     SubmittedById = Convert.ToInt32(Session["USERID"].ToString()),
 
-                    Shift = string.Empty
+                    Shift = hdn_shiftvalue.Value.ToString(),
+
+                    FormID = 1,
+
+                    Approver1EmployeeCode = Approver1CodeLabel.Text.ToString(),
+                    Approver2EmployeeCode = Approver2CodeLabel.Text.ToString(),
+                    DottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text.ToString()
                 };
             }
             catch (FormatException ex)
@@ -1912,7 +1968,7 @@ namespace AnmolDristi.qaqc
                 qcData.GaugeLength, qcData.CommentsGaugeLength, qcData.WeightWithoutOil, qcData.WeightWithOil,
                 qcData.OilPercentValue, // Changed OilPercentValue to OilPercentage
                 qcData.PacketWeight, qcData.DesignAndImplementation, qcData.ColourAndAppearance, qcData.SubmittedById,
-                DateTime.Now.Date, DateTime.Now.TimeOfDay, qcData.Shift, qcData.SubmittedByPNo
+                DateTime.Now.Date, DateTime.Now.TimeOfDay, qcData.Shift, qcData.SubmittedByPNo, qcData.FormID, qcData.Approver1EmployeeCode, qcData.Approver2EmployeeCode, qcData.DottedLineApproverEmployeeCode
             );
 
         }
@@ -1933,7 +1989,7 @@ namespace AnmolDristi.qaqc
                         qcData.Moisture, qcData.aWmax, qcData.pHvalue, qcData.GaugeLength, qcData.CommentsGaugeLength, qcData.WeightWithoutOil,
                         qcData.WeightWithOil, qcData.OilPercentValue, qcData.PacketWeight, qcData.DesignAndImplementation,
                         qcData.ColourAndAppearance, qcData.SubmittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay,
-                        qcData.Shift, qcData.SubmittedByPNo
+                        qcData.Shift, qcData.SubmittedByPNo, qcData.FormID, qcData.Approver1EmployeeCode, qcData.Approver2EmployeeCode, qcData.DottedLineApproverEmployeeCode
                     );
 
                     transaction.Complete();
@@ -1997,6 +2053,12 @@ namespace AnmolDristi.qaqc
             public int SubmittedById { get; set; }
             public string SubmittedByPNo { get; set; }
             public string Shift { get; set; }
+            public int FormID { get; set; }
+            public string SubmittedByEmployeeCode { get; set; }
+
+            public string Approver1EmployeeCode { get; set; }
+            public string Approver2EmployeeCode { get; set; }
+            public string DottedLineApproverEmployeeCode { get; set; }
         }
 
     }

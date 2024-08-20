@@ -6,8 +6,34 @@
             border: none !important; /* This will ensure the border is removed */
             /* Add any other necessary styling */
         }
-    </style>
 
+        .approver-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .approver-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: .25rem;
+        }
+
+        .flow-line {
+            flex: 1;
+            border-top: 2px solid #007bff;
+            margin: 0 10px;
+        }
+
+        .approver-item {
+            text-align: center;
+        }
+    </style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -163,15 +189,15 @@
             // Function to calculate oil percentage
             function calculateOilPercentage() {
                 var weightWithOilInput = parseFloat(document.getElementById('<%= TB_wgtwoil.ClientID %>').value) || 0;
-            var weightWithoutOilInput = parseFloat(document.getElementById('<%= TB_wgtwtoil.ClientID %>').value) || 0;
-            if (weightWithOilInput && weightWithoutOilInput) {
-                var oilPercentage = ((weightWithOilInput - weightWithoutOilInput) / weightWithOilInput) * 100;
-                console.log("Weight with oil input:", oilPercentage);
-                document.getElementById('<%= TB_oilpercent.ClientID %>').value = oilPercentage.toFixed(2);
-        } else {
-            console.error("One or more input elements not found.");
-        }
-    }
+                var weightWithoutOilInput = parseFloat(document.getElementById('<%= TB_wgtwtoil.ClientID %>').value) || 0;
+                if (weightWithOilInput && weightWithoutOilInput) {
+                    var oilPercentage = ((weightWithOilInput - weightWithoutOilInput) / weightWithOilInput) * 100;
+                    console.log("Weight with oil input:", oilPercentage);
+                    document.getElementById('<%= TB_oilpercent.ClientID %>').value = oilPercentage.toFixed(2);
+                } else {
+                    console.error("One or more input elements not found.");
+                }
+            }
 
 
         <%--function validateDryWeight(sender, args) {
@@ -396,6 +422,13 @@
         }
 
     </script>
+
+    <asp:HiddenField ID="hdn_img1" runat="server" />
+    <asp:HiddenField ID="hdn_img2" runat="server" />
+
+    <asp:HiddenField ID="hdn_shiftvalue" runat="server" />
+    <asp:HiddenField ID="hdn_fromid" runat="server" />
+    <asp:HiddenField ID="hdn_formname" runat="server" />
     <asp:HiddenField ID="hdnMinNoOfPcs" runat="server" />
     <asp:HiddenField ID="hdnMaxNoOfPcs" runat="server" />
 
@@ -427,7 +460,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 col-sm-12 ">
+                <div class="col-md-12 col-sm-12">
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
@@ -953,16 +986,70 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 col-sm-12 ">
+                <div class="col-md-12">
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
                                 <asp:Label ID="Label6" runat="server" Text="Approval Matrix"></asp:Label></h2>
-                            <div class="clearfix"></div>
+                                <div class="clearfix"></div>
+                            
                         </div>
-
                         <div class="x_content">
-                            Coming Soon...!
+                            <!-- Approver Flow Diagram -->
+                            <div class="approver-flow">
+                                <div class="approver-item">
+                                    <p>
+                                        <asp:Label ID="Label7" runat="server" Text="Approver 1" />
+                                    </p>
+                                    <asp:Image ID="Image3" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
+                                    <p>
+                                        <asp:Label ID="Approver1NameLabel" runat="server" Text='<%# Eval("Approver1Name") %>' />
+                                    </p>
+                                    <p>
+                                        <asp:Label ID="Approver1CodeLabel" runat="server" Text='<%# Eval("Approver1EmployeeCode") %>' />
+                                    </p>
+                                </div>
+                                <div class="flow-line"></div>
+                                <div class="approver-item">
+                                    <p>
+                                        <asp:Label ID="Label8" runat="server" Text="Approver 2" />
+                                    </p>
+                                    <asp:Image ID="Image2" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
+                                    <p>
+                                        <asp:Label ID="Approver2NameLabel" runat="server" Text='<%# Eval("Approver2Name") %>' />
+                                    </p>
+                                    <p>
+                                        <asp:Label ID="Approver2CodeLabel" runat="server" Text='<%# Eval("Approver2EmployeeCode") %>' />
+                                    </p>
+                                </div>
+                                <div class="flow-line"></div>
+                                <div class="approver-item">
+                                    <p>
+                                        <asp:Label ID="Label9" runat="server" Text="Approver 3" />
+                                    </p>
+                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
+                                    <p>
+                                        <asp:Label ID="DottedLineApproverNameLabel" runat="server" Text='<%# Eval("DottedLineApproverName") %>' />
+                                    </p>
+                                    <p>
+                                        <asp:Label ID="DottedLineApproverCodeLabel" runat="server" Text='<%# Eval("DottedLineApproverEmployeeCode") %>' />
+                                    </p>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <!-- GridView for Detailed Information -->
+                            <asp:GridView ID="GridViewApprovers" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" Visible="false">
+                                <Columns>
+                                    <asp:BoundField DataField="Approver1Name" HeaderText="Approver 1 Name" HtmlEncode="false" />
+                                    <asp:BoundField DataField="Approver1EmployeeCode" HeaderText="Approver 1" HtmlEncode="false" />
+                                    <asp:BoundField DataField="Approver2Name" HeaderText="Approver 2 Name" HtmlEncode="false" />
+                                    <asp:BoundField DataField="Approver2EmployeeCode" HeaderText="Approver 2" HtmlEncode="false" />
+                                    <asp:BoundField DataField="DottedLineApproverName" HeaderText="Dotted Line Approver Name" HtmlEncode="false" />
+                                    <asp:BoundField DataField="DottedLineApproverEmployeeCode" HeaderText="Dotted Line Approver Code" HtmlEncode="false" />
+                                </Columns>
+                            </asp:GridView>
                         </div>
                     </div>
                 </div>
