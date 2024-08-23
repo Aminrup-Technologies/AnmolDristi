@@ -4,16 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
         <div class="">
-            <%--<div class="page-title">
-                <div class="title_left">
-                    <h2>Quality AssuranceReport Forms</h2>
-                </div>
-            </div>
-
-            <div class="clearfix"></div>--%>
-
             <div class="row">
-
                 <div class="col-md-12" id="QC_Panel" runat="server" visible="true">
                     <div class="x_panel">
                         <div class="x_title">
@@ -32,23 +23,19 @@
 
                             </a>
                             <a class="btn btn-app" href="#">
-                                <span class="badge bg-red">
+                                <span class="badge bg-warning">
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="true"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Wheat Flour report
 
                             </a>
                             <a class="btn btn-app" href="#">
-                                <span class="badge bg-red">
+                                <span class="badge bg-warning">
                                     <asp:Label ID="Label2" runat="server" Text="0" Visible="true"></asp:Label></span>
                                 <i class="fa fa-edit"></i>CB Box Report
-
                             </a>
                         </div>
                     </div>
                 </div>
-
-                
-
             </div>
         </div>
     </div>

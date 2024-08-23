@@ -4,10 +4,15 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using ClosedXML.Excel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace AnmolDristi
 {
-    public partial class qaqc_qcinspector_rpt_ : System.Web.UI.Page
+    public partial class app_qc_inspectorreport : System.Web.UI.Page
     {
         DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
         DataTable dt_exportdata = new DataTable();
@@ -808,6 +813,22 @@ namespace AnmolDristi
             {
                 // Handle the case where ViewState["ExportData"] is null
                 Response.Write("No data available to export.");
+            }
+        }
+
+        protected void GridView1_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
+        {
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = GridView1.Rows[rowIndex];
+
+            string dbid = (row.FindControl("lbl_rowid") as Label).Text;
+            //string app1 = (row.FindControl("lbl_Approver1") as Label).Text;
+            //string app2 = (row.FindControl("lbl_Approver2") as Label).Text;
+            //string dtapp = (row.FindControl("lbl_DottedLineApproverEmployeeCode") as Label).Text;
+
+            if (e.CommandName == "ViewApprove")
+            {
+                Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "");
             }
         }
     }

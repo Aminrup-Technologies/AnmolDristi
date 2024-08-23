@@ -93,6 +93,18 @@ namespace AnmolDristi.qaqc
                             DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
                             //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString(); // Adjust field name for photo
                         }
+                        else
+                        {
+                            // Set default values to ADMIN if no rows are found
+                            Approver1NameLabel.Text = "ADMIN";
+                            Approver1CodeLabel.Text = "ADMIN";
+
+                            Approver2NameLabel.Text = "ADMIN";
+                            Approver2CodeLabel.Text = "ADMIN";
+
+                            DottedLineApproverNameLabel.Text = "ADMIN";
+                            DottedLineApproverCodeLabel.Text = "ADMIN";
+                        }
                     }
                 }
             }
@@ -127,6 +139,8 @@ namespace AnmolDristi.qaqc
 
             }
         }
+
+
         private void SetValidatorPropertiesFromDatabase()
         {
             // Fetch validation criteria from the database for NoOfPcs
@@ -1906,14 +1920,6 @@ namespace AnmolDristi.qaqc
                 Console.WriteLine($"Exception: {ex.Message}");
                 throw; // Optional: rethrow the exception if you want it to propagate further
             }
-        }
-
-
-
-        private decimal TryParseDecimal_Old(string value)
-        {
-            decimal result;
-            return decimal.TryParse(value, out result) ? result : 0;
         }
 
         private decimal? TryParseDecimal(string value)

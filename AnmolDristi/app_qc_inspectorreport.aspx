@@ -1,26 +1,6 @@
-﻿<%@ Page Title="AIL | QC Inspector Report" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="qaqc_qcinspector_rpt_.aspx.cs" Inherits="AnmolDristi.qaqc_qcinspector_rpt_" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="app_qc_inspectorreport.aspx.cs" Inherits="AnmolDristi.app_qc_inspectorreport" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        .thumbnail {
-            position: relative;
-            overflow: hidden;
-            width: 100px; /* Set the initial width of the thumbnail */
-            height: 100px; /* Set the initial height of the thumbnail */
-            transition: width 0.3s, height 0.3s; /* Add smooth transition effect */
-        }
 
-            .thumbnail:hover {
-                width: 150px; /* Set the enlarged width on hover */
-                height: 150px; /* Set the enlarged height on hover */
-            }
-
-        .thumbnail-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensure the image covers the entire container */
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
@@ -52,9 +32,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" ValidationGroup="Submit" OnSelectedIndexChanged="DDL_Plant_SelectedIndexChanged"></asp:DropDownList>
-
                                     </div>
-
                                 </div>
                             </div>
 
@@ -183,13 +161,13 @@
                             <div class="row">
                                 <div class="card-box col-md-12 col-sm-12" style="width: 100%; height: 450px; overflow: scroll;">
                                     <asp:GridView ID="GridView1" runat="server" Width="100%" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap"
-                                        AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found">
+                                        AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found" OnRowCommand="GridView1_RowCommand">
                                         <Columns>
                                             <asp:TemplateField HeaderText="SL" HeaderStyle-Width="2%">
                                                 <ItemTemplate>
                                                     SL:<asp:Label ID="lbl_slno" runat="server" Text="<%# Container.DataItemIndex + 1 %>"></asp:Label>
                                                     <br />
-                                                    Id:<asp:Label ID="lbl_rowid" runat="server" Text='<%# Eval("rowid") %>' />
+                                                    DBID:<asp:Label ID="lbl_rowid" runat="server" Text='<%# Eval("rowid") %>' Visible="true" />
                                                 </ItemTemplate>
                                                 <ItemStyle CssClass="text text-center" />
                                             </asp:TemplateField>
@@ -282,17 +260,17 @@
                                             <asp:TemplateField HeaderText="Appearance and Texture" HeaderStyle-Width="10%">
                                                 <ItemTemplate>
                                                     Color Appearance:
-                                                    <asp:Label ID="lbl_ColorAppearance" runat="server"
+                                                    <asp:Label ID="lbl_DesignImplementation" runat="server"
                                                         Text='<%# Convert.ToBoolean(Eval("DesignImplementation")) ? "OK" : "Not OK" %>' Font-Bold="true" />
                                                     ; Comments:
-                                                    <asp:Label ID="lbl_CommentsForColorAppearance" runat="server"
+                                                    <asp:Label ID="lbl_CommentsForDesignImplementation" runat="server"
                                                         Text='<%# Eval("CommentsForDesignImplementation") %>' />
                                                     <br />
                                                     Texture/Bite:
-                                                    <asp:Label ID="Label8" runat="server"
+                                                    <asp:Label ID="lbl_TextureBite" runat="server"
                                                         Text='<%# Convert.ToBoolean(Eval("TextureBite")) ? "OK" : "Not OK" %>' Font-Bold="true" />
                                                     ; Comments:
-                                                    <asp:Label ID="Label9" runat="server"
+                                                    <asp:Label ID="lbl_CommentsForTextureBite" runat="server"
                                                         Text='<%# Eval("CommentsForTextureBite") %>' />
                                                 </ItemTemplate>
                                                 <ItemStyle CssClass="text" />
@@ -334,7 +312,7 @@
                                                 <ItemStyle CssClass="text" />
                                             </asp:TemplateField>
 
-                                            <asp:TemplateField HeaderText="Product Apperance" HeaderStyle-Width="2%">
+                                            <%--<asp:TemplateField HeaderText="Product Apperance" HeaderStyle-Width="2%">
                                                 <ItemTemplate>
                                                     <div class="thumbnail">
                                                         <asp:Image ID="Img_DesignAndImplementation" runat="server" ImageUrl='<%# Eval("DesignAndImplementation") %>' CssClass="thumbnail-image" />
@@ -348,7 +326,7 @@
                                                         <asp:Image ID="Img_ColourAndAppearance" runat="server" ImageUrl='<%# Eval("ColourAndAppearance") %>' CssClass="thumbnail-image" />
                                                     </div>
                                                 </ItemTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField>--%>
 
                                             <asp:TemplateField HeaderText="Approvals" HeaderStyle-Width="10%">
                                                 <ItemTemplate>
@@ -357,39 +335,13 @@
                                                     A2:
                                                     <asp:Label ID="lbl_Approver2" runat="server" Text='<%# Eval("Approver2EmployeeCode") %>' /><br />
                                                     A3:
-                                                    <asp:Label ID="lbl_DottedLineApproverEmployeeCode" runat="server" Text='<%# Eval("DottedLineApproverEmployeeCode") %>' />
+                                                    <asp:Label ID="lbl_DottedLineApproverEmployeeCode" runat="server" Text='<%# Eval("DottedLineApproverEmployeeCode") %>' /><br />
+                                                    <asp:Button ID="btn_viewdetails" runat="server" Text="Approve" Font-Size="Smaller" CssClass="btn btn-sm btn-warning" CommandName="ViewApprove" CausesValidation="false" CommandArgument="<%# Container.DataItemIndex %>" />
                                                 </ItemTemplate>
                                                 <ItemStyle CssClass="text" />
                                             </asp:TemplateField>
 
-                                            <%--<asp:TemplateField HeaderText="Audit Information" HeaderStyle-Width="10%">
-                                                <ItemTemplate>
-                                                    Created By:
-                                                    <asp:Label ID="lbl_CreatedBy" runat="server" Text='<%# Eval("CreatedBy") %>' /><br />
-                                                    Created On:
-                                                    <asp:Label ID="lbl_CreatedOn" runat="server" Text='<%# Eval("CreatedOn", "{0:dd-MM-yyyy}") %>' /><br />
-                                                    Modified By:
-                                                    <asp:Label ID="lbl_ModifiedBy" runat="server" Text='<%# Eval("ModifiedBy") %>' /><br />
-                                                    Modified On:
-                                                    <asp:Label ID="lbl_ModifiedOn" runat="server" Text='<%# Eval("ModifiedOn", "{0:dd-MM-yyyy}") %>' />
-                                                </ItemTemplate>
-                                                <ItemStyle CssClass="text" />
-                                            </asp:TemplateField>--%>
 
-                                            <%--<asp:TemplateField HeaderText="Record Status" HeaderStyle-Width="5%">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lbl_RecordStatus" runat="server" Text='<%# Eval("RecordStatus") %>' CssClass="status-label" />
-                                                </ItemTemplate>
-                                                <ItemStyle CssClass="text text-center" />
-                                            </asp:TemplateField>--%>
-
-                                            <%--<asp:TemplateField HeaderText="Actions" HeaderStyle-Width="5%">
-                                                <ItemTemplate>
-                                                    <asp:HyperLink ID="lnkEdit" runat="server" Text="Edit" NavigateUrl='<%# Eval("ID", "~/EditForm.aspx?ID={0}") %>' CssClass="btn btn-primary btn-sm" />
-                                                    <asp:HyperLink ID="lnkDelete" runat="server" Text="Delete" NavigateUrl='<%# Eval("ID", "~/DeleteForm.aspx?ID={0}") %>' CssClass="btn btn-danger btn-sm" />
-                                                </ItemTemplate>
-                                                <ItemStyle CssClass="text-center" />
-                                            </asp:TemplateField>--%>
                                         </Columns>
                                     </asp:GridView>
 

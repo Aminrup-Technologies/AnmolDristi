@@ -76,6 +76,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.IO.FileSystem.Primitives">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
@@ -114,6 +118,7 @@
     <Content Include="add_prod_plants.aspx" />
     <Content Include="add_region.aspx" />
     <Content Include="add_users.aspx" />
+    <Content Include="app_qc_inspectorreport.aspx" />
     <Content Include="datamastering_home.aspx" />
     <Content Include="home.aspx" />
     <Content Include="qaqc_add_users.aspx" />
@@ -122,7 +127,12 @@
     <Content Include="qaqc_home.aspx" />
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
+    <Content Include="qaqc_process_rpt.aspx" />
+    <Content Include="qaqc_qaapprovals.aspx" />
+    <Content Include="qaqc_qcapprovals.aspx" />
     <Content Include="qaqc_qcinspector_frmctrl.aspx" />
+    <Content Include="qa_qc_FinalCbbWtReport.aspx" />
+    <Content Include="vw_app_qcireport.aspx" />
     <Content Include="WebData\Anmol_Logo.png" />
     <Content Include="WebData\Internal\bank.jpg" />
     <Content Include="WebData\Internal\crossgif.gif" />
@@ -228,6 +238,13 @@
     <Compile Include="add_users.aspx.designer.cs">
       <DependentUpon>add_users.aspx</DependentUpon>
     </Compile>
+    <Compile Include="app_qc_inspectorreport.aspx.cs">
+      <DependentUpon>app_qc_inspectorreport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app_qc_inspectorreport.aspx.designer.cs">
+      <DependentUpon>app_qc_inspectorreport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="blank.aspx.cs">
       <DependentUpon>blank.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -268,6 +285,7 @@
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="QAProcessCheckingDataAcess.cs" />
     <Compile Include="qaqc_add_users.aspx.cs">
       <DependentUpon>qaqc_add_users.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -297,12 +315,33 @@
     <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
     </Compile>
+    <Compile Include="qaqc_process_rpt.aspx.cs">
+      <DependentUpon>qaqc_process_rpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_process_rpt.aspx.designer.cs">
+      <DependentUpon>qaqc_process_rpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_qaapprovals.aspx.cs">
+      <DependentUpon>qaqc_qaapprovals.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_qaapprovals.aspx.designer.cs">
+      <DependentUpon>qaqc_qaapprovals.aspx</DependentUpon>
+    </Compile>
     <Compile Include="qaqc_qahome.aspx.cs">
       <DependentUpon>qaqc_qahome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="qaqc_qahome.aspx.designer.cs">
       <DependentUpon>qaqc_qahome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_qcapprovals.aspx.cs">
+      <DependentUpon>qaqc_qcapprovals.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_qcapprovals.aspx.designer.cs">
+      <DependentUpon>qaqc_qcapprovals.aspx</DependentUpon>
     </Compile>
     <Compile Include="qaqc_qchome.aspx.cs">
       <DependentUpon>qaqc_qchome.aspx</DependentUpon>
@@ -331,6 +370,20 @@
     </Compile>
     <Compile Include="qaqc_qcinspector_rpt_.aspx.designer.cs">
       <DependentUpon>qaqc_qcinspector_rpt_.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qa_qc_FinalCbbWtReport.aspx.cs">
+      <DependentUpon>qa_qc_FinalCbbWtReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qa_qc_FinalCbbWtReport.aspx.designer.cs">
+      <DependentUpon>qa_qc_FinalCbbWtReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vw_app_qcireport.aspx.cs">
+      <DependentUpon>vw_app_qcireport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vw_app_qcireport.aspx.designer.cs">
+      <DependentUpon>vw_app_qcireport.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

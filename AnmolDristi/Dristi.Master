@@ -140,8 +140,19 @@
                                             <ul class="nav child_menu">
                                                 <li id="frms_quality" runat="server" visible="true"><a>Quality<span class="fa fa-chevron-down"></span></a>
                                                     <ul class="nav child_menu">
-                                                        <li id="frms_qa" runat="server" class="sub_menu"><a href="qaqc_qchome.aspx">Quality Control</a></li>
-                                                        <li id="frms_qc" runat="server"><a href="qaqc_qahome.aspx">Quality Assurance</a></li>
+                                                        <li id="frms_qc" runat="server" class="sub_menu"><a href="qaqc_qahome.aspx">Quality Assurance</a></li>
+                                                        <li id="frms_qa" runat="server"><a href="qaqc_qchome.aspx">Quality Control</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li id="FormsApprovals" runat="server" visible="true"><a><i class="fa fa-file-text"></i>Approvals<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li id="app_quality" runat="server" visible="true"><a>Quality<span class="fa fa-chevron-down"></span></a>
+                                                    <ul class="nav child_menu">
+                                                        <li id="app_qa" runat="server" class="sub_menu"><a href="qaqc_qaapprovals.aspx">Quality Assurance</a></li>
+                                                        <li id="app_qc" runat="server"><a href="qaqc_qcapprovals.aspx">Quality Control</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -223,7 +234,7 @@
                     Autologout >
                 <asp:Label ID="lblTime1" runat="server" Text="N/A" Font-Bold="true" ForeColor="IndianRed" Visible="true"></asp:Label>
                     || Time :<asp:Label ID="lblTime" runat="server" Text="N/A" Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
-                    || © 2021-2024
+                    || © 2024
                 <asp:Label ID="Label1" runat="server" Text="Anmol " Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
 
                 </div>

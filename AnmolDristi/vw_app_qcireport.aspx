@@ -1,4 +1,4 @@
-﻿<%@ Page Title="AIL | QC Inspection Form" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="qaqc_inspector_rpt.aspx.cs" Inherits="AnmolDristi.qaqc.qaqc_inspector_rpt" Async="true" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="vw_app_qcireport.aspx.cs" Inherits="AnmolDristi.vw_app_qcireport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
@@ -34,9 +34,9 @@
             text-align: center;
         }
     </style>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <script type="text/javascript">
         function toggleRemarksDiv1(radioButtonList) {
             console.log("showTextbox function called");
@@ -476,7 +476,7 @@
                                     [<asp:Label ID="lbl_DDL_Plant_Value" runat="server" AssociatedControlID="DDL_Plant" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" ValidationGroup="Submit" OnSelectedIndexChanged="DDL_Plant_SelectedIndexChanged"></asp:DropDownList>
+                                        <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
 
                                     </div>
 
@@ -489,7 +489,7 @@
                                     [<asp:Label ID="lbl_DDL_PlantLine_Value" runat="server" AssociatedControlID="DDL_PlantLine" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_PlantLine" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_PlantLine" Display="Dynamic" InitialValue=""></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_PlantLine_SelectedIndexChanged"></asp:DropDownList>
+                                        <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
 
                                     </div>
                                 </div>
@@ -501,7 +501,7 @@
                                     [<asp:Label ID="lbl_DDL_ProductCategory_Value" runat="server" AssociatedControlID="DDL_ProductCategory" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_ProductCategory" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" InitialValue="" ControlToValidate="DDL_ProductCategory" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductCategory_SelectedIndexChanged"></asp:DropDownList>
+                                        <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
 
                                     </div>
                                 </div>
@@ -513,7 +513,7 @@
                                     [<asp:Label ID="lbl_DDL_ProductBrand_Value" runat="server" AssociatedControlID="DDL_ProductBrand" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_ProductBrand" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductBrand_SelectedIndexChanged"></asp:DropDownList>
+                                        <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
@@ -623,7 +623,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3" id="ColorAppRemarksDiv" style="display: none;">
+                            <div class="col-md-3" id="ColorAppRemarksDiv" style="display: none;" runat="server">
                                 <div class="mb-3">
                                     <asp:Label ID="LabelColorAppRemarks" runat="server" AssociatedControlID="TXB_ColorApp_Remarks" Text="Color Appearance (Not Ok)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_ColorAppRemarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_ColorApp_Remarks" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
@@ -867,7 +867,7 @@
                                     <asp:Label ID="Lbl_TB_wgtwtoil" runat="server" AssociatedControlID="TB_wgtwtoil" Text="Weight without oil /Dry Weight (g):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_wgtwtoil" ValidationGroup="Submit" runat="server" ErrorMessage="*" ControlToValidate="TB_wgtwtoil" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_wgtwtoil" ValidationGroup="Submit" runat="server" ControlToValidate="TB_wgtwtoil" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_TB_wgtwtoil" runat="server" ValidationGroup="Submit" ControlToValidate="TB_wgtwtoil" ErrorMessage="Weight with oil should be between 0.00 and 100.00 kg" ForeColor="Red" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_TB_wgtwtoil" runat="server" ValidationGroup="Submit" ControlToValidate="TB_wgtwtoil" ErrorMessage="Weight with oil should be between 0.00 and 100.00 kg" ForeColor="Red" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_wgtwtoil" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Weight with oil (0.00 - 100.00 g)" Text="0.00" oninput="calculateOilPercentage()"></asp:TextBox>
                                     </div>
@@ -881,7 +881,7 @@
                                     <asp:Label ID="Lbl_TB_wgtwoil" runat="server" AssociatedControlID="TB_wgtwoil" Text="Weight with oil / Dipped Weight (g):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_wgtwoil" runat="server" ValidationGroup="Submit" ErrorMessage="*" ControlToValidate="TB_wgtwoil" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_wgtwoil" runat="server" ValidationGroup="Submit" ControlToValidate="TB_wgtwoil" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_TB_wgtwoil" runat="server" ValidationGroup="Submit" ControlToValidate="TB_wgtwoil" ErrorMessage="Weight without oil should be between 0.00 and 1000.00 g" ForeColor="Red" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_TB_wgtwoil" runat="server" ValidationGroup="Submit" ControlToValidate="TB_wgtwoil" ErrorMessage="Weight without oil should be between 0.00 and 1000.00 g" ForeColor="Red" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_wgtwoil" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Weight without oil (0.00 - 1000.00 g)" Text="0.00" oninput="calculateOilPercentage()"></asp:TextBox>
                                     </div>
@@ -932,7 +932,7 @@
                                 </div>
                             </div>--%>
 
-                            <div class="col-md-3" id="FU_DesgImp_Upldr" runat="server" visible="true">
+                            <div class="col-md-3" id="FU_DesgImp_Upldr" runat="server" visible="false">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_FU_DesgImp" runat="server" AssociatedControlID="FU_DesgImp" Text="Product Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_FU_DesgImp" runat="server" ErrorMessage="Product Photograph Required" ControlToValidate="FU_DesgImp" Display="Dynamic" ValidationGroup="Submit" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -941,17 +941,22 @@
                                     <div class="input-group input-group-sm">
                                         <asp:FileUpload ID="FU_DesgImp" runat="server" CssClass="form-control rounded" onchange="displayImage(this);" />
                                         <span class="input-group-btn">
-                                            <asp:Button ID="BtnUploadFU_DesgImp" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm2();" OnClick="BtnUploadFU_DesgImp_Click" ValidationGroup="ValidationGroup1" CausesValidation="true" />
+                                            <asp:Button ID="BtnUploadFU_DesgImp" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm2();" ValidationGroup="ValidationGroup1" CausesValidation="true" />
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-3" id="FU_DesgImp_Img" runat="server" visible="false">
-                                <asp:Image ID="uploadedImage1" runat="server" CssClass="img-fluid" />
+                            <div class="col-md-6" id="FU_DesgImp_Img" runat="server" visible="false">
+                                <div class="mb-6">
+                                    <asp:Label ID="Label11" runat="server" AssociatedControlID="uploadedImage1" Text="Product Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <div class="input-group input-group-sm">
+                                        <asp:Image ID="uploadedImage1" runat="server" CssClass="img-fluid" />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="col-md-3" id="FU_ClrApp_Upldr" runat="server" visible="true">
+                            <div class="col-md-3" id="FU_ClrApp_Upldr" runat="server" visible="false">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_FU_ClrApp" runat="server" AssociatedControlID="FU_ClrApp" Text="Final Packet (Coding Zone)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_FU_ClrApp" runat="server" ErrorMessage="Product Photograph Required" ControlToValidate="FU_ClrApp" Display="Dynamic" ForeColor="Red" ValidationGroup="Submit"></asp:RequiredFieldValidator>
@@ -960,22 +965,28 @@
                                     <div class="input-group input-group-sm">
                                         <asp:FileUpload ID="FU_ClrApp" runat="server" CssClass="form-control rounded" />
                                         <span class="input-group-btn">
-                                            <asp:Button ID="BtnUploadClrApp" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm1();" OnClick="BtnUploadClrApp_Click" ValidationGroup="ValidationGroup2" />
+                                            <asp:Button ID="BtnUploadClrApp" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm1();" ValidationGroup="ValidationGroup2" />
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-3" id="FU_ClrApp_Img" runat="server" visible="false">
-                                <asp:Image ID="uploadedImage2" runat="server" CssClass="img-fluid" />
+                            <div class="col-md-6" id="FU_ClrApp_Img" runat="server" visible="false">
+                                <div class="mb-6">
+                                    <asp:Label ID="Label10" runat="server" AssociatedControlID="uploadedImage2" Text="Final Packet (Coding Zone)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <div class="input-group input-group-sm">
+                                        <asp:Image ID="uploadedImage2" runat="server" CssClass="img-fluid" />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="Click to SUBMIT" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                            <div class="col-md-12">
+                                <div class="mb-12">
+                                    <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="Click on your ACTION" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group input-group-sm">
-                                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="btnSubmit_Click" />
-                                        <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btnReset_Click" />
+                                        <asp:Button ID="btnSubmit" runat="server" Text="Re-Validate Inputs" CssClass="btn btn-warning btn-sm" ValidationGroup="Submit" CausesValidation="true" />
+                                        <asp:Button ID="btnApprove" runat="server" Text="Approve" CssClass="btn btn-success btn-sm" CausesValidation="false" OnClick="btnApprove_Click" />
+                                        <asp:Button ID="btnReject" runat="server" Text="Reject" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btnReject_Click" />
                                     </div>
                                 </div>
                             </div>
@@ -999,28 +1010,22 @@
                             <div class="approver-flow">
                                 <div class="approver-item">
                                     <p>
-                                        <asp:Label ID="Label7" runat="server" Text="Approver 1" />
-                                    </p>
+                                        <asp:Label ID="Label7" runat="server" Text="Approver 1" /></p>
                                     <asp:Image ID="Image3" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
                                     <p>
-                                        <asp:Label ID="Approver1NameLabel" runat="server" Text='<%# Eval("Approver1Name") %>' />
-                                    </p>
+                                        <asp:Label ID="Approver1NameLabel" runat="server" Text='<%# Eval("Approver1Name") %>' /></p>
                                     <p>
-                                        <asp:Label ID="Approver1CodeLabel" runat="server" Text='<%# Eval("Approver1EmployeeCode") %>' />
-                                    </p>
+                                        <asp:Label ID="Approver1CodeLabel" runat="server" Text='<%# Eval("Approver1EmployeeCode") %>' /></p>
                                 </div>
                                 <div class="flow-line"></div>
                                 <div class="approver-item">
                                     <p>
-                                        <asp:Label ID="Label8" runat="server" Text="Approver 2" />
-                                    </p>
+                                        <asp:Label ID="Label8" runat="server" Text="Approver 2" /></p>
                                     <asp:Image ID="Image2" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
                                     <p>
-                                        <asp:Label ID="Approver2NameLabel" runat="server" Text='<%# Eval("Approver2Name") %>' />
-                                    </p>
+                                        <asp:Label ID="Approver2NameLabel" runat="server" Text='<%# Eval("Approver2Name") %>' /></p>
                                     <p>
-                                        <asp:Label ID="Approver2CodeLabel" runat="server" Text='<%# Eval("Approver2EmployeeCode") %>' />
-                                    </p>
+                                        <asp:Label ID="Approver2CodeLabel" runat="server" Text='<%# Eval("Approver2EmployeeCode") %>' /></p>
                                 </div>
                                 <div class="flow-line"></div>
                                 <div class="approver-item">
