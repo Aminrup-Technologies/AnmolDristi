@@ -119,6 +119,7 @@
     <Content Include="add_region.aspx" />
     <Content Include="add_users.aspx" />
     <Content Include="app_qc_inspectorreport.aspx" />
+    <Content Include="ccp_checklist.aspx" />
     <Content Include="datamastering_home.aspx" />
     <Content Include="home.aspx" />
     <Content Include="qaqc_add_users.aspx" />
@@ -131,6 +132,7 @@
     <Content Include="qaqc_qaapprovals.aspx" />
     <Content Include="qaqc_qcapprovals.aspx" />
     <Content Include="qaqc_qcinspector_frmctrl.aspx" />
+    <Content Include="qaqc_rotary_line.aspx" />
     <Content Include="qa_qc_FinalCbbWtReport.aspx" />
     <Content Include="vw_app_qcireport.aspx" />
     <Content Include="WebData\Anmol_Logo.png" />
@@ -252,6 +254,13 @@
     <Compile Include="blank.aspx.designer.cs">
       <DependentUpon>blank.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ccp_checklist.aspx.cs">
+      <DependentUpon>ccp_checklist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ccp_checklist.aspx.designer.cs">
+      <DependentUpon>ccp_checklist.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DAL\QCInspectorDataAccess.cs" />
     <Compile Include="DAL\Shift.cs" />
     <Compile Include="DAL\ShiftManager.cs" />
@@ -370,6 +379,13 @@
     </Compile>
     <Compile Include="qaqc_qcinspector_rpt_.aspx.designer.cs">
       <DependentUpon>qaqc_qcinspector_rpt_.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_rotary_line.aspx.cs">
+      <DependentUpon>qaqc_rotary_line.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_rotary_line.aspx.designer.cs">
+      <DependentUpon>qaqc_rotary_line.aspx</DependentUpon>
     </Compile>
     <Compile Include="qa_qc_FinalCbbWtReport.aspx.cs">
       <DependentUpon>qa_qc_FinalCbbWtReport.aspx</DependentUpon>

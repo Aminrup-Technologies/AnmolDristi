@@ -19,16 +19,19 @@ namespace AnmolDristi.DAL
             connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
         }
 
-        public void InsertBasicData(string plantName, string line, string productCategory, string productBrand, DateTime date, char shift, TimeSpan time,
-                                    decimal processWaterTemp, decimal waterPh, decimal waterHardness, decimal waterTest, decimal tds,
-                                    string maidaBrand, int maidaBatchNo, int maidaMfg, int maidaAppColor, string commentForMaidaAppColor,
-                                    int maidaFlavorTaste, string commentForMaidaFlavorTaste, int maidaGrittiness, string commentsForMaidaGrittiness,
-                                    int bbAppColor, string commentForBBColor, int bbMouthFeel, string commentForBBMouthFeel, int bbFlavorTaste, string commentForBBFlavorTaste,
-                                    int hvoSmell, string commentForHvoSmell, int hvoTaste, string commentForHvoTaste, decimal hvoTemp, int smpSmell, string commentForSmpSmell,
-                                    int smpTaste, string commentForSmpTaste, int smpColor, string commentForSmpColor, decimal syrupTemp, int syrupColor, string commentForSyrupColor,
-                                    decimal syrupPh, int invertSyrup, string commentForInvertSyrup, int sugarSol, string commentForSugarSol, int creamerBucket, string commentForCreamerBucket,
-                                    int sugarGrinder, string commentForSugarGrinder, int oilSystem, string commentForOilSystem, int oilSpray, string commentForOilSpray, int milkSpray,
-                                    string commentForMilkSpray, decimal coldRoomTemp, decimal DeepFreezeTemp)
+        public void InsertBasicData(string pcrNo,string plantName, string line, string productCategory, string productBrand, string skuId,DateTime date, string shift,
+                                    TimeSpan time, decimal processWaterTemp, string commentForProcessWater ,decimal waterPh,string commentForWaterPh ,
+                                    decimal waterHardness,string commentForWaterHardness,string waterTest, decimal tds, string commentForTds, string maidaBrand, 
+                                    string maidaBatchNo,  DateTime maidaMfg, int maidaAppColor, string commentForMaidaAppColor,int maidaFlavorTaste, 
+                                    string commentForMaidaFlavorTaste, int maidaGrittiness, string commentsForMaidaGrittiness,int bbAppColor, string commentForBBColor, 
+                                    int bbMouthFeel, string commentForBBMouthFeel, int bbFlavorTaste, string commentForBBFlavorTaste, int hvoSmell, 
+                                    string commentForHvoSmell, int hvoTaste, string commentForHvoTaste, decimal hvoTemp, string commentForHvoTemp ,int smpSmell, 
+                                    string commentForSmpSmell, int smpTaste, string commentForSmpTaste, int smpColor, string commentForSmpColor, decimal syrupTemp, 
+                                    string commentForSyrupTemp,  int syrupColor, string commentForSyrupColor, decimal syrupPh, string commentForSyrupPh ,
+                                    int invertSyrup, string commentForInvertSyrup, int sugarSol, string commentForSugarSol, int creamerBucket, string commentForCreamerBucket,
+                                    int sugarGrinder, string commentForSugarGrinder, int oilSystem, string commentForOilSystem, int oilSpray,
+                                    string commentForOilSpray, int milkSpray, string commentForMilkSpray, decimal coldRoomTemp, string commentForColdRoom ,
+                                    decimal DeepFreezeTemp , string commentForDeepFreeze ,string ImgLink1, string ImgLink2  )
 
         {
             using (SqlConnection connection = new SqlConnection(connectionString)) 
@@ -38,18 +41,24 @@ namespace AnmolDristi.DAL
                     command.CommandType = CommandType.StoredProcedure;
 
                     // Add parameters
+                    command.Parameters.AddWithValue("@PcrNo", pcrNo);
                     command.Parameters.AddWithValue("@PlantName", plantName);
                     command.Parameters.AddWithValue("@Line", line);
                     command.Parameters.AddWithValue("@ProductCategory", productCategory);
                     command.Parameters.AddWithValue("@ProductBrand", productBrand);
+                    command.Parameters.AddWithValue("@SkuId",skuId);
                     command.Parameters.AddWithValue("@Date", date);
                     command.Parameters.AddWithValue("@Shift",shift);
                     command.Parameters.AddWithValue("@Time",time);
                     command.Parameters.AddWithValue("@ProcessWaterTemp",processWaterTemp);
+                    command.Parameters.AddWithValue("@ProcessWaterCmnt", commentForProcessWater);
                     command.Parameters.AddWithValue("@WaterPH", waterPh);
+                    command.Parameters.AddWithValue("@WaterPhCmnt",commentForWaterPh);
                     command.Parameters.AddWithValue("@WaterHardness",waterHardness);
+                    command.Parameters.AddWithValue("@HardnessCmnt",commentForWaterHardness);
                     command.Parameters.AddWithValue("@WaterTest",waterTest);
                     command.Parameters.AddWithValue("@TDS", tds);
+                    command.Parameters.AddWithValue("@TdsCmnt",commentForTds);
                     command.Parameters.AddWithValue("@MaidaBrand", maidaBrand);
                     command.Parameters.AddWithValue("@MaidaBatchNo", maidaBatchNo);
                     command.Parameters.AddWithValue("@MaidaMfgDate", maidaMfg);
@@ -65,12 +74,12 @@ namespace AnmolDristi.DAL
                     command.Parameters.AddWithValue("@CommentForBBMouthFeel", commentForBBMouthFeel);
                     command.Parameters.AddWithValue("@BBFlavorAndTaste", bbFlavorTaste);
                     command.Parameters.AddWithValue("@CommentForBBFlavorAndTaste", commentForBBFlavorTaste);
-                    command.Parameters.AddWithValue("@BBAppearanceColor", bbAppColor);
                     command.Parameters.AddWithValue("@HvoSmell", hvoSmell);
                     command.Parameters.AddWithValue("@CommentForHvoSmell", commentForHvoSmell);
                     command.Parameters.AddWithValue("@HvoTaste",hvoTaste);
                     command.Parameters.AddWithValue("@CommentForHvoTaste",commentForHvoTaste);
                     command.Parameters.AddWithValue("@HvoTemp",hvoTemp);
+                    command.Parameters.AddWithValue("@HvoCmnt",commentForHvoTemp);
                     command.Parameters.AddWithValue("@SmpSmell",smpSmell);
                     command.Parameters.AddWithValue("@CommentForSmpSmell",commentForSmpSmell);
                     command.Parameters.AddWithValue("@SmpTaste",smpTaste);
@@ -78,9 +87,11 @@ namespace AnmolDristi.DAL
                     command.Parameters.AddWithValue("@SmpColor",smpColor);
                     command.Parameters.AddWithValue("@CommentForSmpColor",commentForSmpColor);
                     command.Parameters.AddWithValue("@SyrupTemp",syrupTemp);
+                    command.Parameters.AddWithValue("@SyrupCmnt",commentForSyrupTemp);
                     command.Parameters.AddWithValue("@SyrupColor",syrupColor);
                     command.Parameters.AddWithValue("@CommentForSyrupColor",commentForSyrupColor);
                     command.Parameters.AddWithValue("@SyrupPH",syrupPh);
+                    command.Parameters.AddWithValue("@SyrupPhCmnt", commentForSyrupPh);
                     command.Parameters.AddWithValue("@InvertSyrpBucketFilter",invertSyrup);
                     command.Parameters.AddWithValue("@CommentForISBF",commentForInvertSyrup);
                     command.Parameters.AddWithValue("@SugarSolBucketFilter",sugarSol);
@@ -96,7 +107,12 @@ namespace AnmolDristi.DAL
                     command.Parameters.AddWithValue("@MilkSpray",milkSpray);
                     command.Parameters.AddWithValue("@CommentForMilkSpray",commentForMilkSpray);
                     command.Parameters.AddWithValue("@ColdRoomTemp",coldRoomTemp);
+                    command.Parameters.AddWithValue("@ColdRoomCmnt", commentForColdRoom);
                     command.Parameters.AddWithValue("@DeepFreezeTemp",DeepFreezeTemp);
+                    command.Parameters.AddWithValue("@DeepFreezeCmnt", commentForDeepFreeze);
+                    command.Parameters.AddWithValue("@MaidaImageUrl", ImgLink1);
+                    command.Parameters.AddWithValue("@BBImageUrl", ImgLink2);
+                    
 
 
                     // Open the connection and execute the command
@@ -109,8 +125,8 @@ namespace AnmolDristi.DAL
         }
 
 
-        public void InsertRawMaterialData(string plantName1, string maidaBrandName, decimal maidaWgt, decimal sugarWgt, decimal butter, decimal smp, 
-                                    decimal processWater, decimal lecithin, decimal gms, decimal ssl, decimal glucose, decimal hvo, decimal syrup, 
+        public void InsertRawMaterialData(string PcrNo,  string maidaBrandName, decimal maidaWgt, decimal sugarWgt, decimal butter, decimal smp,
+                                    decimal processWater, decimal lecithin, decimal gms, decimal ssl, decimal glucose, decimal hvo, decimal syrup,
                                     decimal malt, decimal bb, decimal abc, decimal sbc, decimal smbs, decimal wheyPowder, decimal condenceMilk, decimal salt,
                                     decimal yeast, decimal e1, decimal caramel)
         {
@@ -121,7 +137,7 @@ namespace AnmolDristi.DAL
                     command.CommandType = CommandType.StoredProcedure;
 
                     // Add parameters
-                    command.Parameters.AddWithValue("@PlantName", plantName1);
+                    command.Parameters.AddWithValue("@PcrNo", PcrNo);
                     command.Parameters.AddWithValue("@MaidaBrandName", maidaBrandName);
                     command.Parameters.AddWithValue("@MaidaActWgt", maidaWgt);
                     command.Parameters.AddWithValue("@SugarActWgt", sugarWgt);
@@ -145,7 +161,7 @@ namespace AnmolDristi.DAL
                     command.Parameters.AddWithValue("@YeastActWgt", yeast);
                     command.Parameters.AddWithValue("@E1ActWgt", e1);
                     command.Parameters.AddWithValue("@CaramelActWgt", caramel);
-                    
+
 
 
                     // Open the connection and execute the command
@@ -157,9 +173,12 @@ namespace AnmolDristi.DAL
         }
 
 
-        public void InsertSpongeData(string plantName2, decimal roomTemp, int drumCovered, string commentForDrumCovered, int quality, string commentForQuality,
-                                string standingTime, decimal temp)
+        public void InsertSpongeData(string PcrNo, decimal roomTemp, string commentForRoomTemp,int drumCovered, string commentForDrumCovered, 
+                                        int quality, string commentForQuality, TimeSpan standingTime, string commentForStandingTime , decimal temp , 
+                                        string commentForTemp)
+            
         {
+            
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand command = new SqlCommand("InsertSpongeData", connection))
@@ -167,28 +186,31 @@ namespace AnmolDristi.DAL
                     command.CommandType = CommandType.StoredProcedure;
 
                     // Add parameters
-                    command.Parameters.AddWithValue("@PlantName", plantName2);
+                    command.Parameters.AddWithValue("@PcrNo", PcrNo);
                     command.Parameters.AddWithValue("@RoomTemp", roomTemp);
+                    command.Parameters.AddWithValue("@RoomTempCmnt", commentForRoomTemp);
                     command.Parameters.AddWithValue("@DrumCovered", drumCovered);
                     command.Parameters.AddWithValue("@DrumCmnt", commentForDrumCovered);
                     command.Parameters.AddWithValue("@Quality", quality);
                     command.Parameters.AddWithValue("@QualityCmnt", commentForQuality);
                     command.Parameters.AddWithValue("@StandingTime", standingTime);
+                    command.Parameters.AddWithValue("@StandingTimeCmnt", commentForStandingTime);
                     command.Parameters.AddWithValue("@Temp", temp);
+                    command.Parameters.AddWithValue("@TempCmnt", commentForTemp);
 
 
                     // Open the connection and execute the command
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
-
             }
         }
 
 
-        public void InsertDoughData(string plantName3, decimal doughTemp, string restTime, int metalDetector, string commentForMetalDetector, int processSequence,
-                                string commentForProcessSequence, string creamingTime, string mixingTime, string bakingTime, int diceRmp, int doughCondition,
-                                string commentForDoughCondition)
+        public void InsertDoughData(string PcrNo,  decimal doughTemp, string commentForDoughTemp, TimeSpan restTime, string commentForRestTime,
+                                       int metalDetector, string commentForMetalDetector, int processSequence, string commentForProcessSequence,
+                                       TimeSpan creamingTime, string commentForCreamingTime, TimeSpan mixingTime, string commentForMixingTime ,
+                                       TimeSpan bakingTime, string commentForBakingTime, int diceRmp,string  commentForDice, int doughCondition, string commentForDoughCondition)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -197,18 +219,24 @@ namespace AnmolDristi.DAL
                     command.CommandType = CommandType.StoredProcedure;
 
                     // Add parameters
-                    command.Parameters.AddWithValue("@PlantName", plantName3);
+                    command.Parameters.AddWithValue("@PcrNo", PcrNo);
                     command.Parameters.AddWithValue("@DoughTemp", doughTemp);
+                    command.Parameters.AddWithValue("@DoughTempCmnt", commentForDoughTemp);
                     command.Parameters.AddWithValue("@DoughRestTime", restTime);
+                    command.Parameters.AddWithValue("@DoughRestTimeCmnt", commentForRestTime);
                     command.Parameters.AddWithValue("@MetalDetector", metalDetector);
                     command.Parameters.AddWithValue("@DetectorCmnt", commentForMetalDetector);
                     command.Parameters.AddWithValue("@ProcessSequence",processSequence );
-                    command.Parameters.AddWithValue("@SequenceCmnt", commentForProcessSequence);
+                    command.Parameters.AddWithValue("@ProcessCmnt", commentForProcessSequence);
                     command.Parameters.AddWithValue("@CreamingTime",creamingTime);
+                    command.Parameters.AddWithValue("@CreamingTimeCmnt", commentForCreamingTime);
                     command.Parameters.AddWithValue("@MixingTime",mixingTime);
+                    command.Parameters.AddWithValue("@MixingTimeCmnt", commentForMixingTime);
                     command.Parameters.AddWithValue("@BakingTime",bakingTime);
+                    command.Parameters.AddWithValue("@BakingTimeCmnt", commentForBakingTime);
                     command.Parameters.AddWithValue("@DiceRpm",diceRmp);
-                    command.Parameters.AddWithValue("@DoughCondition",doughCondition);
+                    command.Parameters.AddWithValue("@DiceRpmCmnt", commentForDice);
+                    command.Parameters.AddWithValue("@DoughConditon", doughCondition);
                     command.Parameters.AddWithValue("@DoughCmnt",commentForDoughCondition);
 
 
@@ -220,10 +248,10 @@ namespace AnmolDristi.DAL
             }
         }
 
-        public void InsertOvenData(string plantName4, string zone1Top ,string zone1Bottom ,string zone2Top ,string zone2Bottom ,string zone3Top , string zone3Bottom ,
-                              string zone4Top , string zone4Bottom ,string zone5Top ,string zone5Bottom , string zone6Top ,string zone6Bottom ,
-                              string DPzone1Top , string DPzone1Bottom ,string DPzone2Top ,string DPzone2Bottom ,string DPzone3Top ,string DPzone3Bottom ,
-                              string DPzone4Top ,string DPzone4Bottom , string DPzone5Top ,string DPzone5Bottom , string DPzone6Top ,string DPzone6Bottom ) 
+        public void InsertOvenData(string PcrNo, string zone1Top ,string zone1Bottom ,string zone2Top ,string zone2Bottom ,string zone3Top , string zone3Bottom ,
+                                        string zone4Top , string zone4Bottom ,string zone5Top ,string zone5Bottom , string zone6Top ,string zone6Bottom ,
+                                string DPzone1Top , string DPzone1Bottom ,string DPzone2Top ,string DPzone2Bottom ,string DPzone3Top ,string DPzone3Bottom ,
+                                string DPzone4Top ,string DPzone4Bottom , string DPzone5Top ,string DPzone5Bottom , string DPzone6Top ,string DPzone6Bottom ) 
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -232,7 +260,7 @@ namespace AnmolDristi.DAL
                     command.CommandType = CommandType.StoredProcedure;
 
                     // Add parameters
-                    command.Parameters.AddWithValue("@PlantName", plantName4);
+                    command.Parameters.AddWithValue("PcrNo", PcrNo);
                     command.Parameters.AddWithValue("@OvenZone1Top",zone1Top);
                     command.Parameters.AddWithValue("@OvenZone1Bottom",zone1Bottom);
                     command.Parameters.AddWithValue("@OvenZone2Top",zone2Top);
@@ -269,8 +297,11 @@ namespace AnmolDristi.DAL
         }
 
 
-        public void InsertVerifiedData(int balanceCond , string commentForBalanceCond , string rawBiscuitWgt ,
-                                        int submittedById, DateTime submittedDate, TimeSpan submittedTime, string SubmittedByPNo)
+        public void InsertVerifiedData(string PcrNo, int balanceCond , string commentForBalanceCond , string rawBiscuitWgt ,
+                                            int submittedById, DateTime submittedDate, TimeSpan submittedTime, string submittedByPno,
+                                            string submittedByEmployeeCode,string approver1EmployeeCode , int approver1_Status ,TimeSpan ? approver1_TimeStamp , 
+                                            string approver2EmployeeCode, int approver2_Status ,TimeSpan ? approver2_TimeStamp ,
+                                            string dottedLineApproverEmployeeCode , int dottedApprover_Status ,TimeSpan ? dottedApprover_TimeStamp)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -279,13 +310,30 @@ namespace AnmolDristi.DAL
                     command.CommandType = CommandType.StoredProcedure;
 
                     // Add parameters
+                    command.Parameters.AddWithValue("@PcrNo", PcrNo);
                     command.Parameters.AddWithValue("@WghBalanceCond", balanceCond);
-                    command.Parameters.AddWithValue("@WghBalanceCmnt", commentForBalanceCond);
+                    command.Parameters.AddWithValue("@WghtBalanceCmnt", commentForBalanceCond);
                     command.Parameters.AddWithValue("@RawBiscuitWgt", rawBiscuitWgt);
+
                     command.Parameters.AddWithValue("@SubmittedById", submittedById);
                     command.Parameters.AddWithValue("@SubmittedDate", submittedDate);
                     command.Parameters.AddWithValue("@SubmittedTime", submittedTime);
-                    command.Parameters.AddWithValue("@SubmittedByPNo", SubmittedByPNo);
+
+                    command.Parameters.AddWithValue("@SubmittedByPNo", submittedByPno);
+                    command.Parameters.AddWithValue("@SubmittedByEmployeeCode", submittedByEmployeeCode);
+
+                    command.Parameters.AddWithValue("@Approver1EmployeeCode", approver1EmployeeCode);
+                    command.Parameters.AddWithValue("@Approver1_Status", approver1_Status);
+                    command.Parameters.AddWithValue("@Approver1_TimeStamp", approver1_TimeStamp);
+
+                    command.Parameters.AddWithValue("@Approver2EmployeeCode", approver2EmployeeCode);
+                    command.Parameters.AddWithValue("@Approver2_Status", approver2_Status);
+                    command.Parameters.AddWithValue("@Approver2_TimeStamp", approver2_TimeStamp);
+
+                    command.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", dottedLineApproverEmployeeCode);
+                    command.Parameters.AddWithValue("@DottedApprover_Status", dottedApprover_Status);
+                    command.Parameters.AddWithValue("@DottedApprover_TimeStamp", dottedApprover_TimeStamp);
+
 
                     // Open the connection and execute the command
                     connection.Open();

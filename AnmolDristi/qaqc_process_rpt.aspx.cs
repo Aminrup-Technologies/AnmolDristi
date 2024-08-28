@@ -1,13 +1,17 @@
 ﻿using AnmolDristi.DAL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Services;
 
 namespace AnmolDristi
 {
@@ -15,6 +19,7 @@ namespace AnmolDristi
     {
         public static string ImgLink1 = string.Empty;
         public static string ImgLink2 = string.Empty;
+        public static string PcrNo = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -29,10 +34,10 @@ namespace AnmolDristi
                     lbl_docname.Text = "QA - Process Checking Report";
                     lbl_docnumber.Text = "ANMOL/DOC/CORP/QA/02";
                     PlantBinder();
-                    PlantBinder1();
-                    PlantBinder2();
-                    PlantBinder3();
-                    PlantBinder4();
+
+                    BindGridView();
+                    //GridBinder(22);
+
                 }
 
             }
@@ -67,122 +72,8 @@ namespace AnmolDristi
 
             }
         }
-        private void PlantBinder1()
-        {
-            string query = "SELECT plant_id, CONCAT(plant_name, '[', sap_code, ']') AS plant_name FROM MST_PlantDetails";
-            string textField = "plant_name";
-            string valueField = "plant_id";
 
-            bool recordsBound;
 
-            // Bind the DropDownList and get the flag indicating whether records were bound
-            DatabaseHelper.BindDropDownList(query, DDL_Plant1, textField, valueField, out recordsBound);
-
-            // Check if any records were bound
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_Plant1);
-                string PlantBinder_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'An error occurred!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
-
-            }
-        }
-        private void PlantBinder2()
-        {
-            string query = "SELECT plant_id, CONCAT(plant_name, '[', sap_code, ']') AS plant_name FROM MST_PlantDetails";
-            string textField = "plant_name";
-            string valueField = "plant_id";
-
-            bool recordsBound;
-
-            // Bind the DropDownList and get the flag indicating whether records were bound
-            DatabaseHelper.BindDropDownList(query, DDL_Plant2, textField, valueField, out recordsBound);
-
-            // Check if any records were bound
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_Plant2);
-                string PlantBinder_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'An error occurred!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
-
-            }
-        }
-        private void PlantBinder3()
-        {
-            string query = "SELECT plant_id, CONCAT(plant_name, '[', sap_code, ']') AS plant_name FROM MST_PlantDetails";
-            string textField = "plant_name";
-            string valueField = "plant_id";
-
-            bool recordsBound;
-
-            // Bind the DropDownList and get the flag indicating whether records were bound
-            DatabaseHelper.BindDropDownList(query, DDL_Plant3, textField, valueField, out recordsBound);
-
-            // Check if any records were bound
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_Plant3);
-                string PlantBinder_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'An error occurred!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
-
-            }
-        }
-        private void PlantBinder4()
-        {
-            string query = "SELECT plant_id, CONCAT(plant_name, '[', sap_code, ']') AS plant_name FROM MST_PlantDetails";
-            string textField = "plant_name";
-            string valueField = "plant_id";
-
-            bool recordsBound;
-
-            // Bind the DropDownList and get the flag indicating whether records were bound
-            DatabaseHelper.BindDropDownList(query, DDL_Plant4, textField, valueField, out recordsBound);
-
-            // Check if any records were bound
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_Plant4);
-                string PlantBinder_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'An error occurred!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
-
-            }
-        }
         public class ValidationCriteria
         {
             public string RequiredFieldErrorMessage { get; set; }
@@ -195,6 +86,8 @@ namespace AnmolDristi
             public bool IsRegularExpressionRequired { get; set; }
             public bool IsRangeRequired { get; set; }
         }
+
+
         protected void DDL_Plant_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_Plant.SelectedIndex != 0)
@@ -217,96 +110,7 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_Plant_Error_script, false);
             }
         }
-        protected void DDL_Plant1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (DDL_Plant1.SelectedIndex != 0)
-            {
-                string selectedPlantValue = DDL_Plant1.SelectedValue.ToString();
-                //PlantLinesBinder(selectedPlantValue);
-            }
-            else
-            {
-                //DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
 
-                string DDL_Plant1_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'Invalid Selection!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_Plant1_Error_script, false);
-            }
-        }
-        protected void DDL_Plant2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (DDL_Plant2.SelectedIndex != 0)
-            {
-                string selectedPlantValue = DDL_Plant2.SelectedValue.ToString();
-                //PlantLinesBinder(selectedPlantValue);
-                ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('rawMaterial-tab');", true);
-
-            }
-            else
-            {
-                //DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
-
-                string DDL_Plant2_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'Invalid Selection!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_Plant2_Error_script, false);
-            }
-        }
-        protected void DDL_Plant3_SelectedIndexChanged1(object sender, EventArgs e)
-        {
-            if (DDL_Plant3.SelectedIndex != 0)
-            {
-                string selectedPlantValue = DDL_Plant3.SelectedValue.ToString();
-                //PlantLinesBinder(selectedPlantValue);
-            }
-            else
-            {
-                //DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
-
-                string DDL_Plant3_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'Invalid Selection!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_Plant3_Error_script, false);
-            }
-        }
-        protected void DDL_Plant4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (DDL_Plant4.SelectedIndex != 0)
-            {
-                string selectedPlantValue = DDL_Plant4.SelectedValue.ToString();
-                //  PlantLinesBinder(selectedPlantValue);
-            }
-            else
-            {
-                //DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
-
-                string DDL_Plant4_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'Invalid Selection!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_Plant4_Error_script, false);
-            }
-        }
 
         private void PlantLinesBinder(string selectedPlantValue)
         {
@@ -332,7 +136,6 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantLinesBinderErrorNotification", PlantLinesBinder_Error_script, false);
             }
         }
-
         protected void DDL_PlantLine_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_PlantLine.SelectedIndex != 0)
@@ -357,7 +160,6 @@ namespace AnmolDristi
             }
 
         }
-
         private void LineProductsBinder(string selectedPlantValue, string selectedPlantLineValue)
         {
             // Construct the SQL query with parameters
@@ -392,7 +194,6 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowLineProductsBinderErrorNotification", PN_Error_script, false);
             }
         }
-
         protected void DDL_ProductCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_ProductCategory.SelectedIndex != 0)
@@ -417,7 +218,6 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_PlantLine_Error_script, false);
             }
         }
-
         private void ProductBrandsBinder(string selectedPlantValue, string selectedPlantLineValue, string selectedProductCategoryValue)
         {
             // Construct the SQL query with parameters
@@ -453,7 +253,6 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
             }
         }
-
         protected void DDL_ProductBrand_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_ProductBrand.SelectedIndex != 0)
@@ -517,7 +316,6 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowSKUInvalidErrorNotification", DDL_ProductBrand_Error_script, false);
             }
         }
-
         private void BrandSKUBinder(string selectedProductBrandValue)
         {
             string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue";
@@ -542,6 +340,7 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
             }
         }
+
         protected void BtnUploadFU_MaidaImage_Click(object sender, EventArgs e)
         {
             //Maida image
@@ -560,7 +359,6 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowImage1SuccessNotification", UI_1_Successscript, false);
             }
         }
-
         private bool UploadImage1()
         {
             bool imgSaved = false;
@@ -626,11 +424,11 @@ namespace AnmolDristi
             catch (Exception ex)
             {
                 // Log the exception or display an error message
+
             }
 
             return imgSaved;
         }
-
         private bool UploadImage2()
         {
             bool imgSaved = false;
@@ -700,7 +498,6 @@ namespace AnmolDristi
 
             return imgSaved;
         }
-
         protected void BtnUploadFU_BBImage_Click(object sender, EventArgs e)
         {
             //Broken biscuit image
@@ -723,18 +520,25 @@ namespace AnmolDristi
         protected void BasicBtnSubmit_Click(object sender, EventArgs e)
         {
             // Retrieve values from controls
+            string pcrNo = GenerateUniquePCR01();  // Generate unique value
             string plantName = DDL_Plant.SelectedValue;
             string line = DDL_PlantLine.SelectedValue;
             string productCategory = DDL_ProductCategory.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue;
+            string skuId = DDL_BrandSKU.SelectedValue;
+            string shift = GetCurrentShift();  // auto current shift acc to time
             decimal processWaterTemp = Convert.ToDecimal(TB_ProcessWaterTemp.Text);
+            string commentForProcessWater = "";
             decimal waterPh = Convert.ToDecimal(TB_WaterPH.Text);
+            string commentForWaterPh = "";
             decimal waterHardness = Convert.ToDecimal(TB_WaterHardness.Text);
-            decimal waterTest = Convert.ToDecimal(TB_WaterTest.Text);
+            string commentForWaterHardness = "";
+            string waterTest = TB_WaterTest.Text;
             decimal tds = Convert.ToDecimal(TB_TDS.Text);
+            string commentForTds = "";
             string maidaBrand = TB_MaidaBrand.Text;
-            int maidaBatchNo = Convert.ToInt32(TB_MaidaBatchNo.Text);
-            int maidaMfg = Convert.ToInt32(TB_MaidaMfg.Text);
+            string maidaBatchNo = TB_MaidaBatchNo.Text;
+            DateTime maidaMfg = DateTime.Parse(TB_MaidaMfg.Text).Date;
             int maidaAppColor = Convert.ToInt32(RBL_MaidaColorApp.SelectedValue);
             string commentForMaidaAppColor = TXB_MaidaColorApp_Remarks.Text;
             int maidaFlavorTaste = Convert.ToInt32(RBL_MaidaFlavorTaste.SelectedValue);
@@ -752,6 +556,7 @@ namespace AnmolDristi
             int hvoTaste = Convert.ToInt32(RBL_HvoTaste.SelectedValue);
             string commentForHvoTaste = TXB_HvoTaste_Remarks.Text;
             decimal hvoTemp = Convert.ToDecimal(TB_HvoTemp.Text);
+            string commentForHvoTemp = "";
             int smpSmell = Convert.ToInt32(RBL_SMPSmell.SelectedValue);
             string commentForSmpSmell = TXB_SMPSmell_Remarks.Text;
             int smpTaste = Convert.ToInt32(RBL_SMPTaste.SelectedValue);
@@ -759,9 +564,11 @@ namespace AnmolDristi
             int smpColor = Convert.ToInt32(RBL_SMPColor.SelectedValue);
             string commentForSmpColor = TXB_SMPColor_Remarks.Text;
             decimal syrupTemp = Convert.ToDecimal(TB_SyrupTemp.Text);
+            string commentForSyrupTemp = "";
             int syrupColor = Convert.ToInt32(RBL_SyrupColor.SelectedValue);
             string commentForSyrupColor = TXB_SyrupColor_Remarks.Text;
             decimal syrupPh = Convert.ToDecimal(TB_SyrupPH.Text);
+            string commentForSyrupPh = "";
             int invertSyrup = Convert.ToInt32(RBL_InvertSyrupBucket.SelectedValue);
             string commentForInvertSyrup = TXB_InvertSyrupBucket_Remarks.Text;
             int sugarSol = Convert.ToInt32(RBL_SugarSolBucket.SelectedValue);
@@ -777,23 +584,26 @@ namespace AnmolDristi
             int milkSpray = Convert.ToInt32(RBL_MilkSpray.SelectedValue);
             string commentForMilkSpray = TXB_MilkSpray_Remarks.Text;
             decimal coldRoomTemp = Convert.ToDecimal(TB_ColdRoomTemp.Text);
+            string commentForColdRoom = "";
             decimal DeepFreezeTemp = Convert.ToDecimal(TB_DeepFreezeTemp.Text);
-            //date //shift //time
-            char shift = 'A';
+            string commentForDeepFreeze = "";
+
 
             QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
 
             try
             {
                 // Call the InsertBasicData method with the retrieved values
-                dataAccess.InsertBasicData(plantName, line, productCategory, productBrand, DateTime.Now.Date, shift, DateTime.Now.TimeOfDay, processWaterTemp, waterPh,
-                                            waterHardness, waterTest, tds, maidaBrand, maidaBatchNo, maidaMfg, maidaAppColor, commentForMaidaAppColor,
-                                            maidaFlavorTaste, commentForMaidaFlavorTaste, maidaGrittiness, commentsForMaidaGrittiness, bbAppColor,
-                                            commentForBBColor, bbMouthFeel, commentForBBMouthFeel, bbFlavorTaste, commentForBBFlavorTaste, hvoSmell,
-                                            commentForHvoSmell, hvoTaste, commentForHvoTaste, hvoTemp, smpSmell, commentForSmpSmell, smpTaste, commentForSmpTaste,
-                                            smpColor, commentForSmpColor, syrupTemp, syrupColor, commentForSyrupColor, syrupPh, invertSyrup, commentForInvertSyrup,
-                                            sugarSol, commentForSugarSol, creamerBucket, commentForCreamerBucket, sugarGrinder, commentForSugarGrinder, oilSystem,
-                                            commentForOilSystem, oilSpray, commentForOilSpray, milkSpray, commentForMilkSpray, coldRoomTemp, DeepFreezeTemp);
+                dataAccess.InsertBasicData(pcrNo, plantName, line, productCategory, productBrand, skuId, DateTime.Now.Date, shift, DateTime.Now.TimeOfDay, processWaterTemp,
+                                            commentForProcessWater, waterPh, commentForWaterPh, waterHardness, commentForWaterHardness, waterTest, tds, commentForTds,
+                                            maidaBrand, maidaBatchNo, maidaMfg, maidaAppColor, commentForMaidaAppColor, maidaFlavorTaste, commentForMaidaFlavorTaste,
+                                            maidaGrittiness, commentsForMaidaGrittiness, bbAppColor, commentForBBColor, bbMouthFeel, commentForBBMouthFeel,
+                                            bbFlavorTaste, commentForBBFlavorTaste, hvoSmell, commentForHvoSmell, hvoTaste, commentForHvoTaste, hvoTemp,
+                                            commentForHvoTemp, smpSmell, commentForSmpSmell, smpTaste, commentForSmpTaste, smpColor, commentForSmpColor,
+                                            syrupTemp, commentForSyrupTemp, syrupColor, commentForSyrupColor, syrupPh, commentForSyrupPh, invertSyrup,
+                                            commentForInvertSyrup, sugarSol, commentForSugarSol, creamerBucket, commentForCreamerBucket, sugarGrinder,
+                                            commentForSugarGrinder, oilSystem, commentForOilSystem, oilSpray, commentForOilSpray, milkSpray,
+                                            commentForMilkSpray, coldRoomTemp, commentForColdRoom, DeepFreezeTemp, commentForDeepFreeze, ImgLink1, ImgLink2);
 
 
                 //Make the inputs readonly
@@ -878,6 +688,8 @@ namespace AnmolDristi
             TB_ColdRoomTemp.ReadOnly = true;
             TB_DeepFreezeTemp.ReadOnly = true;
 
+            ImgLink1 = string.Empty;
+            ImgLink2 = string.Empty;
 
             BasicBtnSubmit.Enabled = false;
             BasicBtnSubmit.Text = "SAVED";
@@ -894,14 +706,14 @@ namespace AnmolDristi
 
             // RegisterStartupScript adds the JavaScript code to the page
             ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('rawMaterial-tab').click();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('weight-tab').click();", true);
 
         }
 
         protected void RawBtnSubmit_Click(object sender, EventArgs e)
         {
             // Retrieve values from controls
-            string plantName1 = DDL_Plant1.SelectedValue;
+
             string maidaBrandName = TB_MaidaBrandName.Text;
             decimal maidaWgt = Convert.ToDecimal(TB_MaidaActWgt.Text);
             decimal sugarWgt = Convert.ToDecimal(TB_SugarActWgt.Text);
@@ -930,8 +742,8 @@ namespace AnmolDristi
 
             try
             {
-                // Call the InsertBasicData method with the retrieved values
-                dataAccess.InsertRawMaterialData(plantName1, maidaBrandName, maidaWgt, sugarWgt, butter, smp, processWater, lecithin, gms, ssl, glucose, hvo, syrup,
+                // Call the InsertRawMaterialData method with the retrieved values
+                dataAccess.InsertRawMaterialData(PcrNo, maidaBrandName, maidaWgt, sugarWgt, butter, smp, processWater, lecithin, gms, ssl, glucose, hvo, syrup,
                                             malt, bb, abc, sbc, smbs, wheyPowder, condenceMilk, salt, yeast, e1, caramel);
 
                 //Make the inputs readonly
@@ -954,19 +766,17 @@ namespace AnmolDristi
         }
         protected void RawBtnReset_Click(object sender, EventArgs e)
         {
-            //ScriptManager.RegisterStartupScript(this, GetType(), "clearFields", "document.getElementById('rawMaterial-tab').value = '';", true);
+            Response.Redirect("qaqc_process_rpt.aspx");
             ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('rawMaterial-tab');", true);
             //or
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "clearAndActivate", "clearFields('rawMaterial-tab'); activateTab();", true);
+            // ScriptManager.RegisterStartupScript(this, this.GetType(), "clearAndActivate", "clearFields('rawMaterial-tab'); activateTab();", true);
+            //or
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "resetSection", "resetSectionFields('rawMaterial-tab');", true);
+
         }
         private void MakeInputsReadOnly1()
         {
             //Raw Material Data
-            DDL_Plant.Enabled = false;
-            DDL_PlantLine.Enabled = false;
-            DDL_ProductCategory.Enabled = false;
-            DDL_ProductBrand.Enabled = false;
-            DDL_BrandSKU.Enabled = false;
             TB_MaidaActWgt.ReadOnly = true;
             TB_SugarActWgt.ReadOnly = true;
             TB_ButterActWgt.ReadOnly = true;
@@ -990,8 +800,6 @@ namespace AnmolDristi
             TB_E1ActWgt.ReadOnly = true;
             TB_CaramelActWgt.ReadOnly = true;
 
-            ImgLink1 = string.Empty;
-            ImgLink2 = string.Empty;
 
             BasicBtnSubmit.Enabled = false;
             BasicBtnSubmit.Text = "SAVED";
@@ -1013,22 +821,27 @@ namespace AnmolDristi
 
         protected void SpongeBtnSubmit_Click(object sender, EventArgs e)
         {
+            
             // Retrieve values from controls
-            string plantName2 = DDL_Plant2.SelectedValue;
             decimal roomTemp = Convert.ToDecimal(TB_RoomTemp.Text);
+            string commentForRoomTemp = "";
             int drumCovered = Convert.ToInt32(RBL_DrumCovered.SelectedValue);
             string commentForDrumCovered = TXB_DrumCovered_Remarks.Text;
             int quality = Convert.ToInt32(RBL_Quality.SelectedValue);
             string commentForQuality = TXB_Quality_Remarks.Text;
-            string standingTime = TB_StandingTime.Text;
+            TimeSpan standingTime = TimeSpan.Parse(TB_StandingTime.Text);
+            string commentForStandingTime = "";
             decimal temp = Convert.ToDecimal(TB_Temp.Text);
+            string commentForTemp = "";
 
             QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
 
+
             try
             {
-                // Call the InsertBasicData method with the retrieved values
-                dataAccess.InsertSpongeData(plantName2, roomTemp, drumCovered, commentForDrumCovered, quality, commentForQuality, standingTime, temp);
+                // Call the InsertSpongeData method with the retrieved values
+                dataAccess.InsertSpongeData(PcrNo, roomTemp, commentForRoomTemp, drumCovered, commentForDrumCovered, quality,
+                                                commentForQuality, standingTime, commentForStandingTime, temp, commentForTemp);
 
                 //Make the inputs readonly
                 MakeInputsReadOnly2();
@@ -1049,12 +862,12 @@ namespace AnmolDristi
         }
         protected void Spongebtn_Reset_Click(object sender, EventArgs e)
         {
-
+            ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('spongeData-tab');", true);
+            Response.Redirect("qaqc_process_rpt.aspx");
         }
         private void MakeInputsReadOnly2()
         {
-            //BasicData
-            DDL_Plant.Enabled = false;
+            //SpongeData
             TB_RoomTemp.ReadOnly = true;
             RBL_DrumCovered.Enabled = false;
             TXB_DrumCovered_Remarks.ReadOnly = true;
@@ -1063,9 +876,9 @@ namespace AnmolDristi
             TB_StandingTime.ReadOnly = true;
             TB_Temp.ReadOnly = true;
 
-            BasicBtnSubmit.Enabled = false;
-            BasicBtnSubmit.Text = "SAVED";
-            BasicBtnSubmit.CssClass = "btn btn-sm btn-success";
+            SpongeBtnSubmit.Enabled = false;
+            SpongeBtnSubmit.Text = "SAVED";
+            SpongeBtnSubmit.CssClass = "btn btn-sm btn-success";
 
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
@@ -1086,17 +899,22 @@ namespace AnmolDristi
         protected void DoughBtnSubmit_Click(object sender, EventArgs e)
         {
             // Retrieve values from controls
-            string plantName3 = DDL_Plant3.SelectedValue;
             decimal doughTemp = Convert.ToDecimal(TB_DoughTemp.Text);
-            string restTime = TB_DoughRestTime.Text;
+            string commentForDoughTemp = "";
+            TimeSpan restTime = TimeSpan.Parse(TB_DoughRestTime.Text);
+            string commentForRestTime = "";
             int metalDetector = Convert.ToInt32(RBL_MetalDectector.SelectedValue);
-            string commentForMetalDetector = TXB_MetalDectector_Remarks.Text;
+            string commentForMetalDetector = TXB_MetalDetector_Remarks.Text;
             int processSequence = Convert.ToInt32(RBL_ProcessSequence.SelectedValue);
             string commentForProcessSequence = TXB_ProcessSequence_Remarks.Text;
-            string creamingTime = TB_CreamingTime.Text;
-            string mixingTime = TB_MixingTime.Text;
-            string bakingTime = TB_BakingTime.Text;
+            TimeSpan creamingTime = TimeSpan.Parse(TB_CreamingTime.Text);
+            string commentForCreamingTime = "";
+            TimeSpan mixingTime = TimeSpan.Parse(TB_MixingTime.Text);
+            string commentForMixingTime = "";
+            TimeSpan bakingTime = TimeSpan.Parse(TB_BakingTime.Text);
+            string commentForBakingTime = "";
             int diceRmp = Convert.ToInt32(TB_DiceRpm.Text);
+            string commentForDice = "";
             int doughCondition = Convert.ToInt32(RBL_DoughCondition.SelectedValue);
             string commentForDoughCondition = TXB_DoughCondition_Remarks.Text;
 
@@ -1104,9 +922,11 @@ namespace AnmolDristi
 
             try
             {
-                // Call the InsertBasicData method with the retrieved values
-                dataAccess.InsertDoughData(plantName3, doughTemp, restTime, metalDetector, commentForMetalDetector, processSequence, commentForProcessSequence,
-                                        creamingTime, mixingTime, bakingTime, diceRmp, doughCondition, commentForDoughCondition);
+                // Call the InsertDoughData method with the retrieved values
+                dataAccess.InsertDoughData(PcrNo, doughTemp, commentForDoughTemp, restTime, commentForRestTime, metalDetector,
+                                            commentForMetalDetector, processSequence, commentForProcessSequence, creamingTime, commentForCreamingTime,
+                                            mixingTime, commentForMixingTime, bakingTime, commentForBakingTime, diceRmp, commentForDice, doughCondition,
+                                                commentForDoughCondition);
 
                 //Make the inputs readonly
                 MakeInputsReadOnly3();
@@ -1127,16 +947,16 @@ namespace AnmolDristi
         }
         protected void DoughBtnReset_Click(object sender, EventArgs e)
         {
-
+            ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('doughData-tab');", true);
+            Response.Redirect("qaqc_process_rpt.aspx");
         }
         private void MakeInputsReadOnly3()
         {
-            //BasicData
-            DDL_Plant.Enabled = false;
+            //DoughData
             TB_DoughTemp.ReadOnly = true;
             TB_DoughRestTime.ReadOnly = true;
             RBL_MetalDectector.Enabled = false;
-            TXB_MetalDectector_Remarks.ReadOnly = true;
+            TXB_MetalDetector_Remarks.ReadOnly = true;
             RBL_ProcessSequence.Enabled = false;
             TXB_ProcessSequence_Remarks.ReadOnly = true;
             TB_CreamingTime.ReadOnly = true;
@@ -1147,9 +967,9 @@ namespace AnmolDristi
             TXB_DoughCondition_Remarks.ReadOnly = true;
 
 
-            BasicBtnSubmit.Enabled = false;
-            BasicBtnSubmit.Text = "SAVED";
-            BasicBtnSubmit.CssClass = "btn btn-sm btn-success";
+            DoughBtnSubmit.Enabled = false;
+            DoughBtnSubmit.Text = "SAVED";
+            DoughBtnSubmit.CssClass = "btn btn-sm btn-success";
 
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
@@ -1169,7 +989,7 @@ namespace AnmolDristi
         protected void OvenBtnSubmit_Click(object sender, EventArgs e)
         {
             // Retrieve values from controls
-            string plantName4 = DDL_Plant4.SelectedValue;
+
             string zone1Top = TB_Zone1Top.Text;
             string zone1Bottom = TB_Zone1Bottom.Text;
             string zone2Top = TB_Zone2Top.Text;
@@ -1200,10 +1020,11 @@ namespace AnmolDristi
 
             try
             {
-                // Call the InsertBasicData method with the retrieved values
-                dataAccess.InsertOvenData(plantName4, zone1Top, zone1Bottom, zone2Top, zone2Bottom, zone3Top, zone3Bottom, zone4Top, zone4Bottom, zone5Top,
-                                        zone5Bottom, zone6Top, zone6Bottom, DPzone1Top, DPzone1Bottom, DPzone2Top, DPzone2Bottom, DPzone3Top, DPzone3Bottom,
-                                        DPzone4Top, DPzone4Bottom, DPzone5Top, DPzone5Bottom, DPzone6Top, DPzone6Bottom);
+                // Call the InsertOvenData method with the retrieved values
+                dataAccess.InsertOvenData(PcrNo, zone1Top, zone1Bottom, zone2Top, zone2Bottom, zone3Top, zone3Bottom, zone4Top,
+                                            zone4Bottom, zone5Top, zone5Bottom, zone6Top, zone6Bottom, DPzone1Top, DPzone1Bottom, DPzone2Top,
+                                            DPzone2Bottom, DPzone3Top, DPzone3Bottom, DPzone4Top, DPzone4Bottom, DPzone5Top, DPzone5Bottom,
+                                            DPzone6Top, DPzone6Bottom);
 
                 //Make the inputs readonly
                 MakeInputsReadOnly4();
@@ -1225,12 +1046,12 @@ namespace AnmolDristi
         }
         protected void OvenBtnReset_Click(object sender, EventArgs e)
         {
-
+            ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('ovenData-tab');", true);
+            Response.Redirect("qaqc_process_rpt.aspx");
         }
         private void MakeInputsReadOnly4()
         {
-            //BasicData
-            DDL_Plant.Enabled = false;
+            //OvenData
             TB_Zone1Top.ReadOnly = true;
             TB_Zone1Bottom.ReadOnly = true;
             TB_Zone2Top.ReadOnly = true;
@@ -1258,9 +1079,9 @@ namespace AnmolDristi
             TB_DPZone6Bottom.ReadOnly = true;
 
 
-            BasicBtnSubmit.Enabled = false;
-            BasicBtnSubmit.Text = "SAVED";
-            BasicBtnSubmit.CssClass = "btn btn-sm btn-success";
+            OvenBtnSubmit.Enabled = false;
+            OvenBtnSubmit.Text = "SAVED";
+            OvenBtnSubmit.CssClass = "btn btn-sm btn-success";
 
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
@@ -1281,20 +1102,34 @@ namespace AnmolDristi
         protected void FinalBtnSubmit_Click(object sender, EventArgs e)
         {
             // Retrieve values from controls
-            int balanceCond = Convert.ToInt32(RBL_BalanceCondition.Text);
+            int balanceCond = Convert.ToInt32(RBL_BalanceCondition.SelectedValue);
             string commentForBalanceCond = TXB_BalanceCondition_Remarks.Text;
             string rawBiscuitWgt = TB_RawBiscuitWgt.Text;
+            int submittedById = Convert.ToInt32(null);
+            DateTime submittedDate = DateTime.Now.Date;
+            TimeSpan submittedTime = DateTime.Now.TimeOfDay;
+            string submittedByPno = null;
+            string submittedByEmployeeCode = null;
+            string approver1EmployeeCode = null;
+            int approver1_Status = Convert.ToInt32(null);
+            TimeSpan? approver1_TimeStamp = null;
+            string approver2EmployeeCode = null;
+            int approver2_Status = Convert.ToInt32(null);
+            TimeSpan? approver2_TimeStamp = null;
+            string dottedLineApproverEmployeeCode = null;
+            int dottedApprover_Status = Convert.ToInt32(null);
+            TimeSpan? dottedApprover_TimeStamp = null;
 
-            int submittedById = 1;
-            string SubmittedByPNo = Session["USERID"].ToString();
 
             QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
 
             try
             {
-                // Call the InsertQCInspectorData method with the retrieved values
-                dataAccess.InsertVerifiedData(balanceCond, commentForBalanceCond, rawBiscuitWgt, submittedById, DateTime.Now.Date,
-                                                    DateTime.Now.TimeOfDay, SubmittedByPNo);
+                // Call the InsertVerifiedData method with the retrieved values
+                dataAccess.InsertVerifiedData(PcrNo, balanceCond, commentForBalanceCond, rawBiscuitWgt, submittedById, submittedDate,
+                                                submittedTime, submittedByPno, submittedByEmployeeCode, approver1EmployeeCode, approver1_Status,
+                                                approver1_TimeStamp, approver2EmployeeCode, approver2_Status, approver2_TimeStamp,
+                                                    dottedLineApproverEmployeeCode, dottedApprover_Status, dottedApprover_TimeStamp);
 
                 //Make the inputs readonly
                 MakeInputsReadOnly5();
@@ -1316,21 +1151,21 @@ namespace AnmolDristi
         }
         protected void FinalBtnReset_Click(object sender, EventArgs e)
         {
-
+            ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('verificationData-tab');", true);
+            Response.Redirect("qaqc_process_rpt.aspx");
 
         }
         private void MakeInputsReadOnly5()
         {
-            //BasicData
-            DDL_Plant.Enabled = false;
+            //VerifiedData
             RBL_BalanceCondition.Enabled = false;
             TXB_BalanceCondition_Remarks.ReadOnly = true;
             TB_RawBiscuitWgt.ReadOnly = true;
 
 
-            BasicBtnSubmit.Enabled = false;
-            BasicBtnSubmit.Text = "SAVED";
-            BasicBtnSubmit.CssClass = "btn btn-sm btn-success";
+            FinalBtnSubmit.Enabled = false;
+            FinalBtnSubmit.Text = "SAVED";
+            FinalBtnSubmit.CssClass = "btn btn-sm btn-success";
 
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
@@ -1345,5 +1180,459 @@ namespace AnmolDristi
             ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
 
         }
+
+
+        private string GenerateUniquePCR01()
+        {
+
+            string newPcrValue;
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    // Fetch the maximum PCR01 value
+                    string query = "SELECT ISNULL(MAX(CAST(SUBSTRING(PCRNO, 4, LEN(PCRNO)) AS INT)), 0) FROM PCR_BasicData";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        object result = command.ExecuteScalar();
+                        int maxPCRValue = Convert.ToInt32(result);
+
+                        // Increment the numeric part
+                        int numericPart = maxPCRValue + 1;
+
+                        // Format the new value
+                        newPcrValue = $"PCR{numericPart:D3}"; // Ensure three digits (e.g., PCR001, PCR002)
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                Console.WriteLine("Error generating PCR01: " + ex.Message);
+                throw;
+            }
+
+            PcrNo = newPcrValue;
+            return newPcrValue;
+        }
+        private string GetCurrentShift()
+        {
+            TimeSpan currentTime = DateTime.Now.TimeOfDay;
+
+            // Define shift times
+            TimeSpan shiftAStart = new TimeSpan(6, 0, 0);  // 06:00 AM
+            TimeSpan shiftAEnd = new TimeSpan(14, 0, 0);   // 02:00 PM
+            TimeSpan shiftBStart = new TimeSpan(14, 0, 0); // 02:00 PM
+            TimeSpan shiftBEnd = new TimeSpan(22, 0, 0);   // 10:00 PM
+            TimeSpan shiftCStart = new TimeSpan(22, 0, 0); // 10:00 PM
+            TimeSpan shiftCEnd = new TimeSpan(6, 0, 0);    // 06:00 AM (next day)
+
+            // Determine the current shift based on time
+            if (currentTime >= shiftAStart && currentTime < shiftAEnd)
+            {
+                return "A";  // Morning Shift
+            }
+            else if (currentTime >= shiftBStart && currentTime < shiftBEnd)
+            {
+                return "B";  // Afternoon Shift
+            }
+            else if (currentTime >= shiftCStart || currentTime < shiftCEnd)
+            {
+                return "C";  // Night Shift
+            }
+
+            return "Unknown";
+        }
+
+        private decimal? TryParseDecimal(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                // Return null if the input is null, empty, or consists only of whitespace
+                return null;
+            }
+
+            decimal result;
+            return decimal.TryParse(value, out result) ? (decimal?)result : null;
+        }
+        private int? TryParseInt(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                // Return null if the input is null, empty, or consists only of whitespace
+                return null;
+            }
+
+            int result;
+            return int.TryParse(value, out result) ? (int?)result : null;
+        }
+
+        //private void GridBinder(int rowCount)           //no of rows
+        //{
+        //    DataTable dt = new DataTable();
+
+        //    // Create 5 columns: Sl , variety , standardwgt , actual wgt and deviation
+        //    dt.Columns.Add("Sl");
+        //    dt.Columns.Add("StandardWeight");
+        //    dt.Columns.Add("Variety");
+        //    dt.Columns.Add("ActualWeight");
+        //    dt.Columns.Add("Deviation");
+
+        //    for (int i = 1; i <= rowCount; i++)
+        //    {
+        //        DataRow dr = dt.NewRow();
+        //        dr["Sl"] = i; // Serial number (Sl)
+        //        dt.Rows.Add(dr);
+        //    }
+
+        //    GridView1.DataSource = dt;
+        //    GridView1.DataBind();
+        //}
+
+        
+        private void BindGridView()             // to show all 22 varieties and standard weight 
+        {
+            // Sample data for Variety and Standard Weight
+            var dataSave = new List< VarietyInfo>
+            {
+                // Add all 22 varieties here
+                new VarietyInfo {Sl = 1,   Variety = "Maida", StandardWeight = 50 } ,
+                new VarietyInfo {Sl = 2,   Variety = "Sugar", StandardWeight = 45 } ,
+                new VarietyInfo {Sl = 3,   Variety = "Butter", StandardWeight = 38  },
+                new VarietyInfo {Sl = 4,   Variety = "S.M.P", StandardWeight = 61  },
+                new VarietyInfo {Sl = 5,   Variety = "Process Water", StandardWeight = 43  },
+                new VarietyInfo {Sl = 6,   Variety = "Lecithin", StandardWeight = 90  },
+                new VarietyInfo {Sl = 7,   Variety = "GMS Paste", StandardWeight = 54  },
+                new VarietyInfo {Sl = 8,   Variety = "SSL paste/ LS. Powder", StandardWeight = 67  },
+                new VarietyInfo {Sl = 9,   Variety = "Glucose", StandardWeight = 89 },
+                new VarietyInfo {Sl = 10,  Variety = "H.V.O", StandardWeight = 34  },
+                new VarietyInfo {Sl = 11,  Variety = "Syrup", StandardWeight = 51  },
+                new VarietyInfo {Sl = 12,  Variety = "Malt", StandardWeight = 55  },
+                new VarietyInfo {Sl = 13,  Variety = "Broken Biscuit", StandardWeight = 78  },
+                new VarietyInfo {Sl = 14,  Variety = "A.B.C.", StandardWeight = 51  },
+                new VarietyInfo {Sl = 15,  Variety = "S.B.C.", StandardWeight = 83  },
+                new VarietyInfo {Sl = 16,  Variety = "S.M.B.S.", StandardWeight = 58  },
+                new VarietyInfo {Sl = 17,  Variety = "Whey Powder", StandardWeight = 42  },
+                new VarietyInfo {Sl = 18,  Variety = "Condence Milk", StandardWeight = 52  },
+                new VarietyInfo {Sl = 19,  Variety = "Salt", StandardWeight = 78 } ,
+                new VarietyInfo {Sl = 20,  Variety = "Yeast (Smell & Wt.)", StandardWeight = 53  },
+                new VarietyInfo {Sl = 21,  Variety = "E1", StandardWeight = 77 } ,
+                new VarietyInfo {Sl = 22,  Variety = "Caramel", StandardWeight = 34 } ,
+
+            };
+
+            // Bind to GridView
+            GridView1.DataSource = dataSave;
+            GridView1.DataBind();
+        }
+
+        public class VarietyInfo
+        {
+            public int Sl { get; set; }
+            public string Variety { get; set; }
+            public decimal StandardWeight { get; set; }
+            public decimal ActualWeight { get; set; }
+            public decimal DeviationWeight { get; set; }
+        }
+
+        protected void WgtbtnSubmit_Click(object sender, EventArgs e)
+        {
+            var dataToSave = new List<VarietyInfo>();
+
+            try
+            {
+                foreach (GridViewRow row in GridView1.Rows)
+                {
+                    string variety = row.Cells[1].Text.Trim();
+
+                    decimal actualWeight = 0;
+                    decimal deviationWeight = 0;
+                    decimal standardWeight = 0;
+
+                    var standardWeightTextBox = row.FindControl("txtStandardWeight") as TextBox;
+                    var actualWeightTextBox = row.FindControl("txtActualWeight") as TextBox;
+                    var deviationWeightTextBox = row.FindControl("txtDeviation") as TextBox;
+
+                    if (standardWeightTextBox != null && actualWeightTextBox != null && deviationWeightTextBox != null)
+                    {
+                        if (!string.IsNullOrEmpty(actualWeightTextBox.Text) && decimal.TryParse(actualWeightTextBox.Text, out actualWeight))
+                        {
+                            //actualWeight = actual;
+                        }
+
+                        if (!string.IsNullOrEmpty(deviationWeightTextBox.Text) && decimal.TryParse(deviationWeightTextBox.Text, out deviationWeight))
+                        {
+                            //deviationWeight = deviation;
+                        }
+
+                        if (!string.IsNullOrEmpty(standardWeightTextBox.Text) && decimal.TryParse(standardWeightTextBox.Text, out standardWeight))
+                        {
+                            //standardWeight = standard;
+                        }
+
+                        dataToSave.Add(new VarietyInfo
+                        {
+                            Variety = variety,
+                            StandardWeight = standardWeight,
+                            ActualWeight = actualWeight,
+                            DeviationWeight = deviationWeight
+                        });
+                    }
+                }
+
+                var varietyJson = JsonConvert.SerializeObject(dataToSave.Select(d => d.Variety).ToList());
+                var standardJson = JsonConvert.SerializeObject(dataToSave.Select(d => d.StandardWeight).ToList());
+                var actualJson = JsonConvert.SerializeObject(dataToSave.Select(d => d.ActualWeight).ToList());
+                var deviationJson = JsonConvert.SerializeObject(dataToSave.Select(d => d.DeviationWeight).ToList());
+
+
+                SaveDataToDatabase(varietyJson, standardJson, actualJson, deviationJson);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [WebMethod]
+        public static void SaveData(string jsonData)
+        {
+            // Deserialize JSON data to a list of objects
+            var data = JsonConvert.DeserializeObject<List<VarietyInfo>>(jsonData);
+
+            // Process the data (e.g., save to database)
+            //foreach (var item in data)
+            //{
+            //    // Example: Save each item to the database
+            //    //SaveToDatabase(item);
+            //}
+        }
+
+        //public class VarietyInfo
+        //{
+        //    public decimal StandardWeight { get; set; }
+        //    public decimal ActualWeight { get; set; }
+        //    public decimal DeviationWeight { get; set; }
+        //}
+
+
+        private void SaveDataToDatabase(string varietyJson, string standardJson, string actualJson, string deviationJson )
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+
+                string query = "INSERT INTO PC_MaterialWeights ( PcrNo,  MaidaBrandName ,Variety, StandardWeight, ActualWeight, DeviationWeight) " +
+                                    " VALUES (@PcrNo , @MaidaBrandName ,@Variety, @StandardWeight, @ActualWeight, @DeviationWeight)";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@PcrNo ", PcrNo);
+                    cmd.Parameters.AddWithValue("@MaidaBrandName", TB_MaidaBrandNames.Text);
+                    cmd.Parameters.AddWithValue("@Variety", varietyJson);
+                    cmd.Parameters.AddWithValue("@StandardWeight", standardJson);
+                    cmd.Parameters.AddWithValue("@ActualWeight",actualJson);
+                    cmd.Parameters.AddWithValue("@DeviationWeight",deviationJson);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                WgtbtnSubmit.Enabled = false;
+                WgtbtnSubmit.Text = "SAVED";
+                WgtbtnSubmit.CssClass = "btn btn-sm btn-success";
+
+                string Data_SuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Data Success',
+                                text: 'Recorded Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                // RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('spongeData-tab').click();", true);
+
+            }
+        }
+
+
+        protected void WgtbtnReset_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('weight-tab');", true);
+            Response.Redirect("qaqc_process_rpt.aspx");
+        }
+
+
+
+        //protected void WgtbtnSubmit_Click(object sender, EventArgs e)
+        //{
+        //    List<VarietyInfo> dataToSave = new List<VarietyInfo>();
+
+        //    foreach (GridViewRow row in GridView1.Rows)
+        //    {
+        //        // Retrieve Variety
+        //        string variety = row.Cells[1].Text;
+
+        //        // Assuming StandardWeight is in the third column (index 2)
+        //        double standardWeight = Convert.ToDouble(row.Cells[2].Text);
+
+        //        // Retrieve Actual Weight
+        //        TextBox txtActualWeight = (TextBox)row.FindControl("txtActualWeight");
+        //        double actualWeight = double.TryParse(txtActualWeight.Text, out actualWeight) ? actualWeight : 0.0;
+
+        //        // Retrieve Deviation Weight
+        //        TextBox txtDeviationWeight = (TextBox)row.FindControl("txtDeviationWeight");
+        //        double deviationWeight = double.TryParse(txtDeviationWeight.Text, out deviationWeight) ? deviationWeight : 0.0;
+
+        //        // Collect data to save
+        //        VarietyInfo varietyInfo = new VarietyInfo
+        //        {
+        //            Sl = Convert.ToInt32(row.Cells[0].Text),
+        //            Variety = row.Cells[1].Text,
+        //            StandardWeight = standardWeight,
+        //            ActualWeight = actualWeight,
+        //            DeviationWeight = deviationWeight
+        //        };
+
+        //    }
+
+        //    // Now you can save 'dataToSave' to the database
+        //    SaveDataToDatabase(dataToSave);
+        //}
+
+        //private void SaveDataToDatabase(List<VarietyInfo> dataToSave)
+        //{
+        //    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+        //    using (SqlConnection con = new SqlConnection(connectionString))
+        //    {
+        //        con.Open();
+        //        foreach (var varietyInfo in dataToSave)
+        //        {
+        //            string query = "INSERT INTO PC_MaterialWeights ( PcrNo,  MaidaBrandName ,Variety, StandardWeight, ActualWeight, DeviationWeight) " +
+        //                                " VALUES (@PcrNo , @MaidaBrandName ,@Variety, @StandardWeight, @ActualWeight, @DeviationWeight)";
+        //            using (SqlCommand cmd = new SqlCommand(query, con))
+        //            {
+        //                cmd.Parameters.AddWithValue("@PcrNo ", PcrNo);
+        //                cmd.Parameters.AddWithValue("@MaidaBrandName", TB_MaidaBrandNames.Text);
+        //                cmd.Parameters.AddWithValue("@Variety", varietyInfo.Variety);
+        //                cmd.Parameters.AddWithValue("@StandardWeight", varietyInfo.StandardWeight);
+        //                cmd.Parameters.AddWithValue("@ActualWeight", varietyInfo.ActualWeight);
+        //                cmd.Parameters.AddWithValue("@DeviationWeight", varietyInfo.DeviationWeight);
+
+        //                cmd.ExecuteNonQuery();
+        //            }
+        //        }
+        //        WgtbtnSubmit.Enabled = false;
+        //        WgtbtnSubmit.Text = "SAVED";
+        //        WgtbtnSubmit.CssClass = "btn btn-sm btn-success";
+
+        //        string Data_SuccessScript = @"<script type='text/javascript'>
+        //                    new PNotify({
+        //                        title: 'Data Success',
+        //                        text: 'Recorded Successfully!!',
+        //                        type: 'success',
+        //                        styling: 'bootstrap3'
+        //                    });
+        //                </script>";
+
+        //        // RegisterStartupScript adds the JavaScript code to the page
+        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+        //        ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('spongeData-tab').click();", true);
+
+        //    }
+        //}
+
+
+
+
+        //protected void btnSubmit_Click(object sender, EventArgs e)
+        //{
+        //    Dictionary<int, decimal> WeightData = new Dictionary<int, decimal>();
+        //    foreach (GridViewRow row in GridView1.Rows)
+        //    {
+        //        TextBox txtGrossWeight = (TextBox)row.FindControl("txtGrossWeight");
+
+        //        if (txtGrossWeight != null && !string.IsNullOrEmpty(txtGrossWeight.Text))
+        //        {
+        //            decimal grossWeight;
+        //            if (decimal.TryParse(txtGrossWeight.Text, out grossWeight))
+        //            {
+        //                int sl = row.RowIndex + 1;  // Serial number
+        //                grossWeightData.Add(sl, grossWeight);
+        //            }
+        //        }
+        //    }
+        //    string jsonData = JsonConvert.SerializeObject(WeightData);
+
+        //    // Insert into the database
+        //    //using (SqlConnection conn = new SqlConnection(connectionString))
+        //    //{
+        //    //    conn.Open();
+        //    //    string query = "INSERT INTO YourTable (GrossWeightJson) VALUES (@jsonString)";
+        //    //    using (SqlCommand cmd = new SqlCommand(query, conn))
+        //    //    {
+        //    //        cmd.Parameters.AddWithValue("@jsonString", jsonData);
+        //    //        cmd.ExecuteNonQuery();
+        //    //    }
+        //    //}
+
+        //    // Now, save the JSON data to the database
+        //    //SaveGrossWeightsToDatabase(jsonData);
+
+        //    PopulateGridView(jsonData);
+        //}
+
+        //private void PopulateGridView(string jsonString)
+        //{
+        //    //string jsonString = "";
+
+        //    // Retrieve the JSON string from the database
+        //    //using (SqlConnection conn = new SqlConnection(connectionString))
+        //    //{
+        //    //    conn.Open();
+        //    //    string query = "SELECT GrossWeightJson FROM YourTable WHERE Id = @id";
+        //    //    using (SqlCommand cmd = new SqlCommand(query, conn))
+        //    //    {
+        //    //        cmd.Parameters.AddWithValue("@id", yourId);
+        //    //        jsonString = cmd.ExecuteScalar()?.ToString();
+        //    //    }
+        //    //}
+
+        //    // Deserialize the JSON string into a dictionary
+        //    Dictionary<string, decimal> grossWeightData = JsonConvert.DeserializeObject<Dictionary<string, decimal>>(jsonString);
+
+        //    // Create a DataTable and populate it with data from the dictionary
+        //    DataTable dataTable = new DataTable();
+        //    dataTable.Columns.Add("SlNo", typeof(string));
+        //    dataTable.Columns.Add("Variety", typeof(string));
+        //    dataTable.Columns.Add("Standard", typeof(decimal));
+        //    dataTable.Columns.Add("Actual", typeof(decimal));
+        //    dataTable.Columns.Add("Deviation", typeof(decimal));
+
+        //    foreach (var item in grossWeightData)
+        //    {
+        //        DataRow row = dataTable.NewRow();
+        //        row["SlNo"] = item.Key;
+        //        row["Variety"] = item.Value;
+        //        row["Standard"] = item.Value;
+        //        row["Actual"] = item.Value;
+        //        row["Deviation"] = item.Value;
+        //        dataTable.Rows.Add(row);
+        //    }
+
+        //    // Bind the DataTable to the GridView
+        //    myGridView.DataSource = dataTable;
+        //    myGridView.DataBind();
+        //}
+
+
     }
 }

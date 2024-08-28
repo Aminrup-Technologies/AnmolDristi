@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using static AnmolDristi.qaqc.qaqc_inspector_rpt;
 using Newtonsoft.Json;
+using System.Configuration;
+using AnmolDristi.DAL;
+using System.Web.Script.Serialization;
 
 namespace AnmolDristi
 {
     public partial class qa_qc_FinalCbbWtReport : System.Web.UI.Page
     {
+        public static string CBB_key = String.Empty;
+        DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -25,9 +33,20 @@ namespace AnmolDristi
                     lbl_docname.Text = "FINAL CBB WEIGHT CHECKLIST";
                     lbl_docnumber.Text = "ANMOL/DOC/CORP/QA/08";
                     PlantBinder();
-                    GridBinder(10);
+                    int gridBinderValue = int.Parse(ConfigurationManager.AppSettings["FinalCBBWeight_GridBinderValue"]);
+                    GridBinder(gridBinderValue);
+                    DisplayCurrentShift();
+
                 }
             }
+
+        }
+
+        private void DisplayCurrentShift()
+        {
+            ShiftManager shiftManager = new ShiftManager();
+            string currentShift = shiftManager.GetCurrentShiftType();
+            hdn_shiftvalue.Value = currentShift;
         }
 
         private void GridBinder(int rowCount)
@@ -49,11 +68,48 @@ namespace AnmolDristi
             GridView1.DataBind();
         }
 
+        public class WeightData
+        {
+            public int sl { get; set; }
+            public decimal weight { get; set; }
+        }
+
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            Dictionary<int, decimal> grossWeightData = new Dictionary<int, decimal>();
+            //List<Dictionary<string, object>> recordsList = new List<Dictionary<string, object>>();
+            ////Dictionary<int, decimal> grossWeightData = new Dictionary<int, decimal>();
+
+            //foreach (GridViewRow row in GridView1.Rows)
+            //{
+            //    TextBox txtGrossWeight = (TextBox)row.FindControl("txtGrossWeight");
+
+            //    if (txtGrossWeight != null && !string.IsNullOrEmpty(txtGrossWeight.Text))
+            //    {
+            //        decimal grossWeight;
+            //        if (decimal.TryParse(txtGrossWeight.Text, out grossWeight))
+            //        {
+            //            int sl = row.RowIndex + 1;
+            //            //grossWeightData.Add(sl, grossWeight);
+
+            //            Dictionary<string, object> record = new Dictionary<string, object>
+            //            {
+            //                { "sl", sl },
+            //                { "weight", grossWeight }
+            //            };
+            //            recordsList.Add(record);
+            //        }
+            //    }
+            //}
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //string jsonString = serializer.Serialize(recordsList);
+
+            // Create a list to hold WeightData objects
+            List<WeightData> weightDataList = new List<WeightData>();
+
+            // Iterate through GridView rows and populate the list
             foreach (GridViewRow row in GridView1.Rows)
             {
+                // Assuming you have a TextBox for gross weight
                 TextBox txtGrossWeight = (TextBox)row.FindControl("txtGrossWeight");
 
                 if (txtGrossWeight != null && !string.IsNullOrEmpty(txtGrossWeight.Text))
@@ -61,60 +117,42 @@ namespace AnmolDristi
                     decimal grossWeight;
                     if (decimal.TryParse(txtGrossWeight.Text, out grossWeight))
                     {
-                        int sl = row.RowIndex + 1;  // Serial number
-                        grossWeightData.Add(sl, grossWeight);
+                        int sl = row.RowIndex + 1; // Serial number
+                        weightDataList.Add(new WeightData
+                        {
+                            sl = sl,
+                            weight = grossWeight
+                        });
                     }
                 }
             }
-            string jsonData = JsonConvert.SerializeObject(grossWeightData);
 
-            // Insert into the database
-            //using (SqlConnection conn = new SqlConnection(connectionString))
-            //{
-            //    conn.Open();
-            //    string query = "INSERT INTO YourTable (GrossWeightJson) VALUES (@jsonString)";
-            //    using (SqlCommand cmd = new SqlCommand(query, conn))
-            //    {
-            //        cmd.Parameters.AddWithValue("@jsonString", jsonData);
-            //        cmd.ExecuteNonQuery();
-            //    }
-            //}
+            string jsonData = JsonConvert.SerializeObject(weightDataList);
 
-            // Now, save the JSON data to the database
-            //SaveGrossWeightsToDatabase(jsonData);
 
-            PopulateGridView(jsonData);
+            string avgGrossWgt = txtAverageGrossWeight.Text.ToString();
+            //string jsonData = JsonConvert.SerializeObject(grossWeightData);
+            UpdateGrossWeightsInDatabase(jsonData, avgGrossWgt);
+
+            BindDataToGridView(jsonData);
         }
 
-        private void PopulateGridView(string jsonString)
+        protected void BindDataToGridView(string jsonString)
         {
-            //string jsonString = "";
-
-            // Retrieve the JSON string from the database
-            //using (SqlConnection conn = new SqlConnection(connectionString))
-            //{
-            //    conn.Open();
-            //    string query = "SELECT GrossWeightJson FROM YourTable WHERE Id = @id";
-            //    using (SqlCommand cmd = new SqlCommand(query, conn))
-            //    {
-            //        cmd.Parameters.AddWithValue("@id", yourId);
-            //        jsonString = cmd.ExecuteScalar()?.ToString();
-            //    }
-            //}
-
             // Deserialize the JSON string into a dictionary
-            Dictionary<string, decimal> grossWeightData = JsonConvert.DeserializeObject<Dictionary<string, decimal>>(jsonString);
+            List<WeightData> weightDataList = JsonConvert.DeserializeObject<List<WeightData>>(jsonString);
 
-            // Create a DataTable and populate it with data from the dictionary
+            // Create a DataTable and define its columns
             DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("SlNo", typeof(string));
+            dataTable.Columns.Add("SlNo", typeof(int));
             dataTable.Columns.Add("GrossWeight", typeof(decimal));
 
-            foreach (var item in grossWeightData)
+            // Populate the DataTable with data from the list
+            foreach (var item in weightDataList)
             {
                 DataRow row = dataTable.NewRow();
-                row["SlNo"] = item.Key;
-                row["GrossWeight"] = item.Value;
+                row["SlNo"] = item.sl;
+                row["GrossWeight"] = item.weight;
                 dataTable.Rows.Add(row);
             }
 
@@ -123,7 +161,196 @@ namespace AnmolDristi
             yourGridView.DataBind();
         }
 
+        private void UpdateGrossWeightsInDatabase(String jsonData, string avgGrossWgt)
+        {
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "UPDATE TRN_FINAL_CBB_Weights SET GrossWeightJson = @GrossWeightJson, AverageGrossWeight=@AverageGrossWeight WHERE CBB_PK = @cbb_pk";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@GrossWeightJson", jsonData);
+                        cmd.Parameters.AddWithValue("@AverageGrossWeight", avgGrossWgt);
+                        cmd.Parameters.AddWithValue("@cbb_pk", CBB_key);
+                        cmd.ExecuteNonQuery();
 
+                        RowCount_DIV.Visible = false;
+                        GridView1.Visible = false;
+                        AvgWt_TB.Visible = false;
+
+                        yourGridView.Visible = true;
+                        btnSubmit.Enabled = false;
+                        btnSubmit.Text = "SAVED";
+                        Label6.Text = "Weights Captured";
+
+                        string Data_SuccessScript2 = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Data Success',
+                                text: 'Recorded Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                        // RegisterStartupScript adds the JavaScript code to the page
+                        ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification2", Data_SuccessScript2, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                string errorScript = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{errorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+            }
+        }
+
+        private void PopulateGridView()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            // Create a DataTable to hold the data
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("SlNo", typeof(int));
+            dataTable.Columns.Add("GrossWeight", typeof(decimal));
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                // Query to fetch the data from the database
+                string query = "SELECT CBB_PK, GrossWeightJson FROM FINAL_CBB_basic_data";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DataRow row = dataTable.NewRow();
+                            string cbbPk = reader["CBB_PK"].ToString();
+
+                            // Assuming CBB_PK is in the format "CBB_PK001", "CBB_PK002", etc.
+                            int slNo = int.Parse(cbbPk.Substring(7));  // Extract the numeric part
+
+                            row["SlNo"] = slNo;
+                            row["GrossWeightJson"] = reader["GrossWeightJson"];
+                            dataTable.Rows.Add(row);
+                        }
+                    }
+                }
+            }
+
+            // Bind the DataTable to the GridView
+            yourGridView.DataSource = dataTable;
+            yourGridView.DataBind();
+        }
+
+        private string GenerateUniqueCBB_PK()
+        {
+            string newCbbPkValue;
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    // Fetch the maximum numeric part of CBB_PK safely
+                    string query = @"
+                SELECT ISNULL(MAX(CAST(SUBSTRING(CBB_PK, 7, LEN(CBB_PK) - 6) AS INT)), 0) 
+                FROM FINAL_CBB_basic_data
+                WHERE LEN(CBB_PK) >= 7 AND ISNUMERIC(SUBSTRING(CBB_PK, 7, LEN(CBB_PK) - 6)) = 1";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        object result = command.ExecuteScalar();
+                        int maxNumericValue = Convert.ToInt32(result);
+
+                        // Increment the numeric part
+                        int numericPart = maxNumericValue + 1;
+
+                        // Format the new value
+                        newCbbPkValue = $"CBB_PK{numericPart:D3}"; // Ensures format like CBB_PK001, CBB_PK002
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                Console.WriteLine("Error generating CBB_PK: " + ex.Message);
+                throw;
+            }
+            CBB_key = newCbbPkValue;
+            return newCbbPkValue;
+        }
+
+        private string Find_DBCode()
+        {
+            string aa = null;
+            dbcl.Sqlconnection();
+            dbcl.ConnectDb();
+            string kk = null;
+            string cmdString1 = "select Id,CBB_PK from TRN_FINAL_CBB_Weights where Id=(select max(Id)from TRN_FINAL_CBB_Weights)";
+            SqlCommand com1 = new SqlCommand(cmdString1, dbcl.Conn);
+            SqlDataReader DR1 = com1.ExecuteReader();
+            if (DR1.Read())
+            {
+                aa = DR1.GetValue(1).ToString();
+                string bb = aa.Substring(5);
+                int k = Convert.ToInt32(bb);
+                k = k + 1;
+                string q = Convert.ToString(k);
+                kk = "FCBB0" + q;
+            }
+            else
+            {
+                kk = "FCBB01";
+            }
+            dbcl.DisconnectDb();
+            CBB_key = kk;
+            return kk;
+        }
+
+
+        private string GetCurrentShift()
+        {
+            TimeSpan currentTime = DateTime.Now.TimeOfDay;
+
+            // Define shift times
+            TimeSpan shiftAStart = new TimeSpan(6, 0, 0);  // 06:00 AM
+            TimeSpan shiftAEnd = new TimeSpan(14, 0, 0);   // 02:00 PM
+            TimeSpan shiftBStart = new TimeSpan(14, 0, 0); // 02:00 PM
+            TimeSpan shiftBEnd = new TimeSpan(22, 0, 0);   // 10:00 PM
+            TimeSpan shiftCStart = new TimeSpan(22, 0, 0); // 10:00 PM
+            TimeSpan shiftCEnd = new TimeSpan(6, 0, 0);    // 06:00 AM (next day)
+
+            // Determine the current shift based on time
+            if (currentTime >= shiftAStart && currentTime < shiftAEnd)
+            {
+                return "A";  // Morning Shift
+            }
+            else if (currentTime >= shiftBStart && currentTime < shiftBEnd)
+            {
+                return "B";  // Afternoon Shift
+            }
+            else if (currentTime >= shiftCStart || currentTime < shiftCEnd)
+            {
+                return "C";  // Night Shift
+            }
+
+            return "Unknown";
+        }
 
         private void PlantBinder()
         {
@@ -209,6 +436,8 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
+
+                LoadApprovers(selectedPlantValue, selectedPlantLineValue);
             }
             else
             {
@@ -248,13 +477,13 @@ namespace AnmolDristi
             if (!recordsBound)
             {
                 string PN_Error_script = @"<script type='text/javascript'>
-              new PNotify({
-                  title: 'Error',
-                  text: 'No line categories found for the selected plant and line!',
-                  type: 'error',
-                  styling: 'bootstrap3'
-              });
-          </script>";
+                  new PNotify({
+                      title: 'Error',
+                      text: 'No line categories found for the selected plant and line!',
+                      type: 'error',
+                      styling: 'bootstrap3'
+                  });
+              </script>";
 
                 // RegisterStartupScript adds the JavaScript code to the page
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowLineProductsBinderErrorNotification", PN_Error_script, false);
@@ -291,32 +520,29 @@ namespace AnmolDristi
         {
             // Construct the SQL query with parameters
             string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId AND line_id = @LineId and category_id=@CategoryId";
-            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
+            string textField = "brand_name";
+            string valueField = "brand_id";
 
-            // Create SQL parameters for plant_id and line_id
             SqlParameter[] parameters = new SqlParameter[]
             {
-          new SqlParameter("@PlantId", selectedPlantValue),
-          new SqlParameter("@LineId", selectedPlantLineValue),
-          new SqlParameter("@CategoryId", selectedProductCategoryValue)
+              new SqlParameter("@PlantId", selectedPlantValue),
+              new SqlParameter("@LineId", selectedPlantLineValue),
+              new SqlParameter("@CategoryId", selectedProductCategoryValue)
             };
 
-            // Call the BindDropDownList method with parameters
             bool recordsBound;
             DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
 
-            // Check if any records were bound
             if (!recordsBound)
             {
                 string ProductBrands_Error_script = @"<script type='text/javascript'>
-              new PNotify({
-                  title: 'Error',
-                  text: 'No Brands found for the selected plant and line!',
-                  type: 'error',
-                  styling: 'bootstrap3'
-              });
-          </script>";
+                      new PNotify({
+                          title: 'Error',
+                          text: 'No Brands found for the selected plant and line!',
+                          type: 'error',
+                          styling: 'bootstrap3'
+                      });
+                  </script>";
 
                 // RegisterStartupScript adds the JavaScript code to the page
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
@@ -701,132 +927,51 @@ namespace AnmolDristi
             DDL_ProductBrand.SelectedIndex = 0;
             DDL_BrandSKU.SelectedIndex = 0;
 
-            //TXT_LineNo.Text = string.Empty;
-            //TXT_ProductName.Text = string.Empty;
             TXT_BatchNo.Text = string.Empty;
-            //TXT_SlNo.Text = string.Empty;
             TXT_MRP.Text = string.Empty;
-            //TXT_GrossWt.Text = string.Empty;
 
             lblMessage.Text = string.Empty;
         }
 
-
-        //protected void Btn_Save_Click(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //protected void Btn_Save_Click(object sender, EventArgs e)
-        //{
-        //    // Retrieve selected values from dropdowns
-        //    string plantName = DDL_Plant.SelectedValue;
-        //    string plantLine = DDL_PlantLine.SelectedValue;
-        //    string productCategory = DDL_ProductCategory.SelectedValue;
-        //    string productBrand = DDL_ProductBrand.SelectedValue;
-        //    string brandSKU = DDL_BrandSKU.SelectedValue;
-
-        //    // Retrieve the LineNo from the TextBox
-        //    int lineNo;
-        //    if (!int.TryParse(TXT_LineNo.Text, out lineNo))
-        //    {
-        //        lblMessage.Text = "Please enter a valid Line Number.";
-        //        lblMessage.ForeColor = System.Drawing.Color.Red;
-        //        return;
-        //    }
-
-        //    // Define your connection string
-        //    string connectionString = "Data Source=Buddy\\SQLEXPRESS06;Initial Catalog=AnmolDristi;Integrated Security=True;";
-
-        //    // Create and open a connection to the database
-        //    using (SqlConnection connection = new SqlConnection(connectionString))
-        //    {
-        //        connection.Open();
-
-        //        // SQL query to insert the data
-        //        string insertQuery = "INSERT INTO Basic_Data (PlantId, [Line], ProductCategory, ProductBrand, SKUID, [Date], [Shift], [Time], [LineNo], [ProductName]) " +
-        //                             "VALUES (@PlantId, @Line, @ProductCategory, @ProductBrand, @SKUID, @Date, @Shift, @Time, @LineNo, @ProductName)";
-
-        //        using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
-        //        {
-        //            // Add parameters to the query
-        //            insertCommand.Parameters.AddWithValue("@PlantId", plantName);
-        //            insertCommand.Parameters.AddWithValue("@Line", plantLine);
-        //            insertCommand.Parameters.AddWithValue("@ProductCategory", productCategory);
-        //            insertCommand.Parameters.AddWithValue("@ProductBrand", productBrand);
-        //            insertCommand.Parameters.AddWithValue("@SKUID", brandSKU);
-        //            insertCommand.Parameters.AddWithValue("@Date", DateTime.Now.Date);  // Example: Set current date
-        //            insertCommand.Parameters.AddWithValue("@Shift", 'A');  // Example: Set shift
-        //            insertCommand.Parameters.AddWithValue("@Time", DateTime.Now.TimeOfDay);  // Example: Set current time
-        //            insertCommand.Parameters.AddWithValue("@LineNo", lineNo);  // Use the user-provided LineNo
-        //            insertCommand.Parameters.AddWithValue("@ProductName", ProductName);  // Use the user-provided LineNo
-
-        //            try
-        //            {
-        //                // Execute the query
-        //                int result = insertCommand.ExecuteNonQuery();
-
-        //                // Check if the insert was successful
-        //                if (result > 0)
-        //                {
-        //                    lblMessage.Text = "Data saved successfully!";
-        //                    lblMessage.ForeColor = System.Drawing.Color.Green;
-        //                }
-        //                else
-        //                {
-        //                    lblMessage.Text = "Error saving data.";
-        //                    lblMessage.ForeColor = System.Drawing.Color.Red;
-        //                }
-        //            }
-        //            catch (SqlException ex)
-        //            {
-        //                if (ex.Number == 2627) // SQL error code for unique constraint violation
-        //                {
-        //                    lblMessage.Text = "Error: Line Number already exists. Please enter a different Line Number.";
-        //                }
-        //                else
-        //                {
-        //                    lblMessage.Text = $"Error: {ex.Message}";
-        //                }
-        //                lblMessage.ForeColor = System.Drawing.Color.Red;
-        //            }
-        //        }
-        //    }
-
-        //}
-
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
-            // Retrieve selected values from dropdowns
             string plantName = DDL_Plant.SelectedValue;
             string plantLine = DDL_PlantLine.SelectedValue;
             string productCategory = DDL_ProductCategory.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue;
             string brandSKU = DDL_BrandSKU.SelectedValue;
 
-            // Retrieve ProductName from appropriate control
-            // string productName = TXT_ProductName.Text;  // Assuming you have a TextBox for ProductName
-            string batchNo = TXT_BatchNo.Text;  // Assuming you have a TextBox for ProductName
-            //string slNo = TXT_SlNo.Text;  // Assuming you have a TextBox for ProductName
+            string brandSKUText = DDL_BrandSKU.SelectedItem.Text.ToString();
 
-            // Retrieve the LineNo from the TextBox
-            //int lineNo;
-            //if (!int.TryParse(TXT_LineNo.Text, out lineNo))
-            //{
-            //    lblMessage.Text = "Please enter a valid Line Number.";
-            //    lblMessage.ForeColor = System.Drawing.Color.Red;
-            //    return;
-            //}
+            // Convert the selected SKU text to a decimal
+            decimal skuwt;
+            if (decimal.TryParse(brandSKUText, out skuwt))
+            {
+                // Calculate min and max weights
+                decimal minWeight = skuwt - 2;
+                decimal maxWeight = skuwt + 2;
 
-            // Retrieve and validate SlNo
-            //int slNo;
-            //if (!int.TryParse(TXT_SlNo.Text, out slNo))
-            //{
-            //    lblMessage.Text = "Please enter a valid Serial Number (Sl No).";
-            //    lblMessage.ForeColor = System.Drawing.Color.Red;
-            //    return;
-            //}
+                // Set values to hidden fields
+                hdn_minwt.Value = minWeight.ToString();
+                hdn_maxwt.Value = maxWeight.ToString();
+            }
+            else
+            {
+                // Handle conversion failure if needed
+                // For example, you could set default values or log an error
+                hdn_minwt.Value = "0";
+                hdn_maxwt.Value = "0";
+            }
 
+
+            string cbbPK = Find_DBCode();
+            int formID = Convert.ToInt32(hdn_formid.Value.ToString());
+            int submittedById = Convert.ToInt32(Session["USERID"].ToString());
+            DateTime submittedDate = DateTime.Now.Date;
+            TimeSpan submittedTime = DateTime.Now.TimeOfDay;
+            string shift = hdn_shiftvalue.Value.ToString();
+            string submittedByEmployeeCode = Session["WORKMAN"].ToString();
+            string batchNo = TXT_BatchNo.Text;
             decimal mrp;
             if (!decimal.TryParse(TXT_MRP.Text, out mrp))
             {
@@ -834,88 +979,189 @@ namespace AnmolDristi
                 lblMessage.ForeColor = System.Drawing.Color.Red;
                 return;
             }
+            int viewMode = 1;
+            int deleteMode = 0;
+            string approver1EmployeeCode = Approver1CodeLabel.Text.ToString();
+            string approver2EmployeeCode = Approver2CodeLabel.Text.ToString();
+            string dottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text.ToString();
 
-            //decimal grossWt;
-            //if (!decimal.TryParse(TXT_GrossWt.Text, out grossWt))
-            //{
-            //    lblMessage.Text = "Please enter a valid Gross Weight.";
-            //    lblMessage.ForeColor = System.Drawing.Color.Red;
-            //    return;
-            //}
-
-
-
-
-
-            // Define your connection string
-            string connectionString = "Data Source=Buddy\\SQLEXPRESS06;Initial Catalog=AnmolDristi;Integrated Security=True;";
-
-            // Create and open a connection to the database
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
+                InsertIntoTRN_FINAL_CBB_Weights(
+                    cbbPK, formID, submittedById, submittedDate, submittedTime, shift,
+                    submittedByEmployeeCode, plantName, plantLine, productCategory, productBrand,
+                    brandSKU, batchNo, mrp, viewMode,
+                    deleteMode, approver1EmployeeCode,
+                    approver2EmployeeCode,
+                    dottedLineApproverEmployeeCode
+                );
 
-                // SQL query to insert the data
-                string insertQuery = "INSERT INTO Basic_Data (PlantId, [Line], ProductCategory, ProductBrand, SKUID, [Date], [Shift], [Time], [BatchNo], [MRP]) " +
-                                     "VALUES (@PlantId, @Line, @ProductCategory, @ProductBrand, @SKUID, @Date, @Shift, @Time, @BatchNo, @MRP)";
+                DDL_Plant.Enabled = false;
+                DDL_PlantLine.Enabled = false;
+                DDL_ProductCategory.Enabled = false;
+                DDL_ProductBrand.Enabled = false;
+                DDL_BrandSKU.Enabled = false;
 
-                using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
+                TXT_BatchNo.ReadOnly = true;
+                TXT_MRP.ReadOnly = true;
+
+                Btn_Save.Enabled = false;
+                Btn_Save.Text = "SAVED";
+
+                lblMessage.Text = "Data inserted successfully!";
+
+                string Data_SuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Data Success',
+                                text: 'Recorded Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                // RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+            }
+            catch (Exception ex)
+            {
+                lblMessage.Text = "An error occurred: " + ex.Message;
+                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                string errorScript1 = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{errorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification1", errorScript1, false);
+            }
+        }
+
+
+        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
                 {
-                    // Add parameters to the query
-                    insertCommand.Parameters.AddWithValue("@PlantId", plantName);
-                    insertCommand.Parameters.AddWithValue("@Line", plantLine);
-                    insertCommand.Parameters.AddWithValue("@ProductCategory", productCategory);
-                    insertCommand.Parameters.AddWithValue("@ProductBrand", productBrand);
-                    insertCommand.Parameters.AddWithValue("@SKUID", brandSKU);
-                    insertCommand.Parameters.AddWithValue("@Date", DateTime.Now.Date);  // Example: Set current date
-                    insertCommand.Parameters.AddWithValue("@Shift", 'A');  // Example: Set shift
-                    insertCommand.Parameters.AddWithValue("@Time", DateTime.Now.TimeOfDay);  // Example: Set current time
-                    //insertCommand.Parameters.AddWithValue("@LineNo", lineNo);  // Use the user-provided LineNo
-                    //insertCommand.Parameters.AddWithValue("@ProductName", productName);  // Use the user-provided ProductName
-                    insertCommand.Parameters.AddWithValue("@BatchNo", batchNo);  // Use the user-provided ProductName
-                    //insertCommand.Parameters.AddWithValue("@SlNo", slNo);  // Use the user-provided ProductName
-                    insertCommand.Parameters.AddWithValue("@MRP", mrp);  // Use the user-provided ProductName
-                    //insertCommand.Parameters.AddWithValue("@GrossWt", grossWt);  // Use the user-provided ProductName
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    try
+                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
+                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@FormID", 2);
+                    cmd.Parameters.AddWithValue("@FormName", "qa_qc_FinalCbbWtReport");
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
-                        // Execute the query
-                        int result = insertCommand.ExecuteNonQuery();
+                        hdn_formid.Value = "2";
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
 
-                        // Check if the insert was successful
-                        if (result > 0)
+                        GridViewApprovers.DataSource = dt;
+                        GridViewApprovers.DataBind();
+
+                        if (dt.Rows.Count > 0)
                         {
-                            lblMessage.Text = "Data saved successfully!";
-                            lblMessage.ForeColor = System.Drawing.Color.Green;
+                            DataRow row = dt.Rows[0];
 
-                            // Inject JavaScript to switch to the 'rawBiscuts' tab
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('rawBiscuts-tab').click();", true);
+                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
+
+                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
+
+                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
                         }
                         else
                         {
-                            lblMessage.Text = "Error saving data.";
-                            lblMessage.ForeColor = System.Drawing.Color.Red;
+                            // Set default values to ADMIN if no rows are found
+                            Approver1NameLabel.Text = "ADMIN";
+                            Approver1CodeLabel.Text = "ADMIN";
+
+                            Approver2NameLabel.Text = "ADMIN";
+                            Approver2CodeLabel.Text = "ADMIN";
+
+                            DottedLineApproverNameLabel.Text = "ADMIN";
+                            DottedLineApproverCodeLabel.Text = "ADMIN";
                         }
-                    }
-                    catch (SqlException ex)
-                    {
-                        if (ex.Number == 2627) // SQL error code for unique constraint violation
-                        {
-                            lblMessage.Text = "Error: Line Number already exists. Please enter a different Line Number.";
-                        }
-                        else
-                        {
-                            lblMessage.Text = $"Error: {ex.Message}";
-                        }
-                        lblMessage.ForeColor = System.Drawing.Color.Red;
                     }
                 }
             }
         }
 
-        protected void Button2_Click(object sender, EventArgs e)
-        {
 
+        public void InsertIntoTRN_FINAL_CBB_Weights(
+        string cbbPK, int formID, int submittedById, DateTime submittedDate, TimeSpan submittedTime,
+        string shift, string submittedByEmployeeCode, string plantName, string line,
+        string productCategory, string productBrand, string skuId, string batchNo,
+        decimal mrp, int viewMode,
+        int deleteMode, string approver1EmployeeCode,
+        string approver2EmployeeCode,
+        string dottedLineApproverEmployeeCode)
+        {
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+            {
+                // Define the insert command
+                string insertCommand = @"
+                INSERT INTO [dbo].[TRN_FINAL_CBB_Weights] (
+                    [CBB_PK], [FormID], [SubmittedById], [SubmittedDate], [SubmittedTime], 
+                    [Shift], [SubmittedByEmployeeCode], [PlantName], [Line], [ProductCategory], 
+                    [ProductBrand], [SKUId], [BatchNo], [MRP],
+                    [ViewMode], [DeleteMode], [Approver1EmployeeCode],
+                    [Approver2EmployeeCode],
+                    [DottedLineApproverEmployeeCode]
+                ) VALUES (
+                    @CBB_PK, @FormID, @SubmittedById, @SubmittedDate, @SubmittedTime, 
+                    @Shift, @SubmittedByEmployeeCode, @PlantName, @Line, @ProductCategory, 
+                    @ProductBrand, @SKUId, @BatchNo, @MRP,
+                    @ViewMode, @DeleteMode, @Approver1EmployeeCode,
+                    @Approver2EmployeeCode,
+                    @DottedLineApproverEmployeeCode
+                )";
+
+                using (SqlCommand command = new SqlCommand(insertCommand, connection))
+                {
+                    // Add parameters to the command
+                    command.Parameters.AddWithValue("@CBB_PK", cbbPK);
+                    command.Parameters.AddWithValue("@FormID", formID);
+                    command.Parameters.AddWithValue("@SubmittedById", submittedById);
+                    command.Parameters.AddWithValue("@SubmittedDate", submittedDate);
+                    command.Parameters.AddWithValue("@SubmittedTime", submittedTime);
+                    command.Parameters.AddWithValue("@Shift", shift);
+                    command.Parameters.AddWithValue("@SubmittedByEmployeeCode", submittedByEmployeeCode);
+                    command.Parameters.AddWithValue("@PlantName", plantName);
+                    command.Parameters.AddWithValue("@Line", line);
+                    command.Parameters.AddWithValue("@ProductCategory", productCategory);
+                    command.Parameters.AddWithValue("@ProductBrand", productBrand);
+                    command.Parameters.AddWithValue("@SKUId", skuId);
+                    command.Parameters.AddWithValue("@BatchNo", batchNo);
+                    command.Parameters.AddWithValue("@MRP", mrp);
+                    //command.Parameters.AddWithValue("@GrossWeightJson", grossWeightJson);
+                    //command.Parameters.AddWithValue("@AverageGrossWeight", averageGrossWeight.HasValue ? (object)averageGrossWeight.Value : DBNull.Value);
+                    command.Parameters.AddWithValue("@ViewMode", viewMode);
+                    command.Parameters.AddWithValue("@DeleteMode", deleteMode);
+                    command.Parameters.AddWithValue("@Approver1EmployeeCode", (object)approver1EmployeeCode ?? DBNull.Value);
+                    //command.Parameters.AddWithValue("@Approver1_Status", (object)approver1Status ?? DBNull.Value);
+                    //command.Parameters.AddWithValue("@Approver1_TimeStamp", (object)approver1TimeStamp ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@Approver2EmployeeCode", (object)approver2EmployeeCode ?? DBNull.Value);
+                    //command.Parameters.AddWithValue("@Approver2_Status", (object)approver2Status ?? DBNull.Value);
+                    //command.Parameters.AddWithValue("@Approver2_TimeStamp", (object)approver2TimeStamp ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", (object)dottedLineApproverEmployeeCode ?? DBNull.Value);
+                    //command.Parameters.AddWithValue("@DottedApprover_Status", (object)dottedApproverStatus ?? DBNull.Value);
+                    //command.Parameters.AddWithValue("@DottedApprover_TimeStamp", (object)dottedApproverTimeStamp ?? DBNull.Value);
+
+                    // Open the connection, execute the command and close the connection
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

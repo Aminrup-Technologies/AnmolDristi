@@ -1006,16 +1006,15 @@
 
                         </div>
                         <div class="x_content">
-                            <!-- Approver Flow Diagram -->
                             <div class="approver-flow">
                                 <div class="approver-item">
                                     <p>
                                         <asp:Label ID="Label7" runat="server" Text="Approver 1" /></p>
                                     <asp:Image ID="Image3" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
                                     <p>
-                                        <asp:Label ID="Approver1NameLabel" runat="server" Text='<%# Eval("Approver1Name") %>' /></p>
+                                        <asp:Label ID="Approver1NameLabel" runat="server" Font-Bold="true" /></p>
                                     <p>
-                                        <asp:Label ID="Approver1CodeLabel" runat="server" Text='<%# Eval("Approver1EmployeeCode") %>' /></p>
+                                        <asp:Label ID="Approver1CodeLabel" runat="server" Font-Bold="true" /></p>
                                 </div>
                                 <div class="flow-line"></div>
                                 <div class="approver-item">
@@ -1023,28 +1022,24 @@
                                         <asp:Label ID="Label8" runat="server" Text="Approver 2" /></p>
                                     <asp:Image ID="Image2" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
                                     <p>
-                                        <asp:Label ID="Approver2NameLabel" runat="server" Text='<%# Eval("Approver2Name") %>' /></p>
+                                        <asp:Label ID="Approver2NameLabel" runat="server" Font-Bold="true" /></p>
                                     <p>
-                                        <asp:Label ID="Approver2CodeLabel" runat="server" Text='<%# Eval("Approver2EmployeeCode") %>' /></p>
+                                        <asp:Label ID="Approver2CodeLabel" runat="server" Font-Bold="true" /></p>
                                 </div>
                                 <div class="flow-line"></div>
                                 <div class="approver-item">
                                     <p>
-                                        <asp:Label ID="Label9" runat="server" Text="Approver 3" />
-                                    </p>
+                                        <asp:Label ID="Label9" runat="server" Text="Approver 3" /></p>
                                     <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
                                     <p>
-                                        <asp:Label ID="DottedLineApproverNameLabel" runat="server" Text='<%# Eval("DottedLineApproverName") %>' />
-                                    </p>
+                                        <asp:Label ID="DottedLineApproverNameLabel" runat="server" Font-Bold="true" /></p>
                                     <p>
-                                        <asp:Label ID="DottedLineApproverCodeLabel" runat="server" Text='<%# Eval("DottedLineApproverEmployeeCode") %>' />
-                                    </p>
+                                        <asp:Label ID="DottedLineApproverCodeLabel" runat="server" Font-Bold="true" /></p>
                                 </div>
                             </div>
 
                             <hr />
 
-                            <!-- GridView for Detailed Information -->
                             <asp:GridView ID="GridViewApprovers" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" Visible="false">
                                 <Columns>
                                     <asp:BoundField DataField="Approver1Name" HeaderText="Approver 1 Name" HtmlEncode="false" />

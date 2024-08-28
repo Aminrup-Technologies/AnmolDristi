@@ -17,20 +17,25 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">Shift : 1
+                            <a class="btn btn-app" href="qaqc_process_rpt.aspx">
+                                <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Process Checking
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">Shift : 2
+                            <a class="btn btn-app" href="qa_qc_FinalCbbWtReport.aspx">
+                                <span class="badge bg-green">Shift : 2
                                     <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Metal Detector
+                                <i class="fa fa-edit"></i>Final CBB Weight
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">Shift : 1
+                            <a class="btn btn-app" href="qaqc_rotary_line.aspx" >
+                                <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Leak Test
+                                <i class="fa fa-edit"></i>Line Weight
+                            </a>
+                            <a class="btn btn-app" href="ccp_checklist.aspx" >
+                                <span class="badge bg-green">Shift : 1
+                                    <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>CCP Checklist
                             </a>
                         </div>
                     </div>
