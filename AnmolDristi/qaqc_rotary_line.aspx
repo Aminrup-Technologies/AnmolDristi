@@ -52,7 +52,7 @@
     </style>
 
     <script type="text/javascript">
-        function validateGridView1() {
+        function validateGridView1_old() {
             var isValid = true;
             var gridView = document.getElementById('<%= LineWeights_Grid.ClientID %>');
             for (var i = 1; i < gridView.rows.length; i++) {  // Start from 1 to skip header row
@@ -84,9 +84,48 @@
 
             return isValid;
         }
-    </script>
 
-    <script type="text/javascript">
+        function validateGridView1() {
+            var isValid = true;
+            var filledRowsCount = 0; // Counter to track filled rows
+            var minimumRequiredRows = 3; // Set the minimum number of required filled rows
+
+            var gridView = document.getElementById('<%= LineWeights_Grid.ClientID %>');
+            for (var i = 1; i < gridView.rows.length; i++) {  // Start from 1 to skip the header row
+                var row = gridView.rows[i];
+
+                var txtStlWeight = row.querySelector("input[id*='txtStlWeight']");
+
+                var rowIsFilled = false; // Flag to check if at least one input in this row is filled
+
+                // Check if TextBoxes are filled
+                if (txtStlWeight && txtStlWeight.value.trim() === "") {
+                    isValid = false;
+                    rowIsFilled = false;
+                    txtStlWeight.style.borderColor = "red";
+                } else {
+                    txtStlWeight.style.borderColor = "";
+                }
+
+                // If at least one input in the row is filled, increase the filledRowsCount
+                if (rowIsFilled) {
+                    filledRowsCount++;
+                }
+            }
+
+            // Check if the minimum number of filled rows is met
+            if (filledRowsCount < minimumRequiredRows) {
+                isValid = false;
+                alert("Please fill at least " + minimumRequiredRows + " rows.");
+            }
+
+            //// If not valid, prevent form submission
+            //if (!isValid) {
+            //    alert("Please fill all the required fields.");
+            //}
+
+            return isValid;
+        }
 
         function calculateAverageWeight() {
             var totalWeight = 0;
@@ -114,42 +153,12 @@
             lblAvgWeight.innerHTML = averageWeight;
         }
 
-        function validateGridView1() {
-            var isValid = true;
-            var gridView = document.getElementById('<%= LineWeights_Grid.ClientID %>');
-            for (var i = 1; i < gridView.rows.length; i++) {  // Start from 1 to skip header row
-                var row = gridView.rows[i];
-
-                var txtStlWeight = row.querySelector("input[id*='txtStlWeight']");
-                // var txtedlWeight = row.querySelector("input[id*='txtedlWeight']");
-
-                // Check if TextBoxes are filled
-                if (txtStlWeight && txtStlWeight.value.trim() === "") {
-                    isValid = false;
-                    txtStlWeight.style.borderColor = "red";
-                } else {
-                    txtStlWeight.style.borderColor = "";
-                }
-
-                //if (txtedlWeight && txtedlWeight.value.trim() === "") {
-                //    isValid = false;
-                //    txtedlWeight.style.borderColor = "red";
-                //} else {
-                //    txtedlWeight.style.borderColor = "";
-                //}
-            }
-
-            // If not valid, prevent form submission
-            if (!isValid) {
-                alert("Please fill all the required fields.");
-            }
-
-            return isValid;
-        }
-
 
         function validateGridView() {
             var isValid = true;
+            var filledRowsCount = 0; // Counter to track filled rows
+            var minimumRequiredRows = 3; // Set the minimum number of required filled rows
+
             var gridView = document.getElementById('<%= OvenEnd_GridView.ClientID %>');
             for (var i = 1; i < gridView.rows.length; i++) {  // Start from 1 to skip header row
                 var row = gridView.rows[i];
@@ -157,9 +166,12 @@
                 var txtGaugeLength = row.querySelector("input[id*='txtGaugeLength']");
                 var txtWeight = row.querySelector("input[id*='txtWeight']");
 
+                var rowIsFilled = true; // Flag to check if this row is filled
+
                 // Check if TextBoxes are filled
                 if (txtGaugeLength && txtGaugeLength.value.trim() === "") {
                     isValid = false;
+                    rowIsFilled = false;
                     txtGaugeLength.style.borderColor = "red";
                 } else {
                     txtGaugeLength.style.borderColor = "";
@@ -167,16 +179,27 @@
 
                 if (txtWeight && txtWeight.value.trim() === "") {
                     isValid = false;
+                    rowIsFilled = false;
                     txtWeight.style.borderColor = "red";
                 } else {
                     txtWeight.style.borderColor = "";
                 }
+                // If both inputs in the row are filled, increase the filledRowsCount
+                if (rowIsFilled) {
+                    filledRowsCount++;
+                }
             }
 
-            // If not valid, prevent form submission
-            if (!isValid) {
-                alert("Please fill all the required fields.");
+            // Check if the minimum number of filled rows is met
+            if (filledRowsCount < minimumRequiredRows) {
+                isValid = false;
+                alert("Please fill at least " + minimumRequiredRows + " rows.");
             }
+
+            //// If not valid, prevent form submission
+            //if (!isValid) {
+            //    alert("Please fill all the required fields.");
+            //}
 
             return isValid;
         }

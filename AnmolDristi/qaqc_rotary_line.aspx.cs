@@ -37,7 +37,7 @@ namespace AnmolDristi
                     lbl_docnumber.Text = "ANMOL/DOC/CORQ/QA/02";
                     PlantBinder();
 
-                    int gridBinderValue = int.Parse(ConfigurationManager.AppSettings["FinalCBBWeight_GridBinderValue"]);
+                    int gridBinderValue = int.Parse(ConfigurationManager.AppSettings["RotaryLineOvenend_GridBinderValue"]);
                     GridBinder1(gridBinderValue);
                     GridBinder(gridBinderValue);
 
@@ -576,8 +576,8 @@ namespace AnmolDristi
 
                     cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
                     cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
-                    cmd.Parameters.AddWithValue("@FormID", 2);
-                    cmd.Parameters.AddWithValue("@FormName", "qa_qc_FinalCbbWtReport");
+                    cmd.Parameters.AddWithValue("@FormID", 3);
+                    cmd.Parameters.AddWithValue("@FormName", "qaqc_rotary_line");
 
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {

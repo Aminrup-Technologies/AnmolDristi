@@ -129,6 +129,7 @@
     <Content Include="qaqc_home.aspx" />
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
+    <Content Include="qaqc_oven_report.aspx" />
     <Content Include="qaqc_process_rpt.aspx" />
     <Content Include="qaqc_qaapprovals.aspx" />
     <Content Include="qaqc_qcapprovals.aspx" />
@@ -333,6 +334,13 @@
     </Compile>
     <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_oven_report.aspx.cs">
+      <DependentUpon>qaqc_oven_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_oven_report.aspx.designer.cs">
+      <DependentUpon>qaqc_oven_report.aspx</DependentUpon>
     </Compile>
     <Compile Include="qaqc_process_rpt.aspx.cs">
       <DependentUpon>qaqc_process_rpt.aspx</DependentUpon>

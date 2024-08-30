@@ -37,6 +37,11 @@
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>CCP Checklist
                             </a>
+                            <a class="btn btn-app" href="qaqc_oven_report.aspx" >
+                                <span class="badge bg-green">Shift : 1
+                                    <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Oven Report
+                            </a>
                         </div>
                     </div>
                 </div>

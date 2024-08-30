@@ -123,6 +123,8 @@
 
         function validateGridView() {
             var isValid = true;
+            var filledRowsCount = 0; // Counter to track filled rows
+            var minimumRequiredRows = 3; // Set the minimum number of required filled rows
             var gridView = document.getElementById('<%= GridView1.ClientID %>');
             var totalWeight = 0;
             var count = 0;
@@ -133,29 +135,28 @@
                 var txtGrossWeight = row.querySelector("input[id*='txtGrossWeight']");
 
                 // Check if TextBox is filled and calculate total weight
-                if (txtGrossWeight && txtGrossWeight.value.trim() === "") {
-                    isValid = false;
-                    txtGrossWeight.style.borderColor = "red";
-                } else {
-                    txtGrossWeight.style.borderColor = "";
-                    if (txtGrossWeight.value.trim() !== "") {
-                        totalWeight += parseFloat(txtGrossWeight.value.trim());
-                        count++;
-                    }
+                if (txtGrossWeight && txtGrossWeight.value.trim() !== "") {
+                    totalWeight += parseFloat(txtGrossWeight.value.trim());
+                    count++;
+                    filledRowsCount++; // Count the row as filled
+                    txtGrossWeight.style.borderColor = ""; // Clear any previous validation errors
+                } else if (txtGrossWeight) {
+                    txtGrossWeight.style.borderColor = "red"; // Mark as invalid if empty
                 }
             }
 
+            // Check if the minimum number of filled rows is met
+            if (filledRowsCount < minimumRequiredRows) {
+                isValid = false;
+                alert("Please fill at least " + minimumRequiredRows + " rows.");
+            }
+
             // If there are valid entries, calculate the average
-            if (count > 0) {
+            if (isValid && count > 0) {
                 var averageWeight = totalWeight / count;
                 document.getElementById('<%= txtAverageGrossWeight.ClientID %>').value = averageWeight.toFixed(2);
             } else {
                 document.getElementById('<%= txtAverageGrossWeight.ClientID %>').value = "0.00";
-            }
-
-            // If not valid, prevent form submission
-            if (!isValid) {
-                alert("Please fill all the required fields.");
             }
 
             return isValid;
