@@ -36,22 +36,14 @@ namespace AnmolDristi
                     lbl_docname.Text = "Roatary Line & Oven End Report";
                     lbl_docnumber.Text = "ANMOL/DOC/CORQ/QA/02";
                     PlantBinder();
-                    //HiddenField1.Value = "0";
-                    //ShowInputBox(0);
 
-                    // BindGridView(30);
-                    //BindGridView1(3);
-                    //LoadGridData();
-                    //GridBinder(3);
-                    GridBinder1(28);
-                    GridBinder(28);
+                    int gridBinderValue = int.Parse(ConfigurationManager.AppSettings["FinalCBBWeight_GridBinderValue"]);
+                    GridBinder1(gridBinderValue);
+                    GridBinder(gridBinderValue);
 
                     DisplayCurrentShift();
                 }
-
-
             }
-
         }
 
         private void DisplayCurrentShift()
@@ -842,9 +834,6 @@ namespace AnmolDristi
                     txtEdlWeight.Text = string.Empty; // Clear EDL weight text
                 }
             }
-
-            // Optionally, you can rebind the GridView to ensure it reflects the cleared state
-            // GridBinder1(LineWeights_Grid.Rows.Count); // Adjust the rowCount as necessary
         }
 
 
@@ -952,7 +941,7 @@ namespace AnmolDristi
             UpdateOvenEND_InDatabase(GaugeValueJSON, averageGaugeWeights, WeightsJSON, averageOEWeights, CombinedJSON);
 
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('GrossWeightData-tab').click();", true);
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
             //OvenEnd_GridView.Visible=false;
         }
 

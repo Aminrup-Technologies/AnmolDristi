@@ -363,7 +363,7 @@
                                                             <div class="col-md-12 text-center">
                                                                 <asp:Button ID="Btn_Save" runat="server" Text="Proceed Next" OnClick="Btn_Save_Click" CssClass="btn btn-sm btn-primary" ValidationGroup="Submit" CausesValidation="true" />
                                                                 <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btnReset_Click" />
-                                                                <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" PostBackUrl="~/home.aspx" />
+                                                                <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                                                 <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
 
                                                             </div>
@@ -408,7 +408,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="lbl_lblAvgWeight" runat="server" AssociatedControlID="lblAvgWeight" Text="Avergae of all the Weights:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group-sm">
-                                                                        <asp:Label ID="lblAvgWeight" runat="server" Text="0"></asp:Label>
+                                                                        <asp:Label ID="lblAvgWeight" runat="server" Text="0"></asp:Label> gm
                                                                         <%--<asp:TextBox ID="txtAverageGrossWeight" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>--%>
                                                                     </div>
                                                                 </div>
@@ -421,7 +421,7 @@
                                                         <div class="col-md-12 text-center">
                                                             <asp:Button ID="btn_rawSubmit" runat="server" Text="Proceed Next" OnClientClick="return validateGridView1();" OnClick="btn_rawSubmit_Click" CssClass="btn btn-sm btn-primary" />
                                                             <asp:Button ID="btn_rawrest" runat="server" Text="Reset Grid" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClientClick="clearGridView1TextBoxes(); return false;" />
-                                                            <asp:Button ID="Button2" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" PostBackUrl="~/home.aspx" />
+                                                            <asp:Button ID="Button2" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                                         </div>
                                                     </div>
 
@@ -478,13 +478,13 @@
                                                             <br />
                                                             <h4>Average Weight:
                                                                 <asp:Label ID="lblAvgWeights" runat="server" Text="0"></asp:Label>
-                                                                g</h4>
+                                                                gm</h4>
                                                         </div>
 
                                                         <div class="col-md-12 text-center">
                                                             <asp:Button ID="btnSubmit" runat="server" Text="Final Submit" OnClientClick="return validateGridView();" OnClick="btnOvenSubmit_Click" CssClass="btn btn-sm btn-primary" />
                                                             <asp:Button ID="Button1" runat="server" Text="Reset Grid" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClientClick="clearGridView2TextBoxes(); return false;" />
-                                                            <asp:Button ID="Button3" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" PostBackUrl="~/home.aspx" />
+                                                            <asp:Button ID="Button3" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                                             <asp:Label ID="Label6" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
                                                         </div>
                                                     </div>
