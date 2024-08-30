@@ -125,7 +125,7 @@
                                                         <div class="mask">
                                                             <p>Conference Booking</p>
                                                             <div class="tools tools-bottom">
-                                                                <a href="#"><i class="fa fa-link"></i></a>
+                                                                <a href="http://115.112.186.71/login.aspx"><i class="fa fa-link"></i></a>
                                                                 <%--<a href="#"><i class="fa fa-pencil"></i></a>
                                                                 <a href="#"><i class="fa fa-times"></i></a>--%>
                                                             </div>
