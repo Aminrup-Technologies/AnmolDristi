@@ -20,6 +20,8 @@ namespace AnmolDristi
     {
         string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
         public static String RLWt = String.Empty;
+        DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -41,13 +43,22 @@ namespace AnmolDristi
                     //BindGridView1(3);
                     //LoadGridData();
                     //GridBinder(3);
-                    GridBinder1(10);
-                    GridBinder(10);
+                    GridBinder1(28);
+                    GridBinder(28);
+
+                    DisplayCurrentShift();
                 }
 
 
             }
 
+        }
+
+        private void DisplayCurrentShift()
+        {
+            ShiftManager shiftManager = new ShiftManager();
+            string currentShift = shiftManager.GetCurrentShiftType();
+            hdn_shiftvalue.Value = currentShift;
         }
 
         private void PlantBinder()
@@ -148,6 +159,8 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
+
+                LoadApprovers(selectedPlantValue, selectedPlantLineValue);
             }
             else
             {
@@ -356,83 +369,263 @@ namespace AnmolDristi
         {
             // Validate and save the data
             SaveData();
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('rawBiscuts-tab').click();", true);
+        }
+
+        private string Find_DBCode()
+        {
+            string aa = null;
+            dbcl.Sqlconnection();
+            dbcl.ConnectDb();
+            string kk = null;
+            string cmdString1 = "select Id,RLWt from TRN_RotaryLine_OvenEnd where Id=(select max(Id)from TRN_RotaryLine_OvenEnd)";
+            SqlCommand com1 = new SqlCommand(cmdString1, dbcl.Conn);
+            SqlDataReader DR1 = com1.ExecuteReader();
+            if (DR1.Read())
+            {
+                aa = DR1.GetValue(1).ToString();
+                string bb = aa.Substring(5);
+                int k = Convert.ToInt32(bb);
+                k = k + 1;
+                string q = Convert.ToString(k);
+                kk = "RLOE0" + q;
+            }
+            else
+            {
+                kk = "RLOE01";
+            }
+            dbcl.DisconnectDb();
+            RLWt = kk;
+            return kk;
         }
         private void SaveData()
         {
             // Get values from the UI controls
             string plantName = DDL_Plant.SelectedValue;
             string plantLine = DDL_PlantLine.SelectedValue;
-            string productCategory = DDL_ProductCategory.SelectedValue;
-            string productBrand = DDL_ProductBrand.SelectedValue;
             string brandSKU = DDL_BrandSKU.SelectedValue;
             string varietyPacket = TB_VartyPkt.Text;
-            string shift = GetCurrentShift();  // Automatically get the current shift
-
-
-
-            string insertQuery = @"
-        INSERT INTO BasicRl_Data_Table (
-            PlantId, [Line], ProductCategory, ProductBrand, SKUID, [Date], [Shift], [Time], 
-            [RLWT], [Variety], [CreatedBy], 
-            [LEVEL1_APPROVER_ID], [LEVEL1_APPROVER_NAME], [LEVEL1_APPROVER_STATUS], [LEVEL1_APPROVER_TIMESTAMP], 
-            [LEVEL2_APPROVER_ID], [LEVEL2_APPROVER_NAME], [LEVEL2_APPROVER_STATUS], [LEVEL2_APPROVER_TIMESTAMP], 
-            [LEVEL3_APPROVER_ID], [LEVEL3_APPROVER_NAME], [LEVEL3_APPROVER_STATUS], [LEVEL3_APPROVER_TIMESTAMP]
-        ) VALUES (
-            @PlantId, @Line, @ProductCategory, @ProductBrand, @SKUID, @Date, @Shift, @Time, 
-            @RLWT, @Variety, @CreatedBy, 
-            @LEVEL1_APPROVER_ID, @LEVEL1_APPROVER_NAME, @LEVEL1_APPROVER_STATUS, @LEVEL1_APPROVER_TIMESTAMP, 
-            @LEVEL2_APPROVER_ID, @LEVEL2_APPROVER_NAME, @LEVEL2_APPROVER_STATUS, @LEVEL2_APPROVER_TIMESTAMP, 
-            @LEVEL3_APPROVER_ID, @LEVEL3_APPROVER_NAME, @LEVEL3_APPROVER_STATUS, @LEVEL3_APPROVER_TIMESTAMP
-        );";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+
+                // Collect form data from your ASP.NET form controls (TextBoxes, DropDownLists, etc.)
+                int formID = Convert.ToInt32(hdn_formid.Value.ToString());
+                int submittedById = Convert.ToInt32(Session["USERID"].ToString());
+                DateTime submittedDate = DateTime.Today; // Assuming submission date is today's date
+                TimeSpan submittedTime = DateTime.Now.TimeOfDay; // Assuming submission time is current time
+                string shift = hdn_shiftvalue.Value.ToString();
+                string submittedByEmployeeCode = Session["WORKMAN"].ToString();
+                string line = DDL_PlantLine.SelectedValue;
+                string productCategory = DDL_ProductCategory.SelectedValue;
+                string productBrand = DDL_ProductBrand.SelectedValue;
+                string skuId = DDL_BrandSKU.SelectedValue;
+                string rlWt = Find_DBCode();
+                string variety = TB_VartyPkt.Text.ToString();
+                //int viewMode = Convert.ToInt32(ddlViewMode.SelectedValue); // Dropdown for view mode
+                //int deleteMode = Convert.ToInt32(ddlDeleteMode.SelectedValue); // Dropdown for delete mode
+
+                // Optional parameters
+                //int? approver1Status = string.IsNullOrEmpty(txtApprover1Status.Text) ? (int?)null : Convert.ToInt32(txtApprover1Status.Text);
+                //DateTime? approver1TimeStamp = string.IsNullOrEmpty(txtApprover1TimeStamp.Text) ? (DateTime?)null : Convert.ToDateTime(txtApprover1TimeStamp.Text);
+
+                //int? approver2Status = string.IsNullOrEmpty(txtApprover2Status.Text) ? (int?)null : Convert.ToInt32(txtApprover2Status.Text);
+                //DateTime? approver2TimeStamp = string.IsNullOrEmpty(txtApprover2TimeStamp.Text) ? (DateTime?)null : Convert.ToDateTime(txtApprover2TimeStamp.Text);
+
+                //int? dottedApproverStatus = string.IsNullOrEmpty(txtDottedApproverStatus.Text) ? (int?)null : Convert.ToInt32(txtDottedApproverStatus.Text);
+                //DateTime? dottedApproverTimeStamp = string.IsNullOrEmpty(txtDottedApproverTimeStamp.Text) ? (DateTime?)null : Convert.ToDateTime(txtDottedApproverTimeStamp.Text);
+
+                string approver1EmployeeCode = Approver1CodeLabel.Text.ToString();
+                string approver2EmployeeCode = Approver2CodeLabel.Text.ToString();
+                string dottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text.ToString();
+
+                //string linewt = txtLineWeight.Text;
+                //string gaugeandweight = txtGaugeAndWeight.Text;
+                //decimal? avglinewt = string.IsNullOrEmpty(txtAvgLineWeight.Text) ? (decimal?)null : Convert.ToDecimal(txtAvgLineWeight.Text);
+                //decimal? avggaugevalue = string.IsNullOrEmpty(txtAvgGaugeValue.Text) ? (decimal?)null : Convert.ToDecimal(txtAvgGaugeValue.Text);
+                //decimal? avgweightvalue = string.IsNullOrEmpty(txtAvgWeightValue.Text) ? (decimal?)null : Convert.ToDecimal(txtAvgWeightValue.Text);
+
+                // Call the Insert method
+                InsertRotaryLineOvenEnd(
+                    formID, submittedById, submittedDate, submittedTime, shift, submittedByEmployeeCode,
+                    plantName, line, productCategory, productBrand, skuId, rlWt, variety,
+                    approver1EmployeeCode,
+                    approver2EmployeeCode,
+                    dottedLineApproverEmployeeCode
+                );
+
+                Btn_Save.Enabled = false;
+                Btn_Save.Text = "SAVED";
+
+                TB_VartyPkt.ReadOnly = true;
+
+                lblMessage.Text = "Data inserted successfully!";
+
+                string Data_SuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Data Success',
+                                text: 'Recorded Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                // RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+            }
+            catch (Exception ex)
+            {
+                lblMessage.Text = "An error occurred: " + ex.Message;
+                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                string errorScript1 = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{errorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification1", errorScript1, false);
+            }
+        }
+
+        public void InsertRotaryLineOvenEnd(
+        int formID, int submittedById, DateTime submittedDate, TimeSpan submittedTime, string shift,
+        string submittedByEmployeeCode, string plantName, string line, string productCategory,
+        string productBrand, string skuId, string rlWt, string variety,
+        string approver1EmployeeCode,
+        string approver2EmployeeCode,
+        string dottedLineApproverEmployeeCode)
+        {
+            try
+            {
+                // Get the connection string from Web.config
+                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
+                    using (SqlCommand cmd = new SqlCommand("InsertRotaryLineOvenEnd", conn))
                     {
-                        // Set parameters for the SQL command
-                        insertCommand.Parameters.AddWithValue("@PlantId", plantName);
-                        insertCommand.Parameters.AddWithValue("@Line", plantLine);
-                        insertCommand.Parameters.AddWithValue("@ProductCategory", productCategory);
-                        insertCommand.Parameters.AddWithValue("@ProductBrand", productBrand);
-                        insertCommand.Parameters.AddWithValue("@SKUID", brandSKU);
-                        insertCommand.Parameters.AddWithValue("@Date", DateTime.Now.Date);
-                        insertCommand.Parameters.AddWithValue("@Shift", shift);  // Assuming a default shift 'A'
-                        insertCommand.Parameters.AddWithValue("@Time", DateTime.Now.TimeOfDay);
-                        insertCommand.Parameters.AddWithValue("@RLWT", GenerateUniqueRLWT01());  // Generate unique value
-                        insertCommand.Parameters.AddWithValue("@Variety", varietyPacket);
-                        insertCommand.Parameters.AddWithValue("@CreatedBy", DBNull.Value);  // Replace with actual user ID
-                        insertCommand.Parameters.AddWithValue("@LEVEL1_APPROVER_ID", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL1_APPROVER_NAME", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL1_APPROVER_STATUS", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL1_APPROVER_TIMESTAMP", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL2_APPROVER_ID", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL2_APPROVER_NAME", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL2_APPROVER_STATUS", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL2_APPROVER_TIMESTAMP", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL3_APPROVER_ID", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL3_APPROVER_NAME", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL3_APPROVER_STATUS", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL3_APPROVER_TIMESTAMP", DBNull.Value);
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                        // Open the connection and execute the command
-                        connection.Open();
-                        insertCommand.ExecuteNonQuery();
+                        // Add parameters
+                        cmd.Parameters.AddWithValue("@FormID", formID);
+                        cmd.Parameters.AddWithValue("@SubmittedById", submittedById);
+                        cmd.Parameters.AddWithValue("@SubmittedDate", submittedDate);
+                        cmd.Parameters.AddWithValue("@SubmittedTime", submittedTime);
+                        cmd.Parameters.AddWithValue("@Shift", shift);
+                        cmd.Parameters.AddWithValue("@SubmittedByEmployeeCode", submittedByEmployeeCode);
+                        cmd.Parameters.AddWithValue("@PlantName", plantName);
+                        cmd.Parameters.AddWithValue("@Line", line);
+                        cmd.Parameters.AddWithValue("@ProductCategory", productCategory);
+                        cmd.Parameters.AddWithValue("@ProductBrand", productBrand);
+                        cmd.Parameters.AddWithValue("@SKUId", skuId);
+                        cmd.Parameters.AddWithValue("@RLWt", rlWt);
+                        cmd.Parameters.AddWithValue("@Variety", variety);
+                        //cmd.Parameters.AddWithValue("@ViewMode", viewMode);
+                        //cmd.Parameters.AddWithValue("@DeleteMode", deleteMode);
 
-                        lblMessage.Text = "Data saved successfully!";
-                        lblMessage.ForeColor = System.Drawing.Color.Green;
+                        cmd.Parameters.AddWithValue("@Approver1EmployeeCode", (object)approver1EmployeeCode ?? DBNull.Value);
+                        //cmd.Parameters.AddWithValue("@Approver1_Status", (object)approver1Status ?? DBNull.Value);
+                        //cmd.Parameters.AddWithValue("@Approver1_TimeStamp", (object)approver1TimeStamp ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Approver2EmployeeCode", (object)approver2EmployeeCode ?? DBNull.Value);
+                        //cmd.Parameters.AddWithValue("@Approver2_Status", (object)approver2Status ?? DBNull.Value);
+                        //cmd.Parameters.AddWithValue("@Approver2_TimeStamp", (object)approver2TimeStamp ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", (object)dottedLineApproverEmployeeCode ?? DBNull.Value);
+                        //cmd.Parameters.AddWithValue("@DottedApprover_Status", (object)dottedApproverStatus ?? DBNull.Value);
+                        //cmd.Parameters.AddWithValue("@DottedApprover_TimeStamp", (object)dottedApproverTimeStamp ?? DBNull.Value);
 
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('rawBiscuts-tab').click();", true);
+                        //cmd.Parameters.AddWithValue("@linewt", (object)linewt ?? DBNull.Value);
+                        //cmd.Parameters.AddWithValue("@gaugeandweight", (object)gaugeandweight ?? DBNull.Value);
+                        //cmd.Parameters.AddWithValue("@avglinewt", (object)avglinewt ?? DBNull.Value);
+                        //cmd.Parameters.AddWithValue("@avggaugevalue", (object)avggaugevalue ?? DBNull.Value);
+                        //cmd.Parameters.AddWithValue("@avgweightvalue", (object)avgweightvalue ?? DBNull.Value);
 
+                        // Open connection and execute the command
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+
+                        //string InsertRotaryLineOvenEnd_SuccessScript = @"<script type='text/javascript'>
+                        //    new PNotify({
+                        //        title: 'Data Success',
+                        //        text: 'Recorded Successfully!!',
+                        //        type: 'success',
+                        //        styling: 'bootstrap3'
+                        //    });
+                        //</script>";
+                        //ClientScript.RegisterStartupScript(this.GetType(), "InsertRotaryLineOvenEnd_SuccessNotification", InsertRotaryLineOvenEnd_SuccessScript, false);
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Handle the exception
-                lblMessage.Text = "An error occurred: " + ex.Message;
-                lblMessage.ForeColor = System.Drawing.Color.Red;
+                string InsertRotaryLineOvenEnd_ErrorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                string InsertRotaryLineOvenEnd_ErrorScript = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{InsertRotaryLineOvenEnd_ErrorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "InsertRotaryLineOvenEnd_ErrorNotification", InsertRotaryLineOvenEnd_ErrorScript, false);
+            }
+        }
+
+        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
+                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@FormID", 2);
+                    cmd.Parameters.AddWithValue("@FormName", "qa_qc_FinalCbbWtReport");
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        hdn_formid.Value = "2";
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        GridViewApprovers.DataSource = dt;
+                        GridViewApprovers.DataBind();
+
+                        if (dt.Rows.Count > 0)
+                        {
+                            DataRow row = dt.Rows[0];
+
+                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
+
+                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
+
+                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
+                        }
+                        else
+                        {
+                            // Set default values to ADMIN if no rows are found
+                            Approver1NameLabel.Text = "ADMIN";
+                            Approver1CodeLabel.Text = "ADMIN";
+
+                            Approver2NameLabel.Text = "ADMIN";
+                            Approver2CodeLabel.Text = "ADMIN";
+
+                            DottedLineApproverNameLabel.Text = "ADMIN";
+                            DottedLineApproverCodeLabel.Text = "ADMIN";
+                        }
+                    }
+                }
             }
         }
 
@@ -534,20 +727,27 @@ namespace AnmolDristi
                 dt.Rows.Add(dr);
             }
 
-            GridView2.DataSource = dt;
-            GridView2.DataBind();
+            LineWeights_Grid.DataSource = dt;
+            LineWeights_Grid.DataBind();
+        }
+
+        public class WeightData
+        {
+            public int sl { get; set; }
+            public decimal weight { get; set; }
         }
 
         protected void btn_rawSubmit_Click(object sender, EventArgs e)
         {
-            // Assuming stlweightData and edlweightData are for different columns.
             Dictionary<int, decimal> stlweightData = new Dictionary<int, decimal>();
-            Dictionary<int, decimal> edlweightData = new Dictionary<int, decimal>();
+            List<WeightData> weightDataList = new List<WeightData>();
 
-            foreach (GridViewRow row in GridView2.Rows)
+            decimal totalWeight = 0;
+            int weightCount = 0;
+
+            foreach (GridViewRow row in LineWeights_Grid.Rows)
             {
                 TextBox txtStlWeight = (TextBox)row.FindControl("txtStlWeight");
-                TextBox txtEdlWeight = (TextBox)row.FindControl("txtEdlWeight");
 
                 if (txtStlWeight != null && !string.IsNullOrEmpty(txtStlWeight.Text))
                 {
@@ -555,67 +755,79 @@ namespace AnmolDristi
                     if (decimal.TryParse(txtStlWeight.Text, out stlweight))
                     {
                         int sl = row.RowIndex + 1;  // Serial number
-                        stlweightData[sl] = stlweight;
+                        weightDataList.Add(new WeightData
+                        {
+                            sl = sl,
+                            weight = stlweight
+                        });
+                        totalWeight += stlweight;
+                        weightCount++;
                     }
                 }
-
-                if (txtEdlWeight != null && !string.IsNullOrEmpty(txtEdlWeight.Text))
-                {
-                    decimal edlweight;
-                    if (decimal.TryParse(txtEdlWeight.Text, out edlweight))
-                    {
-                        int sl = row.RowIndex + 1;  // Serial number
-                        edlweightData[sl] = edlweight;
-                    }
-                }
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('ovenReport-tab').click();", true);
-
             }
+            decimal averageWeight = (weightCount > 0) ? (totalWeight / weightCount) : 0;
+            string jsonData = JsonConvert.SerializeObject(weightDataList);
 
-            // Combine data into a single JSON object
-            var combinedData = new
-            {
-                stlWeights = stlweightData,
-                edlWeights = edlweightData
-            };
+            UpdatelinewtInDatabase(jsonData, averageWeight);
 
-            string jsonData = JsonConvert.SerializeObject(combinedData);
-
-            // Update the database
-            UpdatelinewtInDatabase(jsonData);
-            //GridView2.Visible = false;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('ovenReport-tab').click();", true);
+            //LineWeights_Grid.Visible = false;
         }
 
 
-        private void UpdatelinewtInDatabase(string jsonData)
+        private void UpdatelinewtInDatabase(string jsonData, decimal averageWeight)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                conn.Open();
-
-                string query = "UPDATE BasicRl_Data_Table SET stlwt = @stlwt WHERE RLWt = @RLWt";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    cmd.Parameters.AddWithValue("@stlwt", jsonData);
-                    cmd.Parameters.AddWithValue("@RLWt", RLWt); // Assuming RLWt is the primary key or unique identifier
+                    conn.Open();
+                    string query = "UPDATE TRN_RotaryLine_OvenEnd SET linewt = @linewt,avglinewt = @avglinewt WHERE RLWt = @RLWt";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@linewt", jsonData);
+                        cmd.Parameters.AddWithValue("@avglinewt", averageWeight);
+                        cmd.Parameters.AddWithValue("@RLWt", RLWt);
+                        cmd.ExecuteNonQuery();
 
-                    cmd.ExecuteNonQuery();
+                        btn_rawSubmit.Enabled = false;
+                        btn_rawSubmit.Text = "SAVED";
+
+
+                        string UpdatelinewtInDatabaseSuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Data Success',
+                                text: 'Recorded Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                        // RegisterStartupScript adds the JavaScript code to the page
+                        ClientScript.RegisterStartupScript(this.GetType(), "UpdatelinewtInDatabaseNotification2", UpdatelinewtInDatabaseSuccessScript, false);
+
+                    }
                 }
-
-                // Switch to a different tab using JavaScript
-
+            }
+            catch (Exception ex)
+            {
+                string UpdatelinewtInDatabaseerrorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                string UpdatelinewtInDatabaseerrorScript = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{UpdatelinewtInDatabaseerrorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "UpdatelinewtInDatabaseErrorNotification", UpdatelinewtInDatabaseerrorScript, false);
             }
         }
-
-
-
 
         protected void btn_rawrest_Click(object sender, EventArgs e)
         {
-            foreach (GridViewRow row in GridView2.Rows)
+            foreach (GridViewRow row in LineWeights_Grid.Rows)
             {
                 TextBox txtStlWeight = (TextBox)row.FindControl("txtStlWeight");
                 TextBox txtEdlWeight = (TextBox)row.FindControl("txtEdlWeight");
@@ -632,14 +844,8 @@ namespace AnmolDristi
             }
 
             // Optionally, you can rebind the GridView to ensure it reflects the cleared state
-            // GridBinder1(GridView2.Rows.Count); // Adjust the rowCount as necessary
+            // GridBinder1(LineWeights_Grid.Rows.Count); // Adjust the rowCount as necessary
         }
-
-
-
-        /// <summary>
-        /// Oven wt rpt
-        /// </summary>
 
 
         private void GridBinder(int rowCount)
@@ -658,84 +864,155 @@ namespace AnmolDristi
                 dt.Rows.Add(dr);
             }
 
-            GridView1.DataSource = dt;
-            GridView1.DataBind();
+            OvenEnd_GridView.DataSource = dt;
+            OvenEnd_GridView.DataBind();
+        }
+
+        public class OWeightData
+        {
+            public int sl { get; set; }
+            public decimal wt { get; set; }
+        }
+
+        public class GaugeData
+        {
+            public int sl { get; set; }
+            public decimal ge { get; set; }
+        }
+
+        public class OvenEndData
+        {
+            public int sl { get; set; }
+            public decimal ge { get; set; }
+            public decimal wt { get; set; }
         }
 
         protected void btnOvenSubmit_Click(object sender, EventArgs e)
         {
-            var gaugeLengthData = new Dictionary<int, decimal>();
-            var weightData = new Dictionary<int, decimal>();
+            List<GaugeData> gaugeDataList = new List<GaugeData>();
+            List<OWeightData> weightDataList = new List<OWeightData>();
+            List<OvenEndData> OvenEndDataList = new List<OvenEndData>();
 
-            foreach (GridViewRow row in GridView1.Rows)
+            decimal TTL_GaugeValues = 0;
+            int TTL_GaugeValuesRows = 0;
+            decimal TTL_OEWeightValues = 0;
+            int TTL_OEWeightValuesRows = 0;
+
+            foreach (GridViewRow row in OvenEnd_GridView.Rows)
             {
                 TextBox txtGaugeLength = (TextBox)row.FindControl("txtGaugeLength");
                 TextBox txtWeight = (TextBox)row.FindControl("txtWeight");
 
-                if (txtGaugeLength != null && !string.IsNullOrEmpty(txtGaugeLength.Text))
+                if (txtGaugeLength != null && !string.IsNullOrEmpty(txtGaugeLength.Text) && txtWeight != null && !string.IsNullOrEmpty(txtWeight.Text))
                 {
-                    decimal gaugeLength;
-                    if (decimal.TryParse(txtGaugeLength.Text, out gaugeLength))
+                    decimal wts;
+                    decimal ggv;
+                    if (decimal.TryParse(txtGaugeLength.Text, out wts))
                     {
-                        int sl = row.RowIndex + 1;  // Serial number
-                        gaugeLengthData[sl] = gaugeLength;
-                    }
-                }
+                        if (decimal.TryParse(txtWeight.Text, out ggv))
+                        {
+                            int sl = row.RowIndex + 1; // Serial number
+                            OvenEndDataList.Add(new OvenEndData
+                            {
+                                sl = sl,
+                                ge = ggv,
+                                wt = wts
+                            });
 
-                if (txtWeight != null && !string.IsNullOrEmpty(txtWeight.Text))
-                {
-                    decimal weight;
-                    if (decimal.TryParse(txtWeight.Text, out weight))
-                    {
-                        int sl = row.RowIndex + 1;  // Serial number
-                        weightData[sl] = weight;
+                            weightDataList.Add(new OWeightData
+                            {
+                                sl = sl,
+                                wt = wts
+                            });
+
+                            gaugeDataList.Add(new GaugeData
+                            {
+                                sl = sl,
+                                ge = wts
+                            });
+
+                            TTL_GaugeValues += ggv;
+                            TTL_GaugeValuesRows++;
+
+                            TTL_OEWeightValues += wts;
+                            TTL_OEWeightValuesRows++;
+                        }
                     }
                 }
             }
+            string CombinedJSON = JsonConvert.SerializeObject(OvenEndDataList);
+            string WeightsJSON = JsonConvert.SerializeObject(weightDataList);
+            string GaugeValueJSON = JsonConvert.SerializeObject(gaugeDataList);
 
-            // Combine data into a single JSON object
-            var combinedData = new
-            {
-                GaugeLengths = gaugeLengthData,
-                Weights = weightData
-            };
+            decimal averageGaugeWeights = (TTL_GaugeValuesRows > 0) ? (TTL_GaugeValues / TTL_GaugeValuesRows) : 0;
+            decimal averageOEWeights = (TTL_OEWeightValuesRows > 0) ? (TTL_OEWeightValues / TTL_OEWeightValuesRows) : 0;
 
-            string jsonData = JsonConvert.SerializeObject(combinedData);
 
             // Update existing records in the database
-            UpdateWeightsInDatabase(jsonData);
+            UpdateOvenEND_InDatabase(GaugeValueJSON, averageGaugeWeights, WeightsJSON, averageOEWeights, CombinedJSON);
+
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('GrossWeightData-tab').click();", true);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
-            //GridView1.Visible=false;
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
+            //OvenEnd_GridView.Visible=false;
         }
 
-        private void UpdateWeightsInDatabase(string jsonData)
+        private void UpdateOvenEND_InDatabase(string GaugeValueJSON, decimal averageGaugeWeights,  string WeightsJSON, decimal averageOEWeights, string CombinedJSON)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                conn.Open();
-
-                string query = "UPDATE BasicRl_Data_Table SET edlwt = @edlwt WHERE RLWt = @RLWt";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    cmd.Parameters.AddWithValue("@edlwt", jsonData);
-                    cmd.Parameters.AddWithValue("@RLWt", RLWt); // Primary key or unique identifier
+                    conn.Open();
 
-                    cmd.ExecuteNonQuery();
+                    string query = "UPDATE TRN_RotaryLine_OvenEnd SET gaugevalues = @gaugevalues, avggaugevalue = @avggaugevalue, weightvalue = @weightvalue, avgweightvalue = @avgweightvalue, gaugeandweight = @gaugeandweight WHERE RLWt = @RLWt";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@gaugevalues", GaugeValueJSON);
+                        cmd.Parameters.AddWithValue("@avggaugevalue", averageGaugeWeights);
+                        cmd.Parameters.AddWithValue("@weightvalue", WeightsJSON);
+                        cmd.Parameters.AddWithValue("@avgweightvalue", averageOEWeights);
+                        cmd.Parameters.AddWithValue("@gaugeandweight", CombinedJSON);
+                        cmd.Parameters.AddWithValue("@RLWt", RLWt);
+                        cmd.ExecuteNonQuery();
+
+                        btnSubmit.Enabled = false;
+                        btnSubmit.Text = "SAVED";
+
+                        string UpdateOvenEND_SuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Data Success',
+                                text: 'Recorded Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                        // RegisterStartupScript adds the JavaScript code to the page
+                        ClientScript.RegisterStartupScript(this.GetType(), "UpdateOvenENDSuccessNotification", UpdateOvenEND_SuccessScript, false);
+                    }
                 }
-
-                // Optional: Switch to a different tab using JavaScript
-
+            }
+            catch (Exception ex)
+            {
+                string UpdateOvenEND_InDatabase_errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                string UpdateOvenEND_InDatabase_errorScript = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{UpdateOvenEND_InDatabase_errorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "UpdateOvenEND_InDatabaseErrorNotification", UpdateOvenEND_InDatabase_errorScript, false);
             }
         }
 
         protected void btn_ovenrest_Click(object sender, EventArgs e)
         {
             // Iterate through each row of the GridView
-            foreach (GridViewRow row in GridView1.Rows)
+            foreach (GridViewRow row in OvenEnd_GridView.Rows)
             {
                 // Find the TextBox controls in the current row
                 TextBox txtGaugeLength = (TextBox)row.FindControl("txtGaugeLength");
@@ -753,10 +1030,6 @@ namespace AnmolDristi
                     txtWeight.Text = string.Empty; // Clear Weight text
                 }
             }
-
-            // Optional: Rebind the GridView to refresh its state if needed
-            // You might want to keep the same number of rows or reset to a default state
-            // GridBinder(GridView1.Rows.Count); // Uncomment if you need to rebind with the same number of rows
         }
 
     }

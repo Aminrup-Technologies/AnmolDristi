@@ -17,11 +17,11 @@
             /*padding-bottom:20px;*/
         }
 
-        .custom-page-title .title_left h3 {
-            font-size: 20px;
-            color: #333333;
-            font-weight: bold;
-        }
+            .custom-page-title .title_left h3 {
+                font-size: 20px;
+                color: #333333;
+                font-weight: bold;
+            }
 
         .approver-photo {
             width: 50px;
@@ -54,7 +54,7 @@
     <script type="text/javascript">
         function validateGridView1() {
             var isValid = true;
-            var gridView = document.getElementById('<%= GridView2.ClientID %>');
+            var gridView = document.getElementById('<%= LineWeights_Grid.ClientID %>');
             for (var i = 1; i < gridView.rows.length; i++) {  // Start from 1 to skip header row
                 var row = gridView.rows[i];
 
@@ -85,10 +85,72 @@
             return isValid;
         }
     </script>
+
     <script type="text/javascript">
+
+        function calculateAverageWeight() {
+            var totalWeight = 0;
+            var rowCount = 0;
+
+            // Get all the textboxes with the class 'line-weight' inside the GridView
+            var textBoxes = document.getElementsByClassName('line-weight');
+
+            // Loop through each textbox to calculate the total weight
+            for (var i = 0; i < textBoxes.length; i++) {
+                var weight = parseFloat(textBoxes[i].value);
+
+                // Check if the value entered is a valid number
+                if (!isNaN(weight) && weight > 0) {
+                    totalWeight += weight;
+                    rowCount++;
+                }
+            }
+
+            // Calculate the average weight if there are valid entries
+            var averageWeight = (rowCount > 0) ? (totalWeight / rowCount).toFixed(2) : 0;
+
+            // Get the Label by ClientID and update its text with the calculated average
+            var lblAvgWeight = document.getElementById('<%= lblAvgWeight.ClientID %>');
+            lblAvgWeight.innerHTML = averageWeight;
+        }
+
+        function validateGridView1() {
+            var isValid = true;
+            var gridView = document.getElementById('<%= LineWeights_Grid.ClientID %>');
+            for (var i = 1; i < gridView.rows.length; i++) {  // Start from 1 to skip header row
+                var row = gridView.rows[i];
+
+                var txtStlWeight = row.querySelector("input[id*='txtStlWeight']");
+                // var txtedlWeight = row.querySelector("input[id*='txtedlWeight']");
+
+                // Check if TextBoxes are filled
+                if (txtStlWeight && txtStlWeight.value.trim() === "") {
+                    isValid = false;
+                    txtStlWeight.style.borderColor = "red";
+                } else {
+                    txtStlWeight.style.borderColor = "";
+                }
+
+                //if (txtedlWeight && txtedlWeight.value.trim() === "") {
+                //    isValid = false;
+                //    txtedlWeight.style.borderColor = "red";
+                //} else {
+                //    txtedlWeight.style.borderColor = "";
+                //}
+            }
+
+            // If not valid, prevent form submission
+            if (!isValid) {
+                alert("Please fill all the required fields.");
+            }
+
+            return isValid;
+        }
+
+
         function validateGridView() {
             var isValid = true;
-            var gridView = document.getElementById('<%= GridView1.ClientID %>');
+            var gridView = document.getElementById('<%= OvenEnd_GridView.ClientID %>');
             for (var i = 1; i < gridView.rows.length; i++) {  // Start from 1 to skip header row
                 var row = gridView.rows[i];
 
@@ -120,24 +182,76 @@
         }
 
         function clearGridView1TextBoxes() {
-            var textBoxes = document.querySelectorAll('#<%= GridView2.ClientID %> .form-control');
-            textBoxes.forEach(function(textBox) {
-                textBox.value = '';
-            });
-        }
+            var textBoxes = document.querySelectorAll('#<%= LineWeights_Grid.ClientID %> .form-control');
+             textBoxes.forEach(function (textBox) {
+                 textBox.value = '';
+             });
+         }
 
-        function clearGridView2TextBoxes() {
-            var textBoxes = document.querySelectorAll('#<%= GridView1.ClientID %> .form-control');
-            textBoxes.forEach(function(textBox) {
-                textBox.value = '';
-            });
-        }
+         function clearGridView2TextBoxes() {
+             var textBoxes = document.querySelectorAll('#<%= OvenEnd_GridView.ClientID %> .form-control');
+               textBoxes.forEach(function (textBox) {
+                   textBox.value = '';
+               });
+           }
+
+           function calculateAverageGaugeLength() {
+               var totalLength = 0;
+               var count = 0;
+
+               // Get all the TextBox elements for gauge length
+               var textboxes = document.querySelectorAll('.gauge-length');
+
+               // Iterate over each TextBox to sum up the values
+               textboxes.forEach(function (textbox) {
+                   var value = parseFloat(textbox.value);
+                   if (!isNaN(value)) {
+                       totalLength += value;
+                       count++;
+                   }
+               });
+
+               // Calculate the average
+               var averageLength = (count > 0) ? (totalLength / count) : 0;
+
+               // Update the label with the average length in millimeters
+               document.getElementById('lblAvgGaugeLength').innerText = averageLength.toFixed(2) + ' mm';
+           }
+
+           function calculateAverageWeight1() {
+               var totalWeight = 0;
+               var rowCount = 0;
+
+               // Get all the textboxes with the class 'line-weight' inside the GridView
+               var textBoxes = document.getElementsByClassName('weight');
+
+               // Loop through each textbox to calculate the total weight
+               for (var i = 0; i < textBoxes.length; i++) {
+                   var weight = parseFloat(textBoxes[i].value);
+
+                   // Check if the value entered is a valid number
+                   if (!isNaN(weight) && weight > 0) {
+                       totalWeight += weight;
+                       rowCount++;
+                   }
+               }
+
+               // Calculate the average weight if there are valid entries
+               var averageWeight = (rowCount > 0) ? (totalWeight / rowCount).toFixed(2) : 0;
+
+               // Get the Label by ClientID and update its text with the calculated average
+               var lblAvgWeight = document.getElementById('<%= lblAvgWeights.ClientID %>');
+              lblAvgWeight.innerHTML = averageWeight;
+          }
 
     </script>
 
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:HiddenField ID="hdn_shiftvalue" runat="server" />
+    <asp:HiddenField ID="hdn_formid" runat="server" />
+
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title custom-page-title">
@@ -249,6 +363,7 @@
                                                             <div class="col-md-12 text-center">
                                                                 <asp:Button ID="Btn_Save" runat="server" Text="Proceed Next" OnClick="Btn_Save_Click" CssClass="btn btn-sm btn-primary" ValidationGroup="Submit" CausesValidation="true" />
                                                                 <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btnReset_Click" />
+                                                                <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" PostBackUrl="~/home.aspx" />
                                                                 <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
 
                                                             </div>
@@ -263,12 +378,12 @@
                                                                     <asp:RegularExpressionValidator ID="REV_TB_LineNos" runat="server" ValidationGroup="Submit" ControlToValidate="TB_LineNos" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <asp:RangeValidator ID="RV_TB_LineNos" runat="server" ControlToValidate="TB_LineNos" ErrorMessage="[10 - 25]" ForeColor="Red" MinimumValue="10" MaximumValue="25" Type="Double" Display="Static"></asp:RangeValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_LineNos" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Min:10 -- Max:25" Text="10" ReadOnly="true"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_LineNos" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Min:10 -- Max:25" Text="28" ReadOnly="true"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
+                                                            <asp:GridView ID="LineWeights_Grid" runat="server" Visible="true" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
                                                                     <asp:TemplateField HeaderText="SL" HeaderStyle-ForeColor="Blue" HeaderStyle-Font-Bold="true" HeaderStyle-Font-Size="Small">
                                                                         <ItemTemplate>
@@ -280,14 +395,7 @@
 
                                                                     <asp:TemplateField HeaderText="Starting Line Wt:" HeaderStyle-ForeColor="Blue" HeaderStyle-Font-Bold="true" HeaderStyle-Font-Size="Small">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtStlWeight" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                                                                        </ItemTemplate>
-                                                                        <HeaderStyle CssClass="text-center" />
-                                                                        <ItemStyle CssClass="text-center" />
-                                                                    </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Ending Line Wt:" HeaderStyle-ForeColor="Blue" HeaderStyle-Font-Bold="true" HeaderStyle-Font-Size="Small">
-                                                                        <ItemTemplate>
-                                                                            <asp:TextBox ID="txtedlWeight" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtStlWeight" runat="server" CssClass="form-control form-control-sm rounded line-weight" oninput="calculateAverageWeight()"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                         <HeaderStyle CssClass="text-center" />
                                                                         <ItemStyle CssClass="text-center" />
@@ -295,9 +403,25 @@
                                                                 </Columns>
                                                             </asp:GridView>
                                                         </div>
+
+                                                        <div class="col-md-3" id="AvgWt_TB" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="lbl_lblAvgWeight" runat="server" AssociatedControlID="lblAvgWeight" Text="Avergae of all the Weights:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:Label ID="lblAvgWeight" runat="server" Text="0"></asp:Label>
+                                                                        <%--<asp:TextBox ID="txtAverageGrossWeight" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>--%>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        <%--<h4>Average Weight:
+                                                            <asp:Label ID="lblAvgWeight" runat="server" Text="0"></asp:Label>
+                                                            kg</h4>--%>
+
                                                         <div class="col-md-12 text-center">
                                                             <asp:Button ID="btn_rawSubmit" runat="server" Text="Proceed Next" OnClientClick="return validateGridView1();" OnClick="btn_rawSubmit_Click" CssClass="btn btn-sm btn-primary" />
                                                             <asp:Button ID="btn_rawrest" runat="server" Text="Reset Grid" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClientClick="clearGridView1TextBoxes(); return false;" />
+                                                            <asp:Button ID="Button2" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" PostBackUrl="~/home.aspx" />
                                                         </div>
                                                     </div>
 
@@ -311,12 +435,12 @@
                                                                     <asp:RegularExpressionValidator ID="REV_TB_OvenNos" runat="server" ValidationGroup="Submit" ControlToValidate="TB_OvenNos" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <asp:RangeValidator ID="RV_TB_OvenNos" runat="server" ControlToValidate="TB_OvenNos" ErrorMessage="[10 - 25]" ForeColor="Red" MinimumValue="10" MaximumValue="25" Type="Double" Display="Static"></asp:RangeValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_OvenNos" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Min:10 -- Max:25" Text="10" ReadOnly="true"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_OvenNos" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Min:10 -- Max:25" Text="28" ReadOnly="true"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
+                                                            <asp:GridView ID="OvenEnd_GridView" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
 
                                                                     <asp:TemplateField HeaderText="SL" HeaderStyle-ForeColor="Blue"
@@ -333,7 +457,7 @@
                                                                         HeaderStyle-Font-Bold="true"
                                                                         HeaderStyle-Font-Size="Small">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtGaugeLength" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtGaugeLength" runat="server" CssClass="form-control form-control-sm rounded gauge-length" oninput="calculateAverageGaugeLength()"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                         <HeaderStyle CssClass="text-center" />
                                                                         <ItemStyle CssClass="text-center" />
@@ -342,7 +466,7 @@
                                                                         HeaderStyle-Font-Bold="true"
                                                                         HeaderStyle-Font-Size="Small">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtWeight" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtWeight" runat="server" CssClass="form-control form-control-sm rounded weight" oninput="calculateAverageWeight1()"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                         <HeaderStyle CssClass="text-center" />
                                                                         <ItemStyle CssClass="text-center" />
@@ -350,17 +474,17 @@
                                                                 </Columns>
                                                             </asp:GridView>
 
-                                                            <asp:GridView ID="yourGridView" runat="server" AutoGenerateColumns="False" Visible="false">
-                                                                <Columns>
-                                                                    <asp:BoundField DataField="SlNo" HeaderText="Sl. No." />
-                                                                    <asp:BoundField DataField="GrossWeight" HeaderText="Gross Weight" />
-                                                                </Columns>
-                                                            </asp:GridView>
+                                                            <h4>Average Gauge Length: <span id="lblAvgGaugeLength">0.00 mm</span></h4>
+                                                            <br />
+                                                            <h4>Average Weight:
+                                                                <asp:Label ID="lblAvgWeights" runat="server" Text="0"></asp:Label>
+                                                                g</h4>
                                                         </div>
 
                                                         <div class="col-md-12 text-center">
                                                             <asp:Button ID="btnSubmit" runat="server" Text="Final Submit" OnClientClick="return validateGridView();" OnClick="btnOvenSubmit_Click" CssClass="btn btn-sm btn-primary" />
                                                             <asp:Button ID="Button1" runat="server" Text="Reset Grid" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClientClick="clearGridView2TextBoxes(); return false;" />
+                                                            <asp:Button ID="Button3" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" PostBackUrl="~/home.aspx" />
                                                             <asp:Label ID="Label6" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
                                                         </div>
                                                     </div>
@@ -444,6 +568,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 

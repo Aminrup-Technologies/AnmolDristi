@@ -13,6 +13,24 @@ namespace AnmolDristi {
     public partial class qaqc_rotary_line {
         
         /// <summary>
+        /// hdn_shiftvalue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdn_shiftvalue;
+        
+        /// <summary>
+        /// hdn_formid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdn_formid;
+        
+        /// <summary>
         /// lbl_docname control.
         /// </summary>
         /// <remarks>
@@ -220,6 +238,15 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Button btnReset;
         
         /// <summary>
+        /// btn_home control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_home;
+        
+        /// <summary>
         /// lblMessage control.
         /// </summary>
         /// <remarks>
@@ -274,13 +301,40 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.TextBox TB_LineNos;
         
         /// <summary>
-        /// GridView2 control.
+        /// LineWeights_Grid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
+        protected global::System.Web.UI.WebControls.GridView LineWeights_Grid;
+        
+        /// <summary>
+        /// AvgWt_TB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AvgWt_TB;
+        
+        /// <summary>
+        /// lbl_lblAvgWeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_lblAvgWeight;
+        
+        /// <summary>
+        /// lblAvgWeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAvgWeight;
         
         /// <summary>
         /// btn_rawSubmit control.
@@ -299,6 +353,15 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_rawrest;
+        
+        /// <summary>
+        /// Button2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
         /// lbl_TB_OvenNos control.
@@ -346,22 +409,22 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.TextBox TB_OvenNos;
         
         /// <summary>
-        /// GridView1 control.
+        /// OvenEnd_GridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView OvenEnd_GridView;
         
         /// <summary>
-        /// yourGridView control.
+        /// lblAvgWeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView yourGridView;
+        protected global::System.Web.UI.WebControls.Label lblAvgWeights;
         
         /// <summary>
         /// btnSubmit control.
@@ -380,6 +443,15 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
+        /// Button3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button3;
         
         /// <summary>
         /// Label6 control.

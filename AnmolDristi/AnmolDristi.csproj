@@ -118,6 +118,7 @@
     <Content Include="add_prod_plants.aspx" />
     <Content Include="add_region.aspx" />
     <Content Include="add_users.aspx" />
+    <Content Include="apps.aspx" />
     <Content Include="app_qc_inspectorreport.aspx" />
     <Content Include="ccp_checklist.aspx" />
     <Content Include="datamastering_home.aspx" />
@@ -136,6 +137,7 @@
     <Content Include="qa_qc_FinalCbbWtReport.aspx" />
     <Content Include="vw_app_qcireport.aspx" />
     <Content Include="WebData\Anmol_Logo.png" />
+    <Content Include="WebData\confbook.png" />
     <Content Include="WebData\Internal\bank.jpg" />
     <Content Include="WebData\Internal\crossgif.gif" />
     <Content Include="WebData\Internal\cross_icon.png" />
@@ -157,6 +159,7 @@
     <Content Include="WebData\Internal\tick-icon.png" />
     <Content Include="WebData\Internal\view.svg" />
     <Content Include="WebData\No_Image.jpg" />
+    <Content Include="WebData\qaqc.png" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -239,6 +242,13 @@
     </Compile>
     <Compile Include="add_users.aspx.designer.cs">
       <DependentUpon>add_users.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="apps.aspx.cs">
+      <DependentUpon>apps.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="apps.aspx.designer.cs">
+      <DependentUpon>apps.aspx</DependentUpon>
     </Compile>
     <Compile Include="app_qc_inspectorreport.aspx.cs">
       <DependentUpon>app_qc_inspectorreport.aspx</DependentUpon>
