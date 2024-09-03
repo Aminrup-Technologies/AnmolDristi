@@ -15,9 +15,10 @@ namespace AnmolDristi
     public partial class qaqc_pre_dispatch_QI_Report : System.Web.UI.Page
     {
         public static string PDCR_key = String.Empty;
-
+        DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
         public static string ImgLink1 = string.Empty;
         public static string ImgLink2 = string.Empty;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -75,43 +76,51 @@ namespace AnmolDristi
             }
         }
 
-        private string GenerateUniquePDCR_PK()
+        private string Find_DBCode()
         {
-            string newPdcrPkValue;
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            string newLspId = null;
+            dbcl.Sqlconnection();
+            dbcl.ConnectDb();
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                string query = "SELECT PDCR_PK FROM TRN_Pre_Dispatch_Clearance_Report WHERE Id = (SELECT MAX(Id) FROM TRN_Pre_Dispatch_Clearance_Report)";
+                SqlCommand command = new SqlCommand(query, dbcl.Conn);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
                 {
-                    connection.Open();
-                    // Fetch the maximum numeric part of PDCR_PK safely
-                    string query = @"
-                SELECT ISNULL(MAX(CAST(SUBSTRING(PDCR_PK, 8, LEN(PDCR_PK) - 7) AS INT)), 0) 
-                FROM TRN_Pre_Dispatch_Clearance_Report
-                WHERE LEN(PDCR_PK) >= 8 AND ISNUMERIC(SUBSTRING(PDCR_PK, 8, LEN(PDCR_PK) - 7)) = 1";
+                    string lastLspId = reader["PDCR_PK"].ToString();
+                    // Extract the numeric part from the LSP_Id (Assumes LSP is always 3 characters long)
+                    string numericPart = lastLspId.Substring(3);
+                    int numericValue = Convert.ToInt32(numericPart);
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        object result = command.ExecuteScalar();
-                        int maxNumericValue = Convert.ToInt32(result);
+                    // Increment the numeric part
+                    numericValue++;
 
-                        // Increment the numeric part
-                        int numericPart = maxNumericValue + 1;
-
-                        // Format the new value
-                        newPdcrPkValue = $"PDCR_PK{numericPart:D4}"; // Ensures format like PDCR_PK0001, PDCR_PK0002
-                    }
+                    // Generate the new LSP_Id, preserving the "LSP" prefix and ensuring proper zero-padding
+                    newLspId = "PDC" + numericValue.ToString("D2"); // D2 ensures 2 digits (e.g., 09 -> 10)
                 }
+                else
+                {
+                    // If there are no records, start with the initial LSP001
+                    newLspId = "PDC01"; // Adjusted to start from LSP01 to match the two-digit pattern
+                }
+
+                reader.Close();
             }
             catch (Exception ex)
             {
-                // Handle exceptions
-                Console.WriteLine("Error generating PDCR_PK: " + ex.Message);
-                throw;
+                // Handle exception (log it, rethrow it, etc.)
+                throw ex;
             }
-            PDCR_key = newPdcrPkValue;
-            return newPdcrPkValue;
+            finally
+            {
+                dbcl.DisconnectDb();
+            }
+
+            PDCR_key = newLspId;
+            return newLspId;
         }
 
         public class ValidationCriteria
@@ -179,6 +188,8 @@ namespace AnmolDristi
             string textField = "line_name";
             string valueField = "line_id";
 
+            
+
             bool recordsBound;
             DatabaseHelper.BindDropDownList(query, DDL_PlantLine, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedPlantValue), out recordsBound);
 
@@ -198,6 +209,75 @@ namespace AnmolDristi
             }
         }
 
+        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
+                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@FormID", 8);
+                    cmd.Parameters.AddWithValue("@FormName", "qaqc_pre_dispatch_QI_Report");
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        hdn_formid.Value = "8";
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        GridViewApprovers.DataSource = dt;
+                        GridViewApprovers.DataBind();
+
+                        if (dt.Rows.Count > 0)
+                        {
+                            DataRow row = dt.Rows[0];
+
+                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
+
+                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
+
+                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
+                        }
+                        else
+                        {
+                            // Set default values to ADMIN if no rows are found
+                            Approver1NameLabel.Text = "ADMIN";
+                            Approver1CodeLabel.Text = "ADMIN";
+
+                            Approver2NameLabel.Text = "ADMIN";
+                            Approver2CodeLabel.Text = "ADMIN";
+
+                            DottedLineApproverNameLabel.Text = "ADMIN";
+                            DottedLineApproverCodeLabel.Text = "ADMIN";
+
+                            string PlantBinder_Error_script = @"<script type='text/javascript'>
+                                new PNotify({
+                                    title: 'Error',
+                                    text: 'No Approver Mapping Found!',
+                                    type: 'error',
+                                    styling: 'bootstrap3'
+                                });
+                            </script>";
+
+                            // RegisterStartupScript adds the JavaScript code to the page
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
+                        }
+                    }
+                }
+            }
+        }
+
         protected void DDL_PlantLine_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_PlantLine.SelectedIndex != 0)
@@ -205,6 +285,7 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
+                LoadApprovers(selectedPlantValue, selectedPlantLineValue);
             }
             else
             {
@@ -409,30 +490,29 @@ namespace AnmolDristi
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         // Add parameters
-                        cmd.Parameters.AddWithValue("@FormID", 1);
-                        cmd.Parameters.AddWithValue("@PDCR_PK", GenerateUniquePDCR_PK());
+                        cmd.Parameters.AddWithValue("@FormID", Convert.ToInt32(hdn_formid.Value.ToString()));
+                        cmd.Parameters.AddWithValue("@PDCR_PK", Find_DBCode());
                         cmd.Parameters.AddWithValue("@PlantName", plantName);
                         cmd.Parameters.AddWithValue("@Line", plantLine);
                         cmd.Parameters.AddWithValue("@ProductCategory", productCategory);
                         cmd.Parameters.AddWithValue("@ProductBrand", productBrand);
                         cmd.Parameters.AddWithValue("@SKUId", brandSKU);
-                        cmd.Parameters.AddWithValue("@SubmittedById", 1);
-                        cmd.Parameters.AddWithValue("@SubmittedByEmployeeCode", "E123");
-                        cmd.Parameters.AddWithValue("@Approver1EmployeeCode", DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Approver1_Status", 1);
-                        cmd.Parameters.AddWithValue("@Approver1_TimeStamp", DateTime.Now);
-                        cmd.Parameters.AddWithValue("@Approver2EmployeeCode", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@SubmittedById", Convert.ToInt32(Convert.ToInt32(Session["USERID"].ToString())));
+                        cmd.Parameters.AddWithValue("@SubmittedByEmployeeCode", Session["WORKMAN"].ToString());
+                        cmd.Parameters.AddWithValue("@Approver1EmployeeCode", Approver1CodeLabel.Text.ToString());
+                        cmd.Parameters.AddWithValue("@Approver1_Status", 0);
+                        cmd.Parameters.AddWithValue("@Approver1_TimeStamp", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Approver2EmployeeCode", Approver2CodeLabel.Text.ToString());
                         cmd.Parameters.AddWithValue("@Approver2_Status", 0);
-                        cmd.Parameters.AddWithValue("@Approver2_TimeStamp", DateTime.Now);
-                        cmd.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", DBNull.Value);
-                        cmd.Parameters.AddWithValue("@DottedApprover_Status", 1);
-                        cmd.Parameters.AddWithValue("@DottedApprover_TimeStamp", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@Approver2_TimeStamp", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", DottedLineApproverCodeLabel.Text.ToString());
+                        cmd.Parameters.AddWithValue("@DottedApprover_Status", 0);
+                        cmd.Parameters.AddWithValue("@DottedApprover_TimeStamp", DBNull.Value);
                         cmd.Parameters.AddWithValue("@ViewMode", 1);
                         cmd.Parameters.AddWithValue("@DeleteMode", 0);
                         cmd.Parameters.AddWithValue("@SubmittedDate", DateTime.Now.Date);
                         cmd.Parameters.AddWithValue("@SubmittedTime", DateTime.Now.TimeOfDay);
                         cmd.Parameters.AddWithValue("@Shift", shift);
-
                         cmd.Parameters.AddWithValue("@InspectionLot", (object)inspectionLot ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@MaterialCode", (object)materialCode ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@CBB_Produced", (object)cbbProduced ?? DBNull.Value);

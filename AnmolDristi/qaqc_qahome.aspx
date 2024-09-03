@@ -50,7 +50,7 @@
                             </a>
 
                             <a class="btn btn-app" href="qaqc_pre_dispatch_QI_Report.aspx" >
-                                <span class="badge bg-warning">Shift : 1
+                                <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label7" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Pre-Dispatch
                             </a>
