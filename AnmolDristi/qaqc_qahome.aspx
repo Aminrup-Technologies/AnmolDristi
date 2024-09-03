@@ -18,7 +18,7 @@
                         </div>
                         <div class="x_content">
                             <a class="btn btn-app" href="qaqc_process_rpt.aspx">
-                                <span class="badge bg-green">Shift : 1
+                                <span class="badge bg-warning">Shift : 1
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Process Checking
                             </a>
@@ -41,6 +41,23 @@
                                 <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Oven Report
+                            </a>
+
+                            <a class="btn btn-app" href="leak_test.aspx" >
+                                <span class="badge bg-green">Shift : 1
+                                    <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Leak Test
+                            </a>
+
+                            <a class="btn btn-app" href="qaqc_pre_dispatch_QI_Report.aspx" >
+                                <span class="badge bg-warning">Shift : 1
+                                    <asp:Label ID="Label7" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Pre-Dispatch
+                            </a>
+                            <a class="btn btn-app" href="#" >
+                                <span class="badge bg-warning">Shift : 1
+                                    <asp:Label ID="Label8" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Critical Incident
                             </a>
                         </div>
                     </div>

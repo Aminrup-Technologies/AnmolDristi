@@ -125,52 +125,52 @@ namespace AnmolDristi.DAL
         }
 
 
-        public void InsertRawMaterialData(string PcrNo,  string maidaBrandName, decimal maidaWgt, decimal sugarWgt, decimal butter, decimal smp,
-                                    decimal processWater, decimal lecithin, decimal gms, decimal ssl, decimal glucose, decimal hvo, decimal syrup,
-                                    decimal malt, decimal bb, decimal abc, decimal sbc, decimal smbs, decimal wheyPowder, decimal condenceMilk, decimal salt,
-                                    decimal yeast, decimal e1, decimal caramel)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand("InsertRawMaterialData", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
+        //public void InsertRawMaterialData(string PcrNo, string maidaBrandName, decimal maidaWgt, decimal sugarWgt, decimal butter, decimal smp,
+        //                    decimal processWater, decimal lecithin, decimal gms, decimal ssl, decimal glucose, decimal hvo, decimal syrup,
+        //                    decimal malt, decimal bb, decimal abc, decimal sbc, decimal smbs, decimal wheyPowder, decimal condenceMilk, decimal salt,
+        //                    decimal yeast, decimal e1, decimal caramel)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        using (SqlCommand command = new SqlCommand("InsertRawMaterialData", connection))
+        //        {
+        //            command.CommandType = CommandType.StoredProcedure;
 
-                    // Add parameters
-                    command.Parameters.AddWithValue("@PcrNo", PcrNo);
-                    command.Parameters.AddWithValue("@MaidaBrandName", maidaBrandName);
-                    command.Parameters.AddWithValue("@MaidaActWgt", maidaWgt);
-                    command.Parameters.AddWithValue("@SugarActWgt", sugarWgt);
-                    command.Parameters.AddWithValue("@ButterActWgt", butter);
-                    command.Parameters.AddWithValue("@SmpActWgt", smp);
-                    command.Parameters.AddWithValue("@ProcessWaterActualWgt", processWater);
-                    command.Parameters.AddWithValue("@LecithinActWgt", lecithin);
-                    command.Parameters.AddWithValue("@GmsActWgt", gms);
-                    command.Parameters.AddWithValue("@PasteOrPowderActWgt", ssl);
-                    command.Parameters.AddWithValue("@GlucoseActWgt", glucose);
-                    command.Parameters.AddWithValue("@HvoActWgt", hvo);
-                    command.Parameters.AddWithValue("@SyrupActWgt", syrup);
-                    command.Parameters.AddWithValue("@MaltActWgt", malt);
-                    command.Parameters.AddWithValue("@BBActWgt", bb);
-                    command.Parameters.AddWithValue("@AbcActWgt", abc);
-                    command.Parameters.AddWithValue("@SbcActWgt", sbc);
-                    command.Parameters.AddWithValue("@SmbsActWgt", smbs);
-                    command.Parameters.AddWithValue("@WheyPowderActWgt", wheyPowder);
-                    command.Parameters.AddWithValue("@MilkActWgt", condenceMilk);
-                    command.Parameters.AddWithValue("@SaltActWgt", salt);
-                    command.Parameters.AddWithValue("@YeastActWgt", yeast);
-                    command.Parameters.AddWithValue("@E1ActWgt", e1);
-                    command.Parameters.AddWithValue("@CaramelActWgt", caramel);
+        //            // Add parameters
+        //            command.Parameters.AddWithValue("@PcrNo", PcrNo);
+        //            command.Parameters.AddWithValue("@MaidaBrandName", maidaBrandName);
+        //            command.Parameters.AddWithValue("@MaidaActWgt", maidaWgt);
+        //            command.Parameters.AddWithValue("@SugarActWgt", sugarWgt);
+        //            command.Parameters.AddWithValue("@ButterActWgt", butter);
+        //            command.Parameters.AddWithValue("@SmpActWgt", smp);
+        //            command.Parameters.AddWithValue("@ProcessWaterActualWgt", processWater);
+        //            command.Parameters.AddWithValue("@LecithinActWgt", lecithin);
+        //            command.Parameters.AddWithValue("@GmsActWgt", gms);
+        //            command.Parameters.AddWithValue("@PasteOrPowderActWgt", ssl);
+        //            command.Parameters.AddWithValue("@GlucoseActWgt", glucose);
+        //            command.Parameters.AddWithValue("@HvoActWgt", hvo);
+        //            command.Parameters.AddWithValue("@SyrupActWgt", syrup);
+        //            command.Parameters.AddWithValue("@MaltActWgt", malt);
+        //            command.Parameters.AddWithValue("@BBActWgt", bb);
+        //            command.Parameters.AddWithValue("@AbcActWgt", abc);
+        //            command.Parameters.AddWithValue("@SbcActWgt", sbc);
+        //            command.Parameters.AddWithValue("@SmbsActWgt", smbs);
+        //            command.Parameters.AddWithValue("@WheyPowderActWgt", wheyPowder);
+        //            command.Parameters.AddWithValue("@MilkActWgt", condenceMilk);
+        //            command.Parameters.AddWithValue("@SaltActWgt", salt);
+        //            command.Parameters.AddWithValue("@YeastActWgt", yeast);
+        //            command.Parameters.AddWithValue("@E1ActWgt", e1);
+        //            command.Parameters.AddWithValue("@CaramelActWgt", caramel);
 
 
 
-                    // Open the connection and execute the command
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
+        //            // Open the connection and execute the command
+        //            connection.Open();
+        //            command.ExecuteNonQuery();
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
 
         public void InsertSpongeData(string PcrNo, decimal roomTemp, string commentForRoomTemp,int drumCovered, string commentForDrumCovered, 

@@ -123,6 +123,7 @@
     <Content Include="ccp_checklist.aspx" />
     <Content Include="datamastering_home.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="leak_test.aspx" />
     <Content Include="qaqc_add_users.aspx" />
     <Content Include="qaqc_mst_sku.aspx" />
     <Content Include="packages.config" />
@@ -130,6 +131,7 @@
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
     <Content Include="qaqc_oven_report.aspx" />
+    <Content Include="qaqc_pre_dispatch_QI_Report.aspx" />
     <Content Include="qaqc_process_rpt.aspx" />
     <Content Include="qaqc_qaapprovals.aspx" />
     <Content Include="qaqc_qcapprovals.aspx" />
@@ -298,6 +300,13 @@
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="leak_test.aspx.cs">
+      <DependentUpon>leak_test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="leak_test.aspx.designer.cs">
+      <DependentUpon>leak_test.aspx</DependentUpon>
+    </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -341,6 +350,13 @@
     </Compile>
     <Compile Include="qaqc_oven_report.aspx.designer.cs">
       <DependentUpon>qaqc_oven_report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_pre_dispatch_QI_Report.aspx.cs">
+      <DependentUpon>qaqc_pre_dispatch_QI_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_pre_dispatch_QI_Report.aspx.designer.cs">
+      <DependentUpon>qaqc_pre_dispatch_QI_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="qaqc_process_rpt.aspx.cs">
       <DependentUpon>qaqc_process_rpt.aspx</DependentUpon>

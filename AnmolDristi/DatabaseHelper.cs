@@ -35,7 +35,7 @@ namespace AnmolDristi
         {
             // Clear existing items and add the default "No Records Found" item
             ddl.Items.Clear();
-            ddl.Items.Add(new ListItem("No Records Found", ""));
+            ddl.Items.Add(new ListItem("No Records Found", "0"));
         }
 
 
@@ -56,7 +56,7 @@ namespace AnmolDristi
             }
 
             // Add a default item to the DropDownList
-            ddl.Items.Insert(0, new ListItem("Select", ""));
+            ddl.Items.Insert(0, new ListItem("Select", "0"));
         }
 
         public static void BindDropDownList(string query, DropDownList ddl, string textField, string valueField, out bool recordsBound)

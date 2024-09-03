@@ -1090,6 +1090,18 @@ namespace AnmolDristi
 
                             DottedLineApproverNameLabel.Text = "ADMIN";
                             DottedLineApproverCodeLabel.Text = "ADMIN";
+
+                            string PlantBinder_Error_script = @"<script type='text/javascript'>
+                                new PNotify({
+                                    title: 'Error',
+                                    text: 'No Approver Mapping Found!',
+                                    type: 'error',
+                                    styling: 'bootstrap3'
+                                });
+                            </script>";
+
+                            // RegisterStartupScript adds the JavaScript code to the page
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
                         }
                     }
                 }

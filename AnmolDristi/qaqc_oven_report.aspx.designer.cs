@@ -787,15 +787,6 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Button btn_oven_reset;
         
         /// <summary>
-        /// lbl_oven control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_oven;
-        
-        /// <summary>
         /// btn_home control.
         /// </summary>
         /// <remarks>
@@ -803,6 +794,15 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_home;
+        
+        /// <summary>
+        /// lbl_oven control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_oven;
         
         /// <summary>
         /// Label8 control.

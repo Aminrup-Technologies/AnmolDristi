@@ -7,12 +7,71 @@
             border: none !important; /* This will ensure the border is removed */
             /* Add any other necessary styling */
         }
+
+        
+      .custom-page-title {
+          width: 100%;
+          background-color: #f0f0f0; /* Example: Change background color */
+          margin-top: 20px;
+          padding-top: 35px;
+          padding-right: 20px;
+          padding-left: 20px;
+          /padding-bottom:20px;/
+      }
+
+          .custom-page-title .title_left h3 {
+              font-size: 20px;
+              color: #333333;
+              font-weight: bold;
+          }
+
+      /*.nav-tabs .nav-link.active {
+          background-color: #17a2b8;
+          color: white;
+          border: 2px solid #17a2b8;
+          border-radius: 5px;
+      }
+
+      .nav-tabs .nav-link:hover {
+          background-color: #e9ecef;
+          color: #17a2b8;
+      }*/
+
+      .approver-photo {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          object-fit: cover;
+      }
+
+      .approver-flow {
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          padding: 1rem;
+          background-color: #f8f9fa;
+          border: 1px solid #ddd;
+          border-radius: .25rem;
+      }
+
+      .flow-line {
+          flex: 1;
+          border-top: 2px solid #007bff;
+          margin: 0 10px;
+      }
+
+      .approver-item {
+          text-align: center;
+      }
+
     </style>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <script type="text/javascript">
+    <asp:HiddenField ID="hdn_shiftvalue" runat="server" />
 
+    <script type="text/javascript">
 
         //maida image
         function validateForm1() {
@@ -61,6 +120,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200); // Adjust delay as necessary
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -73,6 +141,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -85,6 +162,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -97,6 +183,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -109,6 +204,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -121,6 +225,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -133,6 +246,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -145,6 +267,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -157,6 +288,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -169,6 +309,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -181,6 +330,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -193,6 +351,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -205,6 +372,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -217,6 +393,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -229,6 +414,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -241,6 +435,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -253,6 +456,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -265,6 +477,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -277,10 +498,20 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
         }
+
 
         function toggleDrumCoveredRemarksDiv(radioButtonList) {
             console.log("toggleDrumCoveredRemarksDiv function called");
@@ -289,6 +520,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "No". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -301,6 +541,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -313,6 +562,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "No". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -325,6 +583,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -337,6 +604,15 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
@@ -349,60 +625,104 @@
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
             } else {
                 remarksDiv.style.display = "none";
             }
         }
+
+        function toggleRoomTempRemarksDiv(textBox) {
+            console.log("toggleRoomTempRemarksDiv function called");
+            var roomTemp = parseFloat(document.getElementById('<%=TB_RoomTemp.ClientID%>').value);
+            var remarksDiv = document.getElementById("RoomTempRemarksDiv");
+            if (!isNaN(roomTemp) && roomTemp !== "" && (roomTemp < 20 || roomTemp > 60)) {
+                remarksDiv.style.display = "block";
+
+            } else {
+                remarksDiv.style.display = "none";
+            }
+        }
+
+        function toggleTempRemarksDIV(textBox) {
+            console.log("toggleTempRemarksDIV function called");
+            var Temp = parseFloat(document.getElementById('<%=TB_Temp.ClientID%>').value);
+            var remarksDiv = document.getElementById("TempRemarksDIV");
+            if (!isNaN(Temp) && Temp !== "" && Temp < 20 || Temp > 60) {
+                remarksDiv.style.display = "block";
+
+            } else {
+                remarksDiv.style.display = "none";
+            }
+        }
+
+        function toggleDoughTempRemarksDIV(textBox) {
+            console.log("toggleDoughTempRemarksDIV function called");
+            var doughTemp = parseFloat(document.getElementById('<%=TB_DoughTemp.ClientID%>').value);
+            var remarksDiv = document.getElementById("DoughTempRemarksDIV");
+            if (!isNaN(doughTemp) && doughTemp !== "" && doughTemp < 20 || doughTemp > 60) {
+                remarksDiv.style.display = "block";
+
+            } else {
+                remarksDiv.style.display = "none";
+            }
+        }
+
+        function togglePositionDiv(radioButtonList) {
+            console.log("togglePositionDiv function called");
+            var selectedValue = radioButtonList.querySelector('input[type="radio"]:checked').value;
+            var ovenControlsDiv = document.getElementById('OvenControlsDiv');
+            var damperControlsDiv = document.getElementById('DamperControlsDiv');
+
+            if (selectedValue === "Oven") {
+                ovenControlsDiv.style.display = 'block'; // Show oven controls
+                damperControlsDiv.style.display = 'none'; // Hide damper controls
+            } else if (selectedValue === "Damper") {
+                ovenControlsDiv.style.display = 'none'; // Hide oven controls
+                damperControlsDiv.style.display = 'block'; // Show damper controls
+            } else {
+                ovenControlsDiv.style.display = 'none'; // Hide oven controls
+                damperControlsDiv.style.display = 'none'; // Hide damper controls
+            }
+        }
+
+        function calculateDamperBottom() {
+            var damperTop = parseFloat(document.getElementById('<%= TB_DamperTop.ClientID %>').value);
+            var damperBottom = document.getElementById('<%= TB_DamperBottom.ClientID %>');
+
+            // Example calculation (e.g., subtracting a fixed value)
+            if (damperTop) {
+                damperBottom.value = 100 - parseFloat(damperTop); // Replace with your calculation logic
+            } else {
+                damperBottom.value = ''; // Clear if no input
+            }
+        }
+
 
         // active tab 
         function activateTab(tabId) {
             $('#' + tabId).tab('show');
         }
 
-        // reset tab fields
-        //function clearFields(tabId) {
-        //    var tab = document.getElementById(tabId);
-        //    if (tab) {
-        //        var inputs = tab.querySelectorAll('input, select, textarea');
-        //        inputs.forEach(function (input) {
-        //            if (input.type === 'checkbox' || input.type === 'radio') {
-        //                input.checked = false;
-        //            } else if (input.tagName === 'SELECT') {
-        //                input.selectedIndex = 0;
-        //            } else {
-        //                input.value = '';
-        //            }
-        //        });
-        //    }
-        //}
-
-        //function resetSectionFields(sectionId) {
-        //    var section = document.getElementById(sectionId);
-        //    if (section) {
-        //        var inputs = section.querySelectorAll('input, select, textarea');
-
-        //        inputs.forEach(function (input) {
-        //            switch (input.type) {
-        //                case 'text':
-        //                case 'textarea':
-        //                case 'hidden':
-        //                    input.value = '';
-        //                    break;
-        //                case 'checkbox':
-        //                case 'radio':
-        //                    input.checked = false;
-        //                    break;
-        //                case 'select-one':
-        //                case 'select-multiple':
-        //                    input.selectedIndex = -1;
-        //                    break;
-        //                default:
-        //                    break;
-        //            }
-        //        });
-        //    }
-        //}
-
+        function formatTimeInput(event) {
+            let input = event.target.value;
+            input = input.replace(/\D/g, ''); // Remove non-numeric characters
+            if (input.length >= 6) {
+                input = input.slice(0, 2) + ':' + input.slice(2, 4) + ':' + input.slice(4);
+            } else if (input.length >= 4) {
+                input = input.slice(0, 2) + ':' + input.slice(2);
+            } else if (input.length >= 2) {
+                input = input.slice(0, 2) + ':' + input.slice(2);
+            }
+            event.target.value = input;
+        }
 
         function validateGridView() {
             var isValid = true;
@@ -470,13 +790,42 @@
             // Update the Deviation Weight TextBox
             deviationWeightElement.value = formattedDeviationWeight;
 
+            //-------------------------------------
+            // Calculate the deviation percentage
+            var deviationPercentage = (deviationWeight * 100) / standardWeight;
+            //console.log('Deviation Percentage:', deviationPercentage);
+            if (deviationPercentage > 5) {
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'Deviation',
+                        text: 'Weight percentage greater than 5% ',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
+            }
+
+            // Get the Deviation Percentage element from the same row
+            var deviationPercentageElement = row.querySelector('#txtDeviationPercentage');
+
+            // Format the deviation percentage to two decimal places
+            var formattedDeviationPercentage = deviationPercentage.toFixed(2);
+            //console.log('Formatted Deviation Percentage:', formattedDeviationPercentage);
+
+            // Update the Deviation Percentage TextBox
+            deviationPercentageElement.value = formattedDeviationPercentage;
+            //---------------------------------
+
+
             // Build JSON data for the current row
             var rowData = {
                 Sl: slValue,
                 Variety: row.querySelector('.variety').textContent.trim(),
                 StandardWeight: standardWeight,
                 ActualWeight: actualWeight,
-                DeviationWeight: formattedDeviationWeight
+                DeviationWeight: formattedDeviationWeight,
+                DeviationPercentage: formattedDeviationPercentage
             };
             //console.log('rowData:', rowData);
 
@@ -497,7 +846,7 @@
             }
 
             // Log the updated data for debugging
-            //console.log('GridView Data Updated:', gridViewData);
+            console.log('GridView Data Updated:', gridViewData);
         }
 
         function collectAndSendData() {
@@ -532,6 +881,7 @@
 
     </script>
 
+
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
@@ -559,10 +909,10 @@
                                                         <a class="nav-link active" id="basicData-tab" data-toggle="tab" href="#basicData" role="tab"
                                                             aria-controls="basicData" aria-selected="true">Basic Data</a>
                                                     </li>
-                                                    <li class="nav-item">
+                                                    <%--  <li class="nav-item">
                                                         <a class="nav-link " id="rawMaterial-tab" data-toggle="tab" href="#rawMaterial" role="tab"
                                                             aria-controls="rawMaterial" aria-selected="false">Raw Material Weight</a>
-                                                    </li>
+                                                    </li>--%>
                                                     <li class="nav-item">
                                                         <a class="nav-link " id="weight-tab" data-toggle="tab" href="#weight" role="tab"
                                                             aria-controls="weight" aria-selected="false">Raw Weight</a>
@@ -586,6 +936,7 @@
                                                 </ul>
 
                                                 <div class="tab-content ml-1" id="myTabContent">
+
                                                     <%---Basic Data Starts--%>
                                                     <div class="tab-pane fade show active" id="basicData" role="tabpanel" aria-labelledby="basicData-tab">
                                                         <div class="x-content">
@@ -1380,7 +1731,7 @@
                                                     <%-- Basic Data ends here--%>
 
                                                     <%--Raw Material Weight Data Starts Here--%>
-                                                    <div class="tab-pane fade" id="rawMaterial" role="tabpanel" aria-labelledby="rawMaterial-tab">
+                                                    <%--<div class="tab-pane fade" id="rawMaterial" role="tabpanel" aria-labelledby="rawMaterial-tab">
                                                         <div class="x-content">
 
 
@@ -1637,7 +1988,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            <%--button--%>
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_RawBtnSubmit" runat="server" AssociatedControlID="RawBtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -1649,25 +1999,12 @@
                                                             </div>
 
                                                         </div>
-                                                    </div>
-
+                                                    </div>--%>
                                                     <%--Raw Material Weight Data Ends Here--%>
 
                                                     <%-- Weight Data Starts Here--%>
                                                     <div class="tab-pane fade" id="weight" role="tabpanel" aria-labelledby="weight-tab">
                                                         <div class="x-content">
-
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label76" runat="server" AssociatedControlID="TB_MaidaBrandNames" Text="Maida Brand Name :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_MaidaBrandNames" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_MaidaBrandNames" ValidationGroup="WeightSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_MaidaBrandNames" runat="server" ControlToValidate="TB_MaidaBrandNames" ForeColor="Red" ValidationGroup="WeightSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_MaidaBrandNames" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Maida Brand Name (3-20 characters)" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
 
 
                                                             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
@@ -1704,6 +2041,12 @@
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
+                                                                    <asp:TemplateField HeaderText="Deviation Percentage">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtDeviationPercentage" runat="server" ClientIDMode="Static" CssClass="deviation-percentage" ReadOnly="true"></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
                                                                 </Columns>
                                                             </asp:GridView>
 
@@ -1712,7 +2055,6 @@
                                                         <asp:Button ID="WgtbtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="WgtbtnReset_Click" />
 
                                                     </div>
-
                                                     <%-- Weight ends Starts Here--%>
 
                                                     <%--Sponge Data Start Here--%>
@@ -1726,7 +2068,7 @@
                                                                     <asp:RequiredFieldValidator ID="RFV_RoomTemp" runat="server" ErrorMessage="*" ValidationGroup="SpongeSubmit" ControlToValidate="TB_RoomTemp" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                                                     <asp:RegularExpressionValidator ID="REV_RoomTemp" runat="server" ValidationGroup="SpongeSubmit" ControlToValidate="TB_RoomTemp" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_RoomTemp" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Room Temp. "></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_RoomTemp" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Room Temp." oninput="toggleRoomTempRemarksDiv(this);"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1789,11 +2131,11 @@
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="LabelStandingTime" runat="server" AssociatedControlID="TB_StandingTime" Text="Time :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:Label ID="LabelStandingTime" runat="server" AssociatedControlID="TB_StandingTime" Text="Standing Time :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_Time" runat="server" ErrorMessage="Standing Time is required " ControlToValidate="TB_StandingTime" ValidationGroup="SpongeSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_StandingTime" runat="server" ControlToValidate="TB_StandingTime" ForeColor="Red" ValidationGroup="SpongeSubmit" ErrorMessage="" Display="Dynamic" ValidationExpression=" "></asp:RegularExpressionValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_StandingTime" runat="server" ControlToValidate="TB_StandingTime" ForeColor="Red" ValidationGroup="SpongeSubmit" Display="Dynamic" ErrorMessage="Please enter time in hhmmsss format" ValidationExpression="^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_StandingTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="" TextMode="Time"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_StandingTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="hh:mm:ss" MaxLength="8" oninput="formatTimeInput(event)"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1814,7 +2156,7 @@
                                                                     <asp:RequiredFieldValidator ID="RFV_Temp" runat="server" ErrorMessage="*" ValidationGroup="SpongeSubmit" ControlToValidate="TB_Temp" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                                                     <asp:RegularExpressionValidator ID="REV_Temp" runat="server" ValidationGroup="SpongeSubmit" ControlToValidate="TB_Temp" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Temp" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Temp. "></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_Temp" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Temp. " oninput="toggleTempRemarksDIV(this);"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1854,7 +2196,7 @@
                                                                     <asp:RequiredFieldValidator ID="RFV_DoughTemp" runat="server" ErrorMessage="*" ValidationGroup="DoughSubmit" ControlToValidate="TB_DoughTemp" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                                                     <asp:RegularExpressionValidator ID="REV_DoughTemp" runat="server" ValidationGroup="DoughSubmit" ControlToValidate="TB_Temp" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DoughTemp" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Temp. "></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_DoughTemp" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Temp." oninput="toggleDoughTempRemarksDIV(this);"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1873,9 +2215,9 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="LabelDoughRestTime" runat="server" AssociatedControlID="TB_DoughRestTime" Text="Dough Rest Time :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_DoughRestTime" runat="server" ErrorMessage="Dough Rest Time is required " ControlToValidate="TB_DoughRestTime" ValidationGroup="DoughSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DoughRestTime" runat="server" ControlToValidate="TB_DoughRestTime" ForeColor="Red" ValidationGroup="DoughSubmit" ErrorMessage="" Display="Dynamic" ValidationExpression=" "></asp:RegularExpressionValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_DoughRestTime" runat="server" ControlToValidate="TB_DoughRestTime" ForeColor="Red" ValidationGroup="DoughSubmit" ErrorMessage="Please enter time in hhmmsss format" ValidationExpression="^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DoughRestTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="" TextMode="Time"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_DoughRestTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="hh:mm:ss" MaxLength="8" oninput="formatTimeInput(event)"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1940,9 +2282,9 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="LabelCreamingTime" runat="server" AssociatedControlID="TB_CreamingTime" Text="Creaming Time :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_CreamingTime" runat="server" ErrorMessage="Creaming Time is required " ControlToValidate="TB_CreamingTime" ValidationGroup="DoughSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_CreamingTime" runat="server" ControlToValidate="TB_CreamingTime" ForeColor="Red" ValidationGroup="DoughSubmit" ErrorMessage="" Display="Dynamic" ValidationExpression=" "></asp:RegularExpressionValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_CreamingTime" runat="server" ControlToValidate="TB_CreamingTime" ForeColor="Red" ValidationGroup="DoughSubmit" ErrorMessage="Please enter time in hhmmsss format" ValidationExpression="^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_CreamingTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="" TextMode="Time"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_CreamingTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="hh:mm:ss" MaxLength="8" oninput="formatTimeInput(event)"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1961,9 +2303,9 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="LabelMixingTime" runat="server" AssociatedControlID="TB_MixingTime" Text="Mixing Time :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_MixingTime" runat="server" ErrorMessage="Mixing Time is required " ControlToValidate="TB_MixingTime" ValidationGroup="DoughSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_MixingTime" runat="server" ControlToValidate="TB_MixingTime" ForeColor="Red" ValidationGroup="DoughSubmit" ErrorMessage="" Display="Dynamic" ValidationExpression=" "></asp:RegularExpressionValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_MixingTime" runat="server" ControlToValidate="TB_MixingTime" ForeColor="Red" ValidationGroup="DoughSubmit" ErrorMessage="Please enter time in hhmmsss format" ValidationExpression="^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_MixingTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="" TextMode="Time"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_MixingTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="hh:mm:ss" MaxLength="8" oninput="formatTimeInput(event)"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1982,9 +2324,9 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="LabelBakingTime" runat="server" AssociatedControlID="TB_BakingTime" Text="Baking Time :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_BakingTime" runat="server" ErrorMessage="Baking Time is required " ControlToValidate="TB_DoughRestTime" ValidationGroup="DoughSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_BakingTime" runat="server" ControlToValidate="TB_BakingTime" ForeColor="Red" ValidationGroup="DoughSubmit" ErrorMessage="" Display="Dynamic" ValidationExpression=" "></asp:RegularExpressionValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_BakingTime" runat="server" ControlToValidate="TB_BakingTime" ForeColor="Red" ValidationGroup="DoughSubmit" ErrorMessage="Please enter time in hhmmsss format" ValidationExpression="^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_BakingTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="" TextMode="Time"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_BakingTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="hh:mm:ss" MaxLength="8" oninput="formatTimeInput(event)"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2061,279 +2403,81 @@
                                                     <div class="tab-pane fade" id="ovenData" role="tabpanel" aria-labelledby="ovenData-tab">
                                                         <div class="x-content">
 
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="LabelPosition" runat="server" AssociatedControlID="RBL_Position" Text="Position" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_Position" runat="server" ValidationGroup="OvenSubmit" ErrorMessage="*" ForeColor="Red" ControlToValidate="RBL_Position" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:RadioButtonList ID="RBL_Position" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="togglePositionDiv(this);">
+                                                                            <asp:ListItem Text="Oven" Value="Oven"></asp:ListItem>
+                                                                            <asp:ListItem Text="Damper" Value="Damper"></asp:ListItem>
+                                                                        </asp:RadioButtonList>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
-                                                            <div class="col-md-12">
+                                                            <%------------OVEN CONTROLS-------------%>
+                                                            <div class="col-md-3" id="OvenControlsDiv" style="display: none;">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="LabelOven" runat="server" AssociatedControlID="DDL_Oven" Text="Zone(Oven)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_Oven" runat="server" ErrorMessage="Select Zone" ForeColor="Red" ValidationGroup="OvenSubmit" ControlToValidate="DDL_Oven" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:DropDownList ID="DDL_Oven" runat="server" CssClass="form-control form-control-sm rounded">
+                                                                        <asp:ListItem Text="Select Zone" Value="" />
+                                                                        <asp:ListItem Text="Zone 1" Value="Zone 1"></asp:ListItem>
+                                                                        <asp:ListItem Text="Zone 2" Value="Zone 2"></asp:ListItem>
+                                                                        <asp:ListItem Text="Zone 3" Value="Zone 3"></asp:ListItem>
+                                                                        <asp:ListItem Text="Zone 4" Value="Zone 4"></asp:ListItem>
+                                                                        <asp:ListItem Text="Zone 5" Value="Zone 5"></asp:ListItem>
+                                                                        <asp:ListItem Text="Zone 6" Value="Zone 6"></asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                                <div class="md-3 mb-3">
+                                                                    <asp:Label ID="LabelOvenTop" runat="server" AssociatedControlID="TB_OvenTop" Text="Top" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_OvenTop" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="OvenSubmit" ControlToValidate="TB_OvenTop" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_OvenTop" runat="server" ValidationGroup="OvenSubmit" ControlToValidate="TB_OvenTop" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_OvenTop" runat="server" CssClass="form-control form-control-sm rounded" Placeholder=" Top Temp." MaxLength="20"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="md-3">
-                                                                    <h2>---Oven Profile---</h2>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label23" runat="server" AssociatedControlID="TB_Zone1Top" Text="Zone 1 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone1Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone1Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone1Top" runat="server" ControlToValidate="TB_Zone1Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:Label ID="LabelOvenBottom" runat="server" AssociatedControlID="TB_OvenBottom" Text="Bottom" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_OvenBottom" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="OvenSubmit" ControlToValidate="TB_OvenBottom" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_OvenBottom" runat="server" ValidationGroup="OvenSubmit" ControlToValidate="TB_OvenBottom" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone1Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 1 Top" MaxLength="20"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_OvenBottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder=" Bottom Temp." MaxLength="20"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3">
+                                                            <%-----------DAMPER CONTROLS-----------%>
+                                                            <div class="col-md-3" id="DamperControlsDiv" style="display: none;">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="Label11" runat="server" AssociatedControlID="TB_Zone1Bottom" Text="Zone 1 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone1Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone1Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone1Bottom" runat="server" ControlToValidate="TB_Zone1Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:Label ID="Label6" runat="server" AssociatedControlID="DDL_Damper" Text="Zone(Damper)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_Damper" runat="server" ErrorMessage="Select Zone" ForeColor="Red" ValidationGroup="OvenSubmit" ControlToValidate="DDL_Damper" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:DropDownList ID="DDL_Damper" runat="server" CssClass="form-control form-control-sm rounded">
+                                                                        <asp:ListItem Text="Select Zone" Value="" />
+                                                                        <asp:ListItem Text="Zone 1" Value="Zone 1"></asp:ListItem>
+                                                                        <asp:ListItem Text="Zone 2" Value="Zone 2"></asp:ListItem>
+                                                                        <asp:ListItem Text="Zone 3" Value="Zone 3"></asp:ListItem>
+                                                                        <asp:ListItem Text="Zone 4" Value="Zone 4"></asp:ListItem>
+                                                                        <asp:ListItem Text="Zone 5" Value="Zone 5"></asp:ListItem>
+                                                                        <asp:ListItem Text="Zone 6" Value="Zone 6"></asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                                <div class="md-3 mb-3">
+                                                                    <asp:Label ID="LabelDamperTop" runat="server" AssociatedControlID="TB_DamperTop" Text="Top" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_DamperTop" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="OvenSubmit" ControlToValidate="TB_DamperTop" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_DamperTop" runat="server" ValidationGroup="OvenSubmit" ControlToValidate="TB_DamperTop" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone1Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 1 Bottom" MaxLength="20"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_DamperTop" runat="server" CssClass="form-control form-control-sm rounded" Placeholder=" Top Temp." MaxLength="20" oninput="calculateDamperBottom();"></asp:TextBox>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label24" runat="server" AssociatedControlID="TB_Zone2Top" Text="Zone 2 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone2Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone2Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone2Top" runat="server" ControlToValidate="TB_Zone2Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone2Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 2 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label25" runat="server" AssociatedControlID="TB_Zone2Bottom" Text="Zone 2 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone2Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone2Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone2Bottom" runat="server" ControlToValidate="TB_Zone2Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone2Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 2 Bottom" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label26" runat="server" AssociatedControlID="TB_Zone3Top" Text="Zone 3 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone3Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone3Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone3Top" runat="server" ControlToValidate="TB_Zone3Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone3Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 3 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label27" runat="server" AssociatedControlID="TB_Zone3Bottom" Text="Zone 3 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone3Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone3Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone3Bottom" runat="server" ControlToValidate="TB_Zone3Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone3Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 3 Bottom" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label28" runat="server" AssociatedControlID="TB_Zone4Top" Text="Zone 4 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone4Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone4Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone4Top" runat="server" ControlToValidate="TB_Zone4Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone4Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 4 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label29" runat="server" AssociatedControlID="TB_Zone4Bottom" Text="Zone 4 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone4Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone4Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone4Bottom" runat="server" ControlToValidate="TB_Zone4Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone4Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 4 Bottom" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label30" runat="server" AssociatedControlID="TB_Zone5Top" Text="Zone 5 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone5Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone5Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone5Top" runat="server" ControlToValidate="TB_Zone5Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone5Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 5 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label31" runat="server" AssociatedControlID="TB_Zone5Bottom" Text="Zone 5 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone5Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone5Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="rev_Zone5Bottom" runat="server" ControlToValidate="TB_Zone5Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone5Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 5 Bottom" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label32" runat="server" AssociatedControlID="TB_Zone6Top" Text="Zone 6 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone6Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone6Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone6Top" runat="server" ControlToValidate="TB_Zone6Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone6Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 6 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label33" runat="server" AssociatedControlID="TB_Zone6Bottom" Text="Zone 6 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_Zone6Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Zone6Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_Zone6Bottom" runat="server" ControlToValidate="TB_Zone6Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Zone6Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 6 Bottom" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-12">
                                                                 <div class="md-3">
-                                                                    <h2>---Damper Position---</h2>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label34" runat="server" AssociatedControlID="TB_DPZone1Top" Text="Zone 1 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone1Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone1Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone1Top" runat="server" ControlToValidate="TB_DPZone1Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:Label ID="LabelDamperBottom" runat="server" AssociatedControlID="TB_DamperBottom" Text="Bottom" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_DamperBottom" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="OvenSubmit" ControlToValidate="TB_DamperBottom" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_DamperBottom" runat="server" ValidationGroup="OvenSubmit" ControlToValidate="TB_DamperBottom" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone1Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 1 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label35" runat="server" AssociatedControlID="TB_DPZone1Bottom" Text="Zone 1 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone1Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone1Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone1Bottom" runat="server" ControlToValidate="TB_DPZone1Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone1Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 1 Bottom" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label36" runat="server" AssociatedControlID="TB_DPZone2Top" Text="Zone 2 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone2Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone2Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone2Top" runat="server" ControlToValidate="TB_DPZone2Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone2Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 2 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label37" runat="server" AssociatedControlID="TB_DPZone2Bottom" Text="Zone 2 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone2Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone2Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone2Bottom" runat="server" ControlToValidate="TB_DPZone2Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone2Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 2 Bottom" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label38" runat="server" AssociatedControlID="TB_DPZone3Top" Text="Zone 3 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone3Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone3Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone3Top" runat="server" ControlToValidate="TB_DPZone3Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone3Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 3 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label39" runat="server" AssociatedControlID="TB_DPZone3Bottom" Text="Zone 3 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone3Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone3Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone3Bottom" runat="server" ControlToValidate="TB_DPZone3Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone3Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 3 Bottom" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label40" runat="server" AssociatedControlID="TB_DPZone4Top" Text="Zone 4 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone4Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone4Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone4Top" runat="server" ControlToValidate="TB_DPZone4Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone4Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 4 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label41" runat="server" AssociatedControlID="TB_DPZone4Bottom" Text="Zone 4 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone4Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone4Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone4Bottom" runat="server" ControlToValidate="TB_DPZone4Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone4Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 4 Bottom" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label42" runat="server" AssociatedControlID="TB_DPZone5Top" Text="Zone 5 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone5Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone5Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REVTDPZone5Top" runat="server" ControlToValidate="TB_DPZone5Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone5Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 5 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label43" runat="server" AssociatedControlID="TB_DPZone5Bottom" Text="Zone 5 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone5Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone5Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone5Bottom" runat="server" ControlToValidate="TB_DPZone5Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone5Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 5 Bottom" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label44" runat="server" AssociatedControlID="TB_DPZone6Top" Text="Zone 6 Top :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone6Top" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone6Top" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone6Top" runat="server" ControlToValidate="TB_DPZone6Top" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone6Top" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 6 Top" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label45" runat="server" AssociatedControlID="TB_DPZone6Bottom" Text="Zone 6 Bottom :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DPZone6Bottom" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DPZone6Bottom" ValidationGroup="OvenSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DPZone6Bottom" runat="server" ControlToValidate="TB_DPZone6Bottom" ForeColor="Red" ValidationGroup="OvenSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DPZone6Bottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Zone 6 Bottom" MaxLength="20"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_DamperBottom" runat="server" CssClass="form-control form-control-sm rounded" Placeholder=" Bottom Temp." MaxLength="20" ReadOnly="true"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2347,6 +2491,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
 
 
                                                         </div>
@@ -2412,9 +2557,81 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                <div class="col-md-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>
+                                <asp:Label ID="Label8" runat="server" Text="Approval Matrix"></asp:Label></h2>
+                            <div class="clearfix"></div>
+
+                        </div>
+                        <div class="x_content">
+                            <!-- Approver Flow Diagram -->
+                            <div class="approver-flow">
+                                <div class="approver-item">
+                                    <p>
+                                        <asp:Label ID="Label9" runat="server" Text="Approver 1" />
+                                    </p>
+                                    <asp:Image ID="Image3" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
+                                    <p>
+                                        <asp:Label ID="Approver1NameLabel" runat="server" Text='<%# Eval("Approver1Name") %>' />
+                                    </p>
+                                    <p>
+                                        <asp:Label ID="Approver1CodeLabel" runat="server" Text='<%# Eval("Approver1EmployeeCode") %>' />
+                                    </p>
+                                </div>
+                                <div class="flow-line"></div>
+                                <div class="approver-item">
+                                    <p>
+                                        <asp:Label ID="Label7" runat="server" Text="Approver 2" />
+                                    </p>
+                                    <asp:Image ID="Image2" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
+                                    <p>
+                                        <asp:Label ID="Approver2NameLabel" runat="server" Text='<%# Eval("Approver2Name") %>' />
+                                    </p>
+                                    <p>
+                                        <asp:Label ID="Approver2CodeLabel" runat="server" Text='<%# Eval("Approver2EmployeeCode") %>' />
+                                    </p>
+                                </div>
+                                <div class="flow-line"></div>
+                                <div class="approver-item">
+                                    <p>
+                                        <asp:Label ID="Label11" runat="server" Text="Approver 3" />
+                                    </p>
+                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
+                                    <p>
+                                        <asp:Label ID="DottedLineApproverNameLabel" runat="server" Text='<%# Eval("DottedLineApproverName") %>' />
+                                    </p>
+                                    <p>
+                                        <asp:Label ID="DottedLineApproverCodeLabel" runat="server" Text='<%# Eval("DottedLineApproverEmployeeCode") %>' />
+                                    </p>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <!-- GridView for Detailed Information -->
+                            <asp:GridView ID="GridViewApprovers" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" Visible="false">
+                                <Columns>
+                                    <asp:BoundField DataField="Approver1Name" HeaderText="Approver 1 Name" HtmlEncode="false" />
+                                    <asp:BoundField DataField="Approver1EmployeeCode" HeaderText="Approver 1" HtmlEncode="false" />
+                                    <asp:BoundField DataField="Approver2Name" HeaderText="Approver 2 Name" HtmlEncode="false" />
+                                    <asp:BoundField DataField="Approver2EmployeeCode" HeaderText="Approver 2" HtmlEncode="false" />
+                                    <asp:BoundField DataField="DottedLineApproverName" HeaderText="Dotted Line Approver Name" HtmlEncode="false" />
+                                    <asp:BoundField DataField="DottedLineApproverEmployeeCode" HeaderText="Dotted Line Approver Code" HtmlEncode="false" />
+                                </Columns>
+                            </asp:GridView>
+                        </div>
                     </div>
                 </div>
             </div>
+
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </asp:Content>

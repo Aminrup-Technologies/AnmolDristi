@@ -1,6 +1,4 @@
-﻿using AnmolDristi.DAL;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -9,9 +7,11 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.Services;
+using AnmolDristi.DAL;
+using Newtonsoft.Json;
 
 namespace AnmolDristi
 {
@@ -20,6 +20,7 @@ namespace AnmolDristi
         public static string ImgLink1 = string.Empty;
         public static string ImgLink2 = string.Empty;
         public static string PcrNo = string.Empty;
+    
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -36,11 +37,17 @@ namespace AnmolDristi
                     PlantBinder();
 
                     BindGridView();
-                    //GridBinder(22);
+                    DisplayCurrentShift();
 
                 }
 
             }
+        }
+        private void DisplayCurrentShift()
+        {
+            ShiftManager shiftManager = new ShiftManager();
+            string currentShift = shiftManager.GetCurrentShiftType();
+            hdn_shiftvalue.Value = currentShift;
         }
 
         private void PlantBinder()
@@ -72,7 +79,6 @@ namespace AnmolDristi
 
             }
         }
-
 
         public class ValidationCriteria
         {
@@ -110,8 +116,6 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_Plant_Error_script, false);
             }
         }
-
-
         private void PlantLinesBinder(string selectedPlantValue)
         {
             string query = "SELECT line_id, line_name FROM MST_Plant_Lines WHERE plant_id = @SelectedPlantValue";
@@ -526,7 +530,8 @@ namespace AnmolDristi
             string productCategory = DDL_ProductCategory.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue;
             string skuId = DDL_BrandSKU.SelectedValue;
-            string shift = GetCurrentShift();  // auto current shift acc to time
+            string shift = hdn_shiftvalue.Value.ToString();
+           // string shift = GetCurrentShift();  // auto current shift acc to time
             decimal processWaterTemp = Convert.ToDecimal(TB_ProcessWaterTemp.Text);
             string commentForProcessWater = "";
             decimal waterPh = Convert.ToDecimal(TB_WaterPH.Text);
@@ -710,121 +715,122 @@ namespace AnmolDristi
 
         }
 
-        protected void RawBtnSubmit_Click(object sender, EventArgs e)
-        {
-            // Retrieve values from controls
+        //protected void RawBtnSubmit_Click(object sender, EventArgs e)
+        //{
+        //    // Retrieve values from controls
 
-            string maidaBrandName = TB_MaidaBrandName.Text;
-            decimal maidaWgt = Convert.ToDecimal(TB_MaidaActWgt.Text);
-            decimal sugarWgt = Convert.ToDecimal(TB_SugarActWgt.Text);
-            decimal butter = Convert.ToDecimal(TB_ButterActWgt.Text);
-            decimal smp = Convert.ToDecimal(TB_SMPActWgt.Text);
-            decimal processWater = Convert.ToDecimal(TB_PWActWgt.Text);
-            decimal lecithin = Convert.ToDecimal(TB_LecithinActWgt.Text);
-            decimal gms = Convert.ToDecimal(TB_GMSActWgt.Text);
-            decimal ssl = Convert.ToDecimal(TB_SSLActWgt.Text);
-            decimal glucose = Convert.ToDecimal(TB_GlucoseActWgt.Text);
-            decimal hvo = Convert.ToDecimal(TB_HVOActWgt.Text);
-            decimal syrup = Convert.ToDecimal(TB_SyrupActWgt.Text);
-            decimal malt = Convert.ToDecimal(TB_MaltActWgt.Text);
-            decimal bb = Convert.ToDecimal(TB_BBActWgt.Text);
-            decimal abc = Convert.ToDecimal(TB_ABCActWgt.Text);
-            decimal sbc = Convert.ToDecimal(TB_SBCActWgt.Text);
-            decimal smbs = Convert.ToDecimal(TB_SMBSActWgt.Text);
-            decimal wheyPowder = Convert.ToDecimal(TB_WheyPowderActWgt.Text);
-            decimal condenceMilk = Convert.ToDecimal(TB_MilkActWgt.Text);
-            decimal salt = Convert.ToDecimal(TB_SaltActWgt.Text);
-            decimal yeast = Convert.ToDecimal(TB_YeastActWgt.Text);
-            decimal e1 = Convert.ToDecimal(TB_E1ActWgt.Text);
-            decimal caramel = Convert.ToDecimal(TB_CaramelActWgt.Text);
+        //    string maidaBrandName = TB_MaidaBrandName.Text;
+        //    decimal maidaWgt = Convert.ToDecimal(TB_MaidaActWgt.Text);
+        //    decimal sugarWgt = Convert.ToDecimal(TB_SugarActWgt.Text);
+        //    decimal butter = Convert.ToDecimal(TB_ButterActWgt.Text);
+        //    decimal smp = Convert.ToDecimal(TB_SMPActWgt.Text);
+        //    decimal processWater = Convert.ToDecimal(TB_PWActWgt.Text);
+        //    decimal lecithin = Convert.ToDecimal(TB_LecithinActWgt.Text);
+        //    decimal gms = Convert.ToDecimal(TB_GMSActWgt.Text);
+        //    decimal ssl = Convert.ToDecimal(TB_SSLActWgt.Text);
+        //    decimal glucose = Convert.ToDecimal(TB_GlucoseActWgt.Text);
+        //    decimal hvo = Convert.ToDecimal(TB_HVOActWgt.Text);
+        //    decimal syrup = Convert.ToDecimal(TB_SyrupActWgt.Text);
+        //    decimal malt = Convert.ToDecimal(TB_MaltActWgt.Text);
+        //    decimal bb = Convert.ToDecimal(TB_BBActWgt.Text);
+        //    decimal abc = Convert.ToDecimal(TB_ABCActWgt.Text);
+        //    decimal sbc = Convert.ToDecimal(TB_SBCActWgt.Text);
+        //    decimal smbs = Convert.ToDecimal(TB_SMBSActWgt.Text);
+        //    decimal wheyPowder = Convert.ToDecimal(TB_WheyPowderActWgt.Text);
+        //    decimal condenceMilk = Convert.ToDecimal(TB_MilkActWgt.Text);
+        //    decimal salt = Convert.ToDecimal(TB_SaltActWgt.Text);
+        //    decimal yeast = Convert.ToDecimal(TB_YeastActWgt.Text);
+        //    decimal e1 = Convert.ToDecimal(TB_E1ActWgt.Text);
+        //    decimal caramel = Convert.ToDecimal(TB_CaramelActWgt.Text);
 
-            QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
+        //    QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
 
-            try
-            {
-                // Call the InsertRawMaterialData method with the retrieved values
-                dataAccess.InsertRawMaterialData(PcrNo, maidaBrandName, maidaWgt, sugarWgt, butter, smp, processWater, lecithin, gms, ssl, glucose, hvo, syrup,
-                                            malt, bb, abc, sbc, smbs, wheyPowder, condenceMilk, salt, yeast, e1, caramel);
+        //    try
+        //    {
+        //        // Call the InsertRawMaterialData method with the retrieved values
+        //        dataAccess.InsertRawMaterialData(PcrNo, maidaBrandName, maidaWgt, sugarWgt, butter, smp, processWater, lecithin, gms, ssl, glucose, hvo, syrup,
+        //                                    malt, bb, abc, sbc, smbs, wheyPowder, condenceMilk, salt, yeast, e1, caramel);
 
-                //Make the inputs readonly
-                MakeInputsReadOnly1();
-            }
+        //        //Make the inputs readonly
+        //        MakeInputsReadOnly1();
+        //    }
 
-            catch (Exception ex)
-            {
-                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
-                string errorScript = "<script type='text/javascript'>\n" +
-                                     $"new PNotify({{\n" +
-                                     "    title: 'Error',\n" +
-                                     $"    text: '{errorMessage}',\n" +
-                                     "    type: 'error',\n" +
-                                     "    styling: 'bootstrap3'\n" +
-                                     "});\n" +
-                                     "</script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
-            }
-        }
-        protected void RawBtnReset_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("qaqc_process_rpt.aspx");
-            ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('rawMaterial-tab');", true);
-            //or
-            // ScriptManager.RegisterStartupScript(this, this.GetType(), "clearAndActivate", "clearFields('rawMaterial-tab'); activateTab();", true);
-            //or
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "resetSection", "resetSectionFields('rawMaterial-tab');", true);
+        //    catch (Exception ex)
+        //    {
+        //        string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+        //        string errorScript = "<script type='text/javascript'>\n" +
+        //                             $"new PNotify({{\n" +
+        //                             "    title: 'Error',\n" +
+        //                             $"    text: '{errorMessage}',\n" +
+        //                             "    type: 'error',\n" +
+        //                             "    styling: 'bootstrap3'\n" +
+        //                             "});\n" +
+        //                             "</script>";
+        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+        //    }
+        //}
+        //protected void RawBtnReset_Click(object sender, EventArgs e)
+        //{
+        //    Response.Redirect("qaqc_process_rpt.aspx");
+        //    ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('rawMaterial-tab');", true);
+        //    //or
+        //    // ScriptManager.RegisterStartupScript(this, this.GetType(), "clearAndActivate", "clearFields('rawMaterial-tab'); activateTab();", true);
+        //    //or
+        //    //ScriptManager.RegisterStartupScript(this, this.GetType(), "resetSection", "resetSectionFields('rawMaterial-tab');", true);
 
-        }
-        private void MakeInputsReadOnly1()
-        {
-            //Raw Material Data
-            TB_MaidaActWgt.ReadOnly = true;
-            TB_SugarActWgt.ReadOnly = true;
-            TB_ButterActWgt.ReadOnly = true;
-            TB_SMPActWgt.ReadOnly = true;
-            TB_ProcessWaterTemp.ReadOnly = true;
-            TB_LecithinActWgt.ReadOnly = true;
-            TB_GMSActWgt.ReadOnly = true;
-            TB_SSLActWgt.ReadOnly = true;
-            TB_GlucoseActWgt.ReadOnly = true;
-            TB_HVOActWgt.ReadOnly = true;
-            TB_SyrupActWgt.ReadOnly = true;
-            TB_MaltActWgt.ReadOnly = true;
-            TB_BBActWgt.ReadOnly = true;
-            TB_ABCActWgt.ReadOnly = true;
-            TB_SBCActWgt.ReadOnly = true;
-            TB_SMBSActWgt.ReadOnly = true;
-            TB_WheyPowderActWgt.ReadOnly = true;
-            TB_MilkActWgt.ReadOnly = true;
-            TB_SaltActWgt.ReadOnly = true;
-            TB_YeastActWgt.ReadOnly = true;
-            TB_E1ActWgt.ReadOnly = true;
-            TB_CaramelActWgt.ReadOnly = true;
+        //}
+        //private void MakeInputsReadOnly1()
+        //{
+        //    //Raw Material Data
+        //    TB_MaidaActWgt.ReadOnly = true;
+        //    TB_SugarActWgt.ReadOnly = true;
+        //    TB_ButterActWgt.ReadOnly = true;
+        //    TB_SMPActWgt.ReadOnly = true;
+        //    TB_ProcessWaterTemp.ReadOnly = true;
+        //    TB_LecithinActWgt.ReadOnly = true;
+        //    TB_GMSActWgt.ReadOnly = true;
+        //    TB_SSLActWgt.ReadOnly = true;
+        //    TB_GlucoseActWgt.ReadOnly = true;
+        //    TB_HVOActWgt.ReadOnly = true;
+        //    TB_SyrupActWgt.ReadOnly = true;
+        //    TB_MaltActWgt.ReadOnly = true;
+        //    TB_BBActWgt.ReadOnly = true;
+        //    TB_ABCActWgt.ReadOnly = true;
+        //    TB_SBCActWgt.ReadOnly = true;
+        //    TB_SMBSActWgt.ReadOnly = true;
+        //    TB_WheyPowderActWgt.ReadOnly = true;
+        //    TB_MilkActWgt.ReadOnly = true;
+        //    TB_SaltActWgt.ReadOnly = true;
+        //    TB_YeastActWgt.ReadOnly = true;
+        //    TB_E1ActWgt.ReadOnly = true;
+        //    TB_CaramelActWgt.ReadOnly = true;
 
 
-            BasicBtnSubmit.Enabled = false;
-            BasicBtnSubmit.Text = "SAVED";
-            BasicBtnSubmit.CssClass = "btn btn-sm btn-success";
+        //    BasicBtnSubmit.Enabled = false;
+        //    BasicBtnSubmit.Text = "SAVED";
+        //    BasicBtnSubmit.CssClass = "btn btn-sm btn-success";
 
-            string Data_SuccessScript = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Data Success',
-                                text: 'Recorded Successfully!!',
-                                type: 'success',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
+        //    string Data_SuccessScript = @"<script type='text/javascript'>
+        //            new PNotify({
+        //                title: 'Data Success',
+        //                text: 'Recorded Successfully!!',
+        //                type: 'success',
+        //                styling: 'bootstrap3'
+        //            });
+        //        </script>";
 
-            // RegisterStartupScript adds the JavaScript code to the page
-            ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('spongeData-tab').click();", true);
-        }
+        //    // RegisterStartupScript adds the JavaScript code to the page
+        //    ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+        //    ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('spongeData-tab').click();", true);
+        //}
+
 
         protected void SpongeBtnSubmit_Click(object sender, EventArgs e)
         {
             
             // Retrieve values from controls
             decimal roomTemp = Convert.ToDecimal(TB_RoomTemp.Text);
-            string commentForRoomTemp = "";
+            string commentForRoomTemp = TXB_RoomTemp_Remarks.Text;
             int drumCovered = Convert.ToInt32(RBL_DrumCovered.SelectedValue);
             string commentForDrumCovered = TXB_DrumCovered_Remarks.Text;
             int quality = Convert.ToInt32(RBL_Quality.SelectedValue);
@@ -832,7 +838,7 @@ namespace AnmolDristi
             TimeSpan standingTime = TimeSpan.Parse(TB_StandingTime.Text);
             string commentForStandingTime = "";
             decimal temp = Convert.ToDecimal(TB_Temp.Text);
-            string commentForTemp = "";
+            string commentForTemp = TXB_Temp_Remarks.Text;
 
             QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
 
@@ -869,12 +875,14 @@ namespace AnmolDristi
         {
             //SpongeData
             TB_RoomTemp.ReadOnly = true;
+            TXB_RoomTemp_Remarks.ReadOnly = true;
             RBL_DrumCovered.Enabled = false;
             TXB_DrumCovered_Remarks.ReadOnly = true;
             RBL_Quality.Enabled = false;
             TXB_Quality_Remarks.ReadOnly = true;
             TB_StandingTime.ReadOnly = true;
             TB_Temp.ReadOnly = true;
+            TXB_Temp_Remarks.ReadOnly=true;
 
             SpongeBtnSubmit.Enabled = false;
             SpongeBtnSubmit.Text = "SAVED";
@@ -900,7 +908,7 @@ namespace AnmolDristi
         {
             // Retrieve values from controls
             decimal doughTemp = Convert.ToDecimal(TB_DoughTemp.Text);
-            string commentForDoughTemp = "";
+            string commentForDoughTemp = TXB_DoughTemp_Remarks.Text;
             TimeSpan restTime = TimeSpan.Parse(TB_DoughRestTime.Text);
             string commentForRestTime = "";
             int metalDetector = Convert.ToInt32(RBL_MetalDectector.SelectedValue);
@@ -954,6 +962,7 @@ namespace AnmolDristi
         {
             //DoughData
             TB_DoughTemp.ReadOnly = true;
+            TXB_DoughTemp_Remarks.ReadOnly = true;
             TB_DoughRestTime.ReadOnly = true;
             RBL_MetalDectector.Enabled = false;
             TXB_MetalDetector_Remarks.ReadOnly = true;
@@ -989,44 +998,23 @@ namespace AnmolDristi
         protected void OvenBtnSubmit_Click(object sender, EventArgs e)
         {
             // Retrieve values from controls
+            string position = RBL_Position.SelectedValue;
+            string ovenZone = DDL_Oven.SelectedValue;
+            decimal ovenTop = Convert.ToDecimal(TB_OvenTop.Text);
+            decimal ovenBottom = Convert.ToDecimal(TB_OvenBottom.Text);
+            string damperZone = DDL_Damper.SelectedValue;
+            decimal damperTop = Convert.ToDecimal(TB_DamperTop.Text);
+            decimal damperBottom = Convert.ToDecimal(TB_DamperBottom.Text);
+            
 
-            string zone1Top = TB_Zone1Top.Text;
-            string zone1Bottom = TB_Zone1Bottom.Text;
-            string zone2Top = TB_Zone2Top.Text;
-            string zone2Bottom = TB_Zone2Bottom.Text;
-            string zone3Top = TB_Zone3Top.Text;
-            string zone3Bottom = TB_Zone3Bottom.Text;
-            string zone4Top = TB_Zone4Top.Text;
-            string zone4Bottom = TB_Zone4Bottom.Text;
-            string zone5Top = TB_Zone5Top.Text;
-            string zone5Bottom = TB_Zone5Bottom.Text;
-            string zone6Top = TB_Zone6Top.Text;
-            string zone6Bottom = TB_Zone6Bottom.Text;
-
-            string DPzone1Top = TB_DPZone1Top.Text;
-            string DPzone1Bottom = TB_DPZone1Bottom.Text;
-            string DPzone2Top = TB_DPZone2Top.Text;
-            string DPzone2Bottom = TB_DPZone2Bottom.Text;
-            string DPzone3Top = TB_DPZone3Top.Text;
-            string DPzone3Bottom = TB_DPZone3Bottom.Text;
-            string DPzone4Top = TB_DPZone4Top.Text;
-            string DPzone4Bottom = TB_DPZone4Bottom.Text;
-            string DPzone5Top = TB_DPZone5Top.Text;
-            string DPzone5Bottom = TB_DPZone5Bottom.Text;
-            string DPzone6Top = TB_DPZone6Top.Text;
-            string DPzone6Bottom = TB_DPZone6Bottom.Text;
-
-            QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
+            //QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
 
             try
             {
-                // Call the InsertOvenData method with the retrieved values
-                dataAccess.InsertOvenData(PcrNo, zone1Top, zone1Bottom, zone2Top, zone2Bottom, zone3Top, zone3Bottom, zone4Top,
-                                            zone4Bottom, zone5Top, zone5Bottom, zone6Top, zone6Bottom, DPzone1Top, DPzone1Bottom, DPzone2Top,
-                                            DPzone2Bottom, DPzone3Top, DPzone3Bottom, DPzone4Top, DPzone4Bottom, DPzone5Top, DPzone5Bottom,
-                                            DPzone6Top, DPzone6Bottom);
+                //// Call the InsertOvenData method with the retrieved values
+                //dataAccess.InsertOvenData(PcrNo, );
 
-                //Make the inputs readonly
+                ////Make the inputs readonly
                 MakeInputsReadOnly4();
 
             }
@@ -1052,33 +1040,15 @@ namespace AnmolDristi
         private void MakeInputsReadOnly4()
         {
             //OvenData
-            TB_Zone1Top.ReadOnly = true;
-            TB_Zone1Bottom.ReadOnly = true;
-            TB_Zone2Top.ReadOnly = true;
-            TB_Zone2Bottom.ReadOnly = true;
-            TB_Zone3Top.ReadOnly = true;
-            TB_Zone3Bottom.ReadOnly = true;
-            TB_Zone4Top.ReadOnly = true;
-            TB_Zone4Bottom.ReadOnly = true;
-            TB_Zone5Top.ReadOnly = true;
-            TB_Zone5Bottom.ReadOnly = true;
-            TB_Zone6Top.ReadOnly = true;
-            TB_Zone6Bottom.ReadOnly = true;
+            RBL_Position.Enabled = false;
+            DDL_Oven.Enabled = false;
+            TB_OvenTop.ReadOnly = true;
+            TB_OvenBottom.ReadOnly = true;
+            DDL_Damper.Enabled = false;
+            TB_DamperTop.ReadOnly = true;
+            TB_DamperBottom.ReadOnly = true;
 
-            TB_DPZone1Top.ReadOnly = true;
-            TB_DPZone1Bottom.ReadOnly = true;
-            TB_DPZone2Top.ReadOnly = true;
-            TB_DPZone2Bottom.ReadOnly = true;
-            TB_DPZone3Top.ReadOnly = true;
-            TB_DPZone3Bottom.ReadOnly = true;
-            TB_DPZone4Top.ReadOnly = true;
-            TB_DPZone4Bottom.ReadOnly = true;
-            TB_DPZone5Top.ReadOnly = true;
-            TB_DPZone5Bottom.ReadOnly = true;
-            TB_DPZone6Top.ReadOnly = true;
-            TB_DPZone6Bottom.ReadOnly = true;
-
-
+            
             OvenBtnSubmit.Enabled = false;
             OvenBtnSubmit.Text = "SAVED";
             OvenBtnSubmit.CssClass = "btn btn-sm btn-success";
@@ -1092,7 +1062,7 @@ namespace AnmolDristi
                             });
                         </script>";
 
-            // RegisterStartupScript adds the JavaScript code to the page
+            //RegisterStartupScript adds the JavaScript code to the page
             ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('verificationData-tab').click();", true);
 
@@ -1270,33 +1240,11 @@ namespace AnmolDristi
             return int.TryParse(value, out result) ? (int?)result : null;
         }
 
-        //private void GridBinder(int rowCount)           //no of rows
-        //{
-        //    DataTable dt = new DataTable();
 
-        //    // Create 5 columns: Sl , variety , standardwgt , actual wgt and deviation
-        //    dt.Columns.Add("Sl");
-        //    dt.Columns.Add("StandardWeight");
-        //    dt.Columns.Add("Variety");
-        //    dt.Columns.Add("ActualWeight");
-        //    dt.Columns.Add("Deviation");
-
-        //    for (int i = 1; i <= rowCount; i++)
-        //    {
-        //        DataRow dr = dt.NewRow();
-        //        dr["Sl"] = i; // Serial number (Sl)
-        //        dt.Rows.Add(dr);
-        //    }
-
-        //    GridView1.DataSource = dt;
-        //    GridView1.DataBind();
-        //}
-
-        
         private void BindGridView()             // to show all 22 varieties and standard weight 
         {
             // Sample data for Variety and Standard Weight
-            var dataSave = new List< VarietyInfo>
+            var dataSave = new List<VarietyInfo>
             {
                 // Add all 22 varieties here
                 new VarietyInfo {Sl = 1,   Variety = "Maida", StandardWeight = 50 } ,
@@ -1336,117 +1284,50 @@ namespace AnmolDristi
             public decimal StandardWeight { get; set; }
             public decimal ActualWeight { get; set; }
             public decimal DeviationWeight { get; set; }
+            public decimal DeviationPercentage { get; set; }
         }
 
-        protected void WgtbtnSubmit_Click(object sender, EventArgs e)
-        {
-            var dataToSave = new List<VarietyInfo>();
-
-            try
-            {
-                foreach (GridViewRow row in GridView1.Rows)
-                {
-                    string variety = row.Cells[1].Text.Trim();
-
-                    decimal actualWeight = 0;
-                    decimal deviationWeight = 0;
-                    decimal standardWeight = 0;
-
-                    var standardWeightTextBox = row.FindControl("txtStandardWeight") as TextBox;
-                    var actualWeightTextBox = row.FindControl("txtActualWeight") as TextBox;
-                    var deviationWeightTextBox = row.FindControl("txtDeviation") as TextBox;
-
-                    if (standardWeightTextBox != null && actualWeightTextBox != null && deviationWeightTextBox != null)
-                    {
-                        if (!string.IsNullOrEmpty(actualWeightTextBox.Text) && decimal.TryParse(actualWeightTextBox.Text, out actualWeight))
-                        {
-                            //actualWeight = actual;
-                        }
-
-                        if (!string.IsNullOrEmpty(deviationWeightTextBox.Text) && decimal.TryParse(deviationWeightTextBox.Text, out deviationWeight))
-                        {
-                            //deviationWeight = deviation;
-                        }
-
-                        if (!string.IsNullOrEmpty(standardWeightTextBox.Text) && decimal.TryParse(standardWeightTextBox.Text, out standardWeight))
-                        {
-                            //standardWeight = standard;
-                        }
-
-                        dataToSave.Add(new VarietyInfo
-                        {
-                            Variety = variety,
-                            StandardWeight = standardWeight,
-                            ActualWeight = actualWeight,
-                            DeviationWeight = deviationWeight
-                        });
-                    }
-                }
-
-                var varietyJson = JsonConvert.SerializeObject(dataToSave.Select(d => d.Variety).ToList());
-                var standardJson = JsonConvert.SerializeObject(dataToSave.Select(d => d.StandardWeight).ToList());
-                var actualJson = JsonConvert.SerializeObject(dataToSave.Select(d => d.ActualWeight).ToList());
-                var deviationJson = JsonConvert.SerializeObject(dataToSave.Select(d => d.DeviationWeight).ToList());
-
-
-                SaveDataToDatabase(varietyJson, standardJson, actualJson, deviationJson);
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
 
         [WebMethod]
         public static void SaveData(string jsonData)
         {
+           
             // Deserialize JSON data to a list of objects
             var data = JsonConvert.DeserializeObject<List<VarietyInfo>>(jsonData);
 
-            // Process the data (e.g., save to database)
-            //foreach (var item in data)
-            //{
-            //    // Example: Save each item to the database
-            //    //SaveToDatabase(item);
-            //}
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+
+                    string query = "INSERT INTO PC_MaterialWeights ( PcrNo, JsonData) " +
+                                        " VALUES (@PcrNo, @JsonData)";
+
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@PcrNo ", PcrNo);
+                        cmd.Parameters.AddWithValue("@JsonData", jsonData);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
-        //public class VarietyInfo
-        //{
-        //    public decimal StandardWeight { get; set; }
-        //    public decimal ActualWeight { get; set; }
-        //    public decimal DeviationWeight { get; set; }
-        //}
-
-
-        private void SaveDataToDatabase(string varietyJson, string standardJson, string actualJson, string deviationJson )
+        protected void WgtbtnSubmit_Click(object sender, EventArgs e)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            WgtbtnSubmit.Enabled = false;
+            WgtbtnSubmit.Text = "SAVED";
+            WgtbtnSubmit.CssClass = "btn btn-sm btn-success";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                con.Open();
-
-                string query = "INSERT INTO PC_MaterialWeights ( PcrNo,  MaidaBrandName ,Variety, StandardWeight, ActualWeight, DeviationWeight) " +
-                                    " VALUES (@PcrNo , @MaidaBrandName ,@Variety, @StandardWeight, @ActualWeight, @DeviationWeight)";
-
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@PcrNo ", PcrNo);
-                    cmd.Parameters.AddWithValue("@MaidaBrandName", TB_MaidaBrandNames.Text);
-                    cmd.Parameters.AddWithValue("@Variety", varietyJson);
-                    cmd.Parameters.AddWithValue("@StandardWeight", standardJson);
-                    cmd.Parameters.AddWithValue("@ActualWeight",actualJson);
-                    cmd.Parameters.AddWithValue("@DeviationWeight",deviationJson);
-
-                    cmd.ExecuteNonQuery();
-                }
-
-                WgtbtnSubmit.Enabled = false;
-                WgtbtnSubmit.Text = "SAVED";
-                WgtbtnSubmit.CssClass = "btn btn-sm btn-success";
-
-                string Data_SuccessScript = @"<script type='text/javascript'>
+            string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Data Success',
                                 text: 'Recorded Successfully!!',
@@ -1455,183 +1336,29 @@ namespace AnmolDristi
                             });
                         </script>";
 
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('spongeData-tab').click();", true);
+            //// RegisterStartupScript adds the JavaScript code to the page
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('spongeData-tab').click();", true);
 
-            }
+
         }
-
 
         protected void WgtbtnReset_Click(object sender, EventArgs e)
         {
+
             ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('weight-tab');", true);
             Response.Redirect("qaqc_process_rpt.aspx");
         }
 
-
-
-        //protected void WgtbtnSubmit_Click(object sender, EventArgs e)
-        //{
-        //    List<VarietyInfo> dataToSave = new List<VarietyInfo>();
-
-        //    foreach (GridViewRow row in GridView1.Rows)
-        //    {
-        //        // Retrieve Variety
-        //        string variety = row.Cells[1].Text;
-
-        //        // Assuming StandardWeight is in the third column (index 2)
-        //        double standardWeight = Convert.ToDouble(row.Cells[2].Text);
-
-        //        // Retrieve Actual Weight
-        //        TextBox txtActualWeight = (TextBox)row.FindControl("txtActualWeight");
-        //        double actualWeight = double.TryParse(txtActualWeight.Text, out actualWeight) ? actualWeight : 0.0;
-
-        //        // Retrieve Deviation Weight
-        //        TextBox txtDeviationWeight = (TextBox)row.FindControl("txtDeviationWeight");
-        //        double deviationWeight = double.TryParse(txtDeviationWeight.Text, out deviationWeight) ? deviationWeight : 0.0;
-
-        //        // Collect data to save
-        //        VarietyInfo varietyInfo = new VarietyInfo
-        //        {
-        //            Sl = Convert.ToInt32(row.Cells[0].Text),
-        //            Variety = row.Cells[1].Text,
-        //            StandardWeight = standardWeight,
-        //            ActualWeight = actualWeight,
-        //            DeviationWeight = deviationWeight
-        //        };
-
-        //    }
-
-        //    // Now you can save 'dataToSave' to the database
-        //    SaveDataToDatabase(dataToSave);
-        //}
-
-        //private void SaveDataToDatabase(List<VarietyInfo> dataToSave)
-        //{
-        //    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-        //    using (SqlConnection con = new SqlConnection(connectionString))
-        //    {
-        //        con.Open();
-        //        foreach (var varietyInfo in dataToSave)
-        //        {
-        //            string query = "INSERT INTO PC_MaterialWeights ( PcrNo,  MaidaBrandName ,Variety, StandardWeight, ActualWeight, DeviationWeight) " +
-        //                                " VALUES (@PcrNo , @MaidaBrandName ,@Variety, @StandardWeight, @ActualWeight, @DeviationWeight)";
-        //            using (SqlCommand cmd = new SqlCommand(query, con))
-        //            {
-        //                cmd.Parameters.AddWithValue("@PcrNo ", PcrNo);
-        //                cmd.Parameters.AddWithValue("@MaidaBrandName", TB_MaidaBrandNames.Text);
-        //                cmd.Parameters.AddWithValue("@Variety", varietyInfo.Variety);
-        //                cmd.Parameters.AddWithValue("@StandardWeight", varietyInfo.StandardWeight);
-        //                cmd.Parameters.AddWithValue("@ActualWeight", varietyInfo.ActualWeight);
-        //                cmd.Parameters.AddWithValue("@DeviationWeight", varietyInfo.DeviationWeight);
-
-        //                cmd.ExecuteNonQuery();
-        //            }
-        //        }
-        //        WgtbtnSubmit.Enabled = false;
-        //        WgtbtnSubmit.Text = "SAVED";
-        //        WgtbtnSubmit.CssClass = "btn btn-sm btn-success";
-
-        //        string Data_SuccessScript = @"<script type='text/javascript'>
-        //                    new PNotify({
-        //                        title: 'Data Success',
-        //                        text: 'Recorded Successfully!!',
-        //                        type: 'success',
-        //                        styling: 'bootstrap3'
-        //                    });
-        //                </script>";
-
-        //        // RegisterStartupScript adds the JavaScript code to the page
-        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
-        //        ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('spongeData-tab').click();", true);
-
-        //    }
-        //}
+        
 
 
 
 
-        //protected void btnSubmit_Click(object sender, EventArgs e)
-        //{
-        //    Dictionary<int, decimal> WeightData = new Dictionary<int, decimal>();
-        //    foreach (GridViewRow row in GridView1.Rows)
-        //    {
-        //        TextBox txtGrossWeight = (TextBox)row.FindControl("txtGrossWeight");
 
-        //        if (txtGrossWeight != null && !string.IsNullOrEmpty(txtGrossWeight.Text))
-        //        {
-        //            decimal grossWeight;
-        //            if (decimal.TryParse(txtGrossWeight.Text, out grossWeight))
-        //            {
-        //                int sl = row.RowIndex + 1;  // Serial number
-        //                grossWeightData.Add(sl, grossWeight);
-        //            }
-        //        }
-        //    }
-        //    string jsonData = JsonConvert.SerializeObject(WeightData);
 
-        //    // Insert into the database
-        //    //using (SqlConnection conn = new SqlConnection(connectionString))
-        //    //{
-        //    //    conn.Open();
-        //    //    string query = "INSERT INTO YourTable (GrossWeightJson) VALUES (@jsonString)";
-        //    //    using (SqlCommand cmd = new SqlCommand(query, conn))
-        //    //    {
-        //    //        cmd.Parameters.AddWithValue("@jsonString", jsonData);
-        //    //        cmd.ExecuteNonQuery();
-        //    //    }
-        //    //}
 
-        //    // Now, save the JSON data to the database
-        //    //SaveGrossWeightsToDatabase(jsonData);
 
-        //    PopulateGridView(jsonData);
-        //}
-
-        //private void PopulateGridView(string jsonString)
-        //{
-        //    //string jsonString = "";
-
-        //    // Retrieve the JSON string from the database
-        //    //using (SqlConnection conn = new SqlConnection(connectionString))
-        //    //{
-        //    //    conn.Open();
-        //    //    string query = "SELECT GrossWeightJson FROM YourTable WHERE Id = @id";
-        //    //    using (SqlCommand cmd = new SqlCommand(query, conn))
-        //    //    {
-        //    //        cmd.Parameters.AddWithValue("@id", yourId);
-        //    //        jsonString = cmd.ExecuteScalar()?.ToString();
-        //    //    }
-        //    //}
-
-        //    // Deserialize the JSON string into a dictionary
-        //    Dictionary<string, decimal> grossWeightData = JsonConvert.DeserializeObject<Dictionary<string, decimal>>(jsonString);
-
-        //    // Create a DataTable and populate it with data from the dictionary
-        //    DataTable dataTable = new DataTable();
-        //    dataTable.Columns.Add("SlNo", typeof(string));
-        //    dataTable.Columns.Add("Variety", typeof(string));
-        //    dataTable.Columns.Add("Standard", typeof(decimal));
-        //    dataTable.Columns.Add("Actual", typeof(decimal));
-        //    dataTable.Columns.Add("Deviation", typeof(decimal));
-
-        //    foreach (var item in grossWeightData)
-        //    {
-        //        DataRow row = dataTable.NewRow();
-        //        row["SlNo"] = item.Key;
-        //        row["Variety"] = item.Value;
-        //        row["Standard"] = item.Value;
-        //        row["Actual"] = item.Value;
-        //        row["Deviation"] = item.Value;
-        //        dataTable.Rows.Add(row);
-        //    }
-
-        //    // Bind the DataTable to the GridView
-        //    myGridView.DataSource = dataTable;
-        //    myGridView.DataBind();
-        //}
 
 
     }

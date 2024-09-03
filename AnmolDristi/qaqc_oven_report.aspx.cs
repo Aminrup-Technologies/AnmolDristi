@@ -49,12 +49,12 @@ namespace AnmolDristi
 
                     cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
                     cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
-                    cmd.Parameters.AddWithValue("@FormID", 3);
+                    cmd.Parameters.AddWithValue("@FormID", 4);
                     cmd.Parameters.AddWithValue("@FormName", "qaqc_oven_report");
 
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
-                        hdn_formid.Value = "2";
+                        hdn_formid.Value = "4";
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
@@ -79,6 +79,7 @@ namespace AnmolDristi
                         }
                         else
                         {
+
                             // Set default values to ADMIN if no rows are found
                             Approver1NameLabel.Text = "ADMIN";
                             Approver1CodeLabel.Text = "ADMIN";
@@ -88,6 +89,18 @@ namespace AnmolDristi
 
                             DottedLineApproverNameLabel.Text = "ADMIN";
                             DottedLineApproverCodeLabel.Text = "ADMIN";
+
+                            string PlantBinder_Error_script = @"<script type='text/javascript'>
+                                new PNotify({
+                                    title: 'Error',
+                                    text: 'No Approver Mapping Found!',
+                                    type: 'error',
+                                    styling: 'bootstrap3'
+                                });
+                            </script>";
+
+                            // RegisterStartupScript adds the JavaScript code to the page
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
                         }
                     }
                 }
@@ -283,9 +296,9 @@ namespace AnmolDristi
             // Create SQL parameters for plant_id and line_id
             SqlParameter[] parameters = new SqlParameter[]
             {
-        new SqlParameter("@PlantId", selectedPlantValue),
-        new SqlParameter("@LineId", selectedPlantLineValue),
-        new SqlParameter("@CategoryId", selectedProductCategoryValue)
+                new SqlParameter("@PlantId", selectedPlantValue),
+                new SqlParameter("@LineId", selectedPlantLineValue),
+                new SqlParameter("@CategoryId", selectedProductCategoryValue)
             };
 
             // Call the BindDropDownList method with parameters
@@ -296,13 +309,13 @@ namespace AnmolDristi
             if (!recordsBound)
             {
                 string ProductBrands_Error_script = @"<script type='text/javascript'>
-            new PNotify({
-                title: 'Error',
-                text: 'No Brands found for the selected plant and line!',
-                type: 'error',
-                styling: 'bootstrap3'
-            });
-        </script>";
+                    new PNotify({
+                        title: 'Error',
+                        text: 'No Brands found for the selected plant and line!',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });
+                </script>";
 
                 // RegisterStartupScript adds the JavaScript code to the page
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
@@ -413,6 +426,9 @@ namespace AnmolDristi
             string RejectionKgs = TB_RejectionKgs.Text;
             string shift = hdn_shiftvalue.Value.ToString();
 
+            string approver1EmployeeCode = Approver1CodeLabel.Text.ToString();
+            string approver2EmployeeCode = Approver2CodeLabel.Text.ToString();
+            string dottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text.ToString();
 
             string insertQuery = @"
                 INSERT INTO TRN_FINAL_OVEN_REPORT ([OVN_Id], [FormID], [SubmittedById], [SubmittedDate], [SubmittedTime], [Shift], [SubmittedByEmployeeCode],
@@ -467,10 +483,6 @@ namespace AnmolDristi
                         //command.Parameters.AddWithValue("@Oven_Start_Time", DateTime.Now.TimeOfDay);
                         //command.Parameters.AddWithValue("@Oven_Stop_Time", DateTime.Now.AddHours(1).TimeOfDay);
                         //command.Parameters.AddWithValue("@Reason", "Routine Check");
-
-                        string approver1EmployeeCode = Approver1CodeLabel.Text.ToString();
-                        string approver2EmployeeCode = Approver2CodeLabel.Text.ToString();
-                        string dottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text.ToString();
 
                         insertcommand.Parameters.AddWithValue("@Approver1EmployeeCode", DBNull.Value);
                         insertcommand.Parameters.AddWithValue("@Approver1_Status", 1);

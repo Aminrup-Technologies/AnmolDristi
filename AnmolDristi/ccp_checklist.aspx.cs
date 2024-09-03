@@ -9,12 +9,16 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using static AnmolDristi.qaqc.qaqc_inspector_rpt;
 using Newtonsoft.Json;
+using AnmolDristi.DAL;
 
 namespace AnmolDristi
 {
     public partial class ccp_checklist : System.Web.UI.Page
     {
-        public static string M_CheckId_key= String.Empty;
+        public static string M_CheckId_key = String.Empty;
+        DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
+        public static String CcpId = String.Empty;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -25,46 +29,118 @@ namespace AnmolDristi
                 }
                 else
                 {
+                    int CCPChecklist_MagnetCheck = int.Parse(ConfigurationManager.AppSettings["CCPChecklist_MagnetCheck_GBV"]);
+                    int CCPChecklist_SieveCheck = int.Parse(ConfigurationManager.AppSettings["CCPChecklist_SieveCheck_GBV"]);
+
                     lbl_docname.Text = "CCP CHECKLIST: MD, SS";
                     lbl_docnumber.Text = "ANMOL/DOC/CORP/QA/03";
                     PlantBinder();
-                    BindGridView(9);
+                    BindGridView(CCPChecklist_MagnetCheck);
+                    Bind_GridView_Shieve(CCPChecklist_SieveCheck);
+                    DisplayCurrentShift();
                 }
             }
         }
 
+        private void DisplayCurrentShift()
+        {
+            ShiftManager shiftManager = new ShiftManager();
+            string currentShift = shiftManager.GetCurrentShiftType();
+            hdn_shiftvalue.Value = currentShift;
+        }
+
         private void BindGridView(int rowCount)
         {
+            // Create a DataTable with the necessary columns
             DataTable dt = new DataTable();
 
-            // Create columns: LineNo, Sl, Qty of Metal Found(gm), CleanedStatus, Remarks for not ok
-            dt.Columns.Add("Sl");
-            dt.Columns.Add("Location");         
-            dt.Columns.Add("Qty of Metal Found(gm)");
-            dt.Columns.Add("CleanedStatus");
-            dt.Columns.Add("Remarks for not ok");
+            // Create columns: Serial No (Sl), Location, Qty of Metal Found(gm), Cleaned Status, Remarks for not ok
+            dt.Columns.Add("Sl", typeof(int));
+            dt.Columns.Add("Location", typeof(string));
+            dt.Columns.Add("Qty of Metal Found(gm)", typeof(string)); // Default to empty, filled later by the user
+            dt.Columns.Add("CleanedStatus", typeof(string)); // "Ok" or "Not Ok"
+            dt.Columns.Add("Remarks for not ok", typeof(string)); // Optional remarks
 
-            // List of elements for the LineNo column
-            List<string> Location = new List<string>
+            // Predefined list of locations
+            List<string> locations = new List<string>
                 {
                     "Maida 1", "Maida 2", "Maida 3", "Maida 4", "Maida 5",
                     "Sugar 1", "Sugar 2", "Broken Biscuit 1", "Broken Biscuit 2"
                 };
 
+            // Generate rows based on the provided row count
             for (int i = 0; i < rowCount; i++)
             {
                 DataRow dr = dt.NewRow();
                 dr["Sl"] = i + 1; // Serial number (Sl)
 
-                // Assign LineNo value cyclically if rowCount exceeds the number of items in lineNumbers
-                dr["Location"] = Location[i % Location.Count];
+                // Assign a location from the list, cycling through if needed
+                dr["Location"] = locations[i % locations.Count];
 
+                // Initializing other fields with default values, if necessary
+                dr["Qty of Metal Found(gm)"] = string.Empty; // To be filled by the user
+                dr["CleanedStatus"] = string.Empty; // User selection
+                dr["Remarks for not ok"] = string.Empty; // Optional remarks
+
+                // Add the row to the DataTable
                 dt.Rows.Add(dr);
             }
 
             GridView_MetalCheck.DataSource = dt;
             GridView_MetalCheck.DataBind();
         }
+
+
+        private void Bind_GridView_Shieve(int rowCount)
+        {
+            // Create a DataTable with the necessary columns
+            DataTable dt = new DataTable();
+
+            // Create columns: Serial No (Sl), Sieve No, INITIAL SAMPLE, FINAL RETENTION, % OF RETENTION
+            dt.Columns.Add("Sl", typeof(int));
+            dt.Columns.Add("SieveNo", typeof(string));
+            dt.Columns.Add("InitialSample", typeof(double)); // Default to 0.0, filled later by the user
+            dt.Columns.Add("FinalRetention", typeof(double)); // Default to 0.0, filled later by the user
+            dt.Columns.Add("PercentageRetention", typeof(double)); // Calculated field
+
+            //dt.Columns.Add("InitialSample", typeof(string)); // Default to 0.0, filled later by the user
+            //dt.Columns.Add("FinalRetention", typeof(string)); // Default to 0.0, filled later by the user
+            //dt.Columns.Add("PercentageRetention", typeof(string)); // Calculated field
+
+            // Predefined list of sieve numbers
+            List<string> sieveNumbers = new List<string>
+            {
+                "MS01", "SS01", "BBS01", "MS02", "SS02", "BBS02", "MS03", "SS03", "BBS03"
+            };
+
+            // Generate rows based on the provided row count
+            for (int i = 0; i < rowCount; i++)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sl"] = i + 1; // Serial number (Sl)
+
+                // Assign a sieve number from the list, cycling through if needed
+                dr["SieveNo"] = sieveNumbers[i % sieveNumbers.Count];
+
+                // Initializing other fields with default values, if necessary
+                dr["InitialSample"] = 0.0; // To be filled by the user
+                dr["FinalRetention"] = 0.0; // To be filled by the user
+                dr["PercentageRetention"] = 0.0; // To be calculated based on InitialSample and FinalRetention
+
+                //// Initializing other fields with default values, if necessary
+                //dr["InitialSample"] = string.Empty; // To be filled by the user
+                //dr["FinalRetention"] = string.Empty; // To be filled by the user
+                //dr["PercentageRetention"] = string.Empty; // To be calculated based on InitialSample and FinalRetention
+
+                // Add the row to the DataTable
+                dt.Rows.Add(dr);
+            }
+
+            // Bind the DataTable to the GridView
+            GridView_Shieve.DataSource = dt;
+            GridView_Shieve.DataBind();
+        }
+
 
 
 
@@ -118,25 +194,192 @@ namespace AnmolDristi
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            SaveGridViewDataToJson();
+
+            //foreach (GridViewRow row in GridView_MetalCheck.Rows)
+            //{
+            //    // Get controls in each row
+            //    Label lblLineNo = (Label)row.FindControl("lblLineNo"); // Assuming LineNo is a label
+            //    TextBox txtQtyOfMetalFound = (TextBox)row.FindControl("txtQtyOfMetalFound");
+            //    RadioButtonList rblCleanedStatus = (RadioButtonList)row.FindControl("rblCleanedStatus");
+            //    TextBox txtRemarks = (TextBox)row.FindControl("txtRemarks");
+
+            //    if (lblLineNo != null && txtQtyOfMetalFound != null && rblCleanedStatus != null)
+            //    {
+            //        string lineNo = lblLineNo.Text;
+            //        decimal qtyOfMetalFound = decimal.Parse(txtQtyOfMetalFound.Text);
+            //        string cleanedStatus = rblCleanedStatus.SelectedValue;
+            //        string remarks = cleanedStatus == "Not Ok" ? txtRemarks.Text : null;
+
+            //        int sl = row.RowIndex + 1;  // Serial number (Sl)
+            //        int mCheckId = GetMCheckIdBySerialNumber(sl); // Retrieve the M_CheckId based on the Sl
+
+            //        UpdateMetalCheckRecord(mCheckId, lineNo, qtyOfMetalFound, cleanedStatus, remarks);
+            //    }
+            //}
+        }
+
+        protected void SaveGridViewDataToJson()
+        {
+            // List to hold the row data
+            var gridViewData = new List<Dictionary<string, object>>();
+
+            // Loop through the rows of the GridView
             foreach (GridViewRow row in GridView_MetalCheck.Rows)
             {
-                // Get controls in each row
-                Label lblLineNo = (Label)row.FindControl("lblLineNo"); // Assuming LineNo is a label
-                TextBox txtQtyOfMetalFound = (TextBox)row.FindControl("txtQtyOfMetalFound");
-                RadioButtonList rblCleanedStatus = (RadioButtonList)row.FindControl("rblCleanedStatus");
-                TextBox txtRemarks = (TextBox)row.FindControl("txtRemarks");
+                var rowData = new Dictionary<string, object>();
 
-                if (lblLineNo != null && txtQtyOfMetalFound != null && rblCleanedStatus != null)
+                // Extract data from each control in the row
+                rowData["Sl"] = (row.RowIndex + 1).ToString();
+                rowData["L"] = ((Label)row.FindControl("lbl_Location")).Text;
+                rowData["QMF"] = ((TextBox)row.FindControl("TB_QtyMetalFound")).Text;
+                rowData["CS"] = ((RadioButtonList)row.FindControl("RBL_CleanedStatus")).SelectedValue;
+                rowData["CSR"] = ((TextBox)row.FindControl("TXB_CleanedStatusRemarks")).Text;
+
+                // Add the row data to the list
+                gridViewData.Add(rowData);
+            }
+
+            // Serialize the list to JSON
+            string jsonData = JsonConvert.SerializeObject(gridViewData);
+
+            // Save the JSON data to your database
+            SaveToDatabase(jsonData);
+        }
+
+        private void SaveToDatabase(string jsonData)
+        {
+            try
+            {
+                if (CcpId != "" && CcpId!= string.Empty)
                 {
-                    string lineNo = lblLineNo.Text;
-                    decimal qtyOfMetalFound = decimal.Parse(txtQtyOfMetalFound.Text);
-                    string cleanedStatus = rblCleanedStatus.SelectedValue;
-                    string remarks = cleanedStatus == "Not Ok" ? txtRemarks.Text : null;
+                    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                    string insertQuery = "UPDATE TRN_CCP_Checklist set MetalCheck=@MetalCheck, T2_Status=@T2_Status  where CcpId=@CcpId ";
 
-                    int sl = row.RowIndex + 1;  // Serial number (Sl)
-                    int mCheckId = GetMCheckIdBySerialNumber(sl); // Retrieve the M_CheckId based on the Sl
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@MetalCheck", jsonData);
+                        command.Parameters.AddWithValue("@T2_Status", 1);
+                        command.Parameters.AddWithValue("@CcpId", CcpId);
+                        connection.Open();
+                        command.ExecuteNonQuery();
 
-                    UpdateMetalCheckRecord(mCheckId, lineNo, qtyOfMetalFound, cleanedStatus, remarks);
+                        BindJsonDataToGridView(jsonData);
+                    }
+                }
+                else
+                {
+                    string errorMessage = "No Basic Data Found";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
+
+                    lbl_MagnetCheck.Text = errorMessage;
+                    string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
+                    ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, true);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                lbl_MagnetCheck.Text = errorMessage;
+                string JSONInserterrorScript = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{errorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "}});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "JSONInsertErrorNotification", JSONInserterrorScript, false);
+            }
+        }
+
+        protected void BindJsonDataToGridView(string jsonData)
+        {
+            try
+            {
+                // Deserialize the JSON data into a list of dictionaries
+                var dataList = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(jsonData);
+
+                if (dataList == null || !dataList.Any())
+                {
+                    // Log or handle the case when the deserialized data is null or empty
+                    Console.WriteLine("No data found in JSON.");
+                    return;
+                }
+
+                // Create a DataTable with the necessary columns
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Location", typeof(string));
+                dt.Columns.Add("Qty of Metal Found (gm)", typeof(string));
+                dt.Columns.Add("Cleaned Status", typeof(string));
+                dt.Columns.Add("Remarks for Not Ok", typeof(string));
+
+                // Populate DataTable from deserialized JSON data
+                foreach (var rowData in dataList)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["Location"] = rowData.ContainsKey("L") ? rowData["L"]?.ToString() : string.Empty;
+                    dr["Qty of Metal Found (gm)"] = rowData.ContainsKey("QMF") ? rowData["QMF"]?.ToString() : string.Empty;
+                    dr["Cleaned Status"] = rowData.ContainsKey("CS") ? rowData["CS"]?.ToString() : string.Empty;
+                    dr["Remarks for Not Ok"] = rowData.ContainsKey("CSR") ? rowData["CSR"]?.ToString() : string.Empty;
+
+                    dt.Rows.Add(dr);
+                }
+
+                // Check if DataTable has rows before binding
+                if (dt.Rows.Count > 0)
+                {
+                    GridView1.DataSource = dt;
+                    GridView1.DataBind();
+
+                    GridView_MetalCheck.Visible = false;
+                    btnSubmit.Enabled = false;
+                    btnSubmit.Text = "SAVED";
+                    lbl_MagnetCheck.Text = "Data Saved Successfully";
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('Standard_Sieve-tab').click();", true);
+                }
+                else
+                {
+                    lbl_MagnetCheck.Text = "DataTable is empty";
+                }
+            }
+            catch (Exception ex)
+            {
+                lbl_MagnetCheck.Text = $"Error binding data to GridView: { ex.Message}";
+                // Log or handle exceptions
+                //Console.WriteLine($"Error binding data to GridView: {ex.Message}");
+            }
+        }
+
+        protected void GridView1_MetalCheck_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Access controls
+                Label lblLocation = (Label)e.Row.FindControl("lbl_Location");
+                TextBox tbQtyMetalFound = (TextBox)e.Row.FindControl("TB_QtyMetalFound");
+                RadioButtonList rblCleanedStatus = (RadioButtonList)e.Row.FindControl("RBL_CleanedStatus");
+                TextBox txbCleanedStatusRemarks = (TextBox)e.Row.FindControl("TXB_CleanedStatusRemarks");
+
+                // Customize row based on data
+                DataRowView rowView = (DataRowView)e.Row.DataItem;
+
+                // Example customization: Set TextBox value
+                tbQtyMetalFound.Text = rowView["Qty of Metal Found (gm)"].ToString();
+                rblCleanedStatus.SelectedValue = rowView["Cleaned Status"].ToString();
+                txbCleanedStatusRemarks.Text = rowView["Remarks for Not Ok"].ToString();
+
+                // Example: Hide remarks TextBox if status is "Ok"
+                if (rblCleanedStatus.SelectedValue == "1")
+                {
+                    txbCleanedStatusRemarks.Visible = false;
+                }
+                else
+                {
+                    txbCleanedStatusRemarks.Visible = true;
                 }
             }
         }
@@ -162,12 +405,12 @@ namespace AnmolDristi
                 conn.Open();
 
                 string query = @"
-            UPDATE Metal_Check_Table
-            SET LineNo = @LineNo, 
-                QtyOfMetalFound = @QtyOfMetalFound, 
-                CleanedStatus = @CleanedStatus, 
-                RemarksForCleanedStatus = @Remarks
-            WHERE M_CheckId = @MCheckId";
+                    UPDATE Metal_Check_Table
+                    SET LineNo = @LineNo, 
+                        QtyOfMetalFound = @QtyOfMetalFound, 
+                        CleanedStatus = @CleanedStatus, 
+                        RemarksForCleanedStatus = @Remarks
+                    WHERE M_CheckId = @MCheckId";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -379,6 +622,8 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
+
+                LoadApprovers(selectedPlantValue, selectedPlantLineValue);
             }
             else
             {
@@ -393,6 +638,75 @@ namespace AnmolDristi
                      });
                  </script>";
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_PlantLine_Error_script, false);
+            }
+        }
+
+        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
+                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@FormID", 5);
+                    cmd.Parameters.AddWithValue("@FormName", "ccp_checklist");
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        hdn_formid.Value = "5";
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        GridViewApprovers.DataSource = dt;
+                        GridViewApprovers.DataBind();
+
+                        if (dt.Rows.Count > 0)
+                        {
+                            DataRow row = dt.Rows[0];
+
+                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
+
+                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
+
+                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
+                        }
+                        else
+                        {
+                            // Set default values to ADMIN if no rows are found
+                            Approver1NameLabel.Text = "ADMIN";
+                            Approver1CodeLabel.Text = "ADMIN";
+
+                            Approver2NameLabel.Text = "ADMIN";
+                            Approver2CodeLabel.Text = "ADMIN";
+
+                            DottedLineApproverNameLabel.Text = "ADMIN";
+                            DottedLineApproverCodeLabel.Text = "ADMIN";
+
+                            string PlantBinder_Error_script = @"<script type='text/javascript'>
+                                new PNotify({
+                                    title: 'Error',
+                                    text: 'No Approver Mapping Found!',
+                                    type: 'error',
+                                    styling: 'bootstrap3'
+                                });
+                            </script>";
+
+                            // RegisterStartupScript adds the JavaScript code to the page
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
+                        }
+                    }
+                }
             }
         }
 
@@ -564,22 +878,22 @@ namespace AnmolDristi
             string valueField = "SKUId";
 
             bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedProductBrandValue), out recordsBound);
+            //DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedProductBrandValue), out recordsBound);
 
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
+            //if (!recordsBound)
+            //{
+            //    DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
 
-                string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
-                     new PNotify({
-                         title: 'Error',
-                         text: 'An error occurred!',
-                         type: 'error',
-                         styling: 'bootstrap3'
-                     });
-                 </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
-            }
+            //    string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
+            //         new PNotify({
+            //             title: 'Error',
+            //             text: 'An error occurred!',
+            //             type: 'error',
+            //             styling: 'bootstrap3'
+            //         });
+            //     </script>";
+            //    ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
+            //}
         }
 
         public class ValidationCriteria
@@ -609,7 +923,7 @@ namespace AnmolDristi
 
         protected void RBL_FF_Status_SelectedIndexChanged(object sender, EventArgs e)
         {
-           // TB_FF_Remarks.Visible = RBL_FF_Status.SelectedValue == "Sensing";
+            // TB_FF_Remarks.Visible = RBL_FF_Status.SelectedValue == "Sensing";
         }
 
         protected void RBL_NFE_Status_SelectedIndexChanged(object sender, EventArgs e)
@@ -621,106 +935,157 @@ namespace AnmolDristi
         {
             //TB_SS_Remarks.Visible = RBL_SS_Status.SelectedValue == "Sensing";
         }
-        
 
-        
+        private string Find_DBCode()
+        {
+            string aa = null;
+            dbcl.Sqlconnection();
+            dbcl.ConnectDb();
+            string kk = null;
+            string cmdString1 = "select Id,CcpId from TRN_CCP_Checklist where Id=(select max(Id)from TRN_CCP_Checklist)";
+            SqlCommand com1 = new SqlCommand(cmdString1, dbcl.Conn);
+            SqlDataReader DR1 = com1.ExecuteReader();
+            if (DR1.Read())
+            {
+                aa = DR1.GetValue(1).ToString();
+                string bb = aa.Substring(5);
+                int k = Convert.ToInt32(bb);
+                k = k + 1;
+                string q = Convert.ToString(k);
+                kk = "CCP00" + q;
+            }
+            else
+            {
+                kk = "CCP001";
+            }
+            dbcl.DisconnectDb();
+            CcpId = kk;
+            return kk;
+        }
+
         protected void btnBDSave_Click(object sender, EventArgs e)
+        {
+            BasicData_Insert();
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('Metal_Check-tab').click();", true);
+        }
+
+        private void BasicData_Insert()
         {
             // Retrieve values from controls
             string plantName = DDL_Plant.SelectedValue;
-            string line = DDL_PlantLine.SelectedValue;
+            string plantLine = DDL_PlantLine.SelectedValue;
             string productCategory = DDL_ProductCategory.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue; // Assuming DDL_ProductBrand is a DropDownList
-            string brandSKU = DDL_BrandSKU.SelectedValue;
-            string shift = GetCurrentShift();  // Automatically get the current shift
+            //string brandSKU = DDL_BrandSKU.SelectedValue;
+            string brandSKU = string.Empty;
+            string shift = hdn_shiftvalue.Value.ToString();
+            int formID = Convert.ToInt32(hdn_formid.Value.ToString());
 
-            
 
             // Generate a new CcpId
-            string ccpId = GenerateUniqueCcpId();
+            string ccpId = Find_DBCode();
+            string approver1EmployeeCode = Approver1CodeLabel.Text.ToString();
+            string approver2EmployeeCode = Approver2CodeLabel.Text.ToString();
+            string dottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text.ToString();
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
+            // Insert query for TRN_CCP_Checklist table
             string insertQuery = @"
-        INSERT INTO Basic_Data_Ccp (
-            PlantId, [Line], ProductCategory, ProductBrand, SKUID, CcpId, [Date], [Shift], [Time], 
-            [CreatedBy], [LEVEL1_APPROVER_ID], [LEVEL1_APPROVER_NAME], [LEVEL1_APPROVER_STATUS], [LEVEL1_APPROVER_TIMESTAMP], 
-            [LEVEL2_APPROVER_ID], [LEVEL2_APPROVER_NAME], [LEVEL2_APPROVER_STATUS], [LEVEL2_APPROVER_TIMESTAMP], 
-            [LEVEL3_APPROVER_ID], [LEVEL3_APPROVER_NAME], [LEVEL3_APPROVER_STATUS], [LEVEL3_APPROVER_TIMESTAMP]
-        ) VALUES (
-            @PlantId, @Line, @ProductCategory, @ProductBrand, @SKUID, @CcpId, @Date, @Shift, @Time, 
-            @CreatedBy, @LEVEL1_APPROVER_ID, @LEVEL1_APPROVER_NAME, @LEVEL1_APPROVER_STATUS, @LEVEL1_APPROVER_TIMESTAMP, 
-            @LEVEL2_APPROVER_ID, @LEVEL2_APPROVER_NAME, @LEVEL2_APPROVER_STATUS, @LEVEL2_APPROVER_TIMESTAMP, 
-            @LEVEL3_APPROVER_ID, @LEVEL3_APPROVER_NAME, @LEVEL3_APPROVER_STATUS, @LEVEL3_APPROVER_TIMESTAMP
-        );";
+                INSERT INTO [dbo].[TRN_CCP_Checklist] 
+                (CcpId, FormID, PlantId, Line, ProductCategory, ProductBrand, SKUID, SubmittedById, SubmittedByEmployeeCode, 
+                SubmittedDate, SubmittedTime, Shift, ViewMode, DeleteMode, Approver1EmployeeCode, Approver1_Status, 
+                Approver1_TimeStamp, Approver2EmployeeCode, Approver2_Status, Approver2_TimeStamp, 
+                DottedLineApproverEmployeeCode, DottedApprover_Status, DottedApprover_TimeStamp,T1_Status) 
+                VALUES 
+                (@CcpId, @FormID, @PlantId, @Line, @ProductCategory, @ProductBrand, @SKUID, @SubmittedById, @SubmittedByEmployeeCode, 
+                @SubmittedDate, @SubmittedTime, @Shift, @ViewMode, @DeleteMode, @Approver1EmployeeCode, @Approver1_Status, 
+                @Approver1_TimeStamp, @Approver2EmployeeCode, @Approver2_Status, @Approver2_TimeStamp, 
+                @DottedLineApproverEmployeeCode, @DottedApprover_Status, @DottedApprover_TimeStamp, @T1_Status)";
 
-            try
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                // Create a SqlCommand object
+                using (SqlCommand command = new SqlCommand(insertQuery, connection))
                 {
-                    using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
+                    // Add parameters to the command
+                    command.Parameters.AddWithValue("@CcpId", ccpId); // Example: "CCP12345"
+                    command.Parameters.AddWithValue("@FormID", formID);
+                    command.Parameters.AddWithValue("@PlantId", plantName); // Example: "PLANT001"
+                    command.Parameters.AddWithValue("@Line", plantLine); // Example: "Line1"
+                    command.Parameters.AddWithValue("@ProductCategory", productCategory); // Example: "Electronics"
+                    command.Parameters.AddWithValue("@ProductBrand", productBrand); // Example: "BrandX"
+                    command.Parameters.AddWithValue("@SKUID", brandSKU); // Example: "SKU001"
+                    command.Parameters.AddWithValue("@SubmittedById", Convert.ToInt32(Session["USERID"].ToString())); // Example: 1
+                    command.Parameters.AddWithValue("@SubmittedByEmployeeCode", Session["WORKMAN"].ToString()); // Example: "EMP123"
+                    command.Parameters.AddWithValue("@SubmittedDate", DateTime.Now.Date); // Current date
+                    command.Parameters.AddWithValue("@SubmittedTime", DateTime.Now.TimeOfDay); // Current time
+                    command.Parameters.AddWithValue("@Shift", shift); // Example: "ShiftA"
+                    command.Parameters.AddWithValue("@ViewMode", 1); // Default value 1
+                    command.Parameters.AddWithValue("@DeleteMode", 0); // Default value 0
+                    command.Parameters.AddWithValue("@Approver1EmployeeCode", approver1EmployeeCode); // NULL value
+                    command.Parameters.AddWithValue("@Approver1_Status", 0); // Default value 0
+                    command.Parameters.AddWithValue("@Approver1_TimeStamp", DBNull.Value); // NULL value
+                    command.Parameters.AddWithValue("@Approver2EmployeeCode", approver2EmployeeCode); // NULL value
+                    command.Parameters.AddWithValue("@Approver2_Status", 0); // Default value 0
+                    command.Parameters.AddWithValue("@Approver2_TimeStamp", DBNull.Value); // NULL value
+                    command.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", dottedLineApproverEmployeeCode); // NULL value
+                    command.Parameters.AddWithValue("@DottedApprover_Status", 0); // Default value 0
+                    command.Parameters.AddWithValue("@DottedApprover_TimeStamp", DBNull.Value); // NULL value
+                    command.Parameters.AddWithValue("@T1_Status", 1); // NULL value
+
+                    try
                     {
-                        // Set parameters for the SQL command
-                        insertCommand.Parameters.AddWithValue("@PlantId", plantName);
-                        insertCommand.Parameters.AddWithValue("@Line", line);
-                        insertCommand.Parameters.AddWithValue("@ProductCategory", productCategory);
-                        insertCommand.Parameters.AddWithValue("@ProductBrand", productBrand);
-                        insertCommand.Parameters.AddWithValue("@SKUID", brandSKU);
-                        insertCommand.Parameters.AddWithValue("@CcpId", ccpId);
-                        insertCommand.Parameters.AddWithValue("@Date", DateTime.Now.Date);
-                        insertCommand.Parameters.AddWithValue("@Shift", shift );  
-                        insertCommand.Parameters.AddWithValue("@Time", DateTime.Now.TimeOfDay);
-                        insertCommand.Parameters.AddWithValue("@CreatedBy", Session["USERID"]?.ToString() ?? "Unknown");
-
-                        // Approver fields
-                        insertCommand.Parameters.AddWithValue("@LEVEL1_APPROVER_ID", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL1_APPROVER_NAME", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL1_APPROVER_STATUS", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL1_APPROVER_TIMESTAMP", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL2_APPROVER_ID", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL2_APPROVER_NAME", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL2_APPROVER_STATUS", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL2_APPROVER_TIMESTAMP", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL3_APPROVER_ID", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL3_APPROVER_NAME", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL3_APPROVER_STATUS", DBNull.Value);
-                        insertCommand.Parameters.AddWithValue("@LEVEL3_APPROVER_TIMESTAMP", DBNull.Value);
-
-                        // Open the connection and execute the command
+                        // Open the connection
                         connection.Open();
-                        insertCommand.ExecuteNonQuery();
 
-                        lblMessage.Text = "Data saved successfully!";
-                        lblMessage.ForeColor = System.Drawing.Color.Green;
+                        // Execute the insert command
+                        int rowsAffected = command.ExecuteNonQuery();
 
+                        DDL_Plant.Enabled = false;
+                        DDL_PlantLine.Enabled = false;
+                        DDL_ProductCategory.Enabled = false;
+                        DDL_ProductBrand.Enabled = false;
+                        //DDL_BrandSKU.Enabled = false;
 
-                        // Redirect to the Metal_Check section
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('Metal_Check-tab').click();", true);
+                        btnBDSave.Enabled = false;
+                        btnBDSave.Text = "SAVED";
 
-                        // Make the inputs read-only
-                        MakeInputsReadOnly();
+                        lblMessage.Text = "Data inserted successfully!";
+
+                        string Data_SuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Data Success',
+                                text: 'Recorded Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                        // RegisterStartupScript adds the JavaScript code to the page
+                        ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+                    }
+                    catch (Exception ex)
+                    {
+                        string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                        string BasicdataerrorScript = "<script type='text/javascript'>\n" +
+                                             $"new PNotify({{\n" +
+                                             "    title: 'Error',\n" +
+                                             $"    text: '{errorMessage}',\n" +
+                                             "    type: 'error',\n" +
+                                             "    styling: 'bootstrap3'\n" +
+                                             "}});\n" +
+                                             "</script>";
+                        ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", BasicdataerrorScript, false);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
-                string errorScript = "<script type='text/javascript'>\n" +
-                                     $"new PNotify({{\n" +
-                                     "    title: 'Error',\n" +
-                                     $"    text: '{errorMessage}',\n" +
-                                     "    type: 'error',\n" +
-                                     "    styling: 'bootstrap3'\n" +
-                                     "}});\n" +
-                                     "</script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
-            }
-
         }
 
         private string GenerateUniqueCcpId()
         {
-            string newCcpId;
+            string newCcpId = String.Empty;
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             try
@@ -729,7 +1094,7 @@ namespace AnmolDristi
                 {
                     connection.Open();
                     // Fetch the maximum CcpId value
-                    string query = "SELECT ISNULL(MAX(CAST(CcpId AS INT)), 0) FROM Basic_Data_Ccp";
+                    string query = "SELECT ISNULL(MAX(CAST(CcpId AS INT)), 0) FROM TRN_CCP_Checklist";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         object result = command.ExecuteScalar();
@@ -745,9 +1110,16 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
-                // Handle exceptions
-                Console.WriteLine("Error generating CcpId: " + ex.Message);
-                throw;
+                string CCID_errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                string CCID_errorScript = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{CCID_errorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "}});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "CCID_ShowErrorNotification", CCID_errorScript, false);
             }
 
             return newCcpId;
@@ -760,7 +1132,7 @@ namespace AnmolDristi
             DDL_PlantLine.Enabled = false;
             DDL_ProductCategory.Enabled = false;
             DDL_ProductBrand.Enabled = false;
-           
+
 
             btnBDSave.Enabled = false;
             btnBDSave.Text = "SAVED";
@@ -784,6 +1156,251 @@ namespace AnmolDristi
             Response.Redirect("ccp_checklist.aspx");
         }
 
-        
+        protected void btn_svSieve_Click(object sender, EventArgs e)
+        {
+            SaveSieveGridViewDataToJson();
+        }
+
+        protected void SaveSieveGridViewDataToJson()
+        {
+            // List to hold the row data
+            var gridViewData = new List<Dictionary<string, object>>();
+
+            // Loop through the rows of the GridView
+            foreach (GridViewRow row in GridView_Shieve.Rows)
+            {
+                // Only process data rows (skip header row)
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    //var rowData = new Dictionary<string, object>();
+
+                    //// Extract data from each control in the row
+                    //rowData["Sl"] = (row.RowIndex + 1).ToString();
+                    //rowData["SN"] = ((Label)row.FindControl("lbl_SieveNo")).Text; // Assuming you have a Label for Sieve No
+                    //rowData["ISV"] = ((TextBox)row.FindControl("TB_InitialSample")).Text;
+                    //rowData["FRV"] = ((TextBox)row.FindControl("TB_FinalRetention")).Text;
+                    //rowData["PER"] = ((Label)row.FindControl("lbl_PercentageRetention")).Text;
+
+                    //// Add the row data to the list
+                    //gridViewData.Add(rowData);
+
+
+                    var rowData = new Dictionary<string, object>();
+
+                    // Extract data from each control in the row
+                    rowData["Sl"] = (row.RowIndex + 1).ToString();
+                    rowData["SN"] = ((Label)row.FindControl("lbl_SieveNo")).Text;  // Sieve No
+                    string initialSampleStr = ((TextBox)row.FindControl("TB_InitialSample")).Text;
+                    string finalRetentionStr = ((TextBox)row.FindControl("TB_FinalRetention")).Text;
+
+                    // Declare the variables before using them with TryParse
+                    double initialSample;
+                    double finalRetention;
+
+                    // Parse the values to numbers
+                    bool isInitialSampleParsed = double.TryParse(initialSampleStr, out initialSample);
+                    bool isFinalRetentionParsed = double.TryParse(finalRetentionStr, out finalRetention);
+
+                    // If parsing fails, the value will default to 0
+                    rowData["ISV"] = isInitialSampleParsed ? initialSample.ToString() : "0";
+                    rowData["FRV"] = isFinalRetentionParsed ? finalRetention.ToString() : "0";
+
+                    // Calculate the percentage if ISV is not 0
+                    double percentage = initialSample != 0 ? (initialSample / finalRetention) * 100 : 0;
+                    rowData["PER"] = percentage.ToString("0.##");  // Format to two decimal places
+
+                    // Add the row data to the list
+                    gridViewData.Add(rowData);
+                }
+            }
+
+            // Serialize the list to JSON
+            string jsonData = JsonConvert.SerializeObject(gridViewData);
+
+            // Save the JSON data to your database
+            SaveSieveToDatabase(jsonData);
+        }
+
+        protected void BindSieveJsonDataToGridView(string jsonData)
+        {
+            try
+            {
+                // Step 2: Deserialize the JSON data into a list of dictionaries
+                var dataList = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(jsonData);
+
+                if (dataList == null || !dataList.Any())
+                {
+                    lbl_sivecheckmsg.Text = "No data found in JSON.";
+                    return;
+                }
+
+                // Step 3: Create a DataTable with column names matching the GridView bindings
+                DataTable dt = new DataTable();
+                dt.Columns.Add("SieveNo", typeof(string));           // Column name should be "SieveNo"
+                dt.Columns.Add("InitialSample", typeof(string));     // Column name should be "InitialSample"
+                dt.Columns.Add("FinalRetention", typeof(string));    // Column name should be "FinalRetention"
+                dt.Columns.Add("PercentageRetention", typeof(string)); // Column name should be "PercentageRetention"
+
+                // Step 4: Populate DataTable from deserialized JSON data
+                foreach (var rowData in dataList)
+                {
+                    //DataRow dr = dt.NewRow();
+                    //dr["SieveNo"] = rowData.ContainsKey("SN") ? rowData["SN"]?.ToString() : string.Empty;
+                    //dr["InitialSample"] = rowData.ContainsKey("ISV") ? rowData["ISV"]?.ToString() : string.Empty;
+                    //dr["FinalRetention"] = rowData.ContainsKey("FRV") ? rowData["FRV"]?.ToString() : string.Empty;
+                    //dr["PercentageRetention"] = rowData.ContainsKey("PER") ? rowData["PER"]?.ToString() : string.Empty;
+
+                    //dt.Rows.Add(dr);
+
+                    DataRow dr = dt.NewRow();
+                    dr["SieveNo"] = rowData.ContainsKey("SN") ? rowData["SN"]?.ToString() : string.Empty;
+
+                    // Parse InitialSample and FinalRetention values
+                    double initialSample = rowData.ContainsKey("ISV") ? Convert.ToDouble(rowData["ISV"]) : 0;
+                    double finalRetention = rowData.ContainsKey("FRV") ? Convert.ToDouble(rowData["FRV"]) : 0;
+
+                    dr["InitialSample"] = initialSample.ToString();
+                    dr["FinalRetention"] = finalRetention.ToString();
+
+                    // Calculate PercentageRetention
+                    double percentageRetention = initialSample > 0 ? (initialSample / finalRetention) * 100 : 0;
+                    dr["PercentageRetention"] = percentageRetention.ToString("F2"); // Format to 2 decimal places
+
+                    dt.Rows.Add(dr);
+                }
+
+                // Step 5: Bind DataTable to GridView2 if there is data
+                if (dt.Rows.Count > 0)
+                {
+                    GridView2.Visible = true;
+                    GridView2.DataSource = dt;
+                    GridView2.DataBind();
+
+                    GridView_Shieve.Visible = false;
+                    btn_svSieve.Enabled = false;
+                    btn_svSieve.Text = "SAVED";
+                    lbl_sivecheckmsg.Text = "Data Saved Successfully";
+
+                    // Optionally switch to the next tab after saving
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('Metal_Dctector_Area-tab').click();", true);
+                }
+                else
+                {
+                    lbl_sivecheckmsg.Text = "No data to display.";
+                }
+            }
+            catch (Exception ex)
+            {
+                lbl_sivecheckmsg.Text = $"Error binding data to GridView: { ex.Message}";
+                // Log or handle exceptions
+                //Console.WriteLine($"Error binding data to GridView: {ex.Message}");
+            }
+        }
+
+        private void SaveSieveToDatabase(string jsonData)
+        {
+            try
+            {
+                if (CcpId != "" && CcpId != string.Empty)
+                {
+                    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                    string insertQuery = "UPDATE TRN_CCP_Checklist set SieveCheck=@SieveCheck, T3_Status=@T3_Status where CcpId=@CcpId ";
+
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@SieveCheck", jsonData);
+                        command.Parameters.AddWithValue("@T3_Status", 1);
+                        command.Parameters.AddWithValue("@CcpId", CcpId);
+                        connection.Open();
+                        command.ExecuteNonQuery();
+
+                        BindSieveJsonDataToGridView(jsonData);
+                    }
+                }
+                else
+                {
+                    string SieveerrorMessage = "No Basic Data Found";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
+
+                    lbl_MagnetCheck.Text = SieveerrorMessage;
+                    string SieveerrorScript = $"new PNotify({{ title: 'Error', text: '{SieveerrorMessage}', type: 'error', styling: 'bootstrap3' }});";
+                    ClientScript.RegisterStartupScript(this.GetType(), "ShowSieveErrorNotification", SieveerrorScript, true);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                string SieveJSONerrorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                lbl_MagnetCheck.Text = SieveJSONerrorMessage;
+                string SieveJSONInserterrorScript = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{SieveJSONerrorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "}});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "SieveJSONInsertErrorNotification", SieveJSONInserterrorScript, false);
+            }
+        }
+
+        protected void btn_finalsbmt_Click(object sender, EventArgs e)
+        {
+            if (CcpId != "" && CcpId != string.Empty)
+            {
+                if (btnSubmit.Text == "SAVED" && btn_svSieve.Text == "SAVED")
+                {
+                    int FF_Status = Convert.ToInt32(RBL_FF_Status.SelectedValue);
+                    string FF_Remarks = TB_FF_Remarks.Text.ToString();
+                    int NFE_Status = Convert.ToInt32(RBL_NFE_Status.SelectedValue);
+                    string NFE_Remarks = TB_NFE_Remarks.Text.ToString();
+                    int SS_Status = Convert.ToInt32(RBL_SS_Status.SelectedValue);
+                    string SS_Remarks = TB_SS_Remarks.Text.ToString();
+                    string MD_Remarks = TB_MDRemarks.Text.ToString();
+
+                    try
+                    {
+                        string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                        string insertQuery = "UPDATE TRN_CCP_Checklist set FF_Status=@FF_Status, FF_Remarks=@FF_Remarks, NFE_Status=@NFE_Status, NFE_Remarks=@NFE_Remarks, SS_Status=@SS_Status, SS_Remarks=@SS_Remarks, MD_Remarks=@MD_Remarks, T4_Status=@T4_Status, Final_Status=@Final_Status where CcpId=@CcpId ";
+
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                        {
+                            command.Parameters.AddWithValue("@FF_Status", FF_Status);
+                            command.Parameters.AddWithValue("@FF_Remarks", FF_Remarks);
+                            command.Parameters.AddWithValue("@NFE_Status", NFE_Status);
+                            command.Parameters.AddWithValue("@NFE_Remarks", NFE_Remarks);
+                            command.Parameters.AddWithValue("@SS_Status", SS_Status);
+                            command.Parameters.AddWithValue("@SS_Remarks", SS_Remarks);
+                            command.Parameters.AddWithValue("@MD_Remarks", MD_Remarks);
+                            command.Parameters.AddWithValue("@T4_Status", 1);
+                            command.Parameters.AddWithValue("@Final_Status", 1);
+                            command.Parameters.AddWithValue("@CcpId", CcpId);
+                            connection.Open();
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
+                }
+                else
+                {
+                    lbl_mtldetmsg.Text = "Sieve Check / Metal Detector Pending";
+                }
+            }
+            else
+            {
+                string MagnetD_errorMessage = "No Basic Data Found";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
+
+                lbl_mtldetmsg.Text = MagnetD_errorMessage;
+                string MagnetD_errorScript = $"new PNotify({{ title: 'Error', text: '{MagnetD_errorMessage}', type: 'error', styling: 'bootstrap3' }});";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowMDErrorNotification", MagnetD_errorScript, true);
+            }
+        }
     }
-}  
+}
