@@ -101,8 +101,9 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
-                    
-                    // Handle exceptions (log or display error message)
+                    string errorMessage = ex.Message;
+                    string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
+                    ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, true);
                 }
                 finally
                 {
@@ -154,8 +155,11 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
-                    transaction.Rollback(); // Rollback transaction if there is an error
-                                            // Handle exception (log or display error message)
+                    transaction.Rollback();
+
+                    string errorMessage = ex.Message;
+                    string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
+                    ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, true);
                 }
                 finally
                 {
@@ -212,6 +216,8 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    string errorMessage = ex.Message;
+                    string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                     // Handle exceptions (log or display error message)
                 }
                 finally
@@ -264,6 +270,8 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    string errorMessage = ex.Message;
+                    string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                     // Handle exceptions (log or display error message)
                 }
                 finally
@@ -294,6 +302,8 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    string errorMessage = ex.Message;
+                    string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                     // Handle exceptions (log or display error message)
                 }
                 finally

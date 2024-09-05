@@ -512,6 +512,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                string errorMessage = ex.Message;
+                string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, true);
                 // Handle the exception (log it, display an error message, etc.)
                 //lblMessage.Text = "Error: " + ex.Message;
             }

@@ -1004,6 +1004,9 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
+                string errorMessage = ex.Message;
+                string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, true);
                 // Log the exception or display an error message
             }
 

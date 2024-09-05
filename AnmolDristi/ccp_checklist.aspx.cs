@@ -873,11 +873,11 @@ namespace AnmolDristi
 
         private void BrandSKUBinder(string selectedProductBrandValue)
         {
-            string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue";
-            string textField = "SKU_name";
-            string valueField = "SKUId";
+            //string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue";
+            //string textField = "SKU_name";
+            //string valueField = "SKUId";
 
-            bool recordsBound;
+            //bool recordsBound;
             //DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedProductBrandValue), out recordsBound);
 
             //if (!recordsBound)
@@ -1383,7 +1383,8 @@ namespace AnmolDristi
                     }
                     catch (Exception ex)
                     {
-
+                        string errorMessage = ex.Message;
+                        string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                         throw;
                     }
                 }

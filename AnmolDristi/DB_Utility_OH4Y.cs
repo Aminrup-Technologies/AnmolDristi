@@ -1632,7 +1632,7 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
-
+                string errorMessage = ex.Message;
             }
         }
 
@@ -1658,7 +1658,7 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
-
+                string errorMessage = ex.Message;
             }
         }
 
