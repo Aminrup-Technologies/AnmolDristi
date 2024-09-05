@@ -121,6 +121,7 @@
     <Content Include="apps.aspx" />
     <Content Include="app_qc_inspectorreport.aspx" />
     <Content Include="ccp_checklist.aspx" />
+    <Content Include="critical_quality_report.aspx" />
     <Content Include="datamastering_home.aspx" />
     <Content Include="home.aspx" />
     <Content Include="leak_test.aspx" />
@@ -163,6 +164,7 @@
     <Content Include="WebData\Internal\view.svg" />
     <Content Include="WebData\No_Image.jpg" />
     <Content Include="WebData\qaqc.png" />
+    <Content Include="WebData\sales.png" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -273,6 +275,13 @@
     </Compile>
     <Compile Include="ccp_checklist.aspx.designer.cs">
       <DependentUpon>ccp_checklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="critical_quality_report.aspx.cs">
+      <DependentUpon>critical_quality_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="critical_quality_report.aspx.designer.cs">
+      <DependentUpon>critical_quality_report.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\QCInspectorDataAccess.cs" />
     <Compile Include="DAL\Shift.cs" />

@@ -12,6 +12,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using AnmolDristi.DAL;
 using Newtonsoft.Json;
+using static AnmolDristi.DAL.QAProcessCheckingDataAcess;
 
 namespace AnmolDristi
 {
@@ -20,7 +21,7 @@ namespace AnmolDristi
         public static string ImgLink1 = string.Empty;
         public static string ImgLink2 = string.Empty;
         public static string PcrNo = string.Empty;
-    
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -38,7 +39,7 @@ namespace AnmolDristi
 
                     BindGridView();
                     DisplayCurrentShift();
-
+                    BindGridView1();
                 }
 
             }
@@ -147,6 +148,7 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
+                LoadApprovers(selectedPlantValue, selectedPlantLineValue);
             }
             else
             {
@@ -164,6 +166,69 @@ namespace AnmolDristi
             }
 
         }
+
+        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
+        {
+            // Replace with your actual connection string
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Set parameters for the stored procedure
+                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue); // Replace with actual value
+                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);  // Replace with actual value
+                    cmd.Parameters.AddWithValue("@FormID", 6); // Replace with actual value
+                    cmd.Parameters.AddWithValue("@FormName", "qaqc_process_rpt"); // Replace with actual value
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        // Bind the data to a GridView or another control
+                        GridViewApprovers.DataSource = dt;
+                        GridViewApprovers.DataBind();
+
+                        // Bind data to Flow Diagram if needed
+                        if (dt.Rows.Count > 0)
+                        {
+                            hdn_formid.Value = "6";
+                            DataRow row = dt.Rows[0];
+
+                            // Set data for flow diagram
+                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString(); // Adjust field name for photo
+
+                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString(); // Adjust field name for photo
+
+                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString(); // Adjust field name for photo
+                        }
+                        else
+                        {
+                            // Set default values to ADMIN if no rows are found
+                            Approver1NameLabel.Text = "ADMIN";
+                            Approver1CodeLabel.Text = "ADMIN";
+
+                            Approver2NameLabel.Text = "ADMIN";
+                            Approver2CodeLabel.Text = "ADMIN";
+
+                            DottedLineApproverNameLabel.Text = "ADMIN";
+                            DottedLineApproverCodeLabel.Text = "ADMIN";
+                        }
+                    }
+                }
+            }
+        }
+
         private void LineProductsBinder(string selectedPlantValue, string selectedPlantLineValue)
         {
             // Construct the SQL query with parameters
@@ -524,14 +589,13 @@ namespace AnmolDristi
         protected void BasicBtnSubmit_Click(object sender, EventArgs e)
         {
             // Retrieve values from controls
-            string pcrNo = GenerateUniquePCR01();  // Generate unique value
+            string pcrNo = GenerateUnique();  // Generate unique value
             string plantName = DDL_Plant.SelectedValue;
             string line = DDL_PlantLine.SelectedValue;
             string productCategory = DDL_ProductCategory.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue;
             string skuId = DDL_BrandSKU.SelectedValue;
             string shift = hdn_shiftvalue.Value.ToString();
-           // string shift = GetCurrentShift();  // auto current shift acc to time
             decimal processWaterTemp = Convert.ToDecimal(TB_ProcessWaterTemp.Text);
             string commentForProcessWater = "";
             decimal waterPh = Convert.ToDecimal(TB_WaterPH.Text);
@@ -594,22 +658,151 @@ namespace AnmolDristi
             string commentForDeepFreeze = "";
 
 
-            QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
-
+            //QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
+            
             try
             {
                 // Call the InsertBasicData method with the retrieved values
-                dataAccess.InsertBasicData(pcrNo, plantName, line, productCategory, productBrand, skuId, DateTime.Now.Date, shift, DateTime.Now.TimeOfDay, processWaterTemp,
-                                            commentForProcessWater, waterPh, commentForWaterPh, waterHardness, commentForWaterHardness, waterTest, tds, commentForTds,
-                                            maidaBrand, maidaBatchNo, maidaMfg, maidaAppColor, commentForMaidaAppColor, maidaFlavorTaste, commentForMaidaFlavorTaste,
-                                            maidaGrittiness, commentsForMaidaGrittiness, bbAppColor, commentForBBColor, bbMouthFeel, commentForBBMouthFeel,
-                                            bbFlavorTaste, commentForBBFlavorTaste, hvoSmell, commentForHvoSmell, hvoTaste, commentForHvoTaste, hvoTemp,
-                                            commentForHvoTemp, smpSmell, commentForSmpSmell, smpTaste, commentForSmpTaste, smpColor, commentForSmpColor,
-                                            syrupTemp, commentForSyrupTemp, syrupColor, commentForSyrupColor, syrupPh, commentForSyrupPh, invertSyrup,
-                                            commentForInvertSyrup, sugarSol, commentForSugarSol, creamerBucket, commentForCreamerBucket, sugarGrinder,
-                                            commentForSugarGrinder, oilSystem, commentForOilSystem, oilSpray, commentForOilSpray, milkSpray,
-                                            commentForMilkSpray, coldRoomTemp, commentForColdRoom, DeepFreezeTemp, commentForDeepFreeze, ImgLink1, ImgLink2);
+                //dataAccess.InsertBasicData(pcrNo, plantName, line, productCategory, productBrand, skuId, DateTime.Now.Date, shift, DateTime.Now.TimeOfDay, processWaterTemp,
+                //                            commentForProcessWater, waterPh, commentForWaterPh, waterHardness, commentForWaterHardness, waterTest, tds, commentForTds,
+                //                            maidaBrand, maidaBatchNo, maidaMfg, maidaAppColor, commentForMaidaAppColor, maidaFlavorTaste, commentForMaidaFlavorTaste,
+                //                            maidaGrittiness, commentsForMaidaGrittiness, bbAppColor, commentForBBColor, bbMouthFeel, commentForBBMouthFeel,
+                //                            bbFlavorTaste, commentForBBFlavorTaste, hvoSmell, commentForHvoSmell, hvoTaste, commentForHvoTaste, hvoTemp,
+                //                            commentForHvoTemp, smpSmell, commentForSmpSmell, smpTaste, commentForSmpTaste, smpColor, commentForSmpColor,
+                //                            syrupTemp, commentForSyrupTemp, syrupColor, commentForSyrupColor, syrupPh, commentForSyrupPh, invertSyrup,
+                //                            commentForInvertSyrup, sugarSol, commentForSugarSol, creamerBucket, commentForCreamerBucket, sugarGrinder,
+                //                            commentForSugarGrinder, oilSystem, commentForOilSystem, oilSpray, commentForOilSpray, milkSpray,
+                //                            commentForMilkSpray, coldRoomTemp, commentForColdRoom, DeepFreezeTemp, commentForDeepFreeze, ImgLink1, ImgLink2);
 
+                ProcessCheckingBasicData data = new ProcessCheckingBasicData
+                {
+                    PcrNo = pcrNo,
+                    FormID = Convert.ToInt32(hdn_formid.Value.ToString()),
+                    SubmittedDate = DateTime.Now.Date,
+                    SubmittedTime = DateTime.Now.TimeOfDay,
+                    Shift = hdn_shiftvalue.Value.ToString(),
+                    SubmittedById = Convert.ToInt32(Session["USERID"].ToString()),
+                    SubmittedByEmployeeCode = Session["WORKMAN"].ToString(),
+                    PlantName = DDL_Plant.SelectedValue,
+                    Line = DDL_PlantLine.SelectedValue,
+                    ProductCategory = DDL_ProductCategory.SelectedValue,
+                    ProductBrand = DDL_ProductBrand.SelectedValue,
+                    SKUId = DDL_BrandSKU.SelectedValue,
+
+                    ProcessWaterTemp = string.IsNullOrWhiteSpace(TB_ProcessWaterTemp.Text) ? (decimal?)null : decimal.Parse(TB_ProcessWaterTemp.Text),
+                    ProcessWaterCmnt = TXB_ProcessWaterTemp_Remarks.Text,
+
+                    WaterPH = string.IsNullOrWhiteSpace(TB_WaterPH.Text) ? (decimal?)null : decimal.Parse(TB_WaterPH.Text),
+                    WaterPhCmnt = TXB_WaterPH_Remarks.Text,
+
+                    WaterHardness = string.IsNullOrWhiteSpace(TB_WaterHardness.Text) ? (decimal?)null : decimal.Parse(TB_WaterHardness.Text),
+                    HardnessCmnt = TXB_WaterHardness_Remarks.Text,
+
+                    WaterTest = TB_WaterTest.Text,
+
+                    TDS = string.IsNullOrWhiteSpace(TB_TDS.Text) ? (decimal?)null : decimal.Parse(TB_TDS.Text),
+                    TdsCmnt = TXB_TDS_Remarks.Text,
+
+                    MaidaBrand = TB_MaidaBrand.Text,
+                    MaidaBatchNo = TB_MaidaBatchNo.Text,
+                    MaidaMfgDate = string.IsNullOrWhiteSpace(TB_MaidaMfg.Text) ? (DateTime?)null : DateTime.Parse(TB_MaidaMfg.Text),
+                    MaidaAppearanceColor = Convert.ToInt32(RBL_MaidaColorApp.SelectedValue),
+                    CommentForMaidaColor = TXB_MaidaColorApp_Remarks.Text,
+
+                    MaidaFlavorAndTaste = Convert.ToInt32(RBL_MaidaFlavorTaste.SelectedValue),
+                    CommentsForMaidaFlavourAndTaste = TXB_MaidaFlavorTaste_Remarks.Text,
+
+                    MaidaGrittiness = Convert.ToInt32(RBL_MaidaGrittiness.SelectedValue),
+                    CommentForGrittiness = TXB_MaidaGrittiness_Remarks.Text,
+
+                    BBAppearanceColor = Convert.ToInt32(RBL_BBColorApp.SelectedValue),
+                    CommentForBBColor = TXB_BBColorApp_Remarks.Text,
+
+                    BBMouthFeel = Convert.ToInt32(RBL_BBMouthFeel.SelectedValue),
+                    CommentForBBMouthFeel = TXB_BBMouthFeel_Remarks.Text,
+
+                    BBFlavorAndTaste = Convert.ToInt32(RBL_BBFlavorTaste.SelectedValue),
+                    CommentForBBFlavorAndTaste = TXB_BBFlavorTaste_Remarks.Text,
+
+                    HvoSmell = Convert.ToInt32(RBL_HvoSmell.SelectedValue),
+                    CommentForHvoSmell = TXB_HvoSmell_Remarks.Text,
+
+                    HvoTaste = Convert.ToInt32(RBL_HvoTaste.SelectedValue),
+                    CommentForHvoTaste = TXB_HvoTemp_Remarks.Text,
+
+                    HvoTemp = string.IsNullOrWhiteSpace(TB_HvoTemp.Text) ? (decimal?)null : decimal.Parse(TB_HvoTemp.Text),
+                    HvoCmnt = TXB_HvoTemp_Remarks.Text,
+
+                    SmpSmell = Convert.ToInt32(RBL_SMPSmell.SelectedValue),
+                    CommentForSmpSmell = TXB_SMPSmell_Remarks.Text,
+
+                    SmpTaste = Convert.ToInt32(RBL_SMPTaste.SelectedValue),
+                    CommentForSmpTaste = TXB_SMPTaste_Remarks.Text,
+
+                    SmpColor = Convert.ToInt32(RBL_SMPColor.SelectedValue),
+                    CommentForSmpColor = TXB_SMPSmell_Remarks.Text,
+
+                    SyrupTemp = string.IsNullOrWhiteSpace(TB_SyrupTemp.Text) ? (decimal?)null : decimal.Parse(TB_SyrupTemp.Text),
+                    SyrupCmnt = TXB_SyrupTemp_Remarks.Text,
+
+                    SyrupColor = Convert.ToInt32(RBL_SyrupColor.SelectedValue),
+                    CommentForSyrupColor = TXB_SyrupColor_Remarks.Text,
+
+                    SyrupPH = string.IsNullOrWhiteSpace(TB_SyrupPH.Text) ? (decimal?)null : decimal.Parse(TB_SyrupPH.Text),
+                    SyrupPhCmnt = TXB_SyrupPH_Remarks.Text,
+
+                    InvertSyrpBucketFilter = Convert.ToInt32(RBL_InvertSyrupBucket.SelectedValue),
+                    CommentForISBF = TXB_InvertSyrupBucket_Remarks.Text,
+
+                    SugarSolBucketFilter = Convert.ToInt32(RBL_SugarSolBucket.SelectedValue),
+                    CommentForSSBF = TXB_SugarSolBucket_Remarks.Text,
+
+                    CreamerBucketFilter = Convert.ToInt32(RBL_CreamerBucketFilter.SelectedValue),
+                    CommentForCBF = TXB_CreamerBucket_Remarks.Text,
+
+                    //SugarGrindedSheet = string.IsNullOrWhiteSpace(txtSugarGrindedSheet.Text) ? (int?)null : int.Parse(txtSugarGrindedSheet.Text),
+                    SugarGrindedSheet = Convert.ToInt32(RBL_SugarGrinder.SelectedValue),
+                    CommentForSGS = TXB_SugarGrinder_Remarks.Text,
+
+                    OilSystemBucketFilter = Convert.ToInt32(RBL_OilSystem.SelectedValue),
+                    CommentForOSBF = TXB_OilSystem_Remarks.Text,
+
+                    OilSpray = Convert.ToInt32(RBL_OilSpray.SelectedValue),
+                    CommentForOilSpray = TXB_OilSpray_Remarks.Text,
+
+                    MilkSpray = Convert.ToInt32(RBL_MilkSpray.SelectedValue),
+                    CommentForMilkSpray = TXB_MilkSpray_Remarks.Text,
+
+                    ColdRoomTemp = string.IsNullOrWhiteSpace(TB_ColdRoomTemp.Text) ? (decimal?)null : decimal.Parse(TB_ColdRoomTemp.Text),
+                    ColdRoomCmnt = TXB_ColdRoomTemp_Remarks.Text,
+
+                    DeepFreezeTemp = string.IsNullOrWhiteSpace(TB_DeepFreezeTemp.Text) ? (decimal?)null : decimal.Parse(TB_DeepFreezeTemp.Text),
+                    DeepFreezeCmnt = TXB_DeepFreezeTemp_Remarks.Text,
+
+                    MaidaImageUrl = ImgLink1,
+                    BBImageUrl = ImgLink2,
+
+                    //WghBalanceCond = Convert.ToInt32(RBL_BalanceCondition.SelectedValue),
+                    //WghtBalanceCmnt = TXB_BalanceCondition_Remarks.Text,
+
+                    //RawBiscuitWgt = TB_RawBiscuitWgt.Text,
+
+                    Approver1EmployeeCode = Approver1CodeLabel.Text.ToString(),
+                    //Approver1_TimeStamp = string.IsNullOrWhiteSpace(txtApprover1_TimeStamp.Text) ? (TimeSpan?)null : TimeSpan.Parse(txtApprover1_TimeStamp.Text),
+
+                    Approver2EmployeeCode = Approver2CodeLabel.Text.ToString(),
+                    //Approver2_TimeStamp = string.IsNullOrWhiteSpace(txtApprover2_TimeStamp.Text) ? (TimeSpan?)null : TimeSpan.Parse(txtApprover2_TimeStamp.Text),
+
+                    DottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text.ToString(),
+                    //DottedApprover_TimeStamp = string.IsNullOrWhiteSpace(txtDottedApprover_TimeStamp.Text) ? (TimeSpan?)null : TimeSpan.Parse(txtDottedApprover_TimeStamp.Text),
+                };
+
+
+                QAProcessCheckingDataAcess dal = new QAProcessCheckingDataAcess();
+                dal.InsertProcessCheckingBasicData(data);
+
+                // Optionally, display a success message or redirect
+                //lblMessage.Text = "Data inserted successfully!";
 
                 //Make the inputs readonly
                 MakeInputsReadOnly();
@@ -699,6 +892,7 @@ namespace AnmolDristi
             BasicBtnSubmit.Enabled = false;
             BasicBtnSubmit.Text = "SAVED";
             BasicBtnSubmit.CssClass = "btn btn-sm btn-success";
+            BasicBtnReset.Enabled = false;
 
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
@@ -827,7 +1021,7 @@ namespace AnmolDristi
 
         protected void SpongeBtnSubmit_Click(object sender, EventArgs e)
         {
-            
+
             // Retrieve values from controls
             decimal roomTemp = Convert.ToDecimal(TB_RoomTemp.Text);
             string commentForRoomTemp = TXB_RoomTemp_Remarks.Text;
@@ -882,11 +1076,12 @@ namespace AnmolDristi
             TXB_Quality_Remarks.ReadOnly = true;
             TB_StandingTime.ReadOnly = true;
             TB_Temp.ReadOnly = true;
-            TXB_Temp_Remarks.ReadOnly=true;
+            TXB_Temp_Remarks.ReadOnly = true;
 
             SpongeBtnSubmit.Enabled = false;
             SpongeBtnSubmit.Text = "SAVED";
             SpongeBtnSubmit.CssClass = "btn btn-sm btn-success";
+            Spongebtn_Reset.Enabled = false;
 
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
@@ -979,6 +1174,7 @@ namespace AnmolDristi
             DoughBtnSubmit.Enabled = false;
             DoughBtnSubmit.Text = "SAVED";
             DoughBtnSubmit.CssClass = "btn btn-sm btn-success";
+            DoughBtnReset.Enabled = false;
 
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
@@ -995,111 +1191,56 @@ namespace AnmolDristi
 
         }
 
-        protected void OvenBtnSubmit_Click(object sender, EventArgs e)
-        {
-            // Retrieve values from controls
-            string position = RBL_Position.SelectedValue;
-            string ovenZone = DDL_Oven.SelectedValue;
-            decimal ovenTop = Convert.ToDecimal(TB_OvenTop.Text);
-            decimal ovenBottom = Convert.ToDecimal(TB_OvenBottom.Text);
-            string damperZone = DDL_Damper.SelectedValue;
-            decimal damperTop = Convert.ToDecimal(TB_DamperTop.Text);
-            decimal damperBottom = Convert.ToDecimal(TB_DamperBottom.Text);
-            
-
-            //QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
-
-            try
-            {
-                //// Call the InsertOvenData method with the retrieved values
-                //dataAccess.InsertOvenData(PcrNo, );
-
-                ////Make the inputs readonly
-                MakeInputsReadOnly4();
-
-            }
-            catch (Exception ex)
-            {
-                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
-                string errorScript = "<script type='text/javascript'>\n" +
-                                     $"new PNotify({{\n" +
-                                     "    title: 'Error',\n" +
-                                     $"    text: '{errorMessage}',\n" +
-                                     "    type: 'error',\n" +
-                                     "    styling: 'bootstrap3'\n" +
-                                     "});\n" +
-                                     "</script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
-            }
-        }
-        protected void OvenBtnReset_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('ovenData-tab');", true);
-            Response.Redirect("qaqc_process_rpt.aspx");
-        }
-        private void MakeInputsReadOnly4()
-        {
-            //OvenData
-            RBL_Position.Enabled = false;
-            DDL_Oven.Enabled = false;
-            TB_OvenTop.ReadOnly = true;
-            TB_OvenBottom.ReadOnly = true;
-            DDL_Damper.Enabled = false;
-            TB_DamperTop.ReadOnly = true;
-            TB_DamperBottom.ReadOnly = true;
-
-            
-            OvenBtnSubmit.Enabled = false;
-            OvenBtnSubmit.Text = "SAVED";
-            OvenBtnSubmit.CssClass = "btn btn-sm btn-success";
-
-            string Data_SuccessScript = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Data Success',
-                                text: 'Recorded Successfully!!',
-                                type: 'success',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-
-            //RegisterStartupScript adds the JavaScript code to the page
-            ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('verificationData-tab').click();", true);
-
-        }
-
-
         protected void FinalBtnSubmit_Click(object sender, EventArgs e)
         {
             // Retrieve values from controls
             int balanceCond = Convert.ToInt32(RBL_BalanceCondition.SelectedValue);
             string commentForBalanceCond = TXB_BalanceCondition_Remarks.Text;
             string rawBiscuitWgt = TB_RawBiscuitWgt.Text;
-            int submittedById = Convert.ToInt32(null);
-            DateTime submittedDate = DateTime.Now.Date;
-            TimeSpan submittedTime = DateTime.Now.TimeOfDay;
-            string submittedByPno = null;
-            string submittedByEmployeeCode = null;
-            string approver1EmployeeCode = null;
-            int approver1_Status = Convert.ToInt32(null);
-            TimeSpan? approver1_TimeStamp = null;
-            string approver2EmployeeCode = null;
-            int approver2_Status = Convert.ToInt32(null);
-            TimeSpan? approver2_TimeStamp = null;
-            string dottedLineApproverEmployeeCode = null;
-            int dottedApprover_Status = Convert.ToInt32(null);
-            TimeSpan? dottedApprover_TimeStamp = null;
+            //int submittedById = Convert.ToInt32(null);
+            //DateTime submittedDate = DateTime.Now.Date;
+            //TimeSpan submittedTime = DateTime.Now.TimeOfDay;
+            //string submittedByPno = null;
+            //string submittedByEmployeeCode = null;
+            //string approver1EmployeeCode = null;
+            //int approver1_Status = Convert.ToInt32(null);
+            //TimeSpan? approver1_TimeStamp = null;
+            //string approver2EmployeeCode = null;
+            //int approver2_Status = Convert.ToInt32(null);
+            //TimeSpan? approver2_TimeStamp = null;
+            //string dottedLineApproverEmployeeCode = null;
+            //int dottedApprover_Status = Convert.ToInt32(null);
+            //TimeSpan? dottedApprover_TimeStamp = null;
 
 
-            QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
+            //QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
 
             try
             {
+                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+
+                    string query = "UPDATE TRN_ProcessChecking_BasicData SET WghBalanceCond=@WghBalanceCond, WghtBalanceCmnt=@WghtBalanceCmnt, RawBiscuitWgt=@RawBiscuitWgt where PcrNo=@PcrNo";
+
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@PcrNo ", PcrNo);
+                        cmd.Parameters.AddWithValue("@WghBalanceCond", balanceCond);
+                        cmd.Parameters.AddWithValue("@WghtBalanceCmnt", commentForBalanceCond);
+                        cmd.Parameters.AddWithValue("@RawBiscuitWgt", rawBiscuitWgt);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+
                 // Call the InsertVerifiedData method with the retrieved values
-                dataAccess.InsertVerifiedData(PcrNo, balanceCond, commentForBalanceCond, rawBiscuitWgt, submittedById, submittedDate,
-                                                submittedTime, submittedByPno, submittedByEmployeeCode, approver1EmployeeCode, approver1_Status,
-                                                approver1_TimeStamp, approver2EmployeeCode, approver2_Status, approver2_TimeStamp,
-                                                    dottedLineApproverEmployeeCode, dottedApprover_Status, dottedApprover_TimeStamp);
+                //dataAccess.InsertVerifiedData(PcrNo, balanceCond, commentForBalanceCond, rawBiscuitWgt, submittedById, submittedDate,
+                //                                submittedTime, submittedByPno, submittedByEmployeeCode, approver1EmployeeCode, approver1_Status,
+                //                                approver1_TimeStamp, approver2EmployeeCode, approver2_Status, approver2_TimeStamp,
+                //                                    dottedLineApproverEmployeeCode, dottedApprover_Status, dottedApprover_TimeStamp);
 
                 //Make the inputs readonly
                 MakeInputsReadOnly5();
@@ -1136,6 +1277,7 @@ namespace AnmolDristi
             FinalBtnSubmit.Enabled = false;
             FinalBtnSubmit.Text = "SAVED";
             FinalBtnSubmit.CssClass = "btn btn-sm btn-success";
+            FinalBtnReset.Enabled = false;
 
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
@@ -1152,7 +1294,7 @@ namespace AnmolDristi
         }
 
 
-        private string GenerateUniquePCR01()
+        private string GenerateUnique()
         {
 
             string newPcrValue;
@@ -1164,7 +1306,7 @@ namespace AnmolDristi
                 {
                     connection.Open();
                     // Fetch the maximum PCR01 value
-                    string query = "SELECT ISNULL(MAX(CAST(SUBSTRING(PCRNO, 4, LEN(PCRNO)) AS INT)), 0) FROM PCR_BasicData";
+                    string query = "SELECT ISNULL(MAX(CAST(SUBSTRING(PcrNo, 4, LEN(PcrNo)) AS INT)), 0) FROM TRN_ProcessChecking_BasicData";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         object result = command.ExecuteScalar();
@@ -1240,7 +1382,7 @@ namespace AnmolDristi
             return int.TryParse(value, out result) ? (int?)result : null;
         }
 
-
+        //--------- Weight section data ---------
         private void BindGridView()             // to show all 22 varieties and standard weight 
         {
             // Sample data for Variety and Standard Weight
@@ -1276,7 +1418,6 @@ namespace AnmolDristi
             GridView1.DataSource = dataSave;
             GridView1.DataBind();
         }
-
         public class VarietyInfo
         {
             public int Sl { get; set; }
@@ -1291,7 +1432,7 @@ namespace AnmolDristi
         [WebMethod]
         public static void SaveData(string jsonData)
         {
-           
+
             // Deserialize JSON data to a list of objects
             var data = JsonConvert.DeserializeObject<List<VarietyInfo>>(jsonData);
 
@@ -1303,13 +1444,12 @@ namespace AnmolDristi
                 {
                     con.Open();
 
-                    string query = "INSERT INTO PC_MaterialWeights ( PcrNo, JsonData) " +
-                                        " VALUES (@PcrNo, @JsonData)";
+                    string query = "UPDATE TRN_ProcessChecking_BasicData SET RM_Weights=@RM_Weights where PcrNo=@PcrNo";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@PcrNo ", PcrNo);
-                        cmd.Parameters.AddWithValue("@JsonData", jsonData);
+                        cmd.Parameters.AddWithValue("@RM_Weights", jsonData);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -1320,12 +1460,12 @@ namespace AnmolDristi
                 throw;
             }
         }
-
         protected void WgtbtnSubmit_Click(object sender, EventArgs e)
         {
             WgtbtnSubmit.Enabled = false;
             WgtbtnSubmit.Text = "SAVED";
             WgtbtnSubmit.CssClass = "btn btn-sm btn-success";
+            WgtbtnReset.Enabled = false;
 
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
@@ -1342,7 +1482,6 @@ namespace AnmolDristi
 
 
         }
-
         protected void WgtbtnReset_Click(object sender, EventArgs e)
         {
 
@@ -1350,16 +1489,100 @@ namespace AnmolDristi
             Response.Redirect("qaqc_process_rpt.aspx");
         }
 
+
+        //------- Oven section data ---------
+        private void BindGridView1()             // to show all  6 zone
+        {
+            // Sample data for Variety and Standard Weight
+            var dataSave1 = new List<ZoneInfo>
+            {
+                // Add all 22 varieties here
+                new ZoneInfo {Sl = 1,   Zone = "Zone 1" },
+                new ZoneInfo {Sl = 2,   Zone = "Zone 2" },
+                new ZoneInfo {Sl = 3,   Zone = "Zone 3" },
+                new ZoneInfo {Sl = 4,   Zone = "Zone 4" },
+                new ZoneInfo {Sl = 5,   Zone = "Zone 5" },
+                new ZoneInfo {Sl = 6,   Zone = "Zone 6" },
+
+            };
+
+            // Bind to GridView
+            GridView2.DataSource = dataSave1;
+            GridView2.DataBind();
+        }
+        public class ZoneInfo
+        {
+            public int Sl { get; set; }
+            public string Zone { get; set; }
+            public decimal OvenTop { get; set; }
+            public decimal OvenBottom { get; set; }
+            public decimal DamperTop { get; set; }
+            public decimal DamperBottom { get; set; }
+        }
+
+
+        [WebMethod]
+        public static void SaveData1(string jsonData )
+        {
+
+            // Deserialize JSON data to a list of objects
+            var data = JsonConvert.DeserializeObject<List<ZoneInfo>>(jsonData);
+
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+
+                    string query = "UPDATE TRN_ProcessChecking_BasicData SET Oven_Temperatures=@Oven_Temperatures where PcrNo=@PcrNo";
+
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@PcrNo ", PcrNo);
+                        cmd.Parameters.AddWithValue("@Oven_Temperatures", jsonData);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        protected void OvenBtnSubmit_Click(object sender, EventArgs e)
+        {
+            OvenBtnSubmit.Enabled = false;
+            OvenBtnSubmit.Text = "SAVED";
+            OvenBtnSubmit.CssClass = "btn btn-sm btn-success";
+            OvenBtnReset.Enabled = false;
+
+            string Data_SuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Data Success',
+                                text: 'Recorded Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+            //// RegisterStartupScript adds the JavaScript code to the page
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('verificationData-tab').click();", true);
+
+        }
+        protected void OvenBtnReset_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('ovenData-tab');", true);
+            Response.Redirect("qaqc_process_rpt.aspx");
+        }
+
         
 
 
-
-
-
-
-
-
-
-
     }
+
 }
