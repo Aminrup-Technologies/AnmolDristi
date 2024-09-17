@@ -213,7 +213,7 @@ namespace AnmolDristi
                         //insertCommand.Parameters.AddWithValue("@ViewStatus", chkViewStatus.Checked ? 1 : 0);
                         //insertCommand.Parameters.AddWithValue("@DeleteStatus", chkDeleteStatus.Checked ? 1 : 0);
 
-                        //insertCommand.ExecuteNonQuery();
+                        insertCommand.ExecuteNonQuery();
                         lbl_msg.Visible = false; // Hide error message if insertion is successful
                     }
                 }

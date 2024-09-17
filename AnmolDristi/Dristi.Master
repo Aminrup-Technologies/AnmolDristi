@@ -162,7 +162,7 @@
                                             <ul class="nav child_menu">
                                                 <li id="rpts_quality" runat="server" visible="true"><a>Quality<span class="fa fa-chevron-down"></span></a>
                                                     <ul class="nav child_menu">
-                                                        <li id="rpts_qa" runat="server" class="sub_menu"><a href="#">Quality Assurance</a></li>
+                                                        <li id="rpts_qa" runat="server" class="sub_menu"><a href="qaqc_qahome_rpt.aspx">Quality Assurance</a></li>
                                                         <li id="rpts_qc" runat="server"><a href="qaqc_qchome_rpt.aspx">Quality Control</a></li>
                                                     </ul>
                                                 </li>

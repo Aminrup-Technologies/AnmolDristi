@@ -440,6 +440,7 @@ namespace AnmolDristi.DAL
 
                     // Add parameters
                     cmd.Parameters.AddWithValue("@PcrNo", data.PcrNo);
+                    cmd.Parameters.AddWithValue("@FormID", data.FormID);
                     cmd.Parameters.AddWithValue("@SubmittedDate", data.SubmittedDate);
                     cmd.Parameters.AddWithValue("@SubmittedTime", data.SubmittedTime);
                     cmd.Parameters.AddWithValue("@Shift", data.Shift);

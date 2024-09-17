@@ -32,6 +32,8 @@ namespace AnmolDristi
                 }
                 else
                 {
+                    hdn_formid.Value = string.Empty;
+                    hdn_shiftvalue.Value = string.Empty;
 
                     lbl_docname.Text = "QA - Process Checking Report";
                     lbl_docnumber.Text = "ANMOL/DOC/CORP/QA/02";
@@ -40,6 +42,7 @@ namespace AnmolDristi
                     BindGridView();
                     DisplayCurrentShift();
                     BindGridView1();
+                    
                 }
 
             }
@@ -214,6 +217,7 @@ namespace AnmolDristi
                         }
                         else
                         {
+                            hdn_formid.Value = "6";
                             // Set default values to ADMIN if no rows are found
                             Approver1NameLabel.Text = "ADMIN";
                             Approver1CodeLabel.Text = "ADMIN";

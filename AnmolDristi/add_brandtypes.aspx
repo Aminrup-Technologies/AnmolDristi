@@ -123,7 +123,6 @@
                                     </div>
                                 </div>
                             </div>--%>
-
                         </div>
                     </div>
 
@@ -135,7 +134,7 @@
                                 <asp:Label ID="lbl_msg" runat="server" Text="Click SUBMIT to view Data!!"></asp:Label>
                             </div>
                             <div class="col-md-6 col-sm-12">
-                                <asp:Button ID="btn_cancel" runat="server" Text="Cancel" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btn_cancel_Click"/>
+                                <asp:Button ID="btn_cancel" runat="server" Text="Cancel" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btn_cancel_Click" />
                                 <asp:Button ID="btn_insert" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" />
                                 <asp:Button ID="btn_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="true" ValidationGroup="Submit" OnClick="btnSubmit_Click" />
                             </div>
@@ -157,15 +156,80 @@
                             <div class="row">
                                 <asp:GridView ID="GridViewLineCatBrands" runat="server" Width="100%" class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found" DataKeyNames="Id" OnRowEditing="GridViewLineCatBrands_RowEditing" OnRowCancelingEdit="GridViewLineCatBrands_RowCancelingEdit" OnRowUpdating="GridViewLineCatBrands_RowUpdating" OnRowDeleting="GridViewLineCatBrands_RowDeleting">
                                     <Columns>
-                                        <asp:BoundField DataField="Id" HeaderText="ID" ReadOnly="true" />
-                                        <asp:BoundField DataField="plant_id" HeaderText="Plant ID" />
-                                        <asp:BoundField DataField="line_id" HeaderText="Line ID" />
-                                        <asp:BoundField DataField="category_id" HeaderText="Category ID" />
-                                        <asp:BoundField DataField="brand_id" HeaderText="Brand ID" />
-                                        <asp:BoundField DataField="brand_name" HeaderText="Brand Name" />
-                                        <asp:BoundField DataField="brand_localname" HeaderText="Brand Local Name" />
-                                        <asp:BoundField DataField="brand_sapcode" HeaderText="Brand SAP Code" />
-                                        <asp:BoundField DataField="added_on" HeaderText="Added On" DataFormatString="{0:dd/MM/yyyy}" ReadOnly="true" />
+                                        <asp:TemplateField HeaderText="ID">
+                                            <ItemTemplate>
+                                                <%# Eval("Id") %>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Plant ID">
+                                            <ItemTemplate>
+                                                <%# Eval("plant_id") %>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:TextBox ID="txtPlantId" runat="server" Text='<%# Bind("plant_id") %>' />
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Line ID">
+                                            <ItemTemplate>
+                                                <%# Eval("line_id") %>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:TextBox ID="txtLineId" runat="server" Text='<%# Bind("line_id") %>' />
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Category ID">
+                                            <ItemTemplate>
+                                                <%# Eval("category_id") %>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:TextBox ID="txtCategoryId" runat="server" Text='<%# Bind("category_id") %>' />
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Brand ID">
+                                            <ItemTemplate>
+                                                <%# Eval("brand_id") %>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:TextBox ID="txtBrandId" runat="server" Text='<%# Bind("brand_id") %>' />
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Brand Name">
+                                            <ItemTemplate>
+                                                <%# Eval("brand_name") %>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:TextBox ID="txtBrandName" runat="server" Text='<%# Bind("brand_name") %>' />
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Brand Local Name">
+                                            <ItemTemplate>
+                                                <%# Eval("brand_localname") %>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:TextBox ID="txtBrandLocalName" runat="server" Text='<%# Bind("brand_localname") %>' />
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Brand SAP Code">
+                                            <ItemTemplate>
+                                                <%# Eval("brand_sapcode") %>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:TextBox ID="txtBrandSapCode" runat="server" Text='<%# Bind("brand_sapcode") %>' />
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Added On">
+                                            <ItemTemplate>
+                                                <%# Eval("added_on", "{0:dd/MM/yyyy}") %>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="View Status">
                                             <ItemTemplate>
                                                 <asp:CheckBox ID="view_status" runat="server" Checked='<%# Convert.ToBoolean(Eval("view_status")) %>' Enabled="false" />

@@ -17,7 +17,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <a class="btn btn-app" href="#">
+                            <a class="btn btn-app" href="Process_Approval.aspx">
                                 <span class="badge bg-warning">Shift : 1
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Process Checking

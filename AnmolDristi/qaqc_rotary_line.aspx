@@ -50,7 +50,7 @@
             text-align: center;
         }
     </style>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
         function validateGridView1_old() {
             var isValid = true;
@@ -89,27 +89,26 @@
             var isValid = true;
             var filledRowsCount = 0; // Counter to track filled rows
             var minimumRequiredRows = 3; // Set the minimum number of required filled rows
-
             var gridView = document.getElementById('<%= LineWeights_Grid.ClientID %>');
-            for (var i = 1; i < gridView.rows.length; i++) {  // Start from 1 to skip the header row
-                var row = gridView.rows[i];
 
+            // Start from 1 to skip the header row
+            for (var i = 1; i < gridView.rows.length; i++) {  
+                var row = gridView.rows[i];
                 var txtStlWeight = row.querySelector("input[id*='txtStlWeight']");
 
-                var rowIsFilled = false; // Flag to check if at least one input in this row is filled
+                var rowIsFilled = false; // Flag to check if this row is filled
 
                 // Check if TextBoxes are filled
-                if (txtStlWeight && txtStlWeight.value.trim() === "") {
-                    isValid = false;
-                    rowIsFilled = false;
-                    txtStlWeight.style.borderColor = "red";
-                } else {
-                    txtStlWeight.style.borderColor = "";
+                if (txtStlWeight && txtStlWeight.value.trim() !== "") {
+                    rowIsFilled = true; // Mark row as filled if the input has a value
                 }
 
-                // If at least one input in the row is filled, increase the filledRowsCount
+                // If the row is filled, reset border color and increment the filledRowsCount
                 if (rowIsFilled) {
                     filledRowsCount++;
+                    txtStlWeight.style.borderColor = ""; // Remove red border if filled
+                } else {
+                    txtStlWeight.style.borderColor = "red"; // Set red border if not filled
                 }
             }
 
@@ -119,15 +118,10 @@
                 alert("Please fill at least " + minimumRequiredRows + " rows.");
             }
 
-            //// If not valid, prevent form submission
-            //if (!isValid) {
-            //    alert("Please fill all the required fields.");
-            //}
-
             return isValid;
         }
 
-        function calculateAverageWeight() {
+        <%--function calculateAverageWeight() {
             var totalWeight = 0;
             var rowCount = 0;
 
@@ -151,6 +145,94 @@
             // Get the Label by ClientID and update its text with the calculated average
             var lblAvgWeight = document.getElementById('<%= lblAvgWeight.ClientID %>');
             lblAvgWeight.innerHTML = averageWeight;
+        }--%>
+
+        function calculateAverageWeight() {
+            var totalWeight = 0;
+            var rowCount = 0;
+            var minWeight = Number.MAX_VALUE;
+            var maxWeight = Number.MIN_VALUE;
+
+            // Get all the textboxes with the class 'line-weight' inside the GridView
+            var textBoxes = document.getElementsByClassName('line-weight');
+
+            // Loop through each textbox to calculate the total weight, min, and max weights
+            for (var i = 0; i < textBoxes.length; i++) {
+                var weight = parseFloat(textBoxes[i].value);
+
+                // Check if the value entered is a valid number
+                if (!isNaN(weight) && weight > 0) {
+                    totalWeight += weight;
+                    rowCount++;
+
+                    // Check for min and max weights
+                    if (weight < minWeight) minWeight = weight;
+                    if (weight > maxWeight) maxWeight = weight;
+                }
+            }
+
+            // Calculate the average weight if there are valid entries
+            var averageWeight = (rowCount > 0) ? (totalWeight / rowCount).toFixed(2) : 0;
+            var difference = (rowCount > 0) ? (maxWeight - minWeight).toFixed(2) : 0;
+            minWeight = (minWeight !== Number.MAX_VALUE) ? minWeight.toFixed(2) : 0;
+            maxWeight = (maxWeight !== Number.MIN_VALUE) ? maxWeight.toFixed(2) : 0;
+
+            // Get the Labels by ClientID and update their text with the calculated values
+            var lblAvgWeight = document.getElementById('<%= lblAvgWeight.ClientID %>');
+            var lblMinWeight = document.getElementById('<%= lblMinValue.ClientID %>');
+            var lblMaxWeight = document.getElementById('<%= lblMaxValue.ClientID %>');
+            var lblDiffMinMax = document.getElementById('<%= lblDiffMinMax.ClientID %>');
+
+            lblAvgWeight.innerHTML = averageWeight + " gm";
+            lblMinWeight.innerHTML = minWeight + " gm";
+            lblMaxWeight.innerHTML = maxWeight + " gm";
+            lblDiffMinMax.innerHTML = difference + " gm";
+        }
+
+        function generateChart() {
+            var slNos = [];
+            var weights = [];
+
+            // Get all rows in the GridView
+            var gridView = document.getElementById('<%= LineWeights_Grid.ClientID %>');
+            var rows = gridView.getElementsByTagName('tr');
+
+            // Loop through rows (start at index 1 to skip header row)
+            for (var i = 1; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName('td');
+
+                // Extract SL NO from the first cell
+                var slNo = cells[0].innerText.trim();
+                slNos.push(slNo);
+
+                // Extract weight from the textbox in the second cell
+                var weightTextbox = cells[1].getElementsByTagName('input')[0];
+                var weight = parseFloat(weightTextbox.value) || 0;  // Use 0 if the input is invalid
+                weights.push(weight);
+            }
+
+            // Now render the chart using Chart.js
+            var ctx = document.getElementById('weightChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar', // Can be 'line', 'pie', etc.
+                data: {
+                    labels: slNos,  // SL NO on the X-axis
+                    datasets: [{
+                        label: 'Weights',
+                        data: weights,  // Weights on the Y-axis
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         }
 
 
@@ -160,31 +242,33 @@
             var minimumRequiredRows = 3; // Set the minimum number of required filled rows
 
             var gridView = document.getElementById('<%= OvenEnd_GridView.ClientID %>');
-            for (var i = 1; i < gridView.rows.length; i++) {  // Start from 1 to skip header row
+    
+            // Start from 1 to skip the header row
+            for (var i = 1; i < gridView.rows.length; i++) {  
                 var row = gridView.rows[i];
 
                 var txtGaugeLength = row.querySelector("input[id*='txtGaugeLength']");
                 var txtWeight = row.querySelector("input[id*='txtWeight']");
 
-                var rowIsFilled = true; // Flag to check if this row is filled
+                var rowIsFilled = true; // Flag to check if this row is fully filled
 
-                // Check if TextBoxes are filled
+                // Check if txtGaugeLength is filled
                 if (txtGaugeLength && txtGaugeLength.value.trim() === "") {
-                    isValid = false;
-                    rowIsFilled = false;
-                    txtGaugeLength.style.borderColor = "red";
+                    rowIsFilled = false; // Mark the row as not filled
+                    txtGaugeLength.style.borderColor = "red"; // Highlight the field in red
                 } else {
-                    txtGaugeLength.style.borderColor = "";
+                    txtGaugeLength.style.borderColor = ""; // Reset the border color if filled
                 }
 
+                // Check if txtWeight is filled
                 if (txtWeight && txtWeight.value.trim() === "") {
-                    isValid = false;
-                    rowIsFilled = false;
-                    txtWeight.style.borderColor = "red";
+                    rowIsFilled = false; // Mark the row as not filled
+                    txtWeight.style.borderColor = "red"; // Highlight the field in red
                 } else {
-                    txtWeight.style.borderColor = "";
+                    txtWeight.style.borderColor = ""; // Reset the border color if filled
                 }
-                // If both inputs in the row are filled, increase the filledRowsCount
+
+                // If both fields in the row are filled, increment filledRowsCount
                 if (rowIsFilled) {
                     filledRowsCount++;
                 }
@@ -196,76 +280,90 @@
                 alert("Please fill at least " + minimumRequiredRows + " rows.");
             }
 
-            //// If not valid, prevent form submission
-            //if (!isValid) {
-            //    alert("Please fill all the required fields.");
-            //}
-
             return isValid;
         }
 
         function clearGridView1TextBoxes() {
             var textBoxes = document.querySelectorAll('#<%= LineWeights_Grid.ClientID %> .form-control');
-             textBoxes.forEach(function (textBox) {
-                 textBox.value = '';
-             });
-         }
+            textBoxes.forEach(function (textBox) {
+                textBox.value = '';
+            });
+        }
 
-         function clearGridView2TextBoxes() {
-             var textBoxes = document.querySelectorAll('#<%= OvenEnd_GridView.ClientID %> .form-control');
-               textBoxes.forEach(function (textBox) {
-                   textBox.value = '';
-               });
-           }
+        function clearGridView2TextBoxes() {
+            var textBoxes = document.querySelectorAll('#<%= OvenEnd_GridView.ClientID %> .form-control');
+            textBoxes.forEach(function (textBox) {
+                textBox.value = '';
+            });
+        }
 
-           function calculateAverageGaugeLength() {
-               var totalLength = 0;
-               var count = 0;
+        function calculateAverageGaugeLength() {
+            var totalLength = 0;
+            var count = 0;
+            var minLength = Number.MAX_VALUE;
+            var maxLength = Number.MIN_VALUE;
 
-               // Get all the TextBox elements for gauge length
-               var textboxes = document.querySelectorAll('.gauge-length');
+            // Get all the TextBox elements for gauge length
+            var textboxes = document.querySelectorAll('.gauge-length');
 
-               // Iterate over each TextBox to sum up the values
-               textboxes.forEach(function (textbox) {
-                   var value = parseFloat(textbox.value);
-                   if (!isNaN(value)) {
-                       totalLength += value;
-                       count++;
-                   }
-               });
+            // Iterate over each TextBox to sum up the values and find min/max
+            textboxes.forEach(function (textbox) {
+                var value = parseFloat(textbox.value);
+                if (!isNaN(value)) {
+                    totalLength += value;
+                    count++;
 
-               // Calculate the average
-               var averageLength = (count > 0) ? (totalLength / count) : 0;
+                    // Update min and max values
+                    if (value < minLength) minLength = value;
+                    if (value > maxLength) maxLength = value;
+                }
+            });
 
-               // Update the label with the average length in millimeters
-               document.getElementById('lblAvgGaugeLength').innerText = averageLength.toFixed(2) + ' mm';
-           }
+            // Calculate the average length if there are valid entries
+            var averageLength = (count > 0) ? (totalLength / count).toFixed(2) : 0;
+            var diffLength = (count > 0) ? (maxLength - minLength).toFixed(2) : 0;
 
-           function calculateAverageWeight1() {
-               var totalWeight = 0;
-               var rowCount = 0;
+            // Update the labels with the calculated values
+            document.getElementById('<%= ov_lblMinGauge.ClientID %>').innerText = (minLength !== Number.MAX_VALUE) ? minLength.toFixed(2) : 0;
+            document.getElementById('<%= ov_lblMaxGauge.ClientID %>').innerText = (maxLength !== Number.MIN_VALUE) ? maxLength.toFixed(2) : 0;
+            document.getElementById('<%= ov_lblDiffGauge.ClientID %>').innerText = diffLength;
+            document.getElementById('<%= lblAvgGaugeLength.ClientID %>').innerText = averageLength;
+        }
 
-               // Get all the textboxes with the class 'line-weight' inside the GridView
-               var textBoxes = document.getElementsByClassName('weight');
+        function calculateAverageWeight1() {
+            var totalWeight = 0;
+            var rowCount = 0;
+            var minWeight = Number.MAX_VALUE;
+            var maxWeight = Number.MIN_VALUE;
 
-               // Loop through each textbox to calculate the total weight
-               for (var i = 0; i < textBoxes.length; i++) {
-                   var weight = parseFloat(textBoxes[i].value);
+            // Get all the TextBox elements for weight
+            var textBoxes = document.getElementsByClassName('weight');
 
-                   // Check if the value entered is a valid number
-                   if (!isNaN(weight) && weight > 0) {
-                       totalWeight += weight;
-                       rowCount++;
-                   }
-               }
+            // Loop through each TextBox to calculate total weight, min, and max
+            for (var i = 0; i < textBoxes.length; i++) {
+                var weight = parseFloat(textBoxes[i].value);
 
-               // Calculate the average weight if there are valid entries
-               var averageWeight = (rowCount > 0) ? (totalWeight / rowCount).toFixed(2) : 0;
+                // Check if the value entered is a valid number
+                if (!isNaN(weight) && weight > 0) {
+                    totalWeight += weight;
+                    rowCount++;
 
-               // Get the Label by ClientID and update its text with the calculated average
-               var lblAvgWeight = document.getElementById('<%= lblAvgWeights.ClientID %>');
-              lblAvgWeight.innerHTML = averageWeight;
-          }
+                    // Update min and max values
+                    if (weight < minWeight) minWeight = weight;
+                    if (weight > maxWeight) maxWeight = weight;
+                }
+            }
+
+            // Calculate the average weight and difference
+            var averageWeight = (rowCount > 0) ? (totalWeight / rowCount).toFixed(2) : 0;
+            var diffWeight = (rowCount > 0) ? (maxWeight - minWeight).toFixed(2) : 0;
+
+            // Update the labels with the calculated values
+            document.getElementById('<%= ov_lblMinValue.ClientID %>').innerText = (minWeight !== Number.MAX_VALUE) ? minWeight.toFixed(2) : 0;
+            document.getElementById('<%= ov_lblMaxValue.ClientID %>').innerText = (maxWeight !== Number.MIN_VALUE) ? maxWeight.toFixed(2) : 0;
+            document.getElementById('<%= ov_lblDiffMinMax.ClientID %>').innerText = diffWeight;
+            document.getElementById('<%= lblAvgWeights.ClientID %>').innerText = averageWeight;
+        }
 
     </script>
 
@@ -362,7 +460,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3">
+                                                            <%--<div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Label5" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_DDL_BrandSKU" runat="server" ErrorMessage="Required" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_BrandSKU" InitialValue="0" Display="Dynamic"></asp:RequiredFieldValidator>
@@ -381,12 +479,12 @@
                                                                         <asp:TextBox ID="TB_VartyPkt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Variety Packet (3-20 characters)" MaxLength="20"></asp:TextBox>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>--%>
 
                                                             <div class="col-md-12 text-center">
-                                                                <asp:Button ID="Btn_Save" runat="server" Text="Proceed Next" OnClick="Btn_Save_Click" CssClass="btn btn-sm btn-primary" ValidationGroup="Submit" CausesValidation="true" />
+                                                                <asp:Button ID="Btn_Save" runat="server" Text="Proceed Next" OnClick="Btn_Save_Click" CssClass="btn btn-sm btn-success" ValidationGroup="Submit" CausesValidation="true" />
                                                                 <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btnReset_Click" />
-                                                                <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                                                <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                                                 <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
 
                                                             </div>
@@ -427,24 +525,56 @@
                                                             </asp:GridView>
                                                         </div>
 
-                                                        <div class="col-md-3" id="AvgWt_TB" runat="server" visible="true">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="lbl_lblAvgWeight" runat="server" AssociatedControlID="lblAvgWeight" Text="Avergae of all the Weights:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:Label ID="lblAvgWeight" runat="server" Text="0"></asp:Label> gm
-                                                                        <%--<asp:TextBox ID="txtAverageGrossWeight" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>--%>
-                                                                    </div>
+                                                        <%--<div class="col-md-3" id="Div1" runat="server" visible="true">
+                                                            <div class="mb-3">
+                                                                <asp:Label ID="lbl_lblAvgWeight" runat="server" AssociatedControlID="lblAvgWeight" Text="Avergae of all the Weights:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                <div class="input-group-sm">
+                                                                    <asp:Label ID="lblAvgWeight" runat="server" Text="0"></asp:Label>
+                                                                    gm
                                                                 </div>
                                                             </div>
+                                                        </div>--%>
 
+                                                        <div class="col-md-6" id="AvgWt_TB" runat="server" visible="true">
+                                                            <!-- Table structure for Min, Max, Difference, and Average -->
+                                                            <table class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" style="width:100%;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Min Value</th>
+                                                                        <th>Max Value</th>
+                                                                        <th>Difference (Min-Max)</th>
+                                                                        <th>Average Value</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <asp:Label ID="lblMinValue" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="lblMaxValue" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="lblDiffMinMax" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="lblAvgWeight" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                        <canvas id="weightChart" width="100" height="20"></canvas>
                                                         <%--<h4>Average Weight:
                                                             <asp:Label ID="lblAvgWeight" runat="server" Text="0"></asp:Label>
                                                             kg</h4>--%>
 
                                                         <div class="col-md-12 text-center">
-                                                            <asp:Button ID="btn_rawSubmit" runat="server" Text="Proceed Next" OnClientClick="return validateGridView1();" OnClick="btn_rawSubmit_Click" CssClass="btn btn-sm btn-primary" />
+                                                            <asp:Button ID="btnGenerateChart" runat="server" CssClass="btn btn-sm btn-primary" Text="Generate Chart" OnClientClick="generateChart(); return false;" />
+                                                            <asp:Button ID="btn_rawSubmit" runat="server" Text="Proceed Next" OnClientClick="return validateGridView1();" OnClick="btn_rawSubmit_Click" CssClass="btn btn-sm btn-success" />
                                                             <asp:Button ID="btn_rawrest" runat="server" Text="Reset Grid" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClientClick="clearGridView1TextBoxes(); return false;" />
-                                                            <asp:Button ID="Button2" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                                            <asp:Button ID="btn_home2" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                                         </div>
                                                     </div>
 
@@ -465,10 +595,7 @@
 
                                                             <asp:GridView ID="OvenEnd_GridView" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
-
-                                                                    <asp:TemplateField HeaderText="SL" HeaderStyle-ForeColor="Blue"
-                                                                        HeaderStyle-Font-Bold="true"
-                                                                        HeaderStyle-Font-Size="Small">
+                                                                    <asp:TemplateField HeaderText="SL" HeaderStyle-ForeColor="Blue" HeaderStyle-Font-Bold="true" HeaderStyle-Font-Size="Small">
                                                                         <ItemTemplate>
                                                                             <%# Container.DataItemIndex + 1 %>
                                                                         </ItemTemplate>
@@ -476,18 +603,14 @@
                                                                         <ItemStyle CssClass="text-center" />
                                                                     </asp:TemplateField>
 
-                                                                    <asp:TemplateField HeaderText="Gauge Length(mm) :" HeaderStyle-ForeColor="Blue"
-                                                                        HeaderStyle-Font-Bold="true"
-                                                                        HeaderStyle-Font-Size="Small">
+                                                                    <asp:TemplateField HeaderText="Gauge Length(mm) :" HeaderStyle-ForeColor="Blue" HeaderStyle-Font-Bold="true" HeaderStyle-Font-Size="Small">
                                                                         <ItemTemplate>
                                                                             <asp:TextBox ID="txtGaugeLength" runat="server" CssClass="form-control form-control-sm rounded gauge-length" oninput="calculateAverageGaugeLength()"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                         <HeaderStyle CssClass="text-center" />
                                                                         <ItemStyle CssClass="text-center" />
                                                                     </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Weight (gm):" HeaderStyle-ForeColor="Blue"
-                                                                        HeaderStyle-Font-Bold="true"
-                                                                        HeaderStyle-Font-Size="Small">
+                                                                    <asp:TemplateField HeaderText="Weight (gm):" HeaderStyle-ForeColor="Blue" HeaderStyle-Font-Bold="true" HeaderStyle-Font-Size="Small">
                                                                         <ItemTemplate>
                                                                             <asp:TextBox ID="txtWeight" runat="server" CssClass="form-control form-control-sm rounded weight" oninput="calculateAverageWeight1()"></asp:TextBox>
                                                                         </ItemTemplate>
@@ -497,19 +620,74 @@
                                                                 </Columns>
                                                             </asp:GridView>
 
-                                                            <h4>Average Gauge Length: <span id="lblAvgGaugeLength">0.00 mm</span></h4>
+                                                            <%--<h4>Average Gauge Length: <span id="lblAvgGaugeLength">0.00 mm</span></h4>
                                                             <br />
                                                             <h4>Average Weight:
                                                                 <asp:Label ID="lblAvgWeights" runat="server" Text="0"></asp:Label>
-                                                                gm</h4>
+                                                                gm</h4>--%>
+                                                        </div>
+
+                                                        <div class="col-md-6" id="ov_weights" runat="server" visible="true">
+                                                            <!-- Table structure for Min, Max, Difference, and Average -->
+                                                            <table class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" style="width:100%;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>X</th>
+                                                                        <th>Min Value</th>
+                                                                        <th>Max Value</th>
+                                                                        <th>Difference (Min-Max)</th>
+                                                                        <th>Average Value</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <asp:Label ID="Label5" runat="server" Text="Gauge Value"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="ov_lblMinGauge" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="ov_lblMaxGauge" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="ov_lblDiffGauge" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="lblAvgGaugeLength" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <asp:Label ID="Label18" runat="server" Text="Weights"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="ov_lblMinValue" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                             <asp:Label ID="ov_lblMaxValue" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="ov_lblDiffMinMax" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="lblAvgWeights" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
 
                                                         <div class="col-md-12 text-center">
-                                                            <asp:Button ID="btnSubmit" runat="server" Text="Final Submit" OnClientClick="return validateGridView();" OnClick="btnOvenSubmit_Click" CssClass="btn btn-sm btn-primary" />
+                                                            <asp:Button ID="btnSubmit" runat="server" Text="Final Submit" OnClientClick="return validateGridView();" OnClick="btnOvenSubmit_Click" CssClass="btn btn-sm btn-success" />
                                                             <asp:Button ID="Button1" runat="server" Text="Reset Grid" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClientClick="clearGridView2TextBoxes(); return false;" />
-                                                            <asp:Button ID="Button3" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                                            <asp:Button ID="Button3" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                                             <asp:Label ID="Label6" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
                                                         </div>
+
+                                                        <canvas id="myChart" width="600" height="20" runat="server" visible="false"></canvas>
+
                                                     </div>
                                                 </div>
                                             </div>

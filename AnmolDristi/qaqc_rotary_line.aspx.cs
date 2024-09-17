@@ -38,6 +38,9 @@ namespace AnmolDristi
                     PlantBinder();
 
                     int gridBinderValue = int.Parse(ConfigurationManager.AppSettings["RotaryLineOvenend_GridBinderValue"]);
+                    TB_LineNos.Text = gridBinderValue.ToString();
+                    TB_OvenNos.Text = gridBinderValue.ToString();
+
                     GridBinder1(gridBinderValue);
                     GridBinder(gridBinderValue);
 
@@ -272,7 +275,7 @@ namespace AnmolDristi
             if (DDL_ProductBrand.SelectedIndex != 0)
             {
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
-                BrandSKUBinder(selectedProductBrandValue);
+                //BrandSKUBinder(selectedProductBrandValue);
 
                 DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
 
@@ -331,30 +334,30 @@ namespace AnmolDristi
             }
         }
 
-        private void BrandSKUBinder(string selectedProductBrandValue)
-        {
-            string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue";
-            string textField = "SKU_name";
-            string valueField = "SKUId";
+        //private void BrandSKUBinder(string selectedProductBrandValue)
+        //{
+        //    string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue";
+        //    string textField = "SKU_name";
+        //    string valueField = "SKUId";
 
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedProductBrandValue), out recordsBound);
+        //    bool recordsBound;
+        //    DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedProductBrandValue), out recordsBound);
 
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
+        //    if (!recordsBound)
+        //    {
+        //        DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
 
-                string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'An error occurred!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
-            }
-        }
+        //        string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
+        //                    new PNotify({
+        //                        title: 'Error',
+        //                        text: 'An error occurred!',
+        //                        type: 'error',
+        //                        styling: 'bootstrap3'
+        //                    });
+        //                </script>";
+        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
+        //    }
+        //}
 
 
         protected void Btn_Save_Click(object sender, EventArgs e)
@@ -388,7 +391,7 @@ namespace AnmolDristi
                 kk = "RLOE01";
             }
             dbcl.DisconnectDb();
-            RLWt = kk;
+            //RLWt = kk;
             return kk;
         }
 
@@ -398,8 +401,8 @@ namespace AnmolDristi
             // Get values from the UI controls
             string plantName = DDL_Plant.SelectedValue;
             string plantLine = DDL_PlantLine.SelectedValue;
-            string brandSKU = DDL_BrandSKU.SelectedValue;
-            string varietyPacket = TB_VartyPkt.Text;
+            //string brandSKU = DDL_BrandSKU.SelectedValue;
+            //string varietyPacket = TB_VartyPkt.Text;
 
             try
             {
@@ -414,9 +417,11 @@ namespace AnmolDristi
                 string line = DDL_PlantLine.SelectedValue;
                 string productCategory = DDL_ProductCategory.SelectedValue;
                 string productBrand = DDL_ProductBrand.SelectedValue;
-                string skuId = DDL_BrandSKU.SelectedValue;
-                string rlWt = Find_DBCode();
-                string variety = TB_VartyPkt.Text.ToString();
+                //string skuId = DDL_BrandSKU.SelectedValue;
+                string skuId = string.Empty;
+                RLWt = Find_DBCode();
+                //string variety = TB_VartyPkt.Text.ToString();
+                string variety = string.Empty;
                 //int viewMode = Convert.ToInt32(ddlViewMode.SelectedValue); // Dropdown for view mode
                 //int deleteMode = Convert.ToInt32(ddlDeleteMode.SelectedValue); // Dropdown for delete mode
 
@@ -443,7 +448,7 @@ namespace AnmolDristi
                 // Call the Insert method
                 InsertRotaryLineOvenEnd(
                     formID, submittedById, submittedDate, submittedTime, shift, submittedByEmployeeCode,
-                    plantName, line, productCategory, productBrand, skuId, rlWt, variety,
+                    plantName, line, productCategory, productBrand, skuId, RLWt, variety,
                     approver1EmployeeCode,
                     approver2EmployeeCode,
                     dottedLineApproverEmployeeCode
@@ -452,7 +457,7 @@ namespace AnmolDristi
                 Btn_Save.Enabled = false;
                 Btn_Save.Text = "SAVED";
 
-                TB_VartyPkt.ReadOnly = true;
+                //TB_VartyPkt.ReadOnly = true;
 
                 lblMessage.Text = "Data inserted successfully!";
 
@@ -620,7 +625,7 @@ namespace AnmolDristi
 
                             string PlantBinder_Error_script = @"<script type='text/javascript'>
                                 new PNotify({
-                                    title: 'Error',
+                                    title: 'Warning',
                                     text: 'No Approver Mapping Found!',
                                     type: 'error',
                                     styling: 'bootstrap3'
@@ -708,8 +713,8 @@ namespace AnmolDristi
             DDL_PlantLine.SelectedIndex = 0;
             DDL_ProductCategory.SelectedIndex = 0;
             DDL_ProductBrand.SelectedIndex = 0;
-            DDL_BrandSKU.SelectedIndex = 0;
-            TB_VartyPkt.Text = string.Empty;
+            //DDL_BrandSKU.SelectedIndex = 0;
+            //TB_VartyPkt.Text = string.Empty;
             lblMessage.Text = string.Empty;
         }
 
@@ -745,39 +750,46 @@ namespace AnmolDristi
 
         protected void btn_rawSubmit_Click(object sender, EventArgs e)
         {
-            Dictionary<int, decimal> stlweightData = new Dictionary<int, decimal>();
-            List<WeightData> weightDataList = new List<WeightData>();
-
-            decimal totalWeight = 0;
-            int weightCount = 0;
-
-            foreach (GridViewRow row in LineWeights_Grid.Rows)
+            if (Btn_Save.Text == "SAVED" && RLWt != string.Empty)
             {
-                TextBox txtStlWeight = (TextBox)row.FindControl("txtStlWeight");
+                Dictionary<int, decimal> stlweightData = new Dictionary<int, decimal>();
+                List<WeightData> weightDataList = new List<WeightData>();
 
-                if (txtStlWeight != null && !string.IsNullOrEmpty(txtStlWeight.Text))
+                decimal totalWeight = 0;
+                int weightCount = 0;
+
+                foreach (GridViewRow row in LineWeights_Grid.Rows)
                 {
-                    decimal stlweight;
-                    if (decimal.TryParse(txtStlWeight.Text, out stlweight))
+                    TextBox txtStlWeight = (TextBox)row.FindControl("txtStlWeight");
+
+                    if (txtStlWeight != null && !string.IsNullOrEmpty(txtStlWeight.Text))
                     {
-                        int sl = row.RowIndex + 1;  // Serial number
-                        weightDataList.Add(new WeightData
+                        decimal stlweight;
+                        if (decimal.TryParse(txtStlWeight.Text, out stlweight))
                         {
-                            sl = sl,
-                            weight = stlweight
-                        });
-                        totalWeight += stlweight;
-                        weightCount++;
+                            int sl = row.RowIndex + 1;  // Serial number
+                            weightDataList.Add(new WeightData
+                            {
+                                sl = sl,
+                                weight = stlweight
+                            });
+                            totalWeight += stlweight;
+                            weightCount++;
+                        }
                     }
                 }
+                decimal averageWeight = (weightCount > 0) ? (totalWeight / weightCount) : 0;
+                string jsonData = JsonConvert.SerializeObject(weightDataList);
+
+                UpdatelinewtInDatabase(jsonData, averageWeight);
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('ovenReport-tab').click();", true);
+                //LineWeights_Grid.Visible = false;
             }
-            decimal averageWeight = (weightCount > 0) ? (totalWeight / weightCount) : 0;
-            string jsonData = JsonConvert.SerializeObject(weightDataList);
+            else
+            {
 
-            UpdatelinewtInDatabase(jsonData, averageWeight);
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('ovenReport-tab').click();", true);
-            //LineWeights_Grid.Visible = false;
+            }
         }
 
 
@@ -892,71 +904,74 @@ namespace AnmolDristi
 
         protected void btnOvenSubmit_Click(object sender, EventArgs e)
         {
-            List<GaugeData> gaugeDataList = new List<GaugeData>();
-            List<OWeightData> weightDataList = new List<OWeightData>();
-            List<OvenEndData> OvenEndDataList = new List<OvenEndData>();
-
-            decimal TTL_GaugeValues = 0;
-            int TTL_GaugeValuesRows = 0;
-            decimal TTL_OEWeightValues = 0;
-            int TTL_OEWeightValuesRows = 0;
-
-            foreach (GridViewRow row in OvenEnd_GridView.Rows)
+            if (Btn_Save.Text == "SAVED" && RLWt != string.Empty && btn_rawSubmit.Text == "SAVED")
             {
-                TextBox txtGaugeLength = (TextBox)row.FindControl("txtGaugeLength");
-                TextBox txtWeight = (TextBox)row.FindControl("txtWeight");
+                List<GaugeData> gaugeDataList = new List<GaugeData>();
+                List<OWeightData> weightDataList = new List<OWeightData>();
+                List<OvenEndData> OvenEndDataList = new List<OvenEndData>();
 
-                if (txtGaugeLength != null && !string.IsNullOrEmpty(txtGaugeLength.Text) && txtWeight != null && !string.IsNullOrEmpty(txtWeight.Text))
+                decimal TTL_GaugeValues = 0;
+                int TTL_GaugeValuesRows = 0;
+                decimal TTL_OEWeightValues = 0;
+                int TTL_OEWeightValuesRows = 0;
+
+                foreach (GridViewRow row in OvenEnd_GridView.Rows)
                 {
-                    decimal wts;
-                    decimal ggv;
-                    if (decimal.TryParse(txtGaugeLength.Text, out wts))
+                    TextBox txtGaugeLength = (TextBox)row.FindControl("txtGaugeLength");
+                    TextBox txtWeight = (TextBox)row.FindControl("txtWeight");
+
+                    if (txtGaugeLength != null && !string.IsNullOrEmpty(txtGaugeLength.Text) && txtWeight != null && !string.IsNullOrEmpty(txtWeight.Text))
                     {
-                        if (decimal.TryParse(txtWeight.Text, out ggv))
+                        decimal wts;
+                        decimal ggv;
+                        if (decimal.TryParse(txtGaugeLength.Text, out wts))
                         {
-                            int sl = row.RowIndex + 1; // Serial number
-                            OvenEndDataList.Add(new OvenEndData
+                            if (decimal.TryParse(txtWeight.Text, out ggv))
                             {
-                                sl = sl,
-                                ge = ggv,
-                                wt = wts
-                            });
+                                int sl = row.RowIndex + 1; // Serial number
+                                OvenEndDataList.Add(new OvenEndData
+                                {
+                                    sl = sl,
+                                    ge = ggv,
+                                    wt = wts
+                                });
 
-                            weightDataList.Add(new OWeightData
-                            {
-                                sl = sl,
-                                wt = wts
-                            });
+                                weightDataList.Add(new OWeightData
+                                {
+                                    sl = sl,
+                                    wt = wts
+                                });
 
-                            gaugeDataList.Add(new GaugeData
-                            {
-                                sl = sl,
-                                ge = wts
-                            });
+                                gaugeDataList.Add(new GaugeData
+                                {
+                                    sl = sl,
+                                    ge = wts
+                                });
 
-                            TTL_GaugeValues += ggv;
-                            TTL_GaugeValuesRows++;
+                                TTL_GaugeValues += ggv;
+                                TTL_GaugeValuesRows++;
 
-                            TTL_OEWeightValues += wts;
-                            TTL_OEWeightValuesRows++;
+                                TTL_OEWeightValues += wts;
+                                TTL_OEWeightValuesRows++;
+                            }
                         }
                     }
                 }
+                string CombinedJSON = JsonConvert.SerializeObject(OvenEndDataList);
+                string WeightsJSON = JsonConvert.SerializeObject(weightDataList);
+                string GaugeValueJSON = JsonConvert.SerializeObject(gaugeDataList);
+
+                decimal averageGaugeWeights = (TTL_GaugeValuesRows > 0) ? (TTL_GaugeValues / TTL_GaugeValuesRows) : 0;
+                decimal averageOEWeights = (TTL_OEWeightValuesRows > 0) ? (TTL_OEWeightValues / TTL_OEWeightValuesRows) : 0;
+
+
+                // Update existing records in the database
+                UpdateOvenEND_InDatabase(GaugeValueJSON, averageGaugeWeights, WeightsJSON, averageOEWeights, CombinedJSON);
+
+                //ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('GrossWeightData-tab').click();", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
+                //OvenEnd_GridView.Visible=false;
             }
-            string CombinedJSON = JsonConvert.SerializeObject(OvenEndDataList);
-            string WeightsJSON = JsonConvert.SerializeObject(weightDataList);
-            string GaugeValueJSON = JsonConvert.SerializeObject(gaugeDataList);
-
-            decimal averageGaugeWeights = (TTL_GaugeValuesRows > 0) ? (TTL_GaugeValues / TTL_GaugeValuesRows) : 0;
-            decimal averageOEWeights = (TTL_OEWeightValuesRows > 0) ? (TTL_OEWeightValues / TTL_OEWeightValuesRows) : 0;
-
-
-            // Update existing records in the database
-            UpdateOvenEND_InDatabase(GaugeValueJSON, averageGaugeWeights, WeightsJSON, averageOEWeights, CombinedJSON);
-
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('GrossWeightData-tab').click();", true);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
-            //OvenEnd_GridView.Visible=false;
         }
 
         private void UpdateOvenEND_InDatabase(string GaugeValueJSON, decimal averageGaugeWeights,  string WeightsJSON, decimal averageOEWeights, string CombinedJSON)
