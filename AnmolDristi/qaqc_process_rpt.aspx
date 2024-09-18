@@ -1296,9 +1296,10 @@
                                                                     <asp:Label ID="LabelMaidaColorApp" runat="server" AssociatedControlID="RBL_MaidaColorApp" Text="Maida Color Appearance :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_RBL_MaidaColorApp" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_MaidaColorApp" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_MaidaColorApp" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleMaidaColorAppRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_MaidaColorApp" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleMaidaColorAppRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1319,9 +1320,10 @@
                                                                     <asp:Label ID="LabelMaidaFlavorTaste" runat="server" AssociatedControlID="RBL_MaidaFlavorTaste" Text="Maida Flavor Taste :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_MaidaFlavorTaste" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_MaidaFlavorTaste" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_MaidaFlavorTaste" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleMaidaFlavorTasteRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_MaidaFlavorTaste" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleMaidaFlavorTasteRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1342,9 +1344,10 @@
                                                                     <asp:Label ID="LabelMaidaGrittiness" runat="server" AssociatedControlID="RBL_MaidaGrittiness" Text="Maida Grittiness :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_MaidaGrittiness" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_MaidaGrittiness" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_MaidaGrittiness" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleMaidaGrittinessRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_MaidaGrittiness" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleMaidaGrittinessRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1365,9 +1368,10 @@
                                                                     <asp:Label ID="LabelBBColorApp" runat="server" AssociatedControlID="RBL_BBColorApp" Text="Broken Biscuit Color Appearance :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_BBColorApp" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_BBColorApp" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_BBColorApp" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleBBColorAppRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_BBColorApp" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleBBColorAppRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1388,9 +1392,10 @@
                                                                     <asp:Label ID="LabelBBFlavorTaste" runat="server" AssociatedControlID="RBL_BBFlavorTaste" Text="Broken Biscuit Flavor Taste :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_BBFlavorTaste" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_BBFlavorTaste" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_BBFlavorTaste" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleBBFlavorTasteRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_BBFlavorTaste" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleBBFlavorTasteRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1411,9 +1416,10 @@
                                                                     <asp:Label ID="LabelBBMouthFeel" runat="server" AssociatedControlID="RBL_BBMouthFeel" Text="Broken Biscuit Mouth Feel :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_BBMouthFeel" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_BBMouthFeel" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_BBMouthFeel" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleBBMouthFeelRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_BBMouthFeel" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleBBMouthFeelRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1434,9 +1440,10 @@
                                                                     <asp:Label ID="LabelHvoSmell" runat="server" AssociatedControlID="RBL_HvoSmell" Text="HVO Smell :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_HvoSmell" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_HvoSmell" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_HvoSmell" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleHvoSmellRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_HvoSmell" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleHvoSmellRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1457,9 +1464,10 @@
                                                                     <asp:Label ID="LabelHvoTaste" runat="server" AssociatedControlID="RBL_HvoTaste" Text="HVO Taste :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_HvoTaste" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_HvoTaste" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_HvoTaste" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleHvoTasteRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_HvoTaste" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleHvoTasteRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1502,9 +1510,10 @@
                                                                     <asp:Label ID="LabelSMPSmell" runat="server" AssociatedControlID="RBL_SMPSmell" Text="SMP Smell :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_SMPSmell" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_SMPSmell" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_SMPSmell" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleSMPSmellRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_SMPSmell" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleSMPSmellRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1525,9 +1534,10 @@
                                                                     <asp:Label ID="LabelSMPTaste" runat="server" AssociatedControlID="RBL_SMPTaste" Text="SMP Taste :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_SMPTaste" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_SMPTaste" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_SMPTaste" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleSMPTasteRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_SMPTaste" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleSMPTasteRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1548,9 +1558,10 @@
                                                                     <asp:Label ID="LabelSMPColor" runat="server" AssociatedControlID="RBL_SMPColor" Text="SMP Color :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_SMPColor" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_SMPColor" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_SMPColor" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleSMPColorRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_SMPColor" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleSMPColorRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -1593,9 +1604,10 @@
                                                                     <asp:Label ID="LabelSyrupColor" runat="server" AssociatedControlID="RBL_SyrupColor" Text="Syrup Color :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_SyrupColor" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="RBL_SyrupColor" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_SyrupColor" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleSyrupColorRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_SyrupColor" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleSyrupColorRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -2278,7 +2290,7 @@
                                                                     <asp:Label ID="LabelQuality" runat="server" AssociatedControlID="RBL_Quality" Text="Quality :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_Quality" runat="server" ValidationGroup="SpongeSubmit" ErrorMessage="*" ForeColor="Red" ControlToValidate="RBL_Quality" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_Quality" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleQualityRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_Quality" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleQualityRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
                                                                         </asp:RadioButtonList>

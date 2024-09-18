@@ -208,7 +208,7 @@
         }
 
 
-        function calculateRetention(element) {
+        function calculateRetention_old(element) {
             var row = element.closest('tr'); // Get the closest table row
             var initialSampleInput = row.querySelector('.TB_InitialSample');
             var finalRetentionInput = row.querySelector('.TB_FinalRetention');
@@ -222,6 +222,39 @@
                 retentionLabel.textContent = percentageRetention.toFixed(2) + " %";
             } else {
                 console.error('One or more elements not found.');
+            }
+        }
+
+        function calculateRetention(element) {
+            // Get the closest table row
+            var row = element.closest('tr');
+
+            // Select the input fields for initial sample, final retention, and label for percentage retention
+            var initialSampleInput = row.querySelector('.TB_InitialSample');
+            var finalRetentionInput = row.querySelector('.TB_FinalRetention');
+            var retentionLabel = row.querySelector('.lbl_PercentageRetention');
+
+            // Ensure the elements exist
+            if (initialSampleInput && finalRetentionInput && retentionLabel) {
+                // Parse the input values, allowing negative values for initialSample, defaulting to 0 if invalid
+                var initialSample = parseFloat(initialSampleInput.value);
+                var finalRetention = parseFloat(finalRetentionInput.value) || 0;
+
+                // Check if initialSample is a valid number (not NaN)
+                if (!isNaN(initialSample)) {
+                    // Calculate the percentage retention; divide finalRetention by initialSample, and multiply by 100
+                    var percentageRetention = (initialSample !== 0)
+                        ? (finalRetention / initialSample) * 100 : 0;
+
+                    // Update the label with the calculated retention percentage, rounded to 2 decimal places
+                    retentionLabel.textContent = percentageRetention.toFixed(2) + " %";
+                } else {
+                    // If the initial sample is invalid, set retention label to 'Invalid input'
+                    retentionLabel.textContent = "Invalid input";
+                }
+            } else {
+                // Log an error message if any of the required elements are missing
+                console.error('One or more required elements (initial sample, final retention, or label) are not found.');
             }
         }
 
@@ -616,14 +649,14 @@
                                                                     <asp:TemplateField HeaderText="INITIAL SAMPLE">
                                                                         <ItemTemplate>
                                                                             <asp:TextBox ID="TB_InitialSample" runat="server" CssClass="form-control form-control-sm rounded TB_InitialSample"
-                                                                                oninput="calculateRetention(this);" Text='<%# Eval("InitialSample") %>'></asp:TextBox>
+                                                                                 Text='<%# Eval("InitialSample") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="FINAL RETENTION">
                                                                         <ItemTemplate>
                                                                             <asp:TextBox ID="TB_FinalRetention" runat="server" CssClass="form-control form-control-sm rounded TB_FinalRetention"
-                                                                                oninput="calculateRetention(this);" Text='<%# Eval("FinalRetention") %>'></asp:TextBox>
+                                                                                Text='<%# Eval("FinalRetention") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
