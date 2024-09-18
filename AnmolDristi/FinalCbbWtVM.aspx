@@ -141,7 +141,7 @@
                             </ul>
                             <div class="clearfix"></div>
                         </div>
-                        <!-- GridView for displaying filtered data -->
+
                         <div class="table-responsive">
                             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeaderWhenEmpty="true" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                 <Columns>
@@ -152,97 +152,45 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="ID">
+                                    <asp:TemplateField HeaderText="Record No.">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Id") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="CBB_PK">
-                                        <ItemTemplate>
+                                            <asp:Label ID="lblId" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Id") %>'></asp:Label><br />
                                             <asp:Label ID="lblCBB_PK" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("CBB_PK") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="FormID">
+                                    <asp:TemplateField HeaderText="Submitted On">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblFormID" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("FormID") %>'></asp:Label>
+                                            <asp:Label ID="lblSubmittedDate" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("SubmittedDate", "{0:dd-MM-yyyy}") %>'></asp:Label><br />
+                                            <asp:Label ID="lblSubmittedTime" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("SubmittedTime", "{0:hh\\:mm\\:ss}") %>'></asp:Label><br />
+                                            <asp:Label ID="lblShift" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Shift") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
                                     <asp:TemplateField HeaderText="Submitted By">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblSubmittedBy" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("SubmittedById") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Submitted Date">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblSubmittedDate" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("SubmittedDate", "{0:dd-MM-yyyy}") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Submitted Time">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblSubmittedTime" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("SubmittedTime", "{0:hh\\:mm\\:ss}") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Shift">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblShift" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Shift") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Submitted By Employee Code">
-                                        <ItemTemplate>
                                             <asp:Label ID="lblSubmittedByEmployeeCode" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("SubmittedByEmployeeCode") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="Plant Name">
+                                    <asp:TemplateField HeaderText="Plant & Product">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPlantName" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("PlantName") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Line">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblLine" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Line") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Product Category">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblProductCategory" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("ProductCategory") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Product Brand">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblProductBrand" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("ProductBrand") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="SKU Id">
-                                        <ItemTemplate>
+                                            <asp:Label ID="lblPlantName" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("PlantName") %>'></asp:Label><br />
+                                            <asp:Label ID="lblLine" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Line") %>'></asp:Label><br />
+                                            <asp:Label ID="lblProductCategory" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("ProductCategory") %>'></asp:Label><br />
+                                            <asp:Label ID="lblProductBrand" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("ProductBrand") %>'></asp:Label><br />
                                             <asp:Label ID="lblSKUId" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("SKUId") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="Batch No">
+                                    <asp:TemplateField HeaderText="Batch No & MRP">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblBatchNo" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("BatchNo") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="MRP">
-                                        <ItemTemplate>
+                                            <asp:Label ID="lblBatchNo" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("BatchNo") %>'></asp:Label><br />
                                             <asp:Label ID="lblMRP" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("MRP") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="Gross Weight (Json)">
+                                    <asp:TemplateField HeaderText="Gross Weights">
                                         <ItemTemplate>
                                             <asp:Label ID="lblGrossWeightJson" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("GrossWeightJson") %>'></asp:Label>
                                         </ItemTemplate>
@@ -253,60 +201,9 @@
                                             <asp:Label ID="lblAverageGrossWeight" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("AverageGrossWeight") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="View Mode">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblViewMode" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("ViewMode") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Delete Mode">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDeleteMode" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DeleteMode") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Approver 1 Status">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblApprover1Status" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Approver1_Status") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Approver 1 Timestamp">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblApprover1TimeStamp" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Approver1_TimeStamp", "{0:dd-MM-yyyy HH:mm:ss}") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Approver 2 Status">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblApprover2Status" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Approver2_Status") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Approver 2 Timestamp">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblApprover2TimeStamp" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Approver2_TimeStamp", "{0:dd-MM-yyyy HH:mm:ss}") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Dotted Approver Status">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDottedApproverStatus" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DottedApprover_Status") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Dotted Approver Timestamp">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDottedApproverTimeStamp" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DottedApprover_TimeStamp", "{0:dd-MM-yyyy HH:mm:ss}") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
                                 </Columns>
                             </asp:GridView>
                         </div>
-
-                        <div class="x_content"></div>
                     </div>
                 </div>
             </div>

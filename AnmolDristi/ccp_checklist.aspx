@@ -114,7 +114,20 @@
 
             // Ensure at least 3 rows are filled
             if (filledRowsCount < 2) {
-                alert("Please fill in at least 2 records before proceeding.");
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'Input Required',
+                        text: 'Please fill in at least 2 records before proceeding.',
+                        type: 'warning',
+                        styling: 'bootstrap3',
+                        delay: 3000,        // Notification auto-dismiss delay in milliseconds (3 seconds)
+                        buttons: {
+                            closer: true,  // Show a close button in the notification
+                            sticker: false // Hide the sticker button
+                        }
+                    });
+                }, 200); // Adjust delay as necessary
                 return false; // Prevent the button click
             }
 
@@ -247,10 +260,10 @@
                         ? (finalRetention / initialSample) * 100 : 0;
 
                     // Update the label with the calculated retention percentage, rounded to 2 decimal places
-                    retentionLabel.textContent = percentageRetention.toFixed(2) + " %";
+                    retentionLabel.value = percentageRetention.toFixed(2) + " %";
                 } else {
                     // If the initial sample is invalid, set retention label to 'Invalid input'
-                    retentionLabel.textContent = "Invalid input";
+                    retentionLabel.value = "Invalid input";
                 }
             } else {
                 // Log an error message if any of the required elements are missing
@@ -332,42 +345,71 @@
 
                 var txtInitialSample = row.querySelector("input[id*='TB_InitialSample']");
                 var txtFinalRetention = row.querySelector("input[id*='TB_FinalRetention']");
+                var txtPercentageRetention = row.querySelector("input[id*='lbl_PercentageRetention']");
 
                 var rowIsValid = true; // Flag to check if this row meets the criteria
 
-                // Check if TextBoxes have values greater than 1
+                // Check if Initial Sample TextBox has a valid numeric value (positive or negative, non-zero)
                 if (txtInitialSample) {
-                    var initialSampleValue = parseFloat(txtInitialSample.value) || 0;
-                    if (initialSampleValue <= 1) {
+                    var initialSampleValue = parseFloat(txtInitialSample.value);
+                    if (isNaN(initialSampleValue) || initialSampleValue === 0) {
                         isValid = false;
                         rowIsValid = false;
-                        txtInitialSample.style.borderColor = "red";
+                        txtInitialSample.style.borderColor = "red"; // Mark invalid input
                     } else {
-                        txtInitialSample.style.borderColor = "";
+                        txtInitialSample.style.borderColor = ""; // Reset border color for valid input
                     }
                 }
 
+                // Check if Final Retention TextBox has a valid numeric value (positive or negative, non-zero)
                 if (txtFinalRetention) {
-                    var finalRetentionValue = parseFloat(txtFinalRetention.value) || 0;
-                    if (finalRetentionValue <= 1) {
+                    var finalRetentionValue = parseFloat(txtFinalRetention.value);
+                    if (isNaN(finalRetentionValue) || finalRetentionValue === 0) {
                         isValid = false;
                         rowIsValid = false;
-                        txtFinalRetention.style.borderColor = "red";
+                        txtFinalRetention.style.borderColor = "red"; // Mark invalid input
                     } else {
-                        txtFinalRetention.style.borderColor = "";
+                        txtFinalRetention.style.borderColor = ""; // Reset border color for valid input
                     }
                 }
 
-                // If both inputs in the row are valid (i.e., values > 1), increase the filledRowsCount
-                if (rowIsValid && initialSampleValue > 1 && finalRetentionValue > 1) {
+                // Check if the percentage retention is calculated and non-empty
+                if (txtPercentageRetention) {
+                    var percentageRetentionValue = txtPercentageRetention.value.trim();
+                    if (percentageRetentionValue === "" || percentageRetentionValue === "Invalid input") {
+                        isValid = false;
+                        rowIsValid = false;
+                        txtPercentageRetention.style.borderColor = "red"; // Mark invalid input
+                    } else {
+                        txtPercentageRetention.style.borderColor = ""; // Reset border color for valid input
+                    }
+                }
+
+                // If all values in the row are valid, increase the filledRowsCount
+                if (rowIsValid && !isNaN(initialSampleValue) && initialSampleValue !== 0 &&
+                    !isNaN(finalRetentionValue) && finalRetentionValue !== 0 &&
+                    percentageRetentionValue !== "" && percentageRetentionValue !== "Invalid input") {
                     filledRowsCount++;
                 }
             }
 
-            // Check if the required 3 rows with values > 1 are filled
+            // Check if the required number of rows with valid inputs are filled
             if (filledRowsCount < rowsToValidate) {
                 isValid = false;
-                alert("Please ensure at least " + rowsToValidate + " rows have values greater than 1.");
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'Input Required',
+                        text: 'Please ensure at least ' + rowsToValidate + ' rows have valid non-zero numeric values and valid percentage retention',
+                        type: 'warning',
+                        styling: 'bootstrap3',
+                        delay: 3000,        // Notification auto-dismiss delay in milliseconds (3 seconds)
+                        buttons: {
+                            closer: true,  // Show a close button in the notification
+                            sticker: false // Hide the sticker button
+                        }
+                    });
+                }, 200); // Adjust delay as necessary
             }
 
             // Return the validation result
@@ -624,7 +666,8 @@
 
                                                                     <asp:TemplateField HeaderText="% OF RETENTION">
                                                                         <ItemTemplate>
-                                                                            <asp:Label ID="lbl_PercentageRetention" runat="server" CssClass="lbl_PercentageRetention"></asp:Label>
+                                                                            <asp:TextBox ID="lbl_PercentageRetention" runat="server" CssClass="form-control form-control-sm rounded lbl_PercentageRetention" Text='<%# Eval("PercentageRetention") %>'></asp:TextBox>
+                                                                            <%--<asp:Label ID="lbl_PercentageRetention" runat="server" CssClass="lbl_PercentageRetention"></asp:Label>--%>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                 </Columns>
@@ -649,7 +692,7 @@
                                                                     <asp:TemplateField HeaderText="INITIAL SAMPLE">
                                                                         <ItemTemplate>
                                                                             <asp:TextBox ID="TB_InitialSample" runat="server" CssClass="form-control form-control-sm rounded TB_InitialSample"
-                                                                                 Text='<%# Eval("InitialSample") %>'></asp:TextBox>
+                                                                                Text='<%# Eval("InitialSample") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
@@ -662,7 +705,8 @@
 
                                                                     <asp:TemplateField HeaderText="% OF RETENTION">
                                                                         <ItemTemplate>
-                                                                            <asp:Label ID="lbl_PercentageRetention" runat="server" CssClass="lbl_PercentageRetention"  Text='<%# Eval("PercentageRetention") %>'></asp:Label>
+                                                                           
+                                                                            <asp:Label ID="lbl_PercentageRetention" runat="server" CssClass="form-control form-control-sm rounded lbl_PercentageRetention" Text='<%# Eval("PercentageRetention") %>'></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                 </Columns>

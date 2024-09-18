@@ -91,7 +91,20 @@
 
             // If not valid, prevent form submission
             if (!isValid) {
-                alert("Please fill all the required fields.");
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'Input Required',
+                        text: 'Please fill all the required fields.',
+                        type: 'warning',
+                        styling: 'bootstrap3',
+                        delay: 3000,        // Notification auto-dismiss delay in milliseconds (3 seconds)
+                        buttons: {
+                            closer: true,  // Show a close button in the notification
+                            sticker: false // Hide the sticker button
+                        }
+                    });
+                }, 200); // Adjust delay as necessary
             }
 
             return isValid;
@@ -166,7 +179,20 @@
             // Check if the minimum number of filled rows is met
             if (filledRowsCount < minimumRequiredRows) {
                 isValid = false;
-                alert("Please fill at least " + minimumRequiredRows + " rows.");
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'Input Required',
+                        text: 'Please ensure at least ' + minimumRequiredRows + ' rows have valid non-zero numeric values',
+                        type: 'warning',
+                        styling: 'bootstrap3',
+                        delay: 3000,        // Notification auto-dismiss delay in milliseconds (3 seconds)
+                        buttons: {
+                            closer: true,  // Show a close button in the notification
+                            sticker: false // Hide the sticker button
+                        }
+                    });
+                }, 200); // Adjust delay as necessary
             }
 
             // If there are valid entries, calculate the average

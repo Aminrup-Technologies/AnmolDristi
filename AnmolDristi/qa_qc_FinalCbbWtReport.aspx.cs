@@ -122,6 +122,18 @@ namespace AnmolDristi
             }
             else
             {
+                string NO_BasicData = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'NO Basic Data',
+                                text: 'Initiate from Step-1!!',
+                                type: 'warning',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                // RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "NO_BasicData_Error", NO_BasicData, false);
+
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
             }
 
