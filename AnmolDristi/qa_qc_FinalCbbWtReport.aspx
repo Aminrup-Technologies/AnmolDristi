@@ -102,6 +102,8 @@
             var gridView = document.getElementById('<%= GridView1.ClientID %>');
             var totalWeight = 0;
             var count = 0;
+            var minWeight = Number.MAX_VALUE;
+            var maxWeight = Number.MIN_VALUE;
 
             // Iterate over GridView rows (skip the header row)
             for (var i = 1; i < gridView.rows.length; i++) {
@@ -110,14 +112,30 @@
 
                 // Check if the value is not empty and accumulate total weight
                 if (txtGrossWeight && txtGrossWeight.value.trim() !== "") {
-                    totalWeight += parseFloat(txtGrossWeight.value.trim());
-                    count++;
+                    var weight = parseFloat(txtGrossWeight.value.trim());
+
+                    if (!isNaN(weight) && weight > 0) {
+                        totalWeight += weight;
+                        count++;
+
+                        // Track min and max weight
+                        if (weight < minWeight) minWeight = weight;
+                        if (weight > maxWeight) maxWeight = weight;
+                    }
                 }
             }
 
-            // Calculate the average weight and display it
+            // Calculate the average, min, max, and difference
             var averageWeight = count > 0 ? (totalWeight / count).toFixed(2) : "0.00";
-            document.getElementById('<%= txtAverageGrossWeight.ClientID %>').value = averageWeight;
+            var difference = count > 0 ? (maxWeight - minWeight).toFixed(2) : "0.00";
+            minWeight = (minWeight !== Number.MAX_VALUE) ? minWeight.toFixed(2) : "0.00";
+            maxWeight = (maxWeight !== Number.MIN_VALUE) ? maxWeight.toFixed(2) : "0.00";
+
+            // Update the values on the page
+            document.getElementById('<%= lblAvgWeights.ClientID %>').innerHTML = averageWeight;
+            document.getElementById('<%= lblMinValue.ClientID %>').innerHTML = minWeight + " gm";
+            document.getElementById('<%= lblMaxValue.ClientID %>').innerHTML = maxWeight + " gm";
+            document.getElementById('<%= lblDiffMinMax.ClientID %>').innerHTML = difference + " gm";
         }
 
 
@@ -154,9 +172,9 @@
             // If there are valid entries, calculate the average
             if (isValid && count > 0) {
                 var averageWeight = totalWeight / count;
-                document.getElementById('<%= txtAverageGrossWeight.ClientID %>').value = averageWeight.toFixed(2);
+                document.getElementById('<%= lblAvgWeights.ClientID %>').value = averageWeight.toFixed(2);
             } else {
-                document.getElementById('<%= txtAverageGrossWeight.ClientID %>').value = "0.00";
+                document.getElementById('<%= lblAvgWeights.ClientID %>').value = "0.00";
             }
 
             return isValid;
@@ -307,8 +325,8 @@
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="lblMRP" runat="server" AssociatedControlID="TXT_MRP" Text="MRP:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_MRP" runat="server" ErrorMessage="MRP Required" InitialValue="" ValidationGroup="Submit" ControlToValidate="TXT_MRP" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_MRP" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_MRP" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RequiredFieldValidator ID="RFV_MRP" runat="server" ErrorMessage="MRP Required" InitialValue="" ControlToValidate="TXT_MRP" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_MRP" runat="server" ControlToValidate="TXT_MRP" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <asp:RangeValidator ID="RV_MRP" runat="server" ControlToValidate="TXT_MRP" ErrorMessage="[0.00 - 9999.99]" ForeColor="Red" MinimumValue="0.00" MaximumValue="9999.99" Type="Double" Display="Static"></asp:RangeValidator>
                                                                     <div class="input-group-sm">
                                                                         <asp:TextBox ID="TXT_MRP" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="MRP [0.00 - 9999.99]"></asp:TextBox>
@@ -321,7 +339,7 @@
                                                                 <asp:Button ID="Btn_Save" runat="server" Text="Proceed Next" OnClick="Btn_Save_Click" CausesValidation="true" ValidationGroup="Submit" CssClass="btn btn-sm btn-primary" />
                                                                 <asp:Button ID="Btn_Reset" runat="server" Text="Reset" OnClick="Btn_Reset_Click" CssClass="btn btn-sm btn-warning" />
                                                                 <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
-                                                                <asp:Button ID="btn_home1" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" PostBackUrl="~/home.aspx" />
+                                                                <asp:Button ID="btn_home1" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" PostBackUrl="~/home.aspx" />
                                                             </div>
 
 
@@ -365,14 +383,14 @@
                                                             </asp:GridView>
 
 
-                                                            <div class="col-md-3" id="AvgWt_TB" runat="server" visible="true">
+                                                            <%--<div class="col-md-3" id="AvgWt_TB" runat="server" visible="true">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="lbl_txtAverageGrossWeight" runat="server" AssociatedControlID="txtAverageGrossWeight" Text="Avergae of all the Weights:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group-sm">
                                                                         <asp:TextBox ID="txtAverageGrossWeight" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>--%>
 
                                                             <asp:GridView ID="yourGridView" runat="server" AutoGenerateColumns="False" Visible="false" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
@@ -382,12 +400,42 @@
                                                             </asp:GridView>
                                                         </div>
 
+                                                        <div class="col-md-6" id="Div1" runat="server" visible="true">
+                                                            <!-- Table structure for Min, Max, Difference, and Average -->
+                                                            <table class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" style="width:100%;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Min Value</th>
+                                                                        <th>Max Value</th>
+                                                                        <th>Difference (Min-Max)</th>
+                                                                        <th>Average Value</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <asp:Label ID="lblMinValue" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="lblMaxValue" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="lblDiffMinMax" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <asp:Label ID="lblAvgWeights" runat="server" Text="0"></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
                                                         <div class="col-md-12 text-center">
 
-                                                            <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClientClick="return validateGridView();" ValidationGroup="Submit2" OnClick="btnSubmit_Click" CssClass="btn btn-sm btn-primary" />
+                                                            <asp:Button ID="btnSubmit" runat="server" Text="Final Submit" OnClientClick="return validateGridView();" ValidationGroup="Submit2" OnClick="btnSubmit_Click" CssClass="btn btn-sm btn-primary" />
                                                             <asp:Button ID="btn_resetgrid" runat="server" Text="Reset Inputs" CssClass="btn btn-sm btn-warning" OnClientClick="return resetGridViewTextboxes();" />
                                                             <asp:Label ID="Label6" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
-                                                            <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-info" PostBackUrl="~/home.aspx" />
+                                                            <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" PostBackUrl="~/home.aspx" />
                                                         </div>
 
                                                     </div>

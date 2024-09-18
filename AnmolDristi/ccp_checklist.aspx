@@ -218,7 +218,7 @@
                 var initialSample = parseFloat(initialSampleInput.value) || 0;
                 var finalRetention = parseFloat(finalRetentionInput.value) || 0;
 
-                var percentageRetention = (initialSample > 0) ? (initialSample / finalRetention) * 100 : 0;
+                var percentageRetention = (initialSample > 0) ? (finalRetention / initialSample) * 100 : 0;
                 retentionLabel.textContent = percentageRetention.toFixed(2) + " %";
             } else {
                 console.error('One or more elements not found.');

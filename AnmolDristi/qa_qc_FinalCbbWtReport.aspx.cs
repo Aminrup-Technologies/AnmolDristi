@@ -76,6 +76,57 @@ namespace AnmolDristi
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+
+            if (Btn_Save.Text== "SAVED" && CBB_key != string.Empty)
+            {
+                try
+                {
+                    // Create a list to hold WeightData objects
+                    List<WeightData> weightDataList = new List<WeightData>();
+
+                    // Iterate through GridView rows and populate the list
+                    foreach (GridViewRow row in GridView1.Rows)
+                    {
+                        // Assuming you have a TextBox for gross weight
+                        TextBox txtGrossWeight = (TextBox)row.FindControl("txtGrossWeight");
+
+                        if (txtGrossWeight != null && !string.IsNullOrEmpty(txtGrossWeight.Text))
+                        {
+                            decimal grossWeight;
+                            if (decimal.TryParse(txtGrossWeight.Text, out grossWeight))
+                            {
+                                int sl = row.RowIndex + 1; // Serial number
+                                weightDataList.Add(new WeightData
+                                {
+                                    sl = sl,
+                                    weight = grossWeight
+                                });
+                            }
+                        }
+                    }
+
+                    string jsonData = JsonConvert.SerializeObject(weightDataList);
+
+
+                    string avgGrossWgt = lblAvgWeights.Text.ToString();
+                    //string jsonData = JsonConvert.SerializeObject(grossWeightData);
+                    UpdateGrossWeightsInDatabase(jsonData, avgGrossWgt);
+
+                    BindDataToGridView(jsonData);
+                }
+                catch (Exception ex)
+                {
+
+                    //throw;
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
+            }
+
+
+
             //List<Dictionary<string, object>> recordsList = new List<Dictionary<string, object>>();
             ////Dictionary<int, decimal> grossWeightData = new Dictionary<int, decimal>();
 
@@ -103,38 +154,7 @@ namespace AnmolDristi
             //JavaScriptSerializer serializer = new JavaScriptSerializer();
             //string jsonString = serializer.Serialize(recordsList);
 
-            // Create a list to hold WeightData objects
-            List<WeightData> weightDataList = new List<WeightData>();
-
-            // Iterate through GridView rows and populate the list
-            foreach (GridViewRow row in GridView1.Rows)
-            {
-                // Assuming you have a TextBox for gross weight
-                TextBox txtGrossWeight = (TextBox)row.FindControl("txtGrossWeight");
-
-                if (txtGrossWeight != null && !string.IsNullOrEmpty(txtGrossWeight.Text))
-                {
-                    decimal grossWeight;
-                    if (decimal.TryParse(txtGrossWeight.Text, out grossWeight))
-                    {
-                        int sl = row.RowIndex + 1; // Serial number
-                        weightDataList.Add(new WeightData
-                        {
-                            sl = sl,
-                            weight = grossWeight
-                        });
-                    }
-                }
-            }
-
-            string jsonData = JsonConvert.SerializeObject(weightDataList);
-
-
-            string avgGrossWgt = txtAverageGrossWeight.Text.ToString();
-            //string jsonData = JsonConvert.SerializeObject(grossWeightData);
-            UpdateGrossWeightsInDatabase(jsonData, avgGrossWgt);
-
-            BindDataToGridView(jsonData);
+            
         }
 
         protected void BindDataToGridView(string jsonString)
@@ -180,7 +200,7 @@ namespace AnmolDristi
 
                         RowCount_DIV.Visible = false;
                         GridView1.Visible = false;
-                        AvgWt_TB.Visible = false;
+                        //AvgWt_TB.Visible = false;
 
                         yourGridView.Visible = true;
                         btnSubmit.Enabled = false;
@@ -972,13 +992,30 @@ namespace AnmolDristi
             string shift = hdn_shiftvalue.Value.ToString();
             string submittedByEmployeeCode = Session["WORKMAN"].ToString();
             string batchNo = TXT_BatchNo.Text;
+            //decimal mrp;
+            //if (!decimal.TryParse(TXT_MRP.Text, out mrp))
+            //{
+            //    lblMessage.Text = "Please enter a valid MRP.";
+            //    lblMessage.ForeColor = System.Drawing.Color.Red;
+            //    return;
+            //}
+
             decimal mrp;
-            if (!decimal.TryParse(TXT_MRP.Text, out mrp))
+            string mrpInput = TXT_MRP.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(mrpInput) || !decimal.TryParse(mrpInput, out mrp) || mrp == 0)
             {
-                lblMessage.Text = "Please enter a valid MRP.";
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-                return;
+                mrp = 0;  // Treat as zero
+                lblMessage.Text = "MRP is set to 0.";
+                lblMessage.ForeColor = System.Drawing.Color.Blue;
             }
+            else
+            {
+                lblMessage.Text = "Valid MRP entered.";
+                lblMessage.ForeColor = System.Drawing.Color.Green;
+            }
+
+
             int viewMode = 1;
             int deleteMode = 0;
             string approver1EmployeeCode = Approver1CodeLabel.Text.ToString();
