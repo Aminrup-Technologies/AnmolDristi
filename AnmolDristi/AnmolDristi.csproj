@@ -151,6 +151,7 @@
     <Content Include="vm_leak_test.aspx" />
     <Content Include="vw_app_qcireport.aspx" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
+    <Content Include="UploadImageHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -477,6 +478,9 @@
     </Compile>
     <Compile Include="qa_qc_FinalCbbWtReport.aspx.designer.cs">
       <DependentUpon>qa_qc_FinalCbbWtReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UploadImageHandler.ashx.cs">
+      <DependentUpon>UploadImageHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="vm_ccp_checklist.aspx.cs">
       <DependentUpon>vm_ccp_checklist.aspx</DependentUpon>

@@ -421,10 +421,205 @@
             });
         }
 
+
+        function displayImage1(input) {
+            var file = input.files[0];
+            if (!file) return;
+
+            var img = document.createElement("img");
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                img.src = e.target.result;
+
+                img.onload = function () {
+                    var canvas = document.createElement("canvas");
+                    var ctx = canvas.getContext("2d");
+
+                    var maxWidth = 800; // Resize to this width
+                    var width = img.width;
+                    var height = img.height;
+
+                    if (width > maxWidth) {
+                        height = Math.floor((maxWidth / width) * height);
+                        width = maxWidth;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    canvas.toBlob(function (blob) {
+                        var formData = new FormData();
+                        formData.append("image", blob, file.name);
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "/UploadImageHandler.ashx", true);
+
+                        xhr.upload.onprogress = function (event) {
+                            if (event.lengthComputable) {
+                                var percentComplete = (event.loaded / event.total) * 100;
+                                // Update progress bar or similar indicator
+                            }
+                        };
+
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                var imageElement = document.getElementById('FU_DesgImp_Img');
+                                console.log(imageElement); // Check if this logs a valid element
+                                if (imageElement) {
+                                    imageElement.style.display = 'block'; // Only access 'style' if the element exists
+                                } else {
+                                    console.error("Element 'FU_DesgImp_Img' not found in the DOM.");
+                                }
+                                document.getElementById('<%= uploadedImage1.ClientID %>').src = response.imageUrl;
+
+                                new PNotify({
+                                    title: 'Upload Success',
+                                    text: 'Image Saved!',
+                                    type: 'success',
+                                    styling: 'bootstrap3'
+                                });
+                            } else {
+                                new PNotify({
+                                    title: 'Upload Failed',
+                                    text: 'An error occurred during the upload.',
+                                    type: 'error',
+                                    styling: 'bootstrap3'
+                                });
+                            }
+                        };
+
+                        xhr.send(formData);
+                    }, 'image/jpeg', 0.8); // Compress with quality 0.8 (80%)
+                };
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function validateForm2() {
+            var fileInput = document.getElementById('<%= FU_DesgImp.ClientID %>');
+                if (fileInput.files.length === 0) {
+                    new PNotify({
+                        title: 'Validation Error',
+                        text: 'Please select a file to upload.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });
+                    return false;
+                }
+                return true;
+            }
+
+
+            function displayImage2(input) {
+                var file = input.files[0];
+                if (!file) return;
+
+                var prefix = input.getAttribute("data-prefix");
+                console.log('PrefixValue: ' + prefix + '');
+                var img = document.createElement("img");
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    img.src = e.target.result;
+
+                    img.onload = function () {
+                        var canvas = document.createElement("canvas");
+                        var ctx = canvas.getContext("2d");
+
+                        var maxWidth = 1000; // Resize to this width
+                        var width = img.width;
+                        var height = img.height;
+
+                        if (width > maxWidth) {
+                            height = Math.floor((maxWidth / width) * height);
+                            width = maxWidth;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        canvas.toBlob(function (blob) {
+                            var formData = new FormData();
+
+                            var fileExtension = file.name.split('.').pop(); // Get the file extension
+                            var newFileName = prefix + "_" + new Date().getTime() + "." + fileExtension; // Create new filename with prefix
+
+                            formData.append("image", blob, newFileName); // Append file with new filename
+                            formData.append("prefix", prefix); // Append the prefix for folder selection
+
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "/UploadImageHandler.ashx", true);
+
+                            xhr.upload.onprogress = function (event) {
+                                if (event.lengthComputable) {
+                                    var percentComplete = (event.loaded / event.total) * 100;
+                                    console.log('Upload progress: ' + percentComplete + '%');
+                                }
+                            };
+
+                            xhr.onload = function () {
+                                if (xhr.status === 200) {
+                                    var response = JSON.parse(xhr.responseText);
+                                    var imageElement = document.querySelector('img[data-prefix="' + prefix + '"]');
+                                    console.log("Image Display Element: ", imageElement);
+                                    var labelElement = document.querySelector('span[data-prefix="' + prefix + '"]');
+                                    console.log("Hidden Element: ", labelElement);
+
+                                    if (imageElement) {
+
+                                        imageElement.style.display = 'block';
+                                        imageElement.src = response.imageUrl; // Update image source
+                                        console.log("Image URL: " + response.imageUrl);
+                                    } else {
+                                        console.error("Image element not found for prefix: " + prefix);
+                                    }
+
+                                    if (labelElement) {
+                                        labelElement.innerText = response.imageUrl;
+                                        //labelElement.textContent = response.imageUrl;
+                                    }
+
+                                    // Now use if-else to bind to individual hidden fields
+                                    if (prefix === "QCIR/ClrApp") {
+                                        document.getElementById('<%= hdn_img2.ClientID %>').value = response.imageUrl;
+                                    } else if (prefix === "QCIR/DesignImp") {
+                                        document.getElementById('<%= hdn_img1.ClientID %>').value = response.imageUrl;
+                                    }
+
+                                    new PNotify({
+                                        title: 'Upload Success',
+                                        text: 'Image Saved!',
+                                        type: 'success',
+                                        styling: 'bootstrap3'
+                                    });
+                                } else {
+                                    new PNotify({
+                                        title: 'Upload Failed',
+                                        text: 'An error occurred during the upload.',
+                                        type: 'error',
+                                        styling: 'bootstrap3'
+                                    });
+                                }
+                            };
+
+                            xhr.send(formData);
+                        }, 'image/jpeg', 0.6); // Compress to 80% quality
+                    };
+                };
+
+                reader.readAsDataURL(file);
+            }
+
     </script>
 
-    <asp:HiddenField ID="hdn_img1" runat="server" />
-    <asp:HiddenField ID="hdn_img2" runat="server" />
+    <asp:HiddenField ID="hdn_img1" runat="server"/>
+    <asp:HiddenField ID="hdn_img2" runat="server"/>
+
 
     <asp:HiddenField ID="hdn_shiftvalue" runat="server" />
     <asp:HiddenField ID="hdn_fromid" runat="server" />
@@ -917,38 +1112,25 @@
                             </div>
 
 
-                            <%--<div class="col-md-3" id="FU_DesgImp_Upldr" runat="server" visible="true">
-                                <div class="mb-3">
-                                    <asp:Label ID="Lbl_FU_DesgImp" runat="server" AssociatedControlID="FU_DesgImp" Text="Product Apperance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_FU_DesgImp" runat="server" ErrorMessage="*" ControlToValidate="FU_DesgImp" Display="Dynamic" ValidationGroup="ValidationGroup1" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:CustomValidator ID="CV_FU_DesgImp" runat="server" ControlToValidate="FU_ClrApp" Display="Dynamic" ValidationGroup="ValidationGroup1" ErrorMessage="Please upload file"></asp:CustomValidator>
-                                    <asp:Label ID="lblErrorMessage2" runat="server" CssClass="text-danger"></asp:Label>
-                                    <div class="input-group input-group-sm">
-                                        <asp:FileUpload ID="FU_DesgImp" runat="server" CssClass="form-control rounded" onchange="displayImage(this);" />
-                                        <span class="input-group-btn">
-                                            <asp:Button ID="BtnUploadFU_DesgImp" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm2();" OnClick="BtnUploadFU_DesgImp_Click" ValidationGroup="ValidationGroup1" CausesValidation="true" />
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>--%>
-
-                            <div class="col-md-3" id="FU_DesgImp_Upldr" runat="server" visible="true">
+                            <div class="col-md-3" id="FU_DesgImp_Upldr" runat="server" data-prefix="QCIR/ClrApp">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_FU_DesgImp" runat="server" AssociatedControlID="FU_DesgImp" Text="Product Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_FU_DesgImp" runat="server" ErrorMessage="Product Photograph Required" ControlToValidate="FU_DesgImp" Display="Dynamic" ValidationGroup="Submit" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:CustomValidator ID="CV_FU_DesgImp" runat="server" ControlToValidate="FU_DesgImp" Display="Dynamic" ValidationGroup="Submit" ErrorMessage="Please upload file"></asp:CustomValidator>
                                     <asp:Label ID="lblErrorMessage2" runat="server" CssClass="text-danger"></asp:Label>
                                     <div class="input-group input-group-sm">
-                                        <asp:FileUpload ID="FU_DesgImp" runat="server" CssClass="form-control rounded" onchange="displayImage(this);" />
+                                        
+                                        <asp:FileUpload ID="FU_DesgImp" runat="server" CssClass="form-control rounded" data-prefix="QCIR/ClrApp" onchange="displayImage2(this);" />
+                                        <asp:Label ID="lbl_QCIR_ClrApp" runat="server" Text="" CssClass="image-label" data-prefix="QCIR/ClrApp" Visible="true" ForeColor="Black"></asp:Label>
                                         <span class="input-group-btn">
-                                            <asp:Button ID="BtnUploadFU_DesgImp" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm2();" OnClick="BtnUploadFU_DesgImp_Click" ValidationGroup="ValidationGroup1" CausesValidation="true" />
+                                            <asp:Button ID="BtnUploadFU_DesgImp" Visible="false" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm2();" ValidationGroup="ValidationGroup1" CausesValidation="true" />
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-3" id="FU_DesgImp_Img" runat="server" visible="false">
-                                <asp:Image ID="uploadedImage1" runat="server" CssClass="img-fluid" />
+                            <div class="col-md-3" id="FU_DesgImp_Img" runat="server" data-prefix="QCIR/ClrApp">
+                                <asp:Image ID="uploadedImage1" runat="server" CssClass="img-fluid" data-prefix="QCIR/ClrApp" Style="display: none;" />
                             </div>
 
                             <div class="col-md-3" id="FU_ClrApp_Upldr" runat="server" visible="true">
@@ -958,16 +1140,17 @@
                                     <asp:CustomValidator ID="CV_FU_ClrApp" runat="server" ControlToValidate="FU_ClrApp" Display="Dynamic" ValidationGroup="Submit" ErrorMessage="Please upload at least one file"></asp:CustomValidator>
                                     <asp:Label ID="lblErrorMessage1" runat="server" CssClass="text-danger"></asp:Label>
                                     <div class="input-group input-group-sm">
-                                        <asp:FileUpload ID="FU_ClrApp" runat="server" CssClass="form-control rounded" />
+                                        <asp:FileUpload ID="FU_ClrApp" runat="server" CssClass="form-control rounded" data-prefix="QCIR/DesignImp" onchange="displayImage2(this);" />
+                                        <asp:Label ID="lbl_QCIR_DesignImp" runat="server" Text="" CssClass="image-label" data-prefix="QCIR/DesignImp" Visible="true" ForeColor="Black"></asp:Label>
                                         <span class="input-group-btn">
-                                            <asp:Button ID="BtnUploadClrApp" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm1();" OnClick="BtnUploadClrApp_Click" ValidationGroup="ValidationGroup2" />
+                                            <asp:Button ID="BtnUploadClrApp" runat="server" Visible="false" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm1();" ValidationGroup="ValidationGroup2" />
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-3" id="FU_ClrApp_Img" runat="server" visible="false">
-                                <asp:Image ID="uploadedImage2" runat="server" CssClass="img-fluid" />
+                            <div class="col-md-3" id="FU_ClrApp_Img" runat="server" visible="true">
+                                <asp:Image ID="uploadedImage2" runat="server" CssClass="img-fluid" data-prefix="QCIR/DesignImp" Style="display: none;" />
                             </div>
 
                             <div class="col-md-3">

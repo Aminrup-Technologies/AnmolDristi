@@ -1552,6 +1552,15 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.FileUpload FU_DesgImp;
         
         /// <summary>
+        /// lbl_QCIR_ClrApp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_QCIR_ClrApp;
+        
+        /// <summary>
         /// BtnUploadFU_DesgImp control.
         /// </summary>
         /// <remarks>
@@ -1631,6 +1640,15 @@ namespace AnmolDristi.qaqc {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload FU_ClrApp;
+        
+        /// <summary>
+        /// lbl_QCIR_DesignImp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_QCIR_DesignImp;
         
         /// <summary>
         /// BtnUploadClrApp control.

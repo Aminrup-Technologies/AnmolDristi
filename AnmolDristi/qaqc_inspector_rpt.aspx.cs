@@ -35,6 +35,9 @@ namespace AnmolDristi.qaqc
                     lbl_docname.Text = "QC - Inspection Report";
                     lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/02";
 
+                    lbl_QCIR_ClrApp.Attributes.Add("data-prefix", "QCIR/ClrApp");
+                    lbl_QCIR_DesignImp.Attributes.Add("data-prefix", "QCIR/DesignImp");
+
                     PlantBinder();
                     DisplayCurrentShift();
                 }
@@ -1895,8 +1898,9 @@ namespace AnmolDristi.qaqc
 
                     PacketWeight = TryParseDecimal(TB_PktWgt.Text) ?? 0,
 
-                    DesignAndImplementation = ImgLink1,
-                    ColourAndAppearance = ImgLink2,
+                    
+                    DesignAndImplementation = hdn_img1.Value,
+                    ColourAndAppearance = hdn_img2.Value,
 
                     SubmittedByPNo = Session["WORKMAN"].ToString(),
                     SubmittedById = Convert.ToInt32(Session["USERID"].ToString()),
