@@ -145,15 +145,36 @@
                                                         <a href="http://115.112.186.71:80/login.aspx" target="_blank">
                                                             <img style="width: 70%; display: block;" src="WebData/confbook.png" alt="image" height="100px" />
                                                         </a>
-                                                        <div class="mask">
-                                                            <p>Conference Booking</p>
-                                                            <div class="tools tools-bottom">
-                                                                <a href="http://115.112.186.71/login.aspx"><i class="fa fa-link"></i></a>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                     <div class="caption">
                                                         <p>Conference Booking</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-55">
+                                                <div class="thumbnail">
+                                                    <div class="image view view-first">
+                                                        <a href="http://115.112.186.71:8009/pages/UI.php" target="_blank">
+                                                            <img style="width: 70%; display: block;" src="WebData/itop-logo-external.png" alt="image" height="100px" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <p>IT Helpdesk</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-55">
+                                                <div class="thumbnail">
+                                                    <div class="image view view-first">
+                                                        <a href="https://portal.zinghr.com/2015/pages/authentication/zing.aspx?ccode=anmol" target="_blank">
+                                                            <img style="width: 70%; display: block;" src="WebData/anmolaing.png" alt="image" height="100px" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <p>ZingHr - Anmol Dost</p>
                                                     </div>
                                                 </div>
                                             </div>

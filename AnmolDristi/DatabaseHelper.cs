@@ -286,5 +286,53 @@ namespace AnmolDristi
         }
 
 
+
+        public static void BindLiteralControl(string query, Literal span_L, Literal span_W, Literal span_H, Literal span_GSM, SqlParameter parameter, out bool recordsBound)
+        {
+            // Initialize the output parameter
+            recordsBound = false;
+
+            // Create a DataTable to hold the query results
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+
+                using (SqlConnection conn = GetConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(parameter);
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                        //conn.Open();
+                        adapter.Fill(dataTable);
+
+                        // Check if data is available
+                        recordsBound = dataTable.Rows.Count > 0;
+
+                        // If records are bound, populate the Literal controls
+                        if (recordsBound)
+                        {
+                            DataRow row = dataTable.Rows[0];
+
+                            // Set text for Literal controls
+                            if (span_L != null) span_W.Text = row["Dimension_Std_W"].ToString();
+                            if (span_W != null) span_L.Text = row["Dimension_Std_L"].ToString();
+                            if (span_H != null) span_H.Text = row["Dimension_Std_H"].ToString();
+                            if (span_GSM != null) span_GSM.Text = row["GMS_Std"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception (e.g., log the error, display a message)
+                // For simplicity, you can just rethrow the exception
+                throw new Exception("An error occurred while executing the query: " + ex.Message, ex);
+            }
+        }
+
     }
 }

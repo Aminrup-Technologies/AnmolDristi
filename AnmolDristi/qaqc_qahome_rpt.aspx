@@ -21,6 +21,12 @@
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="true"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Process Checking
                             </a>
+                            <a class="btn btn-app" href="qaqc_qcinspector_rpt_.aspx">
+                                <span class="badge bg-green">
+                                    <asp:Label ID="lbl_qcinspector_rpt_count" runat="server" Text="0" Visible="true"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Inspector Report
+
+                            </a>
                             <a class="btn btn-app" href="FinalCbbWtVM.aspx">
                                 <span class="badge bg-green">
                                     <asp:Label ID="Label4" runat="server" Text="0" Visible="true"></asp:Label></span>

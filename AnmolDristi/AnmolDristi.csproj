@@ -126,6 +126,7 @@
     <Content Include="FinalCbbWtVM.aspx" />
     <Content Include="home.aspx" />
     <Content Include="leak_test.aspx" />
+    <Content Include="PM_LaminateTesting.aspx" />
     <Content Include="preDispatchVM.aspx" />
     <Content Include="Process_Approval.aspx" />
     <Content Include="Process_FinalApproval.aspx" />
@@ -150,6 +151,33 @@
     <Content Include="vm_ccp_checklist.aspx" />
     <Content Include="vm_leak_test.aspx" />
     <Content Include="vw_app_qcireport.aspx" />
+    <Content Include="WebData\anmolaing.png" />
+    <Content Include="WebData\Anmol_Logo.png" />
+    <Content Include="WebData\confbook.png" />
+    <Content Include="WebData\Internal\bank.jpg" />
+    <Content Include="WebData\Internal\crossgif.gif" />
+    <Content Include="WebData\Internal\cross_icon.png" />
+    <Content Include="WebData\Internal\delete_icon.png" />
+    <Content Include="WebData\Internal\DoneRight.gif" />
+    <Content Include="WebData\Internal\edit.png" />
+    <Content Include="WebData\Internal\fi-sr-cross-circle.svg" />
+    <Content Include="WebData\Internal\fi-sr-disk.svg" />
+    <Content Include="WebData\Internal\fi-sr-pencil.svg" />
+    <Content Include="WebData\Internal\fi-sr-trash.svg" />
+    <Content Include="WebData\Internal\Hourglass.gif" />
+    <Content Include="WebData\Internal\pending.png" />
+    <Content Include="WebData\Internal\piggy.png" />
+    <Content Include="WebData\Internal\printer.png" />
+    <Content Include="WebData\Internal\right.png" />
+    <Content Include="WebData\Internal\rightarrow.gif" />
+    <Content Include="WebData\Internal\SingleTick.gif" />
+    <Content Include="WebData\Internal\success_gif.gif" />
+    <Content Include="WebData\Internal\tick-icon.png" />
+    <Content Include="WebData\Internal\view.svg" />
+    <Content Include="WebData\itop-logo-external.png" />
+    <Content Include="WebData\No_Image.jpg" />
+    <Content Include="WebData\qaqc.png" />
+    <Content Include="WebData\sales.png" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <Content Include="UploadImageHandler.ashx" />
     <None Include="Web.Debug.config">
@@ -315,6 +343,13 @@
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PM_LaminateTesting.aspx.cs">
+      <DependentUpon>PM_LaminateTesting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PM_LaminateTesting.aspx.designer.cs">
+      <DependentUpon>PM_LaminateTesting.aspx</DependentUpon>
     </Compile>
     <Compile Include="preDispatchVM.aspx.cs">
       <DependentUpon>preDispatchVM.aspx</DependentUpon>
