@@ -29,18 +29,18 @@
                                     <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>HM / PP Bag
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">WIP
+                            <a class="btn btn-app" href="CorrugatedBoardBoxReport.aspx">
+                                <span class="badge bg-green">OK
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>CBB Report
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">WIP
+                            <a class="btn btn-app" href="bopp_tape.aspx">
+                                <span class="badge bg-green">OK
                                     <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>BOPP Tape
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">WIP
+                            <a class="btn btn-app" href="PVC_Tray.aspx">
+                                <span class="badge bg-green">OK
                                     <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>PVC Tray
                             </a>

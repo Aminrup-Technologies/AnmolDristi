@@ -120,6 +120,7 @@
     <Content Include="add_users.aspx" />
     <Content Include="apps.aspx" />
     <Content Include="app_qc_inspectorreport.aspx" />
+    <Content Include="bopp_tape.aspx" />
     <Content Include="ccp_checklist.aspx" />
     <Content Include="CorrugatedBoardBoxReport.aspx" />
     <Content Include="critical_quality_report.aspx" />
@@ -132,6 +133,7 @@
     <Content Include="Process_Approval.aspx" />
     <Content Include="Process_FinalApproval.aspx" />
     <Content Include="Process_Report.aspx" />
+    <Content Include="PVC_Tray.aspx" />
     <Content Include="qaqc_add_users.aspx" />
     <Content Include="qaqc_mst_sku.aspx" />
     <Content Include="packages.config" />
@@ -291,6 +293,13 @@
     <Compile Include="blank.aspx.designer.cs">
       <DependentUpon>blank.aspx</DependentUpon>
     </Compile>
+    <Compile Include="bopp_tape.aspx.cs">
+      <DependentUpon>bopp_tape.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="bopp_tape.aspx.designer.cs">
+      <DependentUpon>bopp_tape.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ccp_checklist.aspx.cs">
       <DependentUpon>ccp_checklist.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -393,6 +402,13 @@
     </Compile>
     <Compile Include="Process_Report.aspx.designer.cs">
       <DependentUpon>Process_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PVC_Tray.aspx.cs">
+      <DependentUpon>PVC_Tray.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PVC_Tray.aspx.designer.cs">
+      <DependentUpon>PVC_Tray.aspx</DependentUpon>
     </Compile>
     <Compile Include="QAProcessCheckingDataAcess.cs" />
     <Compile Include="qaqc_add_users.aspx.cs">
