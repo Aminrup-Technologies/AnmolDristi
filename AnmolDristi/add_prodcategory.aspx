@@ -17,7 +17,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="QC Inspector Report : Input Controller"></asp:Label></h2>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="Add & Manage Line wise Category Produced"></asp:Label></h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -55,7 +55,7 @@
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="txtCategoryID" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_CategoryID" runat="server" ControlToValidate="txtCategoryID" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Numeric Only" ValidationExpression="^\d+$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="txtCategoryID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Category ID (numeric)" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="txtCategoryID" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true" Placeholder="Auto Binding" MaxLength="10"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label5" runat="server" AssociatedControlID="txtCategoryName" Text="Category Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_CategoryName" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="txtCategoryName" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_CategoryName" runat="server" ErrorMessage="Required" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="txtCategoryName" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_CategoryName" runat="server" ControlToValidate="txtCategoryName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="txtCategoryName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Category Name (3-50 characters)" MaxLength="50"></asp:TextBox>
@@ -79,7 +79,7 @@
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="txtCategorySapCode" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtCategorySapCode" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="txtCategorySapCode" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Category SAP Code" MaxLength="50"></asp:TextBox>
+                                        <asp:TextBox ID="txtCategorySapCode" runat="server" CssClass="form-control form-control-sm rounded" Text="0000" ReadOnly="true" Placeholder="Category SAP Code" MaxLength="50"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="txtLocalName" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="txtLocalName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="txtLocalName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Local Name" MaxLength="50"></asp:TextBox>
+                                        <asp:TextBox ID="txtLocalName" runat="server" CssClass="form-control form-control-sm rounded" Text="0000" ReadOnly="true" Placeholder="Local Name" MaxLength="50"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>

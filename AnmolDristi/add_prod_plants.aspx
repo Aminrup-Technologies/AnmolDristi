@@ -10,7 +10,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="Add Production Plants Details"></asp:Label></h2>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="Add & Manage Production Plants Details"></asp:Label></h2>
                             <div class="clearfix"></div>
                         </div>
 
@@ -19,22 +19,22 @@
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <asp:Label ID="Lbl_plant_id" runat="server" AssociatedControlID="TB_plant_id" Text="Branch ID :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <asp:RequiredFieldValidator ID="RFV_plant_id" runat="server" ErrorMessage="*" ControlToValidate="TB_plant_id" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:Label ID="Lbl_plant_id" runat="server" AssociatedControlID="TB_plant_id" Text="Plant ID :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_plant_id" runat="server" ErrorMessage="Required" ControlToValidate="TB_plant_id" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_plant_id" runat="server" ControlToValidate="TB_plant_id" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Numeric Only" ValidationExpression="^[0-9]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_plant_id" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Branch ID (3-20 characters)" MaxLength="20"></asp:TextBox>
+                                            <asp:TextBox ID="TB_plant_id" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true" Placeholder="Plant ID (3-20 characters)" MaxLength="20"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <asp:Label ID="Lbl_plant_name" runat="server" AssociatedControlID="TB_plant_name" Text="Branch Description :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <asp:RequiredFieldValidator ID="RFV_plant_name" runat="server" ErrorMessage="*" ControlToValidate="TB_plant_name" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:Label ID="Lbl_plant_name" runat="server" AssociatedControlID="TB_plant_name" Text="Plant Name :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_plant_name" runat="server" ErrorMessage="Required" ControlToValidate="TB_plant_name" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_plant_name" runat="server" ControlToValidate="TB_plant_name" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_plant_name" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Branch Description (3-50 characters)" MaxLength="50"></asp:TextBox>
+                                            <asp:TextBox ID="TB_plant_name" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Plant Name (3-50 characters)" MaxLength="50"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -42,10 +42,10 @@
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_SapCode" runat="server" AssociatedControlID="TB_SapCode" Text="SAP Code:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <asp:RequiredFieldValidator ID="RFV_SapCode" runat="server" ErrorMessage="*" ControlToValidate="TB_SapCode" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:RegularExpressionValidator ID="REV_SapCode" runat="server" ControlToValidate="TB_SapCode" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                        <asp:RequiredFieldValidator ID="RFV_SapCode" runat="server" ErrorMessage="Required" ControlToValidate="TB_SapCode" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_SapCode" runat="server" ControlToValidate="TB_SapCode" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[0-9]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_SapCode" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="SAP Code (up to 50 characters)" MaxLength="50"></asp:TextBox>
+                                            <asp:TextBox ID="TB_SapCode" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="SAP Code (up to 50 characters)" MaxLength="5"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -53,8 +53,8 @@
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_LocalName" runat="server" AssociatedControlID="TB_LocalName" Text="Local Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <asp:RequiredFieldValidator ID="RFV_LocalName" runat="server" ErrorMessage="*" ControlToValidate="TB_LocalName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:RegularExpressionValidator ID="REV_LocalName" runat="server" ControlToValidate="TB_LocalName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                        <asp:RequiredFieldValidator ID="RFV_LocalName" runat="server" ErrorMessage="Required" ControlToValidate="TB_LocalName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_LocalName" runat="server" ControlToValidate="TB_LocalName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="TB_LocalName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Local Name (up to 255 characters)" MaxLength="255"></asp:TextBox>
                                         </div>

@@ -395,7 +395,7 @@ namespace AnmolDristi
         private void BindGridView()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = "SELECT [id], [plant_id], [line_id], [category_id], [category_name], [category_sapcode], [local_name], [added_on], [view_status], [delete_status] FROM [AnmolDristi].[dbo].[MST_LineCategory]";
+            string query = "SELECT [id], [plant_id], [line_id], [category_id], [category_name], [category_sapcode], [local_name], [added_on], [view_status], [delete_status] FROM [MST_LineCategory] order by Id desc";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -411,7 +411,7 @@ namespace AnmolDristi
         private void BindGridViewbyPlant(string PlantId)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = "SELECT [id], [plant_id], [line_id], [category_id], [category_name], [category_sapcode], [local_name], [added_on], [view_status], [delete_status] FROM [AnmolDristi].[dbo].[MST_LineCategory] where plant_id = '"+ PlantId + "'";
+            string query = "SELECT [id], [plant_id], [line_id], [category_id], [category_name], [category_sapcode], [local_name], [added_on], [view_status], [delete_status] FROM [MST_LineCategory] where plant_id = '"+ PlantId + "'";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -428,7 +428,7 @@ namespace AnmolDristi
         private void BindGridViewbyPlantLine(string PlantId, string LineId)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = "SELECT [id], [plant_id], [line_id], [category_id], [category_name], [category_sapcode], [local_name], [added_on], [view_status], [delete_status] FROM [AnmolDristi].[dbo].[MST_LineCategory] where plant_id = '" + PlantId + "' and line_id='"+ LineId + "'";
+            string query = "SELECT [id], [plant_id], [line_id], [category_id], [category_name], [category_sapcode], [local_name], [added_on], [view_status], [delete_status] FROM [MST_LineCategory] where plant_id = '" + PlantId + "' and line_id='"+ LineId + "' order by Id desc";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

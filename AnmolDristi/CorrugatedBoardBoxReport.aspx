@@ -1,0 +1,607 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="CorrugatedBoardBoxReport.aspx.cs" Inherits="AnmolDristi.CorrugatedBoardBoxReport" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style type="text/css">
+        .remove-border {
+            border: none !important; /* This will ensure the border is removed */
+            /* Add any other necessary styling */
+        }
+
+        .custom-page-title {
+            width: 100%;
+            background-color: #f0f0f0; /* Example: Change background color */
+            margin-top: 20px;
+            padding-top: 35px;
+            padding-right: 20px;
+            padding-left: 20px;
+            /*padding-bottom:20px;*/
+        }
+
+            .custom-page-title .title_left h3 {
+                font-size: 20px;
+                color: #333333;
+                font-weight: bold;
+            }
+
+
+        .approver-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .approver-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: .25rem;
+        }
+
+        .flow-line {
+            flex: 1;
+            border-top: 2px solid #007bff;
+            margin: 0 10px;
+        }
+
+        .approver-item {
+            text-align: center;
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:HiddenField ID="hdn_formid" runat="server" />
+    <asp:HiddenField ID="hdn_shiftvalue" runat="server" />
+    <div class="right_col" role="main">
+        <div class="container">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>
+                        <asp:Label ID="lbl_docname" runat="server" Text="Label"></asp:Label>
+                    </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="Label"></asp:Label>
+                            </h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="tab-content ml-1" id="myTabContent">
+                                                    <div class="tab-pane fade show active" id="basicData" role="tabpanel" aria-labelledby="basicData-tab">
+                                                        <div class="x_content">
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" ValidationGroup="Submit" OnSelectedIndexChanged="DDL_Plant_SelectedIndexChanged"></asp:DropDownList>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_ProductBrand" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductBrand_SelectedIndexChanged"></asp:DropDownList>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_SupplierName" runat="server" AssociatedControlID="TB_SupplierName" Text="Supplier Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_SupplierName" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_SupplierName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_SupplierName" runat="server" ControlToValidate="TB_SupplierName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_SupplierName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Supplier Name" MaxLength="50"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_ChallanNo" runat="server" AssociatedControlID="TB_ChallanNo" Text="Challan No.:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_ChallanNo" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_ChallanNo" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_ChallanNo" runat="server" ControlToValidate="TB_ChallanNo" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_ChallanNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Challan No." MaxLength="20"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_ChallanDate" runat="server" AssociatedControlID="TB_ChallanDate" Text="Challan Date:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_ChallanDate" runat="server" ErrorMessage="Date Required" ControlToValidate="TB_ChallanDate" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_ChallanDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date" Placeholder="Select Challan Date"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_LotNo" runat="server" AssociatedControlID="TB_LotNo" Text="Lot and Gate No.:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_LotNo" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_LotNo" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_LotNo" runat="server" ControlToValidate="TB_LotNo" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_LotNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Lot and Gate No." MaxLength="20"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_VehicleNo" runat="server" AssociatedControlID="TB_VehicleNo" Text="Vehicle No.:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_VehicleNo" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_VehicleNo" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_VehicleNo" runat="server" ControlToValidate="TB_VehicleNo" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_VehicleNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Vehicle No." MaxLength="15"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <!-- Label for Dimension L (in mm) -->
+                                                                    <asp:Label ID="Lbl_TB_DimensionStdL" runat="server" AssociatedControlID="TB_DimensionStdL" Text="Dimension L (mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                                                                    <!-- Required Field Validator for Dimension L -->
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionStdL" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStdL"
+                                                                        ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                                                                    <!-- Range Validator for Dimension L to ensure the input is within a valid range -->
+                                                                    <asp:RangeValidator ID="RV_TB_DimensionStdL" runat="server" ControlToValidate="TB_DimensionStdL" ValidationGroup="Submit"
+                                                                        ErrorMessage="Invalid Length" MinimumValue="0" MaximumValue="10000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+
+                                                                    <!-- Input TextBox for Dimension L (in mm) -->
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_DimensionStdL" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number"
+                                                                            Placeholder="Enter Length in mm" MaxLength="10" OnKeyUp="validateDimensionL()" ClientIDMode="Static"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Hidden Remark Section for Dimension L -->
+                                                            <div class="col-md-3" id="remarkSectionL" style="display: none;">
+                                                                <div class="mb-3">
+                                                                    <!-- Label for Remark when Dimension L is out of range -->
+                                                                    <asp:Label ID="Lbl_Remark_DimensionL" runat="server" AssociatedControlID="TB_Remarks" Text="Please provide a remark for deviation:"
+                                                                        ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                                                                    <!-- Input TextBox for Remark for Dimension L -->
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_Remark_DimensionL" runat="server" CssClass="form-control form-control-sm rounded"
+                                                                            Placeholder="Enter remark for deviation"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <script type="text/javascript">
+                                                                function validateDimensionL() {
+                                                                    // Get the value of the Dimension L input field
+                                                                    var dimensionLValue = parseFloat(document.getElementById('<%= TB_DimensionStdL.ClientID %>').value);
+
+                                                                    // Get the remark section element for Dimension L
+                                                                    var remarkSectionL = document.getElementById("remarkSectionL");
+
+                                                                    // Valid range for Dimension L: 0 to 10000mm (as specified in the range validator)
+                                                                    var lowerLimitL = 0;
+                                                                    var upperLimitL = 10000;
+
+                                                                    // Check if the Dimension L value is outside the valid range
+                                                                    if (isNaN(dimensionLValue) || dimensionLValue < lowerLimitL || dimensionLValue > upperLimitL) {
+                                                                        // Show the remark section if the value is outside the valid range
+                                                                        remarkSectionL.style.display = "block";
+                                                                    } else {
+                                                                        // Hide the remark section if the value is within the valid range
+                                                                        remarkSectionL.style.display = "none";
+                                                                    }
+                                                                }
+                                                              </script>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <!-- Label for Dimension W (in mm) -->
+                                                                    <asp:Label ID="Lbl_TB_DimensionStdW" runat="server" AssociatedControlID="TB_DimensionStdW" Text="Dimension W (mm):"
+                                                                        ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                                                                    <!-- Required Field Validator for Dimension W -->
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionStdW" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStdW"
+                                                                        ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                                                                    <!-- Range Validator for Dimension W to ensure the input is within a valid range -->
+                                                                    <asp:RangeValidator ID="RV_TB_DimensionStdW" runat="server" ControlToValidate="TB_DimensionStdW" ValidationGroup="Submit"
+                                                                        ErrorMessage="Invalid Width" MinimumValue="0" MaximumValue="10000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+
+                                                                    <!-- Input TextBox for Dimension W (in mm) -->
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_DimensionStdW" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number"
+                                                                            Placeholder="Enter Width in mm" MaxLength="10" OnKeyUp="validateDimensionW()" ClientIDMode="Static"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Hidden Remark Section for Dimension W -->
+                                                            <div class="col-md-3" id="remarkSectionW" style="display: none;">
+                                                                <div class="mb-3">
+                                                                    <!-- Label for Remark when Dimension W is out of range -->
+                                                                    <asp:Label ID="Lbl_Remark_DimensionW" runat="server" AssociatedControlID="TB_Remark_DimensionW"
+                                                                        Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                                                                    <!-- Input TextBox for Remark for Dimension W -->
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_Remark_DimensionW" runat="server" CssClass="form-control form-control-sm rounded"
+                                                                            Placeholder="Enter remark for deviation"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <script type="text/javascript">
+                                                                function validateDimensionW() {
+                                                                    // Get the value of the Dimension W input field
+                                                                    var dimensionWValue = parseFloat(document.getElementById('<%= TB_DimensionStdW.ClientID %>').value);
+
+                                                                    // Get the remark section element for Dimension W
+                                                                    var remarkSectionW = document.getElementById("remarkSectionW");
+
+                                                                    // Valid range for Dimension W: 0 to 10000mm (as specified in the range validator)
+                                                                    var lowerLimitW = 0;
+                                                                    var upperLimitW = 10000;
+
+                                                                    // Check if the Dimension W value is outside the valid range
+                                                                    if (isNaN(dimensionWValue) || dimensionWValue < lowerLimitW || dimensionWValue > upperLimitW) {
+                                                                        // Show the remark section if the value is outside the valid range
+                                                                        remarkSectionW.style.display = "block";
+                                                                    } else {
+                                                                        // Hide the remark section if the value is within the valid range
+                                                                        remarkSectionW.style.display = "none";
+                                                                    }
+                                                                }
+                                                            </script>
+
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <!-- Label for Dimension H (in mm) -->
+                                                                    <asp:Label ID="Lbl_TB_DimensionStdH" runat="server" AssociatedControlID="TB_DimensionStdH" Text="Dimension H (mm):"
+                                                                        ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                                                                    <!-- Required Field Validator for Dimension H -->
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionStdH" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStdH"
+                                                                        ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                                                                    <!-- Range Validator for Dimension H to ensure the input is within a valid range -->
+                                                                    <asp:RangeValidator ID="RV_TB_DimensionStdH" runat="server" ControlToValidate="TB_DimensionStdH" ValidationGroup="Submit"
+                                                                        ErrorMessage="Invalid Height" MinimumValue="0" MaximumValue="10000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+
+                                                                    <!-- Input TextBox for Dimension H (in mm) -->
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_DimensionStdH" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number"
+                                                                            Placeholder="Enter Height in mm" MaxLength="10" OnKeyUp="validateDimensionH()" ClientIDMode="Static"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Hidden Remark Section for Dimension H -->
+                                                            <div class="col-md-3" id="remarkSectionH" style="display: none;">
+                                                                <div class="mb-3">
+                                                                    <!-- Label for Remark when Dimension H is out of range -->
+                                                                    <asp:Label ID="Lbl_Remark_DimensionH" runat="server" AssociatedControlID="TB_Remark_DimensionH"
+                                                                        Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                                                                    <!-- Input TextBox for Remark for Dimension H -->
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_Remark_DimensionH" runat="server" CssClass="form-control form-control-sm rounded"
+                                                                            Placeholder="Enter remark for deviation"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <script type="text/javascript">
+                                                                function validateDimensionH() {
+                                                                    // Get the value of the Dimension H input field
+                                                                    var dimensionHValue = parseFloat(document.getElementById('<%= TB_DimensionStdH.ClientID %>').value);
+
+                                                                    // Get the remark section element for Dimension H
+                                                                    var remarkSectionH = document.getElementById("remarkSectionH");
+
+                                                                    // Valid range for Dimension H: 0 to 10000mm (as specified in the range validator)
+                                                                    var lowerLimitH = 0;
+                                                                    var upperLimitH = 10000;
+
+                                                                    // Check if the Dimension H value is outside the valid range
+                                                                    if (isNaN(dimensionHValue) || dimensionHValue < lowerLimitH || dimensionHValue > upperLimitH) {
+                                                                        // Show the remark section if the value is outside the valid range
+                                                                        remarkSectionH.style.display = "block";
+                                                                    } else {
+                                                                        // Hide the remark section if the value is within the valid range
+                                                                        remarkSectionH.style.display = "none";
+                                                                    }
+                                                                }
+                                                            </script>
+
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_DimensionObsL" runat="server" AssociatedControlID="TB_DimensionObsL" Text="Observed Dimension L (mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionObsL" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionObsL" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_DimensionObsL" runat="server" ControlToValidate="TB_DimensionObsL" ValidationGroup="Submit" ErrorMessage="Invalid Length" MinimumValue="0" MaximumValue="10000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_DimensionObsL" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Observed Length in mm" MaxLength="10"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_DimensionObsW" runat="server" AssociatedControlID="TB_DimensionObsW" Text="Observed Dimension W (mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionObsW" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionObsW" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_DimensionObsW" runat="server" ControlToValidate="TB_DimensionObsW" ValidationGroup="Submit" ErrorMessage="Invalid Width" MinimumValue="0" MaximumValue="10000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_DimensionObsW" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Observed Width in mm" MaxLength="10"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_DimensionObsH" runat="server" AssociatedControlID="TB_DimensionObsH" Text="Observed Dimension H (mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionObsH" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionObsH" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_DimensionObsH" runat="server" ControlToValidate="TB_DimensionObsH" ValidationGroup="Submit" ErrorMessage="Invalid Height" MinimumValue="0" MaximumValue="10000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_DimensionObsH" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Observed Height in mm" MaxLength="10"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <!-- Label for Standard GSM -->
+                                                                    <asp:Label ID="Lbl_TB_GSMStd" runat="server" AssociatedControlID="TB_GSMStd" Text="Standard GSM:"
+                                                                        ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                                                                    <!-- Required Field Validator for Standard GSM -->
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_GSMStd" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_GSMStd"
+                                                                        ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                                                                    <!-- Range Validator for Standard GSM to ensure the input is within a valid range -->
+                                                                    <asp:RangeValidator ID="RV_TB_GSMStd" runat="server" ControlToValidate="TB_GSMStd" ValidationGroup="Submit"
+                                                                        ErrorMessage="Invalid GSM" MinimumValue="0" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+
+                                                                    <!-- Input TextBox for Standard GSM -->
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_GSMStd" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number"
+                                                                            Placeholder="Enter Standard GSM" MaxLength="10" OnKeyUp="validateGSM()" ClientIDMode="Static"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Hidden Remark Section for Standard GSM -->
+                                                            <div class="col-md-3" id="remarkSectionGSM" style="display: none;">
+                                                                <div class="mb-3">
+                                                                    <!-- Label for Remark when Standard GSM is out of range -->
+                                                                    <asp:Label ID="Lbl_Remark_GSMStd" runat="server" AssociatedControlID="TB_Remark_GSMStd"
+                                                                        Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                                                                    <!-- Input TextBox for Remark for Standard GSM -->
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_Remark_GSMStd" runat="server" CssClass="form-control form-control-sm rounded"
+                                                                            Placeholder="Enter remark for deviation"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <script type="text/javascript">
+                                                                function validateGSM() {
+                                                                    // Get the value of the Standard GSM input field
+                                                                    var gsmValue = parseFloat(document.getElementById('<%= TB_GSMStd.ClientID %>').value);
+
+                                                                    // Get the remark section element for Standard GSM
+                                                                    var remarkSectionGSM = document.getElementById("remarkSectionGSM");
+
+                                                                    // Valid range for Standard GSM: 0 to 1000 (as specified in the range validator)
+                                                                    var lowerLimitGSM = 0;
+                                                                    var upperLimitGSM = 1000;
+
+                                                                    // Check if the GSM value is outside the valid range
+                                                                    if (isNaN(gsmValue) || gsmValue < lowerLimitGSM || gsmValue > upperLimitGSM) {
+                                                                        // Show the remark section if the value is outside the valid range
+                                                                        remarkSectionGSM.style.display = "block";
+                                                                    } else {
+                                                                        // Hide the remark section if the value is within the valid range
+                                                                        remarkSectionGSM.style.display = "none";
+                                                                    }
+                                                                }
+                                                            </script>
+
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_GSMObs" runat="server" AssociatedControlID="TB_GSMObs" Text="Observed GSM:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_GSMObs" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_GSMObs" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_GSMObs" runat="server" ControlToValidate="TB_GSMObs" ValidationGroup="Submit" ErrorMessage="Invalid GSM" MinimumValue="0" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_GSMObs" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Observed GSM" MaxLength="10"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <!-- Label for BS (Kg/cm²) -->
+                                                                    <asp:Label ID="Lbl_TB_BurstingStrength" runat="server" AssociatedControlID="TB_BurstingStrength"
+                                                                        Text="BS (Kg/cm²):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                                                                    <!-- Required Field Validator for BS (Kg/cm²) -->
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_BurstingStrength" runat="server" ErrorMessage="Input Required"
+                                                                        ControlToValidate="TB_BurstingStrength" ValidationGroup="Submit" InitialValue=""
+                                                                        Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                                                                    <!-- Range Validator for BS (Kg/cm²) to ensure input is between 0 and 1000 -->
+                                                                    <asp:RangeValidator ID="RV_TB_BurstingStrength" runat="server" ControlToValidate="TB_BurstingStrength"
+                                                                        ValidationGroup="Submit" ErrorMessage="Invalid BS" MinimumValue="0"
+                                                                        MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+
+                                                                    <!-- Input TextBox for BS (Kg/cm²) -->
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_BurstingStrength" runat="server" CssClass="form-control form-control-sm rounded"
+                                                                            TextMode="Number" Placeholder="Enter BS (Kg/cm²)" MaxLength="10">
+                                                                        </asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_CompressionStrength" runat="server" AssociatedControlID="TB_CompressionStrength" Text="Compression Strength (kg/cm²):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_CompressionStrength" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_CompressionStrength" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_CompressionStrength" runat="server" ControlToValidate="TB_CompressionStrength" ValidationGroup="Submit" ErrorMessage="Invalid Compression Strength" MinimumValue="0" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_CompressionStrength" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Compression Strength (kg/cm²)" MaxLength="10"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_FlutePercent" runat="server" AssociatedControlID="TB_FlutePercent" Text="Flute %:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_FlutePercent" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_FlutePercent" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_FlutePercent" runat="server" ControlToValidate="TB_FlutePercent" ValidationGroup="Submit" ErrorMessage="Invalid Flute Percentage" MinimumValue="0" MaximumValue="100" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_FlutePercent" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Flute Percentage" MaxLength="5"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_MoisturePercent" runat="server" AssociatedControlID="TB_MoisturePercent" Text="Moisture %:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_MoisturePercent" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_MoisturePercent" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_MoisturePercent" runat="server" ControlToValidate="TB_MoisturePercent" ValidationGroup="Submit" ErrorMessage="Invalid Moisture Percentage" MinimumValue="0" MaximumValue="100" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_MoisturePercent" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Moisture Percentage" MaxLength="5"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_Remarks" runat="server" AssociatedControlID="TB_Remarks" Text="Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_Remarks" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Placeholder="Enter any additional remarks" Rows="4" MaxLength="500"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="Click to SUBMIT" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <div class="input-group input-group-sm">
+                                                                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="btnSubmit_Click" />
+                                                                        <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btnReset_Click" />
+                                                                        <%--<asp:Button ID="Button1" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />--%>
+                                                                        <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>
+                                <asp:Label ID="Label8" runat="server" Text="Approval Matrix"></asp:Label>
+                            </h2>
+                            <div class="clearfix"></div>
+
+                        </div>
+                        <div class="x_content">
+                            <!-- Approver Flow Diagram -->
+                            <div class="approver-flow">
+                                <div class="approver-item">
+                                    <p>
+                                        <asp:Label ID="Label9" runat="server" Text="Approver 1" />
+                                    </p>
+                                    <asp:Image ID="Image3" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
+                                    <p>
+                                        <asp:Label ID="Approver1NameLabel" runat="server" Text='<%# Eval("Approver1Name") %>' />
+                                    </p>
+                                    <p>
+                                        <asp:Label ID="Approver1CodeLabel" runat="server" Text='<%# Eval("Approver1EmployeeCode") %>' />
+                                    </p>
+                                </div>
+                                <div class="flow-line"></div>
+                                <div class="approver-item">
+                                    <p>
+                                        <asp:Label ID="Label7" runat="server" Text="Approver 2" />
+                                    </p>
+                                    <asp:Image ID="Image2" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
+                                    <p>
+                                        <asp:Label ID="Approver2NameLabel" runat="server" Text='<%# Eval("Approver2Name") %>' />
+                                    </p>
+                                    <p>
+                                        <asp:Label ID="Approver2CodeLabel" runat="server" Text='<%# Eval("Approver2EmployeeCode") %>' />
+                                    </p>
+                                </div>
+                                <div class="flow-line"></div>
+                                <div class="approver-item">
+                                    <p>
+                                        <asp:Label ID="Label11" runat="server" Text="Approver 3" />
+                                    </p>
+                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
+                                    <p>
+                                        <asp:Label ID="DottedLineApproverNameLabel" runat="server" Text='<%# Eval("DottedLineApproverName") %>' />
+                                    </p>
+                                    <p>
+                                        <asp:Label ID="DottedLineApproverCodeLabel" runat="server" Text='<%# Eval("DottedLineApproverEmployeeCode") %>' />
+                                    </p>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <!-- GridView for Detailed Information -->
+                            <asp:GridView ID="GridViewApprovers" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" Visible="false">
+                                <Columns>
+                                    <asp:BoundField DataField="Approver1Name" HeaderText="Approver 1 Name" HtmlEncode="false" />
+                                    <asp:BoundField DataField="Approver1EmployeeCode" HeaderText="Approver 1" HtmlEncode="false" />
+                                    <asp:BoundField DataField="Approver2Name" HeaderText="Approver 2 Name" HtmlEncode="false" />
+                                    <asp:BoundField DataField="Approver2EmployeeCode" HeaderText="Approver 2" HtmlEncode="false" />
+                                    <asp:BoundField DataField="DottedLineApproverName" HeaderText="Dotted Line Approver Name" HtmlEncode="false" />
+                                    <asp:BoundField DataField="DottedLineApproverEmployeeCode" HeaderText="Dotted Line Approver Code" HtmlEncode="false" />
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

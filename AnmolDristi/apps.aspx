@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Anmol Industries | Apps</title>
     <link href="Resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="Resources/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="Resources/nprogress/nprogress.css" rel="stylesheet" />
@@ -106,6 +106,20 @@
                                                         <a href="https://app.powerbi.com/groups/b8563467-c3cb-42a4-b70b-da17856af952/reports/566706ea-ea2c-43e9-8711-baa6de43cd41/ReportSection86019e086bd4cb08a3bf?experience=power-bi" target="_blank">
                                                             <img style="width: 60%; display: block;" src="WebData/sales.png" alt="image" height="100px" />
                                                         </a>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <p>Sales Dashboard</p>
+                                                        <p>(anmolindustries.com Users)</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-55">
+                                                <div class="thumbnail">
+                                                    <div class="image view view-first">
+                                                        <a href="redirect.aspx" target="_blank">
+                                                            <img style="width: 60%; display: block;" src="WebData/sales.png" alt="image" height="100px" />
+                                                        </a>
                                                         <%--<div class="mask">
                                                             <p>Your Text</p>
                                                             <div class="tools tools-bottom">
@@ -115,6 +129,7 @@
                                                     </div>
                                                     <div class="caption">
                                                         <p>Sales Dashboard</p>
+                                                        <p>(anmolbiscuits.net Users)</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -142,6 +157,46 @@
                                             <div class="col-md-55">
                                                 <div class="thumbnail">
                                                     <div class="image view view-first">
+                                                        <a href="https://portal.zinghr.com/2015/pages/authentication/zing.aspx?ccode=anmol" target="_blank">
+                                                            <img style="width: 70%; display: block;" src="WebData/anmolaing.png" alt="image" height="100px" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <p>ZingHR - Anmol Dost</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-55">
+                                                <div class="thumbnail">
+                                                    <div class="image view view-first">
+                                                        <a href="https://anmolfiori.anmolindustries.com:44316/sap/bc/ui2/flp?sap-client=700" target="_blank">
+                                                            <img style="width: 70%; display: block;" src="WebData/sapfiori.png" alt="image" height="100px" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <p>SAP Fiori</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-55">
+                                                <div class="thumbnail">
+                                                    <div class="image view view-first">
+                                                        <a href="https://anmolindustries.edurigo.com/authentication/signin" target="_blank">
+                                                            <img style="width: 80%; display: block;" src="WebData/anmolgurukul.png" alt="image" height="70%" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <p>Gurukul</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-55">
+                                                <div class="thumbnail">
+                                                    <div class="image view view-first">
                                                         <a href="http://115.112.186.71:80/login.aspx" target="_blank">
                                                             <img style="width: 70%; display: block;" src="WebData/confbook.png" alt="image" height="100px" />
                                                         </a>
@@ -152,29 +207,15 @@
                                                 </div>
                                             </div>
 
-
                                             <div class="col-md-55">
                                                 <div class="thumbnail">
                                                     <div class="image view view-first">
                                                         <a href="http://115.112.186.71:8009/pages/UI.php" target="_blank">
-                                                            <img style="width: 70%; display: block;" src="WebData/itop-logo-external.png" alt="image" height="100px" />
+                                                            <img style="width: 60%; display: block;" src="WebData/itop-logo-external.png" alt="image" height="80%" />
                                                         </a>
                                                     </div>
                                                     <div class="caption">
                                                         <p>IT Helpdesk</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-55">
-                                                <div class="thumbnail">
-                                                    <div class="image view view-first">
-                                                        <a href="https://portal.zinghr.com/2015/pages/authentication/zing.aspx?ccode=anmol" target="_blank">
-                                                            <img style="width: 70%; display: block;" src="WebData/anmolaing.png" alt="image" height="100px" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="caption">
-                                                        <p>ZingHr - Anmol Dost</p>
                                                     </div>
                                                 </div>
                                             </div>

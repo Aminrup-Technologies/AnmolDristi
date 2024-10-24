@@ -121,6 +121,7 @@
     <Content Include="apps.aspx" />
     <Content Include="app_qc_inspectorreport.aspx" />
     <Content Include="ccp_checklist.aspx" />
+    <Content Include="CorrugatedBoardBoxReport.aspx" />
     <Content Include="critical_quality_report.aspx" />
     <Content Include="datamastering_home.aspx" />
     <Content Include="FinalCbbWtVM.aspx" />
@@ -139,6 +140,7 @@
     <Content Include="Dristi.Master" />
     <Content Include="qaqc_oven_report.aspx" />
     <Content Include="qaqc_oven_viewpage.aspx" />
+    <Content Include="qaqc_overwrap.aspx" />
     <Content Include="qaqc_pre_dispatch_QI_Report.aspx" />
     <Content Include="qaqc_process_rpt.aspx" />
     <Content Include="qaqc_qaapprovals.aspx" />
@@ -148,10 +150,12 @@
     <Content Include="qaqc_rotaryline_view.aspx" />
     <Content Include="qaqc_rotary_line.aspx" />
     <Content Include="qa_qc_FinalCbbWtReport.aspx" />
+    <Content Include="redirect.aspx" />
     <Content Include="vm_ccp_checklist.aspx" />
     <Content Include="vm_leak_test.aspx" />
     <Content Include="vw_app_qcireport.aspx" />
     <Content Include="WebData\anmolaing.png" />
+    <Content Include="WebData\anmolgurukul.png" />
     <Content Include="WebData\Anmol_Logo.png" />
     <Content Include="WebData\confbook.png" />
     <Content Include="WebData\Internal\bank.jpg" />
@@ -176,8 +180,12 @@
     <Content Include="WebData\Internal\view.svg" />
     <Content Include="WebData\itop-logo-external.png" />
     <Content Include="WebData\No_Image.jpg" />
+    <Content Include="WebData\PrimarySales.png" />
     <Content Include="WebData\qaqc.png" />
     <Content Include="WebData\sales.png" />
+    <Content Include="WebData\sapfiori.png" />
+    <Content Include="WebData\SecondarySales.png" />
+    <Content Include="WebData\TertiarySales.png" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <Content Include="UploadImageHandler.ashx" />
     <None Include="Web.Debug.config">
@@ -289,6 +297,13 @@
     </Compile>
     <Compile Include="ccp_checklist.aspx.designer.cs">
       <DependentUpon>ccp_checklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CorrugatedBoardBoxReport.aspx.cs">
+      <DependentUpon>CorrugatedBoardBoxReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CorrugatedBoardBoxReport.aspx.designer.cs">
+      <DependentUpon>CorrugatedBoardBoxReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="critical_quality_report.aspx.cs">
       <DependentUpon>critical_quality_report.aspx</DependentUpon>
@@ -423,6 +438,13 @@
     <Compile Include="qaqc_oven_viewpage.aspx.designer.cs">
       <DependentUpon>qaqc_oven_viewpage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="qaqc_overwrap.aspx.cs">
+      <DependentUpon>qaqc_overwrap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_overwrap.aspx.designer.cs">
+      <DependentUpon>qaqc_overwrap.aspx</DependentUpon>
+    </Compile>
     <Compile Include="qaqc_pre_dispatch_QI_Report.aspx.cs">
       <DependentUpon>qaqc_pre_dispatch_QI_Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -513,6 +535,13 @@
     </Compile>
     <Compile Include="qa_qc_FinalCbbWtReport.aspx.designer.cs">
       <DependentUpon>qa_qc_FinalCbbWtReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="redirect.aspx.cs">
+      <DependentUpon>redirect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="redirect.aspx.designer.cs">
+      <DependentUpon>redirect.aspx</DependentUpon>
     </Compile>
     <Compile Include="UploadImageHandler.ashx.cs">
       <DependentUpon>UploadImageHandler.ashx</DependentUpon>

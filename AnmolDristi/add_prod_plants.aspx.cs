@@ -20,6 +20,7 @@ namespace AnmolDristi
                 {
                     TB_plant_name.Focus();
                     BindGridView();
+                    BindNextPlantId();
                 }
             }
         }
@@ -29,12 +30,35 @@ namespace AnmolDristi
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT id, plant_id, plant_name, sap_code, local_name, added_on, view_status, delete_status FROM MST_PlantDetails", connection);
+                SqlCommand cmd = new SqlCommand("SELECT id, plant_id, plant_name, sap_code, local_name, added_on, view_status, delete_status FROM MST_PlantDetails order by Id desc", connection);
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 sda.Fill(dt);
                 GridViewProdPlants.DataSource = dt;
                 GridViewProdPlants.DataBind();
+            }
+        }
+
+        private void BindNextPlantId()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT TOP 1 plant_id FROM [MST_PlantDetails] ORDER BY id DESC;";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                conn.Open();
+                object result = cmd.ExecuteScalar();
+                if (result != DBNull.Value)
+                {
+                    int lastPlantID = Convert.ToInt32(result);
+                    int nextPlantID = lastPlantID + 1;
+                    TB_plant_id.Text = nextPlantID.ToString(); // lblNextPlantID is your Label control
+                }
+                else
+                {
+                    TB_plant_id.Text = "100"; // In case there is no record, start with ID 1
+                }
             }
         }
 

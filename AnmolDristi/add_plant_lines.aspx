@@ -18,7 +18,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="lbl_DDL_Plant" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="Required" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0" ValidationGroup="Submit"></asp:RequiredFieldValidator>
                                     [<asp:Label ID="lbl_DDL_Plant_Value" runat="server" AssociatedControlID="DDL_Plant" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" ValidationGroup="Submit" OnSelectedIndexChanged="DDL_Plant_SelectedIndexChanged"></asp:DropDownList>
@@ -30,18 +30,18 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_Line_ID" runat="server" AssociatedControlID="TB_Line_ID" Text="Line ID :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_Line_ID" runat="server" ErrorMessage="*" ControlToValidate="TB_Line_ID" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_Line_ID" runat="server" ErrorMessage="Required" ControlToValidate="TB_Line_ID" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_Line_ID" runat="server" ControlToValidate="TB_Line_ID" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Numeric Only" ValidationExpression="^[0-9]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Line_ID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Line ID (3-20 characters)" MaxLength="20"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Line_ID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Line ID (3-20 characters)" ReadOnly="true" MaxLength="20"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <asp:Label ID="Lbl_Line_Name" runat="server" AssociatedControlID="TB_Line_Name" Text="Line Description :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_Line_Name" runat="server" ErrorMessage="*" ControlToValidate="TB_Line_Name" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:Label ID="Lbl_Line_Name" runat="server" AssociatedControlID="TB_Line_Name" Text="Line Name :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_Line_Name" runat="server" ErrorMessage="Required" ControlToValidate="TB_Line_Name" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_Line_Name" runat="server" ControlToValidate="TB_Line_Name" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_Line_Name" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Line Description (3-50 characters)" MaxLength="50"></asp:TextBox>
@@ -52,7 +52,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_Local_Name" runat="server" AssociatedControlID="TB_Local_Name" Text="Local Name :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_Local_Name" runat="server" ErrorMessage="*" ControlToValidate="TB_Local_Name" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_Local_Name" runat="server" ErrorMessage="Required" ControlToValidate="TB_Local_Name" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_Local_Name" runat="server" ControlToValidate="TB_Local_Name" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_Local_Name" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Local Name (up to 255 characters)" MaxLength="255"></asp:TextBox>
@@ -63,10 +63,10 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_Line_Sap_Code" runat="server" AssociatedControlID="TB_Line_Sap_Code" Text="Line SAP Code :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_Line_Sap_Code" runat="server" ErrorMessage="*" ControlToValidate="TB_Line_Sap_Code" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_Line_Sap_Code" runat="server" ErrorMessage="Required" ControlToValidate="TB_Line_Sap_Code" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_Line_Sap_Code" runat="server" ControlToValidate="TB_Line_Sap_Code" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Line_Sap_Code" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Line SAP Code (up to 50 characters)" MaxLength="50"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Line_Sap_Code" runat="server" CssClass="form-control form-control-sm rounded" Text="0000" Placeholder="Line SAP Code (up to 50 characters)" MaxLength="50"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                 <asp:Label ID="lbl_msg" runat="server" Text="Click SUBMIT to view Data!!"></asp:Label>
                             </div>
                             <div class="col-md-6 col-sm-12">
-                                <asp:Button ID="btn_cancel" runat="server" Text="Cancel" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btn_cancel_Click"/>
+                                <asp:Button ID="btn_cancel" runat="server" Text="Cancel" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btn_cancel_Click" />
                                 <asp:Button ID="btn_insert" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" />
                                 <asp:Button ID="btn_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="true" ValidationGroup="Submit" OnClick="btn_submit_Click" />
                             </div>

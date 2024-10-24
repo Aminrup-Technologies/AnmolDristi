@@ -17,7 +17,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="QC Inspector Report : Input Controller"></asp:Label>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="Add & Manage Brands Specific to Plant and Line"></asp:Label>
                             </h2>
                             <div class="clearfix"></div>
                         </div>
@@ -26,7 +26,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" ValidationGroup="Submit" InitialValue="0"></asp:RequiredFieldValidator>
                                     [<asp:Label ID="lbl_DDL_Plant_Value" runat="server" AssociatedControlID="DDL_Plant" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" ValidationGroup="Submit" OnSelectedIndexChanged="DDL_Plant_SelectedIndexChanged"></asp:DropDownList>
@@ -66,7 +66,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_BrandID" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="txtBrandID" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_BrandID" runat="server" ControlToValidate="txtBrandID" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Numeric Only" ValidationExpression="^\d+$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="txtBrandID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Category ID (numeric)" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="txtBrandID" runat="server" CssClass="form-control form-control-sm rounded" Text="Auto Binding" ReadOnly="true" Placeholder="Category ID (numeric)" MaxLength="10"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                     <asp:RequiredFieldValidator ID="Requiredfieldvalidator1" runat="server" ErrorMessage="*" ControlToValidate="txtBrandLocalName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="Regularexpressionvalidator1" runat="server" ControlToValidate="txtBrandLocalName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="txtBrandLocalName" runat="server" CssClass="form-control form-control-sm rounded" placeholder="Brand Local Name (Optional)" MaxLength="255"></asp:TextBox>
+                                        <asp:TextBox ID="txtBrandLocalName" runat="server" Text="0000" ReadOnly="true" CssClass="form-control form-control-sm rounded" placeholder="Brand Local Name (Optional)" MaxLength="255"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                     <asp:RequiredFieldValidator ID="Requiredfieldvalidator2" runat="server" ErrorMessage="*" ControlToValidate="txtBrandSapCode" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="Regularexpressionvalidator2" runat="server" ControlToValidate="txtBrandSapCode" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="txtBrandSapCode" runat="server" CssClass="form-control form-control-sm rounded" placeholder="Brand SAP Code (Optional)" MaxLength="50"></asp:TextBox>
+                                        <asp:TextBox ID="txtBrandSapCode" runat="server" Text="0000" ReadOnly="true" CssClass="form-control form-control-sm rounded" placeholder="Brand SAP Code (Optional)" MaxLength="50"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                         </div>
                         <div class="x_content">
                             <div class="row">
-                                <asp:GridView ID="GridViewLineCatBrands" runat="server" Width="100%" class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found" DataKeyNames="Id" OnRowEditing="GridViewLineCatBrands_RowEditing" OnRowCancelingEdit="GridViewLineCatBrands_RowCancelingEdit" OnRowUpdating="GridViewLineCatBrands_RowUpdating" OnRowDeleting="GridViewLineCatBrands_RowDeleting">
+                                <asp:GridView ID="GridViewLineCatBrands" runat="server" Width="100%" class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed" Font-Size="8" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found" DataKeyNames="Id" OnRowEditing="GridViewLineCatBrands_RowEditing" OnRowCancelingEdit="GridViewLineCatBrands_RowCancelingEdit" OnRowUpdating="GridViewLineCatBrands_RowUpdating" OnRowDeleting="GridViewLineCatBrands_RowDeleting">
                                     <Columns>
                                         <asp:TemplateField HeaderText="ID">
                                             <ItemTemplate>
@@ -167,7 +167,7 @@
                                                 <%# Eval("plant_id") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtPlantId" runat="server" Text='<%# Bind("plant_id") %>' />
+                                                <asp:TextBox ID="txtPlantId" runat="server" Text='<%# Bind("plant_id") %>' CssClass="form-control form-control-sm rounded"/>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
 
@@ -176,7 +176,7 @@
                                                 <%# Eval("line_id") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtLineId" runat="server" Text='<%# Bind("line_id") %>' />
+                                                <asp:TextBox ID="txtLineId" runat="server" Text='<%# Bind("line_id") %>' CssClass="form-control form-control-sm rounded"/>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
 
@@ -185,7 +185,7 @@
                                                 <%# Eval("category_id") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtCategoryId" runat="server" Text='<%# Bind("category_id") %>' />
+                                                <asp:TextBox ID="txtCategoryId" runat="server" Text='<%# Bind("category_id") %>' CssClass="form-control form-control-sm rounded"/>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
 
@@ -194,7 +194,7 @@
                                                 <%# Eval("brand_id") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtBrandId" runat="server" Text='<%# Bind("brand_id") %>' />
+                                                <asp:TextBox ID="txtBrandId" runat="server" Text='<%# Bind("brand_id") %>' CssClass="form-control form-control-sm rounded"/>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
 
@@ -203,7 +203,7 @@
                                                 <%# Eval("brand_name") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtBrandName" runat="server" Text='<%# Bind("brand_name") %>' />
+                                                <asp:TextBox ID="txtBrandName" runat="server" Text='<%# Bind("brand_name") %>' CssClass="form-control form-control-sm rounded"/>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
 
@@ -212,7 +212,7 @@
                                                 <%# Eval("brand_localname") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtBrandLocalName" runat="server" Text='<%# Bind("brand_localname") %>' />
+                                                <asp:TextBox ID="txtBrandLocalName" runat="server" Text='<%# Bind("brand_localname") %>' CssClass="form-control form-control-sm rounded"/>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
 
@@ -221,7 +221,7 @@
                                                 <%# Eval("brand_sapcode") %>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <asp:TextBox ID="txtBrandSapCode" runat="server" Text='<%# Bind("brand_sapcode") %>' />
+                                                <asp:TextBox ID="txtBrandSapCode" runat="server" Text='<%# Bind("brand_sapcode") %>' CssClass="form-control form-control-sm rounded"/>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
 

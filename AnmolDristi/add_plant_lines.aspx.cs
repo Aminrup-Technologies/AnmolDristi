@@ -24,6 +24,30 @@ namespace AnmolDristi
                 {
                     PlantBinder();
                     BindGridView();
+                    BindNextLineId();
+                }
+            }
+        }
+
+        private void BindNextLineId()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT TOP 1 line_id FROM [MST_Plant_Lines] ORDER BY id DESC;";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                conn.Open();
+                object result = cmd.ExecuteScalar();
+                if (result != DBNull.Value)
+                {
+                    int lastLineID = Convert.ToInt32(result);
+                    int nextLineID = lastLineID + 1;
+                    TB_Line_ID.Text = nextLineID.ToString(); // lblNextLineID is your Label control
+                }
+                else
+                {
+                    TB_Line_ID.Text = "201"; // If no records exist, start with 1
                 }
             }
         }
@@ -84,7 +108,7 @@ namespace AnmolDristi
         private void BindGridViewbyPlant(string plantid)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = "SELECT TOP (1000) [id], [plant_id], [line_id], [line_name], [local_name], [line_sap_code], [added_on], [view_status], [delete_status] FROM [dbo].[MST_Plant_Lines] where plant_id='"+ plantid + "'";
+            string query = "SELECT [id], [plant_id], [line_id], [line_name], [local_name], [line_sap_code], [added_on], [view_status], [delete_status] FROM [dbo].[MST_Plant_Lines] where plant_id='"+ plantid + "' order by Id desc";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -199,7 +223,7 @@ namespace AnmolDristi
         private void BindGridView()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = "SELECT TOP (1000) [id], [plant_id], [line_id], [line_name], [local_name], [line_sap_code], [added_on], [view_status], [delete_status] FROM [dbo].[MST_Plant_Lines]";
+            string query = "SELECT [id], [plant_id], [line_id], [line_name], [local_name], [line_sap_code], [added_on], [view_status], [delete_status] FROM [dbo].[MST_Plant_Lines] order by Id desc";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

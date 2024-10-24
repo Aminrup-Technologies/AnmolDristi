@@ -334,5 +334,48 @@ namespace AnmolDristi
             }
         }
 
+
+        public static void BindLiteralControl(string query, Literal span_Dimension, Literal span_GSM, SqlParameter parameter, out bool recordsBound)
+        {
+            // Initialize the output parameter
+            recordsBound = false;
+
+            // Create a DataTable to hold the query results
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                using (SqlConnection conn = GetConnection())  // Assumes GetConnection() provides a valid SqlConnection
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        // Add the provided parameter to the SQL command
+                        cmd.Parameters.Add(parameter);
+
+                        // Use SqlDataAdapter to execute the query and fill the DataTable
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        adapter.Fill(dataTable);
+
+                        // Check if any data was returned
+                        recordsBound = dataTable.Rows.Count > 0;
+
+                        // If records are bound, populate the Literal controls
+                        if (recordsBound)
+                        {
+                            DataRow row = dataTable.Rows[0];  // Get the first row of results
+
+                            // Populate the Literal controls if they are not null
+                            if (span_Dimension != null) span_Dimension.Text = row["Dimension_Std"].ToString();
+                            if (span_GSM != null) span_GSM.Text = row["GMS_Std"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, e.g., logging or rethrowing the exception with additional context
+                throw new Exception("An error occurred while executing the query: " + ex.Message, ex);
+            }
+        }
     }
 }

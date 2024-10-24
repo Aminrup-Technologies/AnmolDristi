@@ -440,7 +440,7 @@ namespace AnmolDristi
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string selectQuery = "SELECT * FROM MST_LineCatBrands where plant_id='"+ selectedPlantValue + "'";
+                string selectQuery = "SELECT * FROM MST_LineCatBrands where plant_id='"+ selectedPlantValue + "' order by Id desc";
                 using (SqlCommand command = new SqlCommand(selectQuery, connection))
                 {
                     connection.Open();
@@ -459,7 +459,7 @@ namespace AnmolDristi
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string selectQuery = "SELECT * FROM MST_LineCatBrands where plant_id='" + selectedPlantValue + "' and line_id='"+ selectedPlantLineValue + "'";
+                string selectQuery = "SELECT * FROM MST_LineCatBrands where plant_id='" + selectedPlantValue + "' and line_id='"+ selectedPlantLineValue + "' order by id desc";
                 using (SqlCommand command = new SqlCommand(selectQuery, connection))
                 {
                     connection.Open();
@@ -477,7 +477,7 @@ namespace AnmolDristi
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string selectQuery = "SELECT * FROM MST_LineCatBrands where plant_id='" + selectedPlantValue + "' and line_id='" + selectedPlantLineValue + "' and category_id='"+ selectedProductCategoryValue + "'";
+                string selectQuery = "SELECT * FROM MST_LineCatBrands where plant_id='" + selectedPlantValue + "' and line_id='" + selectedPlantLineValue + "' and category_id='"+ selectedProductCategoryValue + "' order by Id desc";
                 using (SqlCommand command = new SqlCommand(selectQuery, connection))
                 {
                     connection.Open();

@@ -101,7 +101,7 @@
                         <div class="x_content">
                             <div class="row">
                                 <div class="card-box col-md-12 col-sm-12" style="width: 100%; height:auto; overflow: scroll;">
-                                    <asp:GridView ID="GridView1" runat="server" Width="100%" class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDeleting="GridView1_RowDeleting" DataKeyNames="Id">
+                                    <asp:GridView ID="GridView1" runat="server" Width="100%" class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed" Font-Size="8" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDeleting="GridView1_RowDeleting" DataKeyNames="Id">
                                         <Columns>
                                             <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" Visible="true" HeaderStyle-Width="2%" ItemStyle-Width="2%" />
                                             <asp:BoundField DataField="brand_id" HeaderText="Brand ID" Visible="false" ReadOnly="True" HeaderStyle-Width="3%" ItemStyle-Width="3%" />
