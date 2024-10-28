@@ -85,7 +85,7 @@
                 }
             }
 
-            function validateForm2() {
+            function validateForm3() {
                 var fileInput = document.getElementById('<%= FU_DesgImp.ClientID %>');
                 if (fileInput.value === "") {
                     document.getElementById('<%= lblErrorMessage2.ClientID %>').innerText = "Please upload file.";
@@ -591,6 +591,9 @@
                                         document.getElementById('<%= hdn_img1.ClientID %>').value = response.imageUrl;
                                     }
 
+                                    // Clear the file input uploader
+                                    input.value = '';
+
                                     new PNotify({
                                         title: 'Upload Success',
                                         text: 'Image Saved!',
@@ -614,6 +617,30 @@
 
                 reader.readAsDataURL(file);
             }
+
+        function validateImages() {
+            var image1 = document.getElementById('<%= uploadedImage1.ClientID %>'); // First image
+            var image2 = document.getElementById('<%= uploadedImage2.ClientID %>'); // Second image
+
+            // Check if images are displayed
+            if (image1.style.display === 'none' && image2.style.display === 'none') {
+                new PNotify({
+                    title: 'Validation Error',
+                    text: 'Please upload at least one image before submitting.',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+                return false; // Prevent form submission
+            }
+
+            // Check ASP.NET validation controls
+            var isValid = Page_ClientValidate("Submit"); // Replace "Submit" with your ValidationGroup if different
+            if (!isValid) {
+                return false; // Prevent form submission if ASP.NET validations fail
+            }
+
+            return true; // Allow form submission if all validations pass
+        }
 
     </script>
 
@@ -1115,15 +1142,15 @@
                             <div class="col-md-3" id="FU_DesgImp_Upldr" runat="server" data-prefix="QCIR/ClrApp">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_FU_DesgImp" runat="server" AssociatedControlID="FU_DesgImp" Text="Product Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_FU_DesgImp" runat="server" ErrorMessage="Product Photograph Required" ControlToValidate="FU_DesgImp" Display="Dynamic" ValidationGroup="Submit" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:CustomValidator ID="CV_FU_DesgImp" runat="server" ControlToValidate="FU_DesgImp" Display="Dynamic" ValidationGroup="Submit" ErrorMessage="Please upload file"></asp:CustomValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_FU_DesgImp" runat="server" ErrorMessage="Product Photograph Required" ControlToValidate="FU_DesgImp" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:CustomValidator ID="CV_FU_DesgImp" runat="server" ControlToValidate="FU_DesgImp" Display="Dynamic" ErrorMessage="Please upload file" ValidationGroup="Submit"></asp:CustomValidator>
                                     <asp:Label ID="lblErrorMessage2" runat="server" CssClass="text-danger"></asp:Label>
                                     <div class="input-group input-group-sm">
                                         
                                         <asp:FileUpload ID="FU_DesgImp" runat="server" CssClass="form-control rounded" data-prefix="QCIR/ClrApp" onchange="displayImage2(this);" />
                                         <asp:Label ID="lbl_QCIR_ClrApp" runat="server" Text="" CssClass="image-label" data-prefix="QCIR/ClrApp" Visible="true" ForeColor="Black"></asp:Label>
                                         <span class="input-group-btn">
-                                            <asp:Button ID="BtnUploadFU_DesgImp" Visible="false" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm2();" ValidationGroup="ValidationGroup1" CausesValidation="true" />
+                                            <asp:Button ID="BtnUploadFU_DesgImp" Visible="false" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm2();" ValidationGroup="ValidationGroup1" CausesValidation="false" />
                                         </span>
                                     </div>
                                 </div>
@@ -1136,14 +1163,14 @@
                             <div class="col-md-3" id="FU_ClrApp_Upldr" runat="server" visible="true">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_FU_ClrApp" runat="server" AssociatedControlID="FU_ClrApp" Text="Final Packet (Coding Zone)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_FU_ClrApp" runat="server" ErrorMessage="Product Photograph Required" ControlToValidate="FU_ClrApp" Display="Dynamic" ForeColor="Red" ValidationGroup="Submit"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_FU_ClrApp" runat="server" ErrorMessage="Product Photograph Required" ControlToValidate="FU_ClrApp" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:CustomValidator ID="CV_FU_ClrApp" runat="server" ControlToValidate="FU_ClrApp" Display="Dynamic" ValidationGroup="Submit" ErrorMessage="Please upload at least one file"></asp:CustomValidator>
                                     <asp:Label ID="lblErrorMessage1" runat="server" CssClass="text-danger"></asp:Label>
                                     <div class="input-group input-group-sm">
                                         <asp:FileUpload ID="FU_ClrApp" runat="server" CssClass="form-control rounded" data-prefix="QCIR/DesignImp" onchange="displayImage2(this);" />
                                         <asp:Label ID="lbl_QCIR_DesignImp" runat="server" Text="" CssClass="image-label" data-prefix="QCIR/DesignImp" Visible="true" ForeColor="Black"></asp:Label>
                                         <span class="input-group-btn">
-                                            <asp:Button ID="BtnUploadClrApp" runat="server" Visible="false" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm1();" ValidationGroup="ValidationGroup2" />
+                                            <asp:Button ID="BtnUploadClrApp" runat="server" Visible="false" CausesValidation="false" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm1();" ValidationGroup="ValidationGroup2" />
                                         </span>
                                     </div>
                                 </div>
@@ -1157,7 +1184,7 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="Click to SUBMIT" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group input-group-sm">
-                                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="btnSubmit_Click" />
+                                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClientClick="return validateImages();" OnClick="btnSubmit_Click" />
                                         <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btnReset_Click" />
                                     </div>
                                 </div>
