@@ -125,9 +125,11 @@
     <Content Include="CorrugatedBoardBoxReport.aspx" />
     <Content Include="critical_quality_report.aspx" />
     <Content Include="datamastering_home.aspx" />
+    <Content Include="EditEmployee.aspx" />
     <Content Include="FinalCbbWtVM.aspx" />
     <Content Include="home.aspx" />
     <Content Include="leak_test.aspx" />
+    <Content Include="New_User.aspx" />
     <Content Include="PM_LaminateTesting.aspx" />
     <Content Include="preDispatchVM.aspx" />
     <Content Include="Process_Approval.aspx" />
@@ -153,6 +155,7 @@
     <Content Include="qaqc_rotary_line.aspx" />
     <Content Include="qa_qc_FinalCbbWtReport.aspx" />
     <Content Include="redirect.aspx" />
+    <Content Include="viewusers.aspx" />
     <Content Include="vm_ccp_checklist.aspx" />
     <Content Include="vm_leak_test.aspx" />
     <Content Include="vw_app_qcireport.aspx" />
@@ -340,6 +343,13 @@
     <Compile Include="Dristi.Master.designer.cs">
       <DependentUpon>Dristi.Master</DependentUpon>
     </Compile>
+    <Compile Include="EditEmployee.aspx.cs">
+      <DependentUpon>EditEmployee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditEmployee.aspx.designer.cs">
+      <DependentUpon>EditEmployee.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FinalCbbWtVM.aspx.cs">
       <DependentUpon>FinalCbbWtVM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -367,6 +377,13 @@
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="New_User.aspx.cs">
+      <DependentUpon>New_User.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="New_User.aspx.designer.cs">
+      <DependentUpon>New_User.aspx</DependentUpon>
     </Compile>
     <Compile Include="PM_LaminateTesting.aspx.cs">
       <DependentUpon>PM_LaminateTesting.aspx</DependentUpon>
@@ -561,6 +578,13 @@
     </Compile>
     <Compile Include="UploadImageHandler.ashx.cs">
       <DependentUpon>UploadImageHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="viewusers.aspx.cs">
+      <DependentUpon>viewusers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="viewusers.aspx.designer.cs">
+      <DependentUpon>viewusers.aspx</DependentUpon>
     </Compile>
     <Compile Include="vm_ccp_checklist.aspx.cs">
       <DependentUpon>vm_ccp_checklist.aspx</DependentUpon>

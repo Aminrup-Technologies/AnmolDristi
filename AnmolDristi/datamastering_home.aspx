@@ -95,6 +95,41 @@
                     </div>
                 </div>
 
+                <div class="col-md-6" id="User_Mgmnt" runat="server" visible="true">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>User Management</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <a class="btn btn-app" href="New_User.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:Label ID="Label17" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Add User
+                            </a>
+                            <a class="btn btn-app" href="viewusers.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:Label ID="Label18" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Manage User
+                            </a>
+                            <a class="btn btn-app" href="#">
+                                <span class="badge bg-green">OK
+                                    <asp:Label ID="Label19" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Roles
+                            </a>
+                            <a class="btn btn-app" href="#">
+                                <span class="badge bg-green">OK
+                                    <asp:Label ID="Label20" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Access
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-6" id="Production_MST" runat="server" visible="true">
                     <div class="x_panel">
                         <div class="x_title">
