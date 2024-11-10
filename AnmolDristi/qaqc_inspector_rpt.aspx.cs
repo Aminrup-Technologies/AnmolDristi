@@ -19,6 +19,7 @@ namespace AnmolDristi.qaqc
 {
     public partial class qaqc_inspector_rpt : System.Web.UI.Page
     {
+        DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
         public static string ImgLink1 = string.Empty;
         public static string ImgLink2 = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
@@ -99,14 +100,32 @@ namespace AnmolDristi.qaqc
                         else
                         {
                             // Set default values to ADMIN if no rows are found
-                            Approver1NameLabel.Text = "ADMIN";
-                            Approver1CodeLabel.Text = "ADMIN";
+                            //Approver1NameLabel.Text = "ADMIN";
+                            //Approver1CodeLabel.Text = "ADMIN";
 
-                            Approver2NameLabel.Text = "ADMIN";
-                            Approver2CodeLabel.Text = "ADMIN";
+                            //Approver2NameLabel.Text = "ADMIN";
+                            //Approver2CodeLabel.Text = "ADMIN";
 
-                            DottedLineApproverNameLabel.Text = "ADMIN";
-                            DottedLineApproverCodeLabel.Text = "ADMIN";
+                            //DottedLineApproverNameLabel.Text = "ADMIN";
+                            //DottedLineApproverCodeLabel.Text = "ADMIN";
+
+                            // Insert default record
+                            dbcl.InsertDefaultApprovers(selectedPlantValue, selectedPlantLineValue, 1);
+
+                            // Reload after insertion
+                            LoadApprovers(selectedPlantValue, selectedPlantLineValue);
+
+                            string PlantBinder_Error_script = @"<script type='text/javascript'>
+                                new PNotify({
+                                    title: 'Data Success',
+                                    text: 'No Approver Mapping Found! Default Approvers Added.',
+                                    type: 'success',
+                                    styling: 'bootstrap3'
+                                });
+                            </script>";
+
+                            // RegisterStartupScript adds the JavaScript code to the page
+                            ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
                         }
                     }
                 }

@@ -238,6 +238,15 @@ namespace AnmolDristi {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl QC_Approval_Matrix;
         
         /// <summary>
+        /// Label21 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label21;
+        
+        /// <summary>
         /// Label16 control.
         /// </summary>
         /// <remarks>

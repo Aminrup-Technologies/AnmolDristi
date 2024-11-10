@@ -127,6 +127,8 @@
     <Content Include="datamastering_home.aspx" />
     <Content Include="EditEmployee.aspx" />
     <Content Include="FinalCbbWtVM.aspx" />
+    <Content Include="Form_Approval_Matrix.aspx" />
+    <Content Include="Form_Master.aspx" />
     <Content Include="home.aspx" />
     <Content Include="leak_test.aspx" />
     <Content Include="New_User.aspx" />
@@ -356,6 +358,20 @@
     </Compile>
     <Compile Include="FinalCbbWtVM.aspx.designer.cs">
       <DependentUpon>FinalCbbWtVM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Approval_Matrix.aspx.cs">
+      <DependentUpon>Form_Approval_Matrix.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Form_Approval_Matrix.aspx.designer.cs">
+      <DependentUpon>Form_Approval_Matrix.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Master.aspx.cs">
+      <DependentUpon>Form_Master.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Form_Master.aspx.designer.cs">
+      <DependentUpon>Form_Master.aspx</DependentUpon>
     </Compile>
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>

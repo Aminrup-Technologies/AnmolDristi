@@ -63,6 +63,12 @@
         .approver-item {
             text-align: center;
         }
+
+        .tab-disabled {
+            color: #6c757d; /* Gray color for disabled look */
+            pointer-events: none; /* Prevent click */
+            cursor: not-allowed;
+        }
     </style>
 </asp:Content>
 
@@ -1003,62 +1009,62 @@
         }
 
         //----- tab jump -----
-        document.addEventListener('DOMContentLoaded', function () {
-            const tabIds = ['basicData', 'weight', 'spongeData', 'doughData', 'ovenData', 'verificationData'];
-            let enabledTabs = new Set(['basicData']); // Initially enable the first tab
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    const tabIds = ['basicData', 'weight', 'spongeData', 'doughData', 'ovenData', 'verificationData'];
+        //    let enabledTabs = new Set(['basicData']); // Initially enable the first tab
 
-            // Disable all tabs except the first one initially
-            for (let i = 0; i < tabIds.length; i++) {
-                document.querySelector(`a[href="#${tabIds[i]}"]`).classList.add('disabled');
-            }
+        //    // Disable all tabs except the first one initially
+        //    for (let i = 0; i < tabIds.length; i++) {
+        //        document.querySelector(`a[href="#${tabIds[i]}"]`).classList.add('disabled');
+        //    }
 
-            // Function to check if the current tab is filled and enable the next tab
-            function checkTabContent(index) {
-                const currentTabContent = document.querySelector(`#${tabIds[index]}`);
-                const inputs = currentTabContent.querySelectorAll('input, select, textarea');
-                let isValid = true;
+        //    // Function to check if the current tab is filled and enable the next tab
+        //    function checkTabContent(index) {
+        //        const currentTabContent = document.querySelector(`#${tabIds[index]}`);
+        //        const inputs = currentTabContent.querySelectorAll('input, select, textarea');
+        //        let isValid = true;
 
-                inputs.forEach(input => {
-                    if (!input.value.trim()) {
-                        isValid = false;
-                    }
-                });
+        //        inputs.forEach(input => {
+        //            if (!input.value.trim()) {
+        //                isValid = false;
+        //            }
+        //        });
 
-                if (isValid && index < tabIds.length - 1) {
-                    // Enable the next tab and disable the current tab
-                    const nextTab = document.querySelector(`a[href="#${tabIds[index + 1]}"]`);
-                    const currentTab = document.querySelector(`a[href="#${tabIds[index]}"]`);
+        //        if (isValid && index < tabIds.length - 1) {
+        //            // Enable the next tab and disable the current tab
+        //            const nextTab = document.querySelector(`a[href="#${tabIds[index + 1]}"]`);
+        //            const currentTab = document.querySelector(`a[href="#${tabIds[index]}"]`);
 
-                    nextTab.classList.remove('disabled');
-                    enabledTabs.add(tabIds[index + 1]); // Mark the next tab as enabled
+        //            nextTab.classList.remove('disabled');
+        //            enabledTabs.add(tabIds[index + 1]); // Mark the next tab as enabled
 
-                    // Disable the current tab once moving to the next one
-                    currentTab.classList.add('disabled');
-                    enabledTabs.delete(tabIds[index]); // Remove current tab from enabled set
-                }
-            }
+        //            // Disable the current tab once moving to the next one
+        //            currentTab.classList.add('disabled');
+        //            enabledTabs.delete(tabIds[index]); // Remove current tab from enabled set
+        //        }
+        //    }
 
-            // Attach click event listeners to each tab
-            tabIds.forEach((tabId, index) => {
-                document.querySelector(`a[href="#${tabId}"]`).addEventListener('click', function (e) {
-                    // Prevent navigation if the tab is not enabled
-                    if (!enabledTabs.has(tabId)) {
-                        e.preventDefault(); // Prevent navigation
-                        alert('Please complete the current section before proceeding.');
-                    }
-                });
+        //    // Attach click event listeners to each tab
+        //    tabIds.forEach((tabId, index) => {
+        //        document.querySelector(`a[href="#${tabId}"]`).addEventListener('click', function (e) {
+        //            // Prevent navigation if the tab is not enabled
+        //            if (!enabledTabs.has(tabId)) {
+        //                e.preventDefault(); // Prevent navigation
+        //                alert('Please complete the current section before proceeding.');
+        //            }
+        //        });
 
-                // Monitor input changes to check and enable the next tab
-                const tabContent = document.querySelector(`#${tabId}`);
-                const inputs = tabContent.querySelectorAll('input, select, textarea');
+        //        // Monitor input changes to check and enable the next tab
+        //        const tabContent = document.querySelector(`#${tabId}`);
+        //        const inputs = tabContent.querySelectorAll('input, select, textarea');
 
-                inputs.forEach(input => {
-                    input.addEventListener('input', function () {
-                        checkTabContent(index);
-                    });
-                });
-            });
-        });
+        //        inputs.forEach(input => {
+        //            input.addEventListener('input', function () {
+        //                checkTabContent(index);
+        //            });
+        //        });
+        //    });
+        //});
 
     </script>
 
@@ -1089,20 +1095,20 @@
                                                         <a class="nav-link active text-info" id="basicData-tab" data-toggle="tab" href="#basicData" role="tab" aria-controls="basicData" aria-selected="true"><%--<i class="fa fa-id-badge mr-2"></i>--%>Plant & Line</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link text-info" id="weight-tab" data-toggle="tab" href="#weight" role="tab" aria-controls="weight" aria-selected="false">
+                                                        <a class="nav-link" id="weight-tab" data-toggle="tab" href="#weight" role="tab" aria-controls="weight" aria-selected="false">
                                                             <%-- <i class="fa fa-clock-o mr-2"></i>--%>Raw Weight</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link " id="spongeData-tab" data-toggle="tab" href="#spongeData" role="tab" aria-controls="spongeData" aria-selected="false">Sponge </a>
+                                                        <a class="nav-link" id="spongeData-tab" data-toggle="tab" href="#spongeData" role="tab" aria-controls="spongeData" aria-selected="false">Sponge </a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link " id="doughData-tab" data-toggle="tab" href="#doughData" role="tab" aria-controls="doughData" aria-selected="false">Dough </a>
+                                                        <a class="nav-link" id="doughData-tab" data-toggle="tab" href="#doughData" role="tab" aria-controls="doughData" aria-selected="false">Dough </a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link " id="ovenData-tab" data-toggle="tab" href="#ovenData" role="tab" aria-controls="ovenData" aria-selected="false">Oven </a>
+                                                        <a class="nav-link" id="ovenData-tab" data-toggle="tab" href="#ovenData" role="tab" aria-controls="ovenData" aria-selected="false">Oven </a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link " id="verificationData-tab" data-toggle="tab" href="#verificationData" role="tab" aria-controls="verificationData" aria-selected="false">Verification</a>
+                                                        <a class="nav-link" id="verificationData-tab" data-toggle="tab" href="#verificationData" role="tab" aria-controls="verificationData" aria-selected="false">Verification</a>
                                                     </li>
                                                 </ul>
 

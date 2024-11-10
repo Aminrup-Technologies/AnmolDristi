@@ -138,7 +138,7 @@ namespace AnmolDristi
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;
             string smtpUsername = "it_helpdesk@atswork.in";
-            string smtpPassword = "W4rqD>Vq5>g25jS$";
+            string smtpPassword = "Welcome";
 
             try
             {
@@ -1744,5 +1744,66 @@ namespace AnmolDristi
             Conn.Close();
             return jobid + "/" + mastercode;
         }
+
+
+        //Added on 09-11-2024
+        public void InsertDefaultApprovers(string plantId, string lineId, int formId)
+        {
+            Sqlconnection();
+            ConnectDb();
+
+            // Retrieve data from MST_FormsMaster for the given FormID
+            string selectQuery = "SELECT FormID, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency " +
+                                 "FROM [AnmolDristi].[dbo].[MST_FormsMaster] WHERE FormID = @FormID";
+
+            using (SqlCommand selectCmd = new SqlCommand(selectQuery, Conn))
+            {
+                selectCmd.Parameters.AddWithValue("@FormID", formId);
+                SqlDataReader reader = selectCmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    // Extract values from MST_FormsMaster
+                    string formName = reader["FormName"].ToString();
+                    string documentNumber = reader["DocumentNumber"].ToString();
+                    string documentName = reader["DocumentName"].ToString();
+                    DateTime issueDate = (DateTime)reader["IssueDate"];
+                    string issueNo = reader["IssueNo"].ToString();
+                    DateTime revisionDate = (DateTime)reader["RevisionDate"];
+                    string revNo = reader["RevNo"].ToString();
+                    int frequency = (int)reader["Frequency"];
+
+                    reader.Close();
+
+                    // Insert data into MST_FormsApprovalMatrix with default values for missing fields
+                    string insertQuery = "INSERT INTO [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] " +
+                                         "(FormID, plant_id, line_id, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency, " +
+                                         "Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode) " +
+                                         "VALUES (@FormID, @PlantId, @LineId, @FormName, @DocumentNumber, @DocumentName, @IssueDate, @IssueNo, @RevisionDate, @RevNo, @Frequency, " +
+                                         "'ADMIN', 'ADMIN', 'ADMIN')";
+
+                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, Conn))
+                    {
+                        // Bind parameters
+                        insertCmd.Parameters.AddWithValue("@FormID", formId);
+                        insertCmd.Parameters.AddWithValue("@PlantId", plantId);
+                        insertCmd.Parameters.AddWithValue("@LineId", lineId);
+                        insertCmd.Parameters.AddWithValue("@FormName", formName);
+                        insertCmd.Parameters.AddWithValue("@DocumentNumber", documentNumber);
+                        insertCmd.Parameters.AddWithValue("@DocumentName", documentName);
+                        insertCmd.Parameters.AddWithValue("@IssueDate", issueDate);
+                        insertCmd.Parameters.AddWithValue("@IssueNo", issueNo);
+                        insertCmd.Parameters.AddWithValue("@RevisionDate", revisionDate);
+                        insertCmd.Parameters.AddWithValue("@RevNo", revNo);
+                        insertCmd.Parameters.AddWithValue("@Frequency", frequency);
+
+                        insertCmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            Conn.Close();
+        }
+
+
     }
 }

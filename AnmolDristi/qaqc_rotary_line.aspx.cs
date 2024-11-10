@@ -588,7 +588,7 @@ namespace AnmolDristi
 
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
-                        hdn_formid.Value = "2";
+                        hdn_formid.Value = "3";
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
@@ -614,20 +614,26 @@ namespace AnmolDristi
                         else
                         {
                             // Set default values to ADMIN if no rows are found
-                            Approver1NameLabel.Text = "ADMIN";
-                            Approver1CodeLabel.Text = "ADMIN";
+                            //Approver1NameLabel.Text = "ADMIN";
+                            //Approver1CodeLabel.Text = "ADMIN";
 
-                            Approver2NameLabel.Text = "ADMIN";
-                            Approver2CodeLabel.Text = "ADMIN";
+                            //Approver2NameLabel.Text = "ADMIN";
+                            //Approver2CodeLabel.Text = "ADMIN";
 
-                            DottedLineApproverNameLabel.Text = "ADMIN";
-                            DottedLineApproverCodeLabel.Text = "ADMIN";
+                            //DottedLineApproverNameLabel.Text = "ADMIN";
+                            //DottedLineApproverCodeLabel.Text = "ADMIN";
+
+                            // Insert default record
+                            dbcl.InsertDefaultApprovers(selectedPlantValue, selectedPlantLineValue, 3);
+
+                            // Reload after insertion
+                            LoadApprovers(selectedPlantValue, selectedPlantLineValue);
 
                             string PlantBinder_Error_script = @"<script type='text/javascript'>
                                 new PNotify({
-                                    title: 'Warning',
-                                    text: 'No Approver Mapping Found!',
-                                    type: 'error',
+                                    title: 'Data Success',
+                                    text: 'No Approver Mapping Found! Default Approvers Added.',
+                                    type: 'success',
                                     styling: 'bootstrap3'
                                 });
                             </script>";
@@ -639,6 +645,10 @@ namespace AnmolDristi
                 }
             }
         }
+
+        
+
+
 
         private string GenerateUniqueRLWT01()
         {

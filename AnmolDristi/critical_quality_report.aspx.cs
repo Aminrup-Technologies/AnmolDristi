@@ -19,6 +19,8 @@ namespace AnmolDristi
     public partial class critical_quality_report : System.Web.UI.Page
     {
        public static string CIRId = string.Empty;
+        DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -217,20 +219,26 @@ namespace AnmolDristi
                         else
                         {
                             // Set default values to ADMIN if no rows are found
-                            Approver1NameLabel.Text = "ADMIN";
-                            Approver1CodeLabel.Text = "ADMIN";
+                            //Approver1NameLabel.Text = "ADMIN";
+                            //Approver1CodeLabel.Text = "ADMIN";
 
-                            Approver2NameLabel.Text = "ADMIN";
-                            Approver2CodeLabel.Text = "ADMIN";
+                            //Approver2NameLabel.Text = "ADMIN";
+                            //Approver2CodeLabel.Text = "ADMIN";
 
-                            DottedLineApproverNameLabel.Text = "ADMIN";
-                            DottedLineApproverCodeLabel.Text = "ADMIN";
+                            //DottedLineApproverNameLabel.Text = "ADMIN";
+                            //DottedLineApproverCodeLabel.Text = "ADMIN";
+
+                            // Insert default record
+                            dbcl.InsertDefaultApprovers(selectedPlantValue, selectedPlantLineValue, 9);
+
+                            // Reload after insertion
+                            LoadApprovers(selectedPlantValue, selectedPlantLineValue);
 
                             string PlantBinder_Error_script = @"<script type='text/javascript'>
                                 new PNotify({
-                                    title: 'Error',
-                                    text: 'No Approver Mapping Found!',
-                                    type: 'error',
+                                    title: 'Data Success',
+                                    text: 'No Approver Mapping Found! Default Approvers Added.',
+                                    type: 'success',
                                     styling: 'bootstrap3'
                                 });
                             </script>";

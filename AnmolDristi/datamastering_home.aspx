@@ -199,7 +199,7 @@
                 <div class="col-md-6" id="QC_Approval_Matrix" runat="server" visible="true">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Forms Approval Matrix</h2>
+                            <h2>Forms & Approval Matrix</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -207,10 +207,15 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <a class="btn btn-app" href="#">
+                            <a class="btn btn-app" href="Form_Master.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:Label ID="Label21" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Forms Master
+                            </a>
+                            <a class="btn btn-app" href="Form_Approval_Matrix.aspx">
                                 <span class="badge bg-green">OK
                                     <asp:Label ID="Label16" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>QCI
+                                <i class="fa fa-edit"></i>Forms Approver
                             </a>
                         </div>
                     </div>
