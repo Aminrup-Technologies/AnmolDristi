@@ -635,7 +635,7 @@ namespace AnmolDristi
                         TB_Email.Text = reader["Email"].ToString();
                         TB_Mobile.Text = reader["Mobile"].ToString();
                         RBL_Gender.SelectedIndex = RBL_Gender.Items.IndexOf(RBL_Gender.Items.FindByText(reader["Gender"].ToString()));
-
+                        TB_Password.Text = reader["Password"].ToString();
                     }
                 }
             }
@@ -645,7 +645,7 @@ namespace AnmolDristi
         {
             string query = "UPDATE MST_UserMaster SET EmployeeName = @EmployeeName, CompanyId = @CompanyId, RegionId = @RegionId, DivisionId = @DivisionId, " +
                    "DepartmentId = @DepartmentId, SubDepartmentId = @SubDepartmentId, CategoryId = @CategoryId, PlantId = @PlantId, " +
-                   "GradeId = @GradeId, BranchId = @BranchId, DOJ = @DOJ, Email = @Email, Mobile = @Mobile, Gender = @Gender " +
+                   "GradeId = @GradeId, BranchId = @BranchId, DOJ = @DOJ, Email = @Email, Mobile = @Mobile, Gender = @Gender , Password= @Password " +
                    "WHERE EmployeeCode = @EmployeeCode";
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -667,7 +667,7 @@ namespace AnmolDristi
                     cmd.Parameters.AddWithValue("@Email", TB_Email.Text);
                     cmd.Parameters.AddWithValue("@Mobile", TB_Mobile.Text);
                     cmd.Parameters.AddWithValue("@Gender", RBL_Gender.SelectedItem.Text);
-
+                    cmd.Parameters.AddWithValue("@Password", TB_Password.Text);
                     conn.Open();
                     cmd.ExecuteNonQuery();
 

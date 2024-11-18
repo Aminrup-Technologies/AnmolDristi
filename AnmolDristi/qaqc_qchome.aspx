@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="qaqc_qchome.aspx.cs" Inherits="AnmolDristi.qaqc_qchome" %>
+﻿<%@ Page Title="QAQC | QC Forms" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="qaqc_qchome.aspx.cs" Inherits="AnmolDristi.qaqc_qchome" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -17,7 +17,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            
+
                             <a class="btn btn-app" href="PM_LaminateTesting.aspx">
                                 <span class="badge bg-green">OK
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>

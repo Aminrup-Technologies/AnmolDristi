@@ -140,7 +140,7 @@ namespace AnmolDristi
                         //    }
                         //}
                         //dbcl.WriteToFile("User " + User_FullName + "[" + Workman + "]" + " Logined Successfully");
-                        Response.Redirect("home.aspx");
+                        Response.Redirect("home.aspx", false);
                     }
                     else
                     {

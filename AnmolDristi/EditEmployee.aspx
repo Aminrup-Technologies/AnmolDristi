@@ -199,6 +199,17 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_Password" runat="server" AssociatedControlID="TB_Password" Text="Password :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                     <asp:RequiredFieldValidator ID="RFV_TB_Password" runat="server" ErrorMessage="Mobile is required " ControlToValidate="TB_Password" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Password" runat="server" ControlToValidate="TB_Password" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Not correct format (no. should start from 6-9)" ValidationExpression="^[6-9][0-9]{9}$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Password" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Mobile no."></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
                             <%--Button--%>
                             <div class="col-md-3">
                                 <div class="mb-3">

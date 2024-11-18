@@ -22,6 +22,8 @@ namespace AnmolDristi.qaqc
         DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
         public static string ImgLink1 = string.Empty;
         public static string ImgLink2 = string.Empty;
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -921,6 +923,7 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
+                logger.Error(ex, "An error occurred in RetrieveFormData");
                 // Log the exception or display an error message
             }
             finally
@@ -1026,6 +1029,7 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
+                logger.Error(ex, "An error occurred in RetrieveFormData");
                 string errorMessage = ex.Message;
                 string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, true);
@@ -1799,6 +1803,7 @@ namespace AnmolDristi.qaqc
                 }
                 catch (Exception ex)
                 {
+                    logger.Error(ex, "An error occurred in RetrieveFormData");
                     DisplayErrorNotification(ex.Message);
                 }
             }
@@ -1935,13 +1940,16 @@ namespace AnmolDristi.qaqc
             }
             catch (FormatException ex)
             {
+                logger.Error(ex, "An error occurred in RetrieveFormData");
                 // Log or display the error message
                 // For example, you could use Console.WriteLine or a logging framework
                 Console.WriteLine($"FormatException: {ex.Message}");
-                throw; // Optional: rethrow the exception if you want it to propagate further
+                throw; 
+                // Optional: rethrow the exception if you want it to propagate further
             }
             catch (Exception ex)
             {
+                logger.Error(ex, "An error occurred in RetrieveFormData");
                 // Handle other potential exceptions
                 Console.WriteLine($"Exception: {ex.Message}");
                 throw; // Optional: rethrow the exception if you want it to propagate further
@@ -2029,6 +2037,7 @@ namespace AnmolDristi.qaqc
                 }
                 catch (Exception ex)
                 {
+                    logger.Error(ex, "An error occurred in RetrieveFormData");
                     DisplayErrorNotification(ex.Message);
                 }
             }

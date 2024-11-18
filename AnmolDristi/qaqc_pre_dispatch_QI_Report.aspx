@@ -354,7 +354,7 @@
                                     <asp:Label ID="lblCBB_Produced" runat="server" AssociatedControlID="TXT_CBB_Produced" Text="No of CBB Produced :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_CBB_Produced" runat="server" ErrorMessage="Required" ValidationGroup="Submit" ControlToValidate="TXT_CBB_Produced" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REF_CBB_Produced" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_CBB_Produced" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_CBB_Produced" runat="server" ControlToValidate="TXT_CBB_Produced" ErrorMessage="[5 - 100]" ForeColor="Red" MinimumValue="2" MaximumValue="100" Type="Integer" Display="Static"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_CBB_Produced" runat="server" ControlToValidate="TXT_CBB_Produced" ErrorMessage="[5 - 3000]" ForeColor="Red" MinimumValue="5" MaximumValue="3000" Type="Integer" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_CBB_Produced" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Number of CBB"></asp:TextBox>
                                     </div>
@@ -366,7 +366,7 @@
                                     <asp:Label ID="lblCBB_Checked" runat="server" AssociatedControlID="TXT_CBB_Checked" Text="No of CBB Checked :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_CBB_Checked" runat="server" ErrorMessage="Required" ValidationGroup="Submit" ControlToValidate="TXT_CBB_Checked" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REF_CBB_Checked" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_CBB_Checked" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_CBB_Checked" runat="server" ControlToValidate="TXT_CBB_Checked" ErrorMessage="[5 - 100]" ForeColor="Red" MinimumValue="2" MaximumValue="100" Type="Integer" Display="Static"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_CBB_Checked" runat="server" ControlToValidate="TXT_CBB_Checked" ErrorMessage="[5 - 3000]" ForeColor="Red" MinimumValue="5" MaximumValue="3000" Type="Integer" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_CBB_Checked" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Number of CBB Checked"></asp:TextBox>
                                     </div>
@@ -401,7 +401,7 @@
                                     <asp:Label ID="lblPackets_CBB" runat="server" AssociatedControlID="TXT_Packets_CBB" Text="No of Packets in CBB :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_Packets_CBB" runat="server" ErrorMessage="Required" ValidationGroup="Submit" ControlToValidate="TXT_Packets_CBB" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REF_Packets_CBB" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_Packets_CBB" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_Packets_CBB" runat="server" ControlToValidate="TXT_Packets_CBB" ErrorMessage="[5 - 100]" ForeColor="Red" MinimumValue="2" MaximumValue="100" Type="Integer" Display="Static"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_Packets_CBB" runat="server" ControlToValidate="TXT_Packets_CBB" ErrorMessage="[5 - 3000]" ForeColor="Red" MinimumValue="5" MaximumValue="3000" Type="Integer" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_Packets_CBB" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Packets in CBB"></asp:TextBox>
                                     </div>
@@ -437,7 +437,7 @@
                                     <asp:Label ID="lblPkts_Checked_Per_CBB" runat="server" AssociatedControlID="TXT_Pkts_Checked_Per_CBB" Text="PKTS Checked/ CBB Box:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_Pkts_Checked_Per_CBB" runat="server" ErrorMessage="Required" ValidationGroup="Submit" ControlToValidate="TXT_Pkts_Checked_Per_CBB" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REF_Pkts_Checked_Per_CBB" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_Pkts_Checked_Per_CBB" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_Pkts_Checked_Per_CBB" runat="server" ControlToValidate="TXT_Pkts_Checked_Per_CBB" ErrorMessage="[5 - 40]" ForeColor="Red" MinimumValue="2" MaximumValue="100" Type="Integer" Display="Static"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_Pkts_Checked_Per_CBB" runat="server" ControlToValidate="TXT_Pkts_Checked_Per_CBB" ErrorMessage="[5 - 3000]" ForeColor="Red" MinimumValue="5" MaximumValue="3000" Type="Integer" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_Pkts_Checked_Per_CBB" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="PKTS Checked / CBB Box"></asp:TextBox>
                                     </div>
@@ -450,7 +450,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_Wt_of_Pkts" runat="server" ErrorMessage="Required" ValidationGroup="Submit" ControlToValidate="TXT_Wt_of_Pkts" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REF_Wt_of_Pkts" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_Wt_of_Pkts" ForeColor="Red" ErrorMessage="Decimal Only"
                                         ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_Wt_of_Pkts" runat="server" ControlToValidate="TXT_Wt_of_Pkts" ErrorMessage="[0.01 - 1000.00 gm]" ForeColor="Red" MinimumValue="0.01" MaximumValue="1000.00" Type="Double" Display="Static"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_Wt_of_Pkts" runat="server" ControlToValidate="TXT_Wt_of_Pkts" ErrorMessage="[0.01 - 2000.00 gm]" ForeColor="Red" MinimumValue="0.01" MaximumValue="2000.00" Type="Double" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_Wt_of_Pkts" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Weight of Pkts"></asp:TextBox>
                                     </div>

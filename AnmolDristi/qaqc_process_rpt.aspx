@@ -2236,7 +2236,7 @@
 
                                                                 </Columns>
                                                             </asp:GridView>
-                                                            <asp:Button ID="WgtbtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" ValidationGroup="SubmitRM" CausesValidation="false" Text="Submit" OnClientClick="return validateGridView() && collectAndSendData();" OnClick="WgtbtnSubmit_Click" />
+                                                            <asp:Button ID="WgtbtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" ValidationGroup="SubmitRM" CausesValidation="false" Enabled="false" Text="Submit" OnClientClick="return validateGridView() && collectAndSendData();" OnClick="WgtbtnSubmit_Click" />
                                                             <asp:Button ID="WgtbtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="WgtbtnReset_Click" />
                                                         </div>
                                                     </div>
@@ -2276,6 +2276,7 @@
                                                                         <asp:RadioButtonList ID="RBL_DrumCovered" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleDrumCoveredRemarksDiv(this);">
                                                                             <asp:ListItem Text="Yes" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="No" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -2360,7 +2361,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_SpongeBtnSubmit" runat="server" AssociatedControlID="SpongeBtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="SpongeBtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="SpongeSubmit" CausesValidation="false" OnClick="SpongeBtnSubmit_Click" />
+                                                                        <asp:Button ID="SpongeBtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="SpongeSubmit" CausesValidation="false" OnClick="SpongeBtnSubmit_Click" />
                                                                         <asp:Button ID="Spongebtn_Reset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="Spongebtn_Reset_Click" />
                                                                     </div>
                                                                 </div>
@@ -2425,6 +2426,7 @@
                                                                         <asp:RadioButtonList ID="RBL_MetalDectector" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleMetalDetectorRemarksDiv(this);">
                                                                             <asp:ListItem Text="Yes" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="No" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -2448,6 +2450,7 @@
                                                                         <asp:RadioButtonList ID="RBL_ProcessSequence" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleProcessSequenceRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -2555,6 +2558,7 @@
                                                                         <asp:RadioButtonList ID="RBL_DoughCondition" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleDoughConditionRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -2574,7 +2578,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="lbl_DoughBtnSubmit" runat="server" AssociatedControlID="DoughBtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="DoughBtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="DoughSubmit" CausesValidation="false" OnClick="DoughBtnSubmit_Click" />
+                                                                        <asp:Button ID="DoughBtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="DoughSubmit" CausesValidation="false" OnClick="DoughBtnSubmit_Click" />
                                                                         <asp:Button ID="DoughBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="DoughBtnReset_Click" />
                                                                     </div>
                                                                 </div>
@@ -2634,7 +2638,7 @@
 
                                                         </div>
 
-                                                        <asp:Button ID="OvenBtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" Text="Submit" CausesValidation="false" ValidationGroup="SubmitOven" OnClientClick="return validateGridView1() && collectAndSendData1(); " OnClick="OvenBtnSubmit_Click" />
+                                                        <asp:Button ID="OvenBtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" Text="Submit" CausesValidation="false" Enabled="false" ValidationGroup="SubmitOven" OnClientClick="return validateGridView1() && collectAndSendData1(); " OnClick="OvenBtnSubmit_Click" />
                                                         <asp:Button ID="OvenBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="OvenBtnReset_Click" />
 
                                                     </div>
@@ -2652,6 +2656,7 @@
                                                                         <asp:RadioButtonList ID="RBL_BalanceCondition" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleBalanceConditionRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
                                                                         </asp:RadioButtonList>
                                                                     </div>
                                                                 </div>
@@ -2682,7 +2687,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_FinalBtnSubmit" runat="server" AssociatedControlID="FinalBtnSubmit" Text="Click to Submit" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="FinalBtnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" ValidationGroup="VerifiedSubmit" CausesValidation="false" OnClick="FinalBtnSubmit_Click" />
+                                                                        <asp:Button ID="FinalBtnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="VerifiedSubmit" CausesValidation="false" OnClick="FinalBtnSubmit_Click" />
                                                                         <asp:Button ID="FinalBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="FinalBtnReset_Click" />
                                                                     </div>
                                                                 </div>
