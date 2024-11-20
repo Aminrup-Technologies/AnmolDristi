@@ -13,6 +13,15 @@ namespace AnmolDristi.qaqc {
     public partial class qaqc_inspector_rpt {
         
         /// <summary>
+        /// hdn_formid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdn_formid;
+        
+        /// <summary>
         /// hdn_img1 control.
         /// </summary>
         /// <remarks>

@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Net.Mail;
 using System.Net;
+using System.Configuration;
 
 namespace AnmolDristi
 {
@@ -1747,7 +1748,7 @@ namespace AnmolDristi
 
 
         //Added on 09-11-2024
-        public void InsertDefaultApprovers(string plantId, string lineId, int formId)
+        public void InsertDefaultApproversOld(string plantId, string lineId, int formId)
         {
             Sqlconnection();
             ConnectDb();
@@ -1802,6 +1803,298 @@ namespace AnmolDristi
                 }
             }
             Conn.Close();
+        }
+
+        public void InsertDefaultApproversNew(string plantId, string lineId, int formId)
+        {
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // Retrieve data from MST_FormsMaster for the given FormID
+                        string selectQuery = @"
+                    SELECT FormID, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency 
+                    FROM [AnmolDristi].[dbo].[MST_FormsMaster] 
+                    WHERE FormID = @FormID";
+
+                        using (SqlCommand selectCmd = new SqlCommand(selectQuery, conn, transaction))
+                        {
+                            selectCmd.Parameters.AddWithValue("@FormID", formId);
+
+                            using (SqlDataReader reader = selectCmd.ExecuteReader())
+                            {
+                                if (reader.HasRows && reader.Read())
+                                {
+                                    string formName = reader["FormName"].ToString();
+                                    string documentNumber = reader["DocumentNumber"].ToString();
+                                    string documentName = reader["DocumentName"].ToString();
+                                    DateTime? issueDate = reader["IssueDate"] as DateTime?;
+                                    string issueNo = reader["IssueNo"].ToString();
+                                    DateTime? revisionDate = reader["RevisionDate"] as DateTime?;
+                                    string revNo = reader["RevNo"].ToString();
+                                    int frequency = reader["Frequency"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Frequency"]);
+
+                                    reader.Close();
+
+                                    // Insert data into MST_FormsApprovalMatrix
+                                    string insertQuery = @"
+                                INSERT INTO [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] 
+                                (FormID, plant_id, line_id, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency, 
+                                 Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode) 
+                                VALUES 
+                                (@FormID, @PlantId, @LineId, @FormName, @DocumentNumber, @DocumentName, @IssueDate, @IssueNo, @RevisionDate, @RevNo, @Frequency, 
+                                 @Approver1Code, @Approver2Code, @DottedLineCode)";
+
+                                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn, transaction))
+                                    {
+                                        insertCmd.Parameters.AddWithValue("@FormID", formId);
+                                        insertCmd.Parameters.AddWithValue("@PlantId", plantId);
+                                        insertCmd.Parameters.AddWithValue("@LineId", lineId);
+                                        insertCmd.Parameters.AddWithValue("@FormName", formName);
+                                        insertCmd.Parameters.AddWithValue("@DocumentNumber", documentNumber);
+                                        insertCmd.Parameters.AddWithValue("@DocumentName", documentName);
+                                        insertCmd.Parameters.AddWithValue("@IssueDate", (object)issueDate ?? DBNull.Value);
+                                        insertCmd.Parameters.AddWithValue("@IssueNo", issueNo);
+                                        insertCmd.Parameters.AddWithValue("@RevisionDate", (object)revisionDate ?? DBNull.Value);
+                                        insertCmd.Parameters.AddWithValue("@RevNo", revNo);
+                                        insertCmd.Parameters.AddWithValue("@Frequency", frequency);
+                                        insertCmd.Parameters.AddWithValue("@Approver1Code", "ADMIN");
+                                        insertCmd.Parameters.AddWithValue("@Approver2Code", "ADMIN");
+                                        insertCmd.Parameters.AddWithValue("@DottedLineCode", "ADMIN");
+
+                                        insertCmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+
+        public void InsertDefaultApproversNew1(string plantId, string lineId, int formId)
+        {
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // Check if default approvers already exist
+                        string checkQuery = @"
+                    SELECT COUNT(*) 
+                    FROM [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] 
+                    WHERE FormID = @FormID AND plant_id = @PlantId AND line_id = @LineId";
+
+                        using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn, transaction))
+                        {
+                            checkCmd.Parameters.AddWithValue("@FormID", formId);
+                            checkCmd.Parameters.AddWithValue("@PlantId", plantId);
+                            checkCmd.Parameters.AddWithValue("@LineId", lineId);
+
+                            int existingCount = (int)checkCmd.ExecuteScalar();
+                            if (existingCount > 0)
+                            {
+                                // Default approvers already exist; exit early
+                                return;
+                            }
+                        }
+
+                        // Retrieve data from MST_FormsMaster for the given FormID
+                        string selectQuery = @"
+                    SELECT FormID, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency 
+                    FROM [AnmolDristi].[dbo].[MST_FormsMaster] 
+                    WHERE FormID = @FormID";
+
+                        using (SqlCommand selectCmd = new SqlCommand(selectQuery, conn, transaction))
+                        {
+                            selectCmd.Parameters.AddWithValue("@FormID", formId);
+
+                            using (SqlDataReader reader = selectCmd.ExecuteReader())
+                            {
+                                if (reader.HasRows && reader.Read())
+                                {
+                                    // Extract data from MST_FormsMaster
+                                    string formName = reader["FormName"].ToString();
+                                    string documentNumber = reader["DocumentNumber"].ToString();
+                                    string documentName = reader["DocumentName"].ToString();
+                                    DateTime? issueDate = reader["IssueDate"] as DateTime?;
+                                    string issueNo = reader["IssueNo"].ToString();
+                                    DateTime? revisionDate = reader["RevisionDate"] as DateTime?;
+                                    string revNo = reader["RevNo"].ToString();
+                                    int frequency = reader["Frequency"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Frequency"]);
+
+                                    reader.Close();
+
+                                    // Insert data into MST_FormsApprovalMatrix
+                                    string insertQuery = @"
+                                INSERT INTO [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] 
+                                (FormID, plant_id, line_id, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency, 
+                                 Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode) 
+                                VALUES 
+                                (@FormID, @PlantId, @LineId, @FormName, @DocumentNumber, @DocumentName, @IssueDate, @IssueNo, @RevisionDate, @RevNo, @Frequency, 
+                                 @Approver1Code, @Approver2Code, @DottedLineCode)";
+
+                                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn, transaction))
+                                    {
+                                        insertCmd.Parameters.AddWithValue("@FormID", formId);
+                                        insertCmd.Parameters.AddWithValue("@PlantId", plantId);
+                                        insertCmd.Parameters.AddWithValue("@LineId", lineId);
+                                        insertCmd.Parameters.AddWithValue("@FormName", formName);
+                                        insertCmd.Parameters.AddWithValue("@DocumentNumber", documentNumber);
+                                        insertCmd.Parameters.AddWithValue("@DocumentName", documentName);
+                                        insertCmd.Parameters.AddWithValue("@IssueDate", (object)issueDate ?? DBNull.Value);
+                                        insertCmd.Parameters.AddWithValue("@IssueNo", issueNo);
+                                        insertCmd.Parameters.AddWithValue("@RevisionDate", (object)revisionDate ?? DBNull.Value);
+                                        insertCmd.Parameters.AddWithValue("@RevNo", revNo);
+                                        insertCmd.Parameters.AddWithValue("@Frequency", frequency);
+                                        insertCmd.Parameters.AddWithValue("@Approver1Code", "ADMIN");
+                                        insertCmd.Parameters.AddWithValue("@Approver2Code", "ADMIN");
+                                        insertCmd.Parameters.AddWithValue("@DottedLineCode", "ADMIN");
+
+                                        insertCmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                        }
+
+                        // Commit the transaction
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception("Error while inserting default approvers: " + ex.Message, ex);
+                    }
+                }
+            }
+        }
+
+        public bool InsertDefaultApprovers(string plantId, string lineId, int formId)
+        {
+            bool isInserted = false;
+
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // Check if default approvers already exist
+                        string checkQuery = @"
+                SELECT COUNT(*) 
+                FROM [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] 
+                WHERE FormID = @FormID AND plant_id = @PlantId AND line_id = @LineId";
+
+                        using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn, transaction))
+                        {
+                            checkCmd.Parameters.AddWithValue("@FormID", formId);
+                            checkCmd.Parameters.AddWithValue("@PlantId", plantId);
+                            checkCmd.Parameters.AddWithValue("@LineId", lineId);
+
+                            int existingCount = (int)checkCmd.ExecuteScalar();
+                            if (existingCount > 0)
+                            {
+                                // Default approvers already exist; no insertion needed
+                                return false;
+                            }
+                        }
+
+                        // Retrieve data from MST_FormsMaster for the given FormID
+                        string selectQuery = @"
+                SELECT FormID, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency 
+                FROM [AnmolDristi].[dbo].[MST_FormsMaster] 
+                WHERE FormID = @FormID";
+
+                        using (SqlCommand selectCmd = new SqlCommand(selectQuery, conn, transaction))
+                        {
+                            selectCmd.Parameters.AddWithValue("@FormID", formId);
+
+                            using (SqlDataReader reader = selectCmd.ExecuteReader())
+                            {
+                                if (reader.HasRows && reader.Read())
+                                {
+                                    // Extract data from MST_FormsMaster
+                                    string formName = reader["FormName"].ToString();
+                                    string documentNumber = reader["DocumentNumber"].ToString();
+                                    string documentName = reader["DocumentName"].ToString();
+                                    DateTime? issueDate = reader["IssueDate"] as DateTime?;
+                                    string issueNo = reader["IssueNo"].ToString();
+                                    DateTime? revisionDate = reader["RevisionDate"] as DateTime?;
+                                    string revNo = reader["RevNo"].ToString();
+                                    int frequency = reader["Frequency"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Frequency"]);
+
+                                    reader.Close();
+
+                                    // Insert data into MST_FormsApprovalMatrix
+                                    string insertQuery = @"
+                            INSERT INTO [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] 
+                            (FormID, plant_id, line_id, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency, 
+                             Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode) 
+                            VALUES 
+                            (@FormID, @PlantId, @LineId, @FormName, @DocumentNumber, @DocumentName, @IssueDate, @IssueNo, @RevisionDate, @RevNo, @Frequency, 
+                             @Approver1Code, @Approver2Code, @DottedLineCode)";
+
+                                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn, transaction))
+                                    {
+                                        insertCmd.Parameters.AddWithValue("@FormID", formId);
+                                        insertCmd.Parameters.AddWithValue("@PlantId", plantId);
+                                        insertCmd.Parameters.AddWithValue("@LineId", lineId);
+                                        insertCmd.Parameters.AddWithValue("@FormName", formName);
+                                        insertCmd.Parameters.AddWithValue("@DocumentNumber", documentNumber);
+                                        insertCmd.Parameters.AddWithValue("@DocumentName", documentName);
+                                        insertCmd.Parameters.AddWithValue("@IssueDate", (object)issueDate ?? DBNull.Value);
+                                        insertCmd.Parameters.AddWithValue("@IssueNo", issueNo);
+                                        insertCmd.Parameters.AddWithValue("@RevisionDate", (object)revisionDate ?? DBNull.Value);
+                                        insertCmd.Parameters.AddWithValue("@RevNo", revNo);
+                                        insertCmd.Parameters.AddWithValue("@Frequency", frequency);
+                                        insertCmd.Parameters.AddWithValue("@Approver1Code", "ADMIN");
+                                        insertCmd.Parameters.AddWithValue("@Approver2Code", "ADMIN");
+                                        insertCmd.Parameters.AddWithValue("@DottedLineCode", "ADMIN");
+
+                                        insertCmd.ExecuteNonQuery();
+                                    }
+
+                                    // Mark as successfully inserted
+                                    isInserted = true;
+                                }
+                                else
+                                {
+                                    // No matching FormID found in MST_FormsMaster
+                                    throw new Exception($"No matching FormID ({formId}) found in MST_FormsMaster.");
+                                }
+                            }
+                        }
+
+                        // Commit the transaction
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        // Log the error or re-throw
+                        throw new Exception("Error while inserting default approvers: " + ex.Message, ex);
+                    }
+                }
+            }
+
+            return isInserted;
         }
 
 

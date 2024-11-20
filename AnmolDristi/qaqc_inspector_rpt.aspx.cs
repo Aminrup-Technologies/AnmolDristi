@@ -22,7 +22,6 @@ namespace AnmolDristi.qaqc
         DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
         public static string ImgLink1 = string.Empty;
         public static string ImgLink2 = string.Empty;
-        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -55,7 +54,7 @@ namespace AnmolDristi.qaqc
             hdn_shiftvalue.Value =currentShift;
         }
 
-        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
+        private void LoadApproversOld(string selectedPlantValue, string selectedPlantLineValue)
         {
             // Replace with your actual connection string
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -132,6 +131,106 @@ namespace AnmolDristi.qaqc
                     }
                 }
             }
+        }
+
+        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
+                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@FormID", 1); // Replace with actual value
+                    cmd.Parameters.AddWithValue("@FormName", "qaqc_inspector_rpt"); // Replace with actual value
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        hdn_formid.Value = "1";
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        if (dt.Rows.Count > 0)
+                        {
+                            // Populate the GridView
+                            GridViewApprovers.DataSource = dt;
+                            GridViewApprovers.DataBind();
+
+                            // Populate labels with approver data
+                            DataRow row = dt.Rows[0];
+
+                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
+
+                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
+
+                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
+                        }
+                        else
+                        {
+                            // Insert default approvers
+                            bool isInserted = dbcl.InsertDefaultApprovers(selectedPlantValue, selectedPlantLineValue, 1);
+
+                            if (isInserted)
+                            {
+                                // Re-fetch data after insertion (no recursion)
+                                da.Fill(dt);
+                                if (dt.Rows.Count > 0)
+                                {
+                                    GridViewApprovers.DataSource = dt;
+                                    GridViewApprovers.DataBind();
+
+                                    // Populate labels with approver data
+                                    DataRow row = dt.Rows[0];
+
+                                    Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                                    Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                                    //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
+
+                                    Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                                    Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                                    //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
+
+                                    DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                                    DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                                    //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
+                                }
+                                else
+                                {
+                                    ShowErrorNotification("Failed to load approver data even after insertion.");
+                                }
+                            }
+                            else
+                            {
+                                // If default insertion fails
+                                ShowErrorNotification("Failed to insert default approvers.");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ShowErrorNotification(string message)
+        {
+            string script = $@"<script type='text/javascript'>
+                        new PNotify({{
+                            title: 'Error',
+                            text: '{message}',
+                            type: 'error',
+                            styling: 'bootstrap3'
+                        }});
+                      </script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "ErrorNotification", script, false);
         }
 
         public void PlantBinder()
@@ -923,7 +1022,7 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "An error occurred in RetrieveFormData");
+                //logger.Error(ex, "An error occurred in RetrieveFormData");
                 // Log the exception or display an error message
             }
             finally
@@ -1029,7 +1128,7 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "An error occurred in RetrieveFormData");
+                //logger.Error(ex, "An error occurred in RetrieveFormData");
                 string errorMessage = ex.Message;
                 string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, true);
@@ -1803,7 +1902,7 @@ namespace AnmolDristi.qaqc
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex, "An error occurred in RetrieveFormData");
+                    //logger.Error(ex, "An error occurred in RetrieveFormData");
                     DisplayErrorNotification(ex.Message);
                 }
             }
@@ -1940,7 +2039,7 @@ namespace AnmolDristi.qaqc
             }
             catch (FormatException ex)
             {
-                logger.Error(ex, "An error occurred in RetrieveFormData");
+                //logger.Error(ex, "An error occurred in RetrieveFormData");
                 // Log or display the error message
                 // For example, you could use Console.WriteLine or a logging framework
                 Console.WriteLine($"FormatException: {ex.Message}");
@@ -1949,7 +2048,7 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "An error occurred in RetrieveFormData");
+                //logger.Error(ex, "An error occurred in RetrieveFormData");
                 // Handle other potential exceptions
                 Console.WriteLine($"Exception: {ex.Message}");
                 throw; // Optional: rethrow the exception if you want it to propagate further
@@ -2037,7 +2136,7 @@ namespace AnmolDristi.qaqc
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex, "An error occurred in RetrieveFormData");
+                    //logger.Error(ex, "An error occurred in RetrieveFormData");
                     DisplayErrorNotification(ex.Message);
                 }
             }

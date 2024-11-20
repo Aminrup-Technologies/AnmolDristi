@@ -37,6 +37,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:HiddenField ID="hdn_formid" runat="server" />
     <script type="text/javascript">
         function toggleRemarksDiv1(radioButtonList) {
             console.log("showTextbox function called");

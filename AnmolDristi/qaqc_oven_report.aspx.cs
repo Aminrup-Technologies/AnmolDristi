@@ -38,7 +38,7 @@ namespace AnmolDristi
             }
         }
 
-        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
+        private void LoadApproversOld(string selectedPlantValue, string selectedPlantLineValue)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
@@ -113,6 +113,108 @@ namespace AnmolDristi
                 }
             }
         }
+
+        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
+                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@FormID", 4);
+                    cmd.Parameters.AddWithValue("@FormName", "qaqc_oven_report");
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        hdn_formid.Value = "4";
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        if (dt.Rows.Count > 0)
+                        {
+                            // Populate the GridView
+                            GridViewApprovers.DataSource = dt;
+                            GridViewApprovers.DataBind();
+
+                            // Populate labels with approver data
+                            DataRow row = dt.Rows[0];
+
+                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
+
+                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
+
+                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
+                        }
+                        else
+                        {
+                            // Insert default approvers
+                            bool isInserted = dbcl.InsertDefaultApprovers(selectedPlantValue, selectedPlantLineValue, 4);
+
+                            if (isInserted)
+                            {
+                                // Re-fetch data after insertion (no recursion)
+                                da.Fill(dt);
+                                if (dt.Rows.Count > 0)
+                                {
+                                    GridViewApprovers.DataSource = dt;
+                                    GridViewApprovers.DataBind();
+
+                                    // Populate labels with approver data
+                                    DataRow row = dt.Rows[0];
+
+                                    Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                                    Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                                    //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
+
+                                    Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                                    Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                                    //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
+
+                                    DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                                    DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                                    //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
+                                }
+                                else
+                                {
+                                    ShowErrorNotification("Failed to load approver data even after insertion.");
+                                }
+                            }
+                            else
+                            {
+                                // If default insertion fails
+                                ShowErrorNotification("Failed to insert default approvers.");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Utility function to display notifications
+        private void ShowErrorNotification(string message)
+        {
+            string script = $@"<script type='text/javascript'>
+                        new PNotify({{
+                            title: 'Error',
+                            text: '{message}',
+                            type: 'error',
+                            styling: 'bootstrap3'
+                        }});
+                      </script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "ErrorNotification", script, false);
+        }
+
 
         private void DisplayCurrentShift()
         {
