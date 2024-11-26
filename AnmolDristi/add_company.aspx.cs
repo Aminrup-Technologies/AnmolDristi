@@ -77,8 +77,10 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
-                    // Rollback transaction if there's an error
-                    transaction.Rollback();
+                    if (transaction != null)
+                    {
+                        transaction.Rollback();
+                    }
                     lbl_msg.Text = "Error: " + ex.Message;
                 }
                 finally

@@ -81,9 +81,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="add_branch.aspx" />
+    <Content Include="add_brands.aspx" />
     <Content Include="add_company.aspx" />
+    <Content Include="add_plants.aspx" />
+    <Content Include="add_plant_lines.aspx" />
+    <Content Include="add_prodcategory.aspx" />
+    <Content Include="add_prod_plants.aspx" />
     <Content Include="add_region.aspx" />
+    <Content Include="Critical_Incident_ViewPage.aspx" />
+    <Content Include="critical_quality_report.aspx">
+      <BrowseToURL>~/critical_incident_report.aspx</BrowseToURL>
+    </Content>
     <Content Include="home.aspx" />
+    <Content Include="New_User.aspx" />
+    <Content Include="PVC _Tray.aspx" />
     <Content Include="qaqc_add_users.aspx" />
     <Content Include="qaqc_mst_sku.aspx" />
     <Content Include="packages.config" />
@@ -91,6 +102,7 @@
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
     <Content Include="qaqc_qcinspector_frmctrl.aspx" />
+    <Content Include="RM_Class5.aspx" />
     <Content Include="WebData\Anmol_Logo.png" />
     <Content Include="WebData\Internal\bank.jpg" />
     <Content Include="WebData\Internal\crossgif.gif" />
@@ -140,12 +152,47 @@
     <Compile Include="add_branch.aspx.designer.cs">
       <DependentUpon>add_branch.aspx</DependentUpon>
     </Compile>
+    <Compile Include="add_brands.aspx.cs">
+      <DependentUpon>add_brands.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="add_brands.aspx.designer.cs">
+      <DependentUpon>add_brands.aspx</DependentUpon>
+    </Compile>
     <Compile Include="add_company.aspx.cs">
       <DependentUpon>add_company.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="add_company.aspx.designer.cs">
       <DependentUpon>add_company.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="add_plants.aspx.cs">
+      <DependentUpon>add_plants.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="add_plants.aspx.designer.cs">
+      <DependentUpon>add_plants.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="add_plant_lines.aspx.cs">
+      <DependentUpon>add_plant_lines.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="add_plant_lines.aspx.designer.cs">
+      <DependentUpon>add_plant_lines.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="add_prodcategory.aspx.cs">
+      <DependentUpon>add_prodcategory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="add_prodcategory.aspx.designer.cs">
+      <DependentUpon>add_prodcategory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="add_prod_plants.aspx.cs">
+      <DependentUpon>add_prod_plants.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="add_prod_plants.aspx.designer.cs">
+      <DependentUpon>add_prod_plants.aspx</DependentUpon>
     </Compile>
     <Compile Include="add_region.aspx.cs">
       <DependentUpon>add_region.aspx</DependentUpon>
@@ -160,6 +207,20 @@
     </Compile>
     <Compile Include="blank.aspx.designer.cs">
       <DependentUpon>blank.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Critical_Incident_ViewPage.aspx.cs">
+      <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Critical_Incident_ViewPage.aspx.designer.cs">
+      <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="critical_quality_report.aspx.cs">
+      <DependentUpon>critical_quality_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="critical_quality_report.aspx.designer.cs">
+      <DependentUpon>critical_quality_report.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\QCInspectorDataAccess.cs" />
     <Compile Include="DatabaseHelper.cs" />
@@ -184,6 +245,20 @@
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="New_User.aspx.cs">
+      <DependentUpon>New_User.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="New_User.aspx.designer.cs">
+      <DependentUpon>New_User.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PVC _Tray.aspx.cs">
+      <DependentUpon>PVC _Tray.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PVC _Tray.aspx.designer.cs">
+      <DependentUpon>PVC _Tray.aspx</DependentUpon>
     </Compile>
     <Compile Include="qaqc_add_users.aspx.cs">
       <DependentUpon>qaqc_add_users.aspx</DependentUpon>
@@ -248,6 +323,13 @@
     </Compile>
     <Compile Include="qaqc_qcinspector_rpt_.aspx.designer.cs">
       <DependentUpon>qaqc_qcinspector_rpt_.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class5.aspx.cs">
+      <DependentUpon>RM_Class5.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class5.aspx.designer.cs">
+      <DependentUpon>RM_Class5.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

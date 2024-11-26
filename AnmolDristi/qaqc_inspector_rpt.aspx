@@ -459,7 +459,7 @@
                                         <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductBrand_SelectedIndexChanged"></asp:DropDownList>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--%
 
                             <div class="col-md-3">
                                 <div class="mb-3">

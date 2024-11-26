@@ -647,7 +647,7 @@ namespace AnmolDristi.qaqc
         //        // Call the InsertQCInspectorData method with the retrieved values
         //        dataAccess.InsertQCInspectorData(plantName, line, productCategory, productBrand, brandSKU,
         //              numberOfPieces, gaugeValue, dryWeight, dippedWeight,
-        //              varietyOrLotNo, bakingTime, ColorAppearance, CommentsForColorAppearance,  flavourAndTaste, commentsForFlavourAndTaste, DesignImplementation, CommentsForDesignImplementation, 
+        //              varietyOrLotNo, bakingTime, ColorAppearance, CommentsForColorAppearance,  flavourAndTaste, commentsForFlavourAndTaste, DesignImplementation, CommentsForDesignImplementation,
         //              TextureBite, CommentsForTextureBite, shapeOrSize, commentsForShapeOrSize, moisture,
         //              gaugeLength, CommentsGaugeLength, weightWithoutOil, weightWithOil, oilPercentValue,
         //              packetWeight, ImgLink1, ImgLink2,
@@ -1161,7 +1161,7 @@ namespace AnmolDristi.qaqc
 
             return imgSaved;
         }
-
+        //------ InputControl ----///
         protected void DDL_ProductBrand_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_ProductBrand.SelectedIndex != 0)

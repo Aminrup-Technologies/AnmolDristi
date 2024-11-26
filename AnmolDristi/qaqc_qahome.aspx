@@ -14,7 +14,7 @@
             <div class="clearfix"></div>--%>
 
             <div class="row">
-                
+
                 <div class="col-md-12" id="Div1" runat="server" visible="true">
                     <div class="x_panel">
                         <div class="x_title">
@@ -42,6 +42,13 @@
                                 <span class="badge bg-red">Shift : 1
                                     <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Leak Test
+
+                            </a>
+                            </a>
+                            <a class="btn btn-app" href="New_User.aspx">
+                                <span class="badge bg-red">WIP
+                                    <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>New_User
 
                             </a>
                         </div>

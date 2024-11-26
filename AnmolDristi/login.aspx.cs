@@ -25,10 +25,10 @@ namespace AnmolDristi
             if (!IsPostBack)
             {
                 Img_CpLogo.ImageUrl = "WebData/Anmol_Logo.png";
-                lbl_companyname.Text = "Anmol Industries Limited";
+                lbl_companyname.Text = "Form Flow 360";
                 lbl_currentyr.Text = DateTime.Now.Year.ToString();
-                lbl_compfooter.Text = "Anmol Industries Limited";
-                lbl_owner.Text = "IT Department";
+                lbl_compfooter.Text = "Purnima Bhakat";
+                lbl_owner.Text = "NSU";
                 txt_loginid.Focus();
             }
         }
@@ -81,7 +81,7 @@ namespace AnmolDristi
 
                     if (WorkStatus == "Active")
                     {
-                        string EmployeeCode = dt.Rows[0]["EmployeeCode"].ToString();
+                        string EmployeeCode = dt.Rows[0]["Id"].ToString();
                         string RegionId = dt.Rows[0]["RegionId"].ToString();
                         string BranchId = dt.Rows[0]["BranchId"].ToString();
                         string PlantId = dt.Rows[0]["PlantId"].ToString();

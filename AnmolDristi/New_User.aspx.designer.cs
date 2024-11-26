@@ -7,396 +7,461 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AnmolDristi {
-    
-    
-    public partial class Dristi {
-        
+namespace AnmolDristi
+{
+
+
+    public partial class New_User
+    {
+
         /// <summary>
-        /// head control.
+        /// lbl_docname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
-        
+        protected global::System.Web.UI.WebControls.Label lbl_docname;
+
         /// <summary>
-        /// form1 control.
+        /// Lbl_DDL_Company control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_DDL_Company;
+
         /// <summary>
-        /// Image1 control.
+        /// RFV_DDL_Company control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Company;
+
         /// <summary>
-        /// ProfilePic_1 control.
+        /// DDL_Company control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic_1;
-        
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Company;
+
         /// <summary>
-        /// lbl_loginusername1 control.
+        /// Lbl_DDL_Region control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_loginusername1;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_DDL_Region;
+
         /// <summary>
-        /// HomePage control.
+        /// RFV_DDL_Region control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HomePage;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Region;
+
         /// <summary>
-        /// Home1 control.
+        /// DDL_Region control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Home1;
-        
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Region;
+
         /// <summary>
-        /// ImputForms control.
+        /// Lbl_DDL_Branch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ImputForms;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_DDL_Branch;
+
         /// <summary>
-        /// frms_quality control.
+        /// RFV_DDL_Branch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl frms_quality;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Branch;
+
         /// <summary>
-        /// frms_qa control.
+        /// DDL_Branch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl frms_qa;
-        
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Branch;
+
         /// <summary>
-        /// frms_qc control.
+        /// Lbl_DDL_Plant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl frms_qc;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_DDL_Plant;
+
         /// <summary>
-        /// Reports control.
+        /// RFV_DDL_Plant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Reports;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Plant;
+
         /// <summary>
-        /// rpts_quality control.
+        /// DDL_Plant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rpts_quality;
-        
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Plant;
+
         /// <summary>
-        /// rpts_qa control.
+        /// Lbl_DDL_Division control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rpts_qa;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_DDL_Division;
+
         /// <summary>
-        /// rpts_qc control.
+        /// RFV_DDL_Division control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rpts_qc;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Division;
+
         /// <summary>
-        /// DataMastering control.
+        /// DDL_Division control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DataMastering;
-        
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Division;
+
         /// <summary>
-        /// OrgMaster control.
+        /// Lbl_DDL_Department control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl OrgMaster;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_DDL_Department;
+
         /// <summary>
-        /// mst_company control.
+        /// RFV_DDL_Department control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_company;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Department;
+
         /// <summary>
-        /// mst_region control.
+        /// DDL_Department control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_region;
-        
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Department;
+
         /// <summary>
-        /// mst_branch control.
+        /// Lbl_DDL_SubDepartment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_branch;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_DDL_SubDepartment;
+
         /// <summary>
-        /// mst_plants control.
+        /// RFV_DDL_SubDepartment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_plants;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_SubDepartment;
+
         /// <summary>
-        /// HRMSMaster control.
+        /// DDL_SubDepartment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HRMSMaster;
-        
+        protected global::System.Web.UI.WebControls.DropDownList DDL_SubDepartment;
+
         /// <summary>
-        /// mst_division control.
+        /// Lbl_DDL_Category control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_division;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_DDL_Category;
+
         /// <summary>
-        /// mst_category control.
+        /// RFV_DDL_Category control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_category;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Category;
+
         /// <summary>
-        /// mst_grade control.
+        /// DDL_Category control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_grade;
-        
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Category;
+
         /// <summary>
-        /// mst_dept control.
+        /// Lbl_DDL_Grade control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_dept;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_DDL_Grade;
+
         /// <summary>
-        /// mst_subdept control.
+        /// RFV_DDL_Grade control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_subdept;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Grade;
+
         /// <summary>
-        /// ProductMaster control.
+        /// DDL_Grade control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ProductMaster;
-        
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Grade;
+
         /// <summary>
-        /// mst_prodplants control.
+        /// Lbl_EmpCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_prodplants;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_EmpCode;
+
         /// <summary>
-        /// mst_lines control.
+        /// RFV_TB_EmpCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_lines;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_EmpCode;
+
         /// <summary>
-        /// mst_prodcategory control.
+        /// REV_TB_EmpCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_prodcategory;
-        
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_EmpCode;
+
         /// <summary>
-        /// mst_brands control.
+        /// TB_EmpCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_brands;
-        
+        protected global::System.Web.UI.WebControls.TextBox TB_EmpCode;
+
         /// <summary>
-        /// mst_brand_sku control.
+        /// Lbl_EmpName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mst_brand_sku;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_EmpName;
+
         /// <summary>
-        /// Controllers control.
+        /// RFV_TB_EmpName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Controllers;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_EmpName;
+
         /// <summary>
-        /// ctrl_qcinspector_Frm control.
+        /// TB_EmpName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ctrl_qcinspector_Frm;
-        
+        protected global::System.Web.UI.WebControls.TextBox TB_EmpName;
+
         /// <summary>
-        /// ProfilePic_2 control.
+        /// Lbl_TB_DOJ control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic_2;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_DOJ;
+
         /// <summary>
-        /// lbl_loginusername2 control.
+        /// RFV_TB_DOJ control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_loginusername2;
-        
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_DOJ;
+
         /// <summary>
-        /// ContentPlaceHolder1 control.
+        /// TB_DOJ control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
-        
+        protected global::System.Web.UI.WebControls.TextBox TB_DOJ;
+
         /// <summary>
-        /// lblTime1 control.
+        /// Lbl_TB_Email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTime1;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_Email;
+
         /// <summary>
-        /// lblTime control.
+        /// TB_Email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTime;
-        
+        protected global::System.Web.UI.WebControls.TextBox TB_Email;
+
         /// <summary>
-        /// Label1 control.
+        /// Lbl_TB_Mobile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_Mobile;
+
         /// <summary>
-        /// btn_lgout control.
+        /// REV_TB_Mobile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_lgout;
-        
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Mobile;
+
         /// <summary>
-        /// ShowPopup control.
+        /// TB_Mobile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ShowPopup;
+        protected global::System.Web.UI.WebControls.TextBox TB_Mobile;
+
+        /// <summary>
+        /// Lbl_RBL_Gender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_RBL_Gender;
+
+        /// <summary>
+        /// RFV_RBL_Gender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_RBL_Gender;
+
+        /// <summary>
+        /// RBL_Gender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList RBL_Gender;
+
+        /// <summary>
+        /// Lbl_BtnSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_BtnSubmit;
+
+        /// <summary>
+        /// BtnSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSubmit;
+
+        /// <summary>
+        /// BtnReset control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnReset;
+
+        /// <summary>
+        /// Btn_home control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_home;
     }
 }

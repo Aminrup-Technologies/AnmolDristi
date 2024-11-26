@@ -160,11 +160,29 @@
 
                                         <li id="DataMastering" runat="server" visible="false"><a><i class="fa fa-database"></i>Data Mastering<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
-                                                <li id="Master" runat="server" visible="true"><a>Masters<span class="fa fa-chevron-down"></span></a>
+                                                <li id="OrgMaster" runat="server" visible="false"><a>Organization Masters<span class="fa fa-chevron-down"></span></a>
                                                     <ul class="nav child_menu">
                                                         <li id="mst_company" runat="server" class="sub_menu"><a href="add_company.aspx">Manage Company</a></li>
                                                         <li id="mst_region" runat="server" class="sub_menu"><a href="add_region.aspx">Manage Region</a></li>
                                                         <li id="mst_branch" runat="server" class="sub_menu"><a href="add_branch.aspx">Manage Branch</a></li>
+                                                        <li id="mst_plants" runat="server" class="sub_menu"><a href="add_plants.aspx">Manage Plants</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li id="HRMSMaster" runat="server" visible="false"><a>HRMS Masters<span class="fa fa-chevron-down"></span></a>
+                                                    <ul class="nav child_menu">
+                                                        <li id="mst_division" runat="server" class="sub_menu"><a href="#">Manage Division</a></li>
+                                                        <li id="mst_category" runat="server" class="sub_menu"><a href="#">Manage Category</a></li>
+                                                        <li id="mst_grade" runat="server" class="sub_menu"><a href="#">Manage Grade</a></li>
+                                                        <li id="mst_dept" runat="server" class="sub_menu"><a href="#x">Manage Department</a></li>
+                                                        <li id="mst_subdept" runat="server" class="sub_menu"><a href="#">Manage Sub-Department</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li id="ProductMaster" runat="server" visible="true"><a>Product Masters<span class="fa fa-chevron-down"></span></a>
+                                                    <ul class="nav child_menu">
+                                                        <li id="mst_prodplants" runat="server" class="sub_menu"><a href="add_prod_plants.aspx">Production Plants</a></li>
+                                                        <li id="mst_lines" runat="server" class="sub_menu"><a href="add_plant_lines.aspx">Manage Lines</a></li>
+                                                        <li id="mst_prodcategory" runat="server" class="sub_menu"><a href="add_prodcategory.aspx">Manage Category</a></li>
+                                                        <li id="mst_brands" runat="server" class="sub_menu"><a href="add_brands.aspx">Manage Brands</a></li>
                                                         <li id="mst_brand_sku" runat="server" class="sub_menu"><a href="qaqc_mst_sku.aspx">Brand SKU Master</a></li>
                                                     </ul>
                                                 </li>

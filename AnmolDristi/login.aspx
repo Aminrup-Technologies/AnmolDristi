@@ -29,7 +29,7 @@
                     <section class="login_content">
                         <asp:Image ID="Img_CpLogo" runat="server" ImageUrl="#" Height="120" Width="180" />
                         <h1>
-                            <asp:Label ID="lbl_companyname" runat="server" Text="Automation & Technical Services"></asp:Label></h1>
+                            <asp:Label ID="lbl_companyname" runat="server" Text="FORM FLOW 360"></asp:Label></h1>
                         <div class="form-horizontal">
                             <div class="form-group row">
                                 <asp:Label ID="Label1" runat="server" AssociatedControlID="txt_loginid" CssClass="control-label col-md-4 col-sm-6 label-align" Font-Bold="true" Text="USER ID"></asp:Label>
@@ -58,9 +58,11 @@
                                 <div>
                                     <p>
                                         © 2023-<asp:Label ID="lbl_currentyr" runat="server" Text="2024"></asp:Label>
-                                        All Rights Reserved. <span style="font-weight: bold; color:red;">
-                                            <a href="https://www.anmolindustries.com/" target="_blank"><asp:Label ID="lbl_compfooter" runat="server" Text="N/A"></asp:Label></a><br /></span> Powered by <a href="#" target="_blank">
-                                                <asp:Label ID="lbl_owner" runat="server" Text="N/A"></asp:Label></a>
+                                        All Rights Reserved. <span style="font-weight: bold; color: red;">
+                                            <a href="https://www.anmolindustries.com/" target="_blank">
+                                                <asp:Label ID="lbl_compfooter" runat="server" Text="N/A"></asp:Label></a><br />
+                                        </span>Powered by <a href="#" target="_blank">
+                                            <asp:Label ID="lbl_owner" runat="server" Text="N/A"></asp:Label></a>
                                     </p>
                                 </div>
                             </div>

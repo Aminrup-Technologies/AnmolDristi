@@ -43,11 +43,23 @@
                                 <i class="fa fa-edit"></i>CB Box Report
 
                             </a>
+                             <a class="btn btn-app" href="critical_quality_report.aspx">
+                                <span class="badge bg-red">WIP
+                                    <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Critical Incidicent Report
+
+                            </a>
+                             <a class="btn btn-app" href="PVC _Tray.aspx">
+                                <span class="badge bg-red">WIP
+                                    <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>PVC Tray / Mono CB Report
+
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                
+
 
             </div>
         </div>

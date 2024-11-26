@@ -1,6 +1,6 @@
-﻿<%@ Page Title="AIL | Regions" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="add_region.aspx.cs" Inherits="AnmolDristi.add_region" %>
-
+﻿<%@ Page Title="AIL | ZingHR Plants" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="add_plants.aspx.cs" Inherits="AnmolDristi.add_plants" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
@@ -17,7 +17,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="Add Region Details"></asp:Label></h2>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="Add Production Plants Details"></asp:Label></h2>
                             <div class="clearfix"></div>
                         </div>
 
@@ -26,22 +26,22 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <asp:Label ID="Lbl_Region_Description" runat="server" AssociatedControlID="TB_Region_Description" Text="Region Description :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <asp:RequiredFieldValidator ID="RFV_Region_Description" runat="server" ErrorMessage="*" ControlToValidate="TB_Region_Description" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:RegularExpressionValidator ID="REV_Region_Description" runat="server" ControlToValidate="TB_Region_Description" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                        <asp:Label ID="Lbl_PlantID_Description" runat="server" AssociatedControlID="TB_PlantID_Description" Text="Branch Description :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_PlantID_Description" runat="server" ErrorMessage="*" ControlToValidate="TB_PlantID_Description" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_PlantID_Description" runat="server" ControlToValidate="TB_PlantID_Description" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_Region_Description" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Region Description (3-100 characters)" MaxLength="100"></asp:TextBox>
+                                            <asp:TextBox ID="TB_PlantID_Description" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Branch Description (3-50 characters)" MaxLength="50"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <asp:Label ID="Lbl_Region_ID" runat="server" AssociatedControlID="TB_Region_ID" Text="Region ID :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <asp:RequiredFieldValidator ID="RFV_Region_ID" runat="server" ErrorMessage="*" ControlToValidate="TB_Region_ID" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:RegularExpressionValidator ID="REV_Region_ID" runat="server" ControlToValidate="TB_Region_ID" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[0-9]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                        <asp:Label ID="Lbl_PlantID_ID" runat="server" AssociatedControlID="TB_PlantID_ID" Text="Branch ID :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_PlantID_ID" runat="server" ErrorMessage="*" ControlToValidate="TB_PlantID_ID" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_PlantID_ID" runat="server" ControlToValidate="TB_PlantID_ID" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Numeric Only" ValidationExpression="^[0-9]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_Region_ID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Region ID (3-20 characters)" MaxLength="20"></asp:TextBox>
+                                            <asp:TextBox ID="TB_PlantID_ID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Branch ID (3-20 characters)" MaxLength="20"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -77,11 +77,18 @@
                             <div class="x_content">
                                 <div class="row">
                                     <div class="card-box col-md-12 col-sm-12" style="width: 100%; height: 450px; overflow: scroll;">
-                                        <asp:GridView ID="GridView1" runat="server" Width="100%" class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDeleting="GridView1_RowDeleting" DataKeyNames="Id">
+                                        <asp:GridView ID="GridViewPlants" runat="server" AutoGenerateColumns="False" DataKeyNames="Id"
+                                            AllowPaging="True" PageSize="10"
+                                            Width="100%" class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found"
+                                            OnRowEditing="GridViewPlants_RowEditing"
+                                            OnRowUpdating="GridViewPlants_RowUpdating"
+                                            OnRowDeleting="GridViewPlants_RowDeleting"
+                                            OnRowCancelingEdit="GridViewPlants_RowCancelingEdit"
+                                            OnRowDataBound="GridViewPlants_RowDataBound" OnPageIndexChanging="GridViewPlants_PageIndexChanging" >
                                             <Columns>
                                                 <asp:BoundField DataField="Id" HeaderText="ID" ReadOnly="True" />
-                                                <asp:BoundField DataField="Region_Description" HeaderText="Region Description" />
-                                                <asp:BoundField DataField="Region_ID" HeaderText="Region ID" />
+                                                <asp:BoundField DataField="PlantID_Description" HeaderText="Plant Description" />
+                                                <asp:BoundField DataField="PlantID_ID" HeaderText="Plant ID" />
 
                                                 <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" ControlStyle-CssClass="btn btn-primary btn-sm" />
                                             </Columns>

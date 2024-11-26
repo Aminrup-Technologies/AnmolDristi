@@ -6,7 +6,7 @@ using System.Web.UI.WebControls;
 
 namespace AnmolDristi
 {
-    public partial class add_branch : System.Web.UI.Page
+    public partial class add_plants : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -18,7 +18,7 @@ namespace AnmolDristi
                 }
                 else
                 {
-                    TB_Branch_Description.Focus();
+                    TB_PlantID_Description.Focus();
                     BindGridView();
                 }
             }
@@ -27,7 +27,6 @@ namespace AnmolDristi
         protected void btn_submit_Click(object sender, EventArgs e)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -37,10 +36,10 @@ namespace AnmolDristi
 
                 try
                 {
-                    // Check if the record exists based on Branch_ID
-                    string checkIfExistsQuery = "SELECT COUNT(*) FROM MST_Branch WHERE Branch_ID = @BranchID";
+                    // Check if the record exists based on PlantID_ID
+                    string checkIfExistsQuery = "SELECT COUNT(*) FROM MST_Plant WHERE PlantID_ID = @PlantIDID";
                     SqlCommand checkIfExistsCommand = new SqlCommand(checkIfExistsQuery, connection, transaction);
-                    checkIfExistsCommand.Parameters.AddWithValue("@BranchID", TB_Branch_ID.Text.Trim());
+                    checkIfExistsCommand.Parameters.AddWithValue("@PlantIDID", TB_PlantID_ID.Text.Trim());
 
                     int existingCount = (int)checkIfExistsCommand.ExecuteScalar();
 
@@ -53,10 +52,10 @@ namespace AnmolDristi
                     }
 
                     // Insert into MST_Branch table
-                    string insertQuery = "INSERT INTO MST_Branch (Branch_Description, Branch_ID) VALUES (@BranchDescription, @BranchID)";
+                    string insertQuery = "INSERT INTO MST_Plant (PlantID_Description, PlantID_ID) VALUES (@PlantIDDescription, @PlantIDID)";
                     SqlCommand insertCommand = new SqlCommand(insertQuery, connection, transaction);
-                    insertCommand.Parameters.AddWithValue("@BranchDescription", TB_Branch_Description.Text.Trim());
-                    insertCommand.Parameters.AddWithValue("@BranchID", TB_Branch_ID.Text.Trim());
+                    insertCommand.Parameters.AddWithValue("@PlantIDDescription", TB_PlantID_Description.Text.Trim());
+                    insertCommand.Parameters.AddWithValue("@PlantIDID", TB_PlantID_ID.Text.Trim());
 
                     insertCommand.ExecuteNonQuery();
 
@@ -64,8 +63,8 @@ namespace AnmolDristi
                     transaction.Commit();
 
                     // Clear form or show success message
-                    TB_Branch_Description.Text = "";
-                    TB_Branch_ID.Text = "";
+                    TB_PlantID_Description.Text = "";
+                    TB_PlantID_ID.Text = "";
                     lbl_msg.Text = "Branch added successfully!";
                     lbl_msg.ForeColor = System.Drawing.Color.Green;
                 }
@@ -83,7 +82,7 @@ namespace AnmolDristi
         protected void BindGridView()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = "SELECT Id, Branch_Description, Branch_ID FROM MST_Branch";
+            string query = "SELECT Id, PlantID_Description, PlantID_ID FROM MST_Plant";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -93,37 +92,37 @@ namespace AnmolDristi
 
                 adapter.Fill(dataTable);
 
-                GridViewBranches.DataSource = dataTable;
-                GridViewBranches.DataBind();
+                GridViewPlants.DataSource = dataTable;
+                GridViewPlants.DataBind();
             }
         }
 
-        protected void GridViewBranches_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void GridViewPlants_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            GridViewBranches.EditIndex = e.NewEditIndex;
+            GridViewPlants.EditIndex = e.NewEditIndex;
             BindGridView();
         }
 
-        protected void GridViewBranches_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void GridViewPlants_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            GridViewBranches.EditIndex = -1;
+            GridViewPlants.EditIndex = -1;
             BindGridView();
         }
 
-        protected void GridViewBranches_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        protected void GridViewPlants_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            GridViewRow row = GridViewBranches.Rows[e.RowIndex];
-            int id = Convert.ToInt32(GridViewBranches.DataKeys[e.RowIndex].Values["Id"]);
+            GridViewRow row = GridViewPlants.Rows[e.RowIndex];
+            int id = Convert.ToInt32(GridViewPlants.DataKeys[e.RowIndex].Values["Id"]);
 
             TextBox tbBranchDescription = row.FindControl("TextBox1") as TextBox;
-            TextBox tbBranchID = row.FindControl("TextBox2") as TextBox;
+            TextBox tbPlantIDID = row.FindControl("TextBox2") as TextBox;
 
             string branchDescription = tbBranchDescription.Text.Trim();
-            string branchID = tbBranchID.Text.Trim();
+            string branchID = tbPlantIDID.Text.Trim();
 
             UpdateBranch(id, branchDescription, branchID);
 
-            GridViewBranches.EditIndex = -1;
+            GridViewPlants.EditIndex = -1;
             BindGridView();
         }
 
@@ -133,10 +132,10 @@ namespace AnmolDristi
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE MST_Branch SET Branch_Description = @BranchDescription, Branch_ID = @BranchID WHERE Id = @Id";
+                string query = "UPDATE MST_Plant SET PlantID_Description = @PlantIDDescription, PlantID_ID = @PlantIDID WHERE Id = @Id";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@BranchDescription", branchDescription);
-                command.Parameters.AddWithValue("@BranchID", branchID);
+                command.Parameters.AddWithValue("@PlantIDDescription", branchDescription);
+                command.Parameters.AddWithValue("@PlantIDID", branchID);
                 command.Parameters.AddWithValue("@Id", id);
 
                 connection.Open();
@@ -144,9 +143,9 @@ namespace AnmolDristi
             }
         }
 
-        protected void GridViewBranches_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void GridViewPlants_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int id = Convert.ToInt32(GridViewBranches.DataKeys[e.RowIndex].Values["Id"]);
+            int id = Convert.ToInt32(GridViewPlants.DataKeys[e.RowIndex].Values["Id"]);
             DeleteBranch(id);
             BindGridView();
         }
@@ -157,7 +156,7 @@ namespace AnmolDristi
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "DELETE FROM MST_Branch WHERE Id = @Id";
+                string query = "DELETE FROM MST_Plant WHERE Id = @Id";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Id", id);
 
@@ -166,14 +165,14 @@ namespace AnmolDristi
             }
         }
 
-        protected void GridViewBranches_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void GridViewPlants_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             // Optional: You can customize row data binding, e.g., for formatting or additional logic
         }
 
-        protected void GridViewBranches_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        protected void GridViewPlants_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            GridViewBranches.PageIndex = e.NewPageIndex;
+            GridViewPlants.PageIndex = e.NewPageIndex;
             BindGridView();
         }
     }
