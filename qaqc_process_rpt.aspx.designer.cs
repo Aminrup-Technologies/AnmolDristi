@@ -2121,6 +2121,33 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Button btn_home;
 
         /// <summary>
+        /// Lbl_DDL_Batch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_DDL_Batch;
+
+        /// <summary>
+        /// RFV_DDL_Batch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Batch;
+
+        /// <summary>
+        /// DDL_Batch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Batch;
+
+        /// <summary>
         /// GridView1 control.
         /// </summary>
         /// <remarks>

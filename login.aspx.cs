@@ -24,10 +24,10 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                Img_CpLogo.ImageUrl = "WebData/Anmol_Logo.png";
-                lbl_companyname.Text = "Anmol Industries Limited";
+                Img_CpLogo.ImageUrl = "WebData/Aminrup_Logo.png";
+                lbl_companyname.Text = "Aminrup Technologies";
                 lbl_currentyr.Text = DateTime.Now.Year.ToString();
-                lbl_compfooter.Text = "Anmol Industries Limited";
+                lbl_compfooter.Text = "Aminrup Technologies";
                 lbl_owner.Text = "IT Department";
                 txt_loginid.Focus();
             }

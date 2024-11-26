@@ -1283,28 +1283,28 @@ namespace AnmolDristi
             var dataSave = new List<VarietyInfo>
             {
                 // Add all 22 varieties here
-                new VarietyInfo {Sl = 1,   Variety = "Maida", StandardWeight = 50 } ,
-                new VarietyInfo {Sl = 2,   Variety = "Sugar", StandardWeight = 45 } ,
-                new VarietyInfo {Sl = 3,   Variety = "Butter", StandardWeight = 38  },
-                new VarietyInfo {Sl = 4,   Variety = "S.M.P", StandardWeight = 61  },
-                new VarietyInfo {Sl = 5,   Variety = "Process Water", StandardWeight = 43  },
-                new VarietyInfo {Sl = 6,   Variety = "Lecithin", StandardWeight = 90  },
-                new VarietyInfo {Sl = 7,   Variety = "GMS Paste", StandardWeight = 54  },
-                new VarietyInfo {Sl = 8,   Variety = "SSL paste/ LS. Powder", StandardWeight = 67  },
-                new VarietyInfo {Sl = 9,   Variety = "Glucose", StandardWeight = 89 },
-                new VarietyInfo {Sl = 10,  Variety = "H.V.O", StandardWeight = 34  },
-                new VarietyInfo {Sl = 11,  Variety = "Syrup", StandardWeight = 51  },
-                new VarietyInfo {Sl = 12,  Variety = "Malt", StandardWeight = 55  },
-                new VarietyInfo {Sl = 13,  Variety = "Broken Biscuit", StandardWeight = 78  },
-                new VarietyInfo {Sl = 14,  Variety = "A.B.C.", StandardWeight = 51  },
-                new VarietyInfo {Sl = 15,  Variety = "S.B.C.", StandardWeight = 83  },
-                new VarietyInfo {Sl = 16,  Variety = "S.M.B.S.", StandardWeight = 58  },
-                new VarietyInfo {Sl = 17,  Variety = "Whey Powder", StandardWeight = 42  },
-                new VarietyInfo {Sl = 18,  Variety = "Condence Milk", StandardWeight = 52  },
-                new VarietyInfo {Sl = 19,  Variety = "Salt", StandardWeight = 78 } ,
-                new VarietyInfo {Sl = 20,  Variety = "Yeast (Smell & Wt.)", StandardWeight = 53  },
-                new VarietyInfo {Sl = 21,  Variety = "E1", StandardWeight = 77 } ,
-                new VarietyInfo {Sl = 22,  Variety = "Caramel", StandardWeight = 34 } ,
+                new VarietyInfo {Sl = 1,   Variety = "Maida",  /*StandardWeight = 50*/ } ,
+                new VarietyInfo {Sl = 2,   Variety = "Sugar", /*StandardWeight = 45*/ } ,
+                new VarietyInfo {Sl = 3,   Variety = "Butter", /*StandardWeight = 38*/  },
+                new VarietyInfo {Sl = 4,   Variety = "S.M.P", /*StandardWeight = 61*/  },
+                new VarietyInfo {Sl = 5,   Variety = "Process Water", /*StandardWeight = 43*/  },
+                new VarietyInfo {Sl = 6,   Variety = "Lecithin", /*StandardWeight = 90*/  },
+                new VarietyInfo {Sl = 7,   Variety = "GMS Paste", /*StandardWeight = 54*/  },
+                new VarietyInfo {Sl = 8,   Variety = "SSL paste/ LS. Powder", /*StandardWeight = 67*/  },
+                new VarietyInfo {Sl = 9,   Variety = "Glucose", /*StandardWeight = 89*/ },
+                new VarietyInfo {Sl = 10,  Variety = "H.V.O", /*StandardWeight = 34*/  },
+                new VarietyInfo {Sl = 11,  Variety = "Syrup", /*StandardWeight = 51*/  },
+                new VarietyInfo {Sl = 12,  Variety = "Malt", /*StandardWeight = 55*/  },
+                new VarietyInfo {Sl = 13,  Variety = "Broken Biscuit", /*StandardWeight = 78*/  },
+                new VarietyInfo {Sl = 14,  Variety = "A.B.C.", /*StandardWeight = 51*/  },
+                new VarietyInfo {Sl = 15,  Variety = "S.B.C.", /*StandardWeight = 83*/  },
+                new VarietyInfo {Sl = 16,  Variety = "S.M.B.S.", /*StandardWeight = 58*/  },
+                new VarietyInfo {Sl = 17,  Variety = "Whey Powder", /*StandardWeight = 42*/  },
+                new VarietyInfo {Sl = 18,  Variety = "Condence Milk", /*StandardWeight = 52*/  },
+                new VarietyInfo {Sl = 19,  Variety = "Salt", /*StandardWeight = 78*/ } ,
+                new VarietyInfo {Sl = 20,  Variety = "Yeast (Smell & Wt.)", /*StandardWeight = 53*/  },
+                new VarietyInfo {Sl = 21,  Variety = "E1", /*StandardWeight = 77*/ } ,
+                new VarietyInfo {Sl = 22,  Variety = "Caramel", /*StandardWeight = 34*/ } ,
 
             };
 
@@ -1316,6 +1316,7 @@ namespace AnmolDristi
         {
             public int Sl { get; set; }
             public string Variety { get; set; }
+            public string Contribution { get; set; }
             public decimal StandardWeight { get; set; }
             public decimal ActualWeight { get; set; }
             public decimal DeviationWeight { get; set; }
@@ -1474,9 +1475,7 @@ namespace AnmolDristi
             Response.Redirect("qaqc_process_rpt.aspx");
         }
 
-
-
-
+        
     }
 
 }

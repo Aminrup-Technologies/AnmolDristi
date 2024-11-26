@@ -11,188 +11,134 @@ namespace AnmolDristi
 {
 
 
-    public partial class Dristi
+    public partial class str_add_warehouse
     {
 
         /// <summary>
-        /// head control.
+        /// LBL_DDL_WorkCountry control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.Label LBL_DDL_WorkCountry;
 
         /// <summary>
-        /// form1 control.
+        /// RFV_DDL_WorkCountry control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_WorkCountry;
 
         /// <summary>
-        /// Image1 control.
+        /// DDL_WorkCountry control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
+        protected global::System.Web.UI.WebControls.DropDownList DDL_WorkCountry;
 
         /// <summary>
-        /// ProfilePic_1 control.
+        /// LBL_TB_WarehouseName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic_1;
+        protected global::System.Web.UI.WebControls.Label LBL_TB_WarehouseName;
 
         /// <summary>
-        /// lbl_loginusername1 control.
+        /// RFV_TB_WarehouseName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_loginusername1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_WarehouseName;
 
         /// <summary>
-        /// HomePage control.
+        /// TB_WarehouseName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HomePage;
+        protected global::System.Web.UI.WebControls.TextBox TB_WarehouseName;
 
         /// <summary>
-        /// Home1 control.
+        /// LBL_TB_WarehouseCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Home1;
+        protected global::System.Web.UI.WebControls.Label LBL_TB_WarehouseCode;
 
         /// <summary>
-        /// QualityForms control.
+        /// RFV_TB_WarehouseCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl QualityForms;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_WarehouseCode;
 
         /// <summary>
-        /// DataMastering control.
+        /// TB_WarehouseCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DataMastering;
+        protected global::System.Web.UI.WebControls.TextBox TB_WarehouseCode;
 
         /// <summary>
-        /// Works control.
+        /// LBL_TB_Manager1_Wrk control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Works;
+        protected global::System.Web.UI.WebControls.Label LBL_TB_Manager1_Wrk;
 
         /// <summary>
-        /// WorkCountry control.
+        /// RFV_TB_Manager1_Wrk control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkCountry;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Manager1_Wrk;
 
         /// <summary>
-        /// WorkState control.
+        /// TB_Manager1_Wrk control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkState;
+        protected global::System.Web.UI.WebControls.TextBox TB_Manager1_Wrk;
 
         /// <summary>
-        /// WorkRegion control.
+        /// LBL_TB_Manager2_Wrk control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkRegion;
+        protected global::System.Web.UI.WebControls.Label LBL_TB_Manager2_Wrk;
 
         /// <summary>
-        /// ProfilePic_2 control.
+        /// TB_Manager2_Wrk control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic_2;
-
-        /// <summary>
-        /// lbl_loginusername2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_loginusername2;
-
-        /// <summary>
-        /// ContentPlaceHolder1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
-
-        /// <summary>
-        /// lblTime1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTime1;
-
-        /// <summary>
-        /// lblTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTime;
-
-        /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-
-        /// <summary>
-        /// btn_lgout control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_lgout;
+        protected global::System.Web.UI.WebControls.TextBox TB_Manager2_Wrk;
 
         /// <summary>
         /// ShowPopup control.
@@ -202,5 +148,23 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ShowPopup;
+
+        /// <summary>
+        /// lbl_msg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_msg;
+
+        /// <summary>
+        /// btn_submit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_submit;
     }
 }

@@ -9,7 +9,7 @@
                 <div class="title_left">
                     <h2>Quality Report Forms</h2>
                 </div>
-            </div>
+            </div> 
 
             <div class="clearfix"></div>
 
@@ -159,6 +159,44 @@
                             <a class="btn btn-app" href="Form_Approval_Matrix.aspx">
                                 <asp:Label ID="Label18" runat="server" Text="0" Visible="false"></asp:Label>
                                 <i class="fa fa-edit"></i>Form Approval Matrix
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12" id="Div3" runat="server" visible="true">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Store Module</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            
+                            <a class="btn btn-app" href="Material_Master.aspx">
+                                <asp:Label ID="Label27" runat="server" Text="0" Visible="false"></asp:Label>
+                                <i class="fa fa-edit"></i>Material Master 
+                            </a>
+
+                            <a class="btn btn-app" href="Material_MasterView.aspx">
+                                <asp:Label ID="Label28" runat="server" Text="0" Visible="false"></asp:Label>
+                                <i class="fa fa-edit"></i>Material Master View 
+                            </a>
+
+                            <a class="btn btn-app" href="str_masters.aspx">
+                                <asp:Label ID="Label29" runat="server" Text="0" Visible="false"></asp:Label>
+                                <i class="fa fa-edit"></i>Store Master 
+                            </a>
+                            <a class="btn btn-app" href="str_add_cstores.aspx">
+                                <asp:Label ID="Label30" runat="server" Text="0" Visible="false"></asp:Label>
+                                <i class="fa fa-edit"></i>Add Central Store
+                            </a>
+                            <a class="btn btn-app" href="str_add_warehouse.aspx">
+                                <asp:Label ID="Label31" runat="server" Text="0" Visible="false"></asp:Label>
+                                <i class="fa fa-edit"></i>Add Warehouse 
                             </a>
                         </div>
                     </div>

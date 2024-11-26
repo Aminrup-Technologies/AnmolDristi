@@ -673,7 +673,7 @@
             }
         }
 
-        
+
 
         // active tab 
         function activateTab(tabId) {
@@ -701,10 +701,20 @@
             for (var i = 1; i < gridView.rows.length; i++) {  // Start from 1 to skip header row
                 var row = gridView.rows[i];
 
+                var txtContribution = row.querySelector("input[id*='txtContribution']");
                 var txtActualWeight = row.querySelector("input[id*='txtActualWeight']");
                 //var txtDescription = row.querySelector("input[id*='txtDescription']");
 
+
                 // Check if TextBoxes are filled
+
+                if (txtContribution && txtContribution.value.trim() === "") {
+                    isValid = false;
+                    txtContribution.style.borderColor = "red";
+                } else {
+                    txtContribution.style.borderColor = ""; // Reset border color if valid
+                }
+
                 if (txtActualWeight && txtActualWeight.value.trim() === "") {
                     isValid = false;
                     txtActualWeight.style.borderColor = "red";
@@ -729,6 +739,30 @@
         }
 
         var gridViewData = [];
+
+
+        //std wgt calculation
+        function calculateStdWgt(contributionInput) {
+            // Get the current batch size from the DropDownList
+            var batchSize = parseFloat(document.getElementById('<%= DDL_Batch.ClientID %>').value);
+            if (isNaN(batchSize)) {
+                alert("Invalid batch size selected. Please select a valid batch.");
+                return;
+            }
+
+            // Find the row where the input resides
+            var row = contributionInput.closest('tr');
+
+            // Get the contribution percentage entered
+            var percentage = parseFloat(contributionInput.value) || 0;
+
+            // Calculate the Standard Weight
+            var stdWgt = (percentage / 100) * batchSize;
+
+            // Update the Standard Weight TextBox in the same row
+            var stdWgtInput = row.querySelector(".standard-weight");
+            stdWgtInput.value = stdWgt.toFixed(3); // Adjust precision as needed
+        }
 
         // Function to calculate deviation and update the grid data
         function calculateDeviation(inputElement) {
@@ -823,7 +857,11 @@
         function collectAndSendData() {
             // Ensure all rows are processed
             document.querySelectorAll('#GridView1 tbody tr').forEach(row => {
+                var contribution = row.querySelector('#txtContribution');
                 var actualWeightElement = row.querySelector('#txtActualWeight');
+                if (contribution) {
+                    calculateStdWgt(contribution); // Process each row
+                }
                 if (actualWeightElement) {
                     calculateDeviation(actualWeightElement); // Process each row
                 }
@@ -986,62 +1024,63 @@
         }
 
         //----- tab jump -----
-        document.addEventListener('DOMContentLoaded', function () {
-            const tabIds = ['basicData', 'weight', 'spongeData', 'doughData', 'ovenData', 'verificationData'];
-            let enabledTabs = new Set(['basicData']); // Initially enable the first tab
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    const tabIds = ['basicData', 'weight', 'spongeData', 'doughData', 'ovenData', 'verificationData'];
+        //    let enabledTabs = new Set(['basicData']); // Initially enable the first tab
 
-            // Disable all tabs except the first one initially
-            for (let i = 0; i < tabIds.length; i++) {
-                document.querySelector(`a[href="#${tabIds[i]}"]`).classList.add('disabled');
-            }
+        //    // Disable all tabs except the first one initially
+        //    for (let i = 0; i < tabIds.length; i++) {
+        //        document.querySelector(`a[href="#${tabIds[i]}"]`).classList.add('disabled');
+        //    }
 
-            // Function to check if the current tab is filled and enable the next tab
-            function checkTabContent(index) {
-                const currentTabContent = document.querySelector(`#${tabIds[index]}`);
-                const inputs = currentTabContent.querySelectorAll('input, select, textarea');
-                let isValid = true;
+        //    // Function to check if the current tab is filled and enable the next tab
+        //    function checkTabContent(index) {
+        //        const currentTabContent = document.querySelector(`#${tabIds[index]}`);
+        //        const inputs = currentTabContent.querySelectorAll('input, select, textarea');
+        //        let isValid = true;
 
-                inputs.forEach(input => {
-                    if (!input.value.trim()) {
-                        isValid = false;
-                    }
-                });
+        //        inputs.forEach(input => {
+        //            if (!input.value.trim()) {
+        //                isValid = false;
+        //            }
+        //        });
 
-                if (isValid && index < tabIds.length - 1) {
-                    // Enable the next tab and disable the current tab
-                    const nextTab = document.querySelector(`a[href="#${tabIds[index + 1]}"]`);
-                    const currentTab = document.querySelector(`a[href="#${tabIds[index]}"]`);
+        //        if (isValid && index < tabIds.length - 1) {
+        //            // Enable the next tab and disable the current tab
+        //            const nextTab = document.querySelector(`a[href="#${tabIds[index + 1]}"]`);
+        //            const currentTab = document.querySelector(`a[href="#${tabIds[index]}"]`);
 
-                    nextTab.classList.remove('disabled');
-                    enabledTabs.add(tabIds[index + 1]); // Mark the next tab as enabled
+        //            nextTab.classList.remove('disabled');
+        //            enabledTabs.add(tabIds[index + 1]); // Mark the next tab as enabled
 
-                    // Disable the current tab once moving to the next one
-                    currentTab.classList.add('disabled');
-                    enabledTabs.delete(tabIds[index]); // Remove current tab from enabled set
-                }
-            }
+        //            // Disable the current tab once moving to the next one
+        //            currentTab.classList.add('disabled');
+        //            enabledTabs.delete(tabIds[index]); // Remove current tab from enabled set
+        //        }
+        //    }
 
-            // Attach click event listeners to each tab
-            tabIds.forEach((tabId, index) => {
-                document.querySelector(`a[href="#${tabId}"]`).addEventListener('click', function (e) {
-                    // Prevent navigation if the tab is not enabled
-                    if (!enabledTabs.has(tabId)) {
-                        e.preventDefault(); // Prevent navigation
-                        alert('Please complete the current section before proceeding.');
-                    }
-                });
+        //    // Attach click event listeners to each tab
+        //    tabIds.forEach((tabId, index) => {
+        //        document.querySelector(`a[href="#${tabId}"]`).addEventListener('click', function (e) {
+        //            // Prevent navigation if the tab is not enabled
+        //            if (!enabledTabs.has(tabId)) {
+        //                e.preventDefault(); // Prevent navigation
+        //                alert('Please complete the current section before proceeding.');
+        //            }
+        //        });
 
-                // Monitor input changes to check and enable the next tab
-                const tabContent = document.querySelector(`#${tabId}`);
-                const inputs = tabContent.querySelectorAll('input, select, textarea');
+        //        // Monitor input changes to check and enable the next tab
+        //        const tabContent = document.querySelector(`#${tabId}`);
+        //        const inputs = tabContent.querySelectorAll('input, select, textarea');
 
-                inputs.forEach(input => {
-                    input.addEventListener('input', function () {
-                        checkTabContent(index);
-                    });
-                });
-            });
-        });
+        //        inputs.forEach(input => {
+        //            input.addEventListener('input', function () {
+        //                checkTabContent(index);
+        //            });
+        //        });
+        //    });
+        //});
+
 
     </script>
 
@@ -1885,10 +1924,25 @@
                                                     </div>
                                                     <%-- Basic Data ends here--%>
 
-                                                   
+
                                                     <%-- Weight Data Starts Here--%>
                                                     <div class="tab-pane fade" id="weight" role="tabpanel" aria-labelledby="weight-tab">
                                                         <div class="x-content">
+
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_DDL_Batch" runat="server" AssociatedControlID="DDL_Batch" Text="Batch" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_DDL_Batch" runat="server" ErrorMessage="*" ValidationGroup="BasicDataSave" ForeColor="Red" ControlToValidate="DDL_Batch" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:DropDownList ID="DDL_Batch" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true">
+                                                                            <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                                                                            <asp:ListItem Text="300" Value="300"></asp:ListItem>
+                                                                            <asp:ListItem Text="500" Value="500"></asp:ListItem>
+                                                                        </asp:DropDownList>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                             <asp:GridView ID="GridView1" Width="100%" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
 
@@ -1898,12 +1952,17 @@
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
-                                                                    <asp:TemplateField HeaderText="Variety" HeaderStyle-Width="30%">
+                                                                    <asp:TemplateField HeaderText="Variety" HeaderStyle-Width="20%">
                                                                         <ItemTemplate>
                                                                             <span class="variety"><%# Eval("Variety") %></span>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
+                                                                    <asp:TemplateField HeaderText="Percentage Contrubution(%)" HeaderStyle-Width="15%">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtContribution" runat="server" ClientIDMode="Static" onkeyup="calculateStdWgt(this)"></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Standard Weight" HeaderStyle-Width="15%">
                                                                         <ItemTemplate>

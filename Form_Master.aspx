@@ -9,7 +9,7 @@
             <div class="page-title">
                 <div class="title_left">
                     <h3>
-                        <asp:Label ID="lbl_docname" runat="server" Text="Label"></asp:Label>
+                        <asp:Label ID="lbl_docname" runat="server" Text="N/A"></asp:Label>
                     </h3>
                 </div>
             </div>
