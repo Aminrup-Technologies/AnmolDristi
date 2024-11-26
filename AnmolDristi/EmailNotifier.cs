@@ -14,6 +14,8 @@ namespace AnmolDristi
         {
             try
             {
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
+
                 //var smtpSettings = new
                 //{
                 //    Host = ConfigurationManager.AppSettings["SmtpSettings:Host"] ?? "smtp-mail.outlook.com",
@@ -33,7 +35,7 @@ namespace AnmolDristi
                     //Password = ConfigurationManager.AppSettings["SmtpSettings:Password"],
                     //FromEmail = ConfigurationManager.AppSettings["SmtpSettings:FromEmail"]
 
-                    Host = "smtp-mail.outlook.com",
+                    Host = "smtp.office365.com",
                     Port = 587,
                     EnableSsl = true,
                     Username = "symphonymis@anmolindustries.com",
