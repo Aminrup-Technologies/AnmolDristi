@@ -14,6 +14,16 @@ namespace AnmolDristi
         {
             try
             {
+                //var smtpSettings = new
+                //{
+                //    Host = ConfigurationManager.AppSettings["SmtpSettings:Host"] ?? "smtp-mail.outlook.com",
+                //    Port = int.Parse(ConfigurationManager.AppSettings["SmtpSettings:Port"] ?? "587"),
+                //    EnableSsl = bool.Parse(ConfigurationManager.AppSettings["SmtpSettings:EnableSsl"] ?? "true"),
+                //    Username = ConfigurationManager.AppSettings["SmtpSettings:Username"] ?? "abc@xyz.com",
+                //    Password = ConfigurationManager.AppSettings["SmtpSettings:Password"] ?? "Welc0meB@ckSymp2024",
+                //    FromEmail = ConfigurationManager.AppSettings["SmtpSettings:FromEmail"] ?? "abc@xyz.com"
+                //};
+
                 var smtpSettings = new
                 {
                     //Host = ConfigurationManager.AppSettings["SmtpSettings:Host"],
@@ -27,7 +37,7 @@ namespace AnmolDristi
                     Port = 587,
                     EnableSsl = true,
                     Username = "symphonymis@anmolindustries.com",
-                    Password = "Welc0meB@ckSymp2024#",
+                    Password = "Welc0meB@ckSymp2024",
                     FromEmail = "symphonymis@anmolindustries.com"
 
                 };
