@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="add_prodcategory.aspx.cs" Inherits="AnmolDristi.add_prodcategory" %>
+﻿<%@ Page Title="AIL | Manage Product Category" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="add_prodcategory.aspx.cs" Inherits="AnmolDristi.add_prodcategory" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -25,7 +25,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0" ValidationGroup="Submit"></asp:RequiredFieldValidator>
                                     [<asp:Label ID="lbl_DDL_Plant_Value" runat="server" AssociatedControlID="DDL_Plant" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" ValidationGroup="Submit" OnSelectedIndexChanged="DDL_Plant_SelectedIndexChanged"></asp:DropDownList>
@@ -47,7 +47,74 @@
                                 </div>
                             </div>
 
+                            <!-- Category ID -->
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Label4" runat="server" AssociatedControlID="txtCategoryID" Text="Category ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    [<asp:Label ID="lbl_lastcategory_code" runat="server" AssociatedControlID="txtCategoryID" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="txtCategoryID" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_CategoryID" runat="server" ControlToValidate="txtCategoryID" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Numeric Only" ValidationExpression="^\d+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="txtCategoryID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Category ID (numeric)" MaxLength="10"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <!-- Category Name -->
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Label5" runat="server" AssociatedControlID="txtCategoryName" Text="Category Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_CategoryName" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="txtCategoryName" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_CategoryName" runat="server" ControlToValidate="txtCategoryName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="txtCategoryName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Category Name (3-50 characters)" MaxLength="50"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Category SAP Code -->
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Label6" runat="server" AssociatedControlID="txtCategorySapCode" Text="Category SAP Code" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="txtCategorySapCode" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtCategorySapCode" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="txtCategorySapCode" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Category SAP Code" MaxLength="50"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Local Name -->
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Label7" runat="server" AssociatedControlID="txtLocalName" Text="Local Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="txtLocalName" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="txtLocalName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9\s\-]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="txtLocalName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Local Name" MaxLength="50"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- View Status -->
+                            <%--<div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Label8" runat="server" AssociatedControlID="chkViewStatus" Text="View Status" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <div class="input-group-sm">
+                                        <asp:CheckBox ID="chkViewStatus" runat="server" CssClass="form-check-input" />
+                                    </div>
+                                </div>
+                            </div>--%>
+
+                            <!-- Delete Status -->
+                            <%--<div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Label9" runat="server" AssociatedControlID="chkDeleteStatus" Text="Delete Status" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <div class="input-group-sm">
+                                        <asp:CheckBox ID="chkDeleteStatus" runat="server" CssClass="form-check-input" />
+                                    </div>
+                                </div>
+                            </div>--%>
                         </div>
                     </div>
 
@@ -59,8 +126,8 @@
                                 <asp:Label ID="lbl_msg" runat="server" Text="Click SUBMIT to view Data!!"></asp:Label>
                             </div>
                             <div class="col-md-6 col-sm-12">
-                                <button type="button" class="btn btn-danger btn-sm collapse-link">Cancel</button>
-                                <asp:Button ID="btn_insert" runat="server" Text="Insert" CssClass="btn btn-warning btn-sm" CausesValidation="false" />
+                                <asp:Button ID="btn_cancel" runat="server" Text="Cancel" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btn_cancel_Click"/>
+                                <asp:Button ID="btn_insert" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" />
                                 <asp:Button ID="btn_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="true" ValidationGroup="Submit" OnClick="btn_submit_Click" />
                             </div>
                         </div>
@@ -91,7 +158,7 @@
                                                 <asp:TextBox ID="txtPlantID" runat="server" Text='<%# Bind("plant_id") %>'></asp:TextBox>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Line ID" HeaderStyle-Width="5%" ItemStyle-Width="5%" >
+                                        <asp:TemplateField HeaderText="Line ID" HeaderStyle-Width="5%" ItemStyle-Width="5%">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblLineID" runat="server" Text='<%# Eval("line_id") %>'></asp:Label>
                                             </ItemTemplate>
@@ -99,7 +166,7 @@
                                                 <asp:TextBox ID="txtLineID" runat="server" Text='<%# Bind("line_id") %>'></asp:TextBox>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Category ID" HeaderStyle-Width="10%" ItemStyle-Width="10%" >
+                                        <asp:TemplateField HeaderText="Category ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblCategoryID" runat="server" Text='<%# Eval("category_id") %>'></asp:Label>
                                             </ItemTemplate>

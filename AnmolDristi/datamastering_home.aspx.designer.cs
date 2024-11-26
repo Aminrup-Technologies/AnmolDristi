@@ -10,240 +10,195 @@
 namespace AnmolDristi {
     
     
-    public partial class add_plant_lines {
+    public partial class datamastering_home {
         
         /// <summary>
-        /// lbl_docnumber control.
+        /// Org_MST control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_docnumber;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Org_MST;
         
         /// <summary>
-        /// lbl_DDL_Plant control.
+        /// Label3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DDL_Plant;
+        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// RFV_DDL_Plant control.
+        /// Label4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Plant;
+        protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// lbl_DDL_Plant_Value control.
+        /// Label5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DDL_Plant_Value;
+        protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// DDL_Plant control.
+        /// Label7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDL_Plant;
+        protected global::System.Web.UI.WebControls.Label Label7;
         
         /// <summary>
-        /// Lbl_Line_ID control.
+        /// HRMS_MST control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_Line_ID;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HRMS_MST;
         
         /// <summary>
-        /// RFV_Line_ID control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Line_ID;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// REV_Line_ID control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Line_ID;
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// TB_Line_ID control.
+        /// Label6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Line_ID;
+        protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// Lbl_Line_Name control.
+        /// Label8 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_Line_Name;
+        protected global::System.Web.UI.WebControls.Label Label8;
         
         /// <summary>
-        /// RFV_Line_Name control.
+        /// Label9 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Line_Name;
+        protected global::System.Web.UI.WebControls.Label Label9;
         
         /// <summary>
-        /// REV_Line_Name control.
+        /// Production_MST control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Line_Name;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Production_MST;
         
         /// <summary>
-        /// TB_Line_Name control.
+        /// Label10 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Line_Name;
+        protected global::System.Web.UI.WebControls.Label Label10;
         
         /// <summary>
-        /// Lbl_Local_Name control.
+        /// Label11 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_Local_Name;
+        protected global::System.Web.UI.WebControls.Label Label11;
         
         /// <summary>
-        /// RFV_Local_Name control.
+        /// Label12 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Local_Name;
+        protected global::System.Web.UI.WebControls.Label Label12;
         
         /// <summary>
-        /// REV_Local_Name control.
+        /// Label13 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Local_Name;
+        protected global::System.Web.UI.WebControls.Label Label13;
         
         /// <summary>
-        /// TB_Local_Name control.
+        /// Label14 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Local_Name;
+        protected global::System.Web.UI.WebControls.Label Label14;
         
         /// <summary>
-        /// Lbl_Line_Sap_Code control.
+        /// QC_Forms_CTRL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_Line_Sap_Code;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl QC_Forms_CTRL;
         
         /// <summary>
-        /// RFV_Line_Sap_Code control.
+        /// Label15 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Line_Sap_Code;
+        protected global::System.Web.UI.WebControls.Label Label15;
         
         /// <summary>
-        /// REV_Line_Sap_Code control.
+        /// QC_Approval_Matrix control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_Line_Sap_Code;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl QC_Approval_Matrix;
         
         /// <summary>
-        /// TB_Line_Sap_Code control.
+        /// Label16 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Line_Sap_Code;
-        
-        /// <summary>
-        /// lbl_msg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_msg;
-        
-        /// <summary>
-        /// btn_cancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_cancel;
-        
-        /// <summary>
-        /// btn_insert control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_insert;
-        
-        /// <summary>
-        /// btn_submit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_submit;
-        
-        /// <summary>
-        /// GridViewPlantLines control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewPlantLines;
+        protected global::System.Web.UI.WebControls.Label Label16;
     }
 }

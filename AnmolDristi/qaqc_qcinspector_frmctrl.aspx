@@ -79,7 +79,7 @@
                                 <asp:Label ID="lbl_msg" runat="server" Text="Click SUBMIT to view Data!!"></asp:Label>
                             </div>
                             <div class="col-md-6 col-sm-12">
-                                <button type="button" class="btn btn-danger btn-sm collapse-link">Cancel</button>
+                                <asp:Button ID="btn_cancel" runat="server" Text="Cancel" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btn_cancel_Click"/>
                                 <asp:Button ID="btn_insert" runat="server" Text="Insert" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btn_insert_Click" />
                                 <asp:Button ID="btn_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="true" ValidationGroup="Submit" OnClick="btn_submit_Click" />
                             </div>
@@ -100,13 +100,22 @@
                         </div>
                         <div class="x_content">
                             <div class="row">
-                                <div class="card-box col-md-12 col-sm-12" style="width: 100%; height: 450px; overflow: scroll;">
+                                <div class="card-box col-md-12 col-sm-12" style="width: 100%; height:auto; overflow: scroll;">
                                     <asp:GridView ID="GridView1" runat="server" Width="100%" class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDeleting="GridView1_RowDeleting" DataKeyNames="Id">
                                         <Columns>
                                             <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" Visible="true" HeaderStyle-Width="2%" ItemStyle-Width="2%" />
-                                            <asp:BoundField DataField="brand_id" HeaderText="Brand ID" Visible="true" ReadOnly="True" HeaderStyle-Width="3%" ItemStyle-Width="3%" />
+                                            <asp:BoundField DataField="brand_id" HeaderText="Brand ID" Visible="false" ReadOnly="True" HeaderStyle-Width="3%" ItemStyle-Width="3%" />
                                             <asp:BoundField DataField="brand_name" HeaderText="Brand Name" Visible="false" ReadOnly="True" HeaderStyle-Width="5%" ItemStyle-Width="5%" />
                                             <asp:BoundField DataField="field_name" HeaderText="Input Field Name" ReadOnly="True" HeaderStyle-Width="5%" ItemStyle-Width="5%" />
+
+                                            <asp:TemplateField HeaderText="UI Display Name" HeaderStyle-Width="5%" ItemStyle-Width="5%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblDisplayName" runat="server" Text='<%# Eval("DisplayName") %>'></asp:Label>
+                                                </ItemTemplate>
+                                                <EditItemTemplate>
+                                                    <asp:TextBox ID="txtDisplayName" runat="server" Text='<%# Eval("DisplayName") %>' Width="100px"></asp:TextBox>
+                                                </EditItemTemplate>
+                                            </asp:TemplateField>
 
                                             <asp:TemplateField HeaderText="Show" HeaderStyle-Width="2%" ItemStyle-Width="2%">
                                                 <ItemTemplate>
@@ -117,7 +126,7 @@
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
 
-                                            <asp:TemplateField HeaderText="Hide" HeaderStyle-Width="2%" ItemStyle-Width="2%">
+                                            <asp:TemplateField HeaderText="Hide / Soft Delete" HeaderStyle-Width="2%" ItemStyle-Width="2%">
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="DeleteMode" runat="server" Checked='<%# Convert.ToBoolean(Eval("DeleteMode")) %>' Enabled="false" />
                                                 </ItemTemplate>

@@ -10,7 +10,7 @@
 namespace AnmolDristi {
     
     
-    public partial class add_prodcategory {
+    public partial class add_brandtypes {
         
         /// <summary>
         /// lbl_docnumber control.
@@ -94,6 +94,78 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.DropDownList DDL_PlantLine;
         
         /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+        
+        /// <summary>
+        /// lbl_DDL_ProductCategory_Value control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DDL_ProductCategory_Value;
+        
+        /// <summary>
+        /// RFV_DDL_ProductCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_ProductCategory;
+        
+        /// <summary>
+        /// DDL_ProductCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDL_ProductCategory;
+        
+        /// <summary>
+        /// lbl_BrandID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_BrandID;
+        
+        /// <summary>
+        /// RFV_BrandID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_BrandID;
+        
+        /// <summary>
+        /// REV_BrandID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_BrandID;
+        
+        /// <summary>
+        /// txtBrandID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBrandID;
+        
+        /// <summary>
         /// Label4 control.
         /// </summary>
         /// <remarks>
@@ -103,40 +175,31 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// lbl_lastcategory_code control.
+        /// RFV_txtBrandName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_lastcategory_code;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtBrandName;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// REV_txtBrandName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_txtBrandName;
         
         /// <summary>
-        /// REV_CategoryID control.
+        /// txtBrandName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_CategoryID;
-        
-        /// <summary>
-        /// txtCategoryID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCategoryID;
+        protected global::System.Web.UI.WebControls.TextBox txtBrandName;
         
         /// <summary>
         /// Label5 control.
@@ -148,31 +211,31 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// RFV_CategoryName control.
+        /// Requiredfieldvalidator1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_CategoryName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator Requiredfieldvalidator1;
         
         /// <summary>
-        /// REV_CategoryName control.
+        /// Regularexpressionvalidator1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_CategoryName;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator Regularexpressionvalidator1;
         
         /// <summary>
-        /// txtCategoryName control.
+        /// txtBrandLocalName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCategoryName;
+        protected global::System.Web.UI.WebControls.TextBox txtBrandLocalName;
         
         /// <summary>
         /// Label6 control.
@@ -184,67 +247,31 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// Requiredfieldvalidator2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator Requiredfieldvalidator2;
         
         /// <summary>
-        /// RegularExpressionValidator1 control.
+        /// Regularexpressionvalidator2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator Regularexpressionvalidator2;
         
         /// <summary>
-        /// txtCategorySapCode control.
+        /// txtBrandSapCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCategorySapCode;
-        
-        /// <summary>
-        /// Label7 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
-        
-        /// <summary>
-        /// RequiredFieldValidator3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
-        
-        /// <summary>
-        /// RegularExpressionValidator2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
-        
-        /// <summary>
-        /// txtLocalName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLocalName;
+        protected global::System.Web.UI.WebControls.TextBox txtBrandSapCode;
         
         /// <summary>
         /// lbl_msg control.
@@ -283,12 +310,12 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Button btn_submit;
         
         /// <summary>
-        /// GridViewLineCategory control.
+        /// GridViewLineCatBrands control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewLineCategory;
+        protected global::System.Web.UI.WebControls.GridView GridViewLineCatBrands;
     }
 }

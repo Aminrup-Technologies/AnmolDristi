@@ -106,6 +106,8 @@ namespace AnmolDristi
                             lbl_msg.Text = "Error: " + ex.Message;
                         }
                     }
+
+                    transaction.Commit();
                     connection.Close();
                 }
 
@@ -114,6 +116,11 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                // Handle any exceptions here
+                if (transaction != null)
+                {
+                    transaction.Rollback();
+                }
                 throw new Exception("Error occurred: " + ex.Message);
             }
         }
@@ -243,6 +250,11 @@ namespace AnmolDristi
         {
             GridViewProdPlants.PageIndex = e.NewPageIndex;
             BindGridView();
+        }
+
+        protected void btn_cancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("datamastering_home.aspx");
         }
     }
 }

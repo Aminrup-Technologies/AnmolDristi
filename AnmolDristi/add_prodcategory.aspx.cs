@@ -116,6 +116,12 @@ namespace AnmolDristi
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 lbl_DDL_PlantLine_Value.Text = selectedPlantLineValue;
                 BindGridViewbyPlantLine(selectedPlantValue, selectedPlantLineValue);
+
+                //------- function call to fetch the last used code and 
+
+                int categoryID = GetNextCategoryId();
+                txtCategoryID.Text = categoryID.ToString();
+                txtCategoryID.ReadOnly = true;
             }
             else
             {
@@ -132,10 +138,144 @@ namespace AnmolDristi
             }
         }
 
+
+        public int GetNextCategoryId()
+        {
+            int nextCategoryId = 0;
+
+            // Replace with your actual connection string
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            // Define your query to call the function
+            string query = "SELECT dbo.GetNextLineCategoryId() AS NextCategoryId";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                try
+                {
+                    connection.Open();
+                    // Execute the query and get the next category ID
+                    nextCategoryId = (int)command.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return nextCategoryId;
+        }
+
         protected void btn_submit_Click(object sender, EventArgs e)
         {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    // Retrieve the values from the input fields
+                    //int categoryID = Convert.ToInt32(txtCategoryID.Text);
+                    int categoryID = GetNextCategoryId();
+                    string categoryName = txtCategoryName.Text;
 
+                    // Check if a record with the same CategoryID and CategoryName already exists
+                    string checkQuery = "SELECT COUNT(*) FROM MST_LineCategory WHERE category_id = @CategoryID AND category_name = @CategoryName";
+                    using (SqlCommand checkCommand = new SqlCommand(checkQuery, connection))
+                    {
+                        checkCommand.Parameters.AddWithValue("@CategoryID", categoryID);
+                        checkCommand.Parameters.AddWithValue("@CategoryName", categoryName);
+
+                        int count = Convert.ToInt32(checkCommand.ExecuteScalar());
+                        if (count > 0)
+                        {
+                            lbl_msg.Text = "A record with the same Category ID and Category Name already exists.";
+                            lbl_msg.Visible = true;
+                            return;
+                        }
+                    }
+
+                    // Insert the new record if no duplicate is found
+                    string insertQuery = @"INSERT INTO MST_LineCategory (plant_id, line_id, category_id, category_name, category_sapcode, local_name, view_status, delete_status) 
+                                   VALUES (@PlantID, @LineID, @CategoryID, @CategoryName, @CategorySapCode, @LocalName, @ViewStatus, @DeleteStatus)";
+                    using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
+                    {
+                        insertCommand.Parameters.AddWithValue("@PlantID", Convert.ToInt32(DDL_Plant.SelectedValue));
+                        insertCommand.Parameters.AddWithValue("@LineID", Convert.ToInt32(DDL_PlantLine.SelectedValue));
+                        insertCommand.Parameters.AddWithValue("@CategoryID", categoryID);
+                        insertCommand.Parameters.AddWithValue("@CategoryName", categoryName);
+                        insertCommand.Parameters.AddWithValue("@CategorySapCode", txtCategorySapCode.Text);
+                        insertCommand.Parameters.AddWithValue("@LocalName", txtLocalName.Text);
+                        insertCommand.Parameters.AddWithValue("@ViewStatus", 1);
+                        insertCommand.Parameters.AddWithValue("@DeleteStatus", 0);
+                        //insertCommand.Parameters.AddWithValue("@ViewStatus", chkViewStatus.Checked ? 1 : 0);
+                        //insertCommand.Parameters.AddWithValue("@DeleteStatus", chkDeleteStatus.Checked ? 1 : 0);
+
+                        //insertCommand.ExecuteNonQuery();
+                        lbl_msg.Visible = false; // Hide error message if insertion is successful
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions
+                    lbl_msg.Text = "An error occurred: " + ex.Message;
+                    lbl_msg.Visible = true;
+                }
+            }
+
+            // Optionally, refresh the GridView or perform other actions after successful insertion
         }
+
+
+        //protected void btn_submit_Click(object sender, EventArgs e)
+        //{
+        //    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        connection.Open();
+        //        SqlTransaction transaction = connection.BeginTransaction();
+
+        //        try
+        //        {
+        //            int plant_id = Convert.ToInt32(DDL_Plant.SelectedValue);
+        //            int line_id = Convert.ToInt32(DDL_PlantLine.SelectedValue);
+        //            int category_id = Convert.ToInt32(txtCategoryID.Text);
+        //            string category_name = txtCategoryName.Text;
+        //            string category_sapcode = txtCategorySapCode.Text;
+        //            string local_name = txtLocalName.Text;
+        //            bool view_status = chkViewStatus.Checked;
+        //            bool delete_status = chkDeleteStatus.Checked;
+
+        //            string query = "INSERT INTO MST_LineCategory (plant_id, line_id, category_id, category_name, category_sapcode, local_name, view_status, delete_status) " +
+        //                           "VALUES (@plant_id, @line_id, @category_id, @category_name, @category_sapcode, @local_name, @view_status, @delete_status)";
+
+        //            using (SqlCommand cmd = new SqlCommand(query, connection, transaction))
+        //            {
+        //                cmd.Parameters.AddWithValue("@plant_id", plant_id);
+        //                cmd.Parameters.AddWithValue("@line_id", line_id);
+        //                cmd.Parameters.AddWithValue("@category_id", category_id);
+        //                cmd.Parameters.AddWithValue("@category_name", category_name);
+        //                cmd.Parameters.AddWithValue("@category_sapcode", category_sapcode ?? (object)DBNull.Value);
+        //                cmd.Parameters.AddWithValue("@local_name", local_name ?? (object)DBNull.Value);
+        //                cmd.Parameters.AddWithValue("@view_status", view_status);
+        //                cmd.Parameters.AddWithValue("@delete_status", delete_status);
+
+        //                //cmd.ExecuteNonQuery();
+        //            }
+
+        //            transaction.Commit();
+        //            // Optionally, show a success message or reset the form
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            transaction.Rollback();
+        //            // Handle exception (e.g., show an error message)
+        //        }
+        //    }
+        //}
 
         protected void GridViewLineCategory_RowEditing(object sender, GridViewEditEventArgs e)
         {
@@ -160,13 +300,13 @@ namespace AnmolDristi
             TextBox txtCategoryName = row.FindControl("txtCategoryName") as TextBox;
             TextBox txtCategorySapCode = row.FindControl("txtCategorySapCode") as TextBox;
             TextBox txtLocalName = row.FindControl("txtLocalName") as TextBox;
-            CheckBox chkViewStatus = row.FindControl("chkViewStatus") as CheckBox;
-            CheckBox chkDeleteStatus = row.FindControl("chkDeleteStatus") as CheckBox;
+            //CheckBox chkViewStatus = row.FindControl("chkViewStatus") as CheckBox;
+            //CheckBox chkDeleteStatus = row.FindControl("chkDeleteStatus") as CheckBox;
 
-            if (txtPlantID == null || txtLineID == null || txtCategoryID == null || txtCategoryName == null || txtCategorySapCode == null || txtLocalName == null || chkViewStatus == null || chkDeleteStatus == null)
-            {
-                throw new Exception("One or more controls are missing from the GridView row.");
-            }
+            //if (txtPlantID == null || txtLineID == null || txtCategoryID == null || txtCategoryName == null || txtCategorySapCode == null || txtLocalName == null || chkViewStatus == null || chkDeleteStatus == null)
+            //{
+            //    throw new Exception("One or more controls are missing from the GridView row.");
+            //}
 
             int plant_id = Convert.ToInt32(txtPlantID.Text);
             int line_id = Convert.ToInt32(txtLineID.Text);
@@ -174,8 +314,8 @@ namespace AnmolDristi
             string category_name = txtCategoryName.Text;
             string category_sapcode = txtCategorySapCode.Text;
             string local_name = txtLocalName.Text;
-            bool view_status = chkViewStatus.Checked;
-            bool delete_status = chkDeleteStatus.Checked;
+            int chkViewStatus = (row.FindControl("view_status") as CheckBox)?.Checked == true ? 1 : 0;
+            int delete_status = (row.FindControl("delete_status") as CheckBox)?.Checked == true ? 1 : 0;
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -200,8 +340,8 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@category_name", category_name);
                         cmd.Parameters.AddWithValue("@category_sapcode", category_sapcode);
                         cmd.Parameters.AddWithValue("@local_name", local_name);
-                        cmd.Parameters.AddWithValue("@view_status", view_status ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@delete_status", delete_status ? 1 : 0);
+                        cmd.Parameters.AddWithValue("@view_status", chkViewStatus);
+                        cmd.Parameters.AddWithValue("@delete_status", delete_status);
                         cmd.ExecuteNonQuery();
                     }
 
@@ -305,6 +445,11 @@ namespace AnmolDristi
         {
             GridViewLineCategory.PageIndex = e.NewPageIndex;
             BindGridView();
+        }
+
+        protected void btn_cancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("datamastering_home.aspx");
         }
     }
 }

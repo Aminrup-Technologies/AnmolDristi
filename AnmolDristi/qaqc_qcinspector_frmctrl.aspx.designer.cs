@@ -175,6 +175,15 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Label lbl_msg;
         
         /// <summary>
+        /// btn_cancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_cancel;
+        
+        /// <summary>
         /// btn_insert control.
         /// </summary>
         /// <remarks>

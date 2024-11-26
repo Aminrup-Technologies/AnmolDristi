@@ -261,7 +261,7 @@ namespace AnmolDristi
         {
             GridViewRow row = GridView1.Rows[e.RowIndex];
             int id = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
-
+            string displayname = (row.FindControl("txtDisplayName") as TextBox)?.Text;
             // Fetching checkbox values and converting them to 0 or 1
             int viewMode = (row.FindControl("ViewMode") as CheckBox)?.Checked == true ? 1 : 0;
             int deleteMode = (row.FindControl("DeleteMode") as CheckBox)?.Checked == true ? 1 : 0;
@@ -274,7 +274,7 @@ namespace AnmolDristi
             string rvErrorMsg = (row.FindControl("txtRVErrorMsg") as TextBox)?.Text;
             string rvMinValue = (row.FindControl("txtRVMinValue") as TextBox)?.Text;
             string rvMaxValue = (row.FindControl("txtRVMaxValue") as TextBox)?.Text;
-            string modifiedRemarks = "Modified from UI/UX";
+            string modifiedRemarks = "Modified by "+ Session["USERID"].ToString() + " from UI/UX";
 
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connStr))
@@ -285,6 +285,7 @@ namespace AnmolDristi
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Id", id);
+                        cmd.Parameters.AddWithValue("@DisplayName", displayname);
                         cmd.Parameters.AddWithValue("@RFV_YesNo", rfvYesNo);
                         cmd.Parameters.AddWithValue("@RFV_ErrorMsg", rfvErrorMsg);
                         cmd.Parameters.AddWithValue("@REV_YesNo", revYesNo);
@@ -349,7 +350,7 @@ namespace AnmolDristi
             int id = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
             //bool ViewMode = (row.FindControl("ViewMode") as CheckBox).Checked;
             //bool DeleteMode = (row.FindControl("DeleteMode") as CheckBox).Checked;
-            string DeletedRemarks = "Deleted by the USER from UI/UX";
+            string DeletedRemarks = "Deleted by the "+ Session["USERID"].ToString() + " from UI/UX";
 
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connStr))
@@ -566,6 +567,11 @@ namespace AnmolDristi
                     }
                 }
             }
+        }
+
+        protected void btn_cancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("datamastering_home.aspx");
         }
     }
 }

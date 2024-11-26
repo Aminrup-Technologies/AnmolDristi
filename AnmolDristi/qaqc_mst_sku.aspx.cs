@@ -303,7 +303,7 @@ namespace AnmolDristi.MST
             string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connString))
             {
-                using (SqlCommand cmd = new SqlCommand("DELETE FROM MST_Brand_SKU WHERE Id=@Id", conn))
+                using (SqlCommand cmd = new SqlCommand("UPDATE MST_Brand_SKU set ViewMode=0 WHERE Id=@Id", conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
                     conn.Open();
@@ -354,6 +354,11 @@ namespace AnmolDristi.MST
                     conn.Close();
                 }
             }
+        }
+
+        protected void btn_cancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("datamastering_home.aspx");
         }
     }
 }

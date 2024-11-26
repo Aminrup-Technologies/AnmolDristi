@@ -17,7 +17,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="QC Inspector Report : Input Controller"></asp:Label></h2>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="Brand SKU Mastering"></asp:Label></h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -79,7 +79,7 @@
                                 <asp:Label ID="lbl_msg" runat="server" Text="Click SUBMIT to view Data!!"></asp:Label>
                             </div>
                             <div class="col-md-6 col-sm-12">
-                                <button type="button" class="btn btn-danger btn-sm collapse-link">Cancel</button>
+                                <asp:Button ID="btn_cancel" runat="server" Text="Cancel" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btn_cancel_Click"/>
                                 <asp:Button ID="btn_insert" runat="server" Text="Insert" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btn_insert_Click" />
                                 <asp:Button ID="btn_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="true" ValidationGroup="Submit" OnClick="btn_submit_Click" />
                             </div>

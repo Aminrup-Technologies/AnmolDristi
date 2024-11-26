@@ -1,2 +1,0 @@
-@param1, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9, @param10, @param11, @param12, @param13, @param14, @param15, @param16, @param17, @param18, @param19, @param20, @param21, @param22, @param23, @param24, @param25, @param26, @param27, @param28, @param29, @param30, @param31, @param32, @param33, @param34, @param35
-102, 202, 1002, 3008, SKU027, 32, 0, 0, 0, sedfvsed, 03:56, 1, , 1, , 1, , 1, , 56*56.7, , 1.26, 209, , 152, 166, 8.43, 185, , , 1, 09-05-2024 00:00:00, 11:43:02.0762848, , S126

@@ -17,7 +17,7 @@ namespace AnmolDristi
                 {
 
                     lbl_username.Text = Session["USERNAME"].ToString();
-                    lbl_empcode.Text = lbl_workmansl.Text = Session["USERID"].ToString();
+                    lbl_empcode.Text = lbl_workmansl.Text = Session["WORKMAN"].ToString();
 
                     string PN_WelcomeBack_script = @"<script type='text/javascript'>
                             new PNotify({

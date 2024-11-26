@@ -186,5 +186,9 @@ namespace AnmolDristi
             BindGridView();
         }
 
+        protected void btn_cancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("datamastering_home.aspx");
+        }
     }
 }
