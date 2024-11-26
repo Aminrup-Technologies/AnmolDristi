@@ -144,7 +144,8 @@ namespace AnmolDristi.qaqc
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
-                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    //cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@LineId", string.IsNullOrEmpty(selectedPlantLineValue) ? (object)DBNull.Value : selectedPlantLineValue);
                     cmd.Parameters.AddWithValue("@FormID", 1); // Replace with actual value
                     cmd.Parameters.AddWithValue("@FormName", "qaqc_inspector_rpt"); // Replace with actual value
 
@@ -212,7 +213,7 @@ namespace AnmolDristi.qaqc
                             else
                             {
                                 // If default insertion fails
-                                ShowErrorNotification("Failed to insert default approvers.");
+                                ShowErrorNotification("Failed to insert default approvers."); 
                             }
                         }
                     }
@@ -1022,6 +1023,9 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 //logger.Error(ex, "An error occurred in RetrieveFormData");
                 // Log the exception or display an error message
             }
@@ -1129,6 +1133,9 @@ namespace AnmolDristi.qaqc
             catch (Exception ex)
             {
                 //logger.Error(ex, "An error occurred in RetrieveFormData");
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 string errorMessage = ex.Message;
                 string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, true);
@@ -1233,6 +1240,8 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
                 // Log the exception or display an error message
             }
 
@@ -1347,6 +1356,9 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 DisplayErrorNotification(ex.Message);
             }
             finally
@@ -1902,6 +1914,9 @@ namespace AnmolDristi.qaqc
                 }
                 catch (Exception ex)
                 {
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                     //logger.Error(ex, "An error occurred in RetrieveFormData");
                     DisplayErrorNotification(ex.Message);
                 }
@@ -2039,6 +2054,9 @@ namespace AnmolDristi.qaqc
             }
             catch (FormatException ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 //logger.Error(ex, "An error occurred in RetrieveFormData");
                 // Log or display the error message
                 // For example, you could use Console.WriteLine or a logging framework
@@ -2048,6 +2066,9 @@ namespace AnmolDristi.qaqc
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 //logger.Error(ex, "An error occurred in RetrieveFormData");
                 // Handle other potential exceptions
                 Console.WriteLine($"Exception: {ex.Message}");
@@ -2136,6 +2157,9 @@ namespace AnmolDristi.qaqc
                 }
                 catch (Exception ex)
                 {
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                     //logger.Error(ex, "An error occurred in RetrieveFormData");
                     DisplayErrorNotification(ex.Message);
                 }

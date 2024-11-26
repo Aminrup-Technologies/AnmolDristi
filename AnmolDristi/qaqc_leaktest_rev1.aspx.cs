@@ -507,13 +507,14 @@ namespace AnmolDristi
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
-                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
-                    cmd.Parameters.AddWithValue("@FormID", 6); // Replace with actual value
-                    cmd.Parameters.AddWithValue("@FormName", "qaqc_process_rpt"); // Replace with actual value
+                    //cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@LineId", string.IsNullOrEmpty(selectedPlantLineValue) ? (object)DBNull.Value : selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@FormID", 7);
+                    cmd.Parameters.AddWithValue("@FormName", "leak_test");
 
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
-                        hdn_formid.Value = "6";
+                        hdn_formid.Value = "7";
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
@@ -541,7 +542,7 @@ namespace AnmolDristi
                         else
                         {
                             // Insert default approvers
-                            bool isInserted = dbcl.InsertDefaultApprovers(selectedPlantValue, selectedPlantLineValue, 6);
+                            bool isInserted = dbcl.InsertDefaultApprovers(selectedPlantValue, selectedPlantLineValue, 7);
 
                             if (isInserted)
                             {

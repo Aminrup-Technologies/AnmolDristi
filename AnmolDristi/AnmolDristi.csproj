@@ -270,6 +270,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ApplicationInsights.config" />
+    <Content Include=".bowerrc" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -439,6 +440,9 @@
     <Compile Include="EditEmployee.aspx.designer.cs">
       <DependentUpon>EditEmployee.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EmailNotifier.cs" />
+    <Compile Include="EmailRecipientManager.cs" />
+    <Compile Include="EmailRecipientMgr.cs" />
     <Compile Include="FinalCbbWtVM.aspx.cs">
       <DependentUpon>FinalCbbWtVM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -484,6 +488,7 @@
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="LoginNotifier.cs" />
     <Compile Include="New_User.aspx.cs">
       <DependentUpon>New_User.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

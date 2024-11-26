@@ -295,7 +295,8 @@ namespace AnmolDristi
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
-                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    //cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@LineId", string.IsNullOrEmpty(selectedPlantLineValue) ? (object)DBNull.Value : selectedPlantLineValue);
                     cmd.Parameters.AddWithValue("@FormID", 8);
                     cmd.Parameters.AddWithValue("@FormName", "qaqc_pre_dispatch_QI_Report");
 

@@ -374,11 +374,11 @@
                                                 <%# Container.DataItemIndex + 1 %>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField DataField="Plant" HeaderText="Plant" SortExpression="Plant" />
+                                        <asp:BoundField DataField="Plant" HeaderText="Plant" SortExpression="Plant" Visible="false" />
                                         <asp:BoundField DataField="PlantId" HeaderText="Plant Id" SortExpression="PlantId" Visible="false" />
-                                        <asp:BoundField DataField="PlantLine" HeaderText="Plant Line" SortExpression="PlantLine" />
+                                        <asp:BoundField DataField="PlantLine" HeaderText="Plant Line" SortExpression="PlantLine" Visible="false" />
                                         <asp:BoundField DataField="PlantLineId" HeaderText="Plant Line Id" SortExpression="PlantLineId" Visible="false" />
-                                        <asp:BoundField DataField="ProductCategory" HeaderText="Product Category" SortExpression="ProductCategory" />
+                                        <asp:BoundField DataField="ProductCategory" HeaderText="Product Category" SortExpression="ProductCategory" Visible="false"/>
                                         <asp:BoundField DataField="ProductCategoryId" HeaderText="Product Category Id" SortExpression="ProductCategoryId" Visible="false" />
                                         <asp:BoundField DataField="ProductBrand" HeaderText="Product Brand" SortExpression="ProductBrand" />
                                         <asp:BoundField DataField="ProductBrandId" HeaderText="Product Brand Id" SortExpression="ProductBrandId" Visible="false" />

@@ -262,7 +262,8 @@ namespace AnmolDristi
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
-                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    //cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@LineId", string.IsNullOrEmpty(selectedPlantLineValue) ? (object)DBNull.Value : selectedPlantLineValue);
                     cmd.Parameters.AddWithValue("@FormID", 6); // Replace with actual value
                     cmd.Parameters.AddWithValue("@FormName", "qaqc_process_rpt"); // Replace with actual value
 
@@ -1143,42 +1144,49 @@ namespace AnmolDristi
         protected void SpongeBtnSubmit_Click(object sender, EventArgs e)
         {
 
-            // Retrieve values from controls
-            decimal roomTemp = Convert.ToDecimal(TB_RoomTemp.Text);
-            string commentForRoomTemp = TXB_RoomTemp_Remarks.Text;
-            int drumCovered = Convert.ToInt32(RBL_DrumCovered.SelectedValue);
-            string commentForDrumCovered = TXB_DrumCovered_Remarks.Text;
-            int quality = Convert.ToInt32(RBL_Quality.SelectedValue);
-            string commentForQuality = TXB_Quality_Remarks.Text;
-            TimeSpan standingTime = TimeSpan.Parse(TB_StandingTime.Text);
-            string commentForStandingTime = "";
-            decimal temp = Convert.ToDecimal(TB_Temp.Text);
-            string commentForTemp = TXB_Temp_Remarks.Text;
-
-            QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
-
-
-            try
+            if (string.IsNullOrWhiteSpace(PcrNo))
             {
-                // Call the InsertSpongeData method with the retrieved values
-                dataAccess.InsertSpongeData(PcrNo, roomTemp, commentForRoomTemp, drumCovered, commentForDrumCovered, quality,
-                                                commentForQuality, standingTime, commentForStandingTime, temp, commentForTemp);
 
-                //Make the inputs readonly
-                MakeInputsReadOnly2();
             }
-            catch (Exception ex)
+            else
             {
-                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
-                string errorScript = "<script type='text/javascript'>\n" +
-                                     $"new PNotify({{\n" +
-                                     "    title: 'Error',\n" +
-                                     $"    text: '{errorMessage}',\n" +
-                                     "    type: 'error',\n" +
-                                     "    styling: 'bootstrap3'\n" +
-                                     "});\n" +
-                                     "</script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+                // Retrieve values from controls
+                decimal roomTemp = Convert.ToDecimal(TB_RoomTemp.Text);
+                string commentForRoomTemp = TXB_RoomTemp_Remarks.Text;
+                int drumCovered = Convert.ToInt32(RBL_DrumCovered.SelectedValue);
+                string commentForDrumCovered = TXB_DrumCovered_Remarks.Text;
+                int quality = Convert.ToInt32(RBL_Quality.SelectedValue);
+                string commentForQuality = TXB_Quality_Remarks.Text;
+                TimeSpan standingTime = TimeSpan.Parse(TB_StandingTime.Text);
+                string commentForStandingTime = "";
+                decimal temp = Convert.ToDecimal(TB_Temp.Text);
+                string commentForTemp = TXB_Temp_Remarks.Text;
+
+                QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
+
+
+                try
+                {
+                    // Call the InsertSpongeData method with the retrieved values
+                    dataAccess.InsertSpongeData(PcrNo, roomTemp, commentForRoomTemp, drumCovered, commentForDrumCovered, quality,
+                                                    commentForQuality, standingTime, commentForStandingTime, temp, commentForTemp, "Yes");
+
+                    //Make the inputs readonly
+                    MakeInputsReadOnly2();
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                    string errorScript = "<script type='text/javascript'>\n" +
+                                         $"new PNotify({{\n" +
+                                         "    title: 'Error',\n" +
+                                         $"    text: '{errorMessage}',\n" +
+                                         "    type: 'error',\n" +
+                                         "    styling: 'bootstrap3'\n" +
+                                         "});\n" +
+                                         "</script>";
+                    ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+                }
             }
         }
         protected void Spongebtn_Reset_Click(object sender, EventArgs e)
@@ -1624,7 +1632,8 @@ namespace AnmolDristi
                 new ZoneInfo {Sl = 4,   Zone = "Zone 4" },
                 new ZoneInfo {Sl = 5,   Zone = "Zone 5" },
                 new ZoneInfo {Sl = 6,   Zone = "Zone 6" },
-
+                new ZoneInfo {Sl = 7,   Zone = "Zone 7" },
+                new ZoneInfo {Sl = 8,   Zone = "Zone 8" },
             };
 
             // Bind to GridView
@@ -1701,9 +1710,26 @@ namespace AnmolDristi
             Response.Redirect("qaqc_process_rpt.aspx");
         }
 
-        
+        protected void SpongeBtnNotApplicable_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(PcrNo))
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('basicData-tab');", true);
+            }
+            else
+            {
+                QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
+                dataAccess.InsertSpongeData(PcrNo, null, null, null, null, null, null, null, null, null, null, "No");
 
 
+                //Make the inputs readonly
+                MakeInputsReadOnly2();
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "activateTab", "activateTab('doughData-tab');", true);
+
+                
+            }
+        }
     }
 
 }

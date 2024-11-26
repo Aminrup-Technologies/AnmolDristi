@@ -77,6 +77,9 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                     if (transaction != null)
                     {
                         transaction.Rollback();

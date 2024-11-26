@@ -426,7 +426,7 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string sqlQuery = "SELECT * FROM [AnmolDristi].[dbo].[TRN_FINAL_OVEN_REPORT] WHERE 1=1";
+                string sqlQuery = "SELECT * FROM [TRN_FINAL_OVEN_REPORT] WHERE 1=1";
 
                 // Add filters to SQL query based on the selected values
                 if (!string.IsNullOrEmpty(DDL_Plant.SelectedValue) && DDL_Plant.SelectedValue != "0")
@@ -594,8 +594,11 @@ namespace AnmolDristi
                     //ShowNotification("No Data", "No records found for the selected date range.", "info");
                 }
             }
-            catch (Exception )
+            catch (Exception ex )
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 // Handle exceptions (log it, show an error message, etc.)
                 ShowNotification("Error", "An error occurred while processing your request.", "error");
             }
@@ -691,8 +694,11 @@ namespace AnmolDristi
                     //ShowNotification("No Data", "No data available to export.", "info");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 // ShowNotification("Error", $"An error occurred while exporting: {ex.Message}", "error");
             }
         }

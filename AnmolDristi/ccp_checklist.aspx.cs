@@ -29,14 +29,18 @@ namespace AnmolDristi
                 }
                 else
                 {
+                    DDL_PlantLine.Enabled = false;
+
                     int CCPChecklist_MagnetCheck = int.Parse(ConfigurationManager.AppSettings["CCPChecklist_MagnetCheck_GBV"]);
                     int CCPChecklist_SieveCheck = int.Parse(ConfigurationManager.AppSettings["CCPChecklist_SieveCheck_GBV"]);
 
                     lbl_docname.Text = "CCP CHECKLIST: MD, SS";
                     lbl_docnumber.Text = "ANMOL/DOC/CORP/QA/03";
+
                     PlantBinder();
                     BindGridView(CCPChecklist_MagnetCheck);
                     Bind_GridView_Shieve(CCPChecklist_SieveCheck);
+                    //BindMetalDetector_GridView(5);
                     DisplayCurrentShift();
                 }
             }
@@ -65,7 +69,7 @@ namespace AnmolDristi
             List<string> locations = new List<string>
                 {
                     "Maida 1", "Maida 2", "Maida 3", "Maida 4", "Maida 5",
-                    "Sugar 1", "Sugar 2", "Broken Biscuit 1", "Broken Biscuit 2"
+                    "Sugar 1", "Sugar 2", "Broken Biscuit / Cake Crumb 1", "Broken Biscuit / Cake Crumb 2"
                 };
 
             // Generate rows based on the provided row count
@@ -110,7 +114,7 @@ namespace AnmolDristi
             // Predefined list of sieve numbers
             List<string> sieveNumbers = new List<string>
             {
-                "MS01", "SS01", "BBS01", "MS02", "SS02", "BBS02", "MS03", "SS03", "BBS03"
+                "MS01", "MS02", "MS03", "MS04", "MS05", "SS01", "SS02", "SS03", "BBS01", "BBS02", "BBS03"
             };
 
             // Generate rows based on the provided row count
@@ -141,7 +145,42 @@ namespace AnmolDristi
             GridView_Shieve.DataBind();
         }
 
+        private void BindMetalDetector_GridView(int rowCount)
+        {
+            // Create a DataTable with the necessary columns
+            DataTable dt = new DataTable();
 
+            // Add columns for each field
+            dt.Columns.Add("FF_Status", typeof(string));
+            dt.Columns.Add("FF_Remarks", typeof(string));
+            dt.Columns.Add("NFE_Status", typeof(string));
+            dt.Columns.Add("NFE_Remarks", typeof(string));
+            dt.Columns.Add("SS_Status", typeof(string));
+            dt.Columns.Add("SS_Remarks", typeof(string));
+            dt.Columns.Add("MD_Remarks", typeof(string));
+
+            // Generate rows based on the provided row count
+            for (int i = 0; i < rowCount; i++)
+            {
+                DataRow dr = dt.NewRow();
+
+                // Initialize columns with default values
+                dr["FF_Status"] = string.Empty; // To be selected by the user
+                dr["FF_Remarks"] = string.Empty;
+                dr["NFE_Status"] = string.Empty;
+                dr["NFE_Remarks"] = string.Empty;
+                dr["SS_Status"] = string.Empty;
+                dr["SS_Remarks"] = string.Empty;
+                dr["MD_Remarks"] = string.Empty;
+
+                // Add the row to the DataTable
+                dt.Rows.Add(dr);
+            }
+
+            // Bind the DataTable to the GridView
+            //GridView_Status.DataSource = dt;
+            //GridView_Status.DataBind();
+        }
 
 
         //protected void SaveData()
@@ -281,6 +320,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
                 lbl_MagnetCheck.Text = errorMessage;
                 string JSONInserterrorScript = "<script type='text/javascript'>\n" +
@@ -348,6 +390,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 lbl_MagnetCheck.Text = $"Error binding data to GridView: { ex.Message}";
                 // Log or handle exceptions
                 //Console.WriteLine($"Error binding data to GridView: {ex.Message}");
@@ -456,6 +501,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 // Handle exceptions
                 Console.WriteLine("Error generating M_CheckId: " + ex.Message);
                 throw;
@@ -479,8 +527,8 @@ namespace AnmolDristi
                 case "Maida 5": return 5;
                 case "Sugar 1": return 6;
                 case "Sugar 2": return 7;
-                case "Broken Biscuit 1": return 8;
-                case "Broken Biscuit 2": return 9;
+                case "Broken Biscuit / Cake Crumb 1": return 8;
+                case "Broken Biscuit / Cake Crumb 2": return 9;
                 default: return 0;
             }
         }
@@ -574,6 +622,10 @@ namespace AnmolDristi
             {
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 PlantLinesBinder(selectedPlantValue);
+
+                LoadApprovers(selectedPlantValue, "");
+
+                DDL_PlantLine.Enabled = true;
             }
             else
             {
@@ -727,7 +779,8 @@ namespace AnmolDristi
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
-                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    //cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
+                    cmd.Parameters.AddWithValue("@LineId", string.IsNullOrEmpty(selectedPlantLineValue) ? (object)DBNull.Value : selectedPlantLineValue);
                     cmd.Parameters.AddWithValue("@FormID", 5);
                     cmd.Parameters.AddWithValue("@FormName", "ccp_checklist");
 
@@ -1174,6 +1227,9 @@ namespace AnmolDristi
                     }
                     catch (Exception ex)
                     {
+                        var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                        EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                         string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
                         string BasicdataerrorScript = "<script type='text/javascript'>\n" +
                                              $"new PNotify({{\n" +
@@ -1216,6 +1272,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 string CCID_errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
                 string CCID_errorScript = "<script type='text/javascript'>\n" +
                                      $"new PNotify({{\n" +
@@ -1265,6 +1324,9 @@ namespace AnmolDristi
         protected void btn_svSieve_Click(object sender, EventArgs e)
         {
             SaveSieveGridViewDataToJson();
+
+            DDL_PlantLine.Enabled = true;
+
         }
 
         protected void SaveSieveGridViewDataToJson()
@@ -1397,6 +1459,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 lbl_sivecheckmsg.Text = $"Error binding data to GridView: { ex.Message}";
                 // Log or handle exceptions
                 //Console.WriteLine($"Error binding data to GridView: {ex.Message}");
@@ -1437,6 +1502,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 string SieveJSONerrorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
                 lbl_MagnetCheck.Text = SieveJSONerrorMessage;
                 string SieveJSONInserterrorScript = "<script type='text/javascript'>\n" +
@@ -1453,6 +1521,22 @@ namespace AnmolDristi
 
         protected void btn_finalsbmt_Click(object sender, EventArgs e)
         {
+            //OldDataInsert();
+            //SaveMetalDetectorDataToJson();
+            NewDatInsert();
+            DisableAllFormFields();
+
+
+            btn_finalsbmt.Enabled = false;
+            btn_finalsbmt.Text = "SAVED";
+            btn_rst_metaldet.Enabled = false;
+            btn_rst_metaldet.Text="NOT ALLOWED";
+
+
+        }
+
+        private void OldDataInsert()
+        {
             if (CcpId != "" && CcpId != string.Empty)
             {
                 if (btnSubmit.Text == "SAVED" && btn_svSieve.Text == "SAVED")
@@ -1468,7 +1552,7 @@ namespace AnmolDristi
                     try
                     {
                         string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-                        string insertQuery = "UPDATE TRN_CCP_Checklist set FF_Status=@FF_Status, FF_Remarks=@FF_Remarks, NFE_Status=@NFE_Status, NFE_Remarks=@NFE_Remarks, SS_Status=@SS_Status, SS_Remarks=@SS_Remarks, MD_Remarks=@MD_Remarks, T4_Status=@T4_Status, Final_Status=@Final_Status where CcpId=@CcpId ";
+                        string insertQuery = "UPDATE TRN_CCP_Checklist set FF_Status=@FF_Status, FF_Remarks=@FF_Remarks, NFE_Status=@NFE_Status, NFE_Remarks=@NFE_Remarks, SS_Status=@SS_Status, SS_Remarks=@SS_Remarks, MD_Remarks=@MD_Remarks, T4_Status=@T4_Status, Final_Status=@Final_Status where CcpId=@CcpId";
 
                         using (SqlConnection connection = new SqlConnection(connectionString))
                         using (SqlCommand command = new SqlCommand(insertQuery, connection))
@@ -1489,6 +1573,9 @@ namespace AnmolDristi
                     }
                     catch (Exception ex)
                     {
+                        var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                        EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                         string errorMessage = ex.Message;
                         string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                         throw;
@@ -1509,5 +1596,356 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowMDErrorNotification", MagnetD_errorScript, true);
             }
         }
+
+
+        private void InitializeGridViewDataTable()
+        {
+            if (ViewState["GridViewData"] == null)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("PlantLine", typeof(string));
+                dt.Columns.Add("FF_Status", typeof(string));
+                dt.Columns.Add("FF_Remarks", typeof(string));
+                dt.Columns.Add("NFE_Status", typeof(string));
+                dt.Columns.Add("NFE_Remarks", typeof(string));
+                dt.Columns.Add("SS_Status", typeof(string));
+                dt.Columns.Add("SS_Remarks", typeof(string));
+                //dt.Columns.Add("MD_Remarks", typeof(string));
+
+                ViewState["GridViewData"] = dt;
+            }
+        }
+
+
+        private void AddRowToGridView()
+        {
+            // Validation for required fields
+            if (DDL_PlantLine.SelectedIndex == 0 || RBL_FF_Status.SelectedItem == null || RBL_NFE_Status.SelectedItem == null || RBL_SS_Status.SelectedItem == null)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "ValidationError", "alert('Please fill all required fields.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('Metal_Dctector_Area-tab').click();", true);
+                return;
+            }
+
+            // Ensure the DataTable is initialized
+            InitializeGridViewDataTable();
+
+            // Fetch the ViewState DataTable
+            DataTable dt = ViewState["GridViewData"] as DataTable;
+
+            // Read form values
+            string plantLine = DDL_PlantLine.SelectedItem.Text;
+            string ffStatus = RBL_FF_Status.SelectedItem != null ? RBL_FF_Status.SelectedItem.Text : "";
+            string ffRemarks = TB_FF_Remarks.Text.Trim();
+            string nfeStatus = RBL_NFE_Status.SelectedItem != null ? RBL_NFE_Status.SelectedItem.Text : "";
+            string nfeRemarks = TB_NFE_Remarks.Text.Trim();
+            string ssStatus = RBL_SS_Status.SelectedItem != null ? RBL_SS_Status.SelectedItem.Text : "";
+            string ssRemarks = TB_SS_Remarks.Text.Trim();
+            //string mdRemarks = TB_MDRemarks.Text.Trim();
+
+            // Check for duplicate entries
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row["PlantLine"].ToString() == plantLine)
+                {
+                    // Show a message to the user and exit
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "DuplicateEntry", "alert('This PlantLine is already added.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('Metal_Dctector_Area-tab').click();", true);
+                    return;
+                }
+            }
+
+            // Add a new row to the DataTable
+            DataRow newRow = dt.NewRow();
+            newRow["PlantLine"] = plantLine;
+            newRow["FF_Status"] = ffStatus;
+            newRow["FF_Remarks"] = ffRemarks;
+            newRow["NFE_Status"] = nfeStatus;
+            newRow["NFE_Remarks"] = nfeRemarks;
+            newRow["SS_Status"] = ssStatus;
+            newRow["SS_Remarks"] = ssRemarks;
+            //newRow["MD_Remarks"] = mdRemarks;
+
+            dt.Rows.Add(newRow);
+
+            // Save the updated DataTable back to ViewState
+            ViewState["GridViewData"] = dt;
+
+            // Rebind the GridView
+            Magnetgrid.DataSource = dt;
+            Magnetgrid.DataBind();
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('Metal_Dctector_Area-tab').click();", true);
+        }
+
+
+        private void ClearFormInputs()
+        {
+            DDL_PlantLine.SelectedIndex = 0;
+            RBL_FF_Status.ClearSelection();
+            TB_FF_Remarks.Text = string.Empty;
+            RBL_NFE_Status.ClearSelection();
+            TB_NFE_Remarks.Text = string.Empty;
+            RBL_SS_Status.ClearSelection();
+            TB_SS_Remarks.Text = string.Empty;
+            //TB_MDRemarks.Text = string.Empty;
+        }
+
+        private void EnableAllFormFields()
+        {
+            DDL_PlantLine.Enabled = true;
+            RBL_FF_Status.Enabled = true;
+            RBL_NFE_Status.Enabled = true;
+            RBL_SS_Status.Enabled = true;
+            TB_FF_Remarks.Enabled = true;
+            TB_NFE_Remarks.Enabled = true;
+            TB_SS_Remarks.Enabled = true;
+            TB_MDRemarks.Enabled = true;
+        }
+
+
+        private void DisableAllFormFields()
+        {
+            // Disable dropdown lists
+            DDL_PlantLine.Enabled = false;
+
+            // Disable radio button lists
+            RBL_FF_Status.Enabled = false;
+            RBL_NFE_Status.Enabled = false;
+            RBL_SS_Status.Enabled = false;
+
+            // Disable textboxes
+            TB_FF_Remarks.Enabled = false;
+            TB_NFE_Remarks.Enabled = false;
+            TB_SS_Remarks.Enabled = false;
+            TB_MDRemarks.Enabled = false;
+        }
+
+
+        protected void btn_resetgrid_Click(object sender, EventArgs e)
+        {
+            ClearFormInputs();
+        }
+
+        protected void btn_addtolist_Click(object sender, EventArgs e)
+        {
+            AddRowToGridView();
+            ClearFormInputs();
+        }
+
+        protected void Magnetgrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            // Retrieve the DataTable from ViewState
+            DataTable dt = ViewState["GridViewData"] as DataTable;
+
+            if (dt != null)
+            {
+                // Remove the row at the specified index
+                dt.Rows.RemoveAt(e.RowIndex);
+
+                // Save the updated DataTable back to ViewState
+                ViewState["GridViewData"] = dt;
+
+                // Rebind the GridView
+                Magnetgrid.DataSource = dt;
+                Magnetgrid.DataBind();
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('Metal_Dctector_Area-tab').click();", true);
+            }
+        }
+
+
+
+        private void BindGridView()
+        {
+            if (ViewState["GridViewData"] != null)
+            {
+                DataTable dt = (DataTable)ViewState["GridViewData"];
+
+                if ((dt != null) && (dt.Rows.Count > 0))
+                {
+                    Magnetgrid.Visible = true;
+                    Magnetgrid.DataSource = dt;
+                    Magnetgrid.DataBind();
+                }
+                else
+                {
+                    Magnetgrid.Visible = false;
+                }
+            }
+        }
+
+        protected void btn_rst_metaldet_Click(object sender, EventArgs e)
+        {
+            //here update the record and set visible false commenting that user left the submission incomplete
+        }
+
+        private string ConvertGridViewToJson()
+        {
+            DataTable dt = new DataTable();
+
+            // Add columns to the DataTable
+            foreach (TableCell headerCell in Magnetgrid.HeaderRow.Cells)
+            {
+                dt.Columns.Add(headerCell.Text);
+            }
+
+            // Add rows to the DataTable
+            foreach (GridViewRow row in Magnetgrid.Rows)
+            {
+                DataRow dr = dt.NewRow();
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    dr[i] = row.Cells[i].Text.Trim();
+                }
+                dt.Rows.Add(dr);
+            }
+
+            // Convert the DataTable to JSON
+            //return JsonConvert.SerializeObject(dt, Formatting.Indented);
+            return JsonConvert.SerializeObject(dt);
+        }
+
+
+        private void NewDatInsert()
+        {
+            if (CcpId != "" && CcpId != string.Empty)
+            {
+                if (btnSubmit.Text == "SAVED" && btn_svSieve.Text == "SAVED")
+                {
+                    string MD_Remarks = TB_MDRemarks.Text.ToString();
+
+                    try
+                    {
+                        string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+                        // Convert GridView data to JSON
+                        //string gridViewJson = ConvertGridViewToJson();
+                        string gridViewJson = SaveMetalDetectorDataToJson();
+
+                        // Save JSON to the database
+                        string query = @"UPDATE TRN_CCP_Checklist SET MetalDataJson1 = @MetalDataJson1, MetalDataJson1_Time = @MetalDataJson1_Time, T4_Status = @T4_Status, Final_Status = @Final_Status, MD_Remarks = @MD_Remarks WHERE CcpId = @CcpId";
+
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@MetalDataJson1", gridViewJson);
+                            command.Parameters.AddWithValue("@MetalDataJson1_Time", DateTime.Now);
+                            command.Parameters.AddWithValue("@T4_Status", 1);
+                            command.Parameters.AddWithValue("@Final_Status", 1);
+                            command.Parameters.AddWithValue("@MD_Remarks", MD_Remarks);
+                            command.Parameters.AddWithValue("@CcpId", CcpId);
+
+                            connection.Open();
+                            command.ExecuteNonQuery();
+                        }
+
+                        // Notify success
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "UpdateSuccess", "new PNotify({ title: 'Success', text: 'Grid data saved successfully.', type: 'success', styling: 'bootstrap3' });", true);
+                    }
+                    catch (Exception ex)
+                    {
+                        var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                        EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
+                        string errorMessage = ex.Message;
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "Error", "new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});", true);
+                    }
+                }
+                else
+                {
+                    lbl_mtldetmsg.Text = "Sieve Check / Metal Detector Pending";
+                }
+            }
+            else
+            {
+                string errorMessage = "No Basic Data Found";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
+                lbl_mtldetmsg.Text = errorMessage;
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Error", $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});", true);
+            }
+        }
+
+        //protected void SaveMetalDetectorDataToJson()
+        //{
+        //    // List to hold the row data
+        //    var gridViewData = new List<Dictionary<string, object>>();
+
+        //    // Loop through the rows of the GridView
+        //    foreach (GridViewRow row in Magnetgrid.Rows)
+        //    {
+        //        // Only process data rows (skip header row)
+        //        if (row.RowType == DataControlRowType.DataRow)
+        //        {
+        //            var rowData = new Dictionary<string, object>();
+
+        //            // Extract data from each control in the row
+        //            var lblPlantLine = (Label)row.FindControl("lbl_PlantLine");
+        //            var lblFF = (Label)row.FindControl("lbl_FF_Status");
+        //            var tbFFR = (TextBox)row.FindControl("TB_FF_Remarks");
+        //            var lblNFE = (Label)row.FindControl("lbl_NFE_Status");
+        //            var tbNFER = (TextBox)row.FindControl("TB_NFE_Remarks");
+        //            var lblSS = (Label)row.FindControl("lbl_SS_Status");
+        //            var tbSSR = (TextBox)row.FindControl("TB_SS_Remarks");
+
+        //            // Debugging: Check if controls exist
+        //            if (lblPlantLine == null || lblFF == null || tbFFR == null || lblNFE == null || tbNFER == null || lblSS == null || tbSSR == null)
+        //            {
+        //                System.Diagnostics.Debug.WriteLine($"Control not found in row {row.RowIndex}");
+        //            }
+
+        //            // Add data to the dictionary (use null-coalescing operator to handle null values)
+        //            rowData["Line"] = lblPlantLine?.Text?.Trim() ?? "No Data";
+        //            rowData["FF"] = lblFF?.Text?.Trim() ?? "No Data";
+        //            rowData["FFR"] = tbFFR?.Text?.Trim() ?? "No Data";
+        //            rowData["NFE"] = lblNFE?.Text?.Trim() ?? "No Data";
+        //            rowData["NFER"] = tbNFER?.Text?.Trim() ?? "No Data";
+        //            rowData["SS"] = lblSS?.Text?.Trim() ?? "No Data";
+        //            rowData["SSR"] = tbSSR?.Text?.Trim() ?? "No Data";
+
+        //            // Add the row data to the list
+        //            gridViewData.Add(rowData);
+        //        }
+        //    }
+
+        //    // Serialize the list to JSON
+        //    string jsonData = JsonConvert.SerializeObject(gridViewData, Formatting.Indented);
+
+        //}
+
+
+        private string SaveMetalDetectorDataToJson()
+        {
+            if (ViewState["GridViewData"] != null)
+            {
+                DataTable dt = (DataTable)ViewState["GridViewData"];
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    var gridViewData = new List<Dictionary<string, object>>();
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        var rowData = new Dictionary<string, object>();
+
+                        foreach (DataColumn column in dt.Columns)
+                        {
+                            rowData[column.ColumnName] = row[column] != DBNull.Value ? row[column].ToString() : null;
+                        }
+
+                        gridViewData.Add(rowData);
+                    }
+
+                    // Serialize to JSON
+                    //return JsonConvert.SerializeObject(gridViewData, Formatting.Indented);
+                    return JsonConvert.SerializeObject(gridViewData);
+                }
+            }
+
+            // Return an empty JSON array if no data is found
+            return "[]";
+        }
+
+
     }
 }

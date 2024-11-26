@@ -2273,7 +2273,7 @@
                                                                     <asp:Label ID="LabelDrumCovered" runat="server" AssociatedControlID="RBL_DrumCovered" Text="Sponge Drum Covered :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_DrumCovered" runat="server" ValidationGroup="SpongeSubmit" ErrorMessage="*" ForeColor="Red" ControlToValidate="RBL_DrumCovered" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_DrumCovered" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleDrumCoveredRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_DrumCovered" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleDrumCoveredRemarksDiv(this);">
                                                                             <asp:ListItem Text="Yes" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="No" Value="0"></asp:ListItem>
                                                                             <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
@@ -2359,10 +2359,12 @@
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="Lbl_SpongeBtnSubmit" runat="server" AssociatedControlID="SpongeBtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:Label ID="Lbl_SpongeBtnSubmit" runat="server" AssociatedControlID="SpongeBtnSubmit" Text="Click to Proceed" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="SpongeBtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="SpongeSubmit" CausesValidation="false" OnClick="SpongeBtnSubmit_Click" />
+                                                                        <asp:Button ID="SpongeBtnSubmit" runat="server" Text="Save" CssClass="btn btn-success btn-sm" Enabled="false" ValidationGroup="SpongeSubmit" CausesValidation="false" OnClick="SpongeBtnSubmit_Click" />
+                                                                        <asp:Button ID="SpongeBtnNotApplicable" runat="server" Text="N/A or SKIP" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="SpongeBtnNotApplicable_Click"/>
                                                                         <asp:Button ID="Spongebtn_Reset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="Spongebtn_Reset_Click" />
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2423,7 +2425,7 @@
                                                                     <asp:Label ID="LabelMetalDectector" runat="server" AssociatedControlID="RBL_MetalDectector" Text="Metal Detector Condition :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_MetalDectector" runat="server" ValidationGroup="DoughSubmit" ErrorMessage="*" ForeColor="Red" ControlToValidate="RBL_MetalDectector" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_MetalDectector" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleMetalDetectorRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_MetalDectector" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleMetalDetectorRemarksDiv(this);">
                                                                             <asp:ListItem Text="Yes" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="No" Value="0"></asp:ListItem>
                                                                             <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
@@ -2447,7 +2449,7 @@
                                                                     <asp:Label ID="LabelProcessSequence" runat="server" AssociatedControlID="RBL_ProcessSequence" Text="Process Sequence :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_ProcessSequence" runat="server" ValidationGroup="DoughSubmit" ErrorMessage="*" ForeColor="Red" ControlToValidate="RBL_MetalDectector" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_ProcessSequence" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleProcessSequenceRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_ProcessSequence" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleProcessSequenceRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
                                                                             <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
@@ -2555,7 +2557,7 @@
                                                                     <asp:Label ID="LabelDoughCondition" runat="server" AssociatedControlID="RBL_DoughCondition" Text="Condition Of Dough :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_DoughCondition" runat="server" ValidationGroup="DoughSubmit" ErrorMessage="*" ForeColor="Red" ControlToValidate="RBL_DoughCondition" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_DoughCondition" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleDoughConditionRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_DoughCondition" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleDoughConditionRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
                                                                             <asp:ListItem Text="N/A" Value="5"></asp:ListItem>
@@ -2653,7 +2655,7 @@
                                                                     <asp:Label ID="Label10" runat="server" AssociatedControlID="RBL_BalanceCondition" Text="Weighing Balance Condition :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_BalanceCondition" runat="server" ValidationGroup="VerifiedSubmit" ErrorMessage="*" ForeColor="Red" ControlToValidate="RBL_BalanceCondition" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:RadioButtonList ID="RBL_BalanceCondition" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleBalanceConditionRemarksDiv(this);">
+                                                                        <asp:RadioButtonList ID="RBL_BalanceCondition" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleBalanceConditionRemarksDiv(this);">
                                                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                                             <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
                                                                             <asp:ListItem Text="N/A" Value="5"></asp:ListItem>

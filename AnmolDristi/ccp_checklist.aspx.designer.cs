@@ -76,31 +76,13 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.DropDownList DDL_Plant;
         
         /// <summary>
-        /// Label2 control.
+        /// DDL_ProductCategory_DIV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-        
-        /// <summary>
-        /// RFV_DDL_PlantLine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_PlantLine;
-        
-        /// <summary>
-        /// DDL_PlantLine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDL_PlantLine;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DDL_ProductCategory_DIV;
         
         /// <summary>
         /// Label3 control.
@@ -128,6 +110,15 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDL_ProductCategory;
+        
+        /// <summary>
+        /// DDL_ProductBrand_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DDL_ProductBrand_DIV;
         
         /// <summary>
         /// Label4 control.
@@ -328,6 +319,42 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Label lbl_sivecheckmsg;
         
         /// <summary>
+        /// DDL_PlantLine_DIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DDL_PlantLine_DIV;
+        
+        /// <summary>
+        /// lbl_DDL_PlantLine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DDL_PlantLine;
+        
+        /// <summary>
+        /// RFV_DDL_PlantLine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_PlantLine;
+        
+        /// <summary>
+        /// DDL_PlantLine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDL_PlantLine;
+        
+        /// <summary>
         /// Label_FF_Status control.
         /// </summary>
         /// <remarks>
@@ -490,6 +517,51 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.TextBox TB_SS_Remarks;
         
         /// <summary>
+        /// Div1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
+        
+        /// <summary>
+        /// btn_AddList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_AddList;
+        
+        /// <summary>
+        /// btn_resetgrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_resetgrid;
+        
+        /// <summary>
+        /// lbl_addmoremessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_addmoremessage;
+        
+        /// <summary>
+        /// Magnetgrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView Magnetgrid;
+        
+        /// <summary>
         /// Label8 control.
         /// </summary>
         /// <remarks>
@@ -515,6 +587,15 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_MDRemarks;
+        
+        /// <summary>
+        /// AddMoreDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AddMoreDiv;
         
         /// <summary>
         /// Label12 control.

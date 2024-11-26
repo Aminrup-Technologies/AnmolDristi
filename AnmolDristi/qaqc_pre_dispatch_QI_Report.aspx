@@ -330,7 +330,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="lblInspectionLot" runat="server" AssociatedControlID="TXT_InspectionLot" Text="Inspection Lot :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_InspectionLot" runat="server" ErrorMessage="Required" ValidationGroup="Submit" InitialValue="" ControlToValidate="TXT_InspectionLot" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_InspectionLot" runat="server" ErrorMessage="Required" ValidationGroup="NotSubmit" InitialValue="" ControlToValidate="TXT_InspectionLot" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_InspectionLot" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_InspectionLot" ForeColor="Red" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_InspectionLot" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Inspection Lot"></asp:TextBox>
@@ -341,7 +341,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="lblMaterialCode" runat="server" AssociatedControlID="TXT_MaterialCode" Text="Material Code :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_MaterialCode" runat="server" ErrorMessage="Required" ValidationGroup="Submit" InitialValue="" ControlToValidate="TXT_MaterialCode" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_MaterialCode" runat="server" ErrorMessage="Required" ValidationGroup="NotSubmit" InitialValue="" ControlToValidate="TXT_MaterialCode" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_MaterialCode" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_MaterialCode" ForeColor="Red" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_MaterialCode" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Inspection Lot"></asp:TextBox>
@@ -354,7 +354,7 @@
                                     <asp:Label ID="lblCBB_Produced" runat="server" AssociatedControlID="TXT_CBB_Produced" Text="No of CBB Produced :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_CBB_Produced" runat="server" ErrorMessage="Required" ValidationGroup="Submit" ControlToValidate="TXT_CBB_Produced" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REF_CBB_Produced" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_CBB_Produced" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_CBB_Produced" runat="server" ControlToValidate="TXT_CBB_Produced" ErrorMessage="[5 - 3000]" ForeColor="Red" MinimumValue="5" MaximumValue="3000" Type="Integer" Display="Static"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_CBB_Produced" runat="server" ControlToValidate="TXT_CBB_Produced" ErrorMessage="[5 - 10000]" ForeColor="Red" MinimumValue="5" MaximumValue="10000" Type="Integer" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_CBB_Produced" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Number of CBB"></asp:TextBox>
                                     </div>
@@ -366,7 +366,7 @@
                                     <asp:Label ID="lblCBB_Checked" runat="server" AssociatedControlID="TXT_CBB_Checked" Text="No of CBB Checked :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_CBB_Checked" runat="server" ErrorMessage="Required" ValidationGroup="Submit" ControlToValidate="TXT_CBB_Checked" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REF_CBB_Checked" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_CBB_Checked" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_CBB_Checked" runat="server" ControlToValidate="TXT_CBB_Checked" ErrorMessage="[5 - 3000]" ForeColor="Red" MinimumValue="5" MaximumValue="3000" Type="Integer" Display="Static"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_CBB_Checked" runat="server" ControlToValidate="TXT_CBB_Checked" ErrorMessage="[5 - 10000]" ForeColor="Red" MinimumValue="5" MaximumValue="10000" Type="Integer" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_CBB_Checked" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Number of CBB Checked"></asp:TextBox>
                                     </div>
@@ -401,7 +401,7 @@
                                     <asp:Label ID="lblPackets_CBB" runat="server" AssociatedControlID="TXT_Packets_CBB" Text="No of Packets in CBB :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_Packets_CBB" runat="server" ErrorMessage="Required" ValidationGroup="Submit" ControlToValidate="TXT_Packets_CBB" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REF_Packets_CBB" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_Packets_CBB" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_Packets_CBB" runat="server" ControlToValidate="TXT_Packets_CBB" ErrorMessage="[5 - 3000]" ForeColor="Red" MinimumValue="5" MaximumValue="3000" Type="Integer" Display="Static"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_Packets_CBB" runat="server" ControlToValidate="TXT_Packets_CBB" ErrorMessage="[5 - 10000]" ForeColor="Red" MinimumValue="5" MaximumValue="10000" Type="Integer" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_Packets_CBB" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Packets in CBB"></asp:TextBox>
                                     </div>
@@ -437,7 +437,7 @@
                                     <asp:Label ID="lblPkts_Checked_Per_CBB" runat="server" AssociatedControlID="TXT_Pkts_Checked_Per_CBB" Text="PKTS Checked/ CBB Box:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_Pkts_Checked_Per_CBB" runat="server" ErrorMessage="Required" ValidationGroup="Submit" ControlToValidate="TXT_Pkts_Checked_Per_CBB" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REF_Pkts_Checked_Per_CBB" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_Pkts_Checked_Per_CBB" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_Pkts_Checked_Per_CBB" runat="server" ControlToValidate="TXT_Pkts_Checked_Per_CBB" ErrorMessage="[5 - 3000]" ForeColor="Red" MinimumValue="5" MaximumValue="3000" Type="Integer" Display="Static"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_Pkts_Checked_Per_CBB" runat="server" ControlToValidate="TXT_Pkts_Checked_Per_CBB" ErrorMessage="[5 - 10000]" ForeColor="Red" MinimumValue="5" MaximumValue="10000" Type="Integer" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_Pkts_Checked_Per_CBB" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="PKTS Checked / CBB Box"></asp:TextBox>
                                     </div>
@@ -565,8 +565,8 @@
                                     <asp:RequiredFieldValidator ID="RFV_RBL_CutsPackets" runat="server" ValidationGroup="Submit" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_CutsPackets" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:RadioButtonList ID="RBL_CutsPackets" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleCutsPacketsRemarksDiv(this);">
-                                            <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
-                                            <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                            <asp:ListItem Text="No" Value="1"></asp:ListItem>
+                                            <asp:ListItem Text="Yes" Value="0"></asp:ListItem>
                                         </asp:RadioButtonList>
                                     </div>
                                 </div>
@@ -589,7 +589,7 @@
                                     <div class="input-group-sm">
                                         <asp:RadioButtonList ID="RBL_BackingStatus" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleBackingStatusRemarksDiv(this);">
                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
-                                            <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                            <asp:ListItem Text="Under/Over Baked" Value="0"></asp:ListItem>
                                         </asp:RadioButtonList>
                                     </div>
                                 </div>
@@ -597,7 +597,7 @@
 
                             <div class="col-md-3" id="BackingStatusRemarksDiv" style="display: none;">
                                 <div class="mb-3">
-                                    <asp:Label ID="LabelBackingStatusRemarks" runat="server" AssociatedControlID="TXB_BackingStatus_Remarks" Text="Baking of Biscuits (Not Ok)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="LabelBackingStatusRemarks" runat="server" AssociatedControlID="TXB_BackingStatus_Remarks" Text="Baking of Biscuits (Under/Over Baked)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_BackingStatusRemarks" runat="server" ErrorMessage="Required" ForeColor="Red" ControlToValidate="TXB_BackingStatus_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXB_BackingStatus_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
@@ -634,8 +634,8 @@
                                     <asp:RequiredFieldValidator ID="RFV_RBL_Cupping" runat="server" ValidationGroup="Submit" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_Cupping" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:RadioButtonList ID="RBL_Cupping" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleCuppingRemarksDiv(this);">
-                                            <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
-                                            <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                            <asp:ListItem Text="No" Value="1"></asp:ListItem>
+                                            <asp:ListItem Text="Yes" Value="0"></asp:ListItem>
                                         </asp:RadioButtonList>
                                     </div>
                                 </div>
@@ -676,7 +676,7 @@
 
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <asp:Label ID="LabelSoggyStatus" runat="server" AssociatedControlID="RBL_SoggyStatus" Text="Biscuit Soggy or Not :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="LabelSoggyStatus" runat="server" AssociatedControlID="RBL_SoggyStatus" Text="Biscuit Soggy:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_RBL_SoggyStatus" runat="server" ValidationGroup="Submit" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_SoggyStatus" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:RadioButtonList ID="RBL_SoggyStatus" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleSoggyStatusRemarksDiv(this);">
@@ -703,8 +703,8 @@
                                     <asp:RequiredFieldValidator ID="RFV_RBL_ForeignBody" runat="server" ValidationGroup="Submit" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_ForeignBody" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:RadioButtonList ID="RBL_ForeignBody" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleForeignBodyRemarksDiv(this);">
-                                            <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
-                                            <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                            <asp:ListItem Text="No" Value="1"></asp:ListItem>
+                                            <asp:ListItem Text="Yes" Value="0"></asp:ListItem>
                                         </asp:RadioButtonList>
                                     </div>
                                 </div>
@@ -726,8 +726,8 @@
                                     <asp:RequiredFieldValidator ID="RFV_RBL_OffOdour" runat="server" ValidationGroup="Submit" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_OffOdour" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:RadioButtonList ID="RBL_OffOdour" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleOffOdourRemarksDiv(this);">
-                                            <asp:ListItem Text="Yes" Value="1"></asp:ListItem>
-                                            <asp:ListItem Text="No" Value="0"></asp:ListItem>
+                                            <asp:ListItem Text="No" Value="1"></asp:ListItem>
+                                            <asp:ListItem Text="Yes" Value="0"></asp:ListItem>
                                         </asp:RadioButtonList>
                                     </div>
                                 </div>
@@ -747,7 +747,7 @@
                                 <div class="mb-3">
                                     <asp:Label ID="LabelRemarks" runat="server" AssociatedControlID="TXB_Remarks" Text="Additional Remarks :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Remarks" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Rows="1" Width="100%"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Remarks" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Text="No Remarks" Rows="1" Width="100%"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>

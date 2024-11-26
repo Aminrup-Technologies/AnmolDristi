@@ -125,6 +125,9 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                     string errorMessage = ex.Message;
                     string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                     ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, true);
@@ -180,6 +183,9 @@ namespace AnmolDristi
                 catch (Exception ex)
                 {
                     transaction.Rollback();
+
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
 
                     string errorMessage = ex.Message;
                     string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
@@ -240,6 +246,9 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                     string errorMessage = ex.Message;
                     string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                     // Handle exceptions (log or display error message)
@@ -294,6 +303,9 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                     string errorMessage = ex.Message;
                     string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                     // Handle exceptions (log or display error message)
@@ -326,6 +338,9 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                     string errorMessage = ex.Message;
                     string errorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
                     // Handle exceptions (log or display error message)

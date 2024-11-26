@@ -173,9 +173,9 @@ namespace AnmolDristi.DAL
         //}
 
 
-        public void InsertSpongeData(string PcrNo, decimal roomTemp, string commentForRoomTemp, int drumCovered, string commentForDrumCovered,
-                                        int quality, string commentForQuality, TimeSpan standingTime, string commentForStandingTime, decimal temp,
-                                        string commentForTemp)
+        public void InsertSpongeData(string PcrNo, decimal? roomTemp, string commentForRoomTemp, int? drumCovered, string commentForDrumCovered,
+                                        int? quality, string commentForQuality, TimeSpan? standingTime, string commentForStandingTime, decimal? temp,
+                                        string commentForTemp, string YesNo)
 
         {
 
@@ -197,7 +197,7 @@ namespace AnmolDristi.DAL
                     command.Parameters.AddWithValue("@StandingTimeCmnt", commentForStandingTime);
                     command.Parameters.AddWithValue("@Temp", temp);
                     command.Parameters.AddWithValue("@TempCmnt", commentForTemp);
-
+                    command.Parameters.AddWithValue("@NotApplicable", YesNo);
 
                     // Open the connection and execute the command
                     connection.Open();

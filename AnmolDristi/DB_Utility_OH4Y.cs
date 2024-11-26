@@ -162,6 +162,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 WriteToFile("87 :Mailer Failed to execute" + ex.Message + "");
             }
         }
@@ -212,6 +215,9 @@ namespace AnmolDristi
             }
             catch (Exception exp)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {exp.Message}</p><p>Stack Trace: {exp.StackTrace}</p>", recipients);
+
                 throw new Exception(exp.Message);
             }
             finally
@@ -1755,7 +1761,7 @@ namespace AnmolDristi
 
             // Retrieve data from MST_FormsMaster for the given FormID
             string selectQuery = "SELECT FormID, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency " +
-                                 "FROM [AnmolDristi].[dbo].[MST_FormsMaster] WHERE FormID = @FormID";
+                                 "FROM [MST_FormsMaster] WHERE FormID = @FormID";
 
             using (SqlCommand selectCmd = new SqlCommand(selectQuery, Conn))
             {
@@ -1777,7 +1783,7 @@ namespace AnmolDristi
                     reader.Close();
 
                     // Insert data into MST_FormsApprovalMatrix with default values for missing fields
-                    string insertQuery = "INSERT INTO [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] " +
+                    string insertQuery = "INSERT INTO [MST_FormsApprovalMatrix] " +
                                          "(FormID, plant_id, line_id, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency, " +
                                          "Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode) " +
                                          "VALUES (@FormID, @PlantId, @LineId, @FormName, @DocumentNumber, @DocumentName, @IssueDate, @IssueNo, @RevisionDate, @RevNo, @Frequency, " +
@@ -1818,7 +1824,7 @@ namespace AnmolDristi
                         // Retrieve data from MST_FormsMaster for the given FormID
                         string selectQuery = @"
                     SELECT FormID, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency 
-                    FROM [AnmolDristi].[dbo].[MST_FormsMaster] 
+                    FROM [MST_FormsMaster] 
                     WHERE FormID = @FormID";
 
                         using (SqlCommand selectCmd = new SqlCommand(selectQuery, conn, transaction))
@@ -1842,7 +1848,7 @@ namespace AnmolDristi
 
                                     // Insert data into MST_FormsApprovalMatrix
                                     string insertQuery = @"
-                                INSERT INTO [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] 
+                                INSERT INTO [MST_FormsApprovalMatrix] 
                                 (FormID, plant_id, line_id, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency, 
                                  Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode) 
                                 VALUES 
@@ -1897,7 +1903,7 @@ namespace AnmolDristi
                         // Check if default approvers already exist
                         string checkQuery = @"
                     SELECT COUNT(*) 
-                    FROM [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] 
+                    FROM [MST_FormsApprovalMatrix] 
                     WHERE FormID = @FormID AND plant_id = @PlantId AND line_id = @LineId";
 
                         using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn, transaction))
@@ -1917,7 +1923,7 @@ namespace AnmolDristi
                         // Retrieve data from MST_FormsMaster for the given FormID
                         string selectQuery = @"
                     SELECT FormID, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency 
-                    FROM [AnmolDristi].[dbo].[MST_FormsMaster] 
+                    FROM [MST_FormsMaster] 
                     WHERE FormID = @FormID";
 
                         using (SqlCommand selectCmd = new SqlCommand(selectQuery, conn, transaction))
@@ -1942,7 +1948,7 @@ namespace AnmolDristi
 
                                     // Insert data into MST_FormsApprovalMatrix
                                     string insertQuery = @"
-                                INSERT INTO [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] 
+                                INSERT INTO [MST_FormsApprovalMatrix] 
                                 (FormID, plant_id, line_id, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency, 
                                  Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode) 
                                 VALUES 
@@ -1977,6 +1983,9 @@ namespace AnmolDristi
                     }
                     catch (Exception ex)
                     {
+                        var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                        EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                         transaction.Rollback();
                         throw new Exception("Error while inserting default approvers: " + ex.Message, ex);
                     }
@@ -1998,9 +2007,9 @@ namespace AnmolDristi
                     {
                         // Check if default approvers already exist
                         string checkQuery = @"
-                SELECT COUNT(*) 
-                FROM [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] 
-                WHERE FormID = @FormID AND plant_id = @PlantId AND line_id = @LineId";
+                            SELECT COUNT(*) 
+                            FROM [MST_FormsApprovalMatrix] 
+                            WHERE FormID = @FormID AND plant_id = @PlantId AND line_id = @LineId";
 
                         using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn, transaction))
                         {
@@ -2018,9 +2027,9 @@ namespace AnmolDristi
 
                         // Retrieve data from MST_FormsMaster for the given FormID
                         string selectQuery = @"
-                SELECT FormID, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency 
-                FROM [AnmolDristi].[dbo].[MST_FormsMaster] 
-                WHERE FormID = @FormID";
+                                SELECT FormID, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency 
+                                FROM [MST_FormsMaster] 
+                                WHERE FormID = @FormID";
 
                         using (SqlCommand selectCmd = new SqlCommand(selectQuery, conn, transaction))
                         {
@@ -2044,18 +2053,19 @@ namespace AnmolDristi
 
                                     // Insert data into MST_FormsApprovalMatrix
                                     string insertQuery = @"
-                            INSERT INTO [AnmolDristi].[dbo].[MST_FormsApprovalMatrix] 
-                            (FormID, plant_id, line_id, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency, 
-                             Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode) 
-                            VALUES 
-                            (@FormID, @PlantId, @LineId, @FormName, @DocumentNumber, @DocumentName, @IssueDate, @IssueNo, @RevisionDate, @RevNo, @Frequency, 
-                             @Approver1Code, @Approver2Code, @DottedLineCode)";
+                                    INSERT INTO [MST_FormsApprovalMatrix] 
+                                    (FormID, plant_id, line_id, FormName, DocumentNumber, DocumentName, IssueDate, IssueNo, RevisionDate, RevNo, Frequency, 
+                                     Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode) 
+                                    VALUES 
+                                    (@FormID, @PlantId, @LineId, @FormName, @DocumentNumber, @DocumentName, @IssueDate, @IssueNo, @RevisionDate, @RevNo, @Frequency, 
+                                     @Approver1Code, @Approver2Code, @DottedLineCode)";
 
                                     using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn, transaction))
                                     {
                                         insertCmd.Parameters.AddWithValue("@FormID", formId);
                                         insertCmd.Parameters.AddWithValue("@PlantId", plantId);
-                                        insertCmd.Parameters.AddWithValue("@LineId", lineId);
+                                        insertCmd.Parameters.AddWithValue("@LineId", string.IsNullOrEmpty(lineId) ? (object)DBNull.Value : lineId);
+                                        //insertCmd.Parameters.AddWithValue("@LineId", lineId);
                                         insertCmd.Parameters.AddWithValue("@FormName", formName);
                                         insertCmd.Parameters.AddWithValue("@DocumentNumber", documentNumber);
                                         insertCmd.Parameters.AddWithValue("@DocumentName", documentName);
@@ -2067,7 +2077,6 @@ namespace AnmolDristi
                                         insertCmd.Parameters.AddWithValue("@Approver1Code", "ADMIN");
                                         insertCmd.Parameters.AddWithValue("@Approver2Code", "ADMIN");
                                         insertCmd.Parameters.AddWithValue("@DottedLineCode", "ADMIN");
-
                                         insertCmd.ExecuteNonQuery();
                                     }
 
@@ -2087,6 +2096,9 @@ namespace AnmolDristi
                     }
                     catch (Exception ex)
                     {
+                        var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                        EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                         transaction.Rollback();
                         // Log the error or re-throw
                         throw new Exception("Error while inserting default approvers: " + ex.Message, ex);

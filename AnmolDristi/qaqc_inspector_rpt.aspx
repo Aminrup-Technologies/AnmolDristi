@@ -619,7 +619,7 @@
                 reader.readAsDataURL(file);
             }
 
-        function validateImages() {
+        <%--function validateImages() {
             var image1 = document.getElementById('<%= uploadedImage1.ClientID %>'); // First image
             var image2 = document.getElementById('<%= uploadedImage2.ClientID %>'); // Second image
 
@@ -641,7 +641,26 @@
             }
 
             return true; // Allow form submission if all validations pass
+        }--%>
+
+        function validateImages() {
+            var image1 = document.getElementById('<%= uploadedImage1.ClientID %>'); // First image
+            var image2 = document.getElementById('<%= uploadedImage2.ClientID %>'); // Second image
+
+            // Check if images are displayed
+            if (image1.style.display === 'none' && image2.style.display === 'none') {
+                new PNotify({
+                    title: 'Missing Input',
+                    text: 'Please upload at least one image before submitting.',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission if all validations pass
         }
+
 
     </script>
 
@@ -1185,7 +1204,7 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="Click to SUBMIT" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group input-group-sm">
-                                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClientClick="return validateImages();" OnClick="btnSubmit_Click" />
+                                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClientClick="return Page_ClientValidate('Submit') && validateImages();" OnClick="btnSubmit_Click" />
                                         <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btnReset_Click" />
                                     </div>
                                 </div>

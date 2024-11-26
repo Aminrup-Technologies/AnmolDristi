@@ -220,24 +220,6 @@
             }
         }
 
-
-        function calculateRetention_old(element) {
-            var row = element.closest('tr'); // Get the closest table row
-            var initialSampleInput = row.querySelector('.TB_InitialSample');
-            var finalRetentionInput = row.querySelector('.TB_FinalRetention');
-            var retentionLabel = row.querySelector('.lbl_PercentageRetention');
-
-            if (initialSampleInput && finalRetentionInput && retentionLabel) {
-                var initialSample = parseFloat(initialSampleInput.value) || 0;
-                var finalRetention = parseFloat(finalRetentionInput.value) || 0;
-
-                var percentageRetention = (initialSample > 0) ? (finalRetention / initialSample) * 100 : 0;
-                retentionLabel.textContent = percentageRetention.toFixed(2) + " %";
-            } else {
-                console.error('One or more elements not found.');
-            }
-        }
-
         function calculateRetention(element) {
             // Get the closest table row
             var row = element.closest('tr');
@@ -271,151 +253,90 @@
             }
         }
 
-        function validateSieveGridViewOld() {
-            var isValid = true;
-            var filledRowsCount = 0; // Counter to track filled rows
-            var minimumRequiredRows = 2; // Set the minimum number of required filled rows
-
-            var gridView = document.getElementById('<%= GridView_Shieve.ClientID %>');
-            if (!gridView) {
-                console.error('GridView not found.');
-                return false;
-            }
-
-            // Loop through all rows starting from index 1 to skip the header row
-            for (var i = 1; i < gridView.rows.length; i++) {
-                var row = gridView.rows[i];
-
-                var txtInitialSample = row.querySelector("input[id*='TB_InitialSample']");
-                var txtFinalRetention = row.querySelector("input[id*='TB_FinalRetention']");
-
-                var rowIsFilled = true; // Flag to check if this row is filled
-
-                // Check if TextBoxes are filled
-                if (txtInitialSample && txtInitialSample.value.trim() === "") {
-                    isValid = false;
-                    rowIsFilled = false;
-                    txtInitialSample.style.borderColor = "red";
-                } else {
-                    txtInitialSample.style.borderColor = "";
-                }
-
-                if (txtFinalRetention && txtFinalRetention.value.trim() === "") {
-                    isValid = false;
-                    rowIsFilled = false;
-                    txtFinalRetention.style.borderColor = "red";
-                } else {
-                    txtFinalRetention.style.borderColor = "";
-                }
-
-                // If both inputs in the row are filled, increase the filledRowsCount
-                if (rowIsFilled) {
-                    filledRowsCount++;
-                }
-            }
-
-            // Check if the minimum number of filled rows is met
-            if (filledRowsCount < minimumRequiredRows) {
-                isValid = false;
-                alert("Please fill at least " + minimumRequiredRows + " rows.");
-            }
-
-            // If not valid, prevent form submission
-            return isValid;
-        }
-
         function validateSieveGridView() {
-            var isValid = true;
-            var filledRowsCount = 0; // Counter to track rows with values > 1
-            var rowsToValidate = 2; // Set the number of rows to validate
-
-            var gridView = document.getElementById('<%= GridView_Shieve.ClientID %>');
-            if (!gridView) {
+            var grid = document.getElementById('<%= GridView_Shieve.ClientID %>');
+            if (!grid) {
                 console.error('GridView not found.');
                 return false;
             }
 
-            // Loop through all rows starting from index 1 to skip the header row
-            for (var i = 1; i < gridView.rows.length; i++) {
-                if (filledRowsCount >= rowsToValidate) {
-                    break; // Stop validation after 3 rows
-                }
+            var rows = grid.getElementsByTagName("tr");
+            var filledRowsCount = 0; // Counter to track valid rows
+            var rowsToValidate = 2; // Number of rows to validate
 
-                var row = gridView.rows[i];
+            // Loop through rows, starting from 1 to skip the header row
+            for (var i = 1; i < rows.length; i++) {
+                var row = rows[i];
 
-                var txtInitialSample = row.querySelector("input[id*='TB_InitialSample']");
-                var txtFinalRetention = row.querySelector("input[id*='TB_FinalRetention']");
-                var txtPercentageRetention = row.querySelector("input[id*='lbl_PercentageRetention']");
+                // Get TextBoxes for "Initial Sample", "Final Retention", and "Percentage Retention"
+                var txtInitialSample = row.querySelector("[id*='TB_InitialSample']");
+                var txtFinalRetention = row.querySelector("[id*='TB_FinalRetention']");
+                var txtPercentageRetention = row.querySelector("[id*='lbl_PercentageRetention']");
 
-                var rowIsValid = true; // Flag to check if this row meets the criteria
+                // Check for valid values
+                var isRowValid = true;
 
-                // Check if Initial Sample TextBox has a valid numeric value (positive or negative, non-zero)
                 if (txtInitialSample) {
-                    var initialSampleValue = parseFloat(txtInitialSample.value);
+                    var initialSampleValue = parseFloat(txtInitialSample.value.trim());
                     if (isNaN(initialSampleValue) || initialSampleValue === 0) {
-                        isValid = false;
-                        rowIsValid = false;
-                        txtInitialSample.style.borderColor = "red"; // Mark invalid input
+                        isRowValid = false;
+                        txtInitialSample.style.borderColor = "red";
                     } else {
-                        txtInitialSample.style.borderColor = ""; // Reset border color for valid input
+                        txtInitialSample.style.borderColor = ""; // Reset for valid input
                     }
                 }
 
-                // Check if Final Retention TextBox has a valid numeric value (positive or negative, non-zero)
                 if (txtFinalRetention) {
-                    var finalRetentionValue = parseFloat(txtFinalRetention.value);
+                    var finalRetentionValue = parseFloat(txtFinalRetention.value.trim());
                     if (isNaN(finalRetentionValue) || finalRetentionValue === 0) {
-                        isValid = false;
-                        rowIsValid = false;
-                        txtFinalRetention.style.borderColor = "red"; // Mark invalid input
+                        isRowValid = false;
+                        txtFinalRetention.style.borderColor = "red";
                     } else {
-                        txtFinalRetention.style.borderColor = ""; // Reset border color for valid input
+                        txtFinalRetention.style.borderColor = ""; // Reset for valid input
                     }
                 }
 
-                // Check if the percentage retention is calculated and non-empty
                 if (txtPercentageRetention) {
                     var percentageRetentionValue = txtPercentageRetention.value.trim();
                     if (percentageRetentionValue === "" || percentageRetentionValue === "Invalid input") {
-                        isValid = false;
-                        rowIsValid = false;
-                        txtPercentageRetention.style.borderColor = "red"; // Mark invalid input
+                        isRowValid = false;
+                        txtPercentageRetention.style.borderColor = "red";
                     } else {
-                        txtPercentageRetention.style.borderColor = ""; // Reset border color for valid input
+                        txtPercentageRetention.style.borderColor = ""; // Reset for valid input
                     }
                 }
 
-                // If all values in the row are valid, increase the filledRowsCount
-                if (rowIsValid && !isNaN(initialSampleValue) && initialSampleValue !== 0 &&
-                    !isNaN(finalRetentionValue) && finalRetentionValue !== 0 &&
-                    percentageRetentionValue !== "" && percentageRetentionValue !== "Invalid input") {
+                // If the row is valid, increment the filledRowsCount
+                if (isRowValid) {
                     filledRowsCount++;
+                }
+
+                // Stop validation if required number of rows are filled
+                if (filledRowsCount >= rowsToValidate) {
+                    break;
                 }
             }
 
-            // Check if the required number of rows with valid inputs are filled
+            // Ensure required number of valid rows
             if (filledRowsCount < rowsToValidate) {
-                isValid = false;
                 setTimeout(function () {
-                    // Display a PNotify notification
                     new PNotify({
                         title: 'Input Required',
-                        text: 'Please ensure at least ' + rowsToValidate + ' rows have valid non-zero numeric values and valid percentage retention',
+                        text: 'Please ensure at least ' + rowsToValidate + ' rows have valid non-zero numeric values and valid percentage retention.',
                         type: 'warning',
                         styling: 'bootstrap3',
-                        delay: 3000,        // Notification auto-dismiss delay in milliseconds (3 seconds)
+                        delay: 3000,
                         buttons: {
-                            closer: true,  // Show a close button in the notification
-                            sticker: false // Hide the sticker button
-                        }
+                            closer: true,
+                            sticker: false,
+                        },
                     });
-                }, 200); // Adjust delay as necessary
+                }, 200);
+                return false; // Prevent form submission
             }
 
-            // Return the validation result
-            return isValid;
+            return true; // Allow form submission
         }
-
 
     </script>
 
@@ -447,7 +368,7 @@
                                                 <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                                                     <li class="nav-item">
                                                         <a class="nav-link active text-info" id="basicData-tab" data-toggle="tab" href="#basicData" role="tab"
-                                                            aria-controls="basicData" aria-selected="true"><%--<i class="fa fa-id-badge mr-2"></i>--%>Plant & Line</a>
+                                                            aria-controls="basicData" aria-selected="true"><%--<i class="fa fa-id-badge mr-2"></i>--%>Plant</a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link text-info" id="Metal_Check-tab" data-toggle="tab" href="#Metal_Check" role="tab"
@@ -462,9 +383,10 @@
                                                     <li class="nav-item">
                                                         <a class="nav-link text-info" id="Metal_Dctector_Area-tab" data-toggle="tab" href="#Metal_Dctector_Area" role="tab"
                                                             aria-controls="Metal_Dctector_Area" aria-selected="false">
-                                                            <%-- <i class="fa fa-clock-o mr-2"></i>--%>Metal Dctector</a>
+                                                            <%-- <i class="fa fa-clock-o mr-2"></i>--%>Metal Detector</a>
                                                     </li>
                                                 </ul>
+
                                                 <div class="tab-content ml-1" id="myTabContent">
                                                     <%---Basic User Info Starts--%>
                                                     <div class="tab-pane fade show active" id="basicData" role="tabpanel" aria-labelledby="basicData-tab">
@@ -480,21 +402,12 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label2" runat="server" AssociatedControlID="DDL_PlantLine" Text="Select Line" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DDL_PlantLine" runat="server" ErrorMessage="Required" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_PlantLine" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_PlantLine_SelectedIndexChanged"></asp:DropDownList>
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-3" id="DDL_ProductCategory_DIV" runat="server" visible="false">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Label3" runat="server" AssociatedControlID="DDL_ProductCategory" Text="Product Category" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DDL_ProductCategory" runat="server" ErrorMessage="Required" ForeColor="Red" ValidationGroup="Submit" InitialValue="0" ControlToValidate="DDL_ProductCategory" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:RequiredFieldValidator ID="RFV_DDL_ProductCategory" runat="server" ForeColor="Red" InitialValue="0" ControlToValidate="DDL_ProductCategory" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
                                                                         <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductCategory_SelectedIndexChanged"></asp:DropDownList>
 
@@ -502,10 +415,10 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-3" id="DDL_ProductBrand_DIV" runat="server" visible="false">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="Required" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_ProductBrand" InitialValue="0" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ForeColor="Red" ControlToValidate="DDL_ProductBrand" InitialValue="0" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
                                                                         <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductBrand_SelectedIndexChanged"></asp:DropDownList>
                                                                     </div>
@@ -630,7 +543,6 @@
                                                     </div>
 
 
-
                                                     <!-- STANDARD SIEVE-->
                                                     <div class="tab-pane fade" id="Standard_Sieve" role="tabpanel" aria-labelledby="Standard_Sieve-tab">
                                                         <div class="x_content">
@@ -705,7 +617,7 @@
 
                                                                     <asp:TemplateField HeaderText="% OF RETENTION">
                                                                         <ItemTemplate>
-                                                                           
+
                                                                             <asp:Label ID="lbl_PercentageRetention" runat="server" CssClass="form-control form-control-sm rounded lbl_PercentageRetention" Text='<%# Eval("PercentageRetention") %>'></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -767,12 +679,23 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     <div class="tab-pane fade" id="Metal_Dctector_Area" role="tabpanel" aria-labelledby="Metal_Dctector_Area-tab">
                                                         <div class="x_content">
+                                                            <div class="col-md-3" id="DDL_PlantLine_DIV" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="lbl_DDL_PlantLine" runat="server" AssociatedControlID="DDL_PlantLine" Text="Select Line" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_DDL_PlantLine" runat="server" ForeColor="Red" ControlToValidate="DDL_PlantLine" ValidationGroup="AddList" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="false" OnSelectedIndexChanged="DDL_PlantLine_SelectedIndexChanged"></asp:DropDownList>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="Label_FF_Status" runat="server" AssociatedControlID="RBL_FF_Status" Text="FF:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_RBL_FF_Status" runat="server" ValidationGroup="Submit4" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_FF_Status" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:Label ID="Label_FF_Status" runat="server" AssociatedControlID="RBL_FF_Status" Text="FF Status:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_RBL_FF_Status" runat="server" ValidationGroup="AddList" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_FF_Status" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
                                                                         <asp:RadioButtonList ID="RBL_FF_Status" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleFFRemarks(this);">
                                                                             <asp:ListItem Text="Sensing" Value="1"></asp:ListItem>
@@ -794,8 +717,8 @@
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="Label_NFE_Status" runat="server" AssociatedControlID="RBL_NFE_Status" Text="NFE:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_NFE_Status" runat="server" ValidationGroup="Submit4" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_NFE_Status" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:Label ID="Label_NFE_Status" runat="server" AssociatedControlID="RBL_NFE_Status" Text="NFE Status:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_NFE_Status" runat="server" ValidationGroup="AddList" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_NFE_Status" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
                                                                         <asp:RadioButtonList ID="RBL_NFE_Status" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleNFERemarks(this);">
                                                                             <asp:ListItem Text="Sensing" Value="1"></asp:ListItem>
@@ -818,8 +741,8 @@
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="Label_SS_Status" runat="server" AssociatedControlID="RBL_SS_Status" Text="SS:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_SS_Status" runat="server" ValidationGroup="Submit4" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_SS_Status" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:Label ID="Label_SS_Status" runat="server" AssociatedControlID="RBL_SS_Status" Text="SS Status:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_SS_Status" runat="server" ValidationGroup="AddList" ErrorMessage="Required" ForeColor="Red" ControlToValidate="RBL_SS_Status" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
                                                                         <asp:RadioButtonList ID="RBL_SS_Status" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleSSRemarks(this);">
                                                                             <asp:ListItem Text="Sensing" Value="1"></asp:ListItem>
@@ -840,39 +763,69 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Remarks -->
-                                                            <div class="col-md-3">
+                                                            
+
+                                                            <div class="col-md-12" id="Div1" runat="server">
+                                                                <asp:Button ID="btn_AddList" runat="server" Text="Add To List" CausesValidation="true" ValidationGroup="AddList" CssClass="btn btn-sm btn-primary" OnClick="btn_addtolist_Click" />
+                                                                <asp:Button ID="btn_resetgrid" runat="server" Text="Reset Inputs" CssClass="btn btn-sm btn-warning" CausesValidation="false" OnClick="btn_resetgrid_Click" />
+                                                                <asp:Label ID="lbl_addmoremessage" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
+                                                            </div>
+
+                                                            <asp:GridView ID="Magnetgrid" runat="server" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" AutoGenerateColumns="false" ShowFooter="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found" OnRowDeleting="Magnetgrid_RowDeleting">
+                                                                <Columns>
+                                                                    <asp:BoundField DataField="PlantLine" HeaderText="Plant Line" />
+                                                                    <asp:BoundField DataField="FF_Status" HeaderText="FF Status" />
+                                                                    <asp:BoundField DataField="FF_Remarks" HeaderText="FF Remarks" Visible="false" />
+                                                                    <asp:BoundField DataField="NFE_Status" HeaderText="NFE Status" />
+                                                                    <asp:BoundField DataField="NFE_Remarks" HeaderText="NFE Remarks" Visible="false" />
+                                                                    <asp:BoundField DataField="SS_Status" HeaderText="SS Status" />
+                                                                    <asp:BoundField DataField="SS_Remarks" HeaderText="SS Remarks" Visible="false" />
+                                                                    <asp:TemplateField HeaderText="Action" HeaderStyle-Width="5%">
+                                                                        <ItemTemplate>
+                                                                            <asp:ImageButton ID="btndelete" runat="server" CommandName="Delete" Height="15px" ImageUrl="~/WebData/Internal/delete_icon.png" Width="15px" ToolTip="Delete" OnClientClick="return confirm('Do you want to DELETE...?')" ImageAlign="Middle" />
+                                                                        </ItemTemplate>
+                                                                        <ItemStyle CssClass="text text-center" />
+                                                                    </asp:TemplateField>
+                                                                </Columns>
+                                                            </asp:GridView>
+
+                                                        </div>
+
+                                                        <div class="col-md-12">&nbsp;</div>
+
+                                                        <!-- Remarks -->
+                                                            <div class="col-md-12">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="Label8" runat="server" Text="Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required" ForeColor="Red" ValidationGroup="Submit4" ControlToValidate="TB_MDRemarks" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                    <asp:Label ID="Label8" runat="server" Text="Overall Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required" ForeColor="Red" ValidationGroup="FinalSubmit" ControlToValidate="TB_MDRemarks" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_MDRemarks" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Rows="3" Text=""></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_MDRemarks" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Rows="2" Text="" PlaceHolder="Additional Comments / Remarks"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Basic Data Save and ReSet Button-->
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label12" runat="server" AssociatedControlID="btnBDSave" Text="Click to Save" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="btn_finalsbmt" runat="server" Text="Final Submit" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit4" CausesValidation="true" OnClick="btn_finalsbmt_Click" />
-                                                                        <asp:Button ID="btn_rst_metaldet" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" />
-                                                                        <asp:Button ID="Button5" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
-                                                                    </div>
-                                                                    <div class="mt-3">
-                                                                        <!-- Add this label to display messages -->
-                                                                        <asp:Label ID="lbl_mtldetmsg" runat="server" Text="" ForeColor="Red"></asp:Label>
-                                                                    </div>
+                                                        <!-- Basic Data Save and ReSet Button-->
+                                                        <div class="col-md-12 pull-left" id="AddMoreDiv" runat="server">
+                                                            <div class="mb-3">
+                                                                <asp:Label ID="Label12" runat="server" AssociatedControlID="btnBDSave" Text="Final DATA Submit" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                <div class="input-group input-group-sm">
+                                                                    <asp:Button ID="btn_finalsbmt" runat="server" Text="Final Submit" CssClass="btn btn-success btn-sm" CausesValidation="true" ValidationGroup="FinalSubmit" OnClick="btn_finalsbmt_Click" />
+                                                                    <asp:Button ID="btn_rst_metaldet" runat="server" Text="Cancel" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btn_rst_metaldet_Click" />
+                                                                    <asp:Button ID="Button5" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                                                </div>
+                                                                <div class="mt-3">
+                                                                    <!-- Add this label to display messages -->
+                                                                    <asp:Label ID="lbl_mtldetmsg" runat="server" Text="" ForeColor="Red"></asp:Label>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>

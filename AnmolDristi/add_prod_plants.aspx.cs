@@ -126,6 +126,9 @@ namespace AnmolDristi
                         }
                         catch (Exception ex)
                         {
+                            var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                            EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                             transaction.Rollback();
                             lbl_msg.Text = "Error: " + ex.Message;
                         }
@@ -140,6 +143,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 // Handle any exceptions here
                 if (transaction != null)
                 {
@@ -224,6 +230,9 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                     transaction.Rollback();
                     // Log or handle the error
                     throw new Exception("Error updating the record: " + ex.Message);
@@ -261,6 +270,9 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                     transaction.Rollback();
                     // Log or handle the error
                     throw new Exception("Error deleting the record: " + ex.Message);

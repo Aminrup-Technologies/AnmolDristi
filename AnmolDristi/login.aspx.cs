@@ -140,6 +140,13 @@ namespace AnmolDristi
                         //    }
                         //}
                         //dbcl.WriteToFile("User " + User_FullName + "[" + Workman + "]" + " Logined Successfully");
+
+                        // Get the user's IP address
+                        //string ipAddress = HttpContext.Current.Request.UserHostAddress;
+
+                        // Notify admin or security team
+                        //LoginNotifier.NotifyLogin(User_FullName, ipAddress);
+
                         Response.Redirect("home.aspx", false);
                     }
                     else
