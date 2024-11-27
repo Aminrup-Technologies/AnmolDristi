@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Net;
 using System.Net.Mail;
 using System.Configuration;
+using System.IO;
 
 namespace AnmolDristi
 {
@@ -14,6 +14,18 @@ namespace AnmolDristi
         {
             try
             {
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
+
+                //var smtpSettings = new
+                //{
+                //    Host = ConfigurationManager.AppSettings["SmtpSettings:Host"] ?? "smtp-mail.outlook.com",
+                //    Port = int.Parse(ConfigurationManager.AppSettings["SmtpSettings:Port"] ?? "587"),
+                //    EnableSsl = bool.Parse(ConfigurationManager.AppSettings["SmtpSettings:EnableSsl"] ?? "true"),
+                //    Username = ConfigurationManager.AppSettings["SmtpSettings:Username"] ?? "abc@xyz.com",
+                //    Password = ConfigurationManager.AppSettings["SmtpSettings:Password"] ?? "Welc0meB@ckSymp2024",
+                //    FromEmail = ConfigurationManager.AppSettings["SmtpSettings:FromEmail"] ?? "abc@xyz.com"
+                //};
+
                 var smtpSettings = new
                 {
                     //Host = ConfigurationManager.AppSettings["SmtpSettings:Host"],
@@ -23,7 +35,7 @@ namespace AnmolDristi
                     //Password = ConfigurationManager.AppSettings["SmtpSettings:Password"],
                     //FromEmail = ConfigurationManager.AppSettings["SmtpSettings:FromEmail"]
 
-                    Host = "smtp-mail.outlook.com",
+                    Host = "smtp.office365.com",
                     Port = 587,
                     EnableSsl = true,
                     Username = "symphonymis@anmolindustries.com",
@@ -56,9 +68,59 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
-                // Log errors in case email sending fails
-                System.IO.File.AppendAllText("EmailErrorLog.txt", $"Failed to send email: {ex.Message}\n");
+                LogEmailError(ex);
             }
         }
+
+        private static void LogEmailError_1(Exception ex)
+        {
+            try
+            {
+                // Define the log file path
+                string targetFolderPath = HttpContext.Current.Server.MapPath("~/Logs/EmailLogs/");
+                if (!Directory.Exists(targetFolderPath))
+                {
+                    Directory.CreateDirectory(targetFolderPath);
+                }
+
+                string logFilePath = Path.Combine(targetFolderPath, $"EmailErrorLog_{DateTime.Now:yyyy-MM-dd}.txt");
+
+                // Append the error details to the log file
+                string logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] Error: {ex.Message}\nStack Trace:\n{ex.StackTrace}\n\n";
+                File.AppendAllText(logFilePath, logEntry);
+            }
+            catch
+            {
+                // If logging fails, do not throw an exception to avoid masking the original error
+            }
+        }
+
+        private static void LogEmailError(Exception ex)
+        {
+            try
+            {
+                string targetFolderPath = HttpContext.Current.Server.MapPath("~/Logs/EmailLogs/");
+                if (!Directory.Exists(targetFolderPath))
+                {
+                    Directory.CreateDirectory(targetFolderPath);
+                }
+
+                string logFilePath = Path.Combine(targetFolderPath, $"EmailErrorLog_{DateTime.Now:yyyy-MM-dd}.txt");
+
+                string logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] Error: {ex.Message}\n";
+                if (ex.InnerException != null)
+                {
+                    logEntry += $"Inner Exception: {ex.InnerException.Message}\n";
+                }
+                logEntry += $"Stack Trace:\n{ex.StackTrace}\n\n";
+
+                File.AppendAllText(logFilePath, logEntry);
+            }
+            catch
+            {
+                // Silent catch for logging failures
+            }
+        }
+
     }
 }
