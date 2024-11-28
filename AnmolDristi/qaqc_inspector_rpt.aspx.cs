@@ -2040,7 +2040,7 @@ namespace AnmolDristi.qaqc
                     DesignAndImplementation = hdn_img1.Value,
                     ColourAndAppearance = hdn_img2.Value,
 
-                    OptionalRemarks = !string.IsNullOrEmpty(TXB_Remarks.Text) ? TXB_Remarks.Text : null,
+                    Remarks = !string.IsNullOrEmpty(TXB_Remarks.Text) ? TXB_Remarks.Text : null,
 
                     SubmittedByPNo = Session["WORKMAN"].ToString(),
                     SubmittedById = Convert.ToInt32(Session["USERID"].ToString()),
@@ -2129,7 +2129,7 @@ namespace AnmolDristi.qaqc
                 qcData.pHvalue, // Changed pHvalue to pH_value
                 qcData.GaugeLength, qcData.CommentsGaugeLength, qcData.WeightWithoutOil, qcData.WeightWithOil,
                 qcData.OilPercentValue, // Changed OilPercentValue to OilPercentage
-                qcData.PacketWeight, qcData.DesignAndImplementation, qcData.ColourAndAppearance, qcData.OptionalRemarks, qcData.SubmittedById,
+                qcData.PacketWeight, qcData.DesignAndImplementation, qcData.ColourAndAppearance, qcData.Remarks, qcData.SubmittedById,
                 DateTime.Now.Date, DateTime.Now.TimeOfDay, qcData.Shift, qcData.SubmittedByPNo, qcData.FormID, qcData.Approver1EmployeeCode, qcData.Approver2EmployeeCode, qcData.DottedLineApproverEmployeeCode
             );
 
@@ -2150,7 +2150,7 @@ namespace AnmolDristi.qaqc
                         qcData.TextureBite, qcData.CommentsForTextureBite, qcData.ShapeOrSize, qcData.CommentsForShapeOrSize,
                         qcData.Moisture, qcData.aWmax, qcData.pHvalue, qcData.GaugeLength, qcData.CommentsGaugeLength, qcData.WeightWithoutOil,
                         qcData.WeightWithOil, qcData.OilPercentValue, qcData.PacketWeight, qcData.DesignAndImplementation,
-                        qcData.ColourAndAppearance, qcData.OptionalRemarks, qcData.SubmittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay,
+                        qcData.ColourAndAppearance, qcData.Remarks, qcData.SubmittedById, DateTime.Now.Date, DateTime.Now.TimeOfDay,
                         qcData.Shift, qcData.SubmittedByPNo, qcData.FormID, qcData.Approver1EmployeeCode, qcData.Approver2EmployeeCode, qcData.DottedLineApproverEmployeeCode
                     );
 
@@ -2217,7 +2217,7 @@ namespace AnmolDristi.qaqc
             public string DesignAndImplementation { get; set; }
             public string ColourAndAppearance { get; set; }
 
-            public string OptionalRemarks { get; set; }
+            public string Remarks { get; set; }
 
             public int SubmittedById { get; set; }
             public string SubmittedByPNo { get; set; }
