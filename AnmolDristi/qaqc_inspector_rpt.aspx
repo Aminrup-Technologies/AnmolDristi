@@ -502,122 +502,129 @@
 
         function validateForm2() {
             var fileInput = document.getElementById('<%= FU_DesgImp.ClientID %>');
-                if (fileInput.files.length === 0) {
-                    new PNotify({
-                        title: 'Validation Error',
-                        text: 'Please select a file to upload.',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                    return false;
-                }
-                return true;
+            if (fileInput.files.length === 0) {
+                new PNotify({
+                    title: 'Validation Error',
+                    text: 'Please select a file to upload.',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+                return false;
             }
+            return true;
+        }
 
 
-            function displayImage2(input) {
-                var file = input.files[0];
-                if (!file) return;
+        function displayImage2(input) {
+            var file = input.files[0];
+            if (!file) return;
 
-                var prefix = input.getAttribute("data-prefix");
-                console.log('PrefixValue: ' + prefix + '');
-                var img = document.createElement("img");
-                var reader = new FileReader();
+            var prefix = input.getAttribute("data-prefix");
+            console.log('PrefixValue: ' + prefix + '');
+            var img = document.createElement("img");
+            var reader = new FileReader();
 
-                reader.onload = function (e) {
-                    img.src = e.target.result;
+            reader.onload = function (e) {
+                img.src = e.target.result;
 
-                    img.onload = function () {
-                        var canvas = document.createElement("canvas");
-                        var ctx = canvas.getContext("2d");
+                img.onload = function () {
+                    var canvas = document.createElement("canvas");
+                    var ctx = canvas.getContext("2d");
 
-                        var maxWidth = 1000; // Resize to this width
-                        var width = img.width;
-                        var height = img.height;
+                    var maxWidth = 1200; // Increased resolution
+                    var maxHeight = 1200; // Optional max height
+                    var width = img.width;
+                    var height = img.height;
 
-                        if (width > maxWidth) {
+                    // Resize based on maxWidth while maintaining aspect ratio
+                    if (width > maxWidth || height > maxHeight) {
+                        if (width > height) {
                             height = Math.floor((maxWidth / width) * height);
                             width = maxWidth;
+                        } else {
+                            width = Math.floor((maxHeight / height) * width);
+                            height = maxHeight;
                         }
+                    }
 
-                        canvas.width = width;
-                        canvas.height = height;
-                        ctx.drawImage(img, 0, 0, width, height);
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
 
-                        canvas.toBlob(function (blob) {
-                            var formData = new FormData();
+                    canvas.toBlob(function (blob) {
+                        var formData = new FormData();
 
-                            var fileExtension = file.name.split('.').pop(); // Get the file extension
-                            var newFileName = prefix + "_" + new Date().getTime() + "." + fileExtension; // Create new filename with prefix
+                        var fileExtension = file.name.split('.').pop(); // Get the file extension
+                        var newFileName = prefix + "_" + new Date().getTime() + "." + fileExtension; // Create new filename with prefix
 
-                            formData.append("image", blob, newFileName); // Append file with new filename
-                            formData.append("prefix", prefix); // Append the prefix for folder selection
+                        formData.append("image", blob, newFileName); // Append file with new filename
+                        formData.append("prefix", prefix); // Append the prefix for folder selection
 
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "/UploadImageHandler.ashx", true);
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "/UploadImageHandler.ashx", true);
 
-                            xhr.upload.onprogress = function (event) {
-                                if (event.lengthComputable) {
-                                    var percentComplete = (event.loaded / event.total) * 100;
-                                    console.log('Upload progress: ' + percentComplete + '%');
+                        xhr.upload.onprogress = function (event) {
+                            if (event.lengthComputable) {
+                                var percentComplete = (event.loaded / event.total) * 100;
+                                console.log('Upload progress: ' + percentComplete + '%');
+                            }
+                        };
+
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                var imageElement = document.querySelector('img[data-prefix="' + prefix + '"]');
+                                console.log("Image Display Element: ", imageElement);
+                                var labelElement = document.querySelector('span[data-prefix="' + prefix + '"]');
+                                console.log("Hidden Element: ", labelElement);
+
+                                if (imageElement) {
+
+                                    imageElement.style.display = 'block';
+                                    imageElement.src = response.imageUrl; // Update image source
+                                    console.log("Image URL: " + response.imageUrl);
+                                } else {
+                                    console.error("Image element not found for prefix: " + prefix);
                                 }
-                            };
 
-                            xhr.onload = function () {
-                                if (xhr.status === 200) {
-                                    var response = JSON.parse(xhr.responseText);
-                                    var imageElement = document.querySelector('img[data-prefix="' + prefix + '"]');
-                                    console.log("Image Display Element: ", imageElement);
-                                    var labelElement = document.querySelector('span[data-prefix="' + prefix + '"]');
-                                    console.log("Hidden Element: ", labelElement);
+                                if (labelElement) {
+                                    labelElement.innerText = response.imageUrl;
+                                    //labelElement.textContent = response.imageUrl;
+                                }
 
-                                    if (imageElement) {
-
-                                        imageElement.style.display = 'block';
-                                        imageElement.src = response.imageUrl; // Update image source
-                                        console.log("Image URL: " + response.imageUrl);
-                                    } else {
-                                        console.error("Image element not found for prefix: " + prefix);
-                                    }
-
-                                    if (labelElement) {
-                                        labelElement.innerText = response.imageUrl;
-                                        //labelElement.textContent = response.imageUrl;
-                                    }
-
-                                    // Now use if-else to bind to individual hidden fields
-                                    if (prefix === "QCIR/ClrApp") {
-                                        document.getElementById('<%= hdn_img2.ClientID %>').value = response.imageUrl;
+                                // Now use if-else to bind to individual hidden fields
+                                if (prefix === "QCIR/ClrApp") {
+                                    document.getElementById('<%= hdn_img2.ClientID %>').value = response.imageUrl;
                                     } else if (prefix === "QCIR/DesignImp") {
                                         document.getElementById('<%= hdn_img1.ClientID %>').value = response.imageUrl;
                                     }
 
                                     // Clear the file input uploader
-                                    input.value = '';
+                                input.value = '';
 
-                                    new PNotify({
-                                        title: 'Upload Success',
-                                        text: 'Image Saved!',
-                                        type: 'success',
-                                        styling: 'bootstrap3'
-                                    });
-                                } else {
-                                    new PNotify({
-                                        title: 'Upload Failed',
-                                        text: 'An error occurred during the upload.',
-                                        type: 'error',
-                                        styling: 'bootstrap3'
-                                    });
-                                }
+                                new PNotify({
+                                    title: 'Upload Success',
+                                    text: 'Image Saved!',
+                                    type: 'success',
+                                    styling: 'bootstrap3'
+                                });
+                            } else {
+                                new PNotify({
+                                    title: 'Upload Failed',
+                                    text: 'An error occurred during the upload.',
+                                    type: 'error',
+                                    styling: 'bootstrap3'
+                                });
+                            }
                             };
 
                             xhr.send(formData);
-                        }, 'image/jpeg', 0.6); // Compress to 80% quality
+                        }, 'image/jpeg', 0.9); // Compress to 80% quality
                     };
                 };
 
-                reader.readAsDataURL(file);
-            }
+            reader.readAsDataURL(file);
+        }
 
         <%--function validateImages() {
             var image1 = document.getElementById('<%= uploadedImage1.ClientID %>'); // First image
@@ -664,8 +671,8 @@
 
     </script>
 
-    <asp:HiddenField ID="hdn_img1" runat="server"/>
-    <asp:HiddenField ID="hdn_img2" runat="server"/>
+    <asp:HiddenField ID="hdn_img1" runat="server" />
+    <asp:HiddenField ID="hdn_img2" runat="server" />
 
 
     <asp:HiddenField ID="hdn_shiftvalue" runat="server" />
@@ -1166,7 +1173,7 @@
                                     <asp:CustomValidator ID="CV_FU_DesgImp" runat="server" ControlToValidate="FU_DesgImp" Display="Dynamic" ErrorMessage="Please upload file" ValidationGroup="Submit"></asp:CustomValidator>
                                     <asp:Label ID="lblErrorMessage2" runat="server" CssClass="text-danger"></asp:Label>
                                     <div class="input-group input-group-sm">
-                                        
+
                                         <asp:FileUpload ID="FU_DesgImp" runat="server" CssClass="form-control rounded" data-prefix="QCIR/ClrApp" onchange="displayImage2(this);" />
                                         <asp:Label ID="lbl_QCIR_ClrApp" runat="server" Text="" CssClass="image-label" data-prefix="QCIR/ClrApp" Visible="true" ForeColor="Black"></asp:Label>
                                         <span class="input-group-btn">
@@ -1198,6 +1205,16 @@
 
                             <div class="col-md-3" id="FU_ClrApp_Img" runat="server" visible="true">
                                 <asp:Image ID="uploadedImage2" runat="server" CssClass="img-fluid" data-prefix="QCIR/DesignImp" Style="display: none;" />
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TXB_Remarks" runat="server" Text="Optional Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TXB_Remarks" runat="server" ErrorMessage="Required" ForeColor="Red" ValidationGroup="NoSubmit" ControlToValidate="TXB_Remarks" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TXB_Remarks" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Rows="2" Text="" MaxLength="200" PlaceHolder="Additional Comments / Remarks"></asp:TextBox>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-md-3">
