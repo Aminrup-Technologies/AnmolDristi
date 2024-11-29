@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="qaqc_qcapprovals.aspx.cs" Inherits="AnmolDristi.qaqc_qcapprovals" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
@@ -9,7 +9,7 @@
                 <div class="col-md-12" id="QC_Panel" runat="server" visible="true">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Quality Control Approvals</h2>
+                            <h2>Quality Control - Reports for Approvals</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -17,23 +17,36 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <a class="btn btn-app" href="app_qc_inspectorreport.aspx">
-                                <span class="badge bg-green">Shift-2
-                                    <asp:Label ID="lbl_tbttodaycount" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Inspector Report
+                            <a class="btn btn-app" href="PM_LaminateTesting.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:label id="Label1" runat="server" text="0" visible="false"></asp:label>
+                                </span>
+                                <i class="fa fa-edit"></i>Daily Laminate
 
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">Batch-1
-                                    <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Wheat Flour report
-
+                            <a class="btn btn-app" href="qaqc_overwrap.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:label id="Label2" runat="server" text="0" visible="false"></asp:label>
+                                </span>
+                                <i class="fa fa-edit"></i>HM / PP Bag
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">Consignment-1
-                                    <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>CB Box Report
-
+                            <a class="btn btn-app" href="CorrugatedBoardBoxReport.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:label id="Label3" runat="server" text="0" visible="false"></asp:label>
+                                </span>
+                                <i class="fa fa-edit"></i>CBB Report
+                            </a>
+                            <a class="btn btn-app" href="bopp_tape.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:label id="Label4" runat="server" text="0" visible="false"></asp:label>
+                                </span>
+                                <i class="fa fa-edit"></i>BOPP Tape
+                            </a>
+                            <a class="btn btn-app" href="PVC_Tray.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:label id="Label5" runat="server" text="0" visible="false"></asp:label>
+                                </span>
+                                <i class="fa fa-edit"></i>PVC Tray
                             </a>
                         </div>
                     </div>
