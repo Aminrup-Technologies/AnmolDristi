@@ -28,6 +28,7 @@
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -228,6 +229,18 @@
     <Content Include="qaqc_rotary_line.aspx" />
     <Content Include="qa_qc_FinalCbbWtReport.aspx" />
     <Content Include="redirect.aspx" />
+    <Content Include="RM_Class_1.aspx" />
+    <Content Include="RM_Class_1_Approval.aspx" />
+    <Content Include="RM_Class_1_FinalApproval.aspx" />
+    <Content Include="RM_Class_1_Report.aspx" />
+    <Content Include="RM_Class_3.aspx" />
+    <Content Include="RM_Class_3_Approval.aspx" />
+    <Content Include="RM_Class_3_FinalApproval.aspx" />
+    <Content Include="RM_Class_3_Report.aspx" />
+    <Content Include="RM_Class_4.aspx" />
+    <Content Include="RM_Class_4_Approval.aspx" />
+    <Content Include="RM_Class_4_FinalApproval.aspx" />
+    <Content Include="RM_Class_4_Report.aspx" />
     <Content Include="viewusers.aspx" />
     <Content Include="vm_ccp_checklist.aspx" />
     <Content Include="vm_leak_test.aspx" />
@@ -707,6 +720,78 @@
     </Compile>
     <Compile Include="redirect.aspx.designer.cs">
       <DependentUpon>redirect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_1.aspx.cs">
+      <DependentUpon>RM_Class_1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_1.aspx.designer.cs">
+      <DependentUpon>RM_Class_1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_1_Approval.aspx.cs">
+      <DependentUpon>RM_Class_1_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_1_Approval.aspx.designer.cs">
+      <DependentUpon>RM_Class_1_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_1_FinalApproval.aspx.cs">
+      <DependentUpon>RM_Class_1_FinalApproval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_1_FinalApproval.aspx.designer.cs">
+      <DependentUpon>RM_Class_1_FinalApproval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_1_Report.aspx.cs">
+      <DependentUpon>RM_Class_1_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_1_Report.aspx.designer.cs">
+      <DependentUpon>RM_Class_1_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3.aspx.cs">
+      <DependentUpon>RM_Class_3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3.aspx.designer.cs">
+      <DependentUpon>RM_Class_3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3_Approval.aspx.cs">
+      <DependentUpon>RM_Class_3_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3_Approval.aspx.designer.cs">
+      <DependentUpon>RM_Class_3_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3_FinalApproval.aspx.cs">
+      <DependentUpon>RM_Class_3_FinalApproval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3_FinalApproval.aspx.designer.cs">
+      <DependentUpon>RM_Class_3_FinalApproval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3_Report.aspx.cs">
+      <DependentUpon>RM_Class_3_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3_Report.aspx.designer.cs">
+      <DependentUpon>RM_Class_3_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_4.aspx.cs">
+      <DependentUpon>RM_Class_4.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_4.aspx.designer.cs">
+      <DependentUpon>RM_Class_4.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_4_Approval.aspx.cs">
+      <DependentUpon>RM_Class_4_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_4_Approval.aspx.designer.cs">
+      <DependentUpon>RM_Class_4_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_4_FinalApproval.aspx.cs">
+      <DependentUpon>RM_Class_4_FinalApproval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_4_FinalApproval.aspx.designer.cs">
+      <DependentUpon>RM_Class_4_FinalApproval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_4_Report.aspx.cs">
+      <DependentUpon>RM_Class_4_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_4_Report.aspx.designer.cs">
+      <DependentUpon>RM_Class_4_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="UploadImageHandler.ashx.cs">
       <DependentUpon>UploadImageHandler.ashx</DependentUpon>
