@@ -20,6 +20,7 @@ namespace AnmolDristi
     public partial class vw_app_qcireport : System.Web.UI.Page
     {
         public static Int32 RecordID =0;
+        public static Int32 ViewMode = 0;
 
         public static string ImgLink1 = string.Empty;
         public static string ImgLink2 = string.Empty;
@@ -49,7 +50,7 @@ namespace AnmolDristi
 
                     //below to bind the report details from TRN Tables
                     RecordID = Convert.ToInt32(Request.QueryString["ID"]);
-
+                    ViewMode = Convert.ToInt32(Request.QueryString["VM"]);
                     // Call the new method to load data
                     LoadRecordData(RecordID);
                 }
@@ -1249,6 +1250,11 @@ namespace AnmolDristi
                     }
                 }
             }
+        }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("qaqc_qcinspector_rpt_.aspx", false);
         }
     }
 }

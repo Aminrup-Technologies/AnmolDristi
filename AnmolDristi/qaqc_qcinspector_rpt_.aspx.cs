@@ -4,6 +4,10 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using ClosedXML.Excel;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using System.Web.UI.WebControls;
 
 namespace AnmolDristi
 {
@@ -23,23 +27,119 @@ namespace AnmolDristi
                 else
                 {
                     PlantBinder();
-                    BindGridView();
+                    LoadData("TRN_qcinspector");
+                    //loadAlldata();
                 }
 
             }
         }
 
+        private void loadAlldata()
+        {
+            try
+            {
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+                string query = @"
+                    SELECT TOP(30)
+                        c.ID AS DBID,
+                        c.FormID as FormID,
+                        'NA' as RecordID,
+                        p.plant_name AS PlantName,
+                        l.line_name AS LineName,
+	                    pc.category_name AS ProductCategory,
+	                    pb.brand_name AS ProductBrand,
+                        c.SubmittedByEmployeeCode as EmpCode,
+                        u.EmployeeName AS EmpName,
+                        c.SubmittedDate as SDate,
+                        c.SubmittedTime as STime,
+                        c.Shift as SShift,
+                        c.Remarks as Remarks,
+                        c.Approver1EmployeeCode as L1,
+                        c.Approver1_Status,
+                        c.Approver1_TimeStamp,
+                        c.Approver2EmployeeCode as L2,
+                        c.Approver2_Status,
+                        c.Approver2_TimeStamp,
+                        c.DottedLineApproverEmployeeCode as L3,
+                        c.DottedApprover_Status,
+                        c.DottedApprover_TimeStamp
+                    FROM 
+                        TRN_qcinspector c
+                    LEFT JOIN 
+                        MST_PlantDetails p ON c.PlantName = p.plant_id
+                    LEFT JOIN 
+                        MST_Plant_Lines l ON c.Line = l.line_id
+                    LEFT JOIN 
+                        MST_LineCategory pc ON c.ProductCategory = pc.category_id
+                    LEFT JOIN 
+                        MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
+                    LEFT JOIN
+                        MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
+                    WHERE 
+                        1 = 1
+                    ORDER BY 
+                        c.[SubmittedDate] DESC, 
+                        c.[SubmittedTime] DESC;
+                ";
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        GridView1.DataSource = dt;
+                        GridView1.DataBind();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+            }
+        }
+
+        private void LoadData(string tableName)
+        {
+            try
+            {
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("USP_LoadViewListData", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@TableName", tableName);
+                        cmd.Parameters.AddWithValue("@TopRecords", 30);
+
+                        SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        ViewState["ExportData"] = dt;
+                        GridView1.DataSource = dt;
+                        GridView1.DataBind();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+            }
+        }
+
         private void BindGridView()
         {
-            // Get the connection string from Web.config
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecords", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
                     using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                     {
                         DataTable dt = new DataTable();
@@ -52,13 +152,9 @@ namespace AnmolDristi
                         }
                         else
                         {
-                            // Handle no records found
                             GridView1.DataSource = null;
                             GridView1.DataBind();
-                            //lblMessage.Text = "No records found for the selected plant.";
-                            //lblMessage.Visible = true;
 
-                            // Define the PNotify script for no records found
                             string noRecordsScript = @"<script type='text/javascript'>
                                     new PNotify({
                                         title: 'No Records Found',
@@ -67,8 +163,6 @@ namespace AnmolDristi
                                         styling: 'bootstrap3'
                                     });
                                 </script>";
-
-                            // Register the script to show the notification
                             ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification", noRecordsScript, false);
 
                         }
@@ -76,18 +170,15 @@ namespace AnmolDristi
                 }
             }
         }
+
         private void BindGridView(string plantName)
         {
-            // Get the connection string from Web.config
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecordsByPlant", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    // Add the PlantName parameter and its value
                     cmd.Parameters.Add(new SqlParameter("@PlantName", plantName));
 
                     using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
@@ -102,13 +193,8 @@ namespace AnmolDristi
                         }
                         else
                         {
-                            // Handle no records found
                             GridView1.DataSource = null;
                             GridView1.DataBind();
-                            //lblMessage.Text = "No records found for the selected plant.";
-                            //lblMessage.Visible = true;
-
-                            // Define the PNotify script for no records found
                             string noRecordsScript2 = @"<script type='text/javascript'>
                                     new PNotify({
                                         title: 'No Records Found',
@@ -117,8 +203,6 @@ namespace AnmolDristi
                                         styling: 'bootstrap3'
                                     });
                                 </script>";
-
-                            // Register the script to show the notification
                             ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification2", noRecordsScript2, false);
 
                         }
@@ -128,16 +212,12 @@ namespace AnmolDristi
         }
         private void BindGridView(string plantName, string plantLine)
         {
-            // Get the connection string from Web.config
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecordsByPlantLine", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    // Add the PlantName and PlantLine parameters and their values
                     cmd.Parameters.Add(new SqlParameter("@PlantName", plantName));
                     cmd.Parameters.Add(new SqlParameter("@PlantLine", plantLine));
 
@@ -153,11 +233,9 @@ namespace AnmolDristi
                         }
                         else
                         {
-                            // Handle no records found
                             GridView1.DataSource = null;
                             GridView1.DataBind();
 
-                            // Define the PNotify script for no records found
                             string noRecordsScript3 = @"<script type='text/javascript'>
                                     new PNotify({
                                         title: 'No Records Found',
@@ -166,8 +244,6 @@ namespace AnmolDristi
                                         styling: 'bootstrap3'
                                     });
                                 </script>";
-
-                            // Register the script to show the notification
                             ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification3", noRecordsScript3, false);
                         }
                     }
@@ -200,11 +276,7 @@ namespace AnmolDristi
             string valueField = "plant_id";
 
             bool recordsBound;
-
-            // Bind the DropDownList and get the flag indicating whether records were bound
             DatabaseHelper.BindDropDownList(query, DDL_Plant, textField, valueField, out recordsBound);
-
-            // Check if any records were bound
             if (!recordsBound)
             {
                 DatabaseHelper.BindWithDefaultNoRecords(DDL_Plant);
@@ -216,8 +288,6 @@ namespace AnmolDristi
                                 styling: 'bootstrap3'
                             });
                         </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
 
             }
@@ -229,13 +299,11 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 lbl_DDL_Plant_Value.Text = selectedPlantValue;
                 PlantLinesBinder(selectedPlantValue);
-
-                BindGridView(selectedPlantValue);
+                DataLoader();
             }
             else
             {
                 DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
-
                 string DDL_Plant_Error_script = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Error',
@@ -279,9 +347,7 @@ namespace AnmolDristi
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
                 lbl_DDL_PlantLine_Value.Text = selectedPlantLineValue;
-                BindGridView(selectedPlantValue, selectedPlantLineValue);
-
-                //here goes the code to Bind the Approval Matrix
+                DataLoader();
             }
             else
             {
@@ -300,23 +366,19 @@ namespace AnmolDristi
         }
         private void LineProductsBinder(string selectedPlantValue, string selectedPlantLineValue)
         {
-            // Construct the SQL query with parameters
             string query = "SELECT category_id, category_name FROM MST_LineCategory WHERE plant_id = @PlantId AND line_id = @LineId";
-            string textField = "category_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "category_id"; // Assuming this is the correct field for storing in the DropDownList
+            string textField = "category_name";
+            string valueField = "category_id";
 
-            // Create SQL parameters for plant_id and line_id
             SqlParameter[] parameters = new SqlParameter[]
             {
                 new SqlParameter("@PlantId", selectedPlantValue),
                 new SqlParameter("@LineId", selectedPlantLineValue)
             };
 
-            // Call the BindDropDownList method with parameters
             bool recordsBound;
             DatabaseHelper.BindDropDownList(query, DDL_ProductCategory, textField, valueField, parameters, out recordsBound);
 
-            // Check if any records were bound
             if (!recordsBound)
             {
                 string PN_Error_script = @"<script type='text/javascript'>
@@ -327,23 +389,17 @@ namespace AnmolDristi
                         styling: 'bootstrap3'
                     });
                 </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowLineProductsBinderErrorNotification", PN_Error_script, false);
             }
         }
         private void BindGridView(string plantName, string plantLine, string productCategory)
         {
-            // Get the connection string from Web.config
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecordsByPlantLineProduct", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    // Add the parameters and their values
                     cmd.Parameters.Add(new SqlParameter("@PlantName", plantName));
                     cmd.Parameters.Add(new SqlParameter("@PlantLine", plantLine));
                     cmd.Parameters.Add(new SqlParameter("@ProductCategory", productCategory));
@@ -360,11 +416,9 @@ namespace AnmolDristi
                         }
                         else
                         {
-                            // Handle no records found
                             GridView1.DataSource = null;
                             GridView1.DataBind();
 
-                            // Define the PNotify script for no records found
                             string noRecordsScript4 = @"<script type='text/javascript'>
                                     new PNotify({
                                         title: 'No Records Found',
@@ -374,7 +428,6 @@ namespace AnmolDristi
                                     });
                                 </script>";
 
-                            // Register the script to show the notification
                             ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification4", noRecordsScript4, false);
                         }
                     }
@@ -390,7 +443,7 @@ namespace AnmolDristi
                 string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
                 ProductBrandsBinder(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue);
                 lbl_DDL_ProductCategory_Value.Text = selectedProductCategoryValue;
-                BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue);
+                DataLoader();
             }
             else
             {
@@ -410,12 +463,10 @@ namespace AnmolDristi
 
         private void ProductBrandsBinder(string selectedPlantValue, string selectedPlantLineValue, string selectedProductCategoryValue)
         {
-            // Construct the SQL query with parameters
             string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId AND line_id = @LineId and category_id=@CategoryId";
-            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
+            string textField = "brand_name";
+            string valueField = "brand_id";
 
-            // Create SQL parameters for plant_id and line_id
             SqlParameter[] parameters = new SqlParameter[]
             {
                 new SqlParameter("@PlantId", selectedPlantValue),
@@ -423,7 +474,6 @@ namespace AnmolDristi
                 new SqlParameter("@CategoryId", selectedProductCategoryValue)
             };
 
-            // Call the BindDropDownList method with parameters
             bool recordsBound;
             DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
 
@@ -438,23 +488,17 @@ namespace AnmolDristi
                         styling: 'bootstrap3'
                     });
                 </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
             }
         }
         private void BindGridView(string plantName, string plantLine, string productCategory, string brandName)
         {
-            // Get the connection string from Web.config
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("GetTop10QCInspectorRecordsByPlantLineProductBrand", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    // Add the parameters and their values
                     cmd.Parameters.Add(new SqlParameter("@PlantName", plantName));
                     cmd.Parameters.Add(new SqlParameter("@PlantLine", plantLine));
                     cmd.Parameters.Add(new SqlParameter("@ProductCategory", productCategory));
@@ -472,11 +516,9 @@ namespace AnmolDristi
                         }
                         else
                         {
-                            // Handle no records found
                             GridView1.DataSource = null;
                             GridView1.DataBind();
 
-                            // Define the PNotify script for no records found
                             string noRecordsScript5 = @"<script type='text/javascript'>
                                     new PNotify({
                                         title: 'No Records Found',
@@ -486,7 +528,6 @@ namespace AnmolDristi
                                     });
                                 </script>";
 
-                            // Register the script to show the notification
                             ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification5", noRecordsScript5, false);
                         }
                     }
@@ -503,7 +544,7 @@ namespace AnmolDristi
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
                 BrandSKUBinder(selectedProductBrandValue);
                 lbl_DDL_ProductBrand_Value.Text = selectedProductBrandValue;
-                BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue, selectedProductBrandValue);
+                DataLoader();
             }
             else
             {
@@ -546,48 +587,174 @@ namespace AnmolDristi
         }
         protected void btn_submit_Click(object sender, EventArgs e)
         {
-            string startdate = txt_date1.Text.ToString();
-            string enddate = txt_date2.Text.ToString();
+            DataLoader();
+        }
 
-            string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
-            string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
-            string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
-            string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
-            string selectedBrandSKU = DDL_BrandSKU.SelectedValue.ToString();
+        private void DataLoader()
+        {
+            DateTime? dateFrom = string.IsNullOrEmpty(txt_date1.Text) ? (DateTime?)null : DateTime.ParseExact(txt_date1.Text, "yyyy-MM-dd", null);
+            DateTime? dateTo = string.IsNullOrEmpty(txt_date2.Text) ? (DateTime?)null : DateTime.ParseExact(txt_date2.Text, "yyyy-MM-dd", null);
 
+            StringBuilder queryBuilder = new StringBuilder(@"
+                SELECT 
+                    c.ID AS DBID,
+                    c.FormID AS FormID,
+                    p.plant_name AS PlantName,
+                    l.line_name AS LineName,
+                    pc.category_name AS ProductCategory,
+                    pb.brand_name AS ProductBrand,
+                    c.SubmittedByEmployeeCode AS EmpCode,
+                    u.EmployeeName AS EmpName,
+                    c.SubmittedDate AS SDate,
+                    c.SubmittedTime AS STime,
+                    c.Shift AS SShift,
+                    'No Comment' AS Remarks,
+                    c.Approver1EmployeeCode AS L1,
+                    c.Approver1_Status,
+                    c.Approver1_TimeStamp,
+                    c.Approver2EmployeeCode AS L2,
+                    c.Approver2_Status,
+                    c.Approver2_TimeStamp,
+                    c.DottedLineApproverEmployeeCode AS L3,
+                    c.DottedApprover_Status,
+                    c.DottedApprover_TimeStamp
+                FROM TRN_qcinspector c
+                LEFT JOIN MST_PlantDetails p ON c.PlantName = p.plant_id
+                LEFT JOIN MST_Plant_Lines l ON c.Line = l.line_id
+                LEFT JOIN MST_LineCategory pc ON c.ProductCategory = pc.category_id
+                LEFT JOIN MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
+                LEFT JOIN MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
+                WHERE 1 = 1");
 
+            var parameters = new List<SqlParameter>();
 
-            if (DDL_Plant.SelectedIndex != 0)
+            // Add filters for date range
+            if (dateFrom.HasValue)
             {
-                if (DDL_PlantLine.SelectedIndex != 0)
+                queryBuilder.Append(" AND c.SubmittedDate >= @DateFrom");
+                parameters.Add(new SqlParameter("@DateFrom", SqlDbType.Date) { Value = dateFrom.Value.Date });
+            }
+
+            if (dateTo.HasValue)
+            {
+                queryBuilder.Append(" AND c.SubmittedDate <= @DateTo");
+                parameters.Add(new SqlParameter("@DateTo", SqlDbType.Date) { Value = dateTo.Value.Date });
+            }
+
+            if (!string.IsNullOrEmpty(DDL_Plant.SelectedValue) && DDL_Plant.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.PlantName = @PlantId");
+                parameters.Add(new SqlParameter("@PlantId", SqlDbType.Int) { Value = DDL_Plant.SelectedValue });
+            }
+
+            if (!string.IsNullOrEmpty(DDL_PlantLine.SelectedValue) && DDL_PlantLine.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.Line = @LineName");
+                parameters.Add(new SqlParameter("@LineName", SqlDbType.Int) { Value = DDL_PlantLine.SelectedValue });
+            }
+
+            if (!string.IsNullOrEmpty(DDL_ProductCategory.SelectedValue) && DDL_ProductCategory.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.ProductCategory = @ProductCategory");
+                parameters.Add(new SqlParameter("@ProductCategory", SqlDbType.Int) { Value = DDL_ProductCategory.SelectedValue });
+            }
+
+            if (!string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) && DDL_ProductBrand.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.ProductBrand = @ProductBrand");
+                parameters.Add(new SqlParameter("@ProductBrand", SqlDbType.Int) { Value = DDL_ProductBrand.SelectedValue });
+            }
+
+            queryBuilder.Append(" ORDER BY c.SubmittedDate DESC, c.SubmittedTime DESC");
+
+            try
+            {
+                DataTable filteredData = GetDataFromTable(queryBuilder.ToString(), parameters.ToArray());
+
+                // Convert DataTable to List<ReportInfo>
+                //List<ReportInfo> dataSave = filteredData.AsEnumerable().Select(row => new ReportInfo
+                //{
+                //    DBID = row.Field<int>("DBID"),
+                //    FormID = row.Field<int>("FormID"),
+                //    PlantName = row.Field<string>("PlantName"),
+                //    LineName = row.Field<string>("LineName"),
+                //    ProductCategory = row.Field<string>("ProductCategory"),
+                //    ProductBrand = row.Field<string>("ProductBrand"),
+                //    EmpCode = row.Field<string>("EmpCode"),
+                //    EmpName = row.Field<string>("EmpName"),
+                //    SDate = row.Field<DateTime>("SDate"),
+                //    STime = row.Field<TimeSpan>("STime"),
+                //    SShift = row.Field<string>("SShift"),
+                //    Remarks = row.Field<string>("Remarks"),
+                //    L1 = row.Field<string>("L1"),
+                //    Approver1_Status = row.Field<int?>("Approver1_Status"),
+                //    Approver1_TimeStamp = row.Field<DateTime?>("Approver1_TimeStamp"),
+                //    L2 = row.Field<string>("L2"),
+                //    Approver2_Status = row.Field<int?>("Approver2_Status"),
+                //    Approver2_TimeStamp = row.Field<DateTime?>("Approver2_TimeStamp"),
+                //    L3 = row.Field<string>("L3"),
+                //    DottedApprover_Status = row.Field<int?>("DottedApprover_Status"),
+                //    DottedApprover_TimeStamp = row.Field<DateTime?>("DottedApprover_TimeStamp")
+                //}).ToList();
+
+                // Bind to GridView
+                GridView1.DataSource = filteredData;
+                GridView1.DataBind();
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.Message;
+                string FilterDataerrorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
+                ClientScript.RegisterStartupScript(this.GetType(), "FilteredDataerror", FilterDataerrorScript, true);
+            }
+        }
+
+        private DataTable GetDataFromTable(string query, SqlParameter[] parameters)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    if (DDL_ProductBrand.SelectedIndex != 0)
+                    cmd.Parameters.AddRange(parameters);
+                    cmd.CommandType = CommandType.Text;
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                     {
-                        if (txt_date1.Text != "" && txt_date1.Text != "")
-                        {
-                            BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue, selectedProductBrandValue, selectedBrandSKU, startdate, enddate);
-                        }
-                        else
-                        {
-                            // Define the PNotify script for no records found
-                            string noRecordsScript9 = @"<script type='text/javascript'>
-                                new PNotify({
-                                    title: 'No Records Found',
-                                    text: 'No Calender Date Selection by User',
-                                    type: 'info',
-                                    styling: 'bootstrap3'
-                                });
-                            </script>";
-
-                            // Register the script to show the notification
-                            ClientScript.RegisterStartupScript(this.GetType(), "ShowNoRecordsNotification9", noRecordsScript9, false);
-
-                            BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue, selectedProductBrandValue, selectedBrandSKU);
-                        }
+                        sda.Fill(dt);
                     }
                 }
             }
+            return dt;
         }
+
+        public class ReportInfo
+        {
+            public int DBID { get; set; }
+            public int FormID { get; set; }
+            public string PlantName { get; set; }
+            public string LineName { get; set; }
+            public string ProductCategory { get; set; }
+            public string ProductBrand { get; set; }
+            public string EmpCode { get; set; }
+            public string EmpName { get; set; }
+            public DateTime SDate { get; set; }
+            public TimeSpan STime { get; set; }
+            public string SShift { get; set; }
+            public string Remarks { get; set; }
+            public string L1 { get; set; }
+            public int? Approver1_Status { get; set; }
+            public DateTime? Approver1_TimeStamp { get; set; }
+            public string L2 { get; set; }
+            public int? Approver2_Status { get; set; }
+            public DateTime? Approver2_TimeStamp { get; set; }
+            public string L3 { get; set; }
+            public int? DottedApprover_Status { get; set; }
+            public DateTime? DottedApprover_TimeStamp { get; set; }
+        }
+
         private void BindGridView(string plantName, string plantLine, string productCategory, string brandName, string skuid, string startDate, string endDate)
         {
             // Get the connection string from Web.config
@@ -669,7 +836,7 @@ namespace AnmolDristi
                             string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
                             string selectedBrandSKU = DDL_BrandSKU.SelectedValue.ToString();
 
-                            BindGridView(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue, selectedProductBrandValue, selectedBrandSKU);
+                            DataLoader();
                         }
                     }
                 }
@@ -766,7 +933,6 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
-                // Log error or handle it appropriately
                 Response.Write("An error occurred: " + ex.Message);
             }
         }
@@ -808,6 +974,17 @@ namespace AnmolDristi
             {
                 // Handle the case where ViewState["ExportData"] is null
                 Response.Write("No data available to export.");
+            }
+        }
+
+        protected void GridView1_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
+        {
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = GridView1.Rows[rowIndex];
+            string dbid = (row.FindControl("lbl_rowid") as Label).Text;
+            if (e.CommandName == "View")
+            {
+                Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "&VM=1", false);
             }
         }
     }

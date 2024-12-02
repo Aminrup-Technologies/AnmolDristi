@@ -39,8 +39,8 @@
 
                         <div class="x_content">
 
-                            <div class="col-md-3">
-                                <div class="mb-3">
+                            <div class="col-md-2">
+                                <div class="mb-2">
                                     <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
@@ -51,8 +51,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="mb-3">
+                            <div class="col-md-2">
+                                <div class="mb-2">
                                     <asp:Label ID="Label2" runat="server" AssociatedControlID="DDL_PlantLine" Text="Select Line" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_PlantLine" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_PlantLine" Display="Dynamic" InitialValue=""></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
@@ -62,8 +62,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="mb-3">
+                            <div class="col-md-2">
+                                <div class="mb-2">
                                     <asp:Label ID="Label3" runat="server" AssociatedControlID="DDL_ProductCategory" Text="Product Category" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_ProductCategory" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" InitialValue="" ControlToValidate="DDL_ProductCategory" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
@@ -73,28 +73,18 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="mb-3">
+                            <div class="col-md-2">
+                                <div class="mb-2">
                                     <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_ProductBrand" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductBrand_SelectedIndexChanged"></asp:DropDownList>
+                                        <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="false" OnSelectedIndexChanged="DDL_ProductBrand_SelectedIndexChanged"></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <asp:Label ID="Label5" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_DDL_BrandSKU" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_BrandSKU" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
-                                    <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_BrandSKU" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="mb-3">
+                            <div class="col-md-2">
+                                <div class="mb-2">
                                     <asp:Label ID="lblPackageDate" runat="server" AssociatedControlID="TXT_PackageDate" Text="Date From" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_PackageDate" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TXT_PackageDate" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
@@ -104,8 +94,8 @@
                             </div>
 
 
-                            <div class="col-md-3">
-                                <div class="mb-3">
+                            <div class="col-md-2">
+                                <div class="mb-2">
                                     <asp:Label ID="Label6" runat="server" AssociatedControlID="TXT_PackageDate" Text="Date To" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TXT_PackageDate" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
@@ -124,7 +114,7 @@
             <p style="margin-right: 10px; margin-bottom: 0;">Click SUBMIT to view Data!!</p>
             <asp:Button ID="btn_view_Cancel" runat="server" Text="Cancle" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btn_view_Cancel_Click" />
             <asp:Button ID="btn_view_Reset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btn_view_Reset_Click" />
-            <asp:Button ID="btn_view_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="false" OnClick="btn_view_submit_Click" />
+            <asp:Button ID="btn_view_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="false" OnClick="btn_view_submit_Click"/>
         </div>
 
 
@@ -139,13 +129,13 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="label_lower" runat="server" Text="Label" Style="margin-right: 6px;"></asp:Label>
+                                <asp:Label ID="label_lower" runat="server" Text="View and Select for Detailed View" Style="margin-right: 6px;"></asp:Label>
                             </h2>
 
                             <%--<a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exportModal">
                                 <i class="fa fa-file-export"></i>Export
                             </a>--%>
-                              <asp:Button ID="ExportBtn" runat="server" Text="Export" CssClass="btn btn-info btn-sm" CausesValidation="false" OnClick="ExportBtn_Click" />
+                            <asp:Button ID="ExportBtn" runat="server" Text="Export" CssClass="btn btn-info btn-sm" CausesValidation="false" OnClick="ExportBtn_Click" />
 
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -154,46 +144,59 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="table-responsive">
-                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-bordered">
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                 <Columns>
 
-                                    <asp:TemplateField HeaderText="Sl">
+                                    <asp:TemplateField HeaderText="Sl" HeaderStyle-Width="5%">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblSl" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label>
+                                            <asp:Label ID="lblSl" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label><br />
+                                            Record ID:<asp:Label ID="lbl_RecordID" runat="server" Text='<%# Eval("RecordID") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
 
-                                    <asp:TemplateField HeaderText="Plant and Line Details">
+                                    <asp:TemplateField HeaderText="Plant Details" HeaderStyle-Width="10%">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPlant" runat="server" Text='<%# "Plant: " + Eval("PlantName") %>'></asp:Label><br />
-                                            <asp:Label ID="lblLine" runat="server" Text='<%# "Line: " + Eval("Line") %>'></asp:Label><br />
-                                            <asp:Label ID="lblCategory" runat="server" Text='<%# "Category: " + Eval("ProductCategory") %>'></asp:Label><br />
-                                            <asp:Label ID="lblBrand" runat="server" Text='<%# "Brand: " + Eval("ProductBrand") %>'></asp:Label><br />
-                                            <asp:Label ID="lblSku" runat="server" Text='<%# "SKU: " + Eval("SKUId") %>'></asp:Label>
+                                            Plant:<asp:Label ID="lbl_PlantName" runat="server" Text='<%# Eval("PlantName") %>' Font-Bold="true" /><br />
+                                            Line:<asp:Label ID="lbl_Line" runat="server" Text='<%# Eval("LineName") %>' Font-Bold="true" /><br />
+                                            Category:<asp:Label ID="lbl_ProductCategory" runat="server" Text='<%# Eval("ProductCategory") %>' Font-Bold="true" /><br />
+                                            Brand:<asp:Label ID="lbl_ProductBrand" runat="server" Text='<%# Eval("ProductBrand") %>' Font-Bold="true" /><br />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
 
-                                    <asp:TemplateField HeaderText="Submission Details">
+                                    <asp:TemplateField HeaderText="Submission Details" HeaderStyle-Width="10%">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblSubmittedDate" runat="server" Text='<%# "Date: " + Eval("SubmittedDate", "{0:dd/MM/yyyy}") %>'></asp:Label><br />
-                                            <asp:Label ID="lblSubmittedTime" runat="server" Text='<%# "Time: " + Eval("SubmittedTime", "{0:hh\\:mm\\:ss}") %>'></asp:Label><br />
-                                            <asp:Label ID="lblShift" runat="server" Text='<%# "Shift: " + Eval("Shift") %>'></asp:Label><br />
-                                            <asp:Label ID="lblSubmittedBy" runat="server" Text='<%# "Submitted By (ID): " + Eval("SubmittedById") %>'></asp:Label><br />
-                                            <asp:Label ID="lblEmployeeCode" runat="server" Text='<%# "Emp Code: " + Eval("SubmittedByEmployeeCode") %>'></asp:Label>
+                                            Date:<asp:Label ID="lblSubmittedDate" runat="server" Text='<%# Eval("SDate", "{0:dd/MM/yyyy}") %>'></asp:Label><br />
+                                            Time:<asp:Label ID="lblSubmittedTime" runat="server" Text='<%# Eval("STime", "{0:hh\\:mm\\:ss}") %>'></asp:Label>
+                                            [<asp:Label ID="lblShift" runat="server" Text='<%# Eval("SShift") %>'></asp:Label>]<br />
+                                            <asp:Label ID="lblSubmittedBy" runat="server" Text='<%# Eval("EmpName") %>'></asp:Label>
+                                            [<asp:Label ID="lblEmployeeCode" runat="server" Text='<%# Eval("EmpCode") %>'></asp:Label>]
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-
-                                    <asp:TemplateField HeaderText="Leak Test Details">
+                                    <%--<asp:TemplateField HeaderText="Metal Check" HeaderStyle-Width="30%">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPackingMCNo" runat="server" Text='<%# "Packing MC No: " + Eval("Packing_MC_No") %>'></asp:Label><br />
-                                            <asp:Label ID="lblLeakTestStatus" runat="server"
-                                                Text='<%# Eval("LeakTestStatus") != DBNull.Value && Convert.ToBoolean(Eval("LeakTestStatus")) ? "Leak Test Status: Passed" : "Leak Test Status: Failed" %>'>
-                                            </asp:Label>
-                                            <asp:Label ID="lblRemarksForFail" runat="server" Text='<%# "Remarks (if Failed): " + Eval("RemarksForFail") %>'></asp:Label>
+                                            <asp:Label ID="MetalCheck" runat="server" Text='<%# Eval("MetalCheck") %>'></asp:Label>
                                         </ItemTemplate>
+                                    </asp:TemplateField>--%>
+
+                                    <asp:TemplateField HeaderText="Remarks" HeaderStyle-Width="20%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblRemarks" runat="server" Text='<%# Eval("Remarks") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Approvals" HeaderStyle-Width="20%">
+                                        <ItemTemplate>
+                                            L1:<asp:Label ID="lbl_Approver1" runat="server" Text='<%# Eval("L1") %>' />
+                                            [<asp:Label ID="lbl_Approver1_Status" runat="server" Text='<%# Eval("Approver1_Status") == "0" ? "Approved" : "Pending" %>' />]<br />
+                                            L2:<asp:Label ID="lbl_Approver2" runat="server" Text='<%# Eval("L2") %>' />
+                                            [<asp:Label ID="lbl_Approver2_Status" runat="server" Text='<%# Eval("Approver2_Status") == "0" ? "Approved" : "Pending" %>' />]<br />
+                                            L3:<asp:Label ID="lbl_DottedLineApproverEmployeeCode" runat="server" Text='<%# Eval("L3") %>' />
+                                            [<asp:Label ID="lbl_DottedApprover_Status" runat="server" Text='<%# Eval("DottedApprover_Status") == "0" ? "Approved" : "Pending" %>' />]<br />
+                                        </ItemTemplate>
+                                        <ItemStyle CssClass="text" />
                                     </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
