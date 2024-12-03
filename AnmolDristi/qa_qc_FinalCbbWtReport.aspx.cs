@@ -114,7 +114,7 @@ namespace AnmolDristi
 
                     BindDataToGridView(jsonData);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                     //throw;
@@ -166,7 +166,7 @@ namespace AnmolDristi
             //JavaScriptSerializer serializer = new JavaScriptSerializer();
             //string jsonString = serializer.Serialize(recordsList);
 
-            
+
         }
 
         protected void BindDataToGridView(string jsonString)
@@ -198,7 +198,7 @@ namespace AnmolDristi
             try
             {
                 string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-                
+
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();

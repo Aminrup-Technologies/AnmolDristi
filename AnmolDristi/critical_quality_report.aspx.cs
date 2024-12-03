@@ -19,8 +19,6 @@ namespace AnmolDristi
     public partial class critical_quality_report : System.Web.UI.Page
     {
        public static string CIRId = string.Empty;
-        DB_Utility_OH4Y dbcl = new DB_Utility_OH4Y();
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -35,19 +33,10 @@ namespace AnmolDristi
                     lbl_docnumber.Text = "ANMOL/DOC/CORP/QA/07";
 
                     PlantBinder();
-                    DisplayCurrentShift();
                 }
 
             }
         }
-
-        private void DisplayCurrentShift()
-        {
-            ShiftManager shiftManager = new ShiftManager();
-            string currentShift = shiftManager.GetCurrentShiftType();
-            hdn_shiftvalue.Value = currentShift;
-        }
-
         public void PlantBinder()
         {
             string query = "SELECT plant_id, CONCAT(plant_name, '[', sap_code, ']') AS plant_name FROM MST_PlantDetails";
@@ -157,8 +146,6 @@ namespace AnmolDristi
                 string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
                 lbl_DDL_PlantLine_Value.Text = selectedPlantLineValue;
                 LineProductsBinder(selectedPlantValue, selectedPlantLineValue);
-
-                LoadApprovers(selectedPlantValue, selectedPlantLineValue);
             }
             else
             {
@@ -175,182 +162,6 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_PlantLine_Error_script, false);
             }
         }
-
-        private void LoadApproversOld(string selectedPlantValue, string selectedPlantLineValue)
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
-                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
-                    cmd.Parameters.AddWithValue("@FormID", 9);
-                    cmd.Parameters.AddWithValue("@FormName", "critical_quality_report");
-
-                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                    {
-                        hdn_formid.Value = "9";
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-
-                        GridViewApprovers.DataSource = dt;
-                        GridViewApprovers.DataBind();
-
-                        if (dt.Rows.Count > 0)
-                        {
-                            DataRow row = dt.Rows[0];
-
-                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
-                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
-                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
-
-                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
-                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
-                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
-
-                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
-                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
-                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
-                        }
-                        else
-                        {
-                            // Set default values to ADMIN if no rows are found
-                            //Approver1NameLabel.Text = "ADMIN";
-                            //Approver1CodeLabel.Text = "ADMIN";
-
-                            //Approver2NameLabel.Text = "ADMIN";
-                            //Approver2CodeLabel.Text = "ADMIN";
-
-                            //DottedLineApproverNameLabel.Text = "ADMIN";
-                            //DottedLineApproverCodeLabel.Text = "ADMIN";
-
-                            // Insert default record
-                            dbcl.InsertDefaultApprovers(selectedPlantValue, selectedPlantLineValue, 9);
-
-                            // Reload after insertion
-                            LoadApprovers(selectedPlantValue, selectedPlantLineValue);
-
-                            string PlantBinder_Error_script = @"<script type='text/javascript'>
-                                new PNotify({
-                                    title: 'Data Success',
-                                    text: 'No Approver Mapping Found! Default Approvers Added.',
-                                    type: 'success',
-                                    styling: 'bootstrap3'
-                                });
-                            </script>";
-
-                            // RegisterStartupScript adds the JavaScript code to the page
-                            ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue);
-                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);
-                    cmd.Parameters.AddWithValue("@FormID", 9);
-                    cmd.Parameters.AddWithValue("@FormName", "critical_quality_report");
-
-                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                    {
-                        hdn_formid.Value = "9";
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-
-                        if (dt.Rows.Count > 0)
-                        {
-                            // Populate the GridView
-                            GridViewApprovers.DataSource = dt;
-                            GridViewApprovers.DataBind();
-
-                            // Populate labels with approver data
-                            DataRow row = dt.Rows[0];
-
-                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
-                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
-                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
-
-                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
-                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
-                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
-
-                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
-                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
-                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
-                        }
-                        else
-                        {
-                            // Insert default approvers
-                            bool isInserted = dbcl.InsertDefaultApprovers(selectedPlantValue, selectedPlantLineValue, 9);
-
-                            if (isInserted)
-                            {
-                                // Re-fetch data after insertion (no recursion)
-                                da.Fill(dt);
-                                if (dt.Rows.Count > 0)
-                                {
-                                    GridViewApprovers.DataSource = dt;
-                                    GridViewApprovers.DataBind();
-
-                                    // Populate labels with approver data
-                                    DataRow row = dt.Rows[0];
-
-                                    Approver1NameLabel.Text = row["Approver1Name"].ToString();
-                                    Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
-                                    //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString();
-
-                                    Approver2NameLabel.Text = row["Approver2Name"].ToString();
-                                    Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
-                                    //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString();
-
-                                    DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
-                                    DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
-                                    //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString();
-                                }
-                                else
-                                {
-                                    ShowErrorNotification("Failed to load approver data even after insertion.");
-                                }
-                            }
-                            else
-                            {
-                                // If default insertion fails
-                                ShowErrorNotification("Failed to insert default approvers.");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void ShowErrorNotification(string message)
-        {
-            string script = $@"<script type='text/javascript'>
-                        new PNotify({{
-                            title: 'Error',
-                            text: '{message}',
-                            type: 'error',
-                            styling: 'bootstrap3'
-                        }});
-                      </script>";
-            ClientScript.RegisterStartupScript(this.GetType(), "ErrorNotification", script, false);
-        }
-
         private void LineProductsBinder(string selectedPlantValue, string selectedPlantLineValue)
         {
             // Construct the SQL query with parameters
@@ -609,8 +420,7 @@ namespace AnmolDristi
 
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            int formID = Convert.ToInt32(hdn_formid.Value.ToString());
-            string shift = hdn_shiftvalue.Value.ToString();
+
             string plantName = DDL_Plant.SelectedValue;
             string plantLine = DDL_PlantLine.SelectedValue;
             string productCategory = DDL_ProductCategory.SelectedValue;
@@ -634,6 +444,7 @@ namespace AnmolDristi
             string SubmittedByPNo = Session["WORKMAN"].ToString();
             DateTime SubmittedDate = DateTime.Now.Date;  // Current Date
             TimeSpan SubmittedTime = DateTime.Now.TimeOfDay;  // Current Time
+            string Shift = string.Empty;
 
             //DateTime? TimeOfIssueing = string.IsNullOrEmpty(TB_IssueTime.Text) ? (DateTime?)null : Convert.ToDateTime(TB_IssueTime.Text);
 
@@ -644,14 +455,14 @@ namespace AnmolDristi
                     conn.Open();
 
                     // SQL Insert Query
-                    string query = @"INSERT INTO TRN_Critical_Incident (CIRId,FormID, PlantName, Line, ProductCategory, ProductBrand, SKUId, BatchCode, QCI_EmpCode, SftInCharge_EmpCode, QAQCInCharge, QIDetails, RjtdQty, WhenObserved, ImmediateAction, CorrectiveAction, TgtDtOfComp, Responsibility_EmpCode, DispatchAppRB, DispatchApp, TimeOfIssueing, SubmittedById, SubmittedByPNo, SubmittedDate, SubmittedTime, Shift) VALUES (@CIRId, @FormID, @PlantName, @Line, @ProductCategory, @ProductBrand, @SKUId, @BatchCode, @QCI_EmpCode, @SftInCharge_EmpCode, @QAQCInCharge, @QIDetails, @RjtdQty, @WhenObserved, @ImmediateAction, @CorrectiveAction, @TgtDtOfComp, @Responsibility_EmpCode, @DispatchAppRB, @DispatchApp, @TimeOfIssueing, @SubmittedById, @SubmittedByPNo, @SubmittedDate, @SubmittedTime, @Shift)";
+                    string query = @"INSERT INTO TRN_Critical_Incident (CIRId, PlantName, Line, ProductCategory, ProductBrand, SKUId, BatchCode, QCI_EmpCode, SftInCharge_EmpCode, QAQCInCharge, QIDetails, RjtdQty, WhenObserved, ImmediateAction, CorrectiveAction, TgtDtOfComp, Responsibility_EmpCode, DispatchAppRB, DispatchApp, TimeOfIssueing, SubmittedById, SubmittedByPNo, SubmittedDate, SubmittedTime, Shift) VALUES (@CIRId, @PlantName, @Line, @ProductCategory, @ProductBrand, @SKUId, @BatchCode, @QCI_EmpCode, @SftInCharge_EmpCode, @QAQCInCharge, @QIDetails, @RjtdQty, @WhenObserved, @ImmediateAction, @CorrectiveAction, @TgtDtOfComp, @Responsibility_EmpCode, @DispatchAppRB, @DispatchApp, @TimeOfIssueing, @SubmittedById, @SubmittedByPNo, @SubmittedDate, @SubmittedTime, @Shift)";
 
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         // Add parameters
                         cmd.Parameters.AddWithValue("@CIRId", GenerateUniqueCIR_PK());
-                        cmd.Parameters.AddWithValue("@FormID", formID);
+                        //cmd.Parameters.AddWithValue("@Id", 1);
                         cmd.Parameters.AddWithValue("@PlantName", plantName);
                         cmd.Parameters.AddWithValue("@Line", plantLine);
                         cmd.Parameters.AddWithValue("@ProductCategory", productCategory);
@@ -675,7 +486,7 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@SubmittedByPNo", SubmittedByPNo);
                         cmd.Parameters.AddWithValue("@SubmittedDate", SubmittedDate);
                         cmd.Parameters.AddWithValue("@SubmittedTime", SubmittedTime);
-                        cmd.Parameters.AddWithValue("@Shift", shift);
+                        cmd.Parameters.AddWithValue("@Shift", Shift);
 
                         // Execute the query
                         cmd.ExecuteNonQuery();

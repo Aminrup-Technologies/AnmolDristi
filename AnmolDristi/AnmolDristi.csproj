@@ -76,6 +76,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.IO.FileSystem.Primitives">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
@@ -105,6 +109,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.aspx" />
     <Content Include="add_branch.aspx" />
     <Content Include="add_brandtypes.aspx" />
     <Content Include="add_company.aspx" />
@@ -114,18 +119,60 @@
     <Content Include="add_prod_plants.aspx" />
     <Content Include="add_region.aspx" />
     <Content Include="add_users.aspx" />
+    <Content Include="apps.aspx" />
+    <Content Include="app_qc_inspectorreport.aspx" />
+    <Content Include="bopp_tape.aspx" />
+    <Content Include="ccp_checklist.aspx" />
+    <Content Include="CorrugatedBoardBoxReport.aspx" />
     <Content Include="Critical_Incident_ViewPage.aspx" />
     <Content Include="critical_quality_report.aspx" />
     <Content Include="datamastering_home.aspx" />
+    <Content Include="EditEmployee.aspx" />
+    <Content Include="FinalCbbWtVM.aspx" />
+    <Content Include="Form_Approval_Matrix.aspx" />
+    <Content Include="Form_Master.aspx" />
+    <Content Include="frmmastering_home.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="home.aspx" />
+    <Content Include="leak_test.aspx" />
+    <Content Include="Logs\EmailLogs\EmailErrorLog_2024-11-26.txt" />
+    <Content Include="New_User.aspx" />
+    <Content Include="PM_LaminateTesting.aspx" />
+    <Content Include="preDispatchVM.aspx" />
+    <Content Include="Process_Approval.aspx" />
+    <Content Include="Process_FinalApproval.aspx" />
+    <Content Include="Process_Report.aspx" />
+    <Content Include="prod_misc.aspx" />
+    <Content Include="prod_misc_rpts.aspx" />
+    <Content Include="PVC_Tray.aspx" />
     <Content Include="qaqc_add_users.aspx" />
+    <Content Include="qaqc_leaktest_rev1.aspx" />
     <Content Include="qaqc_mst_sku.aspx" />
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
+    <Content Include="qaqc_oven_report.aspx" />
+    <Content Include="qaqc_oven_viewpage.aspx" />
+    <Content Include="qaqc_overwrap.aspx" />
+    <Content Include="qaqc_pre_dispatch_QI_Report.aspx" />
+    <Content Include="qaqc_process_rpt.aspx" />
+    <Content Include="qaqc_qaapprovals.aspx" />
+    <Content Include="qaqc_qahome_rpt.aspx" />
+    <Content Include="qaqc_qcapprovals.aspx" />
     <Content Include="qaqc_qcinspector_frmctrl.aspx" />
+    <Content Include="qaqc_rotaryline_view.aspx" />
+    <Content Include="qaqc_rotary_line.aspx" />
+    <Content Include="qa_qc_FinalCbbWtReport.aspx" />
+    <Content Include="redirect.aspx" />
+    <Content Include="RM_Class2.aspx" />
     <Content Include="RM_Class5.aspx" />
+    <Content Include="UploadedFiles\Logs\QCInspectorLog_2024-08-12.txt" />
+    <Content Include="UploadedFiles\Logs\QCInspectorLog_2024-08-14.txt" />
+    <Content Include="viewusers.aspx" />
+    <Content Include="vm_ccp_checklist.aspx" />
+    <Content Include="vm_leak_test.aspx" />
+    <Content Include="vw_app_qcireport.aspx" />
     <Content Include="WebData\Anmol_Logo.png" />
     <Content Include="WebData\Internal\bank.jpg" />
     <Content Include="WebData\Internal\crossgif.gif" />
@@ -148,7 +195,13 @@
     <Content Include="WebData\Internal\tick-icon.png" />
     <Content Include="WebData\Internal\view.svg" />
     <Content Include="WebData\No_Image.jpg" />
+    <Content Include="ApplicationInsights.config" />
+    <Content Include="NLog.config" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
+    <Content Include="UploadImageHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -168,6 +221,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+    </Compile>
     <Compile Include="add_branch.aspx.cs">
       <DependentUpon>add_branch.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -231,6 +291,20 @@
     <Compile Include="add_users.aspx.designer.cs">
       <DependentUpon>add_users.aspx</DependentUpon>
     </Compile>
+    <Compile Include="apps.aspx.cs">
+      <DependentUpon>apps.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="apps.aspx.designer.cs">
+      <DependentUpon>apps.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="app_qc_inspectorreport.aspx.cs">
+      <DependentUpon>app_qc_inspectorreport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app_qc_inspectorreport.aspx.designer.cs">
+      <DependentUpon>app_qc_inspectorreport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="blank.aspx.cs">
       <DependentUpon>blank.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -238,8 +312,30 @@
     <Compile Include="blank.aspx.designer.cs">
       <DependentUpon>blank.aspx</DependentUpon>
     </Compile>
+    <Compile Include="bopp_tape.aspx.cs">
+      <DependentUpon>bopp_tape.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="bopp_tape.aspx.designer.cs">
+      <DependentUpon>bopp_tape.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ccp_checklist.aspx.cs">
+      <DependentUpon>ccp_checklist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ccp_checklist.aspx.designer.cs">
+      <DependentUpon>ccp_checklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CorrugatedBoardBoxReport.aspx.cs">
+      <DependentUpon>CorrugatedBoardBoxReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CorrugatedBoardBoxReport.aspx.designer.cs">
+      <DependentUpon>CorrugatedBoardBoxReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Critical_Incident_ViewPage.aspx.cs">
       <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Critical_Incident_ViewPage.aspx.designer.cs">
       <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
@@ -270,12 +366,60 @@
     <Compile Include="Dristi.Master.designer.cs">
       <DependentUpon>Dristi.Master</DependentUpon>
     </Compile>
+    <Compile Include="EditEmployee.aspx.cs">
+      <DependentUpon>EditEmployee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditEmployee.aspx.designer.cs">
+      <DependentUpon>EditEmployee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmailNotifier.cs" />
+    <Compile Include="EmailRecipientManager.cs" />
+    <Compile Include="EmailRecipientMgr.cs" />
+    <Compile Include="FinalCbbWtVM.aspx.cs">
+      <DependentUpon>FinalCbbWtVM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FinalCbbWtVM.aspx.designer.cs">
+      <DependentUpon>FinalCbbWtVM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Approval_Matrix.aspx.cs">
+      <DependentUpon>Form_Approval_Matrix.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Form_Approval_Matrix.aspx.designer.cs">
+      <DependentUpon>Form_Approval_Matrix.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Master.aspx.cs">
+      <DependentUpon>Form_Master.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Form_Master.aspx.designer.cs">
+      <DependentUpon>Form_Master.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmmastering_home.aspx.cs">
+      <DependentUpon>frmmastering_home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmmastering_home.aspx.designer.cs">
+      <DependentUpon>frmmastering_home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="leak_test.aspx.cs">
+      <DependentUpon>leak_test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="leak_test.aspx.designer.cs">
+      <DependentUpon>leak_test.aspx</DependentUpon>
     </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
@@ -284,12 +428,84 @@
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="LoginNotifier.cs" />
+    <Compile Include="New_User.aspx.cs">
+      <DependentUpon>New_User.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="New_User.aspx.designer.cs">
+      <DependentUpon>New_User.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PM_LaminateTesting.aspx.cs">
+      <DependentUpon>PM_LaminateTesting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PM_LaminateTesting.aspx.designer.cs">
+      <DependentUpon>PM_LaminateTesting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="preDispatchVM.aspx.cs">
+      <DependentUpon>preDispatchVM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="preDispatchVM.aspx.designer.cs">
+      <DependentUpon>preDispatchVM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Process_Approval.aspx.cs">
+      <DependentUpon>Process_Approval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Process_Approval.aspx.designer.cs">
+      <DependentUpon>Process_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Process_FinalApproval.aspx.cs">
+      <DependentUpon>Process_FinalApproval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Process_FinalApproval.aspx.designer.cs">
+      <DependentUpon>Process_FinalApproval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Process_Report.aspx.cs">
+      <DependentUpon>Process_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Process_Report.aspx.designer.cs">
+      <DependentUpon>Process_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="prod_misc.aspx.cs">
+      <DependentUpon>prod_misc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="prod_misc.aspx.designer.cs">
+      <DependentUpon>prod_misc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="prod_misc_rpts.aspx.cs">
+      <DependentUpon>prod_misc_rpts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="prod_misc_rpts.aspx.designer.cs">
+      <DependentUpon>prod_misc_rpts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PVC_Tray.aspx.cs">
+      <DependentUpon>PVC_Tray.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PVC_Tray.aspx.designer.cs">
+      <DependentUpon>PVC_Tray.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="QAProcessCheckingDataAcess.cs" />
     <Compile Include="qaqc_add_users.aspx.cs">
       <DependentUpon>qaqc_add_users.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="qaqc_add_users.aspx.designer.cs">
       <DependentUpon>qaqc_add_users.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_leaktest_rev1.aspx.cs">
+      <DependentUpon>qaqc_leaktest_rev1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_leaktest_rev1.aspx.designer.cs">
+      <DependentUpon>qaqc_leaktest_rev1.aspx</DependentUpon>
     </Compile>
     <Compile Include="qaqc_mst_sku.aspx.cs">
       <DependentUpon>qaqc_mst_sku.aspx</DependentUpon>
@@ -313,12 +529,68 @@
     <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
     </Compile>
+    <Compile Include="qaqc_oven_report.aspx.cs">
+      <DependentUpon>qaqc_oven_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_oven_report.aspx.designer.cs">
+      <DependentUpon>qaqc_oven_report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_oven_viewpage.aspx.cs">
+      <DependentUpon>qaqc_oven_viewpage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_oven_viewpage.aspx.designer.cs">
+      <DependentUpon>qaqc_oven_viewpage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_overwrap.aspx.cs">
+      <DependentUpon>qaqc_overwrap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_overwrap.aspx.designer.cs">
+      <DependentUpon>qaqc_overwrap.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_pre_dispatch_QI_Report.aspx.cs">
+      <DependentUpon>qaqc_pre_dispatch_QI_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_pre_dispatch_QI_Report.aspx.designer.cs">
+      <DependentUpon>qaqc_pre_dispatch_QI_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_process_rpt.aspx.cs">
+      <DependentUpon>qaqc_process_rpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_process_rpt.aspx.designer.cs">
+      <DependentUpon>qaqc_process_rpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_qaapprovals.aspx.cs">
+      <DependentUpon>qaqc_qaapprovals.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_qaapprovals.aspx.designer.cs">
+      <DependentUpon>qaqc_qaapprovals.aspx</DependentUpon>
+    </Compile>
     <Compile Include="qaqc_qahome.aspx.cs">
       <DependentUpon>qaqc_qahome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="qaqc_qahome.aspx.designer.cs">
       <DependentUpon>qaqc_qahome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_qahome_rpt.aspx.cs">
+      <DependentUpon>qaqc_qahome_rpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_qahome_rpt.aspx.designer.cs">
+      <DependentUpon>qaqc_qahome_rpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_qcapprovals.aspx.cs">
+      <DependentUpon>qaqc_qcapprovals.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_qcapprovals.aspx.designer.cs">
+      <DependentUpon>qaqc_qcapprovals.aspx</DependentUpon>
     </Compile>
     <Compile Include="qaqc_qchome.aspx.cs">
       <DependentUpon>qaqc_qchome.aspx</DependentUpon>
@@ -348,18 +620,87 @@
     <Compile Include="qaqc_qcinspector_rpt_.aspx.designer.cs">
       <DependentUpon>qaqc_qcinspector_rpt_.aspx</DependentUpon>
     </Compile>
+    <Compile Include="qaqc_rotaryline_view.aspx.cs">
+      <DependentUpon>qaqc_rotaryline_view.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_rotaryline_view.aspx.designer.cs">
+      <DependentUpon>qaqc_rotaryline_view.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_rotary_line.aspx.cs">
+      <DependentUpon>qaqc_rotary_line.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_rotary_line.aspx.designer.cs">
+      <DependentUpon>qaqc_rotary_line.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qa_qc_FinalCbbWtReport.aspx.cs">
+      <DependentUpon>qa_qc_FinalCbbWtReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qa_qc_FinalCbbWtReport.aspx.designer.cs">
+      <DependentUpon>qa_qc_FinalCbbWtReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="redirect.aspx.cs">
+      <DependentUpon>redirect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="redirect.aspx.designer.cs">
+      <DependentUpon>redirect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class2.aspx.cs">
+      <DependentUpon>RM_Class2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class2.aspx.designer.cs">
+      <DependentUpon>RM_Class2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RM_Class5.aspx.cs">
       <DependentUpon>RM_Class5.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RM_Class5.aspx.designer.cs">
       <DependentUpon>RM_Class5.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UploadImageHandler.ashx.cs">
+      <DependentUpon>UploadImageHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="viewusers.aspx.cs">
+      <DependentUpon>viewusers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="viewusers.aspx.designer.cs">
+      <DependentUpon>viewusers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vm_ccp_checklist.aspx.cs">
+      <DependentUpon>vm_ccp_checklist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vm_ccp_checklist.aspx.designer.cs">
+      <DependentUpon>vm_ccp_checklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vm_leak_test.aspx.cs">
+      <DependentUpon>vm_leak_test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vm_leak_test.aspx.designer.cs">
+      <DependentUpon>vm_leak_test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vw_app_qcireport.aspx.cs">
+      <DependentUpon>vw_app_qcireport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vw_app_qcireport.aspx.designer.cs">
+      <DependentUpon>vw_app_qcireport.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
