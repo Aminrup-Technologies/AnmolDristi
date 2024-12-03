@@ -30,7 +30,7 @@ namespace AnmolDristi
                 else
                 {
 
-                    lbl_docname.Text = "QA - PRE DISPATCH CLEARANCE REPORT ";
+                    lbl_docname.Text = "QA - PRE DISPATCH CLEARANCE REPORT";
                     lbl_docnumber.Text = "ANMOL/DOC/CORP/QA/06";
 
                     PlantBinder();

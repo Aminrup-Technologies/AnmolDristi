@@ -190,6 +190,7 @@
     <Content Include="bopp_tape.aspx" />
     <Content Include="ccp_checklist.aspx" />
     <Content Include="CorrugatedBoardBoxReport.aspx" />
+    <Content Include="Critical_Incident_ViewPage.aspx" />
     <Content Include="critical_quality_report.aspx" />
     <Content Include="datamastering_home.aspx" />
     <Content Include="EditEmployee.aspx" />
@@ -406,6 +407,13 @@
     </Compile>
     <Compile Include="CorrugatedBoardBoxReport.aspx.designer.cs">
       <DependentUpon>CorrugatedBoardBoxReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Critical_Incident_ViewPage.aspx.cs">
+      <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Critical_Incident_ViewPage.aspx.designer.cs">
+      <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="critical_quality_report.aspx.cs">
       <DependentUpon>critical_quality_report.aspx</DependentUpon>

@@ -52,7 +52,7 @@
                                     <asp:Label ID="lblPreDispatch" runat="server" Text="0" Visible="true" Font-Bold="true"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Pre-Dispatch
                             </a>
-                            <a class="btn btn-app" href="#">
+                            <a class="btn btn-app" href="Critical_Incident_ViewPage.aspx">
                                 <span class="badge bg-green">
                                     <asp:Label ID="lblCriticalIncident" runat="server" Text="0" Visible="true" Font-Bold="true"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Critical Incident

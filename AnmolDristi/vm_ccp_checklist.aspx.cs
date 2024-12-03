@@ -26,7 +26,7 @@ namespace AnmolDristi
                 }
                 else
                 {
-                    lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/05 ";
+                    //lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/05 ";
                     PlantBinder();
                     loadAlldata();
                 }
@@ -607,7 +607,6 @@ namespace AnmolDristi
                     SELECT 
                         c.ID AS DBID,
                         c.FormID as FormID,
-                        c.CcpId as RecordID,
                         p.plant_name AS PlantName,
                         c.SubmittedByEmployeeCode as EmpCode,
                         u.EmployeeName AS EmpName,
@@ -654,37 +653,37 @@ namespace AnmolDristi
                 var filteredData = GetDataFromTable(queryBuilder.ToString(), parameters.ToArray());
 
                 // Map to ReportInfo list
-                var dataSave = filteredData.AsEnumerable().Select(row => new ReportInfo
-                {
-                    DBID = row.Field<int>("DBID"),
-                    FormID = row.Field<int>("FormID"),
-                    RecordID = row.Field<string>("RecordID"),
-                    PlantName = row.Field<string>("PlantName"),
-                    EmpCode = row.Field<string>("EmpCode"),
-                    EmpName = row.Field<string>("EmpName"),
-                    SDate = row.Field<DateTime>("SDate"),
-                    STime = row.Field<TimeSpan>("STime"),
-                    SShift = row.Field<string>("SShift"),
-                    Remarks = row.Field<string>("Remarks"),
-                    L1 = row.Field<string>("L1"),
-                    Approver1_Status = row.Field<int?>("Approver1_Status"),
-                    Approver1_TimeStamp = row.Field<DateTime?>("Approver1_TimeStamp"),
-                    L2 = row.Field<string>("L2"),
-                    Approver2_Status = row.Field<int?>("Approver2_Status"),
-                    Approver2_TimeStamp = row.Field<DateTime?>("Approver2_TimeStamp"),
-                    L3 = row.Field<string>("L3"),
-                    DottedApprover_Status = row.Field<int?>("DottedApprover_Status"),
-                    DottedApprover_TimeStamp = row.Field<DateTime?>("DottedApprover_TimeStamp")
-                }).ToList();
+                //var dataSave = filteredData.AsEnumerable().Select(row => new ReportInfo
+                //{
+                //    DBID = row.Field<int>("DBID"),
+                //    FormID = row.Field<int>("FormID"),
+                //    RecordID = row.Field<string>("RecordID"),
+                //    PlantName = row.Field<string>("PlantName"),
+                //    EmpCode = row.Field<string>("EmpCode"),
+                //    EmpName = row.Field<string>("EmpName"),
+                //    SDate = row.Field<DateTime>("SDate"),
+                //    STime = row.Field<TimeSpan>("STime"),
+                //    SShift = row.Field<string>("SShift"),
+                //    Remarks = row.Field<string>("Remarks"),
+                //    L1 = row.Field<string>("L1"),
+                //    Approver1_Status = row.Field<int?>("Approver1_Status"),
+                //    Approver1_TimeStamp = row.Field<DateTime?>("Approver1_TimeStamp"),
+                //    L2 = row.Field<string>("L2"),
+                //    Approver2_Status = row.Field<int?>("Approver2_Status"),
+                //    Approver2_TimeStamp = row.Field<DateTime?>("Approver2_TimeStamp"),
+                //    L3 = row.Field<string>("L3"),
+                //    DottedApprover_Status = row.Field<int?>("DottedApprover_Status"),
+                //    DottedApprover_TimeStamp = row.Field<DateTime?>("DottedApprover_TimeStamp")
+                //}).ToList();
 
                 // Bind to GridView
-                GridView1.DataSource = dataSave;
+                GridView1.DataSource = filteredData;
                 GridView1.DataBind();
 
-                if (!dataSave.Any())
-                {
-                    ShowNotification("No Data", "No records found for the selected criteria.", "info");
-                }
+                //if (!filteredData.Any())
+                //{
+                //    ShowNotification("No Data", "No records found for the selected criteria.", "info");
+                //}
             }
             catch (Exception ex)
             {
@@ -718,13 +717,24 @@ namespace AnmolDristi
 
         protected void btn_view_Cancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("home.aspx");
+            Response.Redirect("home.aspx",false);
         }
 
         protected void btn_view_Reset_Click(object sender, EventArgs e)
         {
-            Response.Redirect("vm_ccp_checklist.aspx");
+            Response.Redirect("vm_ccp_checklist.aspx", false);
         }
 
+        protected void GridView1_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
+        {
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = GridView1.Rows[rowIndex];
+            string dbid = (row.FindControl("lbl_rowid") as Label).Text;
+            if (e.CommandName == "View")
+            {
+                //Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "&VM=1", false);
+                //Response.Redirect("#", false);
+            }
+        }
     }
 }

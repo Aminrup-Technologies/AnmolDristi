@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="vm_leak_test.aspx.cs" Inherits="AnmolDristi.vm_leak_test" %>
+﻿<%@ Page Title="AIL | QC - Leak/Seal & Slanted Pack Report" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="vm_leak_test.aspx.cs" Inherits="AnmolDristi.vm_leak_test" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -26,8 +26,7 @@
                 <div class="col-md-12 col-sm-12 ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="Label"></asp:Label></h2>
+                            <h2>Search Filters for Leak/Seal & Slanted Pack Report</h2>
                             <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>
 
                             <ul class="nav navbar-right panel_toolbox">
@@ -112,9 +111,9 @@
 
         <div class="action-buttons" style="display: flex; justify-content: center; align-items: center; text-align: center;">
             <p style="margin-right: 10px; margin-bottom: 0;">Click SUBMIT to view Data!!</p>
-            <asp:Button ID="btn_view_Cancel" runat="server" Text="Cancle" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btn_view_Cancel_Click" />
+            <asp:Button ID="btn_view_Cancel" runat="server" Text="Cancel" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/qaqc_qahome_rpt.aspx" />
             <asp:Button ID="btn_view_Reset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btn_view_Reset_Click" />
-            <asp:Button ID="btn_view_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="false" OnClick="btn_view_submit_Click"/>
+            <asp:Button ID="btn_view_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="false" OnClick="btn_view_submit_Click" />
         </div>
 
 
@@ -144,13 +143,13 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="table-responsive">
-                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" OnRowCommand="GridView1_RowCommand">
                                 <Columns>
 
                                     <asp:TemplateField HeaderText="Sl" HeaderStyle-Width="5%">
                                         <ItemTemplate>
                                             <asp:Label ID="lblSl" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label><br />
-                                            Record ID:<asp:Label ID="lbl_RecordID" runat="server" Text='<%# Eval("RecordID") %>'></asp:Label>
+                                            DBID:<asp:Label ID="lbl_rowid" runat="server" Text='<%# Eval("DBID") %>' Visible="true" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -197,6 +196,12 @@
                                             [<asp:Label ID="lbl_DottedApprover_Status" runat="server" Text='<%# Eval("DottedApprover_Status") == "0" ? "Approved" : "Pending" %>' />]<br />
                                         </ItemTemplate>
                                         <ItemStyle CssClass="text" />
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Actions" HeaderStyle-Width="5%">
+                                        <ItemTemplate>
+                                            <asp:Button ID="btn_viewdetails" runat="server" Text="View" Font-Size="Smaller" CssClass="btn btn-sm btn-warning" CommandName="View" CausesValidation="false" CommandArgument="<%# Container.DataItemIndex %>" />
+                                        </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>

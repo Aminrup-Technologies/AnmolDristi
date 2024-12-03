@@ -25,7 +25,6 @@ namespace AnmolDristi
                 }
                 else
                 {
-                    lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/05 ";
                     PlantBinder();
                     loadAlldata();
                 }
@@ -1068,6 +1067,18 @@ namespace AnmolDristi
         protected void btn_view_Reset_Click(object sender, EventArgs e)
         {
             Response.Redirect("vm_leak_test.aspx");
+        }
+
+        protected void GridView1_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
+        {
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = GridView1.Rows[rowIndex];
+            string dbid = (row.FindControl("lbl_rowid") as Label).Text;
+            if (e.CommandName == "View")
+            {
+                //Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "&VM=1", false);
+                //Response.Redirect("#", false);
+            }
         }
     }
 }
