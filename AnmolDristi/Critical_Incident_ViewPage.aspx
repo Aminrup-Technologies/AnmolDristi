@@ -26,7 +26,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                     [<asp:Label ID="lbl_DDL_Plant_Value" runat="server" AssociatedControlID="DDL_Plant" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
+                                    [<asp:Label ID="lbl_DDL_Plant_Value" runat="server" AssociatedControlID="DDL_Plant" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_Plant_SelectedIndexChanged"></asp:DropDownList>
@@ -38,7 +38,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label2" runat="server" AssociatedControlID="DDL_PlantLine" Text="Select Line" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                     [<asp:Label ID="lbl_DDL_PlantLine_Value" runat="server" AssociatedControlID="DDL_PlantLine" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
+                                    [<asp:Label ID="lbl_DDL_PlantLine_Value" runat="server" AssociatedControlID="DDL_PlantLine" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
 
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_PlantLine_SelectedIndexChanged"></asp:DropDownList>
@@ -125,100 +125,60 @@
                         <div class="x_content">
                             <div class="row">
                                 <div class="card-box col-md-12 col-sm-12" style="width: 100%; height: 450px; overflow: scroll;">
-                                    <asp:GridView ID="GridView1" runat="server" Width="100%" class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found">
+                                    <asp:GridView ID="GridView1" runat="server" Width="100%" class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" EmptyDataText="No Data Found" OnRowCommand="GridView1_RowCommand">
                                         <Columns>
 
-                                            <asp:TemplateField HeaderText="SL" Visible="True" HeaderStyle-Width="2%">
+                                            <asp:TemplateField HeaderText="Sl" HeaderStyle-Width="5%">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lbl_slno" runat="server" Text="<%# Container.DataItemIndex + 1 %>"></asp:Label>
+                                                    <asp:Label ID="lblSl" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label><br />
+                                                    DBID:<asp:Label ID="lbl_rowid" runat="server" Text='<%# Eval("DBID") %>' Visible="true" />
                                                 </ItemTemplate>
-                                                <ItemStyle CssClass="text text-center" />
                                             </asp:TemplateField>
 
-                                            <asp:TemplateField HeaderText="Plant and Line Details" Visible="true" HeaderStyle-Width="5%">
-                                                <ItemTemplate>
-                                                    Plant Name :
-                                                    <asp:Label ID="lbl_Plant" runat="server" Text='<%# Eval("PlantName") %>' />
-                                                    <br />
-                                                    Line No :
-                                                    <asp:Label ID="lbl_Line" runat="server" Text='<%# Eval("Line") %>' />
-                                                    <br />
-                                                    Category:
-                                                    <asp:Label ID="lbl_Category" runat="server" Text='<%# Eval("ProductCategory") %>' />
-                                                    <br />
-                                                    Brand:
-                                                    <asp:Label ID="lbl_Brand" runat="server" Text='<%# Eval("ProductBrand")%>' />
-                                                    <br />
-                                                    SKU:
-                                                    <asp:Label ID="lbl_Sku" runat="server" Text='<%# Eval("SKUId") %>' />
-                                                    <br />
-                                                </ItemTemplate>
-                                                <ItemStyle CssClass="text" />
 
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Submission Details" HeaderStyle-Width="5%">
+                                            <asp:TemplateField HeaderText="Plant Details" HeaderStyle-Width="20%">
                                                 <ItemTemplate>
-                                                    Date :
-                                                    <asp:Label ID="lbl_SubmittedDate" runat="server" Text='<%# Eval("SubmittedDate","{0:dd-MM-yyyy}") %>' ForeColor="Brown" Font-Bold="true" /><br />
-                                                    Time :
-                                                    <asp:Label ID="lbl_SubmittedTime" runat="server" Text='<%# Eval("SubmittedTime") %>' ForeColor="Brown" Font-Bold="true" /><br />
-                                                    Employee :
-                                                    <asp:Label ID="lbl_SubmittedById" runat="server" Text='<%# Eval("SubmittedById") %>' Font-Bold="true" ForeColor="Blue" />
-                                                    <br />
+                                                    Plant:<asp:Label ID="lbl_PlantName" runat="server" Text='<%# Eval("PlantName") %>' Font-Bold="true" /><br />
+                                                    Line:<asp:Label ID="lbl_Line" runat="server" Text='<%# Eval("LineName") %>' Font-Bold="true" /><br />
+                                                    Category:<asp:Label ID="lbl_ProductCategory" runat="server" Text='<%# Eval("ProductCategory") %>' Font-Bold="true" /><br />
+                                                    Brand:<asp:Label ID="lbl_ProductBrand" runat="server" Text='<%# Eval("ProductBrand") %>' Font-Bold="true" /><br />
                                                 </ItemTemplate>
-                                                <ItemStyle CssClass="text" />
                                             </asp:TemplateField>
 
-                                            <asp:TemplateField HeaderText="Observation Details :" Visible="true" HeaderStyle-Width="5%">
+
+                                            <asp:TemplateField HeaderText="Submission Details" HeaderStyle-Width="20%">
                                                 <ItemTemplate>
-                                                    Quality Incident Details :
-                                                    <asp:Label ID="lbl_qiDetail" runat="server" Text='<%# Eval("QIDetails") %>' Font-Bold="true" /><br />
-                                                    Rejected/Hold Quantity :
-                                                    <asp:Label ID="lbl_r_hQuantity" runat="server" Text='<%# Eval("RjtdQty") %>' Font-Bold="true" /><br />
-                                                    When Observed :
-                                                    <asp:Label ID="lbl_Observed" runat="server" Text='<%# Eval("WhenObserved") %>' Font-Bold="true" /><br />
-                                                    Target Date of Completion :
-                                                    <asp:Label ID="lbl_TargetDtCom" runat="server" Text='<%# Eval("TgtDtOfComp") %>' Font-Bold="true" />
+                                                    Date:<asp:Label ID="lblSubmittedDate" runat="server" Text='<%# Eval("SDate", "{0:dd/MM/yyyy}") %>'></asp:Label><br />
+                                                    Time:<asp:Label ID="lblSubmittedTime" runat="server" Text='<%# Eval("STime", "{0:hh\\:mm\\:ss}") %>'></asp:Label>
+                                                    [<asp:Label ID="lblShift" runat="server" Text='<%# Eval("SShift") %>'></asp:Label>]<br />
+                                                    <asp:Label ID="lblSubmittedBy" runat="server" Text='<%# Eval("EmpName") %>'></asp:Label>
+                                                    [<asp:Label ID="lblEmployeeCode" runat="server" Text='<%# Eval("EmpCode") %>'></asp:Label>]
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+
+                                            <asp:TemplateField HeaderText="Remarks" HeaderStyle-Width="20%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblRemarks" runat="server" Text='<%# Eval("Remarks") %>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+
+                                            <asp:TemplateField HeaderText="Approvals" HeaderStyle-Width="20%">
+                                                <ItemTemplate>
+                                                    L1:<asp:Label ID="lbl_Approver1" runat="server" Text='<%# Eval("L1") %>' />
+                                                    [<asp:Label ID="lbl_Approver1_Status" runat="server" Text='<%# Eval("Approver1_Status") == "0" ? "Approved" : "Pending" %>' />]<br />
+                                                    L2:<asp:Label ID="lbl_Approver2" runat="server" Text='<%# Eval("L2") %>' />
+                                                    [<asp:Label ID="lbl_Approver2_Status" runat="server" Text='<%# Eval("Approver2_Status") == "0" ? "Approved" : "Pending" %>' />]<br />
+                                                    L3:<asp:Label ID="lbl_DottedLineApproverEmployeeCode" runat="server" Text='<%# Eval("L3") %>' />
+                                                    [<asp:Label ID="lbl_DottedApprover_Status" runat="server" Text='<%# Eval("DottedApprover_Status") == "0" ? "Approved" : "Pending" %>' />]<br />
                                                 </ItemTemplate>
                                                 <ItemStyle CssClass="text" />
                                             </asp:TemplateField>
 
-                                            <asp:TemplateField HeaderText="Actions Taken :" Visible="true" HeaderStyle-Width="5%">
+                                            <asp:TemplateField HeaderText="Actions" HeaderStyle-Width="5%">
                                                 <ItemTemplate>
-                                                    Immediate Taken Action :
-                                                    <asp:Label ID="lbl_ImmediateTakenAction" runat="server" Text='<%# Eval("ImmediateAction") %>' Font-Bold="true" /><br />
-                                                    Corrective/Preventive Actions :
-                                                    <asp:Label ID="lbl_c_pActions" runat="server" Text='<%# Eval("CorrectiveAction") %>' Font-Bold="true" /><br />
+                                                    <asp:Button ID="btn_viewdetails" runat="server" Text="View" Font-Size="Smaller" CssClass="btn btn-sm btn-warning" CommandName="View" CausesValidation="false" CommandArgument="<%# Container.DataItemIndex %>" />
                                                 </ItemTemplate>
-                                                <ItemStyle CssClass="text" />
                                             </asp:TemplateField>
-
-                                            <asp:TemplateField HeaderText="In-Charge Details" Visible="true" HeaderStyle-Width="5%">
-                                                <ItemTemplate>
-                                                    QCI :
-                                                    <asp:Label ID="lbl_QCI" runat="server" Text='<%# Eval("QCI_EmpCode") %>' Font-Bold="true" /><br />
-                                                    Shift In-Charge :
-                                                    <asp:Label ID="lbl_SftInCharge" runat="server" Text='<%# Eval("SftInCharge_EmpCode") %>' Font-Bold="true" /><br />
-                                                    QA&QC In-Charge :
-                                                    <asp:Label ID="lbl_qaqcInCharge" runat="server" Text='<%# Eval("QAQCInCharge") %>' Font-Bold="true" /><br />
-                                                    Responsibility :
-                                                    <asp:Label ID="lbl_Responsibility" runat="server" Text='<%# Eval("Responsibility_EmpCode") %>' Font-Bold="true" />
-                                                </ItemTemplate>
-                                                <ItemStyle CssClass="text" />
-                                            </asp:TemplateField>
-
-                                            <asp:TemplateField HeaderText="Dispatch Details" Visible="true" HeaderStyle-Width="5%">
-                                                <ItemTemplate>
-                                                    Dispatch Approval:
-                                              <asp:Label ID="lbl_dispatch" runat="server" Text='<%# (Eval("DispatchAppRb") != null ? (Eval("DispatchAppRb").ToString() == "1" ? "Ok" : "Not Ok") : "N/A") %>' />
-                                                    <br />
-                                                    Dispatch Approval Remarks :
-                                        <asp:Label ID="Lb_DispatchAppR" runat="server" Text='<%# Eval("DispatchApp")%>'></asp:Label>
-                                                    <br />
-                                                </ItemTemplate>
-                                                <ItemStyle CssClass="text" />
-                                            </asp:TemplateField>
-
                                         </Columns>
                                         <HeaderStyle CssClass="text text-center" />
                                         <EmptyDataTemplate>

@@ -105,7 +105,7 @@ namespace AnmolDristi.DAL
             decimal moisture, decimal aWmax, decimal pHvalue, decimal gaugeLength,
             string CommentsGaugeLength, decimal weightWithoutOil, decimal weightWithOil,
             decimal oilPercentage, decimal packetWeight, string designAndImplementation,
-            string colourAndAppearance, int submittedById, DateTime submittedDate,
+            string colourAndAppearance, string Remarks, int submittedById, DateTime submittedDate,
             TimeSpan submittedTime, string Shift, string SubmittedByPNo, int FormID, string Approver1EmployeeCode, string Approver2EmployeeCode, string DottedLineApproverEmployeeCode)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -148,6 +148,11 @@ namespace AnmolDristi.DAL
                     command.Parameters.AddWithValue("@PacketWeight", packetWeight);
                     command.Parameters.AddWithValue("@DesignAndImplementation", designAndImplementation);
                     command.Parameters.AddWithValue("@ColourAndAppearance", colourAndAppearance);
+
+                    //Newly added on 28-Nov-2024------------------------
+                    command.Parameters.AddWithValue("@Remarks", Remarks);
+
+
                     command.Parameters.AddWithValue("@SubmittedById", submittedById);
                     command.Parameters.AddWithValue("@SubmittedDate", submittedDate);
                     command.Parameters.AddWithValue("@SubmittedTime", submittedTime);

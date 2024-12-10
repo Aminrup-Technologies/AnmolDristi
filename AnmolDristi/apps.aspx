@@ -99,8 +99,8 @@
                                     </div>
                                     <div class="x_content">
 
-                                        <div class="row">
-                                            <div class="col-md-55">
+                                        <div class="row" >
+                                            <div class="col-md-55" id="powerbi_com" runat="server" visible="false">
                                                 <div class="thumbnail">
                                                     <div class="image view view-first">
                                                         <a href="https://app.powerbi.com/groups/b8563467-c3cb-42a4-b70b-da17856af952/reports/566706ea-ea2c-43e9-8711-baa6de43cd41/ReportSection86019e086bd4cb08a3bf?experience=power-bi" target="_blank">
@@ -114,7 +114,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-55">
+                                            <div class="col-md-55" id="powerbi_net" runat="server" visible="false">
                                                 <div class="thumbnail">
                                                     <div class="image view view-first">
                                                         <a href="redirect.aspx" target="_blank">
@@ -216,6 +216,32 @@
                                                     </div>
                                                     <div class="caption">
                                                         <p>IT Helpdesk</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-55">
+                                                <div class="thumbnail">
+                                                    <div class="image view view-first">
+                                                        <a href="http://115.112.186.71:8001/" target="_blank">
+                                                            <img style="width: 60%; display: block;" src="WebData/webdatacapture.jpg" alt="image" height="80%" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <p>CMS Machines</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-55">
+                                                <div class="thumbnail">
+                                                    <div class="image view view-first">
+                                                        <a href="http://115.112.186.71:8002/TimeOffice/Login" target="_blank">
+                                                            <img style="width: 60%; display: block;" src="WebData/webtos.png" alt="image" height="80%" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <p>CMS Reports</p>
                                                     </div>
                                                 </div>
                                             </div>

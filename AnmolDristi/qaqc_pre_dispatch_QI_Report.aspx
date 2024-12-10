@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="qaqc_pre_dispatch_QI_Report.aspx.cs" Inherits="AnmolDristi.qaqc_pre_dispatch_QI_Report" %>
+﻿<%@ Page Title="QC | Pre-Dispatch Clearance Report Form" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="qaqc_pre_dispatch_QI_Report.aspx.cs" Inherits="AnmolDristi.qaqc_pre_dispatch_QI_Report" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 

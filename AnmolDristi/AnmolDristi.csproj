@@ -197,7 +197,9 @@
     <Content Include="WebData\Internal\view.svg" />
     <Content Include="WebData\No_Image.jpg" />
     <Content Include="ApplicationInsights.config" />
-    <Content Include="NLog.config" />
+    <Content Include=".bowerrc" />
+    <Content Include="WebData\webdatacapture.jpg" />
+    <Content Include="WebData\webtos.png" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -333,6 +335,13 @@
     </Compile>
     <Compile Include="CorrugatedBoardBoxReport.aspx.designer.cs">
       <DependentUpon>CorrugatedBoardBoxReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Critical_Incident_ViewPage.aspx.cs">
+      <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Critical_Incident_ViewPage.aspx.designer.cs">
+      <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Critical_Incident_Detailed.aspx.cs">
       <DependentUpon>Critical_Incident_Detailed.aspx</DependentUpon>
@@ -707,6 +716,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
     <Folder Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>

@@ -1270,7 +1270,7 @@
                                                                     <asp:RequiredFieldValidator ID="RFV_TB_MaidaBrand" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_MaidaBrand" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                                                     <asp:RegularExpressionValidator ID="REV_TB_MaidaBrand" runat="server" ControlToValidate="TB_MaidaBrand" ForeColor="Red" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_MaidaBrand" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Maida Brand (3-20 characters)" MaxLength="20"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_MaidaBrand" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Maida Brand (3-30 characters)" MaxLength="30"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2205,14 +2205,14 @@
 
                                                                     <asp:TemplateField HeaderText="Variety" HeaderStyle-Width="30%">
                                                                         <ItemTemplate>
-                                                                            <span class="variety"><%# Eval("Variety") %></span>
+                                                                            <span class="variety"><%# Eval("sap_IngredientName") %></span>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
 
                                                                     <asp:TemplateField HeaderText="Standard Weight" HeaderStyle-Width="15%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtStandardWeight" runat="server" CssClass="standard-weight form-control form-control-sm rounded" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("StandardWeight") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtStandardWeight" runat="server" CssClass="standard-weight form-control form-control-sm rounded" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("BOM_Qnty") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
@@ -2678,9 +2678,10 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="LabelRawBiscuitWgt" runat="server" AssociatedControlID="TB_RawBiscuitWgt" Text="Raw Biscuit Weight:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_RawBiscuitWgt" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_RawBiscuitWgt" ValidationGroup="VerifiedSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_RawBiscuitWgt" runat="server" ControlToValidate="TB_RawBiscuitWgt" ForeColor="Red" ValidationGroup="VerifiedSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_RawBiscuitWgt" runat="server" ControlToValidate="TB_RawBiscuitWgt" ForeColor="Red" ValidationGroup="VerifiedSubmit" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_RawBiscuitWgt" runat="server" ValidationGroup="VerifiedSubmit" ControlToValidate="TB_RawBiscuitWgt" ErrorMessage="[01.00 - 1000.00 gm]" ForeColor="Red" MinimumValue="01.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_RawBiscuitWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Raw Biscuit Wgt" MaxLength="20"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_RawBiscuitWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Raw Biscuit Wgt" MaxLength="10"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>

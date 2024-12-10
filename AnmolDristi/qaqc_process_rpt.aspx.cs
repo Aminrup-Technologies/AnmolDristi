@@ -40,7 +40,7 @@ namespace AnmolDristi
                     lbl_docnumber.Text = "ANMOL/DOC/CORP/QA/02";
                     PlantBinder();
 
-                    BindGridView();
+                    //BindGridView();
                     DisplayCurrentShift();
                     BindGridView1();
                     
@@ -448,9 +448,10 @@ namespace AnmolDristi
         {
             if (DDL_ProductBrand.SelectedIndex != 0)
             {
+                string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
                 BrandSKUBinder(selectedProductBrandValue);
-
+                BindGridViewfromDB(selectedPlantValue, selectedProductBrandValue);
                 DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
 
 
@@ -928,6 +929,8 @@ namespace AnmolDristi
 
                 //Make the inputs readonly
                 MakeInputsReadOnly();
+
+                BindGridViewfromDB(plantName, productBrand);
             }
             catch (Exception ex)
             {
@@ -1176,6 +1179,9 @@ namespace AnmolDristi
                 }
                 catch (Exception ex)
                 {
+                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                    EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                     string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
                     string errorScript = "<script type='text/javascript'>\n" +
                                          $"new PNotify({{\n" +
@@ -1265,6 +1271,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
                 string errorScript = "<script type='text/javascript'>\n" +
                                      $"new PNotify({{\n" +
@@ -1377,6 +1386,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
                 string errorScript = "<script type='text/javascript'>\n" +
                                      $"new PNotify({{\n" +
@@ -1426,7 +1438,7 @@ namespace AnmolDristi
         private string GenerateUnique()
         {
 
-            string newPcrValue;
+            string newPcrValue = string.Empty;
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             try
@@ -1451,9 +1463,12 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
                 // Handle exceptions
-                Console.WriteLine("Error generating PCR01: " + ex.Message);
-                throw;
+                //Console.WriteLine("Error generating PCR01: " + ex.Message);
+                //throw;
             }
 
             PcrNo = newPcrValue;
@@ -1518,28 +1533,28 @@ namespace AnmolDristi
             var dataSave = new List<VarietyInfo>
             {
                 // Add all 22 varieties here
-                new VarietyInfo {Sl = 1,   Variety = "Maida", StandardWeight = 500 } ,
-                new VarietyInfo {Sl = 2,   Variety = "Sugar", StandardWeight = 500 } ,
-                new VarietyInfo {Sl = 3,   Variety = "Butter", StandardWeight = 500  },
-                new VarietyInfo {Sl = 4,   Variety = "S.M.P", StandardWeight = 500  },
-                new VarietyInfo {Sl = 5,   Variety = "Process Water", StandardWeight = 500  },
-                new VarietyInfo {Sl = 6,   Variety = "Lecithin", StandardWeight = 500  },
-                new VarietyInfo {Sl = 7,   Variety = "GMS Paste", StandardWeight = 500  },
-                new VarietyInfo {Sl = 8,   Variety = "SSL paste/ LS. Powder", StandardWeight = 500  },
-                new VarietyInfo {Sl = 9,   Variety = "Glucose", StandardWeight = 500 },
-                new VarietyInfo {Sl = 10,  Variety = "H.V.O", StandardWeight = 500  },
-                new VarietyInfo {Sl = 11,  Variety = "Syrup", StandardWeight = 500  },
-                new VarietyInfo {Sl = 12,  Variety = "Malt", StandardWeight = 500  },
-                new VarietyInfo {Sl = 13,  Variety = "Broken Biscuit", StandardWeight = 500  },
-                new VarietyInfo {Sl = 14,  Variety = "A.B.C.", StandardWeight = 500  },
-                new VarietyInfo {Sl = 15,  Variety = "S.B.C.", StandardWeight = 500  },
-                new VarietyInfo {Sl = 16,  Variety = "S.M.B.S.", StandardWeight = 500  },
-                new VarietyInfo {Sl = 17,  Variety = "Whey Powder", StandardWeight = 500  },
-                new VarietyInfo {Sl = 18,  Variety = "Condence Milk", StandardWeight = 500  },
-                new VarietyInfo {Sl = 19,  Variety = "Salt", StandardWeight = 500 } ,
-                new VarietyInfo {Sl = 20,  Variety = "Yeast (Smell & Wt.)", StandardWeight = 500  },
-                new VarietyInfo {Sl = 21,  Variety = "E1", StandardWeight = 500 } ,
-                new VarietyInfo {Sl = 22,  Variety = "Caramel", StandardWeight = 500 } ,
+                new VarietyInfo {Sl = 1,   sap_IngredientName = "Maida", BOM_Qnty = 500 } ,
+                new VarietyInfo {Sl = 2,   sap_IngredientName = "Sugar", BOM_Qnty = 500 } ,
+                new VarietyInfo {Sl = 3,   sap_IngredientName = "Butter", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 4,   sap_IngredientName = "S.M.P", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 5,   sap_IngredientName = "Process Water", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 6,   sap_IngredientName = "Lecithin", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 7,   sap_IngredientName = "GMS Paste", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 8,   sap_IngredientName = "SSL paste/ LS. Powder", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 9,   sap_IngredientName = "Glucose", BOM_Qnty = 500 },
+                new VarietyInfo {Sl = 10,  sap_IngredientName = "H.V.O", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 11,  sap_IngredientName = "Syrup", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 12,  sap_IngredientName = "Malt", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 13,  sap_IngredientName = "Broken Biscuit", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 14,  sap_IngredientName = "A.B.C.", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 15,  sap_IngredientName = "S.B.C.", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 16,  sap_IngredientName = "S.M.B.S.", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 17,  sap_IngredientName = "Whey Powder", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 18,  sap_IngredientName = "Condence Milk", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 19,  sap_IngredientName = "Salt", BOM_Qnty = 500 } ,
+                new VarietyInfo {Sl = 20,  sap_IngredientName = "Yeast (Smell & Wt.)", BOM_Qnty = 500  },
+                new VarietyInfo {Sl = 21,  sap_IngredientName = "E1", BOM_Qnty = 500 } ,
+                new VarietyInfo {Sl = 22,  sap_IngredientName = "Caramel", BOM_Qnty = 500 } ,
 
             };
 
@@ -1547,11 +1562,70 @@ namespace AnmolDristi
             GridView1.DataSource = dataSave;
             GridView1.DataBind();
         }
+
+        private void BindGridViewfromDB(string Plant_Id, string Brand_Id)
+        {
+            // Connection string to your database (update with your actual connection details)
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            // Query to fetch data from the database
+            string query = "SELECT ROW_NUMBER() OVER (ORDER BY sap_IngredientName) AS Sl, sap_IngredientName, BOM_Qnty FROM MST_ProcessCheck_Materials where plant_id=@plant_id and brand_id=@brand_id order by Id";
+
+            // Create a DataTable to hold the data
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                // Using block ensures connection is properly disposed of
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    // Create a SqlCommand to execute the query
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Add parameters to the command to prevent SQL injection
+                        command.Parameters.AddWithValue("@plant_id", Plant_Id);
+                        command.Parameters.AddWithValue("@brand_id", Brand_Id);
+
+                        // Open the connection
+                        connection.Open();
+
+                        // Execute the query and load the data into the DataTable
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                        {
+                            adapter.Fill(dataTable);
+                        }
+                    }
+                }
+
+                // Check if DataTable contains any rows
+                if (dataTable.Rows.Count > 0)
+                {
+                    // Bind the DataTable to the GridView
+                    GridView1.DataSource = dataTable;
+                    GridView1.DataBind();
+                }
+                else
+                {
+                    // Call another function if no records are found
+                    BindGridView();
+                }
+            }
+            catch (Exception ex)
+            {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+
+                // Handle exceptions (e.g., log the error or display a message)
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+
+
         public class VarietyInfo
         {
             public int Sl { get; set; }
-            public string Variety { get; set; }
-            public decimal StandardWeight { get; set; }
+            public string sap_IngredientName { get; set; }
+            public decimal BOM_Qnty { get; set; }
             public decimal ActualWeight { get; set; }
             public decimal DeviationWeight { get; set; }
             public decimal DeviationPercentage { get; set; }
@@ -1585,8 +1659,8 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
-
-                throw;
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
             }
         }
         protected void WgtbtnSubmit_Click(object sender, EventArgs e)
@@ -1679,8 +1753,9 @@ namespace AnmolDristi
             }
             catch (Exception ex)
             {
-
-                throw;
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+                //throw;
             }
         }
         protected void OvenBtnSubmit_Click(object sender, EventArgs e)

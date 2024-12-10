@@ -1687,6 +1687,33 @@ namespace AnmolDristi.qaqc {
         protected global::System.Web.UI.WebControls.Image uploadedImage2;
         
         /// <summary>
+        /// Lbl_TXB_Remarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TXB_Remarks;
+        
+        /// <summary>
+        /// RFV_TXB_Remarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TXB_Remarks;
+        
+        /// <summary>
+        /// TXB_Remarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXB_Remarks;
+        
+        /// <summary>
         /// Lbl_btnSubmit control.
         /// </summary>
         /// <remarks>
