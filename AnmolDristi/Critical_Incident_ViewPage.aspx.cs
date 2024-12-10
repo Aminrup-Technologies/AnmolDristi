@@ -581,7 +581,7 @@ namespace AnmolDristi
             string dbid = (row.FindControl("lbl_rowid") as Label).Text;
             if (e.CommandName == "View")
             {
-                //Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "&VM=1", false);
+                Response.Redirect("Critical_Incident_Detailed.aspx?ID=" + dbid + "&VM=0", false);
             }
         }
     }

@@ -217,7 +217,7 @@
                                                         </EditItemTemplate>
                                                     </asp:TemplateField>
 
-                                                    <asp:CommandField ShowEditButton="True" />
+                                                    <asp:CommandField ShowEditButton="True" CausesValidation="false" />
                                                 </Columns>
                                             </asp:GridView>
 

@@ -13,7 +13,7 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                if (Session["USERID"] != null || Session["USERNAME"] != null || Session["WORKMAN"] != null)
+                if (Session["USERID"] != null || Session["USERNAME"] != null || Session["WORKMAN"] != null || Session["PLANTID"] != null)
                 {
 
                     lbl_username.Text = Session["USERNAME"].ToString();

@@ -828,7 +828,7 @@ namespace AnmolDristi
 
             if (e.CommandName == "ViewApprove")
             {
-                Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "");
+                Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "&VM=1", false);
             }
         }
     }

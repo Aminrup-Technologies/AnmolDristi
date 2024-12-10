@@ -1,18 +1,10 @@
-﻿using AnmolDristi.DAL;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Transactions;
 using System.Configuration;
 
 namespace AnmolDristi
@@ -20,7 +12,7 @@ namespace AnmolDristi
     public partial class vw_app_qcireport : System.Web.UI.Page
     {
         public static Int32 RecordID =0;
-        public static Int32 ViewMode = 0;
+        public static Int32 ViewerMode = 0;
 
         public static string ImgLink1 = string.Empty;
         public static string ImgLink2 = string.Empty;
@@ -50,7 +42,7 @@ namespace AnmolDristi
 
                     //below to bind the report details from TRN Tables
                     RecordID = Convert.ToInt32(Request.QueryString["ID"]);
-                    ViewMode = Convert.ToInt32(Request.QueryString["VM"]);
+                    ViewerMode = Convert.ToInt32(Request.QueryString["VM"]);
                     // Call the new method to load data
                     LoadRecordData(RecordID);
                 }
@@ -1254,7 +1246,18 @@ namespace AnmolDristi
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("qaqc_qcinspector_rpt_.aspx", false);
+            if (ViewerMode == 0)
+            {
+                Response.Redirect("qaqc_qcinspector_rpt_.aspx", false);
+            }
+            else if (ViewerMode == 1)
+            {
+                Response.Redirect("app_qc_inspectorreport.aspx", false);
+            }
+            else
+            {
+                Response.Redirect("home.aspx", false);
+            }
         }
     }
 }

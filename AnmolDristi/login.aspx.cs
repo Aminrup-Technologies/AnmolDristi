@@ -116,7 +116,7 @@ namespace AnmolDristi
                         //Session["PERMISSION"] = User_Permission;
                         Session["REGION"] = RegionId;
                         Session["STATE"] = BranchId;
-                        Session["COMPANY_CODE"] = PlantId;
+                        Session["PLANTID"] = PlantId;
                         Session["U_SITE"] = User_Worksite;
                         Session["U_SITECODE"] = User_WRKSTCode;
 

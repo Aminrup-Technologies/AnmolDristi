@@ -807,7 +807,7 @@ namespace AnmolDristi
             DateTime? dateTo = string.IsNullOrEmpty(TxtDateTo.Text) ? (DateTime?)null : DateTime.ParseExact(TxtDateTo.Text, "yyyy-MM-dd", null);
 
             StringBuilder queryBuilder = new StringBuilder(@"
-                SELECT 
+                SELECT TOP(30)
                     c.ID AS DBID,
                     c.FormID AS FormID,
                     p.plant_name AS PlantName,
@@ -948,8 +948,7 @@ namespace AnmolDristi
             string dbid = (row.FindControl("lbl_rowid") as Label).Text;
             if (e.CommandName == "View")
             {
-                //Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "&VM=1", false);
-                //Response.Redirect("#", false);
+                Response.Redirect("qaqc_rotaryline_detailview.aspx?ID=" + dbid + "&VM=0", false);
             }
         }
 

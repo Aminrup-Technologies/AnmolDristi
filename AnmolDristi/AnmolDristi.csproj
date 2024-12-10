@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -190,19 +191,23 @@
     <Content Include="bopp_tape.aspx" />
     <Content Include="ccp_checklist.aspx" />
     <Content Include="CorrugatedBoardBoxReport.aspx" />
+    <Content Include="Critical_Incident_Detailed.aspx" />
     <Content Include="Critical_Incident_ViewPage.aspx" />
     <Content Include="critical_quality_report.aspx" />
     <Content Include="datamastering_home.aspx" />
     <Content Include="EditEmployee.aspx" />
     <Content Include="FinalCbbWtVM.aspx" />
+    <Content Include="Final_CBB_Detailed.aspx" />
     <Content Include="Form_Approval_Matrix.aspx" />
     <Content Include="Form_Master.aspx" />
     <Content Include="Global.asax" />
     <Content Include="home.aspx" />
     <Content Include="leak_test.aspx" />
     <Content Include="New_User.aspx" />
+    <Content Include="Oven_Report_Detailed.aspx" />
     <Content Include="PM_LaminateTesting.aspx" />
     <Content Include="preDispatchVM.aspx" />
+    <Content Include="Pre_Dispatch_Detailed.aspx" />
     <Content Include="Process_Approval.aspx" />
     <Content Include="Process_FinalApproval.aspx" />
     <Content Include="Process_Report.aspx" />
@@ -225,6 +230,8 @@
     <Content Include="qaqc_qahome_rpt.aspx" />
     <Content Include="qaqc_qcapprovals.aspx" />
     <Content Include="qaqc_qcinspector_frmctrl.aspx" />
+    <Content Include="qaqc_rotaryline_approval.aspx" />
+    <Content Include="qaqc_rotaryline_detailview.aspx" />
     <Content Include="qaqc_rotaryline_view.aspx" />
     <Content Include="qaqc_rotary_line.aspx" />
     <Content Include="qa_qc_FinalCbbWtReport.aspx" />
@@ -408,6 +415,13 @@
     <Compile Include="CorrugatedBoardBoxReport.aspx.designer.cs">
       <DependentUpon>CorrugatedBoardBoxReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Critical_Incident_Detailed.aspx.cs">
+      <DependentUpon>Critical_Incident_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Critical_Incident_Detailed.aspx.designer.cs">
+      <DependentUpon>Critical_Incident_Detailed.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Critical_Incident_ViewPage.aspx.cs">
       <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -458,6 +472,13 @@
     <Compile Include="FinalCbbWtVM.aspx.designer.cs">
       <DependentUpon>FinalCbbWtVM.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Final_CBB_Detailed.aspx.cs">
+      <DependentUpon>Final_CBB_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Final_CBB_Detailed.aspx.designer.cs">
+      <DependentUpon>Final_CBB_Detailed.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Form_Approval_Matrix.aspx.cs">
       <DependentUpon>Form_Approval_Matrix.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -504,6 +525,13 @@
     <Compile Include="New_User.aspx.designer.cs">
       <DependentUpon>New_User.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Oven_Report_Detailed.aspx.cs">
+      <DependentUpon>Oven_Report_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Oven_Report_Detailed.aspx.designer.cs">
+      <DependentUpon>Oven_Report_Detailed.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PM_LaminateTesting.aspx.cs">
       <DependentUpon>PM_LaminateTesting.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -517,6 +545,13 @@
     </Compile>
     <Compile Include="preDispatchVM.aspx.designer.cs">
       <DependentUpon>preDispatchVM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pre_Dispatch_Detailed.aspx.cs">
+      <DependentUpon>Pre_Dispatch_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pre_Dispatch_Detailed.aspx.designer.cs">
+      <DependentUpon>Pre_Dispatch_Detailed.aspx</DependentUpon>
     </Compile>
     <Compile Include="Process_Approval.aspx.cs">
       <DependentUpon>Process_Approval.aspx</DependentUpon>
@@ -687,6 +722,20 @@
     </Compile>
     <Compile Include="qaqc_qcinspector_rpt_.aspx.designer.cs">
       <DependentUpon>qaqc_qcinspector_rpt_.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_rotaryline_approval.aspx.cs">
+      <DependentUpon>qaqc_rotaryline_approval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_rotaryline_approval.aspx.designer.cs">
+      <DependentUpon>qaqc_rotaryline_approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_rotaryline_detailview.aspx.cs">
+      <DependentUpon>qaqc_rotaryline_detailview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_rotaryline_detailview.aspx.designer.cs">
+      <DependentUpon>qaqc_rotaryline_detailview.aspx</DependentUpon>
     </Compile>
     <Compile Include="qaqc_rotaryline_view.aspx.cs">
       <DependentUpon>qaqc_rotaryline_view.aspx</DependentUpon>

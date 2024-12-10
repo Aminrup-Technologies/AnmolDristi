@@ -92,7 +92,7 @@
             var gridView = document.getElementById('<%= LineWeights_Grid.ClientID %>');
 
             // Start from 1 to skip the header row
-            for (var i = 1; i < gridView.rows.length; i++) {  
+            for (var i = 1; i < gridView.rows.length; i++) {
                 var row = gridView.rows[i];
                 var txtStlWeight = row.querySelector("input[id*='txtStlWeight']");
 
@@ -242,9 +242,9 @@
             var minimumRequiredRows = 3; // Set the minimum number of required filled rows
 
             var gridView = document.getElementById('<%= OvenEnd_GridView.ClientID %>');
-    
+
             // Start from 1 to skip the header row
-            for (var i = 1; i < gridView.rows.length; i++) {  
+            for (var i = 1; i < gridView.rows.length; i++) {
                 var row = gridView.rows[i];
 
                 var txtGaugeLength = row.querySelector("input[id*='txtGaugeLength']");
@@ -378,7 +378,7 @@
             <div class="page-title custom-page-title">
                 <div class="title_left">
                     <h3>
-                        <asp:Label ID="lbl_docname" runat="server" Text="Label"></asp:Label>
+                        <asp:Label ID="lbl_docname" runat="server" Text="Rotary Line & Oven End Report"></asp:Label>
                     </h3>
                 </div>
             </div>
@@ -537,7 +537,7 @@
 
                                                         <div class="col-md-6" id="AvgWt_TB" runat="server" visible="true">
                                                             <!-- Table structure for Min, Max, Difference, and Average -->
-                                                            <table class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" style="width:100%;">
+                                                            <table class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" style="width: 100%;">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Min Value</th>
@@ -629,7 +629,7 @@
 
                                                         <div class="col-md-6" id="ov_weights" runat="server" visible="true">
                                                             <!-- Table structure for Min, Max, Difference, and Average -->
-                                                            <table class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" style="width:100%;">
+                                                            <table class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" style="width: 100%;">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>X</th>
@@ -665,7 +665,7 @@
                                                                             <asp:Label ID="ov_lblMinValue" runat="server" Text="0"></asp:Label>
                                                                         </td>
                                                                         <td>
-                                                                             <asp:Label ID="ov_lblMaxValue" runat="server" Text="0"></asp:Label>
+                                                                            <asp:Label ID="ov_lblMaxValue" runat="server" Text="0"></asp:Label>
                                                                         </td>
                                                                         <td>
                                                                             <asp:Label ID="ov_lblDiffMinMax" runat="server" Text="0"></asp:Label>
@@ -673,7 +673,7 @@
                                                                         <td>
                                                                             <asp:Label ID="lblAvgWeights" runat="server" Text="0"></asp:Label>
                                                                         </td>
-                                                                        
+
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -713,16 +713,10 @@
                             <!-- Approver Flow Diagram -->
                             <div class="approver-flow">
                                 <div class="approver-item">
-                                    <p>
-                                        <asp:Label ID="Label8" runat="server" Text="Approver 1" />
-                                    </p>
+                                    <p><asp:Label ID="Label8" runat="server" Text="Approver 1" /></p>
                                     <asp:Image ID="Image3" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
-                                    <p>
-                                        <asp:Label ID="Approver1NameLabel" runat="server" Text='<%# Eval("Approver1Name") %>' />
-                                    </p>
-                                    <p>
-                                        <asp:Label ID="Approver1CodeLabel" runat="server" Text='<%# Eval("Approver1EmployeeCode") %>' />
-                                    </p>
+                                    <p><asp:Label ID="Approver1NameLabel" runat="server" Text='<%# Eval("Approver1Name") %>' /></p>
+                                    <p><asp:Label ID="Approver1CodeLabel" runat="server" Text='<%# Eval("Approver1EmployeeCode") %>' /></p>
                                 </div>
                                 <div class="flow-line"></div>
                                 <div class="approver-item">
@@ -754,7 +748,6 @@
 
                             <hr />
 
-                            <!-- GridView for Detailed Information -->
                             <asp:GridView ID="GridViewApprovers" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" Visible="false">
                                 <Columns>
                                     <asp:BoundField DataField="Approver1Name" HeaderText="Approver 1 Name" HtmlEncode="false" />
@@ -769,8 +762,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
 </asp:Content>

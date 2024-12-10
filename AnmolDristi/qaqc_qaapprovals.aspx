@@ -28,31 +28,31 @@
                                 <i class="fa fa-edit"></i>Inspector Report
                             </a>
                             
-                            <a class="btn btn-app" href="#" >
+                            <a class="btn btn-app" href="qaqc_rotaryline_approval.aspx" >
                                 <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Line Weight
                             </a>
-                            <a class="btn btn-app" href="#" >
+                            <a class="btn btn-app" href="vm_ccp_checklist.aspx" >
                                 <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label7" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>CCP Checklist
                             </a>
                             
 
-                            <a class="btn btn-app" href="#" >
+                            <a class="btn btn-app" href="vm_leak_test.aspx" >
                                 <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label8" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Leak Test
                             </a>
 
-                            <a class="btn btn-app" href="#" >
+                            <a class="btn btn-app" href="preDispatchVM.aspx" >
                                 <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label9" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Pre-Dispatch
                             </a>
                             
-                            <a class="btn btn-app" href="#" >
+                            <a class="btn btn-app" href="Critical_Incident_ViewPage.aspx" >
                                 <span class="badge bg-green">As Req.
                                     <asp:Label ID="Label10" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Critical Incident
