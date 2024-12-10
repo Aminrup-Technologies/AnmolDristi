@@ -350,13 +350,6 @@
     <Compile Include="Critical_Incident_Detailed.aspx.designer.cs">
       <DependentUpon>Critical_Incident_Detailed.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Critical_Incident_ViewPage.aspx.cs">
-      <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Critical_Incident_ViewPage.aspx.designer.cs">
-      <DependentUpon>Critical_Incident_ViewPage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="critical_quality_report.aspx.cs">
       <DependentUpon>critical_quality_report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -718,6 +711,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
     <Folder Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
@@ -756,7 +750,7 @@
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

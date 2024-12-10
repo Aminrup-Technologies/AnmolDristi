@@ -44,6 +44,11 @@
                                     <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>PVC Tray
                             </a>
+                            <a class="btn btn-app" href="RM_Class5.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>RM_Class5
+                            </a>
                         </div>
                     </div>
                 </div>
