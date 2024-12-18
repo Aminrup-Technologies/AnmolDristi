@@ -167,6 +167,19 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-55">
+                                                <div class="thumbnail">
+                                                    <div class="image view view-first">
+                                                        <a href="https://apps.powerapps.com/play/e/default-4922e92e-11cc-41a4-8327-402ddaae5277/a/bbf368a6-e6e7-4499-ad3c-162d14f1f549?tenantId=4922e92e-11cc-41a4-8327-402ddaae5277&hint=d15542da-3559-4df1-aec5-01c898c3dae2&source=sharebutton&sourcetime=1734523733202" target="_blank">
+                                                            <img style="width: 70%; display: block;" src="WebData/approval.jpg" alt="image" height="100px" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <p>e-Approval</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
 
                                             <div class="col-md-55">
                                                 <div class="thumbnail">

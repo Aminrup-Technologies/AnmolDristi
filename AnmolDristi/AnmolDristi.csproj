@@ -202,6 +202,7 @@
     <Content Include="Form_Master.aspx" />
     <Content Include="Global.asax" />
     <Content Include="home.aspx" />
+    <Content Include="LeakAndSlant_Detailed.aspx" />
     <Content Include="leak_test.aspx" />
     <Content Include="New_User.aspx" />
     <Content Include="Oven_Report_Detailed.aspx" />
@@ -243,6 +244,7 @@
     <Content Include="WebData\anmolaing.png" />
     <Content Include="WebData\anmolgurukul.png" />
     <Content Include="WebData\Anmol_Logo.png" />
+    <Content Include="WebData\approval.jpg" />
     <Content Include="WebData\confbook.png" />
     <Content Include="WebData\Internal\bank.jpg" />
     <Content Include="WebData\Internal\crossgif.gif" />
@@ -502,6 +504,13 @@
     </Compile>
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LeakAndSlant_Detailed.aspx.cs">
+      <DependentUpon>LeakAndSlant_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LeakAndSlant_Detailed.aspx.designer.cs">
+      <DependentUpon>LeakAndSlant_Detailed.aspx</DependentUpon>
     </Compile>
     <Compile Include="leak_test.aspx.cs">
       <DependentUpon>leak_test.aspx</DependentUpon>

@@ -2197,13 +2197,13 @@
                                                             <asp:GridView ID="GridView1" Width="100%" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
 
-                                                                    <asp:TemplateField HeaderText="Sl" HeaderStyle-Width="10%">
+                                                                    <asp:TemplateField HeaderText="Sl" HeaderStyle-Width="5%">
                                                                         <ItemTemplate>
                                                                             <%# Container.DataItemIndex + 1 %>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
-                                                                    <asp:TemplateField HeaderText="Variety" HeaderStyle-Width="30%">
+                                                                    <asp:TemplateField HeaderText="Variety" HeaderStyle-Width="35%">
                                                                         <ItemTemplate>
                                                                             <span class="variety"><%# Eval("sap_IngredientName") %></span>
                                                                         </ItemTemplate>
@@ -2218,7 +2218,7 @@
 
                                                                     <asp:TemplateField HeaderText="Actual Weight" HeaderStyle-Width="15%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtActualWeight" runat="server" ClientIDMode="Static" onkeyup="calculateDeviation(this)"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtActualWeight" runat="server" ClientIDMode="Static" CssClass="form-control form-control-sm rounded" Width="70%" onkeyup="calculateDeviation(this)"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 

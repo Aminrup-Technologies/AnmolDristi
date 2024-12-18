@@ -745,7 +745,6 @@ namespace AnmolDristi
             {
                 Response.Redirect("home.aspx", false);
             }
-            //Response.Redirect("qaqc_rotaryline_view.aspx", false);
         }
     }
 }

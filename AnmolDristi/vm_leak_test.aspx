@@ -4,18 +4,14 @@
 
     <style type="text/css">
         .remove-border {
-            border: none !important; /* This will ensure the border is removed */
-            /* Add any other necessary styling */
+            border: none !important;
         }
 
         .table-responsive {
-            overflow-x: auto; /* Allow horizontal scroll */
-            white-space: nowrap; /* Prevent text wrapping */
+            overflow-x: auto;
+            white-space: nowrap;
         }
     </style>
-
-
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

@@ -22,6 +22,7 @@ namespace AnmolDristi
         public static string ImgLink1 = string.Empty;
         public static string ImgLink2 = string.Empty;
         public static string PcrNo = string.Empty;
+        public static string Brand_BTCode = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -411,12 +412,10 @@ namespace AnmolDristi
         }
         private void ProductBrandsBinder(string selectedPlantValue, string selectedPlantLineValue, string selectedProductCategoryValue)
         {
-            // Construct the SQL query with parameters
             string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId AND line_id = @LineId and category_id=@CategoryId";
-            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
+            string textField = "brand_name";
+            string valueField = "brand_id";
 
-            // Create SQL parameters for plant_id and line_id
             SqlParameter[] parameters = new SqlParameter[]
             {
                 new SqlParameter("@PlantId", selectedPlantValue),
@@ -424,11 +423,9 @@ namespace AnmolDristi
                 new SqlParameter("@CategoryId", selectedProductCategoryValue)
             };
 
-            // Call the BindDropDownList method with parameters
             bool recordsBound;
             DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
 
-            // Check if any records were bound
             if (!recordsBound)
             {
                 string ProductBrands_Error_script = @"<script type='text/javascript'>
@@ -440,7 +437,6 @@ namespace AnmolDristi
                     });
                 </script>";
 
-                // RegisterStartupScript adds the JavaScript code to the page
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
             }
         }
@@ -451,7 +447,13 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
                 BrandSKUBinder(selectedProductBrandValue);
-                BindGridViewfromDB(selectedPlantValue, selectedProductBrandValue);
+                GetSAPCodes(Convert.ToInt32(selectedProductBrandValue));
+
+                //Here goes the function call to get the BT code against the Plant and Brand Selection which will be used for binding the recipe in RM Section
+
+
+                //BindGridViewfromDB(selectedPlantValue, selectedProductBrandValue);
+
                 DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
 
 
@@ -508,6 +510,65 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowSKUInvalidErrorNotification", DDL_ProductBrand_Error_script, false);
             }
         }
+
+        private void GetSAPCodes(int brandId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            string query = @"
+                        SELECT 
+                            p.[sap_code] AS Plant_SAP_Code,
+                            b.[brand_sapcode] AS Brand_SAP_Code
+                        FROM 
+                           [MST_PlantDetails] p
+                        JOIN 
+                            [MST_LineCatBrands] b
+                        ON 
+                            p.[plant_id] = b.[plant_id]
+                        AND 
+                            b.[brand_id] = @brand_id"; // Using parameterized query for brand_id
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    // Add the brand_id parameter to the SQL command
+                    cmd.Parameters.AddWithValue("@brand_id", brandId);
+
+                    try
+                    {
+                        // Open the connection
+                        conn.Open();
+
+                        // Execute the query and fetch the result in a DataReader
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            // Bind the result to a GridView or process the data as needed
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    string plantSapCode = reader["Plant_SAP_Code"].ToString();
+                                    string brandSapCode = reader["Brand_SAP_Code"].ToString();
+                                    BindGridViewfromDB(plantSapCode, brandSapCode);
+                                    // You can log, display, or store these values
+                                    //Response.Write($"Plant SAP Code: {plantSapCode}, Brand SAP Code: {brandSapCode}<br>");
+                                }
+                            }
+                            else
+                            {
+                                Response.Write("No data found.");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle any errors
+                        Response.Write($"Error: {ex.Message}");
+                    }
+                }
+            }
+        }
+
         private void BrandSKUBinder(string selectedProductBrandValue)
         {
             string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue";
@@ -930,7 +991,7 @@ namespace AnmolDristi
                 //Make the inputs readonly
                 MakeInputsReadOnly();
 
-                BindGridViewfromDB(plantName, productBrand);
+                //BindGridViewfromDB(plantName, productBrand);
             }
             catch (Exception ex)
             {
@@ -1569,7 +1630,7 @@ namespace AnmolDristi
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             // Query to fetch data from the database
-            string query = "SELECT ROW_NUMBER() OVER (ORDER BY sap_IngredientName) AS Sl, sap_IngredientName, BOM_Qnty FROM MST_ProcessCheck_Materials where plant_id=@plant_id and brand_id=@brand_id order by Id";
+            string query = "SELECT ROW_NUMBER() OVER (ORDER BY ComponentDescription) AS Sl, ComponentDescription as sap_IngredientName, BOMQuantity as BOM_Qnty FROM PlantMaterialData where PlantID=@plant_id and MaterialID=@brand_id and IsActive=1 order by Id";
 
             // Create a DataTable to hold the data
             DataTable dataTable = new DataTable();
