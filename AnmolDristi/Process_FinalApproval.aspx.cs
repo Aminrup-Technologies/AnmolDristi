@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Xml.Linq;
 using Newtonsoft.Json;
+using System.Drawing;
+using System.IO;
 
 namespace AnmolDristi
 {
@@ -23,6 +20,11 @@ namespace AnmolDristi
         public static string ProductCategory = string.Empty;
         public static string CategoryBrand = string.Empty;
         public static string BrandSKU = string.Empty;
+
+        public static string App1_Status = string.Empty;
+        public static string App2_Status = string.Empty;
+        public static string DottedApp_Status = string.Empty;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -241,7 +243,22 @@ namespace AnmolDristi
                             if (dt.Rows.Count > 0)
                             {
                                 DataRow row = dt.Rows[0];
-
+                                string BasicTab = dt.Rows[0]["BasicData_Status"].ToString();
+                                if (BasicTab == "1")
+                                {
+                                    CompleteTab1.Visible = true;
+                                    lbl_recordid1.Visible = true;
+                                    lbl_recordid1.Text = pcrNo.ToString();
+                                    IncompleteTab1.Visible = false;
+                                }
+                                else
+                                {
+                                    //when value is 0 , Data record present
+                                    CompleteTab1.Visible = false;
+                                    lbl_recordid1.Visible = false;
+                                    lbl_recordid1.Text = "N/A";
+                                    IncompleteTab1.Visible = true;
+                                }
                                 PlantId = dt.Rows[0]["PlantId"].ToString();
                                 PlantName = dt.Rows[0]["plant_name"].ToString();
                                 DDL_Plant.SelectedItem.Text = PlantName; //This is for binding the DDL using TEXT
@@ -250,7 +267,7 @@ namespace AnmolDristi
                                 PlantLine = dt.Rows[0]["line"].ToString();
                                 DDL_PlantLine.SelectedValue = PlantLine; //This is for binding the DDL using Value / ID
 
-                                LineProductsBinder(PlantId,PlantLine);
+                                LineProductsBinder(PlantId, PlantLine);
                                 ProductCategory = dt.Rows[0]["ProductCategory"].ToString();
                                 DDL_ProductCategory.SelectedValue = ProductCategory;
 
@@ -261,6 +278,9 @@ namespace AnmolDristi
                                 BrandSKUBinder(CategoryBrand);
                                 BrandSKU = dt.Rows[0]["SKUId"].ToString();
                                 DDL_BrandSKU.SelectedValue = BrandSKU;
+
+                                string FormID = row["FormID"].ToString();
+                                LoadFormDetails(FormID, PlantId, PlantLine);
 
                                 TB_ProcessWaterTemp.Text = dt.Rows[0]["ProcessWaterTemp"].ToString();
                                 TB_WaterPH.Text = dt.Rows[0]["WaterPH"].ToString();
@@ -340,7 +360,188 @@ namespace AnmolDristi
 
                                 imgMaida.ImageUrl = dt.Rows[0]["MaidaImageUrl"].ToString();
                                 imgBB.ImageUrl = dt.Rows[0]["BBImageUrl"].ToString();
+                                if (row.Table.Columns.Contains("DesignAndImplementation") && !Convert.IsDBNull(row["DesignAndImplementation"]))
+                                {
+                                    string imageUrl = row["DesignAndImplementation"].ToString();
 
+                                    // Validate if the image URL exists on the server
+                                    if (File.Exists(Server.MapPath(imageUrl)))
+                                    {
+                                        // Hide file uploader and show the uploaded image
+                                        //FU_DesgImp_Upldr.Visible = false;
+                                        //FU_DesgImp_Img.Visible = true;
+
+                                        // Set the valid image URL from the database
+                                        imgMaida.ImageUrl = imageUrl;
+                                    }
+                                    else
+                                    {
+                                        // If the image URL is invalid, set the default "No Image" placeholder
+                                        imgMaida.ImageUrl = ResolveUrl("~/WebData/No_Image.jpg");
+
+                                        // Show the file uploader and hide the image control
+                                        //FU_DesgImp_Upldr.Visible = false;
+                                        //FU_DesgImp_Img.Visible = true;
+                                    }
+                                }
+                                else
+                                {
+                                    // If no data exists, display a default "No Image" placeholder
+                                    imgMaida.ImageUrl = ResolveUrl("~/WebData/No_Image.jpg");
+
+                                    // Show the file uploader and hide the image control
+                                    //FU_DesgImp_Upldr.Visible = true;
+                                    //FU_DesgImp_Img.Visible = false;
+                                }
+
+                                if (row.Table.Columns.Contains("ColourAndAppearance") && !Convert.IsDBNull(row["ColourAndAppearance"]))
+                                {
+                                    string imageUrl = row["ColourAndAppearance"].ToString();
+
+                                    // Validate if the image URL exists on the server
+                                    if (File.Exists(Server.MapPath(imageUrl)))
+                                    {
+                                        // Hide file uploader and show the uploaded image
+                                        //FU_ClrApp_Upldr.Visible = false;
+                                        //FU_ClrApp_Img.Visible = true;
+
+                                        // Set the valid image URL from the database
+                                        imgBB.ImageUrl = imageUrl;
+                                    }
+                                    else
+                                    {
+                                        // If the image URL is invalid, set the default "No Image" placeholder
+                                        imgBB.ImageUrl = ResolveUrl("~/WebData/No_Image.jpg");
+
+                                        // Show the file uploader and hide the image control
+                                        //FU_ClrApp_Upldr.Visible = false;
+                                        //FU_ClrApp_Img.Visible = true;
+                                    }
+                                }
+                                else
+                                {
+                                    // If no data exists, display a default "No Image" placeholder
+                                    imgBB.ImageUrl = ResolveUrl("~/WebData/No_Image.jpg");
+
+                                    // Show the file uploader and hide the image control
+                                    //FU_ClrApp_Upldr.Visible = true;
+                                    //FU_ClrApp_Img.Visible = false;
+                                }
+
+                                // Assume the logged-in user's Employee Code is stored in a session variable
+                                string loggedInUserCode = Session["WORKMAN"].ToString(); // Example session variable
+                                // Boolean flag to track if the logged-in user is one of the approvers
+                                bool isApprover = false;
+
+                                // Approver 1
+                                if (App1_Status == "0") // Pending
+                                {
+                                    Approver1CodeLabel.ForeColor = Color.Brown;
+                                    if (loggedInUserCode == dt.Rows[0]["Approver1EmployeeCode"].ToString())
+                                    {
+                                        btnApprove.Enabled = true;
+                                        btnReject.Enabled = true;
+                                        isApprover = true;
+                                    }
+                                }
+                                else if (App1_Status == "1") // Approved
+                                {
+                                    Approver1CodeLabel.ForeColor = Color.Green;
+                                    if (loggedInUserCode == dt.Rows[0]["Approver1EmployeeCode"].ToString())
+                                    {
+                                        btnApprove.Text = "Approved";
+                                        btnApprove.Enabled = false;
+                                        btnReject.Enabled = false;
+                                        isApprover = true;
+                                        Lbl_btnSubmit.Text = "You have approved!";
+                                    }
+                                }
+
+                                // Approver 2
+                                if (App2_Status == "0") // Pending
+                                {
+                                    Approver2CodeLabel.ForeColor = Color.Brown;
+                                    if (loggedInUserCode == dt.Rows[0]["Approver2EmployeeCode"].ToString())
+                                    {
+                                        btnApprove.Enabled = true;
+                                        btnReject.Enabled = true;
+                                        isApprover = true;
+                                    }
+                                }
+                                else if (App2_Status == "1") // Approved
+                                {
+                                    Approver2CodeLabel.ForeColor = Color.Green;
+                                    if (loggedInUserCode == dt.Rows[0]["Approver2EmployeeCode"].ToString())
+                                    {
+                                        btnApprove.Text = "Approved";
+                                        btnApprove.Enabled = false;
+                                        btnReject.Enabled = false;
+                                        isApprover = true;
+                                        Lbl_btnSubmit.Text = "You have approved!";
+                                    }
+                                }
+
+                                // Dotted Line Approver
+                                if (DottedApp_Status == "0") // Pending
+                                {
+                                    DottedLineApproverCodeLabel.ForeColor = Color.Brown;
+                                    if (loggedInUserCode == dt.Rows[0]["DottedLineApproverEmployeeCode"].ToString())
+                                    {
+                                        btnApprove.Enabled = true;
+                                        btnReject.Enabled = true;
+                                        isApprover = true;
+                                    }
+                                }
+                                else if (DottedApp_Status == "1") // Approved
+                                {
+                                    DottedLineApproverCodeLabel.ForeColor = Color.Green;
+                                    if (loggedInUserCode == dt.Rows[0]["DottedLineApproverEmployeeCode"].ToString())
+                                    {
+                                        btnApprove.Text = "Approved";
+                                        btnApprove.Enabled = false;
+                                        btnReject.Enabled = false;
+                                        isApprover = true;
+                                        Lbl_btnSubmit.Text = "You have approved!";
+                                    }
+                                }
+
+                                // If the logged-in user is not any of the approvers
+                                if (!isApprover)
+                                {
+                                    // Option 1: Disable the buttons
+                                    btnApprove.Enabled = false;
+                                    btnReject.Enabled = false;
+
+                                    // Option 2: Hide the buttons entirely
+                                    // btnApprove.Visible = false;
+                                    // btnReject.Visible = false;
+                                    string PlantBinder_Error_script = @"<script type='text/javascript'>
+                                        new PNotify({
+                                            title: 'Error',
+                                            text: 'You are not authorized to approve!',
+                                            type: 'error',
+                                            styling: 'bootstrap3'
+                                        });
+                                    </script>";
+
+                                    // RegisterStartupScript adds the JavaScript code to the page
+                                    ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantBinderErrorNotification", PlantBinder_Error_script, false);
+                                    Lbl_btnSubmit.Text = "You are not authorized to approve or reject this form.";
+
+                                }
+
+
+                                // Combined Actions - Example for handling when all approvers have approved
+                                if (App1_Status == "1" && App2_Status == "1" && DottedApp_Status == "1")
+                                {
+                                    // Perform action when all approvers have approved
+                                    // Example: Allow form submission or update status
+                                }
+                                else if (App1_Status == "0" || App2_Status == "0" || DottedApp_Status == "0")
+                                {
+                                    // Perform action when any approver is still pending
+                                    // Example: Disable form submission or show a pending message
+                                }
                             }
                         }
                     }
@@ -358,6 +559,69 @@ namespace AnmolDristi
                                      "});\n" +
                                      "</script>";
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+            }
+        }
+
+        private void LoadFormDetails(string FormID, string selectedPlantValue, string selectedPlantLineValue)
+        {
+            // Replace with your actual connection string
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Set parameters for the stored procedure
+                    cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue); // Replace with actual value
+                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);  // Replace with actual value
+                    cmd.Parameters.AddWithValue("@FormID", FormID); // Replace with actual value
+                    cmd.Parameters.AddWithValue("@FormName", "qaqc_process_rpt"); // Replace with actual value
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        // Bind the data to a GridView or another control
+                        GridViewApprovers.DataSource = dt;
+                        GridViewApprovers.DataBind();
+
+                        // Bind data to Flow Diagram if needed
+                        if (dt.Rows.Count > 0)
+                        {
+                            DataRow row = dt.Rows[0];
+
+                            lbl_docname.Text = row["DocumentName"].ToString();
+                            lbl_docnumber.Text = row["DocumentNumber"].ToString();
+                            // Set data for flow diagram
+                            Approver1NameLabel.Text = row["Approver1Name"].ToString();
+                            Approver1CodeLabel.Text = row["Approver1EmployeeCode"].ToString();
+                            //Approver1Photo.ImageUrl = row["Approver1Photo"].ToString(); // Adjust field name for photo
+
+                            Approver2NameLabel.Text = row["Approver2Name"].ToString();
+                            Approver2CodeLabel.Text = row["Approver2EmployeeCode"].ToString();
+                            //Approver2Photo.ImageUrl = row["Approver2Photo"].ToString(); // Adjust field name for photo
+
+                            DottedLineApproverNameLabel.Text = row["DottedLineApproverName"].ToString();
+                            DottedLineApproverCodeLabel.Text = row["DottedLineApproverEmployeeCode"].ToString();
+                            //DottedLineApproverPhoto.ImageUrl = row["DottedLineApproverPhoto"].ToString(); // Adjust field name for photo
+                        }
+                        else
+                        {
+                            // Set default values to ADMIN if no rows are found
+                            Approver1NameLabel.Text = "ADMIN";
+                            Approver1CodeLabel.Text = "ADMIN";
+
+                            Approver2NameLabel.Text = "ADMIN";
+                            Approver2CodeLabel.Text = "ADMIN";
+
+                            DottedLineApproverNameLabel.Text = "ADMIN";
+                            DottedLineApproverCodeLabel.Text = "ADMIN";
+                        }
+                    }
+                }
             }
         }
 
@@ -385,9 +649,15 @@ namespace AnmolDristi
                 // Step 3: Bind the deserialized data to the GridView
                 GridView1.DataSource = varietyInfoList;
                 GridView1.DataBind();
+
+                //Div1.Visible = true;
+                //Label23.Visible = true;
+                //Label23.Text = "Success";
             }
             else
             {
+                Div2.Visible = true;
+
                 // Handle the case where no data is found
                 GridView1.DataSource = null;
                 GridView1.DataBind();
@@ -412,7 +682,33 @@ namespace AnmolDristi
                     {
                         if (reader.Read())
                         {
-                            jsonData = reader["RM_Weights"].ToString();
+                            string spongeid = reader["RM_Status"].ToString();
+                            if (reader["RM_Status"] != DBNull.Value && !string.IsNullOrEmpty(reader["RM_Status"].ToString()))
+                            {
+                                if (spongeid == "1")
+                                {
+                                    jsonData = reader["RM_Weights"].ToString();
+                                    Div1.Visible = true;
+                                    Div2.Visible = false;
+                                    Label23.Visible = true;
+                                    Label23.Text = pcrNo.ToString();
+                                }
+                                else
+                                {
+                                    Div1.Visible = false;
+                                    Div2.Visible = true;
+                                }
+                            }
+                            else
+                            {
+                                Div1.Visible = false;
+                                Div2.Visible = true;
+                            }   
+                        }
+                        else
+                        {
+                            Div1.Visible = false;
+                            Div2.Visible = true;
                         }
                     }
                 }
@@ -441,20 +737,35 @@ namespace AnmolDristi
                             if (dt.Rows.Count > 0)
                             {
                                 DataRow row = dt.Rows[0];
+                                string spongeid = dt.Rows[0]["SpongeId"].ToString();
+                                if (dt.Rows[0]["SpongeId"] != DBNull.Value && !string.IsNullOrEmpty(dt.Rows[0]["SpongeId"].ToString()))
+                                {
+                                    TB_RoomTemp.Text = dt.Rows[0]["RoomTemp"].ToString();
+                                    TXB_RoomTemp_Remarks.Text = dt.Rows[0]["RoomTempCmnt"].ToString();
 
-                                TB_RoomTemp.Text = dt.Rows[0]["RoomTemp"].ToString();
-                                TXB_RoomTemp_Remarks.Text = dt.Rows[0]["RoomTempCmnt"].ToString();
+                                    RBL_DrumCovered.SelectedValue = dt.Rows[0]["DrumCovered"].ToString();
+                                    TXB_DrumCovered_Remarks.Text = dt.Rows[0]["DrumCmnt"].ToString();
 
-                                RBL_DrumCovered.SelectedValue = dt.Rows[0]["DrumCovered"].ToString();
-                                TXB_DrumCovered_Remarks.Text = dt.Rows[0]["DrumCmnt"].ToString();
+                                    RBL_Quality.SelectedValue = dt.Rows[0]["Quality"].ToString();
+                                    TXB_Quality_Remarks.Text = dt.Rows[0]["QualityCmnt"].ToString();
 
-                                RBL_Quality.SelectedValue = dt.Rows[0]["Quality"].ToString();
-                                TXB_Quality_Remarks.Text = dt.Rows[0]["QualityCmnt"].ToString();
+                                    TB_StandingTime.Text = dt.Rows[0]["StandingTime"].ToString();
 
-                                TB_StandingTime.Text = dt.Rows[0]["StandingTime"].ToString();
+                                    TB_Temp.Text = dt.Rows[0]["Temp"].ToString();
+                                    TXB_Temp_Remarks.Text = dt.Rows[0]["TempCmnt"].ToString();
 
-                                TB_Temp.Text = dt.Rows[0]["Temp"].ToString();
-                                TXB_Temp_Remarks.Text = dt.Rows[0]["TempCmnt"].ToString();
+                                    Div3.Visible = true;
+                                    Label26.Visible = true;
+                                    Label26.Text = spongeid.ToString();
+                                }
+                                else
+                                {
+                                    Div4.Visible = true;
+                                }
+                            }
+                            else
+                            {
+                                Div4.Visible = true;
                             }
                         }
                     }
@@ -495,26 +806,40 @@ namespace AnmolDristi
                             if (dt.Rows.Count > 0)
                             {
                                 DataRow row = dt.Rows[0];
+                                string DoughId = dt.Rows[0]["DoughId"].ToString();
+                                if (dt.Rows[0]["DoughId"] != DBNull.Value && !string.IsNullOrEmpty(dt.Rows[0]["DoughId"].ToString()))
+                                {
+                                    TB_DoughTemp.Text = dt.Rows[0]["DoughTemp"].ToString();
+                                    TXB_DoughTemp_Remarks.Text = dt.Rows[0]["DoughTempCmnt"].ToString();
 
-                               TB_DoughTemp.Text = dt.Rows[0]["DoughTemp"].ToString();
-                               TXB_DoughTemp_Remarks.Text = dt.Rows[0]["DoughTempCmnt"].ToString();
+                                    TB_DoughRestTime.Text = dt.Rows[0]["DoughRestTime"].ToString();
 
-                               TB_DoughRestTime.Text = dt.Rows[0]["DoughRestTime"].ToString();
-                               
-                               RBL_MetalDectector.SelectedValue = dt.Rows[0]["MetalDetector"].ToString();
-                               TXB_MetalDetector_Remarks.Text = dt.Rows[0]["DetectorCmnt"].ToString();
+                                    RBL_MetalDectector.SelectedValue = dt.Rows[0]["MetalDetector"].ToString();
+                                    TXB_MetalDetector_Remarks.Text = dt.Rows[0]["DetectorCmnt"].ToString();
 
-                               RBL_ProcessSequence.SelectedValue = dt.Rows[0]["ProcessSequence"].ToString();
-                               TXB_ProcessSequence_Remarks.Text = dt.Rows[0]["ProcessCmnt"].ToString();
-                                
-                               TB_CreamingTime.Text = dt.Rows[0]["CreamingTime"].ToString();
-                               TB_MixingTime.Text = dt.Rows[0]["MixingTime"].ToString();
-                               TB_BakingTime.Text = dt.Rows[0]["BakingTime"].ToString();
+                                    RBL_ProcessSequence.SelectedValue = dt.Rows[0]["ProcessSequence"].ToString();
+                                    TXB_ProcessSequence_Remarks.Text = dt.Rows[0]["ProcessCmnt"].ToString();
 
-                               TB_DiceRpm.Text = dt.Rows[0]["DiceRpm"].ToString();
+                                    TB_CreamingTime.Text = dt.Rows[0]["CreamingTime"].ToString();
+                                    TB_MixingTime.Text = dt.Rows[0]["MixingTime"].ToString();
+                                    TB_BakingTime.Text = dt.Rows[0]["BakingTime"].ToString();
 
-                               RBL_DoughCondition.SelectedValue = dt.Rows[0]["DoughConditon"].ToString();
-                               TXB_DoughCondition_Remarks.Text = dt.Rows[0]["DoughCmnt"].ToString() ;
+                                    TB_DiceRpm.Text = dt.Rows[0]["DiceRpm"].ToString();
+
+                                    RBL_DoughCondition.SelectedValue = dt.Rows[0]["DoughConditon"].ToString();
+                                    TXB_DoughCondition_Remarks.Text = dt.Rows[0]["DoughCmnt"].ToString();
+                                    Div5.Visible = true;
+                                    Label29.Visible = true;
+                                    Label29.Text = DoughId.ToString();
+                                }
+                                else
+                                {
+                                    Div6.Visible = true;
+                                }
+                            }
+                            else
+                            {
+                                Div6.Visible = true;
                             }
                         }
                     }
@@ -545,6 +870,7 @@ namespace AnmolDristi
             public string DamperTop { get; set; }
             public string DamperBottom { get; set; }
         }
+
         private void BindGridView_OvenTemps(string pcrNo)
         {
             // Step 1: Retrieve the JSON data from the database
@@ -558,9 +884,12 @@ namespace AnmolDristi
                 // Step 3: Bind the deserialized data to the GridView
                 GridView2.DataSource = zoneInfoList;
                 GridView2.DataBind();
+
+                Div7.Visible = true;
             }
             else
             {
+                Div8.Visible = true;
                 // Handle the case where no data is found
                 GridView2.DataSource = null;
                 GridView2.DataBind();
@@ -585,7 +914,32 @@ namespace AnmolDristi
                     {
                         if (reader.Read())
                         {
-                            jsonData = reader["Oven_Temperatures"].ToString();
+                            //jsonData = reader["Oven_Temperatures"].ToString();
+                            string spongeid = reader["RM_Status"].ToString();
+                            if (reader["OvenData_Status"] != DBNull.Value && !string.IsNullOrEmpty(reader["OvenData_Status"].ToString()))
+                            {
+                                if (spongeid == "1")
+                                {
+                                    jsonData = reader["Oven_Temperatures"].ToString();
+                                    Div7.Visible = true;
+                                    Div8.Visible = false;
+                                }
+                                else
+                                {
+                                    Div7.Visible = false;
+                                    Div8.Visible = true;
+                                }
+                            }
+                            else
+                            {
+                                Div7.Visible = false;
+                                Div8.Visible = true;
+                            }
+                        }
+                        else
+                        {
+                            Div7.Visible = false;
+                            Div8.Visible = true;
                         }
                     }
                 }
@@ -614,15 +968,38 @@ namespace AnmolDristi
                             if (dt.Rows.Count > 0)
                             {
                                 DataRow row = dt.Rows[0];
+                                string spongeid = dt.Rows[0]["FinalSubmit_Status"].ToString();
+                                if (dt.Rows[0]["FinalSubmit_Status"] != DBNull.Value && !string.IsNullOrEmpty(dt.Rows[0]["FinalSubmit_Status"].ToString()))
+                                {
+                                    if (spongeid =="1")
+                                    {
+                                        RBL_BalanceCondition.SelectedValue = dt.Rows[0]["WghBalanceCond"].ToString();
+                                        TXB_BalanceCondition_Remarks.Text = dt.Rows[0]["WghtBalanceCmnt"].ToString();
 
-                                RBL_BalanceCondition.SelectedValue = dt.Rows[0]["WghBalanceCond"].ToString();
-                                TXB_BalanceCondition_Remarks.Text = dt.Rows[0]["WghtBalanceCmnt"].ToString();
+                                        TB_RawBiscuitWgt.Text = dt.Rows[0]["RawBiscuitWgt"].ToString();
 
-                                TB_RawBiscuitWgt.Text = dt.Rows[0]["RawBiscuitWgt"].ToString();
-                                
-                                Approver1CodeLabel.Text = dt.Rows[0]["Approver1EmployeeCode"].ToString();
-                                Approver2CodeLabel.Text = dt.Rows[0]["Approver2EmployeeCode"].ToString();
-                                DottedLineApproverCodeLabel.Text = dt.Rows[0]["DottedLineApproverEmployeeCode"].ToString();
+                                        Approver1CodeLabel.Text = dt.Rows[0]["Approver1EmployeeCode"].ToString();
+                                        Approver2CodeLabel.Text = dt.Rows[0]["Approver2EmployeeCode"].ToString();
+                                        DottedLineApproverCodeLabel.Text = dt.Rows[0]["DottedLineApproverEmployeeCode"].ToString();
+                                        Div9.Visible = true;
+                                        Div10.Visible = false;
+                                    }
+                                    else
+                                    {
+                                        Div9.Visible = false;
+                                        Div10.Visible = true;
+                                    }
+                                }
+                                else
+                                {
+                                    Div9.Visible = false;
+                                    Div10.Visible = true;
+                                }
+                            }
+                            else
+                            {
+                                Div9.Visible = false;
+                                Div10.Visible = true;
                             }
                         }
                     }
@@ -810,7 +1187,7 @@ namespace AnmolDristi
         {
             if (ViewerMode == 0)
             {
-                Response.Redirect("Process_Report.aspx.aspx", false);
+                Response.Redirect("Process_Report.aspx", false);
             }
             else if (ViewerMode == 1)
             {

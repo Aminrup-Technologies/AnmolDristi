@@ -10,8 +10,6 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Drawing;
 
-
-
 namespace AnmolDristi
 {
     public partial class Critical_Incident_Detailed : System.Web.UI.Page

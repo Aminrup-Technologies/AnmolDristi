@@ -54,6 +54,7 @@ namespace AnmolDristi
                 string query = @"
                     SELECT TOP(30)
                         c.ID AS DBID,
+                        c.PcrNo,
                         c.FormID as FormID,
                         'NA' as RecordID,
                         p.plant_name AS PlantName,
@@ -723,6 +724,7 @@ namespace AnmolDristi
             StringBuilder queryBuilder = new StringBuilder(@"
                 SELECT 
                     c.ID AS DBID,
+                    c.PcrNo,
                     c.FormID AS FormID,
                     p.plant_name AS PlantName,
                     l.line_name AS LineName,
@@ -859,10 +861,13 @@ namespace AnmolDristi
         {
             int rowIndex = Convert.ToInt32(e.CommandArgument);
             GridViewRow row = GridView1.Rows[rowIndex];
+
+            string pcrno = (row.FindControl("lblPcrno") as Label).Text;
             string dbid = (row.FindControl("lbl_rowid") as Label).Text;
+
             if (e.CommandName == "View")
             {
-                //Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "&VM=1", false);
+                Response.Redirect("Process_FinalApproval.aspx?PcrNo=" + pcrno + "&ID=" + dbid + "&VM=0", false);
             }
         }
     }

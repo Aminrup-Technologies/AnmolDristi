@@ -154,17 +154,11 @@
                 'RBL_OilSystem': 'OilSystemRemarksDiv',
                 'RBL_OilSpray': 'OilSprayRemarksDiv',
                 'RBL_MilkSpray': 'MilkSprayRemarksDiv',
-
-                //Sponge
                 'RBL_DrumCovered': 'DrumCoveredRemarksDiv',
                 'RBL_Quality': 'QualityRemarksDiv',
-
-                //Dough
                 'RBL_MetalDectector': 'MetalDetectorRemarksDiv',
                 'RBL_ProcessSequence': 'ProcessSequenceRemarksDiv',
                 'RBL_DoughCondition': 'DoughConditionRemarksDiv',
-
-                //Verified
                 'RBL_BalanceCondition': 'BalanceConditionRemarksDiv',
             };
 
@@ -259,8 +253,23 @@
                                                     <div class="tab-pane fade show active" id="basicData" role="tabpanel" aria-labelledby="basicData-tab">
                                                         <div class="x-content">
 
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
+                                                            <div class="col-md-3" id="CompleteTab1" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Img_Success1" runat="server" ImageUrl="~/WebData/success_gif.gif" CssClass="pull-left align-content-center" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="lbl_tbtidcreatedmsg" runat="server" Text="Record ID Created..!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                    : [<asp:Label ID="lbl_recordid1" runat="server" Text="" Visible="false" Font-Bold="true" ForeColor="Black"></asp:Label>]
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3" id="IncompleteTab1" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image4" runat="server" ImageUrl="~/WebData/crossgif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label6" runat="server" Text="Incomplete Submission!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <div class="mb-2">
                                                                     <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group-sm">
                                                                         <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
@@ -268,8 +277,8 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
+                                                            <div class="col-md-2">
+                                                                <div class="mb-2">
                                                                     <asp:Label ID="Label2" runat="server" AssociatedControlID="DDL_PlantLine" Text="Select Line" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group-sm">
                                                                         <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
@@ -277,8 +286,8 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
+                                                            <div class="col-md-2">
+                                                                <div class="mb-2">
                                                                     <asp:Label ID="Label3" runat="server" AssociatedControlID="DDL_ProductCategory" Text="Product Category" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group-sm">
                                                                         <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
@@ -286,8 +295,8 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
+                                                            <div class="col-md-2">
+                                                                <div class="mb-2">
                                                                     <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group-sm">
                                                                         <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
@@ -834,16 +843,32 @@
 
                                                             <%--Image part--%>
 
-                                                            <div class="col-md-3" id="FU_MaidaImage_img" runat="server">
+                                                            <%--<div class="col-md-3" id="FU_MaidaImage_img" runat="server">
                                                                 <asp:Label ID="LblMaiadImg" runat="server" Text="Maida Image" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                 <asp:Image ID="imgMaida" runat="server" ImageUrl='<%# Eval("MaidaImageUrl") != null ? ResolveUrl(Eval("MaidaImageUrl").ToString()) : "~/Images/placeholder.jpg" %>' AlternateText="Maida Image" Width="100px" Height="100px" />
+                                                            </div>--%>
+                                                            <div class="col-md-3" id="FU_MaidaImage_img" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Label37" runat="server" AssociatedControlID="imgMaida" Text="Maida Image" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <div class="input-group input-group-sm">
+                                                                        <asp:Image ID="imgMaida" runat="server" CssClass="img-fluid" Width="100%" ImageUrl='<%# Eval("MaidaImageUrl") != null ? ResolveUrl(Eval("MaidaImageUrl").ToString()) : "~/Images/placeholder.jpg" %>' AlternateText="Maida Image" />
+                                                                    </div>
+                                                                </div>
                                                             </div>
 
-                                                            <div class="col-md-3" id="FU_BBImage_Img" runat="server">
+                                                            <%--<div class="col-md-6" id="FU_BBImage_Img" runat="server">
                                                                 <asp:Label ID="LblBBImg" runat="server" Text="Broken Biscuit Image" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                 <asp:Image ID="imgBB" runat="server" ImageUrl='<%# Eval("BBImageUrl") != null ? ResolveUrl(Eval("BBImageUrl").ToString()) : "~/Images/placeholder.jpg" %>' AlternateText="BB Image" Width="100px" Height="100px" />
-                                                            </div>
+                                                            </div>--%>
 
+                                                            <div class="col-md-3" id="FU_BBImage_Img" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Label38" runat="server" AssociatedControlID="imgBB" Text="Maida Image" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <div class="input-group input-group-sm">
+                                                                        <asp:Image ID="imgBB" runat="server" CssClass="img-fluid" Width="100%" ImageUrl='<%# Eval("BBImageUrl") != null ? ResolveUrl(Eval("BBImageUrl").ToString()) : "~/Images/placeholder.jpg" %>' AlternateText="BB Image" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <%-- Basic Data ends here--%>
@@ -851,50 +876,64 @@
                                                     <%-- Weight Data Starts Here--%>
                                                     <div class="tab-pane fade" id="weight" role="tabpanel" aria-labelledby="weight-tab">
                                                         <div class="x-content">
+                                                            <div class="row" id="Div1" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image5" runat="server" ImageUrl="~/WebData/success_gif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label14" runat="server" Text="ID Created..!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                    : [<asp:Label ID="Label23" runat="server" Text="" Visible="false" Font-Bold="true"></asp:Label>]
+                                                                </div>
+                                                            </div>
 
+                                                            <div class="row" id="Div2" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image6" runat="server" ImageUrl="~/WebData/crossgif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label24" runat="server" Text="Incomplete Submission!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                </div>
+                                                            </div>
 
                                                             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
 
-                                                                    <asp:TemplateField HeaderText="Sl">
+                                                                    <asp:TemplateField HeaderText="Sl" HeaderStyle-Width="5%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtSl" runat="server" ReadOnly="true" ClientIDMode="Static" Text="<%# Container.DataItemIndex + 1 %>"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtSl" runat="server" ClientIDMode="Static" Enabled="false" CssClass="form-control form-control-sm rounded" Text="<%# Container.DataItemIndex + 1 %>"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
-                                                                    <asp:TemplateField HeaderText="Variety">
+                                                                    <asp:TemplateField HeaderText="Variety" HeaderStyle-Width="25%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtVariety" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Variety") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtVariety" runat="server" ReadOnly="true" ClientIDMode="Static" CssClass="form-control form-control-sm rounded" Text='<%# Eval("Variety") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
-                                                                    <asp:TemplateField HeaderText="Standard Weight">
+                                                                    <asp:TemplateField HeaderText="Standard Weight" HeaderStyle-Width="10%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtStandardWeight" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("StandardWeight") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtStandardWeight" runat="server" ReadOnly="true" ClientIDMode="Static" CssClass="form-control form-control-sm rounded" Text='<%# Eval("StandardWeight") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
-                                                                    <asp:TemplateField HeaderText="Actual Weight">
+                                                                    <asp:TemplateField HeaderText="Actual Weight" HeaderStyle-Width="15%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtActualWeight" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("ActualWeight") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtActualWeight" runat="server" ReadOnly="true" ClientIDMode="Static" CssClass="form-control form-control-sm rounded" Text='<%# Eval("ActualWeight") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
-                                                                    <asp:TemplateField HeaderText="Deviation Weight">
+                                                                    <asp:TemplateField HeaderText="Deviation Weight" HeaderStyle-Width="15%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtDeviation" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DeviationWeight") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtDeviation" runat="server" ReadOnly="true" ClientIDMode="Static" CssClass="form-control form-control-sm rounded" Text='<%# Eval("DeviationWeight") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
-                                                                    <asp:TemplateField HeaderText="Deviation Percentage">
+                                                                    <asp:TemplateField HeaderText="Deviation Percentage" HeaderStyle-Width="20%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtDeviationPercentage" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DeviationPercentage") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtDeviationPercentage" runat="server" ReadOnly="true" ClientIDMode="Static" CssClass="form-control form-control-sm rounded" Text='<%# Eval("DeviationPercentage") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                 </Columns>
                                                             </asp:GridView>
 
+                                                            
                                                         </div>
                                                     </div>
                                                     <%-- Weight ends Starts Here--%>
@@ -903,6 +942,20 @@
                                                     <div class="tab-pane fade" id="spongeData" role="tabpanel" aria-labelledby="spongeData-tab">
                                                         <div class="x-content">
 
+                                                            <div class="row" id="Div3" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image7" runat="server" ImageUrl="~/WebData/success_gif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label25" runat="server" Text="ID Created..!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                    : [<asp:Label ID="Label26" runat="server" Text="" Visible="false" Font-Bold="true"></asp:Label>]
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row" id="Div4" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image8" runat="server" ImageUrl="~/WebData/crossgif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label27" runat="server" Text="Incomplete Submission!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                </div>
+                                                            </div>
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
@@ -994,6 +1047,8 @@
                                                                 </div>
                                                             </div>
 
+                                                            
+
                                                         </div>
                                                     </div>
                                                     <%-- Sponge Data Ends Here--%>
@@ -1002,6 +1057,20 @@
                                                     <div class="tab-pane fade" id="doughData" role="tabpanel" aria-labelledby="doughData-tab">
                                                         <div class="x-content">
 
+                                                            <div class="row" id="Div5" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image9" runat="server" ImageUrl="~/WebData/success_gif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label28" runat="server" Text="ID Created..!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                    : [<asp:Label ID="Label29" runat="server" Text="" Visible="false" Font-Bold="true"></asp:Label>]
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row" id="Div6" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image10" runat="server" ImageUrl="~/WebData/crossgif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label30" runat="server" Text="Incomplete Submission!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                </div>
+                                                            </div>
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
@@ -1133,6 +1202,7 @@
                                                                 </div>
                                                             </div>
 
+                                                            
                                                         </div>
                                                     </div>
                                                     <%--Dough Data Ends Here--%>
@@ -1140,51 +1210,66 @@
                                                     <%--Oven Data Start Here--%>
                                                     <div class="tab-pane fade" id="ovenData" role="tabpanel" aria-labelledby="ovenData-tab">
                                                         <div class="x-content">
+                                                            <div class="row" id="Div7" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image11" runat="server" ImageUrl="~/WebData/success_gif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label31" runat="server" Text="ID Created..!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                    : [<asp:Label ID="Label32" runat="server" Text="" Visible="false" Font-Bold="true"></asp:Label>]
+                                                                </div>
+                                                            </div>
 
+                                                            <div class="row" id="Div8" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image12" runat="server" ImageUrl="~/WebData/crossgif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label33" runat="server" Text="Incomplete Submission!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                </div>
+                                                            </div>
 
-                                                            <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
+                                                            <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true" Width="100%" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
 
                                                                     <asp:TemplateField HeaderText="Sl">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtSl" runat="server" ReadOnly="true" ClientIDMode="Static" Text="<%# Container.DataItemIndex + 1 %>"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtSl" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded" ClientIDMode="Static" Text="<%# Container.DataItemIndex + 1 %>"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Zone">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtZone" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Zone") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtZone" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded" ClientIDMode="Static" Text='<%# Eval("Zone") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
 
                                                                     <asp:TemplateField HeaderText="Oven Top">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtOvenTop" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("OvenTop") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtOvenTop" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded" ClientIDMode="Static" Text='<%# Eval("OvenTop") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Oven Bottom">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtOvenBottom" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("OvenBottom") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtOvenBottom" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded" ClientIDMode="Static" Text='<%# Eval("OvenBottom") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Damper Top">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtDamperTop" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DamperTop") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtDamperTop" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded" ClientIDMode="Static" Text='<%# Eval("DamperTop") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Damper Bottom">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtDamperBottom" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DamperBottom") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtDamperBottom" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded" ClientIDMode="Static" Text='<%# Eval("DamperBottom") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                 </Columns>
                                                             </asp:GridView>
 
+
+                                                            
                                                         </div>
                                                     </div>
                                                     <%--Oven Data Ends Here--%>
@@ -1192,6 +1277,21 @@
                                                     <%--Verification Data Start Here--%>
                                                     <div class="tab-pane fade" id="verificationData" role="tabpanel" aria-labelledby="verificationData-tab">
                                                         <div class="x-content">
+
+                                                            <div class="row" id="Div9" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image13" runat="server" ImageUrl="~/WebData/success_gif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label34" runat="server" Text="ID Created..!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                    : [<asp:Label ID="Label35" runat="server" Text="" Visible="false" Font-Bold="true"></asp:Label>]
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row" id="Div10" runat="server" visible="false">
+                                                                <div class="col-md-12 col-sm-12" style="vertical-align: middle; text-align: center;">
+                                                                    <asp:Image ID="Image14" runat="server" ImageUrl="~/WebData/crossgif.gif" Width="100px" Height="100px" />
+                                                                    <asp:Label ID="Label36" runat="server" Text="Incomplete Submission!" Font-Bold="true" Font-Size="Large"></asp:Label>
+                                                                </div>
+                                                            </div>
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
@@ -1222,6 +1322,9 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+
+                                                            
 
                                                         </div>
                                                     </div>

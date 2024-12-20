@@ -246,6 +246,7 @@
     <Content Include="WebData\Anmol_Logo.png" />
     <Content Include="WebData\approval.jpg" />
     <Content Include="WebData\confbook.png" />
+    <Content Include="WebData\crossgif.gif" />
     <Content Include="WebData\Internal\bank.jpg" />
     <Content Include="WebData\Internal\crossgif.gif" />
     <Content Include="WebData\Internal\cross_icon.png" />
@@ -273,6 +274,8 @@
     <Content Include="WebData\sales.png" />
     <Content Include="WebData\sapfiori.png" />
     <Content Include="WebData\SecondarySales.png" />
+    <Content Include="WebData\SingleTick.gif" />
+    <Content Include="WebData\success_gif.gif" />
     <Content Include="WebData\TertiarySales.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

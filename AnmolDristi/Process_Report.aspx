@@ -26,8 +26,8 @@
                                 <div class="tab-content ml-1" id="myTabContent">
                                     <div class="x-content">
 
-                                        <div class="col-md-3">
-                                            <div class="mb-3">
+                                        <div class="col-md-2">
+                                            <div class="mb-2">
                                                 <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                 <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                                 <div class="input-group-sm">
@@ -36,8 +36,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <div class="mb-3">
+                                        <div class="col-md-2">
+                                            <div class="mb-2">
                                                 <asp:Label ID="Label2" runat="server" AssociatedControlID="DDL_PlantLine" Text="Select Line" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                 <asp:RequiredFieldValidator ID="RFV_DDL_PlantLine" runat="server" ErrorMessage="" ForeColor="Red" ControlToValidate="DDL_PlantLine" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                                 <div class="input-group-sm">
@@ -46,8 +46,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <div class="mb-3">
+                                        <div class="col-md-2">
+                                            <div class="mb-2">
                                                 <asp:Label ID="Label3" runat="server" AssociatedControlID="DDL_ProductCategory" Text="Product Category" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                 <asp:RequiredFieldValidator ID="RFV_DDL_ProductCategory" runat="server" ErrorMessage="" ForeColor="Red" InitialValue="" ControlToValidate="DDL_ProductCategory" Display="Dynamic"></asp:RequiredFieldValidator>
                                                 <div class="input-group-sm">
@@ -56,8 +56,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <div class="mb-3">
+                                        <div class="col-md-2">
+                                            <div class="mb-2">
                                                 <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                 <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="" ForeColor="Red" ControlToValidate="DDL_ProductBrand" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
                                                 <div class="input-group-sm">
@@ -66,8 +66,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <div class="mb-3">
+                                        <div class="col-md-2">
+                                            <div class="mb-2">
                                                 <asp:Label ID="Label5" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                 <asp:RequiredFieldValidator ID="RFV_DDL_BrandSKU" runat="server" ErrorMessage="" ForeColor="Red" ControlToValidate="DDL_BrandSKU" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
                                                 <div class="input-group-sm">
@@ -137,6 +137,7 @@
                                     <ItemTemplate>
                                         <asp:Label ID="lblSl" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label><br />
                                         DBID:<asp:Label ID="lbl_rowid" runat="server" Text='<%# Eval("DBID") %>' Visible="true" />
+                                        <asp:Label ID="lblPcrno" runat="server" CssClass="bold-text" ReadOnly="true" Visible="false" ClientIDMode="Static" Font-Bold="true" Text='<%# Eval("PcrNo") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
