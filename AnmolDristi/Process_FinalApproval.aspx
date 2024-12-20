@@ -213,7 +213,7 @@
             <div class="page-title">
                 <div class="title_left">
                     <h3>
-                        <asp:Label ID="lbl_docname" runat="server" Text="Label"></asp:Label></h3>
+                        <asp:Label ID="lbl_docname" runat="server" Text="QA - Process Checking Report"></asp:Label></h3>
                 </div>
             </div>
             <div class="row">
@@ -221,7 +221,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="Label"></asp:Label></h2>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="ANMOL/DOC/CORP/QA/02"></asp:Label></h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="row">
@@ -281,7 +281,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Label3" runat="server" AssociatedControlID="DDL_ProductCategory" Text="Product Category" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group-sm">
-                                                                        <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ></asp:DropDownList>
+                                                                        <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -290,7 +290,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group-sm">
-                                                                        <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ></asp:DropDownList>
+                                                                        <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -298,8 +298,8 @@
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Label5" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                   <div class="input-group-sm">
-                                                                        <asp:DropDownList ID="DDL_BrandSKU" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ></asp:DropDownList>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:DropDownList ID="DDL_BrandSKU" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -364,7 +364,7 @@
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_TB_MaidaBatchNo" runat="server" AssociatedControlID="TB_MaidaBatchNo" Text="Maida Batch No. :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                   <div class="input-group-sm">
+                                                                    <div class="input-group-sm">
                                                                         <asp:TextBox ID="TB_MaidaBatchNo" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("MaidaBatchNo")%>'></asp:TextBox>
                                                                     </div>
                                                                 </div>
@@ -858,7 +858,7 @@
 
                                                                     <asp:TemplateField HeaderText="Sl">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtSl" runat="server" ReadOnly="true" ClientIDMode="Static" Text=<%# Container.DataItemIndex + 1 %>></asp:TextBox>
+                                                                            <asp:TextBox ID="txtSl" runat="server" ReadOnly="true" ClientIDMode="Static" Text="<%# Container.DataItemIndex + 1 %>"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
@@ -1095,7 +1095,7 @@
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="LabelBakingTime" runat="server" AssociatedControlID="TB_BakingTime" Text="Baking Time :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <div class="input-group-sm"> 
+                                                                    <div class="input-group-sm">
                                                                         <asp:TextBox ID="TB_BakingTime" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval("BakingTime")  %>'></asp:TextBox>
                                                                     </div>
                                                                 </div>
@@ -1147,38 +1147,38 @@
 
                                                                     <asp:TemplateField HeaderText="Sl">
                                                                         <ItemTemplate>
-                                                                            <asp:Textbox ID="txtSl" runat="server" ReadOnly="true" ClientIDMode="Static" Text="<%# Container.DataItemIndex + 1 %>"></asp:Textbox>
+                                                                            <asp:TextBox ID="txtSl" runat="server" ReadOnly="true" ClientIDMode="Static" Text="<%# Container.DataItemIndex + 1 %>"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Zone">
                                                                         <ItemTemplate>
-                                                                            <asp:Textbox ID="txtZone" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Zone") %>'></asp:Textbox>
+                                                                            <asp:TextBox ID="txtZone" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("Zone") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
 
                                                                     <asp:TemplateField HeaderText="Oven Top">
                                                                         <ItemTemplate>
-                                                                            <asp:Textbox ID="txtOvenTop" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("OvenTop") %>'></asp:Textbox>
+                                                                            <asp:TextBox ID="txtOvenTop" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("OvenTop") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Oven Bottom">
                                                                         <ItemTemplate>
-                                                                            <asp:Textbox ID="txtOvenBottom" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("OvenBottom") %>'></asp:Textbox>
+                                                                            <asp:TextBox ID="txtOvenBottom" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("OvenBottom") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Damper Top">
                                                                         <ItemTemplate>
-                                                                            <asp:Textbox ID="txtDamperTop" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DamperTop") %>'></asp:Textbox>
+                                                                            <asp:TextBox ID="txtDamperTop" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DamperTop") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Damper Bottom">
                                                                         <ItemTemplate>
-                                                                            <asp:Textbox ID="txtDamperBottom" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DamperBottom") %>'></asp:Textbox>
+                                                                            <asp:TextBox ID="txtDamperBottom" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("DamperBottom") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
@@ -1225,10 +1225,8 @@
 
                                                         </div>
                                                     </div>
-                                                    <%--Verification Data ends Here--%>
 
-                                                    <%--Button--%>
-                                                    <div class="col-md-3">
+                                                    <%--<div class="col-md-3">
                                                         <div class="mb-3">
                                                             <asp:Label ID="Lbl_BasicbtnApprove" runat="server" AssociatedControlID="" Text="Click on your ACTION" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group input-group-sm">
@@ -1237,7 +1235,20 @@
                                                                 <asp:Button ID="BtnReject" runat="server" Text="Reject" CssClass="btn btn-sm btn-danger" CausesValidation="false" OnClick="BtnReject_Click" />
                                                             </div>
                                                         </div>
+                                                    </div>--%>
+
+                                                    <div class="col-md-12">
+                                                        <div class="mb-12">
+                                                            <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="Click on your ACTION" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <div class="input-group input-group-sm">
+                                                                <asp:Button ID="btnSubmit" runat="server" Text="Re-Validate Inputs" CssClass="btn btn-warning btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClientClick="validateOnClick(); return false;" />
+                                                                <asp:Button ID="btnApprove" runat="server" Text="Approve" CssClass="btn btn-success btn-sm" CausesValidation="false" OnClick="btnApprove_Click" />
+                                                                <asp:Button ID="btnReject" runat="server" Text="Reject" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btnReject_Click" />
+                                                                <asp:Button ID="btnBack" runat="server" Text="Back" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="btnBack_Click" />
+                                                            </div>
+                                                        </div>
                                                     </div>
+
                                                 </div>
 
                                             </div>

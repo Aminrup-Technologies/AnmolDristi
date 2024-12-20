@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AnmolDristi
-{
-
-
-    public partial class LeakAndSlant_Detailed
-    {
-
+namespace AnmolDristi {
+    
+    
+    public partial class LeakAndSlant_Detailed {
+        
         /// <summary>
         /// lbl_docname control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_docname;
-
+        
         /// <summary>
         /// lbl_docnumber control.
         /// </summary>
@@ -31,7 +29,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_docnumber;
-
+        
         /// <summary>
         /// gvData control.
         /// </summary>
@@ -40,43 +38,52 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvData;
-
+        
         /// <summary>
-        /// Lbl_BasicbtnApprove control.
+        /// Lbl_btnSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_BasicbtnApprove;
-
+        protected global::System.Web.UI.WebControls.Label Lbl_btnSubmit;
+        
         /// <summary>
-        /// BtnValidate control.
+        /// btnSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnValidate;
-
+        protected global::System.Web.UI.WebControls.Button btnSubmit;
+        
         /// <summary>
-        /// BtnApprove control.
+        /// btnApprove control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnApprove;
-
+        protected global::System.Web.UI.WebControls.Button btnApprove;
+        
         /// <summary>
-        /// BtnReject control.
+        /// btnReject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnReject;
-
+        protected global::System.Web.UI.WebControls.Button btnReject;
+        
+        /// <summary>
+        /// btnBack control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBack;
+        
         /// <summary>
         /// Label8 control.
         /// </summary>
@@ -85,7 +92,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label8;
-
+        
         /// <summary>
         /// Label9 control.
         /// </summary>
@@ -94,7 +101,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label9;
-
+        
         /// <summary>
         /// Image3 control.
         /// </summary>
@@ -103,7 +110,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image Image3;
-
+        
         /// <summary>
         /// Approver1NameLabel control.
         /// </summary>
@@ -112,7 +119,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Approver1NameLabel;
-
+        
         /// <summary>
         /// Approver1CodeLabel control.
         /// </summary>
@@ -121,7 +128,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Approver1CodeLabel;
-
+        
         /// <summary>
         /// Label7 control.
         /// </summary>
@@ -130,7 +137,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label7;
-
+        
         /// <summary>
         /// Image2 control.
         /// </summary>
@@ -139,7 +146,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image Image2;
-
+        
         /// <summary>
         /// Approver2NameLabel control.
         /// </summary>
@@ -148,7 +155,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Approver2NameLabel;
-
+        
         /// <summary>
         /// Approver2CodeLabel control.
         /// </summary>
@@ -157,7 +164,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Approver2CodeLabel;
-
+        
         /// <summary>
         /// Label11 control.
         /// </summary>
@@ -166,7 +173,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label11;
-
+        
         /// <summary>
         /// Image1 control.
         /// </summary>
@@ -175,7 +182,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image Image1;
-
+        
         /// <summary>
         /// DottedLineApproverNameLabel control.
         /// </summary>
@@ -184,7 +191,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label DottedLineApproverNameLabel;
-
+        
         /// <summary>
         /// DottedLineApproverCodeLabel control.
         /// </summary>
@@ -193,7 +200,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label DottedLineApproverCodeLabel;
-
+        
         /// <summary>
         /// GridViewApprovers control.
         /// </summary>

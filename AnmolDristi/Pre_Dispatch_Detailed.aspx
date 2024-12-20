@@ -151,7 +151,7 @@
             <div class="page-title">
                 <div class="title_left">
                     <h3>
-                        <asp:Label ID="lbl_docname" runat="server" Text="Detailed View Page"></asp:Label>
+                        <asp:Label ID="lbl_docname" runat="server" Text="QA - PRE DISPATCH CLEARANCE REPORT"></asp:Label>
                     </h3>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="Detailed View"></asp:Label>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="ANMOL/DOC/CORP/QA/06"></asp:Label>
                             </h2>
                             <div class="clearfix"></div>
                         </div>

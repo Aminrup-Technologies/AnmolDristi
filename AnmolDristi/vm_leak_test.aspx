@@ -146,6 +146,7 @@
                                         <ItemTemplate>
                                             <asp:Label ID="lblSl" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label><br />
                                             DBID:<asp:Label ID="lbl_rowid" runat="server" Text='<%# Eval("DBID") %>' Visible="true" />
+                                            <asp:Label ID="lbl_batchid" runat="server" Text='<%# Eval("BatchID") %>' Visible="false" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -169,12 +170,6 @@
                                             [<asp:Label ID="lblEmployeeCode" runat="server" Text='<%# Eval("EmpCode") %>'></asp:Label>]
                                         </ItemTemplate>
                                     </asp:TemplateField>
-
-                                    <%--<asp:TemplateField HeaderText="Metal Check" HeaderStyle-Width="30%">
-                                        <ItemTemplate>
-                                            <asp:Label ID="MetalCheck" runat="server" Text='<%# Eval("MetalCheck") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>--%>
 
                                     <asp:TemplateField HeaderText="Remarks" HeaderStyle-Width="20%">
                                         <ItemTemplate>

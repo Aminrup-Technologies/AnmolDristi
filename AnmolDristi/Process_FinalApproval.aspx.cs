@@ -14,6 +14,9 @@ namespace AnmolDristi
 {
     public partial class Process_FinalApproval : System.Web.UI.Page
     {
+        public static Int32 RecordID = 0;
+        public static Int32 ViewerMode = 0;
+
         public static string PlantId = string.Empty;
         public static string PlantName = string.Empty;
         public static string PlantLine = string.Empty;
@@ -24,12 +27,39 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                if (Request.QueryString["PcrNo"] != null) 
+                if (!string.IsNullOrEmpty(Request.QueryString["PcrNo"]))
                 {
                     string pcrNo = Request.QueryString["PcrNo"];
+                    int viewerMode = 0;
+                    // Safely parse "VM" query parameter
+                    if (int.TryParse(Request.QueryString["VM"], out viewerMode))
+                    {
+                        ViewerMode = viewerMode;
+                    }
+                    else
+                    {
+                        ViewerMode = 0; // Default or fallback value
+                    }
+                    int recordId = 0;
+                    // Safely parse "ID" query parameter
+                    if (int.TryParse(Request.QueryString["ID"], out recordId))
+                    {
+                        RecordID = recordId;
+                    }
+                    else
+                    {
+                        RecordID = -1; // Default or invalid ID marker
+                    }
 
+                    // Call binding methods
                     PlantBinder();
                     DataBinder(pcrNo);
+                }
+                else
+                {
+                    // Handle the case where "PcrNo" is missing
+                    Response.Write("Error: PcrNo parameter is required.");
+                    Response.End();
                 }
             }
         }
@@ -612,15 +642,184 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
             }
         }
-        
 
-        protected void BtnApprove_Click(object sender, EventArgs e)
+
+        protected void btnApprove_Click(object sender, EventArgs e)
         {
-
+            UpdateColumnBasedOnApproverType();
+            //LoadRecordData(RecordID);
         }
-        protected void BtnReject_Click(object sender, EventArgs e)
-        {
 
+        protected void btnReject_Click(object sender, EventArgs e)
+        {
+            RejectionBasedOnApproverType();
+            //LoadRecordData(RecordID);
+        }
+
+        public void UpdateColumnBasedOnApproverType()
+        {
+            // Get the logged-in employee code from session
+            string employeeCode = Session["WORKMAN"] as string;
+
+            if (!string.IsNullOrEmpty(employeeCode))
+            {
+                // Retrieve the approver codes from the labels in the approver-flow div
+                string approver1Code = Approver1CodeLabel.Text.ToString();
+                string approver2Code = Approver2CodeLabel.Text.ToString();
+                string dottedLineApproverCode = DottedLineApproverCodeLabel.Text.ToString();
+
+                // Determine the approver type based on the employee code
+                string approverType = string.Empty;
+
+                if (employeeCode == approver1Code)
+                {
+                    approverType = "Approver1";
+                }
+                else if (employeeCode == approver2Code)
+                {
+                    approverType = "Approver2";
+                }
+                else if (employeeCode == dottedLineApproverCode)
+                {
+                    approverType = "DottedLineApprover";
+                }
+
+                if (!string.IsNullOrEmpty(approverType))
+                {
+                    // Define the connection string
+                    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+                    // Perform SQL operation based on the approver type
+                    string updateQuery = string.Empty;
+
+                    switch (approverType)
+                    {
+                        case "Approver1":
+                            updateQuery = "UPDATE TRN_qcinspector SET Approver1_Status = 1, Approver1_TimeStamp = @TimeStamp WHERE Approver1EmployeeCode = @Condition and ID=@ID";
+                            break;
+                        case "Approver2":
+                            updateQuery = "UPDATE TRN_qcinspector SET Approver2_Status = 1, Approver2_TimeStamp = @TimeStamp WHERE Approver2EmployeeCode = @Condition and ID=@ID";
+                            break;
+                        case "DottedLineApprover":
+                            updateQuery = "UPDATE TRN_qcinspector SET DottedApprover_Status = 1, DottedApprover_TimeStamp = @TimeStamp WHERE DottedLineApproverEmployeeCode = @Condition and ID=@ID";
+                            break;
+                    }
+
+                    if (!string.IsNullOrEmpty(updateQuery))
+                    {
+                        using (SqlConnection conn = new SqlConnection(connectionString))
+                        {
+                            SqlCommand cmd = new SqlCommand(updateQuery, conn);
+                            cmd.Parameters.AddWithValue("@TimeStamp", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@Condition", employeeCode);
+                            cmd.Parameters.AddWithValue("@ID", RecordID);
+                            try
+                            {
+                                conn.Open();
+                                cmd.ExecuteNonQuery();
+                                Lbl_btnSubmit.Text = "Approved";
+                            }
+                            catch (Exception ex)
+                            {
+                                // Handle exceptions (e.g., logging, rethrowing)
+                                //throw new Exception("Error updating the table.", ex);
+                                Lbl_btnSubmit.Text = ex.Message;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void RejectionBasedOnApproverType()
+        {
+            // Get the logged-in employee code from session
+            string employeeCode = Session["WORKMAN"] as string;
+
+            if (!string.IsNullOrEmpty(employeeCode))
+            {
+                // Retrieve the approver codes from the labels in the approver-flow div
+                string approver1Code = Approver1CodeLabel.Text.ToString();
+                string approver2Code = Approver2CodeLabel.Text.ToString();
+                string dottedLineApproverCode = DottedLineApproverCodeLabel.Text.ToString();
+
+                // Determine the approver type based on the employee code
+                string approverType = string.Empty;
+
+                if (employeeCode == approver1Code)
+                {
+                    approverType = "Approver1";
+                }
+                else if (employeeCode == approver2Code)
+                {
+                    approverType = "Approver2";
+                }
+                else if (employeeCode == dottedLineApproverCode)
+                {
+                    approverType = "DottedLineApprover";
+                }
+
+                if (!string.IsNullOrEmpty(approverType))
+                {
+                    // Define the connection string
+                    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+                    // Perform SQL operation based on the approver type
+                    string updateQuery = string.Empty;
+
+                    switch (approverType)
+                    {
+                        case "Approver1":
+                            updateQuery = "UPDATE TRN_qcinspector SET Approver1_Status = 0, Approver1_TimeStamp = @TimeStamp WHERE Approver1EmployeeCode = @Condition and ID=@ID";
+                            break;
+                        case "Approver2":
+                            updateQuery = "UPDATE TRN_qcinspector SET Approver2_Status = 0, Approver2_TimeStamp = @TimeStamp WHERE Approver2EmployeeCode = @Condition and ID=@ID";
+                            break;
+                        case "DottedLineApprover":
+                            updateQuery = "UPDATE TRN_qcinspector SET DottedApprover_Status = 0, DottedApprover_TimeStamp = @TimeStamp WHERE DottedLineApproverEmployeeCode = @Condition and ID=@ID";
+                            break;
+                    }
+
+                    if (!string.IsNullOrEmpty(updateQuery))
+                    {
+                        using (SqlConnection conn = new SqlConnection(connectionString))
+                        {
+                            SqlCommand cmd = new SqlCommand(updateQuery, conn);
+                            cmd.Parameters.AddWithValue("@TimeStamp", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@Condition", employeeCode);
+                            cmd.Parameters.AddWithValue("@ID", RecordID);
+                            try
+                            {
+                                conn.Open();
+                                cmd.ExecuteNonQuery();
+                                Lbl_btnSubmit.Text = "Rejected";
+                            }
+                            catch (Exception ex)
+                            {
+                                // Handle exceptions (e.g., logging, rethrowing)
+                                Lbl_btnSubmit.Text = ex.Message;
+                                //throw new Exception("Error updating the table.", ex);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            if (ViewerMode == 0)
+            {
+                Response.Redirect("Process_Report.aspx.aspx", false);
+            }
+            else if (ViewerMode == 1)
+            {
+                Response.Redirect("Process_Approval.aspx", false);
+            }
+            else
+            {
+                Response.Redirect("home.aspx", false);
+            }
         }
     }
 }

@@ -660,50 +660,109 @@ namespace AnmolDristi
         {
             try
             {
+                //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                //string query = @"
+                //    SELECT TOP(30)
+                //        c.ID AS DBID,
+                //        c.FormID as FormID,
+                //        c.LSP_Id as RecordID,
+                //        p.plant_name AS PlantName,
+                //        l.line_name AS LineName,
+                //     pc.category_name AS ProductCategory,
+                //     pb.brand_name AS ProductBrand,
+                //        c.SubmittedByEmployeeCode as EmpCode,
+                //        u.EmployeeName AS EmpName,
+                //        c.SubmittedDate as SDate,
+                //        c.SubmittedTime as STime,
+                //        c.Shift as SShift,
+                //        'No Comment' as Remarks,
+                //        c.Approver1EmployeeCode as L1,
+                //        c.Approver1_Status,
+                //        c.Approver1_TimeStamp,
+                //        c.Approver2EmployeeCode as L2,
+                //        c.Approver2_Status,
+                //        c.Approver2_TimeStamp,
+                //        c.DottedLineApproverEmployeeCode as L3,
+                //        c.DottedApprover_Status,
+                //        c.DottedApprover_TimeStamp
+                //    FROM 
+                //        TRN_LeakSealSlanted_Data c
+                //    LEFT JOIN 
+                //        MST_PlantDetails p ON c.PlantName = p.plant_id
+                //    LEFT JOIN 
+                //        MST_Plant_Lines l ON c.Line = l.line_id
+                //    LEFT JOIN 
+                //        MST_LineCategory pc ON c.ProductCategory = pc.category_id
+                //    LEFT JOIN 
+                //        MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
+                //    LEFT JOIN
+                //        MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
+                //    WHERE 
+                //        1 = 1
+                //    ORDER BY 
+                //        c.[SubmittedDate] DESC, 
+                //        c.[SubmittedTime] DESC;
+                //";
+
                 string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
                 string query = @"
+                    WITH RankedData AS (
+                        SELECT 
+                            c.ID AS DBID,
+                            c.FormID AS FormID,
+                            c.BatchID,
+                            c.LSP_Id AS RecordID,
+                            p.plant_name AS PlantName,
+                            l.line_name AS LineName,
+                            pc.category_name AS ProductCategory,
+                            pb.brand_name AS ProductBrand,
+                            c.SubmittedByEmployeeCode AS EmpCode,
+                            u.EmployeeName AS EmpName,
+                            c.SubmittedDate AS SDate,
+                            c.SubmittedTime AS STime,
+                            c.Shift AS SShift,
+                            'No Comment' AS Remarks,
+                            c.Approver1EmployeeCode AS L1,
+                            c.Approver1_Status,
+                            c.Approver1_TimeStamp,
+                            c.Approver2EmployeeCode AS L2,
+                            c.Approver2_Status,
+                            c.Approver2_TimeStamp,
+                            c.DottedLineApproverEmployeeCode AS L3,
+                            c.DottedApprover_Status,
+                            c.DottedApprover_TimeStamp,
+                            ROW_NUMBER() OVER (
+                                PARTITION BY c.BatchID 
+                                ORDER BY c.SubmittedDate DESC, c.SubmittedTime DESC
+                            ) AS RowNum
+                        FROM 
+                            TRN_LeakSealSlanted_Data c
+                        LEFT JOIN 
+                            MST_PlantDetails p ON c.PlantName = p.plant_id
+                        LEFT JOIN 
+                            MST_Plant_Lines l ON c.Line = l.line_id
+                        LEFT JOIN 
+                            MST_LineCategory pc ON c.ProductCategory = pc.category_id
+                        LEFT JOIN 
+                            MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
+                        LEFT JOIN
+                            MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
+                    )
                     SELECT TOP(30)
-                        c.ID AS DBID,
-                        c.FormID as FormID,
-                        c.LSP_Id as RecordID,
-                        p.plant_name AS PlantName,
-                        l.line_name AS LineName,
-	                    pc.category_name AS ProductCategory,
-	                    pb.brand_name AS ProductBrand,
-                        c.SubmittedByEmployeeCode as EmpCode,
-                        u.EmployeeName AS EmpName,
-                        c.SubmittedDate as SDate,
-                        c.SubmittedTime as STime,
-                        c.Shift as SShift,
-                        'No Comment' as Remarks,
-                        c.Approver1EmployeeCode as L1,
-                        c.Approver1_Status,
-                        c.Approver1_TimeStamp,
-                        c.Approver2EmployeeCode as L2,
-                        c.Approver2_Status,
-                        c.Approver2_TimeStamp,
-                        c.DottedLineApproverEmployeeCode as L3,
-                        c.DottedApprover_Status,
-                        c.DottedApprover_TimeStamp
+                        DBID, FormID, BatchID, RecordID, PlantName, LineName, ProductCategory, 
+                        ProductBrand, EmpCode, EmpName, SDate, STime, SShift, Remarks, 
+                        L1, Approver1_Status, Approver1_TimeStamp, 
+                        L2, Approver2_Status, Approver2_TimeStamp, 
+                        L3, DottedApprover_Status, DottedApprover_TimeStamp
                     FROM 
-                        TRN_LeakSealSlanted_Data c
-                    LEFT JOIN 
-                        MST_PlantDetails p ON c.PlantName = p.plant_id
-                    LEFT JOIN 
-                        MST_Plant_Lines l ON c.Line = l.line_id
-                    LEFT JOIN 
-                        MST_LineCategory pc ON c.ProductCategory = pc.category_id
-                    LEFT JOIN 
-                        MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
-                    LEFT JOIN
-                        MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
+                        RankedData
                     WHERE 
-                        1 = 1
+                        RowNum = 1
                     ORDER BY 
-                        c.[SubmittedDate] DESC, 
-                        c.[SubmittedTime] DESC;
+                        SDate DESC, STime DESC;
                 ";
+
 
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
@@ -901,7 +960,7 @@ namespace AnmolDristi
         //    }
         //}
 
-        protected void btn_view_submit_Click(object sender, EventArgs e)
+        protected void btn_view_submit_Click_old(object sender, EventArgs e)
         {
             // Retrieve date range from textboxes
             DateTime? dateFrom = string.IsNullOrEmpty(TXT_PackageDate.Text)
@@ -1035,6 +1094,154 @@ namespace AnmolDristi
             }
         }
 
+        protected void btn_view_submit_Click(object sender, EventArgs e)
+        {
+            // Retrieve date range from textboxes
+            DateTime? dateFrom = string.IsNullOrEmpty(TXT_PackageDate.Text)
+                ? (DateTime?)null
+                : DateTime.ParseExact(TXT_PackageDate.Text, "yyyy-MM-dd", null);
+            DateTime? dateTo = string.IsNullOrEmpty(TextBox1.Text)
+                ? (DateTime?)null
+                : DateTime.ParseExact(TextBox1.Text, "yyyy-MM-dd", null);
+
+            // Build SQL query dynamically based on date range
+            StringBuilder queryBuilder = new StringBuilder(@"
+                WITH RankedData AS (
+                    SELECT 
+                        c.ID AS DBID,
+                        c.FormID AS FormID,
+                        c.BatchID,
+                        c.LSP_Id AS RecordID,
+                        p.plant_name AS PlantName,
+                        l.line_name AS LineName,
+                        pc.category_name AS ProductCategory,
+                        pb.brand_name AS ProductBrand,
+                        c.SubmittedByEmployeeCode AS EmpCode,
+                        u.EmployeeName AS EmpName,
+                        c.SubmittedDate AS SDate,
+                        c.SubmittedTime AS STime,
+                        c.Shift AS SShift,
+                        'No Comment' AS Remarks,
+                        c.Approver1EmployeeCode AS L1,
+                        c.Approver1_Status,
+                        c.Approver1_TimeStamp,
+                        c.Approver2EmployeeCode AS L2,
+                        c.Approver2_Status,
+                        c.Approver2_TimeStamp,
+                        c.DottedLineApproverEmployeeCode AS L3,
+                        c.DottedApprover_Status,
+                        c.DottedApprover_TimeStamp,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY c.BatchID 
+                            ORDER BY c.SubmittedDate DESC, c.SubmittedTime DESC
+                        ) AS RowNum
+                    FROM TRN_LeakSealSlanted_Data c
+                    LEFT JOIN MST_PlantDetails p ON c.PlantName = p.plant_id
+                    LEFT JOIN MST_Plant_Lines l ON c.Line = l.line_id
+                    LEFT JOIN MST_LineCategory pc ON c.ProductCategory = pc.category_id
+                    LEFT JOIN MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
+                    LEFT JOIN MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
+                    WHERE 1 = 1");
+
+            var parameters = new List<SqlParameter>();
+
+            // Add filters for date range
+            if (dateFrom.HasValue)
+            {
+                queryBuilder.Append(" AND c.SubmittedDate >= @DateFrom");
+                parameters.Add(new SqlParameter("@DateFrom", SqlDbType.Date) { Value = dateFrom.Value.Date });
+            }
+
+            if (dateTo.HasValue)
+            {
+                queryBuilder.Append(" AND c.SubmittedDate <= @DateTo");
+                parameters.Add(new SqlParameter("@DateTo", SqlDbType.Date) { Value = dateTo.Value.Date });
+            }
+
+            // Filter by selected plant
+            if (!string.IsNullOrEmpty(DDL_Plant.SelectedValue) && DDL_Plant.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.PlantName = @PlantId");
+                parameters.Add(new SqlParameter("@PlantId", SqlDbType.Int) { Value = DDL_Plant.SelectedValue });
+            }
+
+            if (!string.IsNullOrEmpty(DDL_PlantLine.SelectedValue) && DDL_PlantLine.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.Line = @LineName");
+                parameters.Add(new SqlParameter("@LineName", SqlDbType.Int) { Value = DDL_PlantLine.SelectedValue });
+            }
+
+            if (!string.IsNullOrEmpty(DDL_ProductCategory.SelectedValue) && DDL_ProductCategory.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.ProductCategory = @ProductCategory");
+                parameters.Add(new SqlParameter("@ProductCategory", SqlDbType.Int) { Value = DDL_ProductCategory.SelectedValue });
+            }
+
+            if (!string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) && DDL_ProductBrand.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.ProductBrand = @ProductBrand");
+                parameters.Add(new SqlParameter("@ProductBrand", SqlDbType.Int) { Value = DDL_ProductBrand.SelectedValue });
+            }
+
+            queryBuilder.Append(@")
+                SELECT TOP(30)
+                    DBID, FormID, BatchID, RecordID, PlantName, LineName, ProductCategory, 
+                    ProductBrand, EmpCode, EmpName, SDate, STime, SShift, Remarks, 
+                    L1, Approver1_Status, Approver1_TimeStamp, 
+                    L2, Approver2_Status, Approver2_TimeStamp, 
+                    L3, DottedApprover_Status, DottedApprover_TimeStamp
+                FROM RankedData
+                WHERE RowNum = 1
+                ORDER BY SDate DESC, STime DESC");
+
+            try
+            {
+                // Fetch filtered data using the constructed query and parameters
+                DataTable filteredData = GetDataFromTable(queryBuilder.ToString(), parameters.ToArray());
+
+                // Convert DataTable to List<ReportInfo>
+                List<ReportInfo> dataSave = filteredData.AsEnumerable().Select(row => new ReportInfo
+                {
+                    DBID = row.Field<int>("DBID"),
+                    FormID = row.Field<int>("FormID"),
+                    RecordID = row.Field<string>("RecordID"),
+                    PlantName = row.Field<string>("PlantName"),
+                    LineName = row.Field<string>("LineName"),
+                    ProductCategory = row.Field<string>("ProductCategory"),
+                    ProductBrand = row.Field<string>("ProductBrand"),
+                    EmpCode = row.Field<string>("EmpCode"),
+                    EmpName = row.Field<string>("EmpName"),
+                    SDate = row.Field<DateTime>("SDate"),
+                    STime = row.Field<TimeSpan>("STime"),
+                    SShift = row.Field<string>("SShift"),
+                    Remarks = row.Field<string>("Remarks"),
+                    L1 = row.Field<string>("L1"),
+                    Approver1_Status = row.Field<int?>("Approver1_Status"),
+                    Approver1_TimeStamp = row.Field<DateTime?>("Approver1_TimeStamp"),
+                    L2 = row.Field<string>("L2"),
+                    Approver2_Status = row.Field<int?>("Approver2_Status"),
+                    Approver2_TimeStamp = row.Field<DateTime?>("Approver2_TimeStamp"),
+                    L3 = row.Field<string>("L3"),
+                    DottedApprover_Status = row.Field<int?>("DottedApprover_Status"),
+                    DottedApprover_TimeStamp = row.Field<DateTime?>("DottedApprover_TimeStamp")
+                }).ToList();
+
+                // Bind to GridView
+                GridView1.DataSource = dataSave;
+                GridView1.DataBind();
+
+                // Show a notification if no records are found
+                if (dataSave.Count == 0)
+                {
+                    // ShowNotification("No Data", "No records found for the selected date range.", "info");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (log it, show an error message, etc.)
+                // ShowNotification("Error", "An error occurred while processing your request.", "error");
+            }
+        }
 
 
         private DataTable GetDataFromTable(string query, SqlParameter[] parameters)
@@ -1074,9 +1281,10 @@ namespace AnmolDristi
             int rowIndex = Convert.ToInt32(e.CommandArgument);
             GridViewRow row = GridView1.Rows[rowIndex];
             string dbid = (row.FindControl("lbl_rowid") as Label).Text;
+            string batchid = (row.FindControl("lbl_batchid") as Label).Text;
             if (e.CommandName == "View")
             {
-                //Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "&VM=1", false);
+                Response.Redirect("LeakAndSlant_Detailed.aspx?ID=" + batchid + "&VM=1", false);
                 //Response.Redirect("#", false);
             }
         }

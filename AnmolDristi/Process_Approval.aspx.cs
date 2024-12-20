@@ -462,14 +462,14 @@ namespace AnmolDristi
         }
         private void BindGridView()
         {
-            var dataSave = new List<ReportInfo>
-            {
-                 new ReportInfo {},
-            };
+            //var dataSave = new List<ReportInfo>
+            //{
+            //     new ReportInfo {},
+            //};
 
-            // Bind to GridView
-            GridView1.DataSource = dataSave;
-            GridView1.DataBind();
+            //// Bind to GridView
+            //GridView1.DataSource = dataSave;
+            //GridView1.DataBind();
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -488,6 +488,27 @@ namespace AnmolDristi
                 }
             }
         }
+
+        protected string BindSubmittedTime(object submittedTime)
+        {
+            if (submittedTime != null && submittedTime != DBNull.Value)
+            {
+                if (submittedTime is TimeSpan)
+                {
+                    TimeSpan timeValue = (TimeSpan)submittedTime;
+                    DateTime baseDate = DateTime.Today;
+                    DateTime fullTime = baseDate.Add(timeValue);
+                    return fullTime.ToString("HH:mm") + " HRS";
+                }
+                else if (submittedTime is DateTime)
+                {
+                    DateTime dateTimeValue = Convert.ToDateTime(submittedTime);
+                    return dateTimeValue.ToString("HH:mm") + " HRS";
+                }
+            }
+            return string.Empty;
+        }
+
         protected void FilterData()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -645,6 +666,24 @@ namespace AnmolDristi
 
             // Redirect to the Process_FinalApproval.aspx page with the PcrNo in the query string
             Response.Redirect("Process_FinalApproval.aspx?PcrNo=" + pcrno);
+        }
+
+        protected void GridView1_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
+        {
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = GridView1.Rows[rowIndex];
+
+            string pcrno = (row.FindControl("lblPcrno") as Label).Text;
+            string dbid = (row.FindControl("lbl_rowid") as Label).Text;
+            //string app1 = (row.FindControl("lbl_Approver1") as Label).Text;
+            //string app2 = (row.FindControl("lbl_Approver2") as Label).Text;
+            //string dtapp = (row.FindControl("lbl_DottedLineApproverEmployeeCode") as Label).Text;
+
+            if (e.CommandName == "ViewApprove")
+            {
+                Response.Redirect("Process_FinalApproval.aspx?PcrNo="+pcrno +"&ID="+dbid+"&VM=1", false);
+
+            }
         }
 
     }

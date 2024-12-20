@@ -137,7 +137,7 @@
                                 <asp:Label ID="lbl_msg" runat="server" Text="Click SUBMIT to view Data!!"></asp:Label>
                             </div>
                             <div class="col-md-6 col-sm-12">
-                                <button type="button" class="btn btn-danger btn-sm collapse-link">Cancel</button>
+                                <asp:Button ID="ReportbtnCancel" runat="server" Text="Home" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/qaqc_qaapprovals.aspx" />
                                 <button type="reset" class="btn btn-warning btn-sm">Reset</button>
                                 <asp:Button ID="btn_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" CausesValidation="true" ValidationGroup="Submit" OnClick="btn_submit_Click" />
                             </div>

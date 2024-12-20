@@ -64,11 +64,11 @@
             text-align: center;
         }
 
-        .tab-disabled {
-            color: #6c757d; /* Gray color for disabled look */
-            pointer-events: none; /* Prevent click */
+        /*.tab-disabled {
+            color: #6c757d;
+            pointer-events: none;
             cursor: not-allowed;
-        }
+        }*/
     </style>
 </asp:Content>
 
@@ -1008,63 +1008,62 @@
             xhr.send(JSON.stringify({ jsonData: jsonData }));
         }
 
-        //----- tab jump -----
-        //document.addEventListener('DOMContentLoaded', function () {
-        //    const tabIds = ['basicData', 'weight', 'spongeData', 'doughData', 'ovenData', 'verificationData'];
-        //    let enabledTabs = new Set(['basicData']); // Initially enable the first tab
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabIds = ['basicData', 'weight', 'spongeData', 'doughData', 'ovenData', 'verificationData'];
+            let enabledTabs = new Set(['basicData']); // Initially enable the first tab
 
-        //    // Disable all tabs except the first one initially
-        //    for (let i = 0; i < tabIds.length; i++) {
-        //        document.querySelector(`a[href="#${tabIds[i]}"]`).classList.add('disabled');
-        //    }
+            // Disable all tabs except the first one initially
+            for (let i = 0; i < tabIds.length; i++) {
+                document.querySelector(`a[href="#${tabIds[i]}"]`).classList.add('disabled');
+            }
 
-        //    // Function to check if the current tab is filled and enable the next tab
-        //    function checkTabContent(index) {
-        //        const currentTabContent = document.querySelector(`#${tabIds[index]}`);
-        //        const inputs = currentTabContent.querySelectorAll('input, select, textarea');
-        //        let isValid = true;
+            // Function to check if the current tab is filled and enable the next tab
+            function checkTabContent(index) {
+                const currentTabContent = document.querySelector(`#${tabIds[index]}`);
+                const inputs = currentTabContent.querySelectorAll('input, select, textarea');
+                let isValid = true;
 
-        //        inputs.forEach(input => {
-        //            if (!input.value.trim()) {
-        //                isValid = false;
-        //            }
-        //        });
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                    }
+                });
 
-        //        if (isValid && index < tabIds.length - 1) {
-        //            // Enable the next tab and disable the current tab
-        //            const nextTab = document.querySelector(`a[href="#${tabIds[index + 1]}"]`);
-        //            const currentTab = document.querySelector(`a[href="#${tabIds[index]}"]`);
+                if (isValid && index < tabIds.length - 1) {
+                    // Enable the next tab and disable the current tab
+                    const nextTab = document.querySelector(`a[href="#${tabIds[index + 1]}"]`);
+                    const currentTab = document.querySelector(`a[href="#${tabIds[index]}"]`);
 
-        //            nextTab.classList.remove('disabled');
-        //            enabledTabs.add(tabIds[index + 1]); // Mark the next tab as enabled
+                    nextTab.classList.remove('disabled');
+                    enabledTabs.add(tabIds[index + 1]); // Mark the next tab as enabled
 
-        //            // Disable the current tab once moving to the next one
-        //            currentTab.classList.add('disabled');
-        //            enabledTabs.delete(tabIds[index]); // Remove current tab from enabled set
-        //        }
-        //    }
+                    // Disable the current tab once moving to the next one
+                    currentTab.classList.add('disabled');
+                    enabledTabs.delete(tabIds[index]); // Remove current tab from enabled set
+                }
+            }
 
-        //    // Attach click event listeners to each tab
-        //    tabIds.forEach((tabId, index) => {
-        //        document.querySelector(`a[href="#${tabId}"]`).addEventListener('click', function (e) {
-        //            // Prevent navigation if the tab is not enabled
-        //            if (!enabledTabs.has(tabId)) {
-        //                e.preventDefault(); // Prevent navigation
-        //                alert('Please complete the current section before proceeding.');
-        //            }
-        //        });
+            // Attach click event listeners to each tab
+            tabIds.forEach((tabId, index) => {
+                document.querySelector(`a[href="#${tabId}"]`).addEventListener('click', function (e) {
+                    // Prevent navigation if the tab is not enabled
+                    if (!enabledTabs.has(tabId)) {
+                        e.preventDefault(); // Prevent navigation
+                        alert('Please complete the current section before proceeding.');
+                    }
+                });
 
-        //        // Monitor input changes to check and enable the next tab
-        //        const tabContent = document.querySelector(`#${tabId}`);
-        //        const inputs = tabContent.querySelectorAll('input, select, textarea');
+                // Monitor input changes to check and enable the next tab
+                const tabContent = document.querySelector(`#${tabId}`);
+                const inputs = tabContent.querySelectorAll('input, select, textarea');
 
-        //        inputs.forEach(input => {
-        //            input.addEventListener('input', function () {
-        //                checkTabContent(index);
-        //            });
-        //        });
-        //    });
-        //});
+                inputs.forEach(input => {
+                    input.addEventListener('input', function () {
+                        checkTabContent(index);
+                    });
+                });
+            });
+        });
 
     </script>
 
@@ -2212,7 +2211,7 @@
 
                                                                     <asp:TemplateField HeaderText="Standard Weight" HeaderStyle-Width="15%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtStandardWeight" runat="server" CssClass="standard-weight form-control form-control-sm rounded" ReadOnly="true" ClientIDMode="Static" Text='<%# Eval("BOM_Qnty") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtStandardWeight" runat="server" CssClass="standard-weight form-control form-control-sm rounded" ReadOnly="true" Width="50%" ForeColor="DimGray" ClientIDMode="Static" Text='<%# Eval("BOM_Qnty") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
@@ -2362,7 +2361,7 @@
                                                                     <asp:Label ID="Lbl_SpongeBtnSubmit" runat="server" AssociatedControlID="SpongeBtnSubmit" Text="Click to Proceed" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
                                                                         <asp:Button ID="SpongeBtnSubmit" runat="server" Text="Save" CssClass="btn btn-success btn-sm" Enabled="false" ValidationGroup="SpongeSubmit" CausesValidation="false" OnClick="SpongeBtnSubmit_Click" />
-                                                                        <asp:Button ID="SpongeBtnNotApplicable" runat="server" Text="N/A or SKIP" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="SpongeBtnNotApplicable_Click"/>
+                                                                        <asp:Button ID="SpongeBtnNotApplicable" runat="server" Text="N/A or SKIP" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="SpongeBtnNotApplicable_Click" />
                                                                         <asp:Button ID="Spongebtn_Reset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="Spongebtn_Reset_Click" />
 
                                                                     </div>
@@ -2535,9 +2534,9 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="LabelDiceRpm" runat="server" AssociatedControlID="TB_DoughTemp" Text="Dice RPM :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_DiceRpm" runat="server" ErrorMessage="*" ValidationGroup="DoughSubmit" ControlToValidate="TB_DiceRpm" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_DiceRpm" runat="server" ValidationGroup="DoughSubmit" ControlToValidate="TB_DiceRpm" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_DiceRpm" runat="server" ValidationGroup="DoughSubmit" ControlToValidate="TB_DiceRpm" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DiceRpm" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Dice Rmp "></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_DiceRpm" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Dice Rmp"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2585,56 +2584,43 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                     </div>
-                                                    <%--Dough Data Ends Here--%>
 
-                                                    <%--Oven Data Start Here--%>
                                                     <div class="tab-pane fade" id="ovenData" role="tabpanel" aria-labelledby="ovenData-tab">
                                                         <div class="x-content">
-
-
                                                             <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
-
                                                                     <asp:TemplateField HeaderText="Sl">
                                                                         <ItemTemplate>
                                                                             <%# Container.DataItemIndex + 1 %>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-
                                                                     <asp:TemplateField HeaderText="Zone">
                                                                         <ItemTemplate>
                                                                             <span class="zone"><%# Eval("Zone") %></span>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-
-
                                                                     <asp:TemplateField HeaderText="Oven Top">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtOvenTop" runat="server" ClientIDMode="Static" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtOvenTop" runat="server" ClientIDMode="Static" Width="70%" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-
                                                                     <asp:TemplateField HeaderText="Oven Bottom">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtOvenBottom" runat="server" ClientIDMode="Static" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtOvenBottom" runat="server" ClientIDMode="Static" Width="70%" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-
                                                                     <asp:TemplateField HeaderText="Damper Top">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtDamperTop" runat="server" ClientIDMode="Static" CssClass="form-control form-control-sm rounded" onkeyup="calculateDamperBottom(this)"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtDamperTop" runat="server" ClientIDMode="Static" Width="70%" CssClass="form-control form-control-sm rounded" onkeyup="calculateDamperBottom(this)"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-
                                                                     <asp:TemplateField HeaderText="Damper Bottom">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtDamperBottom" runat="server" ClientIDMode="Static" CssClass="form-control form-control-sm rounded damperBottom-percentage" ReadOnly="true"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtDamperBottom" runat="server" ClientIDMode="Static" Width="70%" CssClass="form-control form-control-sm rounded damperBottom-percentage" ReadOnly="true"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-
                                                                 </Columns>
                                                             </asp:GridView>
 
@@ -2644,9 +2630,7 @@
                                                         <asp:Button ID="OvenBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="OvenBtnReset_Click" />
 
                                                     </div>
-                                                    <%--Oven Data Ends Here--%>
 
-                                                    <%--Verification Data Start Here--%>
                                                     <div class="tab-pane fade" id="verificationData" role="tabpanel" aria-labelledby="verificationData-tab">
                                                         <div class="x-content">
 
@@ -2698,7 +2682,7 @@
 
                                                         </div>
                                                     </div>
-                                                    <%--Verification Data ends Here--%>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2764,7 +2748,6 @@
 
                             <hr />
 
-                            <!-- GridView for Detailed Information -->
                             <asp:GridView ID="GridViewApprovers" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" Visible="false">
                                 <Columns>
                                     <asp:BoundField DataField="Approver1Name" HeaderText="Approver 1 Name" HtmlEncode="false" />
