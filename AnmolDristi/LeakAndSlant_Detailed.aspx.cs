@@ -271,11 +271,11 @@ namespace AnmolDristi
         {
             if (ViewerMode == 0)
             {
-                Response.Redirect("qaqc_qcinspector_rpt_.aspx", false);
+                Response.Redirect("vm_leak_test.aspx", false);
             }
             else if (ViewerMode == 1)
             {
-                Response.Redirect("app_qc_inspectorreport.aspx", false);
+                Response.Redirect("vm_leak_test.aspx", false);
             }
             else
             {
