@@ -96,7 +96,7 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_SupplierName" runat="server" AssociatedControlID="TB_SupplierName" Text="Supplier Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_SupplierName" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_SupplierName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_SupplierName" runat="server" ControlToValidate="TB_SupplierName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_SupplierName" runat="server" ControlToValidate="TB_SupplierName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_SupplierName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Supplier Name" MaxLength="50"></asp:TextBox>
                                     </div>
@@ -147,7 +147,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <!-- Label for Dimension L (in mm) -->
-                                    <asp:Label ID="Lbl_TB_DimensionStdL" runat="server" AssociatedControlID="TB_DimensionStdL" Text="Dimension L (mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="Lbl_TB_DimensionStdL" runat="server" AssociatedControlID="TB_DimensionStdL" Text="Standard Dimension L (mm):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
 
                                     <!-- Required Field Validator for Dimension L -->
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionStdL" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStdL"
@@ -159,8 +159,8 @@
 
                                     <!-- Input TextBox for Dimension L (in mm) -->
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionStdL" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number"
-                                            Placeholder="Enter Length in mm" MaxLength="10" OnKeyUp="validateDimensionL()" ClientIDMode="Static"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionStdL" runat="server" CssClass="form-control form-control-sm rounded" 
+                                            Placeholder="Enter Length in mm" OnKeyUp="validateDimensionL()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -206,8 +206,8 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <!-- Label for Dimension W (in mm) -->
-                                    <asp:Label ID="Lbl_TB_DimensionStdW" runat="server" AssociatedControlID="TB_DimensionStdW" Text="Dimension W (mm):"
-                                        ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="Lbl_TB_DimensionStdW" runat="server" AssociatedControlID="TB_DimensionStdW" Text="Standard Dimension W (mm):"
+                                        ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
 
                                     <!-- Required Field Validator for Dimension W -->
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionStdW" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStdW"
@@ -219,8 +219,8 @@
 
                                     <!-- Input TextBox for Dimension W (in mm) -->
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionStdW" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number"
-                                            Placeholder="Enter Width in mm" MaxLength="10" OnKeyUp="validateDimensionW()" ClientIDMode="Static"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionStdW" runat="server" CssClass="form-control form-control-sm rounded"
+                                            Placeholder="Enter Width in mm" OnKeyUp="validateDimensionW()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -267,8 +267,8 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <!-- Label for Dimension H (in mm) -->
-                                    <asp:Label ID="Lbl_TB_DimensionStdH" runat="server" AssociatedControlID="TB_DimensionStdH" Text="Dimension H (mm):"
-                                        ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="Lbl_TB_DimensionStdH" runat="server" AssociatedControlID="TB_DimensionStdH" Text="Standard Dimension H (mm):"
+                                        ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
 
                                     <!-- Required Field Validator for Dimension H -->
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionStdH" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStdH"
@@ -280,8 +280,8 @@
 
                                     <!-- Input TextBox for Dimension H (in mm) -->
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionStdH" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number"
-                                            Placeholder="Enter Height in mm" MaxLength="10" OnKeyUp="validateDimensionH()" ClientIDMode="Static"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionStdH" runat="server" CssClass="form-control form-control-sm rounded" 
+                                            Placeholder="Enter Height in mm" OnKeyUp="validateDimensionH()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -331,7 +331,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionObsL" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionObsL" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RangeValidator ID="RV_TB_DimensionObsL" runat="server" ControlToValidate="TB_DimensionObsL" ValidationGroup="Submit" ErrorMessage="Invalid Length" MinimumValue="0" MaximumValue="10000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionObsL" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Observed Length in mm" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionObsL" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Observed Length in mm"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -342,7 +342,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionObsW" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionObsW" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RangeValidator ID="RV_TB_DimensionObsW" runat="server" ControlToValidate="TB_DimensionObsW" ValidationGroup="Submit" ErrorMessage="Invalid Width" MinimumValue="0" MaximumValue="10000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionObsW" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Observed Width in mm" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionObsW" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Observed Width in mm"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -353,7 +353,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionObsH" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionObsH" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RangeValidator ID="RV_TB_DimensionObsH" runat="server" ControlToValidate="TB_DimensionObsH" ValidationGroup="Submit" ErrorMessage="Invalid Height" MinimumValue="0" MaximumValue="10000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionObsH" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Observed Height in mm" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionObsH" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Observed Height in mm"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -362,7 +362,7 @@
                                 <div class="mb-3">
                                     <!-- Label for Standard GSM -->
                                     <asp:Label ID="Lbl_TB_GSMStd" runat="server" AssociatedControlID="TB_GSMStd" Text="Standard GSM:"
-                                        ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
 
                                     <!-- Required Field Validator for Standard GSM -->
                                     <asp:RequiredFieldValidator ID="RFV_TB_GSMStd" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_GSMStd"
@@ -374,8 +374,7 @@
 
                                     <!-- Input TextBox for Standard GSM -->
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_GSMStd" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number"
-                                            Placeholder="Enter Standard GSM" MaxLength="10" OnKeyUp="validateGSM()" ClientIDMode="Static"></asp:TextBox>
+                                        <asp:TextBox ID="TB_GSMStd" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Standard GSM" OnKeyUp="validateGSM()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -425,7 +424,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_GSMObs" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_GSMObs" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RangeValidator ID="RV_TB_GSMObs" runat="server" ControlToValidate="TB_GSMObs" ValidationGroup="Submit" ErrorMessage="Invalid GSM" MinimumValue="0" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_GSMObs" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Observed GSM" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="TB_GSMObs" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Observed GSM"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -448,8 +447,7 @@
 
                                     <!-- Input TextBox for BS (Kg/cm²) -->
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_BurstingStrength" runat="server" CssClass="form-control form-control-sm rounded"
-                                            TextMode="Number" Placeholder="Enter BS (Kg/cm²)" MaxLength="10">
+                                        <asp:TextBox ID="TB_BurstingStrength" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter BS (Kg/cm²)">
                                         </asp:TextBox>
                                     </div>
                                 </div>
@@ -461,7 +459,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_CompressionStrength" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_CompressionStrength" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RangeValidator ID="RV_TB_CompressionStrength" runat="server" ControlToValidate="TB_CompressionStrength" ValidationGroup="Submit" ErrorMessage="Invalid Compression Strength" MinimumValue="0" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_CompressionStrength" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Compression Strength (kg/cm²)" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="TB_CompressionStrength" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Compression Strength (kg/cm²)"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -472,7 +470,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_FlutePercent" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_FlutePercent" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RangeValidator ID="RV_TB_FlutePercent" runat="server" ControlToValidate="TB_FlutePercent" ValidationGroup="Submit" ErrorMessage="Invalid Flute Percentage" MinimumValue="0" MaximumValue="100" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_FlutePercent" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Flute Percentage" MaxLength="5"></asp:TextBox>
+                                        <asp:TextBox ID="TB_FlutePercent" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Flute Percentage"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -483,7 +481,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_MoisturePercent" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_MoisturePercent" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RangeValidator ID="RV_TB_MoisturePercent" runat="server" ControlToValidate="TB_MoisturePercent" ValidationGroup="Submit" ErrorMessage="Invalid Moisture Percentage" MinimumValue="0" MaximumValue="100" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_MoisturePercent" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Moisture Percentage" MaxLength="5"></asp:TextBox>
+                                        <asp:TextBox ID="TB_MoisturePercent" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Moisture Percentage"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>

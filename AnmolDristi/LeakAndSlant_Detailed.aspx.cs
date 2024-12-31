@@ -271,6 +271,7 @@ namespace AnmolDristi
         {
             if (ViewerMode == 0)
             {
+                //View List Page name for the submitter
                 Response.Redirect("vm_leak_test.aspx", false);
             }
             else if (ViewerMode == 1)

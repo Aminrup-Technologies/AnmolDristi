@@ -63,51 +63,18 @@ namespace AnmolDristi
 
             }
         }
-        private void ProductBrandsBinder(string selectedPlantValue)
-        {
-            // Construct the SQL query with parameters
-            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId ";
-            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
-
-            // Create SQL parameters for plant_id and line_id
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@PlantId", selectedPlantValue)
-            };
-
-            // Call the BindDropDownList method with parameters
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
-
-            // Check if any records were bound
-            if (!recordsBound)
-            {
-                string ProductBrands_Error_script = @"<script type='text/javascript'>
-                    new PNotify({
-                        title: 'Error',
-                        text: 'No Brands found for the selected plant and line!',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
-            }
-        }
 
         protected void DDL_Plant_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_Plant.SelectedIndex != 0)
             {
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
-                ProductBrandsBinder(selectedPlantValue);
+                //ProductBrandsBinder(selectedPlantValue);
                 LoadApprovers(selectedPlantValue);
             }
             else
             {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
+                //DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
 
                 string DDL_Plant_Error_script = @"<script type='text/javascript'>
                             new PNotify({
@@ -257,7 +224,8 @@ namespace AnmolDristi
 
 
             string plantName = DDL_Plant.SelectedValue;
-            string productBrand = DDL_ProductBrand.SelectedValue;
+            //string productBrand = DDL_ProductBrand.SelectedValue;
+            string productBrand = TB_MatVarietyName.Text.ToString();
 
             string supplier = TB_SupplierName.Text;
             string challanNo = TB_ChallanNo.Text;
@@ -383,7 +351,8 @@ namespace AnmolDristi
         private void MakeInputsReadOnly()
         {
             DDL_Plant.Enabled = false;
-            DDL_ProductBrand.Enabled = false;
+            //DDL_ProductBrand.Enabled = false;
+            TB_MatVarietyName.ReadOnly = true;
             TB_SupplierName.ReadOnly = true;
             TB_ChallanNo.ReadOnly = true;
             TB_ChallanDate.ReadOnly = true;

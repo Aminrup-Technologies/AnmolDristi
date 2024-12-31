@@ -141,18 +141,28 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_MatVarietyName" runat="server" AssociatedControlID="TB_MatVarietyName" Text="Material / Variety" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_MatVarietyName" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_MatVarietyName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_MatVarietyName" runat="server" ControlToValidate="TB_MatVarietyName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_MatVarietyName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Material / Variety" MaxLength="50"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--<div class="col-md-3">
+                                <div class="mb-3">
                                     <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_ProductBrand" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductBrand_SelectedIndexChanged"></asp:DropDownList>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--%>
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_SupplierName" runat="server" AssociatedControlID="TB_SupplierName" Text="Supplier Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_SupplierName" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_SupplierName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_SupplierName" runat="server" ControlToValidate="TB_SupplierName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_SupplierName" runat="server" ControlToValidate="TB_SupplierName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_SupplierName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Supplier Name" MaxLength="50"></asp:TextBox>
                                     </div>
@@ -203,20 +213,21 @@
 
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <asp:Label ID="Lbl_TB_SealingValue" runat="server" AssociatedControlID="TB_SealingValue" Text="Sealing Value:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="Lbl_TB_SealingValue" runat="server" AssociatedControlID="TB_SealingValue" Text="Sealing:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_SealingValue" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_SealingValue" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RangeValidator ID="RV_TB_SealingValue" runat="server" ControlToValidate="TB_SealingValue" ValidationGroup="Submit" ErrorMessage="Sealing Value must be between 0 and 1000" MinimumValue="0" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_SealingValue" runat="server" ControlToValidate="TB_SealingValue" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_SealingValue" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Sealing Value" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="TB_SealingValue" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Sealing Value"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3" id="Std_Dim_Div" runat="server" visible="true">
                                 <div class="mb-3">
                                     <!-- Label for Standard Dimension (in mm) -->
                                     <asp:Label ID="LBL_DimensionStd" runat="server" AssociatedControlID="TB_DimensionStd" Text="Standard Dimension (in mm):"
-                                        ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:Literal ID="span_Dimension" runat="server" Text='<%# Eval("Dimension_Std") %>'></asp:Literal>
+                                        ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Literal ID="span_Dimension" runat="server"
+                                        Text='<%# string.IsNullOrEmpty(Eval("Dimension_Std")?.ToString()) ? "0.00" : Eval("Dimension_Std") %>'></asp:Literal>
 
                                     <!-- Required Field Validator -->
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionStd" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStd"
@@ -230,7 +241,7 @@
                                     <!-- Input TextBox for Standard Dimension (in mm) -->
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_DimensionStd" runat="server" CssClass="form-control form-control-sm rounded"
-                                            Placeholder="Enter 0.00mm and 1000.0mm Dimension" MaxLength="10" OnKeyUp="validateDimension()"
+                                            Placeholder="Enter 0.00mm and 1000.0mm Dimension" Text="0.00" MaxLength="10" OnKeyUp="validateDimension()"
                                             ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
@@ -255,16 +266,17 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionObs" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionObs" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RangeValidator ID="RV_TB_DimensionObs" runat="server" ControlToValidate="TB_DimensionObs" ValidationGroup="Submit" ErrorMessage="Invalid Obs Dimension" MinimumValue="0" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionObs" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Observed Dimension (in mm)" MaxLength="50"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionObs" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Observed Dimension (in mm)"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3"  id="Std_gsmwt_Div" runat="server" visible="true">
                                 <div class="mb-3">
                                     <!-- Label for GSM/WT per 10 PS (STD) -->
                                     <asp:Label ID="Lbl_TB_GMS_Std" runat="server" AssociatedControlID="TB_GMS_Std"
-                                        Text="GSM/WT per 10 PS (STD):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:Literal ID="span_GMS" runat="server" Text='<%# Eval("GMS_Std") %>'></asp:Literal>
+                                        Text="GSM/WT per 10 PS (STD):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Literal ID="span_GMS" runat="server"
+                                        Text='<%# string.IsNullOrEmpty(Eval("GMS_Std")?.ToString()) ? "0.00" : Eval("GMS_Std") %>'></asp:Literal>
 
                                     <!-- Required Field Validator -->
                                     <asp:RequiredFieldValidator ID="RFV_TB_GMS_Std" runat="server" ErrorMessage="Input Required"
@@ -279,7 +291,7 @@
                                     <!-- Input TextBox for GSM/WT per 10 PS (STD) -->
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_GMS_Std" runat="server" CssClass="form-control form-control-sm rounded"
-                                            Placeholder="Enter 0.00g to 1000.00g GSM/Weight per 10 PS" MaxLength="10"
+                                            Placeholder="Enter 0.00g to 1000.00g GSM/Weight per 10 PS" Text="0.00" MaxLength="10"
                                             OnKeyUp="validateGSM()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>

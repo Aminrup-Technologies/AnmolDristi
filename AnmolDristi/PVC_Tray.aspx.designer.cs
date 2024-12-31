@@ -85,40 +85,40 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.DropDownList DDL_Plant;
         
         /// <summary>
-        /// Label4 control.
+        /// Lbl_TB_MatVarietyName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_MatVarietyName;
         
         /// <summary>
-        /// lbl_DDL_ProductBrand_Value control.
+        /// RFV_TB_MatVarietyName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DDL_ProductBrand_Value;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_MatVarietyName;
         
         /// <summary>
-        /// RFV_DDL_ProductBrand control.
+        /// REV_TB_MatVarietyName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_ProductBrand;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_MatVarietyName;
         
         /// <summary>
-        /// DDL_ProductBrand control.
+        /// TB_MatVarietyName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDL_ProductBrand;
+        protected global::System.Web.UI.WebControls.TextBox TB_MatVarietyName;
         
         /// <summary>
         /// Lbl_Supplier control.
@@ -256,6 +256,51 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.TextBox TB_VehicleNo;
         
         /// <summary>
+        /// Lbl_Std_DimensionL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Std_DimensionL;
+        
+        /// <summary>
+        /// RFV_TB_Std_DimensionL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Std_DimensionL;
+        
+        /// <summary>
+        /// REV_TB_Std_DimensionL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Std_DimensionL;
+        
+        /// <summary>
+        /// RV_TB_Std_DimensionL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_Std_DimensionL;
+        
+        /// <summary>
+        /// TB_Std_DimensionL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Std_DimensionL;
+        
+        /// <summary>
         /// Lbl_DimensionL control.
         /// </summary>
         /// <remarks>
@@ -299,6 +344,51 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_DimensionL;
+        
+        /// <summary>
+        /// Lbl_Std_DimensionW control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Std_DimensionW;
+        
+        /// <summary>
+        /// RFV_TB_Std_DimensionW control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Std_DimensionW;
+        
+        /// <summary>
+        /// REV_TB_Std_DimensionW control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Std_DimensionW;
+        
+        /// <summary>
+        /// RV_TB_Std_DimensionW control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_Std_DimensionW;
+        
+        /// <summary>
+        /// TB_Std_DimensionW control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Std_DimensionW;
         
         /// <summary>
         /// Lbl_DimensionW control.
@@ -346,6 +436,51 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.TextBox TB_DimensionW;
         
         /// <summary>
+        /// Lbl_Std_DimensionH control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Std_DimensionH;
+        
+        /// <summary>
+        /// RFV_TB_Std_DimensionH control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Std_DimensionH;
+        
+        /// <summary>
+        /// REV_TB_Std_DimensionH control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Std_DimensionH;
+        
+        /// <summary>
+        /// RV_TB_Std_DimensionH control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_Std_DimensionH;
+        
+        /// <summary>
+        /// TB_Std_DimensionH control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Std_DimensionH;
+        
+        /// <summary>
         /// Lbl_DimensionH control.
         /// </summary>
         /// <remarks>
@@ -389,6 +524,51 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_DimensionH;
+        
+        /// <summary>
+        /// Lbl_Std_GSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Std_GSM;
+        
+        /// <summary>
+        /// RFV_TB_Std_GSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Std_GSM;
+        
+        /// <summary>
+        /// REV_TB_Std_GSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Std_GSM;
+        
+        /// <summary>
+        /// RV_TB_Std_GSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_Std_GSM;
+        
+        /// <summary>
+        /// TB_Std_GSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Std_GSM;
         
         /// <summary>
         /// Lbl_GSM control.

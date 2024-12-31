@@ -108,6 +108,16 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_MatVarietyName" runat="server" AssociatedControlID="TB_MatVarietyName" Text="Material / Variety" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_MatVarietyName" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_MatVarietyName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_MatVarietyName" runat="server" ControlToValidate="TB_MatVarietyName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphabet Only" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_MatVarietyName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Material / Variety" MaxLength="50"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--<div class="col-md-3">
+                                <div class="mb-3">
                                     <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Material / Variety" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     [<asp:Label ID="lbl_DDL_ProductBrand_Value" runat="server" AssociatedControlID="DDL_ProductBrand" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_ProductBrand" InitialValue="0" Display="Dynamic"></asp:RequiredFieldValidator>
@@ -115,7 +125,7 @@
                                         <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductBrand_SelectedIndexChanged"></asp:DropDownList>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--%>
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_Supplier" runat="server" AssociatedControlID="TB_Supplier" Text="Supplier Name :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -161,50 +171,110 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Standard Length Input -->
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <asp:Label ID="Lbl_DimensionL" runat="server" AssociatedControlID="TB_DimensionL" Text="Dimensions(Length in mm) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="Lbl_Std_DimensionL" runat="server" AssociatedControlID="TB_Std_DimensionL" Text="Standard Length (mm):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Std_DimensionL" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Std_DimensionL" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Std_DimensionL" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Std_DimensionL" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RangeValidator ID="RV_TB_Std_DimensionL" runat="server" ErrorMessage="0.00 to 1000.00" ValidationGroup="Submit" ControlToValidate="TB_Std_DimensionL" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Std_DimensionL" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Standard Length [0.00-1000.00]"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Length Input -->
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_DimensionL" runat="server" AssociatedControlID="TB_DimensionL" Text="Observation (Length in mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionL" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_DimensionL" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_DimensionL" runat="server" ValidationGroup="Submit" ControlToValidate="TB_DimensionL" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_TB_DimensionL" runat="server" ErrorMessage="N1 to N2" ValidationGroup="Submit" ControlToValidate="TB_DimensionL" MinimumValue="50" MaximumValue="100" Type="Integer" Display="Static" ForeColor="Red"></asp:RangeValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_DimensionL" runat="server" ValidationGroup="Submit" ControlToValidate="TB_DimensionL" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RangeValidator ID="RV_TB_DimensionL" runat="server" ErrorMessage="0.00 to 1000.00" ValidationGroup="Submit" ControlToValidate="TB_DimensionL" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionL" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Length [50-100]" TextMode="Number"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionL" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Length [0.00-1000.00]"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Standard Width -->
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <asp:Label ID="Lbl_DimensionW" runat="server" AssociatedControlID="TB_DimensionW" Text="Dimensions(Width in mm) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="Lbl_Std_DimensionW" runat="server" AssociatedControlID="TB_Std_DimensionW" Text="Standard Width (mm):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Std_DimensionW" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Std_DimensionW" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Std_DimensionW" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Std_DimensionW" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RangeValidator ID="RV_TB_Std_DimensionW" runat="server" ErrorMessage="0.00 to 1000.00" ValidationGroup="Submit" ControlToValidate="TB_Std_DimensionW" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Std_DimensionW" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Standard Width [0.00-1000.00]"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Repeat for Width -->
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_DimensionW" runat="server" AssociatedControlID="TB_DimensionW" Text="Observation (Width in mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionW" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_DimensionW" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_DimensionW" runat="server" ValidationGroup="Submit" ControlToValidate="TB_DimensionW" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_TB_DimensionW" runat="server" ErrorMessage="N1 to N2" ValidationGroup="Submit" ControlToValidate="TB_DimensionW" MinimumValue="50" MaximumValue="100" Type="Integer" Display="Static" ForeColor="Red"></asp:RangeValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_DimensionW" runat="server" ValidationGroup="Submit" ControlToValidate="TB_DimensionW" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RangeValidator ID="RV_TB_DimensionW" runat="server" ErrorMessage="0.00 to 1000.00" ValidationGroup="Submit" ControlToValidate="TB_DimensionW" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionW" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Width [50-100]" TextMode="Number"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionW" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Width [0.00-1000.00]"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Standard Value TextBox for Height -->
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <asp:Label ID="Lbl_DimensionH" runat="server" AssociatedControlID="TB_DimensionH" Text="Dimensions(Height in mm) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="Lbl_Std_DimensionH" runat="server" AssociatedControlID="TB_Std_DimensionH" Text="Standard Height (mm) :" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Std_DimensionH" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Std_DimensionH" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Std_DimensionH" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Std_DimensionH" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^\d{1,4}(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RangeValidator ID="RV_TB_Std_DimensionH" runat="server" ErrorMessage="0.00 to 1000.00" ValidationGroup="Submit" ControlToValidate="TB_Std_DimensionH" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Std_DimensionH" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Std. Height [0.00-1000.00]"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_DimensionH" runat="server" AssociatedControlID="TB_DimensionH" Text="Observation (Height in mm) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionH" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_DimensionH" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_DimensionH" runat="server" ValidationGroup="Submit" ControlToValidate="TB_DimensionH" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_TB_DimensionH" runat="server" ErrorMessage="N1 to N2" ValidationGroup="Submit" ControlToValidate="TB_DimensionH" MinimumValue="50" MaximumValue="100" Type="Integer" Display="Static" ForeColor="Red"></asp:RangeValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_DimensionH" runat="server" ValidationGroup="Submit" ControlToValidate="TB_DimensionH" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^\d{1,4}(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RangeValidator ID="RV_TB_DimensionH" runat="server" ErrorMessage="0.00 to 1000.00" ValidationGroup="Submit" ControlToValidate="TB_DimensionH" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionH" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Height [50-100]" TextMode="Number"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionH" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Height [0.00-1000.00]"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Standard Value TextBox for GSM -->
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <asp:Label ID="Lbl_GSM" runat="server" AssociatedControlID="TB_GSM" Text="GSM / Wt per 10pc :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_TB_GSM" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_GSM" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_GSM" runat="server" ValidationGroup="Submit" ControlToValidate="TB_GSM" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_TB_GSM" runat="server" ErrorMessage="N1 to N2" ValidationGroup="Submit" ControlToValidate="TB_GSM" MinimumValue="50" MaximumValue="100" Type="Integer" Display="Static" ForeColor="Red"></asp:RangeValidator>
+                                    <asp:Label ID="Lbl_Std_GSM" runat="server" AssociatedControlID="TB_Std_GSM" Text="Standard GSM / Wt per 10pc :" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Std_GSM" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Std_GSM" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Std_GSM" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Std_GSM" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^\d{1,4}(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RangeValidator ID="RV_TB_Std_GSM" runat="server" ErrorMessage="0.00 to 1000.00" ValidationGroup="Submit" ControlToValidate="TB_Std_GSM" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_GSM" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="[50-100]" TextMode="Number"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Std_GSM" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Std. GSM [0.00-1000.00]"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_GSM" runat="server" AssociatedControlID="TB_GSM" Text="Observation GSM / Wt per 10pc :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_GSM" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_GSM" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_GSM" runat="server" ValidationGroup="Submit" ControlToValidate="TB_GSM" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^\d{1,4}(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RangeValidator ID="RV_TB_GSM" runat="server" ErrorMessage="0.00 to 1000.00" ValidationGroup="Submit" ControlToValidate="TB_GSM" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_GSM" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="GSM [0.00-1000.00]"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_Remarks" runat="server" AssociatedControlID="TB_Remarks" Text="Remarks :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>

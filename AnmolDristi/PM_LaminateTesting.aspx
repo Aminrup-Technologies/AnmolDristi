@@ -301,7 +301,7 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_Seal" runat="server" AssociatedControlID="TB_Seal" Text="Seal Strength :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_Seal" runat="server" ErrorMessage="*" ValidationGroup="DataSave" ControlToValidate="TB_Seal" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_Seal" runat="server" ControlToValidate="TB_Seal" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Seal" runat="server" ControlToValidate="TB_Seal" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^\d+(\.\d{1,3})?$"  Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_Seal" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Seal Strength Value "></asp:TextBox>
                                     </div>
@@ -312,7 +312,7 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_Length" runat="server" AssociatedControlID="TB_Length" Text="Length Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
 
-                                    <asp:Literal ID="span_L" runat="server" Text='<%# "<span style=\"color: red;\">" + Eval("Dimension_Std_L") %>'></asp:Literal>
+                                    <asp:Literal ID="span_L" runat="server" Text='<%# string.IsNullOrEmpty(Eval("Dimension_Std_L")?.ToString()) ? "0.00" : Eval("Dimension_Std_L") %>'></asp:Literal>
                                     <asp:RequiredFieldValidator ID="RFV_TB_Length" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Length" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_Length" runat="server" ControlToValidate="TB_Length" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
@@ -334,7 +334,8 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_Width" runat="server" AssociatedControlID="TB_Width" Text="Width Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:Literal ID="span_W" runat="server" Text='<%# Eval("Dimension_Std_W") %>'></asp:Literal>
+                                    <asp:Literal ID="span_W" runat="server"
+                                        Text='<%# string.IsNullOrEmpty(Eval("Dimension_Std_W")?.ToString()) ? "0.00" : Eval("Dimension_Std_W") %>'></asp:Literal>
                                     <asp:RequiredFieldValidator ID="RFV_TB_Width" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Width" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_Width" runat="server" ControlToValidate="TB_Width" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
@@ -356,7 +357,8 @@
                             <div class="col-md-3" id="Dimension_Height_Row" runat="server" visible="false">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_Height" runat="server" AssociatedControlID="TB_Height" Text="Height Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:Literal ID="span_H" runat="server" Text='<%# Eval("Dimension_Std_H") %>'></asp:Literal>
+                                    <asp:Literal ID="span_H" runat="server"
+                                        Text='<%# string.IsNullOrEmpty(Eval("Dimension_Std_H")?.ToString()) ? "0.00" : Eval("Dimension_Std_H") %>'></asp:Literal>
                                     <asp:RequiredFieldValidator ID="RFV_TB_Height" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_Height" InitialValue="0.00" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_Height" runat="server" ControlToValidate="TB_Height" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
@@ -378,7 +380,8 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_GSM" runat="server" AssociatedControlID="TB_GSM" Text="GSM Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:Literal ID="span_GSM" runat="server" Text='<%# Eval("GMS_Std") %>'></asp:Literal>
+                                    <asp:Literal ID="span_GSM" runat="server"
+                                        Text='<%# string.IsNullOrEmpty(Eval("GMS_Std")?.ToString()) ? "0.00" : Eval("GMS_Std") %>'></asp:Literal>
                                     <asp:RequiredFieldValidator ID="RFV_TB_GSM" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_GSM" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_GSM" runat="server" ControlToValidate="TB_GSM" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">

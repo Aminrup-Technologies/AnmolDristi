@@ -104,7 +104,8 @@ namespace AnmolDristi
         private void ProductBrandsBinder(string selectedPlantValue)
         {
             // Construct the SQL query with parameters
-            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId ";
+            //string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId ";
+            string query = "SELECT c.brand_id, CONCAT (c.brand_name,'[' ,l.line_name, ']') as brand_name  FROM MST_LineCatBrands c, MST_Plant_Lines l WHERE c.plant_id = @PlantId and c.line_id = l.line_id order by l.line_name";
             string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
             string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
 

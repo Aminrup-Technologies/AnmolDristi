@@ -313,15 +313,33 @@ namespace AnmolDristi
                         recordsBound = dataTable.Rows.Count > 0;
 
                         // If records are bound, populate the Literal controls
-                        if (recordsBound)
+                        //if (recordsBound)
+                        //{
+                        //    DataRow row = dataTable.Rows[0];
+
+                        //    // Set text for Literal controls
+                        //    if (span_L != null) span_W.Text = row["Dimension_Std_W"].ToString();
+                        //    if (span_W != null) span_L.Text = row["Dimension_Std_L"].ToString();
+                        //    if (span_H != null) span_H.Text = row["Dimension_Std_H"].ToString();
+                        //    if (span_GSM != null) span_GSM.Text = row["GMS_Std"].ToString();
+                        //}
+                        if (recordsBound && dataTable.Rows.Count > 0)
                         {
                             DataRow row = dataTable.Rows[0];
 
-                            // Set text for Literal controls
-                            if (span_L != null) span_W.Text = row["Dimension_Std_W"].ToString();
-                            if (span_W != null) span_L.Text = row["Dimension_Std_L"].ToString();
-                            if (span_H != null) span_H.Text = row["Dimension_Std_H"].ToString();
-                            if (span_GSM != null) span_GSM.Text = row["GMS_Std"].ToString();
+                            // Set text for Literal controls or default to "0.00"
+                            span_L.Text = row["Dimension_Std_L"]?.ToString() ?? "0.00";
+                            span_W.Text = row["Dimension_Std_W"]?.ToString() ?? "0.00";
+                            span_H.Text = row["Dimension_Std_H"]?.ToString() ?? "0.00";
+                            span_GSM.Text = row["GMS_Std"]?.ToString() ?? "0.00";
+                        }
+                        else
+                        {
+                            // Default values for Literal controls when records are not found
+                            span_L.Text = "0.00";
+                            span_W.Text = "0.00";
+                            span_H.Text = "0.00";
+                            span_GSM.Text = "0.00";
                         }
                     }
                 }

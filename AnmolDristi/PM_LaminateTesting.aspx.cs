@@ -173,7 +173,8 @@ namespace AnmolDristi
         private void ProductBrandsBinder(string selectedPlantValue)
         {
             // Construct the SQL query with parameters
-            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId ";
+            //string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId";
+            string query = "SELECT c.brand_id, CONCAT (c.brand_name,'[' ,l.line_name, ']') as brand_name  FROM MST_LineCatBrands c, MST_Plant_Lines l WHERE c.plant_id = @PlantId and c.line_id = l.line_id order by l.line_name";
             string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
             string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
 
@@ -317,6 +318,8 @@ namespace AnmolDristi
                 {
                     //DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
 
+
+
                     string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Error',
@@ -415,7 +418,6 @@ namespace AnmolDristi
 
             string plantName = DDL_Plant.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue;
-
             string supplier = TB_Supplier.Text;
             int smell = Convert.ToInt32(RBL_Smell.SelectedValue);
             string smellRemarks = TXB_Smell_Remarks.Text;
@@ -425,23 +427,18 @@ namespace AnmolDristi
             string vehicleNo = TB_VehicleNo.Text;
             decimal bond = Convert.ToDecimal(TB_Bond.Text);
             decimal seal = Convert.ToDecimal(TB_Seal.Text);
-
             decimal stdLength = Convert.ToDecimal(span_L.Text);
             decimal obsLength = Convert.ToDecimal(TB_Length.Text);
             string lengthRemarks = TXB_Length_Remarks.Text;
-
             decimal stdWidth = Convert.ToDecimal(span_W.Text);
             decimal obsWidth = Convert.ToDecimal(TB_Width.Text);
             string widthRemarks = TXB_Width_Remarks.Text;
-
             decimal stdHeight = Convert.ToDecimal(span_H.Text); 
             decimal obsHeight = Convert.ToDecimal(TB_Height.Text);
             string heightRemarks =TXB_Height_Remarks.Text;
-
             decimal stdGsm = Convert.ToDecimal(span_GSM.Text);
             decimal obsGsm = Convert.ToDecimal(TB_GSM.Text);
             string gsmRemarks =TXB_GSM_Remarks.Text;
-
             string remarks = TXB_Remarks.Text;
 
             DateTime submittedDate = DateTime.Now.Date;
@@ -532,6 +529,8 @@ namespace AnmolDristi
         {
             DDL_Plant.Enabled = false;
             DDL_ProductBrand.Enabled = false;
+            DDL_BrandSKU.Enabled = false;
+
             TB_Supplier.ReadOnly = true;
             RBL_Smell.Enabled = false;
             TXB_Smell_Remarks.ReadOnly = true;

@@ -315,12 +315,12 @@ namespace AnmolDristi
             {
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 lbl_DDL_Plant_Value.Text = selectedPlantValue;
-                ProductBrandsBinder(selectedPlantValue);
+                //ProductBrandsBinder(selectedPlantValue);
                 LoadApprovers(selectedPlantValue);
             }
             else
             {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
+                //DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
 
                 string DDL_Plant_Error_script = @"<script type='text/javascript'>
                             new PNotify({
@@ -333,104 +333,23 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_Plant_Error_script, false);
             }
         }
-        private void ProductBrandsBinder(string selectedPlantValue)
-        {
-            // Construct the SQL query with parameters
-            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId order by brand_id";
-            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
 
-            // Create SQL parameters for plant_id and line_id
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@PlantId", selectedPlantValue)
-            };
-
-            // Call the BindDropDownList method with parameters
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
-
-            // Check if any records were bound
-            if (!recordsBound)
-            {
-                string ProductBrands_Error_script = @"<script type='text/javascript'>
-                    new PNotify({
-                        title: 'Error',
-                        text: 'No Brands found for the selected plant and line!',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
-            }
-        }
-        protected void DDL_ProductBrand_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (DDL_ProductBrand.SelectedIndex != 0)
-            {
-                string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
-                lbl_DDL_ProductBrand_Value.Text = selectedProductBrandValue;
-
-                DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
-
-                // Example: Querying the DataTable for a specific field name
-                //string fieldName = "no_of_pcs"; // Specify the field name you want to query
-                //DataRow[] rows = dataTable.Select($"brand_id = {selectedProductBrandValue} AND field_name = '{fieldName}'");
-
-                // Iterate through the filtered rows and extract validation criteria
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    // Extract field name from the current row
-                    string fieldName = row["field_name"].ToString();
-
-                    // Extract validation criteria from the DataRow
-                    bool rfvEnabled = Convert.ToBoolean(row["RFV_YesNo"]);
-                    string rfvErrorMessage = row["RFV_ErrorMsg"].ToString();
-                    bool revEnabled = Convert.ToBoolean(row["REV_YesNo"]);
-                    string revErrorMessage = row["REV_ErrorMsg"].ToString();
-                    string revExpression = row["REV_Expression"].ToString();
-
-                    // Create a new instance of ValidationCriteria and populate it with data from the DataRow
-                    ValidationCriteria criteria = new ValidationCriteria();
-                    criteria.RequiredFieldErrorMessage = rfvErrorMessage;
-                    criteria.IsRequired = rfvEnabled;
-                    criteria.RegularExpressionErrorMessage = revErrorMessage;
-                    criteria.IsRegularExpressionRequired = revEnabled;
-                    criteria.RegularExpression = revExpression;
-
-                    // Use the criteria as needed
-                    // For example, you can pass it to a method to set up validators
-
-                }
-            }
-            else
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
-
-                string DDL_ProductBrand_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'Invalid Selection!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowSKUInvalidErrorNotification", DDL_ProductBrand_Error_script, false);
-            }
-        }
         private void MakeInputsReadOnly()
         {
             DDL_Plant.Enabled = false;
-            DDL_ProductBrand.Enabled = false;
+            TB_ChalanNo.ReadOnly = true;
+            TB_MatVarietyName.ReadOnly = true;
             TB_Supplier.ReadOnly = true;
             TB_ChalanDate.ReadOnly = true;
             TB_LotNo.ReadOnly = true;
             TB_VehicleNo.ReadOnly = true;
+            TB_Std_DimensionL.ReadOnly = true;
             TB_DimensionL.ReadOnly = true;
+            TB_Std_DimensionW.ReadOnly = true;
             TB_DimensionW.ReadOnly = true;
+            TB_Std_DimensionH.ReadOnly = true;
             TB_DimensionH.ReadOnly = true;
+            TB_Std_GSM.ReadOnly = true;
             TB_GSM.ReadOnly = true;
             TB_Remarks.ReadOnly = true;
             btnSubmit.Enabled = false;
@@ -496,7 +415,7 @@ namespace AnmolDristi
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             string plantName = DDL_Plant.SelectedValue;
-            string productBrand = DDL_ProductBrand.SelectedValue;
+            string productBrand = TB_MatVarietyName.Text.ToString();
             string Supplier_Name = TB_Supplier.Text;
             string Challan_No = TB_ChalanNo.Text;
             DateTime? Challan_Date = string.IsNullOrEmpty(TB_ChalanDate.Text) ? (DateTime?)null : Convert.ToDateTime(TB_ChalanDate.Text);
@@ -505,12 +424,16 @@ namespace AnmolDristi
             decimal Dimension_Obs_L = Convert.ToDecimal(TB_DimensionL.Text);
             decimal Dimension_Obs_W = Convert.ToDecimal(TB_DimensionW.Text);
             decimal Dimension_Obs_H = Convert.ToDecimal(TB_DimensionH.Text);
+            decimal Dimension_Std_L = Convert.ToDecimal(TB_Std_DimensionL.Text);
+            decimal Dimension_Std_W = Convert.ToDecimal(TB_Std_DimensionW.Text);
+            decimal Dimension_Std_H = Convert.ToDecimal(TB_Std_DimensionH.Text);
             decimal GSM_Obs = Convert.ToDecimal(TB_GSM.Text);
+            decimal GSM_Std = Convert.ToDecimal(TB_Std_GSM.Text);
             string Remarks = TB_Remarks.Text;
             int SubmittedById = Convert.ToInt32(Session["USERID"].ToString());
             string SubmittedByEmployeeCode = Session["WORKMAN"].ToString();
-            DateTime SubmittedDate = DateTime.Now.Date;  // Current Date
-            TimeSpan SubmittedTime = DateTime.Now.TimeOfDay;  // Current Time
+            DateTime SubmittedDate = DateTime.Now.Date;
+            TimeSpan SubmittedTime = DateTime.Now.TimeOfDay;
 
             string approver1EmployeeCode = Approver1CodeLabel.Text;
             string approver2EmployeeCode = Approver2CodeLabel.Text;
@@ -523,8 +446,9 @@ namespace AnmolDristi
                     conn.Open();
 
                     // SQL Insert Query
-                    string query = @"INSERT INTO TRN_PVC_Tray (PVCID, FormID, PlantName, ProductBrand, Supplier_Name, Challan_No, Challan_Date, Lot_No, Vehicle_No, Dimension_Obs_L, Dimension_Obs_W, Dimension_Obs_H, GSM_Obs, Remarks, SubmittedById, SubmittedByEmployeeCode, SubmittedDate, SubmittedTime, Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode, Approver1_Status, Approver2_Status, DottedApprover_Status, SubmissionStatus) VALUES 
-                      (@PVCID, @FormID, @PlantName, @ProductBrand, @Supplier_Name, @Challan_No, @Challan_Date, @Lot_No, @Vehicle_No, @Dimension_Obs_L, @Dimension_Obs_W, @Dimension_Obs_H, @GSM_Obs, @Remarks, @SubmittedById, @SubmittedByEmployeeCode, @SubmittedDate, @SubmittedTime, @Approver1EmployeeCode, @Approver2EmployeeCode, @DottedLineApproverEmployeeCode, @Approver1_Status, @Approver2_Status, @DottedApprover_Status, @SubmissionStatus)";
+                    string query = @"INSERT INTO TRN_PVC_Tray (PVCID, FormID, PlantName, ProductBrand, Supplier_Name, Challan_No, Challan_Date, Lot_No, Vehicle_No, Dimension_Std_L, Dimension_Std_W, Dimension_Std_H, GSM_Std, Dimension_Obs_L, Dimension_Obs_W, Dimension_Obs_H, GSM_Obs, Remarks, SubmittedById, SubmittedByEmployeeCode, SubmittedDate, SubmittedTime, Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode, Approver1_Status, Approver2_Status, DottedApprover_Status, SubmissionStatus)
+                    VALUES
+                    (@PVCID, @FormID, @PlantName, @ProductBrand, @Supplier_Name, @Challan_No, @Challan_Date, @Lot_No, @Vehicle_No, @Dimension_Std_L, @Dimension_Std_W, @Dimension_Std_H, @GSM_Std, @Dimension_Obs_L, @Dimension_Obs_W, @Dimension_Obs_H, @GSM_Obs, @Remarks, @SubmittedById, @SubmittedByEmployeeCode, @SubmittedDate, @SubmittedTime, @Approver1EmployeeCode, @Approver2EmployeeCode, @DottedLineApproverEmployeeCode, @Approver1_Status, @Approver2_Status, @DottedApprover_Status, @SubmissionStatus)";
 
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -539,6 +463,10 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@Challan_Date", Challan_Date);
                         cmd.Parameters.AddWithValue("@Lot_No", Lot_No);
                         cmd.Parameters.AddWithValue("@Vehicle_No", Vehicle_No);
+                        cmd.Parameters.AddWithValue("@Dimension_Std_L", Dimension_Std_L);
+                        cmd.Parameters.AddWithValue("@Dimension_Std_W", Dimension_Std_W);
+                        cmd.Parameters.AddWithValue("@Dimension_Std_H", Dimension_Std_H);
+                        cmd.Parameters.AddWithValue("@GSM_Std", GSM_Std);
                         cmd.Parameters.AddWithValue("@Dimension_Obs_L", Dimension_Obs_L);
                         cmd.Parameters.AddWithValue("@Dimension_Obs_W", Dimension_Obs_W);
                         cmd.Parameters.AddWithValue("@Dimension_Obs_H", Dimension_Obs_H);
