@@ -12,7 +12,7 @@ namespace AnmolDristi
 {
     public partial class qaqc_overwrap : System.Web.UI.Page
     {
-        private string connectionString = "DbConn";
+        //private string connectionString = "DbConn";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -207,7 +207,7 @@ namespace AnmolDristi
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("Sp_GetFormsApprovalMatrix_PM", conn))
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix_PM", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -424,7 +424,7 @@ namespace AnmolDristi
 
                 // Additional remarks
                 string remarkForDimensionStd = TB_Remark_Dimension.Text;
-                Lbl_Remark_GSM.AssociatedControlID = TB_Remark_GSM.Text;
+                //Lbl_Remark_GSM.AssociatedControlID = TB_Remark_GSM.Text;
 
                 // Submission data
                 DateTime submittedDate = DateTime.Now.Date;
@@ -470,7 +470,7 @@ namespace AnmolDristi
                             cmd.Parameters.AddWithValue("@GSM_Obs", gsmObs);
                             cmd.Parameters.AddWithValue("@Remarks", remarks);
                             cmd.Parameters.AddWithValue("@RemarkForDimensionStd", remarkForDimensionStd);
-                            cmd.Parameters.AddWithValue("@RemarkForGSM_Std", Lbl_Remark_GSM.AssociatedControlID);
+                           // cmd.Parameters.AddWithValue("@RemarkForGSM_Std", Lbl_Remark_GSM.AssociatedControlID);
 
                             // Default status and approvers
                             cmd.Parameters.AddWithValue("@Approver1_Status", 0); // Default status for Approvers

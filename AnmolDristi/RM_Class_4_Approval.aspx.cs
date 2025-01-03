@@ -9,9 +9,10 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
-using Microsoft.Office.Interop.Excel;
-using System.Runtime.InteropServices; // Optional, for Excel interop cleanup
-using ExcelInterop = Microsoft.Office.Interop.Excel;
+using System.Text;
+//using Microsoft.Office.Interop.Excel;
+//using System.Runtime.InteropServices; // Optional, for Excel interop cleanup
+//using ExcelInterop = Microsoft.Office.Interop.Excel;
 
 namespace AnmolDristi
 {
@@ -32,12 +33,13 @@ namespace AnmolDristi
                     lbl_viewname.Text = "View and Search for Detailed View || ";
 
                     PlantBinder();
-                    BindGridView();
+                    loadAlldata();
 
                 }
 
             }
         }
+
 
         private void PlantBinder()
         {
@@ -68,7 +70,6 @@ namespace AnmolDristi
 
             }
         }
-
         protected void DDL_Plant_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_Plant.SelectedIndex != 0)
@@ -95,7 +96,7 @@ namespace AnmolDristi
 
         private void MaterialBinder(string selectedPlantValue)
         {
-            string query = "SELECT Material_Id, Material_Name FROM RM_Material where Class = 4 ";
+            string query = "SELECT Material_Id, Material_Name FROM RM_Material where Class = 3 ";
             string textField = "Material_Name";
             string valueField = "Material_Id";
 
@@ -209,231 +210,213 @@ namespace AnmolDristi
 
         protected void ReportbtnReset_Click(object sender, EventArgs e)
         {
-            Response.Redirect("RM_Class_3_Approval.aspx");
+            Response.Redirect("RM_Class_4_Report.aspx");
         }
 
         protected void ReportbtnSubmit_Click(object sender, EventArgs e)
         {
-            DateTime fromDate = Convert.ToDateTime(TB_Date_From.Text);
-            DateTime toDate = Convert.ToDateTime(TB_Date_To.Text);
-            if (toDate > DateTime.Now)
-            {
-                Response.Write("<script>alert('ToDate cannot be greater than current date!');</script>");
-            }
-            else if (fromDate > toDate)
-            {
-                Response.Write("<script>alert('FromDate cannot be greater than ToDate!');</script>");
-            }
-            else
-            {
-                getReportData(fromDate, toDate);
-            }
+            DataLoader();
         }
 
-        private void getReportData(DateTime fromDate, DateTime toDate)
+
+        private void loadAlldata()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(connectionString))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand("SP_RM_4_DateFilter", con))
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+                string query = @"
+                    SELECT TOP(30)
+                        c.ID AS DBID,
+                        c.FormID as FormID,
+                        'NA' as RecordID,
+                        p.plant_name AS PlantName,
+                        m.material_name AS MaterialName,
+		                ISNULL(pb.brand_name, 'N/A') AS ProductBrand,
+                        c.SubmittedByEmployeeCode as EmpCode,
+                        u.EmployeeName AS EmpName,
+                        c.SubmittedDate as SDate,
+                        c.SubmittedTime as STime,
+                        c.Approver1EmployeeCode as L1,
+                        c.Approver1_Status,
+                        c.Approver1_TimeStamp,
+                        c.Approver2EmployeeCode as L2,
+                        c.Approver2_Status,
+                        c.Approver2_TimeStamp,
+                        c.DottedLineApproverEmployeeCode as L3,
+                        c.DottedApprover_Status,
+                        c.DottedApprover_TimeStamp,
+                        c.Material_Image
+                    FROM 
+                        TRN_RM_CLASS_4 c
+                    LEFT JOIN 
+                        MST_PlantDetails p ON c.PlantName = p.plant_id
+                    LEFT JOIN 
+                        RM_MATERIAL m ON c.MaterialName = m.Material_Id
+                    LEFT JOIN 
+                        MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
+                    LEFT JOIN
+                        MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
+                    WHERE 
+                        1 = 1
+                    ORDER BY 
+                        c.[SubmittedDate] DESC, 
+                        c.[SubmittedTime] DESC;
+                ";
+
+
+                using (SqlConnection con = new SqlConnection(connectionString))
                 {
-                    cmd.Parameters.AddWithValue("@FromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@ToDate", toDate);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        System.Data.DataTable dt = new System.Data.DataTable();
-                        sda.Fill(dt);
-                        if (dt.Rows.Count > 0)
-                        {
-                            GridView1.DataSource = dt;
-                            GridView1.DataBind();
-                        }
-                    }
-                }
-            }
-        }
-
-        public class ReportInfo
-        {
-            public string RMFID { get; set; }
-            public string plant_name { get; set; }
-            public string material_name { get; set; }
-            public string brand_name { get; set; }
-            public string SubmittedDate { get; set; }
-            public string SubmittedTime { get; set; }
-            public string SubmittedById { get; set; }
-            public string Supplier_Name { get; set; }
-            public string Quantity { get; set; }
-            public string CommentsForQuantity { get; set; }
-            public string Challan_No { get; set; }
-            public string Challan_Date { get; set; }
-            public string Lot_No { get; set; }
-            public string Vehicle_No { get; set; }
-            public string Color { get; set; }
-            public string CommentsForColor { get; set; }
-            public string Smell { get; set; }
-            public string CommentsForSmell { get; set; }
-            public string Taste { get; set; }
-            public string CommentsForTaste { get; set; }
-            public string Appearance { get; set; }
-            public string CommentsForAppearance { get; set; }
-
-
-            public string Material_Image { get; set; }
-            public string Approver1EmployeeCode { get; set; }
-            public string Approver2EmployeeCode { get; set; }
-            public string DottedLineApproverEmployeeCode { get; set; }
-        }
-
-        private void BindGridView()
-        {
-            //var dataSave = new List<ReportInfo>
-            //{
-            //     new ReportInfo {},
-            //};
-
-            //// Bind to GridView
-            //GridView1.DataSource = dataSave;
-            //GridView1.DataBind();
-
-            //string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            //using (SqlConnection con = new SqlConnection(connectionString))
-            //{
-            //    using (SqlCommand cmd = new SqlCommand("SP_RM_4_ViewPage", con))
-            //    {
-
-            //        cmd.CommandType = CommandType.StoredProcedure;
-            //        using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-            //        {
-            //            System.Data.DataTable dt = new System.Data.DataTable();
-            //            sda.Fill(dt);
-            //            GridView1.DataSource = dt;
-            //            GridView1.DataBind();
-            //        }
-            //    }
-            //}
-        }
-
-        protected void FilterData()
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand("SP_RM_4_FilteredData", con))
-                {
-
-                    cmd.Parameters.AddWithValue("@Plant_Name", string.IsNullOrEmpty(DDL_Plant.SelectedValue) || DDL_Plant.SelectedValue == "0" ? (object)DBNull.Value : Convert.ToInt32(DDL_Plant.SelectedValue));
-                    cmd.Parameters.AddWithValue("@Material_Name", string.IsNullOrEmpty(DDL_Material.SelectedItem.Text) ? (object)DBNull.Value : DDL_Material.SelectedItem.Text);
-                    cmd.Parameters.AddWithValue("@Product_Brand", string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) || DDL_ProductBrand.SelectedValue == "0" ? (object)DBNull.Value : Convert.ToInt32(DDL_ProductBrand.SelectedValue));
-
-
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-                    {
-                        System.Data.DataTable dt = new System.Data.DataTable();
+                        SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
                         sda.Fill(dt);
                         GridView1.DataSource = dt;
                         GridView1.DataBind();
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+                EmailNotifier.Notify("Application Error", $"<p>Error: {ex.Message}</p><p>Stack Trace: {ex.StackTrace}</p>", recipients);
+            }
         }
 
-        protected void ExportBtn_Click(object sender, EventArgs e)
+        private void DataLoader()
         {
+            DateTime? dateFrom = string.IsNullOrEmpty(TB_Date_From.Text) ? (DateTime?)null : DateTime.ParseExact(TB_Date_From.Text, "yyyy-MM-dd", null);
+            DateTime? dateTo = string.IsNullOrEmpty(TB_Date_To.Text) ? (DateTime?)null : DateTime.ParseExact(TB_Date_To.Text, "yyyy-MM-dd", null);
 
+            StringBuilder queryBuilder = new StringBuilder(@"
+                SELECT 
+                    c.ID AS DBID,
+                    c.FormID AS FormID,
+                    p.plant_name AS PlantName,
+                    m.material_name AS MaterialName,
+		            ISNULL(pb.brand_name, 'N/A') AS ProductBrand,
+                    c.SubmittedByEmployeeCode AS EmpCode,
+                    u.EmployeeName AS EmpName,
+                    c.SubmittedDate AS SDate,
+                    c.SubmittedTime AS STime,
+                    c.Approver1EmployeeCode AS L1,
+                    c.Approver1_Status,
+                    c.Approver1_TimeStamp,
+                    c.Approver2EmployeeCode AS L2,
+                    c.Approver2_Status,
+                    c.Approver2_TimeStamp,
+                    c.DottedLineApproverEmployeeCode AS L3,
+                    c.DottedApprover_Status,
+                    c.DottedApprover_TimeStamp,
+                    c.Material_Image
+                FROM TRN_RM_CLASS_4 c
+                LEFT JOIN MST_PlantDetails p ON c.PlantName = p.plant_id
+                LEFT JOIN RM_MATERIAL m ON c.MaterialName = m.Material_Id
+                LEFT JOIN MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
+                LEFT JOIN MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
+                WHERE 1 = 1");
+
+
+            var parameters = new List<SqlParameter>();
+
+            // Add filters for date range
+            if (dateFrom.HasValue)
+            {
+                queryBuilder.Append(" AND c.SubmittedDate >= @DateFrom");
+                parameters.Add(new SqlParameter("@DateFrom", SqlDbType.Date) { Value = dateFrom.Value.Date });
+            }
+
+            if (dateTo.HasValue)
+            {
+                queryBuilder.Append(" AND c.SubmittedDate <= @DateTo");
+                parameters.Add(new SqlParameter("@DateTo", SqlDbType.Date) { Value = dateTo.Value.Date });
+            }
+
+            if (!string.IsNullOrEmpty(DDL_Plant.SelectedValue) && DDL_Plant.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.PlantName = @PlantId");
+                parameters.Add(new SqlParameter("@PlantId", SqlDbType.Int) { Value = DDL_Plant.SelectedValue });
+            }
+
+            //if (!string.IsNullOrEmpty(DDL_PlantLine.SelectedValue) && DDL_PlantLine.SelectedValue != "0")
+            //{
+            //    queryBuilder.Append(" AND c.Line = @LineName");
+            //    parameters.Add(new SqlParameter("@LineName", SqlDbType.Int) { Value = DDL_PlantLine.SelectedValue });
+            //}
+
+            //if (!string.IsNullOrEmpty(DDL_ProductCategory.SelectedValue) && DDL_ProductCategory.SelectedValue != "0")
+            //{
+            //    queryBuilder.Append(" AND c.ProductCategory = @ProductCategory");
+            //    parameters.Add(new SqlParameter("@ProductCategory", SqlDbType.Int) { Value = DDL_ProductCategory.SelectedValue });
+            //}
+
+            if (!string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) && DDL_ProductBrand.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.ProductBrand = @ProductBrand");
+                parameters.Add(new SqlParameter("@ProductBrand", SqlDbType.Int) { Value = DDL_ProductBrand.SelectedValue });
+            }
+
+            queryBuilder.Append(" ORDER BY c.SubmittedDate DESC, c.SubmittedTime DESC");
+
+            try
+            {
+                DataTable filteredData = GetDataFromTable(queryBuilder.ToString(), parameters.ToArray());
+                GridView1.DataSource = filteredData;
+                GridView1.DataBind();
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.Message;
+                string FilterDataerrorScript = $"new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});";
+                ClientScript.RegisterStartupScript(this.GetType(), "FilteredDataerror", FilterDataerrorScript, true);
+            }
+        }
+
+        private DataTable GetDataFromTable(string query, SqlParameter[] parameters)
+        {
+            DataTable dt = new DataTable();
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("SP_RM_4_ViewPage", con))
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
+                    cmd.Parameters.AddRange(parameters);
+                    cmd.CommandType = CommandType.Text;
 
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                     {
-                        if (reader.HasRows)
-                        {
-                            string GridViewDataExportedFileInfo = "RM_Class_4_ViewPage_" + DateTime.UtcNow.ToString("yyyyMMdd_HHmmss") + ".xls";
-
-                            #region Export In Documents Folder
-                            object misValue = System.Reflection.Missing.Value;
-                            ExcelInterop.Application application = new ExcelInterop.Application();
-                            application.Visible = false;
-
-                            ExcelInterop.Workbook workbook = application.Workbooks.Add(misValue);
-                            ExcelInterop.Worksheet worksheet = (ExcelInterop.Worksheet)workbook.Worksheets[1];
-                            worksheet.Name = "RM_Class_4_ViewPage";
-                            worksheet.Cells.Font.Size = 12;
-
-                            // Add Column Headers from SqlDataReader 
-
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                worksheet.Cells[1, i + 1] = reader.GetName(i);  // Adding column headers
-                            }
-
-                            // Add Data from SqlDataReader
-                            int rowIndex = 2; // Data starts from row 2
-                            while (reader.Read())
-                            {
-                                for (int i = 0; i < reader.FieldCount; i++)
-                                {
-                                    worksheet.Cells[rowIndex, i + 1] = reader.GetValue(i).ToString();  // Add data to the cells
-                                }
-                                rowIndex++;
-                            }
-
-                            // Apply AutoFilter
-                            ExcelInterop.Range usedRange = worksheet.UsedRange;
-                            usedRange.AutoFilter(1, Type.Missing, ExcelInterop.XlAutoFilterOperator.xlFilterValues, Type.Missing, true);
-
-                            // Save the workbook
-                            workbook.SaveAs(GridViewDataExportedFileInfo,
-                                ExcelInterop.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue,
-                                ExcelInterop.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
-
-                            // Close the workbook and quit the application
-                            workbook.Close(true, misValue, misValue);
-                            application.Quit();
-
-                            // Notify the user
-                            this.ClientScript.RegisterStartupScript(this.GetType(), "GridViewData Exported Alert Box.",
-                                "alert('Data File Exported with name " + GridViewDataExportedFileInfo + " in Document folder');", true);
-                            #endregion
-                        }
-                        else
-                        {
-                            this.ClientScript.RegisterStartupScript(this.GetType(), "No Data Alert Box.",
-                                "alert('There are no records to Download.');", true);
-                        }
+                        sda.Fill(dt);
                     }
                 }
             }
-
-
+            return dt;
         }
 
-        public void AddColumnInSheetFromReader(Worksheet worksheet, SqlDataReader reader)
+
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            for (int i = 0; i < reader.FieldCount; i++)
+            if (e.CommandName == "View")
             {
-                string columnName = reader.GetName(i);
-                worksheet.Cells[1, i + 1] = columnName; // Write column headers in the first row
+                // Get the DBID from the CommandArgument.
+                int dbid = Convert.ToInt32(e.CommandArgument);
+
+                if (dbid > 0)
+                {
+                    // Redirect with the correct DBID.
+                    Response.Redirect("RM_Class_4_FinalApproval.aspx?DBID=" + dbid);
+                }
+                else
+                {
+                    // Handle cases where DBID is not valid.
+                    // Show an error message or log the issue.
+                    System.Diagnostics.Debug.WriteLine("Invalid DBID passed: " + e.CommandArgument);
+                }
             }
         }
 
-        protected void ApproveBtn_Click(object sender, EventArgs e)
-        {
-            // Get the ID from the CommandArgument of the button
-            System.Web.UI.WebControls.Button btn = (System.Web.UI.WebControls.Button)sender;
-            string rmfid = btn.CommandArgument;
 
-            // Redirect to the Process_FinalApproval.aspx page with the PcrNo in the query string
-            Response.Redirect("RM_Class_4_FinalApproval.aspx?RMFID=" + rmfid);
-        }
     }
 
 }

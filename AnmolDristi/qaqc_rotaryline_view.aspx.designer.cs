@@ -42,6 +42,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
+        /// lbl_DDL_Plant_Value control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DDL_Plant_Value;
+
+        /// <summary>
         /// RFV_DDL_Plant control.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label4;
+
+        /// <summary>
+        /// lbl_DDL_PlantLine_Value control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DDL_PlantLine_Value;
 
         /// <summary>
         /// RFV_DDL_PlantLine control.
@@ -96,6 +114,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Label Label5;
 
         /// <summary>
+        /// lbl_DDL_ProductCategory_Value control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DDL_ProductCategory_Value;
+
+        /// <summary>
         /// RFV_DDL_ProductCategory control.
         /// </summary>
         /// <remarks>
@@ -123,6 +150,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Label Label6;
 
         /// <summary>
+        /// lbl_DDL_ProductBrand_Value control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DDL_ProductBrand_Value;
+
+        /// <summary>
         /// RFV_DDL_ProductBrand control.
         /// </summary>
         /// <remarks>
@@ -148,6 +184,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label7;
+
+        /// <summary>
+        /// lbl_DDL_BrandSKU_Value control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DDL_BrandSKU_Value;
 
         /// <summary>
         /// RFV_DDL_BrandSKU control.

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -8,6 +10,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using System.Windows.Media.Media3D;
 
 namespace AnmolDristi
 {
@@ -23,13 +26,26 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                if (Request.QueryString["RMFID"] != null)
+                if (Request.QueryString["DBID"] != null)
                 {
-                    string rmfid = Request.QueryString["RMFID"];
+                    string id = Request.QueryString["DBID"];
 
                     PlantBinder();
-                    getDetails(rmfid);
+                    getDetails(id);
 
+                }
+
+                string source = Request.QueryString["source"];
+
+                if (source == "report")
+                {
+                    BtnApprove.Visible = false;
+                    BtnReject.Visible = false;
+                    BtnBack.PostBackUrl = "~/RM_Class_1_Report.aspx";
+                }
+                else
+                {
+                    BtnBack.PostBackUrl = "~/RM_Class_1_Approval.aspx";
                 }
             }
         }
@@ -110,7 +126,7 @@ namespace AnmolDristi
             {
                 DatabaseHelper.BindWithDefaultNoRecords(DDL_Material);
 
-                string RegionBinder_Error_script = @"<script type='text/javascript'>
+                string MaterialBinder_Error_script = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Error',
                                 text: 'An error occurred!',
@@ -118,9 +134,44 @@ namespace AnmolDristi
                                 styling: 'bootstrap3'
                             });
                         </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowRegionBinderErrorNotification", RegionBinder_Error_script, false);
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowMaterialBinderErrorNotification", MaterialBinder_Error_script, false);
             }
         }
+
+        private void BrandsBinder(string selectedPlantValue) //-->(Plant-->Material-->Brand) for material where product category is N/A 
+        {
+            // Construct the SQL query with parameters
+            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId ";
+            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
+            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
+
+            // Create SQL parameters for plant_id and line_id
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@PlantId", selectedPlantValue),
+            };
+
+            // Call the BindDropDownList method with parameters
+            bool recordsBound;
+            DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
+
+            // Check if any records were bound
+            if (!recordsBound)
+            {
+                string ProductBrands_Error_script = @"<script type='text/javascript'>
+                    new PNotify({
+                        title: 'Error',
+                        text: 'No Brands found for the selected plant !',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });
+                </script>";
+
+                // RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
+            }
+        }
+
         private void LineProductsBinder(string selectedPlantValue, string selectedMaterialValue)
         {
             // Construct the SQL query with parameters
@@ -144,7 +195,7 @@ namespace AnmolDristi
                 string PN_Error_script = @"<script type='text/javascript'>
                     new PNotify({
                         title: 'Error',
-                        text: 'No line categories found for the selected plant and line!',
+                        text: 'No categories found for the selected plant !',
                         type: 'error',
                         styling: 'bootstrap3'
                     });
@@ -154,40 +205,8 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowLineProductsBinderErrorNotification", PN_Error_script, false);
             }
         }
-        private void BrandsBinder(string selectedPlantValue)
-        {
-            // Construct the SQL query with parameters
-            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId ";
-            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
-
-            // Create SQL parameters for plant_id and line_id
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@PlantId", selectedPlantValue),
-            };
-
-            // Call the BindDropDownList method with parameters
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
-
-            // Check if any records were bound
-            if (!recordsBound)
-            {
-                string ProductBrands_Error_script = @"<script type='text/javascript'>
-                    new PNotify({
-                        title: 'Error',
-                        text: 'No Brands found for the selected plant and line!',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
-            }
-        }
-        private void ProductBrandsBinder(string selectedPlantValue, string selectedProductCategoryValue)
+        
+        private void ProductBrandsBinder(string selectedPlantValue, string selectedProductCategoryValue)   //-->( Plant-->Material-->Category-->Brand) for material where product category is applicable 
         {
             // Construct the SQL query with parameters
             string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId AND  category_id=@CategoryId";
@@ -211,7 +230,7 @@ namespace AnmolDristi
                 string ProductBrands_Error_script = @"<script type='text/javascript'>
                     new PNotify({
                         title: 'Error',
-                        text: 'No Brands found for the selected plant and line!',
+                        text: 'No Category Brands found for the selected plant !',
                         type: 'error',
                         styling: 'bootstrap3'
                     });
@@ -236,7 +255,7 @@ namespace AnmolDristi
         private void DivBinders(string selectedMaterialValue)
         {
             SetControlsVisible(Page.Controls, false);
-            FU_MaterialImage_img.Visible = false;
+            FU_MaterialImage_img.Visible = false; 
 
             // Show relevant controls based on the selected material
             switch (MaterialName)
@@ -574,17 +593,32 @@ namespace AnmolDristi
             }
         }
 
-        void getDetails(string rmfid)
+        void getDetails(string id)
         {
             try
             {
                 string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                string query = @"
+                    SELECT
+                        P.PlantName as PlantID,
+                        A.plant_name,
+	                    B.Material_Name,
+                        C.category_name,
+                        D.brand_name,
+                        P.*
+                    FROM
+                        TRN_RM_CLASS_1 P
+                    LEFT JOIN dbo.MST_PlantDetails A ON P.PlantName = A.plant_id
+                    LEFT JOIN dbo.RM_MATERIAL B ON P.MaterialName = B.Material_Id
+                    LEFT JOIN dbo.MST_LineCategory C ON P.ProductCategory = C.category_id
+                    LEFT JOIN dbo.MST_LineCatBrands D ON P.ProductBrand = D.brand_id
+                    WHERE P.Id = @Id";
+
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("SP_RM_1_ApprovalData", con))
+                    using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@RMFID", rmfid);
+                        cmd.Parameters.AddWithValue("@Id", id);
                         con.Open();
                         using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                         {
@@ -596,20 +630,55 @@ namespace AnmolDristi
 
                                 PlantId = dt.Rows[0]["PlantId"].ToString();
                                 PlantName = dt.Rows[0]["plant_name"].ToString();
-                                DDL_Plant.SelectedItem.Text = PlantName; //This is for binding the DDL using TEXT
+                                DDL_Plant.SelectedItem.Text = PlantName; 
 
                                 MaterialBinder(PlantId);
                                 MaterialName = dt.Rows[0]["Material_Name"].ToString();
                                 DDL_Material.SelectedItem.Text = MaterialName;
                                 DivBinders(MaterialName);
 
-                                LineProductsBinder(PlantId,MaterialName);
-                                ProductCategory = dt.Rows[0]["ProductCategory"].ToString();
-                                DDL_ProductCategory.SelectedValue = ProductCategory; //This is for binding the DDL using Value / ID
+                                //LineProductsBinder(PlantId,MaterialName);
+                                //ProductCategory = dt.Rows[0]["ProductCategory"].ToString();
+                                //DDL_ProductCategory.SelectedValue = ProductCategory; 
 
-                                ProductBrandsBinder(PlantId, ProductCategory);
-                                CategoryBrand = dt.Rows[0]["ProductBrand"].ToString();
-                                DDL_ProductBrand.SelectedValue = CategoryBrand;
+
+                                //ProductBrandsBinder(PlantId, ProductCategory); //only for material where product category is applicable
+                                //BrandsBinder(PlantId);                         //only for material where product category is not applicable
+                                //CategoryBrand = dt.Rows[0]["ProductBrand"].ToString();
+                                //DDL_ProductBrand.SelectedValue = CategoryBrand;
+
+                                string ProductCategory = dt.Rows[0]["ProductCategory"].ToString();
+                                if (!string.IsNullOrEmpty(ProductCategory) && ProductCategory != "0")
+                                {
+                                    LineProductsBinder(PlantId, MaterialName);
+                                    if (DDL_ProductCategory.Items.FindByValue(ProductCategory) != null)
+                                    {
+                                        DDL_ProductCategory.SelectedValue = ProductCategory;
+                                    }
+                                }
+
+
+
+                                string CategoryBrand = dt.Rows[0]["ProductBrand"].ToString();
+                                if (!string.IsNullOrEmpty(CategoryBrand) && CategoryBrand != "0")
+                                {
+                                    if (!string.IsNullOrEmpty(ProductCategory) && ProductCategory != "0")
+                                    {
+                                        // Call ProductBrandsBinder when ProductCategory is applicable
+                                        ProductBrandsBinder(PlantId, ProductCategory);
+                                    }
+                                    else
+                                    {
+                                        // Call BrandsBinder when ProductCategory is not applicable
+                                        BrandsBinder(PlantId);
+                                    }
+
+                                    if (DDL_ProductBrand.Items.FindByValue(CategoryBrand) != null)
+                                    {
+                                        DDL_ProductBrand.SelectedValue = CategoryBrand;
+                                    }
+                                }
+
 
                                 TB_Supplier.Text = dt.Rows[0]["Supplier_Name"].ToString();
 

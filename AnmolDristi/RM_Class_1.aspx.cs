@@ -10,6 +10,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using System.Windows.Media.Media3D;
 
 namespace AnmolDristi
 {
@@ -31,7 +33,7 @@ namespace AnmolDristi
 
 
                     lbl_docname.Text = "QC - RM Class 1 Report";
-                    lbl_docnumber.Text = "ANMOL/DOC/CORP/QC/PKNG/01";
+                    lbl_docnumber.Text = "*******";
                     PlantBinder();
                     PopulateColorDropdown();
 
@@ -523,7 +525,7 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedMaterialValue = DDL_Material.SelectedValue.ToString();
                 LineProductsBinder(selectedPlantValue, selectedMaterialValue);
-                BrandsBinder(selectedPlantValue);   // when product category is not applicable (ie.,excluding cocoa powder)
+                BrandsBinder(selectedPlantValue);   // for material where product category is N/A (ie.,excluding cocoa powder)
 
                 // Call method to show relevant controls based on selected material
                 DivBinders(selectedMaterialValue);
@@ -582,7 +584,7 @@ namespace AnmolDristi
             {
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
-                ProductBrandsBinder(selectedPlantValue, selectedProductCategoryValue); 
+                ProductBrandsBinder(selectedPlantValue, selectedProductCategoryValue); //for material where product category is applicable
             }
             else
             {
@@ -886,7 +888,7 @@ namespace AnmolDristi
             int formID = Convert.ToInt32(hdn_formid.Value.ToString());
 
             string plantName = DDL_Plant.SelectedValue;
-            string materialName = DDL_Material.SelectedItem.Text;
+            string materialName = DDL_Material.SelectedValue;
             string productCategory = string.IsNullOrEmpty(DDL_ProductCategory.SelectedValue) ? null : DDL_ProductCategory.Text;
             string productBrand = string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) ? null : DDL_ProductBrand.Text;
 
@@ -1472,7 +1474,7 @@ namespace AnmolDristi
 
         private void DivBinders(string selectedMaterialValue)
         {
-            string selectedMaterial = DDL_Material.SelectedItem.Text;
+            string selectedMaterial = DDL_Material.SelectedItem.Text;   
 
             SetControlsVisible(Page.Controls, false);
             FU_MaterialImage_Upldr.Visible = false;

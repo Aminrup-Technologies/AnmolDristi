@@ -32,7 +32,7 @@ namespace AnmolDristi
 
 
                     lbl_docname.Text = "QC - RM Class 3 Report";
-                    lbl_docnumber.Text = "ANMOL/DOC/CORP/QC/PKNG/01";
+                    lbl_docnumber.Text = "*******";
                     PlantBinder();
                     PopulateColorDropdown();
 
@@ -1830,6 +1830,8 @@ namespace AnmolDristi
                     break;
             }
         }
+
+
 
     }
 }

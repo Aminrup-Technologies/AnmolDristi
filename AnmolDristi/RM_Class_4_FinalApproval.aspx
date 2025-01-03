@@ -282,7 +282,7 @@
             <div class="page-title">
                 <div class="title_left">
                     <h3>
-                        <asp:Label ID="lbl_docname" runat="server" Text="Label"></asp:Label>
+                        <asp:Label ID="lbl_docname" runat="server" Text="Detailed View"></asp:Label>
                     </h3>
                 </div>
             </div>
@@ -291,7 +291,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="Label"></asp:Label>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="Detailed View"></asp:Label>
                             </h2>
                             <div class="clearfix"></div>
                         </div>
@@ -371,7 +371,7 @@
 
                                                     <div class="col-md-3" id="QuantityRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Label_TXB_Quantity_Remarks" runat="server" AssociatedControlID="TXB_Quantity_Remarks" Text="Quantity Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_TXB_Quantity_Remarks" runat="server" AssociatedControlID="TXB_Quantity_Remarks" Text="Quantity Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_Quantity_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForQuantity") %>'></asp:TextBox>
                                                             </div>
@@ -437,9 +437,9 @@
 
                                                     <div class="col-md-3" id="SmellRemarksDiv" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="LabelSmellRemarks" runat="server" AssociatedControlID="TXB_Smell_Remarks" Text="Smell (Not Ok)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="LabelSmellRemarks" runat="server" AssociatedControlID="TXB_Smell_Remarks" Text="Smell (Not Ok)" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
-                                                                <asp:TextBox ID="TXB_Smell_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded" Text='<%#  Eval("CommentsForSmell") %>'></asp:TextBox>
+                                                                <asp:TextBox ID="TXB_Smell_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly"  Text='<%#  Eval("CommentsForSmell") %>'></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -458,9 +458,9 @@
 
                                                     <div class="col-md-3" id="AppearanceRemarksDiv" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="LabelAppearancepRemarks" runat="server" AssociatedControlID="TXB_Appearance_Remarks" Text=" Appearance (Not Ok)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="LabelAppearancepRemarks" runat="server" AssociatedControlID="TXB_Appearance_Remarks" Text=" Appearance (Not Ok)" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
-                                                                <asp:TextBox ID="TXB_Appearance_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded" Text='<%#  Eval("CommentsForAppearance") %>'></asp:TextBox>
+                                                                <asp:TextBox ID="TXB_Appearance_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForAppearance") %>'></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -479,7 +479,7 @@
 
                                                     <div class="col-md-3" id="TasteFlavorRemarksDiv" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="LabelTasteFlavorRemarks" runat="server" AssociatedControlID="TXB_TasteFlavor_Remarks" Text=" Taste/Flavor  (Not Ok)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="LabelTasteFlavorRemarks" runat="server" AssociatedControlID="TXB_TasteFlavor_Remarks" Text=" Taste/Flavor  (Not Ok)" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_TasteFlavor_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm  rounded white-background-readonly" Text='<%#  Eval("CommentsForTaste") %>'></asp:TextBox>
                                                             </div>
@@ -498,7 +498,7 @@
 
                                                     <div class="col-md-3" id="FungusRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TXB_Fungus_Remarks" runat="server" AssociatedControlID="TXB_Fungus_Remarks" Text="Fungus Infestation Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Lbl_TXB_Fungus_Remarks" runat="server" AssociatedControlID="TXB_Fungus_Remarks" Text="Fungus Infestation Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_Fungus_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm  rounded white-background-readonly" Text='<%#  Eval("CommentsForFungus") %>'></asp:TextBox>
                                                             </div>
@@ -516,7 +516,7 @@
                                                     </div>
                                                     <div class="col-md-3" id="PHRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TXB_PH_Remarks" runat="server" AssociatedControlID="TXB_PH_Remarks" Text="PH Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Lbl_TXB_PH_Remarks" runat="server" AssociatedControlID="TXB_PH_Remarks" Text="PH Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_PH_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForPH") %>'></asp:TextBox>
                                                             </div>
@@ -535,7 +535,7 @@
 
                                                     <div class="col-md-3" id="MoistureRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TXB_Moisture_Remarks" runat="server" AssociatedControlID="TXB_Moisture_Remarks" Text="Moisture Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Lbl_TXB_Moisture_Remarks" runat="server" AssociatedControlID="TXB_Moisture_Remarks" Text="Moisture Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_Moisture_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForMoisture") %>'></asp:TextBox>
                                                             </div>
@@ -554,7 +554,7 @@
 
                                                     <div class="col-md-3" id="AshRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TXB_Ash_Remarks" runat="server" AssociatedControlID="TXB_Ash_Remarks" Text="Total Ash Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Lbl_TXB_Ash_Remarks" runat="server" AssociatedControlID="TXB_Ash_Remarks" Text="Total Ash Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_Ash_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForTotalAsh") %>'></asp:TextBox>
                                                             </div>
@@ -573,7 +573,7 @@
 
                                                     <div class="col-md-3" id="FatContentRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Label_TXB_Fat_Remarks" runat="server" AssociatedControlID="TXB_Fat_Remarks" Text="Fat Content Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_TXB_Fat_Remarks" runat="server" AssociatedControlID="TXB_Fat_Remarks" Text="Fat Content Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_Fat_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForFatContent") %>'></asp:TextBox>
                                                             </div>
@@ -592,7 +592,7 @@
 
                                                     <div class="col-md-3" id="MilkRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TXB_Milk_Remarks" runat="server" AssociatedControlID="TXB_Milk_Remarks" Text="Milk Snf Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Lbl_TXB_Milk_Remarks" runat="server" AssociatedControlID="TXB_Milk_Remarks" Text="Milk Snf Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_Milk_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForMilk") %>'></asp:TextBox>
                                                             </div>
@@ -611,7 +611,7 @@
 
                                                     <div class="col-md-3" id="SolidRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Label_TXB_Solid_Remarks" runat="server" AssociatedControlID="TXB_Solid_Remarks" Text="Total Solids Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_TXB_Solid_Remarks" runat="server" AssociatedControlID="TXB_Solid_Remarks" Text="Total Solids Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_Solid_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForSolid") %>'></asp:TextBox>
                                                             </div>
@@ -630,7 +630,7 @@
 
                                                     <div class="col-md-3" id="LactoseRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Label_TXB_Lactose_Remarks" runat="server" AssociatedControlID="TXB_Lactose_Remarks" Text="Lactose Content Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_TXB_Lactose_Remarks" runat="server" AssociatedControlID="TXB_Lactose_Remarks" Text="Lactose Content Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_Lactose_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForLactose") %>'></asp:TextBox>
                                                             </div>
@@ -649,7 +649,7 @@
 
                                                     <div class="col-md-3" id="ProteinRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Label_TXB_Protein_Remarks" runat="server" AssociatedControlID="TXB_Protein_Remarks" Text="Protein Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_TXB_Protein_Remarks" runat="server" AssociatedControlID="TXB_Protein_Remarks" Text="Protein Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_Protein_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForProtein") %>'></asp:TextBox>
                                                             </div>
@@ -668,7 +668,7 @@
 
                                                     <div class="col-md-3" id="MilkFatRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Label_TXB_MilkFat_Remarks" runat="server" AssociatedControlID="TXB_MilkFat_Remarks" Text="Milk Fat Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_TXB_MilkFat_Remarks" runat="server" AssociatedControlID="TXB_MilkFat_Remarks" Text="Milk Fat Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_MilkFat_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForMilkFat") %>'></asp:TextBox>
                                                             </div>
@@ -688,7 +688,7 @@
 
                                                     <div class="col-md-3" id="TitrableAcidityRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Label_TXB_TitrableAcidity_Remarks" runat="server" AssociatedControlID="TXB_TitrableAcidity_Remarks" Text="Titrable Acidity Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_TXB_TitrableAcidity_Remarks" runat="server" AssociatedControlID="TXB_TitrableAcidity_Remarks" Text="Titrable Acidity Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_TitrableAcidity_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForTitrableAcidity") %>'></asp:TextBox>
                                                             </div>
@@ -707,7 +707,7 @@
 
                                                     <div class="col-md-3" id="SO2RemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Label_TXB_SO2_Remarks" runat="server" AssociatedControlID="TXB_SO2_Remarks" Text="SO2 Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_TXB_SO2_Remarks" runat="server" AssociatedControlID="TXB_SO2_Remarks" Text="SO2 Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_SO2_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForSO2") %>'></asp:TextBox>
                                                             </div>
@@ -726,7 +726,7 @@
 
                                                     <div class="col-md-3" id="GlucoseContentRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TXB_GlucoseContent_Remarks" runat="server" AssociatedControlID="TXB_GlucoseContent_Remarks" Text="Glucose Content Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Lbl_TXB_GlucoseContent_Remarks" runat="server" AssociatedControlID="TXB_GlucoseContent_Remarks" Text="Glucose Content Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_GlucoseContent_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForGlucoseContent") %>'></asp:TextBox>
                                                             </div>
@@ -745,7 +745,7 @@
 
                                                     <div class="col-md-3" id="LossOnDryingRemarksDIV" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Label_TXB_LossOnDrying_Remarks" runat="server" AssociatedControlID="TXB_LossOnDrying_Remarks" Text="Loss On Drying Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_TXB_LossOnDrying_Remarks" runat="server" AssociatedControlID="TXB_LossOnDrying_Remarks" Text="Loss On Drying Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_LossOnDrying_Remarks" runat="server" ReadOnly="true" CssClass="form-control form-control-sm rounded white-background-readonly" Text='<%#  Eval("CommentsForLossOnDrying") %>'></asp:TextBox>
                                                             </div>
@@ -768,6 +768,7 @@
                                                             <asp:Button ID="BtnValidate" runat="server" Text="Re-Validate inputs" CssClass="btn btn-warning btn-sm" ValidationGroup="" CausesValidation="true" OnClientClick="validateOnClick(); return false;" />
                                                             <asp:Button ID="BtnApprove" runat="server" Text="Approve" CssClass="btn btn-success btn-sm" CausesValidation="false" OnClick="BtnApprove_Click" />
                                                             <asp:Button ID="BtnReject" runat="server" Text="Reject" CssClass="btn btn-sm btn-danger" CausesValidation="false" OnClick="BtnReject_Click" />
+                                                            <asp:Button ID="BtnBack" runat="server" Text="Back" CssClass="btn btn-sm btn-info" CausesValidation="false" PostBackUrl="~/RM_Class_4_Approval.aspx" />
                                                         </div>
                                                     </div>
                                                 </div>

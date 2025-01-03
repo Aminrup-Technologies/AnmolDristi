@@ -27,10 +27,10 @@
                                     <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Metal Detector
                             </a>
-                            <a class="btn btn-app" href="#">
+                            <a class="btn btn-app" href="qaqc_rotaryline_approval.aspx">
                                 <span class="badge bg-warning">Shift : 1
                                     <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Leak Test
+                                <i class="fa fa-edit"></i>Line Weight
                             </a>
                         </div>
                     </div>

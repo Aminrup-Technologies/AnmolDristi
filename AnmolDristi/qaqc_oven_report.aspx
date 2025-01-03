@@ -255,7 +255,7 @@
                                                                         <asp:TextBox ID="TB_DippedWeight" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Dipped Weight (in gm)" MaxLength="5"></asp:TextBox>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div> 
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">

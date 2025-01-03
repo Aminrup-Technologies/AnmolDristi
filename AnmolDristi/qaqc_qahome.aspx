@@ -28,36 +28,38 @@
                                     <asp:Label ID="lbl_tbttodaycount" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Inspector Report
                             </a>
-                            
-                            <a class="btn btn-app" href="qaqc_rotary_line.aspx" >
+
+                            <a class="btn btn-app" href="qaqc_rotary_line.aspx">
                                 <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Line Weight
                             </a>
-                            <a class="btn btn-app" href="ccp_checklist.aspx" >
+                            <a class="btn btn-app" href="ccp_checklist.aspx">
                                 <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>CCP Checklist
                             </a>
-                            
 
-                            <a class="btn btn-app" href="qaqc_leaktest_rev1.aspx" >
+
+                            <a class="btn btn-app" href="qaqc_leaktest_rev1.aspx">
                                 <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Leak Test
                             </a>
 
-                            <a class="btn btn-app" href="qaqc_pre_dispatch_QI_Report.aspx" >
+                            <a class="btn btn-app" href="qaqc_pre_dispatch_QI_Report.aspx">
                                 <span class="badge bg-green">Shift : 1
                                     <asp:Label ID="Label7" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Pre-Dispatch
                             </a>
-                            
-                            <a class="btn btn-app" href="critical_quality_report.aspx" >
+
+                            <a class="btn btn-app" href="critical_quality_report.aspx">
                                 <span class="badge bg-green">As Req.
                                     <asp:Label ID="Label8" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Critical Incident
                             </a>
+
+                           
                         </div>
                     </div>
                 </div>

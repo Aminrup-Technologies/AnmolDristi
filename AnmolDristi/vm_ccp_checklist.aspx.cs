@@ -754,7 +754,36 @@ namespace AnmolDristi
         {
             Response.Redirect("vm_ccp_checklist.aspx");
         }
-        
 
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "View")
+            {
+                // Get the DBID from the CommandArgument.
+                int dbid = Convert.ToInt32(e.CommandArgument);
+
+                if (dbid > 0)
+                {
+                    // Redirect with the correct DBID.
+                    Response.Redirect("CCP_Checklist_detailed.aspx?DBID=" + dbid + "&source=report");
+                }
+                else
+                {
+                    // Handle cases where DBID is not valid.
+                    // Show an error message or log the issue.
+                    System.Diagnostics.Debug.WriteLine("Invalid DBID passed: " + e.CommandArgument);
+                }
+            }
+        }
+
+        protected void ViewBtn_Click(object sender, EventArgs e)
+        {
+                // Get the ID from the CommandArgument of the button
+                System.Web.UI.WebControls.Button btn = (System.Web.UI.WebControls.Button)sender;
+                string ID = btn.CommandArgument;
+
+                Response.Redirect("CCP_Checklist_detailed.aspx?ID=" + ID);
+            
+        }
     }
 }

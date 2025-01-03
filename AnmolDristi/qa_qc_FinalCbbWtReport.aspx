@@ -231,7 +231,7 @@
             // Remove 'show active' class from all tab panes
             document.querySelectorAll('.tab-pane').forEach(function (pane) {
                 pane.classList.remove('show', 'active');
-            });
+            }); 
 
             // Add active class to the selected tab and its content
             tabLink.classList.add('active');

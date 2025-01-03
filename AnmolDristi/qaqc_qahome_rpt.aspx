@@ -57,6 +57,8 @@
                                     <asp:Label ID="Label8" runat="server" Text="0" Visible="true"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Critical Incident
                             </a>
+
+                           
                         </div>
                     </div>
                 </div>

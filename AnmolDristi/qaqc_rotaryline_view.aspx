@@ -23,6 +23,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    [<asp:Label ID="lbl_DDL_Plant_Value" runat="server" AssociatedControlID="DDL_Plant" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" ValidationGroup="Submit" OnSelectedIndexChanged="DDL_Plant_SelectedIndexChanged"></asp:DropDownList>
@@ -34,6 +35,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_PlantLine" Text="Select Line" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    [<asp:Label ID="lbl_DDL_PlantLine_Value" runat="server" AssociatedControlID="DDL_PlantLine" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_PlantLine" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_PlantLine" Display="Dynamic" InitialValue=""></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_PlantLine_SelectedIndexChanged"></asp:DropDownList>
@@ -45,6 +47,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label5" runat="server" AssociatedControlID="DDL_ProductCategory" Text="Product Category" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    [<asp:Label ID="lbl_DDL_ProductCategory_Value" runat="server" AssociatedControlID="DDL_ProductCategory" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_ProductCategory" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" InitialValue="" ControlToValidate="DDL_ProductCategory" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductCategory_SelectedIndexChanged"></asp:DropDownList>
@@ -56,6 +59,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label6" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    [<asp:Label ID="lbl_DDL_ProductBrand_Value" runat="server" AssociatedControlID="DDL_ProductBrand" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_ProductBrand" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductBrand_SelectedIndexChanged"></asp:DropDownList>
@@ -63,9 +67,10 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-3" runat="server" visible="false">
                                 <div class="mb-3">
                                     <asp:Label ID="Label7" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    [<asp:Label ID="lbl_DDL_BrandSKU_Value" runat="server" AssociatedControlID="DDL_BrandSKU" Text="N/A" ForeColor="LightBlue" Font-Bold="true" Font-Size="Smaller"></asp:Label>]
                                     <asp:RequiredFieldValidator ID="RFV_DDL_BrandSKU" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_BrandSKU" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_BrandSKU" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
@@ -113,7 +118,7 @@
                             <h2>
                                 <asp:Label ID="lbl_lower" runat="server" Text="Label"></asp:Label>
                             </h2>
-                            <asp:Button ID="btn_view_export" runat="server" Text="Export" class="btn btn-primary btn-sm" OnClick="btn_view_export_Click" />
+                            <asp:Button ID="btn_view_export" runat="server" Text="Export" class="btn btn-primary btn-sm" />
 
 
                             <ul class="nav navbar-right panel_toolbox">
@@ -130,55 +135,60 @@
                                 <Columns>
                                     <asp:TemplateField HeaderText="Sl">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="RLWt">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblRLWt" runat="server" ClientIDMode="Static" Text='<%# Eval("RLWt") %>'></asp:Label>
+                                            <asp:Label ID="lblId" runat="server" ReadOnly="true" ClientIDMode="Static" Text="Sl:"></asp:Label><strong><%# Container.DataItemIndex + 1 %></strong>
+                                            <br />
+                                            <asp:Label ID="lblRLWt" runat="server" ClientIDMode="Static" Text='<%# "RLWt: " + "<strong>" + Eval("RLWt")  + "</strong>" %>'></asp:Label>
+                                            <br />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
                                     <asp:TemplateField HeaderText="Plant and Line Details">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPlantName" runat="server" Text='<%# "Plant: " + Eval("PlantName") %>'></asp:Label><br />
-                                            <asp:Label ID="lblLine" runat="server" Text='<%# "Line: " + Eval("Line") %>'></asp:Label><br />
-                                            <asp:Label ID="lblProductCategory" runat="server" Text='<%# "Category: " + Eval("ProductCategory") %>'></asp:Label><br />
-                                            <asp:Label ID="lblProductBrand" runat="server" Text='<%# "Brand: " + Eval("ProductBrand") %>'></asp:Label><br />
-                                            <asp:Label ID="lblSKUId" runat="server" Text='<%# "SKU: " + Eval("SKUId") %>'></asp:Label>
+                                            <asp:Label ID="lblPlant" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "Plant: " + "<strong>" +  Eval("plant_name") + "</strong>" %>'></asp:Label> <br />
+                                            <asp:Label ID="lblLine" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "Line: " + "<strong>" + Eval("line_name")  + "</strong>" %>'></asp:Label> <br />
+                                            <asp:Label ID="lblCategory" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "Category:" + "<strong>" + Eval("category_name") + "</strong>" %>'></asp:Label> <br />
+                                            <asp:Label ID="lblBrand" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "Brand:" + "<strong>" + Eval("brand_name") + "</strong>" %>'></asp:Label> <br />
+                                            <%--<asp:Label ID="lblSKUId" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "SKU: " + "<strong>" + Eval("SKUId") + "</strong>" %>'></asp:Label>--%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
 
                                     <asp:TemplateField HeaderText="Submission Details">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblDate" runat="server" Text='<%# "Date: " + Eval("SubmittedDate", "{0:dd/MM/yyyy}") %>'></asp:Label><br />
-                                            <asp:Label ID="lblTime" runat="server" Text='<%# "Time: " + Eval("SubmittedTime", "{0:hh\\:mm\\:ss}") %>'></asp:Label><br />
-                                            <asp:Label ID="lblShift" runat="server" Text='<%# "Shift: " + Eval("Shift") %>'></asp:Label><br />
-                                            <asp:Label ID="lblVariety" runat="server" Text='<%# "Variety: "+Eval("Variety") %>'></asp:Label><br />
+                                            <asp:Label ID="Label2" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "Date: <span style=\"color: red; font-weight: bold;\">" + Eval("SubmittedDate","{0:dd-MM-yyyy}") + "</span>" %>'></asp:Label>
+                                            <br />
+                                            <asp:Label ID="Label3" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "Time: <span style=\"color: red; font-weight: bold;\">" + DataBinder.Eval(Container.DataItem, "SubmittedTime", "{0:hh\\:mm\\:ss}") + "</span>" %>'></asp:Label>
+                                            <br />
+                                            <asp:Label ID="lblName" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "Submitter:" + "<strong>" + Eval("SubmittedByEmployeeCode")+ "</strong>"%>'></asp:Label>
+                                            <br />
+                                            <asp:Label ID="lblShift" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "Shift: " + "<strong>" + Eval("Shift") + "</strong>" %>'></asp:Label><br />
+                                            <%--<asp:Label ID="lblVariety" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "Variety: "+Eval("Variety") %>'></asp:Label><br />--%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-
-                                    <asp:TemplateField HeaderText="Level1 Approval Details">
+                                    <asp:TemplateField HeaderText="Line Weight Details">
                                         <ItemTemplate>
-
-                                            <asp:Label ID="lblLevel1ApproverId" runat="server" Text='<%# "Level 1 Approver ID: " + Eval("Approver1EmployeeCode") %>'></asp:Label><br />
-                                            <asp:Label ID="lblLevel2ApproverId" runat="server" Text='<%# "Level 2 Approver ID: " + Eval("Approver2EmployeeCode") %>'></asp:Label><br />
-                                            <asp:Label ID="lblLevel3ApproverId" runat="server" Text='<%# "Level 3 Approver ID: " + Eval("DottedLineApproverEmployeeCode") %>'></asp:Label><br />
+                                            <%--<asp:Label ID="lblLineWt" runat="server" Visible="false" Text='<%# "Line Weight: " + "<strong>" + Eval("linewt") + "</strong>" %>'></asp:Label><br />--%>
+                                            <asp:Label ID="lblAvgLineWt" runat="server" Text='<%# "Average Line Weight: " + "<strong>" + Eval("avglinewt") + "</strong>" %>'></asp:Label><br />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-
-                                    <asp:TemplateField HeaderText="Test Details">
+                                    <asp:TemplateField HeaderText="Oven End Data Details">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblLineWt" runat="server" Visible="false" Text='<%# "Line Weight: " + Eval("linewt") %>'></asp:Label><br />
-                                            <asp:Label ID="lblGaugeAndWeight" runat="server" Visible="false" Text='<%# "Gauge and Weight: " + Eval("gaugeandweight") %>'></asp:Label><br />
-                                            <asp:Label ID="lblAvgLineWt" runat="server" Text='<%# "Average Line Weight: " + Eval("avglinewt") %>'></asp:Label><br />
-                                            <asp:Label ID="lblAvgGaugeValue" runat="server" Text='<%# "Average Gauge Value: " + Eval("avggaugevalue") %>'></asp:Label><br />
-                                            <asp:Label ID="lblAvgWeightValue" runat="server" Text='<%# "Average Weight Value: " + Eval("avgweightvalue") %>'></asp:Label>
+                                            <%--<asp:Label ID="lblGaugeAndWeight" runat="server" Visible="false" Text='<%# "Gauge and Weight: " + "<strong>" + Eval("gaugeandweight") + "</strong>" %>'></asp:Label><br />--%>
+                                            <asp:Label ID="lblAvgGaugeValue" runat="server" Text='<%# "Average Gauge Value: " + "<strong>" + Eval("avggaugevalue") + "</strong>" %>'></asp:Label><br />
+                                            <asp:Label ID="lblAvgWeightValue" runat="server" Text='<%# "Average Weight Value: " + "<strong>" + Eval("avgweightvalue") + "</strong>" %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText=" Approvals Details">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblLevel1ApproverId" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "A1: " + Eval("Approver1EmployeeCode") %>'></asp:Label><br />
+                                            <asp:Label ID="lblLevel2ApproverId" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "A2: " + Eval("Approver2EmployeeCode") %>'></asp:Label><br />
+                                            <asp:Label ID="lblLevel3ApproverId" runat="server" ReadOnly="true" ClientIDMode="Static" Text='<%# "A3: " + Eval("DottedLineApproverEmployeeCode") %>'></asp:Label><br />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
                                 </Columns>
                             </asp:GridView>
                         </div>

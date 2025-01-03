@@ -89,12 +89,13 @@ namespace AnmolDristi
                     // Build the error details
                     string subject = "Application Error Notification";
                     string body = $@"
-                <h1>An error occurred in the application</h1>
-                <p><strong>Message:</strong> {ex.Message}</p>
-                <p><strong>Source:</strong> {ex.Source}</p>
-                <p><strong>TargetSite:</strong> {ex.TargetSite}</p>
-                <p><strong>Stack Trace:</strong></p>
-                <pre>{ex.StackTrace}</pre>";
+                        <h1>An error occurred in the application</h1>
+                        <p><strong>Message:</strong> {ex.Message}</p>
+                        <p><strong>Source:</strong> {ex.Source}</p>
+                        <p><strong>TargetSite:</strong> {ex.TargetSite}</p>
+                        <p><strong>InnerException:</strong> {ex.InnerException}</p>
+                        <p><strong>Stack Trace:</strong></p>
+                        <pre>{ex.StackTrace}</pre>";
 
                     EmailNotifier.Notify(subject, body, recipients);
                 }
@@ -112,6 +113,7 @@ namespace AnmolDristi
                     Response.Write("<h1>Error Details</h1>");
                     Response.Write($"<p>{ex.Message}</p>");
                     Response.Write($"<pre>{ex.StackTrace}</pre>");
+                    Response.Write($"<pre>{ex.InnerException}</pre>");
                     Response.End(); // Stop further processing
                     return;
                 }
@@ -142,6 +144,10 @@ namespace AnmolDristi
             }
         }
 
+        //protected void Application_Error(object sender, EventArgs e)
+        //{
+
+        //}
 
         protected void Session_End(object sender, EventArgs e)
         {

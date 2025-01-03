@@ -64,7 +64,9 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <script type="text/javascript">
+
         function validateGSM() {
             // Get the value of the GSM input field
             var gsmValue = parseFloat(document.getElementById('<%=TB_GMS_Std.ClientID %>').value);
@@ -85,8 +87,7 @@
                 remarkSection.style.display = "none";
             }
         }
-    </script>
-    <script type="text/javascript">
+    
         function validateDimension() {
             // Get the value of the Dimension input field
             var dimensionValue = parseFloat(document.getElementById('<%= TB_DimensionStd.ClientID %>').value);
@@ -108,8 +109,10 @@
             }
         }
     </script>
+
     <asp:HiddenField ID="hdn_formid" runat="server" />
     <asp:HiddenField ID="hdn_shiftvalue" runat="server" />
+
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
@@ -130,6 +133,7 @@
                         </div>
 
                         <div class="x_content">
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -139,6 +143,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -148,6 +153,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_SupplierName" runat="server" AssociatedControlID="TB_SupplierName" Text="Supplier Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -211,44 +217,30 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <!-- Label for Standard Dimension (in mm) -->
-                                    <asp:Label ID="LBL_DimensionStd" runat="server" AssociatedControlID="TB_DimensionStd" Text="Standard Dimension (in mm):"
-                                        ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="LBL_DimensionStd" runat="server" AssociatedControlID="TB_DimensionStd" Text="Standard Dimension (in mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:Literal ID="span_Dimension" runat="server" Text='<%# Eval("Dimension_Std") %>'></asp:Literal>
-
-                                    <!-- Required Field Validator -->
-                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionStd" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStd"
-                                        ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-
-                                    <!-- Range Validator to ensure the input is within the valid range -->
-                                    <asp:RangeValidator ID="RV_TB_DimensionStd" runat="server" ControlToValidate="TB_DimensionStd" ValidationGroup="Submit"
-                                        ErrorMessage="Value must be between 0.00mm and 1000.0mm" MinimumValue="0.00" MaximumValue="1000.00" Type="Double"
-                                        Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
-
-                                    <!-- Input TextBox for Standard Dimension (in mm) -->
+                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionStd" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStd" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RangeValidator ID="RV_TB_DimensionStd" runat="server" ControlToValidate="TB_DimensionStd" ValidationGroup="Submit" ErrorMessage="Value must be between 0.00mm and 1000.0mm" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionStd" runat="server" CssClass="form-control form-control-sm rounded"
-                                            Placeholder="Enter 0.00mm and 1000.0mm Dimension" MaxLength="10" OnKeyUp="validateDimension()"
-                                            ClientIDMode="Static"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionStd" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter 0.00mm and 1000.0mm Dimension" MaxLength="10" OnKeyUp="validateDimension()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
                             <!-- Hidden Remark Section -->
                             <div class="col-md-3" id="remarkSection1" style="display: none;">
                                 <div class="mb-3">
                                     <!-- Label for Remark -->
-                                    <asp:Label ID="Lbl_Remark_Dimension" runat="server" AssociatedControlID="TB_Remarks" Text="Please provide a remark for deviation:"
-                                        ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
-
-                                    <!-- Input TextBox for Remark -->
+                                    <asp:Label ID="Lbl_Remark_Dimension" runat="server" AssociatedControlID="TB_Remarks" Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Remark_Dimension" runat="server" CssClass="form-control form-control-sm rounded"
-                                            Placeholder="Enter remark for deviation"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Remark_Dimension" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter remark for deviation"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_DimensionObs" runat="server" AssociatedControlID="TB_DimensionObs" Text="Observed Dimension (in mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -259,45 +251,30 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <!-- Label for GSM/WT per 10 PS (STD) -->
-                                    <asp:Label ID="Lbl_TB_GMS_Std" runat="server" AssociatedControlID="TB_GMS_Std"
-                                        Text="GSM/WT per 10 PS (STD):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="Lbl_TB_GMS_Std" runat="server" AssociatedControlID="TB_GMS_Std" Text="GSM/WT per 10 PS (STD):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:Literal ID="span_GMS" runat="server" Text='<%# Eval("GMS_Std") %>'></asp:Literal>
-
-                                    <!-- Required Field Validator -->
-                                    <asp:RequiredFieldValidator ID="RFV_TB_GMS_Std" runat="server" ErrorMessage="Input Required"
-                                        ControlToValidate="TB_GMS_Std" ValidationGroup="Submit" InitialValue="" Display="Dynamic"
-                                        ForeColor="Red"></asp:RequiredFieldValidator>
-
-                                    <!-- Range Validator to ensure the input is within the valid range -->
-                                    <asp:RangeValidator ID="RV_TB_GMS_Std" runat="server" ControlToValidate="TB_GMS_Std"
-                                        ValidationGroup="Submit" ErrorMessage="Value must be between 0.00g to 1000.00g"
-                                        MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"
-                                        ForeColor="Red"></asp:RangeValidator>
-                                    <!-- Input TextBox for GSM/WT per 10 PS (STD) -->
+                                    <asp:RequiredFieldValidator ID="RFV_TB_GMS_Std" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_GMS_Std" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RangeValidator ID="RV_TB_GMS_Std" runat="server" ControlToValidate="TB_GMS_Std" ValidationGroup="Submit" ErrorMessage="Value must be between 0.00g to 1000.00g" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_GMS_Std" runat="server" CssClass="form-control form-control-sm rounded"
-                                            Placeholder="Enter 0.00g to 1000.00g GSM/Weight per 10 PS" MaxLength="10"
-                                            OnKeyUp="validateGSM()" ClientIDMode="Static"></asp:TextBox>
+                                        <asp:TextBox ID="TB_GMS_Std" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter 0.00g to 1000.00g GSM/Weight per 10 PS" MaxLength="10" OnKeyUp="validateGSM()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
                             <!-- Hidden Remark Section -->
                             <div class="col-md-3" id="remarkSection" style="display: none;">
                                 <div class="mb-3">
                                     <!-- Label for Remark -->
-                                    <asp:Label ID="Lbl_Remark_GSM" runat="server" AssociatedControlID="TB_Remark_GSM"
-                                        Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
-
-                                    <!-- Input TextBox for Remark -->
+                                    <asp:Label ID="Lbl_Remark_GSM" runat="server" AssociatedControlID="TB_Remark_GSM" Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Remark_GSM" runat="server" CssClass="form-control form-control-sm rounded"
-                                            Placeholder="Enter remark for deviation"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Remark_GSM" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter remark for deviation"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_GSM_Obs" runat="server" AssociatedControlID="TB_GSM_Obs" Text="GSM/WT per 10 PS (OBS):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -308,6 +285,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_Remarks" runat="server" AssociatedControlID="TB_Remarks" Text="Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>

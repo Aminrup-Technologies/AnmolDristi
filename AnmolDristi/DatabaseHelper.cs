@@ -285,6 +285,36 @@ namespace AnmolDristi
             return dataTable;
         }
 
+        public static DataTable GetBrandFieldsControlByMaterialIdAndBrandId(int materialId, int brandId)
+        {
+            DataTable dataTable = new DataTable();
+
+            // Create a SqlConnection
+            using (SqlConnection connection = GetConnection())
+            {
+                // Open the connection
+
+                // Create a SqlCommand for the stored procedure
+                using (SqlCommand command = new SqlCommand("GetBrandFieldsControlByBrandId", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add parameters
+                    command.Parameters.AddWithValue("@material_id", materialId);
+                    command.Parameters.AddWithValue("@brand_id", brandId);
+
+                    // Execute the SqlCommand and load results into the DataTable
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        dataTable.Load(reader);
+                    }
+                }
+                connection.Close();
+            }
+
+            return dataTable;
+        }
+
 
 
         public static void BindLiteralControl(string query, Literal span_L, Literal span_W, Literal span_H, Literal span_GSM, SqlParameter parameter, out bool recordsBound)

@@ -32,7 +32,7 @@ namespace AnmolDristi
         private void BindFormsMasterGrid()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = "SELECT * FROM MST_FormsMaster order by Id desc";
+            string query = "SELECT * FROM MST_FormsMaster order by FormID desc";
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, con))

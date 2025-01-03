@@ -448,8 +448,7 @@
                                 <div class="mb-3">
                                     <asp:Label ID="lblWt_of_Pkts" runat="server" AssociatedControlID="TXT_Wt_of_Pkts" Text="Wt. of Pkts (in gm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_Wt_of_Pkts" runat="server" ErrorMessage="Required" ValidationGroup="Submit" ControlToValidate="TXT_Wt_of_Pkts" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REF_Wt_of_Pkts" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_Wt_of_Pkts" ForeColor="Red" ErrorMessage="Decimal Only"
-                                        ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RegularExpressionValidator ID="REF_Wt_of_Pkts" runat="server" ValidationGroup="Submit" ControlToValidate="TXT_Wt_of_Pkts" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:RangeValidator ID="RV_Wt_of_Pkts" runat="server" ControlToValidate="TXT_Wt_of_Pkts" ErrorMessage="[0.01 - 2000.00 gm]" ForeColor="Red" MinimumValue="0.01" MaximumValue="2000.00" Type="Double" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXT_Wt_of_Pkts" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Weight of Pkts"></asp:TextBox>

@@ -23,13 +23,26 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                if (Request.QueryString["RMFID"] != null)
+                if (Request.QueryString["DBID"] != null)
                 {
-                    string rmfid = Request.QueryString["RMFID"];
+                    string id = Request.QueryString["DBID"];
 
                     PlantBinder();
-                    getDetails(rmfid);
+                    getDetails(id);
 
+                }
+
+                string source = Request.QueryString["source"];
+
+                if (source == "report")
+                {
+                    BtnApprove.Visible = false;
+                    BtnReject.Visible = false;
+                    BtnBack.PostBackUrl = "~/RM_Class_4_Report.aspx";
+                }
+                else
+                {
+                    BtnBack.PostBackUrl = "~/RM_Class_4_Approval.aspx";
                 }
             }
         }
@@ -409,7 +422,7 @@ namespace AnmolDristi
                     imgMaterial.Visible = true;
                     break;
 
-                
+
 
                 default:
                     // Optionally handle a default case
@@ -417,17 +430,30 @@ namespace AnmolDristi
             }
         }
 
-        void getDetails(string rmfid)
+        void getDetails(string id)
         {
             try
             {
                 string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                string query = @"
+                    SELECT
+                        P.PlantName as PlantID,
+                        A.plant_name,
+	                    B.Material_Name,
+                        D.brand_name,
+                        P.*
+                    FROM
+                        TRN_RM_CLASS_4 P
+                    LEFT JOIN dbo.MST_PlantDetails A ON P.PlantName = A.plant_id
+                    LEFT JOIN dbo.RM_MATERIAL B ON P.MaterialName = B.Material_Id
+                    LEFT JOIN dbo.MST_LineCatBrands D ON P.ProductBrand = D.brand_id
+                    WHERE P.Id = @Id";
+
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("SP_RM_4_ApprovalData", con))
+                    using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@RMFID", rmfid);
+                        cmd.Parameters.AddWithValue("@Id", id);
                         con.Open();
                         using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                         {
@@ -446,9 +472,19 @@ namespace AnmolDristi
                                 DDL_Material.SelectedItem.Text = MaterialName;
                                 DivBinders(MaterialName);
 
-                                ProductBrandsBinder(PlantId);
-                                CategoryBrand = dt.Rows[0]["ProductBrand"].ToString();
-                                DDL_ProductBrand.SelectedValue = CategoryBrand;
+                                //ProductBrandsBinder(PlantId);
+                                //CategoryBrand = dt.Rows[0]["ProductBrand"].ToString();
+                                //DDL_ProductBrand.SelectedValue = CategoryBrand;
+
+                                string CategoryBrand = dt.Rows[0]["ProductBrand"].ToString();
+                                if (!string.IsNullOrEmpty(CategoryBrand) && CategoryBrand != "0")
+                                {
+                                    ProductBrandsBinder(PlantId);
+                                    if (DDL_ProductBrand.Items.FindByValue(CategoryBrand) != null)
+                                    {
+                                        DDL_ProductBrand.SelectedValue = CategoryBrand;
+                                    }
+                                }
 
                                 TB_Supplier.Text = dt.Rows[0]["Supplier_Name"].ToString();
 

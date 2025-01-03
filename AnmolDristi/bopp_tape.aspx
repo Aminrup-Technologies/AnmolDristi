@@ -153,6 +153,7 @@
                         </div>
                         <div class="x_content">
                             <div class="row">
+
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -250,7 +251,7 @@
                                         <!-- Required Field Validator -->
                                         <asp:RequiredFieldValidator ID="RFV_TB_StandardDimension" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_StandardDimension" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <!-- Range Validator for 99.5 to 101 mm -->
-                                        <asp:RangeValidator ID="RV_TB_StandardDimension" runat="server" ControlToValidate="TB_StandardDimension" MinimumValue="99.5" MaximumValue="101" Type="Double" ErrorMessage="Value must be between 99.5 and 101 mm" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                        <asp:RangeValidator ID="RV_TB_StandardDimension" runat="server" ControlToValidate="TB_StandardDimension" MinimumValue="99.5" MaximumValue="101" Type="Double" ErrorMessage="Value must be between 99.5 and 101 mm"  Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                         <div class="input-group-sm">
                                             <!-- Textbox for Standard Dimension -->
                                             <asp:TextBox ID="TB_StandardDimension" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Standard Dimension" MaxLength="25"></asp:TextBox>
@@ -283,7 +284,7 @@
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_StandardGSM" runat="server" AssociatedControlID="TB_StandardGSM" Text="Standard GSM:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_StandardGSM" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_StandardGSM" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:RangeValidator ID="RV_StandardGSM" runat="server" ControlToValidate="TB_StandardGSM" ErrorMessage="Value must be between 99.5 and 101" MinimumValue="99.5" MaximumValue="101" Type="Double" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                        <asp:RangeValidator ID="RV_StandardGSM" runat="server" ControlToValidate="TB_StandardGSM" ErrorMessage="Value must be between 99.5 and 101" MinimumValue="99.5" MaximumValue="101" Type="Double"  Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="TB_StandardGSM" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Standard GSM"></asp:TextBox>
                                         </div>

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace AnmolDristi
@@ -34,6 +35,9 @@ namespace AnmolDristi
                     PlantBinder();
                     PopulateColorDropdown();
 
+                    // Call a helper method to make all controls visible
+                    SetControlsVisible(Page.Controls, true);
+
                     // set validators for fields or columns
                     SetQuantityValidators();
                     SetPhValidators();
@@ -59,6 +63,40 @@ namespace AnmolDristi
             }
         }
 
+        private void SetControlsVisible(ControlCollection controls, bool visible)
+        {
+            foreach (Control ctrl in controls)
+            {
+                // Only hide/show divs that are not related to the Plant dropdown
+                if (ctrl is HtmlGenericControl && (ctrl as HtmlGenericControl).TagName == "div")
+                {
+                    // Assuming you have named your divs properly or added IDs to them (e.g., divSupplierSection, divOtherSection, etc.)
+                    if (ctrl.ID != "PlantDIV" && ctrl.ID != "MaterialDIV")
+                    {
+                        ctrl.Visible = visible;
+                    }
+                }
+                // Check for remarks TextBoxes
+                if (ctrl is TextBox && (ctrl.ID.EndsWith("RemarksDiv", StringComparison.OrdinalIgnoreCase)))
+                {
+                    if (!visible)
+                    {
+                        (ctrl as TextBox).CssClass += " hidden"; // Add 'hidden' class to hide
+                    }
+                    else
+                    {
+                        (ctrl as TextBox).CssClass = (ctrl as TextBox).CssClass.Replace(" hidden", ""); // Remove 'hidden' class
+                    }
+                }
+
+                // Recursively check nested controls for divs
+                if (ctrl.HasControls())
+                {
+                    SetControlsVisible(ctrl.Controls, visible);
+                }
+            }
+
+        }
         public class ValidationCriteria
         {
             public string RequiredFieldErrorMessage { get; set; }
@@ -497,7 +535,7 @@ namespace AnmolDristi
                 ProductBrandsBinder(selectedPlantValue);
 
                 // Call method to show relevant controls based on selected material
-                //DivBinders(selectedMaterialValue);
+                DivBinders(selectedMaterialValue);
             }
             else
             {
@@ -611,6 +649,256 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowSKUInvalidErrorNotification", DDL_ProductBrand_Error_script, false);
             }
         }
+
+        private void DivBinders(string selectedMaterialValue)
+        {
+            string selectedMaterial = DDL_Material.SelectedItem.Text;
+
+            SetControlsVisible(Page.Controls, false);
+            FU_MaterialImage_Upldr.Visible = false;
+            FU_MaterialImage.Visible = false;
+
+            // Show relevant controls based on the selected material
+            switch (selectedMaterial)
+            {
+                case "Butter":
+
+                    //Product Brand
+                    BrandDIV.Visible = true;
+
+                    //Supplier	
+                    SupplierDIV.Visible = true;
+
+                    //Challan No & Date	
+                    ChallanNoDIV.Visible = true;
+                    ChallanDateDIV.Visible = true;
+
+                    //Lot No/ Batch No.
+                    LotNoDIV.Visible = true;
+
+                    //Vehicle No	
+                    VehicleNoDIV.Visible = true;
+
+                    //Colour	
+                    ColorDIV.Visible = true;
+                    ColorRemarksDiv.Visible = true;
+
+                    //Appearance	
+                    AppearanceDIV.Visible = true;
+
+                    //Taste/Flavour	
+                    TasteFlavorDIV.Visible = true;
+
+                    //Fungus Infestation
+                    FungusDIV.Visible = true;
+
+                    //Moisture
+                    MoistureDIV.Visible = true;
+
+                    //Fat Content 
+                    FatContentDIV.Visible = true;
+
+                    //Milk Snf
+                    MilkDIV.Visible = true;
+
+                    //Image
+                    FU_MaterialImage_Upldr.Visible = true;
+                    FU_MaterialImage.Visible = true;
+                    break;
+
+                case "Condensed Milk":
+                    //Supplier	
+                    SupplierDIV.Visible = true;
+
+                    //Challan No & Date	
+                    ChallanNoDIV.Visible = true;
+                    ChallanDateDIV.Visible = true;
+
+                    //Lot No/ Batch No.
+                    LotNoDIV.Visible = true;
+
+                    //Pkd/Mfg Date	
+                    PkdMfgDIV.Visible = true;
+
+                    //Vehicle No	
+                    VehicleNoDIV.Visible = true;
+
+                    //Colour	
+                    ColorDIV.Visible = true;
+                    ColorRemarksDiv.Visible = true;
+
+                    //Taste/Flavour	
+                    TasteFlavorDIV.Visible = true;
+
+                    //Total Solids	
+                    SolidDIV.Visible = true;
+
+                    //Titrable Acidity
+                    TitrableAcidityDIV.Visible = true;
+
+
+                    //Image
+                    FU_MaterialImage_Upldr.Visible = true;
+                    FU_MaterialImage.Visible = true;
+                    break;
+
+                case "SMP":
+
+                    //Product Brand
+                    BrandDIV.Visible = true;
+
+                    // Supplier
+                    SupplierDIV.Visible = true;
+
+                    //Challan No & Date	
+                    ChallanDateDIV.Visible = true;
+                    ChallanNoDIV.Visible = true;
+
+                    //Lot No/ Batch No.
+                    LotNoDIV.Visible = true;
+
+                    //Pkd/Mfg Date	
+                    PkdMfgDIV.Visible = true;
+
+                    //Vehicle No	
+                    VehicleNoDIV.Visible = true;
+
+                    //Taste/Flavour	
+                    TasteFlavorDIV.Visible = true;
+
+                    //Moisture
+                    MoistureDIV.Visible = true;
+
+                    //Total Ash
+                    AshDIV.Visible = true;
+
+                    //Protein	
+                    ProteinDIV.Visible = true;
+
+                    //Milk Fat
+                    MilkFatDIV.Visible = true;
+
+                    //Titrable Acidity
+                    TitrableAcidityDIV.Visible = true;
+
+                    //SO2
+                    SO2DIV.Visible = true;
+
+                    //Image
+                    FU_MaterialImage_Upldr.Visible = true;
+                    FU_MaterialImage.Visible = true;
+                    break;
+
+                case "Whey Powder":
+
+                    //Product Brand
+                    BrandDIV.Visible = true;
+
+                    // Supplier
+                    SupplierDIV.Visible = true;
+
+                    //Challan No & Date	
+                    ChallanDateDIV.Visible = true;
+                    ChallanNoDIV.Visible = true;
+
+                    //Lot No/ Batch No.
+                    LotNoDIV.Visible = true;
+
+                    //Pkd/Mfg Date	
+                    PkdMfgDIV.Visible = true;
+
+                    //Vehicle No	
+                    VehicleNoDIV.Visible = true;
+
+                    //Taste/Flavour	
+                    TasteFlavorDIV.Visible = true;
+
+                    //pH
+                    PHDIV.Visible = true;
+
+                    //Moisture
+                    MoistureDIV.Visible = true;
+
+                    //Total Ash
+                    AshDIV.Visible = true;
+
+                    //Lactose Content
+                    LactoseDIV.Visible = true;
+
+                    //Protein	
+                    ProteinDIV.Visible = true;
+
+                    //Milk Fat
+                    MilkFatDIV.Visible = true;
+
+                    //Image
+                    FU_MaterialImage_Upldr.Visible = true;
+                    FU_MaterialImage.Visible = true;
+                    break;
+
+                case "Whole Milk Powder":
+
+                    //Product Brand
+                    BrandDIV.Visible = true;
+
+                    // Supplier
+                    SupplierDIV.Visible = true;
+
+                    //Challan No & Date	
+                    ChallanDateDIV.Visible = true;
+                    ChallanNoDIV.Visible = true;
+
+                    //QTY	
+                    QuantityDIV.Visible = true;
+
+                    //Lot No/ Batch No.
+                    LotNoDIV.Visible = true;
+
+                    //Pkd/Mfg Date	
+                    PkdMfgDIV.Visible = true;
+
+
+                    //Colour	
+                    ColorDIV.Visible = true;
+                    ColorRemarksDiv.Visible = true;
+
+                    //Odour/Smell	
+                    SmellDIV.Visible = true;
+
+                    //Appearance	
+                    AppearanceDIV.Visible = true;
+
+                    //Taste/Flavour	
+                    TasteFlavorDIV.Visible = true;
+
+                    //Moisture		
+                    MoistureDIV.Visible = true;
+
+                    //Titrable Acidity	
+                    TitrableAcidityDIV.Visible = true;
+
+                    //SO2	
+                    SO2DIV.Visible = true;
+
+                    //Loss on Drying	
+                    LossOnDryingDIV.Visible = true;
+
+                    //Glucose Content
+                    GlucoseContentDIV.Visible = true;
+
+                    //Image
+                    FU_MaterialImage_Upldr.Visible = true;
+                    FU_MaterialImage.Visible = true;
+                    break;
+
+
+
+                default:
+                    // Optionally handle a default case
+                    break;
+            }
+        }
+
 
         private bool UploadImage1()
         {

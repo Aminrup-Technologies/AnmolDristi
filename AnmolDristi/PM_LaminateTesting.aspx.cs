@@ -70,18 +70,18 @@ namespace AnmolDristi
             }
         }
 
-        public class ValidationCriteria
-        {
-            public string RequiredFieldErrorMessage { get; set; }
-            public string RegularExpressionErrorMessage { get; set; }
-            public string RegularExpression { get; set; }
-            public string RangeErrorMessage { get; set; }
-            public string MinimumValue { get; set; }
-            public string MaximumValue { get; set; }
-            public bool IsRequired { get; set; }
-            public bool IsRegularExpressionRequired { get; set; }
-            public bool IsRangeRequired { get; set; }
-        }
+        //public class ValidationCriteria
+        //{
+        //    public string RequiredFieldErrorMessage { get; set; }
+        //    public string RegularExpressionErrorMessage { get; set; }
+        //    public string RegularExpression { get; set; }
+        //    public string RangeErrorMessage { get; set; }
+        //    public string MinimumValue { get; set; }
+        //    public string MaximumValue { get; set; }
+        //    public bool IsRequired { get; set; }
+        //    public bool IsRegularExpressionRequired { get; set; }
+        //    public bool IsRangeRequired { get; set; }
+        //}
 
 
         protected void DDL_Plant_SelectedIndexChanged(object sender, EventArgs e)
@@ -317,7 +317,7 @@ namespace AnmolDristi
                 {
                     //DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
 
-                    string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
+                    string StandardValueBinder_Error_script = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Error',
                                 text: 'No Records of Standard Value !',
@@ -325,7 +325,7 @@ namespace AnmolDristi
                                 styling: 'bootstrap3'
                             });
                         </script>";
-                    ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
+                    ClientScript.RegisterStartupScript(this.GetType(), "ShowStandardValueBinderErrorNotification", StandardValueBinder_Error_script, false);
                 }
             }
             catch (Exception ex)
