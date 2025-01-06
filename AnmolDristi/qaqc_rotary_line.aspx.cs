@@ -37,6 +37,10 @@ namespace AnmolDristi
                     lbl_docnumber.Text = "ANMOL/DOC/CORQ/QA/02";
                     PlantBinder();
 
+                    Btn_Save.Enabled = true;
+                    btn_rawSubmit.Enabled = false;
+                    btnSubmit.Enabled = false;
+
                     int gridBinderValue = int.Parse(ConfigurationManager.AppSettings["RotaryLineOvenend_GridBinderValue"]);
                     TB_LineNos.Text = gridBinderValue.ToString();
                     TB_OvenNos.Text = gridBinderValue.ToString();
@@ -364,6 +368,8 @@ namespace AnmolDristi
         {
             // Validate and save the data
             SaveData();
+            Btn_Save.Enabled = false;
+            btn_rawSubmit.Enabled = true;
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('rawBiscuts-tab').click();", true);
         }
@@ -539,6 +545,14 @@ namespace AnmolDristi
                         //cmd.Parameters.AddWithValue("@avglinewt", (object)avglinewt ?? DBNull.Value);
                         //cmd.Parameters.AddWithValue("@avggaugevalue", (object)avggaugevalue ?? DBNull.Value);
                         //cmd.Parameters.AddWithValue("@avgweightvalue", (object)avgweightvalue ?? DBNull.Value);
+
+                        cmd.Parameters.AddWithValue("@Panel1_Status", 1);
+                        cmd.Parameters.AddWithValue("@Panel1_Timestamp",DateTime.Now);
+                        cmd.Parameters.AddWithValue("@Panel2_Status", 0);
+                        cmd.Parameters.AddWithValue("@Panel2_Timestamp", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Panel3_Status", 0);
+                        cmd.Parameters.AddWithValue("@Panel3_Timestamp", DBNull.Value);
+
 
                         // Open connection and execute the command
                         conn.Open();
@@ -893,6 +907,9 @@ namespace AnmolDristi
 
                 UpdatelinewtInDatabase(jsonData, averageWeight);
 
+                btnSubmit.Enabled = true;
+
+
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('ovenReport-tab').click();", true);
                 //LineWeights_Grid.Visible = false;
             }
@@ -911,12 +928,14 @@ namespace AnmolDristi
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "UPDATE TRN_RotaryLine_OvenEnd SET linewt = @linewt,avglinewt = @avglinewt WHERE RLWt = @RLWt";
+                    string query = "UPDATE TRN_RotaryLine_OvenEnd SET linewt = @linewt,avglinewt = @avglinewt, Panel2_Status=@Panel2_Status, Panel2_Timestamp=@Panel2_Timestamp WHERE RLWt = @RLWt";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@linewt", jsonData);
                         cmd.Parameters.AddWithValue("@avglinewt", averageWeight);
                         cmd.Parameters.AddWithValue("@RLWt", RLWt);
+                        cmd.Parameters.AddWithValue("@Panel2_Status", 1);
+                        cmd.Parameters.AddWithValue("@Panel2_Timestamp", DateTime.Now);
                         cmd.ExecuteNonQuery();
 
                         btn_rawSubmit.Enabled = false;
@@ -1093,7 +1112,7 @@ namespace AnmolDristi
                 {
                     conn.Open();
 
-                    string query = "UPDATE TRN_RotaryLine_OvenEnd SET gaugevalues = @gaugevalues, avggaugevalue = @avggaugevalue, weightvalue = @weightvalue, avgweightvalue = @avgweightvalue, gaugeandweight = @gaugeandweight WHERE RLWt = @RLWt";
+                    string query = "UPDATE TRN_RotaryLine_OvenEnd SET gaugevalues = @gaugevalues, avggaugevalue = @avggaugevalue, weightvalue = @weightvalue, avgweightvalue = @avgweightvalue, gaugeandweight = @gaugeandweight, Panel3_Status=@Panel3_Status, Panel3_Timestamp=@Panel3_Timestamp WHERE RLWt = @RLWt";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -1103,6 +1122,8 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@avgweightvalue", averageOEWeights);
                         cmd.Parameters.AddWithValue("@gaugeandweight", CombinedJSON);
                         cmd.Parameters.AddWithValue("@RLWt", RLWt);
+                        cmd.Parameters.AddWithValue("@Panel3_Status", 1);
+                        cmd.Parameters.AddWithValue("@Panel3_Timestamp", DateTime.Now);
                         cmd.ExecuteNonQuery();
 
                         btnSubmit.Enabled = false;

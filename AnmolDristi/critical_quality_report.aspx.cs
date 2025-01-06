@@ -1,17 +1,7 @@
 ﻿using AnmolDristi.DAL;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Configuration;
 
 namespace AnmolDristi
@@ -31,7 +21,7 @@ namespace AnmolDristi
                 }
                 else
                 {
-                    lbl_docname.Text = "Critical Incident Report";
+                    lbl_docname.Text = "Incident Report";
                     lbl_docnumber.Text = "ANMOL/DOC/CORP/QA/07";
 
                     PlantBinder();
@@ -87,12 +77,6 @@ namespace AnmolDristi
         }
         private ValidationCriteria GetValidationCriteriaFromDatabase(string fieldName)
         {
-            // Query the database to fetch validation criteria based on the field name
-            // Implement database querying logic here, and return the fetched data
-            // For example:
-            // SELECT * FROM ValidationCriteria WHERE FieldName = fieldName
-
-            // Simulated data for demonstration
             ValidationCriteria criteria = new ValidationCriteria();
             criteria.RequiredFieldErrorMessage = "*";
             criteria.RegularExpressionErrorMessage = "*";

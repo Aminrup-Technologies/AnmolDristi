@@ -88,7 +88,7 @@
         function validateGridView1() {
             var isValid = true;
             var filledRowsCount = 0; // Counter to track filled rows
-            var minimumRequiredRows = 3; // Set the minimum number of required filled rows
+            var minimumRequiredRows = 16; // Set the minimum number of required filled rows
             var gridView = document.getElementById('<%= LineWeights_Grid.ClientID %>');
 
             // Start from 1 to skip the header row
@@ -239,7 +239,7 @@
         function validateGridView() {
             var isValid = true;
             var filledRowsCount = 0; // Counter to track filled rows
-            var minimumRequiredRows = 3; // Set the minimum number of required filled rows
+            var minimumRequiredRows = 16; // Set the minimum number of required filled rows
 
             var gridView = document.getElementById('<%= OvenEnd_GridView.ClientID %>');
 

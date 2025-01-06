@@ -190,6 +190,7 @@
     <Content Include="app_qc_inspectorreport.aspx" />
     <Content Include="bopp_tape.aspx" />
     <Content Include="ccp_checklist.aspx" />
+    <Content Include="CCP_Checklist_detailed.aspx" />
     <Content Include="CorrugatedBoardBoxReport.aspx" />
     <Content Include="Critical_Incident_Detailed.aspx" />
     <Content Include="Critical_Incident_ViewPage.aspx" />
@@ -412,6 +413,13 @@
     </Compile>
     <Compile Include="ccp_checklist.aspx.designer.cs">
       <DependentUpon>ccp_checklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CCP_Checklist_detailed.aspx.cs">
+      <DependentUpon>CCP_Checklist_detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CCP_Checklist_detailed.aspx.designer.cs">
+      <DependentUpon>CCP_Checklist_detailed.aspx</DependentUpon>
     </Compile>
     <Compile Include="CorrugatedBoardBoxReport.aspx.cs">
       <DependentUpon>CorrugatedBoardBoxReport.aspx</DependentUpon>

@@ -26,7 +26,7 @@ namespace AnmolDristi
                 }
                 else
                 {
-                    //lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/05 ";
+                    //lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/05";
                     PlantBinder();
                     loadAlldata();
                 }
@@ -733,7 +733,7 @@ namespace AnmolDristi
             if (e.CommandName == "View")
             {
                 //Add View Details Page for CCP Checklist
-                //Response.Redirect("vw_app_qcireport.aspx?ID=" + dbid + "&VM=1", false);
+                Response.Redirect("CCP_Checklist_detailed.aspx?ID=" + dbid + "&VM=0", false);
                 //Response.Redirect("#", false);
             }
         }
