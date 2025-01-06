@@ -17,25 +17,25 @@
                         </div>
                         <div class="x_content">
                             
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">WIP
+                            <a class="btn btn-app" href="PM_Laminate_Report.aspx">
+                                <span class="badge bg-green">Ok
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Daily Laminate
 
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">WIP
+                            <a class="btn btn-app" href="vm_overwrap.aspx">
+                                <span class="badge bg-green">Ok
                                     <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>HM / PP Bag
 
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">WIP
+                            <a class="btn btn-app" href="CorrugatedBoardBox_View.aspx">
+                                <span class="badge bg-green">Ok
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>CBB Report
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">WIP
+                            <a class="btn btn-app" href="bopp_tape_View.aspx">
+                                <span class="badge bg-green">Ok
                                     <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>BOPP Tape
                             </a>

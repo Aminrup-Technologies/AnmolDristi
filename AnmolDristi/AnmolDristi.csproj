@@ -189,9 +189,15 @@
     <Content Include="apps.aspx" />
     <Content Include="app_qc_inspectorreport.aspx" />
     <Content Include="bopp_tape.aspx" />
+    <Content Include="bopp_tape_approval.aspx" />
+    <Content Include="bopp_tape_Detailed.aspx" />
+    <Content Include="bopp_tape_View.aspx" />
     <Content Include="ccp_checklist.aspx" />
     <Content Include="CCP_Checklist_detailed.aspx" />
     <Content Include="CorrugatedBoardBoxReport.aspx" />
+    <Content Include="CorrugatedBoardBox_Approval.aspx" />
+    <Content Include="CorrugatedBoardBox_Detailed.aspx" />
+    <Content Include="CorrugatedBoardBox_View.aspx" />
     <Content Include="Critical_Incident_Detailed.aspx" />
     <Content Include="Critical_Incident_ViewPage.aspx" />
     <Content Include="critical_quality_report.aspx" />
@@ -207,7 +213,12 @@
     <Content Include="leak_test.aspx" />
     <Content Include="New_User.aspx" />
     <Content Include="Oven_Report_Detailed.aspx" />
+    <Content Include="overwrap_approval.aspx" />
+    <Content Include="overwrap_Detailed.aspx" />
     <Content Include="PM_LaminateTesting.aspx" />
+    <Content Include="PM_Laminate_Approval.aspx" />
+    <Content Include="PM_Laminate_FinalApproval.aspx" />
+    <Content Include="PM_Laminate_Report.aspx" />
     <Content Include="preDispatchVM.aspx" />
     <Content Include="Pre_Dispatch_Detailed.aspx" />
     <Content Include="Process_Approval.aspx" />
@@ -241,6 +252,7 @@
     <Content Include="viewusers.aspx" />
     <Content Include="vm_ccp_checklist.aspx" />
     <Content Include="vm_leak_test.aspx" />
+    <Content Include="vm_overwrap.aspx" />
     <Content Include="vw_app_qcireport.aspx" />
     <Content Include="WebData\anmolaing.png" />
     <Content Include="WebData\anmolgurukul.png" />
@@ -407,6 +419,27 @@
     <Compile Include="bopp_tape.aspx.designer.cs">
       <DependentUpon>bopp_tape.aspx</DependentUpon>
     </Compile>
+    <Compile Include="bopp_tape_approval.aspx.cs">
+      <DependentUpon>bopp_tape_approval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="bopp_tape_approval.aspx.designer.cs">
+      <DependentUpon>bopp_tape_approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="bopp_tape_Detailed.aspx.cs">
+      <DependentUpon>bopp_tape_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="bopp_tape_Detailed.aspx.designer.cs">
+      <DependentUpon>bopp_tape_Detailed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="bopp_tape_View.aspx.cs">
+      <DependentUpon>bopp_tape_View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="bopp_tape_View.aspx.designer.cs">
+      <DependentUpon>bopp_tape_View.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ccp_checklist.aspx.cs">
       <DependentUpon>ccp_checklist.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -427,6 +460,27 @@
     </Compile>
     <Compile Include="CorrugatedBoardBoxReport.aspx.designer.cs">
       <DependentUpon>CorrugatedBoardBoxReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CorrugatedBoardBox_Approval.aspx.cs">
+      <DependentUpon>CorrugatedBoardBox_Approval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CorrugatedBoardBox_Approval.aspx.designer.cs">
+      <DependentUpon>CorrugatedBoardBox_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CorrugatedBoardBox_Detailed.aspx.cs">
+      <DependentUpon>CorrugatedBoardBox_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CorrugatedBoardBox_Detailed.aspx.designer.cs">
+      <DependentUpon>CorrugatedBoardBox_Detailed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CorrugatedBoardBox_View.aspx.cs">
+      <DependentUpon>CorrugatedBoardBox_View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CorrugatedBoardBox_View.aspx.designer.cs">
+      <DependentUpon>CorrugatedBoardBox_View.aspx</DependentUpon>
     </Compile>
     <Compile Include="Critical_Incident_Detailed.aspx.cs">
       <DependentUpon>Critical_Incident_Detailed.aspx</DependentUpon>
@@ -552,12 +606,47 @@
     <Compile Include="Oven_Report_Detailed.aspx.designer.cs">
       <DependentUpon>Oven_Report_Detailed.aspx</DependentUpon>
     </Compile>
+    <Compile Include="overwrap_approval.aspx.cs">
+      <DependentUpon>overwrap_approval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="overwrap_approval.aspx.designer.cs">
+      <DependentUpon>overwrap_approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="overwrap_Detailed.aspx.cs">
+      <DependentUpon>overwrap_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="overwrap_Detailed.aspx.designer.cs">
+      <DependentUpon>overwrap_Detailed.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PM_LaminateTesting.aspx.cs">
       <DependentUpon>PM_LaminateTesting.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PM_LaminateTesting.aspx.designer.cs">
       <DependentUpon>PM_LaminateTesting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PM_Laminate_Approval.aspx.cs">
+      <DependentUpon>PM_Laminate_Approval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PM_Laminate_Approval.aspx.designer.cs">
+      <DependentUpon>PM_Laminate_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PM_Laminate_FinalApproval.aspx.cs">
+      <DependentUpon>PM_Laminate_FinalApproval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PM_Laminate_FinalApproval.aspx.designer.cs">
+      <DependentUpon>PM_Laminate_FinalApproval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PM_Laminate_Report.aspx.cs">
+      <DependentUpon>PM_Laminate_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PM_Laminate_Report.aspx.designer.cs">
+      <DependentUpon>PM_Laminate_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="preDispatchVM.aspx.cs">
       <DependentUpon>preDispatchVM.aspx</DependentUpon>
@@ -808,6 +897,13 @@
     </Compile>
     <Compile Include="vm_leak_test.aspx.designer.cs">
       <DependentUpon>vm_leak_test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vm_overwrap.aspx.cs">
+      <DependentUpon>vm_overwrap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vm_overwrap.aspx.designer.cs">
+      <DependentUpon>vm_overwrap.aspx</DependentUpon>
     </Compile>
     <Compile Include="vw_app_qcireport.aspx.cs">
       <DependentUpon>vw_app_qcireport.aspx</DependentUpon>

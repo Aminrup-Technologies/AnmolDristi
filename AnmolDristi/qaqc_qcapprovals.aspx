@@ -17,33 +17,33 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <a class="btn btn-app" href="PM_LaminateTesting.aspx">
-                                <span class="badge bg-green">OK
+                            <a class="btn btn-app" href="PM_Laminate_Approval.aspx">
+                                <span class="badge bg-green">Ok
                                     <asp:label id="Label1" runat="server" text="0" visible="false"></asp:label>
                                 </span>
                                 <i class="fa fa-edit"></i>Daily Laminate
 
                             </a>
-                            <a class="btn btn-app" href="qaqc_overwrap.aspx">
-                                <span class="badge bg-green">OK
+                            <a class="btn btn-app" href="overwrap_approval.aspx">
+                                <span class="badge bg-green">Ok
                                     <asp:label id="Label2" runat="server" text="0" visible="false"></asp:label>
                                 </span>
                                 <i class="fa fa-edit"></i>HM / PP Bag
                             </a>
-                            <a class="btn btn-app" href="CorrugatedBoardBoxReport.aspx">
-                                <span class="badge bg-green">OK
+                            <a class="btn btn-app" href="CorrugatedBoardBox_Approval.aspx">
+                                <span class="badge bg-green">Ok
                                     <asp:label id="Label3" runat="server" text="0" visible="false"></asp:label>
                                 </span>
                                 <i class="fa fa-edit"></i>CBB Report
                             </a>
-                            <a class="btn btn-app" href="bopp_tape.aspx">
-                                <span class="badge bg-green">OK
+                            <a class="btn btn-app" href="bopp_tape_approval.aspx">
+                                <span class="badge bg-green">Ok
                                     <asp:label id="Label4" runat="server" text="0" visible="false"></asp:label>
                                 </span>
                                 <i class="fa fa-edit"></i>BOPP Tape
                             </a>
-                            <a class="btn btn-app" href="PVC_Tray.aspx">
-                                <span class="badge bg-green">OK
+                            <a class="btn btn-app" href="#">
+                                <span class="badge bg-warning">WIP
                                     <asp:label id="Label5" runat="server" text="0" visible="false"></asp:label>
                                 </span>
                                 <i class="fa fa-edit"></i>PVC Tray
