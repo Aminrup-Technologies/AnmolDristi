@@ -146,6 +146,7 @@
     <Content Include="prod_misc.aspx" />
     <Content Include="prod_misc_rpts.aspx" />
     <Content Include="PVC_Tray.aspx" />
+    <Content Include="PVC_Tray_ViewPage.aspx" />
     <Content Include="qaqc_add_users.aspx" />
     <Content Include="qaqc_leaktest_rev1.aspx" />
     <Content Include="qaqc_mst_sku.aspx" />
@@ -502,6 +503,13 @@
     <Compile Include="PVC_Tray.aspx.designer.cs">
       <DependentUpon>PVC_Tray.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PVC_Tray_ViewPage.aspx.cs">
+      <DependentUpon>PVC_Tray_ViewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PVC_Tray_ViewPage.aspx.designer.cs">
+      <DependentUpon>PVC_Tray_ViewPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="QAProcessCheckingDataAcess.cs" />
     <Compile Include="qaqc_add_users.aspx.cs">
       <DependentUpon>qaqc_add_users.aspx</DependentUpon>
@@ -711,9 +719,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Service References\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
