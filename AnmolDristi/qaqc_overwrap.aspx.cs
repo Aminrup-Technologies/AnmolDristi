@@ -28,7 +28,7 @@ namespace AnmolDristi
                     lbl_docname.Text = "HM Bag/ PP Bag Report";
                     lbl_docnumber.Text = " ANMOL/DOC/CORP/QC/PKNG/03";
                     PlantBinder();
-                   
+
                 }
 
 
@@ -78,7 +78,7 @@ namespace AnmolDristi
             public bool IsRangeRequired { get; set; }
         }
 
-        
+
         protected void DDL_Plant_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_Plant.SelectedIndex != 0)
@@ -364,107 +364,105 @@ namespace AnmolDristi
         //}
         protected void btn_overwrap_submit_Click(object sender, EventArgs e)
         {
-            if (Page.IsValid)
+            // Define connection string
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            // Generate unique OVRID
+            string ovrId = GenerateUnique();  // Use the function to generate unique ID
+                                              //int formID = Convert.ToInt32(hdn_formid.Value.ToString());  // Get form ID
+
+            // Retrieve form values
+            string plantName = DDL_Plant.SelectedValue;
+            string productBrand = TB_MatVarietyName.Text.ToString();
+            string supplierName = TB_SupplierName.Text;
+            string challanNo = TB_ChallanNo.Text;
+            DateTime challanDate = DateTime.Parse(TB_ChallanDate.Text).Date;
+            string lotGateNo = TB_LotGateNo.Text;
+            string vehicleNo = TB_VehicleNo.Text;
+            //decimal sealingValue = Convert.ToDecimal(TB_SealingValue.Text);
+            string sealingValue = TB_SealingValue.Text.ToString();
+            decimal dimensionStd = Convert.ToDecimal(TB_DimensionStd.Text);
+            decimal dimensionObs = Convert.ToDecimal(TB_DimensionObs.Text);
+            decimal gmsStd = Convert.ToDecimal(TB_GMS_Std.Text);
+            decimal gsmObs = Convert.ToDecimal(TB_GSM_Obs.Text);
+            string remarks = TB_Remarks.Text;
+
+            // Additional remarks
+            string remarkForDimensionStd = TB_Remark_Dimension.Text;
+            Lbl_Remark_GSM.AssociatedControlID = TB_Remark_GSM.Text;
+
+            // Submission data
+            DateTime submittedDate = DateTime.Now.Date;
+            TimeSpan submittedTime = DateTime.Now.TimeOfDay;
+            int submittedById = Convert.ToInt32(Session["USERID"].ToString());  // Get user ID from session
+            string submittedByEmployeeCode = Session["WORKMAN"].ToString();  // Get employee code from session
+
+            // Approver details
+            string approver1EmployeeCode = Approver1CodeLabel.Text;
+            string approver2EmployeeCode = Approver2CodeLabel.Text;
+            string dottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text;
+
+            try
             {
-                // Define connection string
-                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-                // Generate unique OVRID
-                string ovrId = GenerateUnique();  // Use the function to generate unique ID
-                //int formID = Convert.ToInt32(hdn_formid.Value.ToString());  // Get form ID
-
-                // Retrieve form values
-                string plantName = DDL_Plant.SelectedValue;
-                string productBrand = TB_MatVarietyName.Text.ToString();
-                string supplierName = TB_SupplierName.Text;
-                string challanNo = TB_ChallanNo.Text;
-                DateTime challanDate = DateTime.Parse(TB_ChallanDate.Text).Date;
-                string lotGateNo = TB_LotGateNo.Text;
-                string vehicleNo = TB_VehicleNo.Text;
-                //decimal sealingValue = Convert.ToDecimal(TB_SealingValue.Text);
-                string sealingValue = TB_SealingValue.Text.ToString();
-                decimal dimensionStd = Convert.ToDecimal(TB_DimensionStd.Text);
-                decimal dimensionObs = Convert.ToDecimal(TB_DimensionObs.Text);
-                decimal gmsStd = Convert.ToDecimal(TB_GMS_Std.Text);
-                decimal gsmObs = Convert.ToDecimal(TB_GSM_Obs.Text);
-                string remarks = TB_Remarks.Text;
-
-                // Additional remarks
-                string remarkForDimensionStd = TB_Remark_Dimension.Text;
-                Lbl_Remark_GSM.AssociatedControlID = TB_Remark_GSM.Text;
-
-                // Submission data
-                DateTime submittedDate = DateTime.Now.Date;
-                TimeSpan submittedTime = DateTime.Now.TimeOfDay;
-                int submittedById = Convert.ToInt32(Session["USERID"].ToString());  // Get user ID from session
-                string submittedByEmployeeCode = Session["WORKMAN"].ToString();  // Get employee code from session
-
-                // Approver details
-                string approver1EmployeeCode = Approver1CodeLabel.Text;
-                string approver2EmployeeCode = Approver2CodeLabel.Text;
-                string dottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text;
-
-                try
+                // Connect to the database and execute stored procedure
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    // Connect to the database and execute stored procedure
-                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_OVERWRAP", conn))
                     {
-                        conn.Open();
-                        using (SqlCommand cmd = new SqlCommand("SP_OVERWRAP", conn))
-                        {
-                            cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                            // Add parameters
-                            cmd.Parameters.AddWithValue("@OVRID", ovrId);
-                            cmd.Parameters.AddWithValue("@FormID", 11);
-                            cmd.Parameters.AddWithValue("@SubmittedDate", submittedDate);
-                            cmd.Parameters.AddWithValue("@SubmittedTime", submittedTime);
-                            cmd.Parameters.AddWithValue("@SubmittedById", submittedById);
-                            cmd.Parameters.AddWithValue("@SubmittedByEmployeeCode", submittedByEmployeeCode);
+                        // Add parameters
+                        cmd.Parameters.AddWithValue("@OVRID", ovrId);
+                        cmd.Parameters.AddWithValue("@FormID", 11);
+                        cmd.Parameters.AddWithValue("@SubmittedDate", submittedDate);
+                        cmd.Parameters.AddWithValue("@SubmittedTime", submittedTime);
+                        cmd.Parameters.AddWithValue("@SubmittedById", submittedById);
+                        cmd.Parameters.AddWithValue("@SubmittedByEmployeeCode", submittedByEmployeeCode);
 
-                            // Add form values
-                            cmd.Parameters.AddWithValue("@PlantName", plantName);
-                            cmd.Parameters.AddWithValue("@ProductBrand", productBrand);
-                            cmd.Parameters.AddWithValue("@SupplierName", supplierName);
-                            cmd.Parameters.AddWithValue("@ChallanNo", challanNo);
-                            cmd.Parameters.AddWithValue("@ChallanDate", challanDate);
-                            cmd.Parameters.AddWithValue("@LotGateNo", lotGateNo);
-                            cmd.Parameters.AddWithValue("@VehicleNo", vehicleNo);
-                            cmd.Parameters.AddWithValue("@SealingValue", sealingValue);
-                            cmd.Parameters.AddWithValue("@DimensionStd", dimensionStd);
-                            cmd.Parameters.AddWithValue("@DimensionObs", dimensionObs);
-                            cmd.Parameters.AddWithValue("@GMS_Std", gmsStd);
-                            cmd.Parameters.AddWithValue("@GSM_Obs", gsmObs);
-                            cmd.Parameters.AddWithValue("@Remarks", remarks);
-                            cmd.Parameters.AddWithValue("@RemarkForDimensionStd", remarkForDimensionStd);
-                            cmd.Parameters.AddWithValue("@RemarkForGSM_Std", Lbl_Remark_GSM.AssociatedControlID);
+                        // Add form values
+                        cmd.Parameters.AddWithValue("@PlantName", plantName);
+                        cmd.Parameters.AddWithValue("@ProductBrand", productBrand);
+                        cmd.Parameters.AddWithValue("@SupplierName", supplierName);
+                        cmd.Parameters.AddWithValue("@ChallanNo", challanNo);
+                        cmd.Parameters.AddWithValue("@ChallanDate", challanDate);
+                        cmd.Parameters.AddWithValue("@LotGateNo", lotGateNo);
+                        cmd.Parameters.AddWithValue("@VehicleNo", vehicleNo);
+                        cmd.Parameters.AddWithValue("@SealingValue", sealingValue);
+                        cmd.Parameters.AddWithValue("@DimensionStd", dimensionStd);
+                        cmd.Parameters.AddWithValue("@DimensionObs", dimensionObs);
+                        cmd.Parameters.AddWithValue("@GMS_Std", gmsStd);
+                        cmd.Parameters.AddWithValue("@GSM_Obs", gsmObs);
+                        cmd.Parameters.AddWithValue("@Remarks", remarks);
+                        cmd.Parameters.AddWithValue("@RemarkForDimensionStd", remarkForDimensionStd);
+                        cmd.Parameters.AddWithValue("@RemarkForGSM_Std", Lbl_Remark_GSM.AssociatedControlID);
 
-                            // Default status and approvers
-                            cmd.Parameters.AddWithValue("@Approver1_Status", 0); // Default status for Approvers
-                            cmd.Parameters.AddWithValue("@Approver2_Status", 0); // Default status for Approvers
-                            cmd.Parameters.AddWithValue("@DottedApprover_Status", 0); // Default status for Dotted Line Approver
-                            cmd.Parameters.AddWithValue("@ViewMode", 1); // Default View Mode
-                            cmd.Parameters.AddWithValue("@DeleteMode", 0); // Default Delete Mode
+                        // Default status and approvers
+                        cmd.Parameters.AddWithValue("@Approver1_Status", 0); // Default status for Approvers
+                        cmd.Parameters.AddWithValue("@Approver2_Status", 0); // Default status for Approvers
+                        cmd.Parameters.AddWithValue("@DottedApprover_Status", 0); // Default status for Dotted Line Approver
+                        cmd.Parameters.AddWithValue("@ViewMode", 1); // Default View Mode
+                        cmd.Parameters.AddWithValue("@DeleteMode", 0); // Default Delete Mode
 
-                            // Approver details
-                            cmd.Parameters.AddWithValue("@Approver1EmployeeCode", approver1EmployeeCode);
-                            cmd.Parameters.AddWithValue("@Approver2EmployeeCode", approver2EmployeeCode);
-                            cmd.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", dottedLineApproverEmployeeCode);
+                        // Approver details
+                        cmd.Parameters.AddWithValue("@Approver1EmployeeCode", approver1EmployeeCode);
+                        cmd.Parameters.AddWithValue("@Approver2EmployeeCode", approver2EmployeeCode);
+                        cmd.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", dottedLineApproverEmployeeCode);
 
-                            // Execute the stored procedure
-                            cmd.ExecuteNonQuery();
-                        }
-                        conn.Close();
+                        // Execute the stored procedure
+                        cmd.ExecuteNonQuery();
                     }
+                    conn.Close();
+                }
 
-                    bool isReadOnly = true; // Set to false to make inputs editable
-                    SetReadOnlyMode(isReadOnly);
+                bool isReadOnly = true; // Set to false to make inputs editable
+                SetReadOnlyMode(isReadOnly);
 
-                    btn_overwrap_submit.Enabled = false;
-                    btn_overwrap_submit.Text = "SAVED";
-                    btn_overwrap_submit.CssClass = "btn btn-sm btn-success";
+                btn_overwrap_submit.Enabled = false;
+                btn_overwrap_submit.Text = "SAVED";
+                btn_overwrap_submit.CssClass = "btn btn-sm btn-success";
 
-                    string Data_SuccessScript = @"<script type='text/javascript'>
+                string Data_SuccessScript = @"<script type='text/javascript'>
                                 new PNotify({
                                     title: 'Data Success',
                                     text: 'Recorded Successfully!!',
@@ -473,28 +471,27 @@ namespace AnmolDristi
                                 });
                             </script>";
 
-                    //// RegisterStartupScript adds the JavaScript code to the page
-                    ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
-                    // Success message
-                    //lbl_overwrap.Text = "Data saved successfully!";
-                }
-                catch (Exception ex)
-                {
-                    string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
-                    string errorScript = "<script type='text/javascript'>\n" +
-                                         $"new PNotify({{\n" +
-                                         "    title: 'Error',\n" +
-                                         $"    text: '{errorMessage}',\n" +
-                                         "    type: 'error',\n" +
-                                         "    styling: 'bootstrap3'\n" +
-                                         "});\n" +
-                                         "</script>";
-                    ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
-                    // Handle exceptions
-                    //string errorMessage = ex.Message.Replace("'", "\\'");
-                    //string errorScript = $"<script type='text/javascript'>new PNotify({{title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3'}});</script>";
-                    //ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
-                }
+                //// RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+                // Success message
+                //lbl_overwrap.Text = "Data saved successfully!";
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.Message.Replace("'", "\\'"); // Escape single quotes in the error message
+                string errorScript = "<script type='text/javascript'>\n" +
+                                     $"new PNotify({{\n" +
+                                     "    title: 'Error',\n" +
+                                     $"    text: '{errorMessage}',\n" +
+                                     "    type: 'error',\n" +
+                                     "    styling: 'bootstrap3'\n" +
+                                     "});\n" +
+                                     "</script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+                // Handle exceptions
+                //string errorMessage = ex.Message.Replace("'", "\\'");
+                //string errorScript = $"<script type='text/javascript'>new PNotify({{title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3'}});</script>";
+                //ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
             }
         }
 
@@ -559,6 +556,6 @@ namespace AnmolDristi
             Response.Redirect("qaqc_overwrap.aspx");
         }
 
-       
+
     }
 }

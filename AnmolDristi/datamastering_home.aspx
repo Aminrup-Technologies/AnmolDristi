@@ -191,6 +191,11 @@
                                     <asp:Label ID="Label15" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>QCI
                             </a>
+                            <a class="btn btn-app" href="aata_maida_frmctrl.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:Label ID="Label22" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>RM-0
+                            </a>
                         </div>
                     </div>
                 </div>

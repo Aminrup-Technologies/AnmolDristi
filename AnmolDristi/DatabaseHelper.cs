@@ -204,6 +204,36 @@ namespace AnmolDristi
             ddl.Items.Insert(0, new ListItem("Select", "0"));
         }
 
+        public static DataTable GetBrandFieldsControlByMaterialIdAndPlantId(int materialId, int brandId)
+        {
+            DataTable dataTable = new DataTable();
+
+            // Create a SqlConnection
+            using (SqlConnection connection = GetConnection())
+            {
+                // Open the connection
+
+                // Create a SqlCommand for the stored procedure
+                using (SqlCommand command = new SqlCommand("GetRMFieldsControlByPlantId", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add parameters
+                    command.Parameters.AddWithValue("@material_id", materialId);
+                    command.Parameters.AddWithValue("@plant_id", brandId);
+
+                    // Execute the SqlCommand and load results into the DataTable
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        dataTable.Load(reader);
+                    }
+                }
+                connection.Close();
+            }
+
+            return dataTable;
+        }
+
         public static void BindDropDownList(string query, DropDownList ddl, string textField, string valueField, SqlParameter[] parameters, out bool recordsBound)
         {
             // Initialize the flag

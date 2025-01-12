@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="EditEmployee.aspx.cs" Inherits="AnmolDristi.EditEmployee" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .remove-border {
@@ -178,7 +179,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_Mobile" runat="server" AssociatedControlID="TB_Mobile" Text="Mobile :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                     <asp:RequiredFieldValidator ID="RFV_TB_Mobile" runat="server" ErrorMessage="Mobile is required " ControlToValidate="TB_Mobile" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Mobile" runat="server" ErrorMessage="Mobile is required " ControlToValidate="TB_Mobile" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_Mobile" runat="server" ControlToValidate="TB_Mobile" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Not correct format (no. should start from 6-9)" ValidationExpression="^[6-9][0-9]{9}$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_Mobile" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Mobile no."></asp:TextBox>
@@ -202,13 +203,18 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_Password" runat="server" AssociatedControlID="TB_Password" Text="Password :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                     <asp:RequiredFieldValidator ID="RFV_TB_Password" runat="server" ErrorMessage="Mobile is required " ControlToValidate="TB_Password" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_Password" runat="server" ControlToValidate="TB_Password" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Not correct format (no. should start from 6-9)" ValidationExpression="^[6-9][0-9]{9}$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Password" runat="server" ErrorMessage="Password is required" ControlToValidate="TB_Password" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red">
+                                    </asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Password" runat="server" ControlToValidate="TB_Password" ValidationGroup="Submit" ForeColor="Red"
+                                        ErrorMessage="Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character." ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                                        Display="Dynamic">
+                                    </asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Password" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Mobile no."></asp:TextBox>
+                                        <asp:TextBox ID="TB_Password" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter your password"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
 
                             <%--Button--%>
                             <div class="col-md-3">
