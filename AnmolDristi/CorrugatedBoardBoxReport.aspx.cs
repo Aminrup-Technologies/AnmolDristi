@@ -142,7 +142,7 @@ namespace AnmolDristi
             {
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
                 StandardValueBinder(selectedProductBrandValue);
-
+                BrandSKUBinder(selectedProductBrandValue);
                 System.Data.DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
 
 
@@ -190,6 +190,31 @@ namespace AnmolDristi
                     });
                 </script>";
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowSKUInvalidErrorNotification", DDL_ProductBrand_Error_script, false);
+            }
+        }
+
+        private void BrandSKUBinder(string selectedProductBrandValue)
+        {
+            string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue and ViewMode=1 order by SKUId";
+            string textField = "SKU_name";
+            string valueField = "SKUId";
+
+            bool recordsBound;
+            DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedProductBrandValue), out recordsBound);
+
+            if (!recordsBound)
+            {
+                DatabaseHelper.BindWithDefaultNoRecords(DDL_BrandSKU);
+
+                string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Error',
+                                text: 'No Records Found!',
+                                type: 'warning',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
             }
         }
 
@@ -287,8 +312,8 @@ namespace AnmolDristi
             string cbbId = GenerateUniqueCBBID();
             DateTime submittedDate = DateTime.Now.Date;
             TimeSpan submittedTime = DateTime.Now.TimeOfDay;
-          // int submittedById = Convert.ToInt32(Session["USERID"]);
-          // string submittedByEmployeeCode = Session["WORKMAN"].ToString();
+              // int submittedById = Convert.ToInt32(Session["USERID"]);
+              // string submittedByEmployeeCode = Session["WORKMAN"].ToString();
 
             string plantName = DDL_Plant.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue;
@@ -314,10 +339,15 @@ namespace AnmolDristi
             decimal gsmObs = Convert.ToDecimal(TB_GSMObs.Text);
             string remarkForGsmStd = TB_Remark_GSMStd.Text;
 
+            //Below remarks fields are added on 14-Jan-2025
             decimal bsKgPerCm2 = Convert.ToDecimal(TB_BurstingStrength.Text);
+            string bsremarks = TB_Remarks_BurstingStrength.Text;
             decimal compStrength = Convert.ToDecimal(TB_CompressionStrength.Text);
+            string csremarks = TB_Remarks_CompressionStrength.Text;
             decimal flutePercentage = Convert.ToDecimal(TB_FlutePercent.Text);
+            string fluteremarks = TB_Remarks_FlutePercent.Text;
             decimal moisturePercentage = Convert.ToDecimal(TB_MoisturePercent.Text);
+            string moistremarks = TB_Remarks_MoisturePercent.Text;
             string remarks = TB_Remarks.Text;
 
             string approver1EmployeeCode = Approver1CodeLabel.Text;
@@ -360,9 +390,13 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@RemarkForGSM_Std", remarkForGsmStd);
                         command.Parameters.AddWithValue("@GSM_Obs", gsmObs);
                         command.Parameters.AddWithValue("@BS_KgPerCm2", bsKgPerCm2);
+                        command.Parameters.AddWithValue("@BS_Remarks", bsremarks);
                         command.Parameters.AddWithValue("@Comp_Strength", compStrength);
+                        command.Parameters.AddWithValue("@Comp_Remarks", csremarks);
                         command.Parameters.AddWithValue("@Flute_Percentage", flutePercentage);
+                        command.Parameters.AddWithValue("@Flute_Remarks", fluteremarks);
                         command.Parameters.AddWithValue("@Moisture_Percentage", moisturePercentage);
+                        command.Parameters.AddWithValue("@Moisture_Remarks", moistremarks);
                         command.Parameters.AddWithValue("@Remarks", remarks);
                         command.Parameters.AddWithValue("@Approver1EmployeeCode", approver1EmployeeCode);
                         command.Parameters.AddWithValue("@Approver2EmployeeCode", approver2EmployeeCode);

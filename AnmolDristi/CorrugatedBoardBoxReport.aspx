@@ -51,6 +51,49 @@
             text-align: center;
         }
     </style>
+
+    <script type="text/javascript">
+        function validateRange(min, max, remarksDivId) {
+            var inputValue = parseFloat(document.getElementById('<%=TB_BurstingStrength.ClientID%>').value);
+            var remarksDiv = document.getElementById(remarksDivId);
+            if (!isNaN(inputValue) && inputValue !== "" && (inputValue < min || inputValue > max)) {
+                remarksDiv.style.display = "block";
+            } else {
+                remarksDiv.style.display = "none";
+            }
+        }
+
+        function validateRange2(min, max, remarksDivId) {
+            var inputValue = parseFloat(document.getElementById('<%=TB_CompressionStrength.ClientID%>').value);
+            var remarksDiv = document.getElementById(remarksDivId);
+            if (!isNaN(inputValue) && inputValue !== "" && (inputValue < min || inputValue > max)) {
+                remarksDiv.style.display = "block";
+            } else {
+                remarksDiv.style.display = "none";
+            }
+        }
+
+        function validateRange3(min, max, remarksDivId) {
+            var inputValue = parseFloat(document.getElementById('<%=TB_FlutePercent.ClientID%>').value);
+            var remarksDiv = document.getElementById(remarksDivId);
+            if (!isNaN(inputValue) && inputValue !== "" && (inputValue < min || inputValue > max)) {
+                remarksDiv.style.display = "block";
+            } else {
+                remarksDiv.style.display = "none";
+            }
+        }
+
+        function validateRange4(min, max, remarksDivId) {
+            var inputValue = parseFloat(document.getElementById('<%=TB_MoisturePercent.ClientID%>').value);
+            var remarksDiv = document.getElementById(remarksDivId);
+            if (!isNaN(inputValue) && inputValue !== "" && (inputValue < min || inputValue > max)) {
+                remarksDiv.style.display = "block";
+            } else {
+                remarksDiv.style.display = "none";
+            }
+        }
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:HiddenField ID="hdn_formid" runat="server" />
@@ -92,6 +135,17 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Label6" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_DDL_BrandSKU" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_BrandSKU" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <div class="input-group-sm">
+                                        <asp:DropDownList ID="DDL_BrandSKU" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_SupplierName" runat="server" AssociatedControlID="TB_SupplierName" Text="Supplier Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -159,7 +213,7 @@
 
                                     <!-- Input TextBox for Dimension L (in mm) -->
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionStdL" runat="server" CssClass="form-control form-control-sm rounded" 
+                                        <asp:TextBox ID="TB_DimensionStdL" runat="server" CssClass="form-control form-control-sm rounded"
                                             Placeholder="Enter Length in mm" OnKeyUp="validateDimensionL()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
@@ -185,22 +239,22 @@
                                     // Get the value of the Dimension L input field
                                     var dimensionLValue = parseFloat(document.getElementById('<%= TB_DimensionStdL.ClientID %>').value);
 
-                                                                    // Get the remark section element for Dimension L
-                                                                    var remarkSectionL = document.getElementById("remarkSectionL");
+                                    // Get the remark section element for Dimension L
+                                    var remarkSectionL = document.getElementById("remarkSectionL");
 
-                                                                    // Valid range for Dimension L: 0 to 10000mm (as specified in the range validator)
-                                                                    var lowerLimitL = 0;
-                                                                    var upperLimitL = 10000;
+                                    // Valid range for Dimension L: 0 to 10000mm (as specified in the range validator)
+                                    var lowerLimitL = 0;
+                                    var upperLimitL = 10000;
 
-                                                                    // Check if the Dimension L value is outside the valid range
-                                                                    if (isNaN(dimensionLValue) || dimensionLValue < lowerLimitL || dimensionLValue > upperLimitL) {
-                                                                        // Show the remark section if the value is outside the valid range
-                                                                        remarkSectionL.style.display = "block";
-                                                                    } else {
-                                                                        // Hide the remark section if the value is within the valid range
-                                                                        remarkSectionL.style.display = "none";
-                                                                    }
-                                                                }
+                                    // Check if the Dimension L value is outside the valid range
+                                    if (isNaN(dimensionLValue) || dimensionLValue < lowerLimitL || dimensionLValue > upperLimitL) {
+                                        // Show the remark section if the value is outside the valid range
+                                        remarkSectionL.style.display = "block";
+                                    } else {
+                                        // Hide the remark section if the value is within the valid range
+                                        remarkSectionL.style.display = "none";
+                                    }
+                                }
                                                               </script>
 
                             <div class="col-md-3">
@@ -245,22 +299,22 @@
                                     // Get the value of the Dimension W input field
                                     var dimensionWValue = parseFloat(document.getElementById('<%= TB_DimensionStdW.ClientID %>').value);
 
-                                                                    // Get the remark section element for Dimension W
-                                                                    var remarkSectionW = document.getElementById("remarkSectionW");
+                                    // Get the remark section element for Dimension W
+                                    var remarkSectionW = document.getElementById("remarkSectionW");
 
-                                                                    // Valid range for Dimension W: 0 to 10000mm (as specified in the range validator)
-                                                                    var lowerLimitW = 0;
-                                                                    var upperLimitW = 10000;
+                                    // Valid range for Dimension W: 0 to 10000mm (as specified in the range validator)
+                                    var lowerLimitW = 0;
+                                    var upperLimitW = 10000;
 
-                                                                    // Check if the Dimension W value is outside the valid range
-                                                                    if (isNaN(dimensionWValue) || dimensionWValue < lowerLimitW || dimensionWValue > upperLimitW) {
-                                                                        // Show the remark section if the value is outside the valid range
-                                                                        remarkSectionW.style.display = "block";
-                                                                    } else {
-                                                                        // Hide the remark section if the value is within the valid range
-                                                                        remarkSectionW.style.display = "none";
-                                                                    }
-                                                                }
+                                    // Check if the Dimension W value is outside the valid range
+                                    if (isNaN(dimensionWValue) || dimensionWValue < lowerLimitW || dimensionWValue > upperLimitW) {
+                                        // Show the remark section if the value is outside the valid range
+                                        remarkSectionW.style.display = "block";
+                                    } else {
+                                        // Hide the remark section if the value is within the valid range
+                                        remarkSectionW.style.display = "none";
+                                    }
+                                }
                             </script>
 
 
@@ -280,7 +334,7 @@
 
                                     <!-- Input TextBox for Dimension H (in mm) -->
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionStdH" runat="server" CssClass="form-control form-control-sm rounded" 
+                                        <asp:TextBox ID="TB_DimensionStdH" runat="server" CssClass="form-control form-control-sm rounded"
                                             Placeholder="Enter Height in mm" OnKeyUp="validateDimensionH()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
@@ -306,22 +360,22 @@
                                     // Get the value of the Dimension H input field
                                     var dimensionHValue = parseFloat(document.getElementById('<%= TB_DimensionStdH.ClientID %>').value);
 
-                                                                    // Get the remark section element for Dimension H
-                                                                    var remarkSectionH = document.getElementById("remarkSectionH");
+                                    // Get the remark section element for Dimension H
+                                    var remarkSectionH = document.getElementById("remarkSectionH");
 
-                                                                    // Valid range for Dimension H: 0 to 10000mm (as specified in the range validator)
-                                                                    var lowerLimitH = 0;
-                                                                    var upperLimitH = 10000;
+                                    // Valid range for Dimension H: 0 to 10000mm (as specified in the range validator)
+                                    var lowerLimitH = 0;
+                                    var upperLimitH = 10000;
 
-                                                                    // Check if the Dimension H value is outside the valid range
-                                                                    if (isNaN(dimensionHValue) || dimensionHValue < lowerLimitH || dimensionHValue > upperLimitH) {
-                                                                        // Show the remark section if the value is outside the valid range
-                                                                        remarkSectionH.style.display = "block";
-                                                                    } else {
-                                                                        // Hide the remark section if the value is within the valid range
-                                                                        remarkSectionH.style.display = "none";
-                                                                    }
-                                                                }
+                                    // Check if the Dimension H value is outside the valid range
+                                    if (isNaN(dimensionHValue) || dimensionHValue < lowerLimitH || dimensionHValue > upperLimitH) {
+                                        // Show the remark section if the value is outside the valid range
+                                        remarkSectionH.style.display = "block";
+                                    } else {
+                                        // Hide the remark section if the value is within the valid range
+                                        remarkSectionH.style.display = "none";
+                                    }
+                                }
                             </script>
 
 
@@ -396,25 +450,16 @@
 
                             <script type="text/javascript">
                                 function validateGSM() {
-                                    // Get the value of the Standard GSM input field
                                     var gsmValue = parseFloat(document.getElementById('<%= TB_GSMStd.ClientID %>').value);
-
-                                                                    // Get the remark section element for Standard GSM
-                                                                    var remarkSectionGSM = document.getElementById("remarkSectionGSM");
-
-                                                                    // Valid range for Standard GSM: 0 to 1000 (as specified in the range validator)
-                                                                    var lowerLimitGSM = 0;
-                                                                    var upperLimitGSM = 1000;
-
-                                                                    // Check if the GSM value is outside the valid range
-                                                                    if (isNaN(gsmValue) || gsmValue < lowerLimitGSM || gsmValue > upperLimitGSM) {
-                                                                        // Show the remark section if the value is outside the valid range
-                                                                        remarkSectionGSM.style.display = "block";
-                                                                    } else {
-                                                                        // Hide the remark section if the value is within the valid range
-                                                                        remarkSectionGSM.style.display = "none";
-                                                                    }
-                                                                }
+                                    var remarkSectionGSM = document.getElementById("remarkSectionGSM");
+                                    var lowerLimitGSM = 0;
+                                    var upperLimitGSM = 1000;
+                                    if (isNaN(gsmValue) || gsmValue < lowerLimitGSM || gsmValue > upperLimitGSM) {
+                                        remarkSectionGSM.style.display = "block";
+                                    } else {
+                                        remarkSectionGSM.style.display = "none";
+                                    }
+                                }
                             </script>
 
 
@@ -431,24 +476,16 @@
 
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <!-- Label for BS (Kg/cm²) -->
-                                    <asp:Label ID="Lbl_TB_BurstingStrength" runat="server" AssociatedControlID="TB_BurstingStrength"
-                                        Text="BS (Kg/cm²):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-
-                                    <!-- Required Field Validator for BS (Kg/cm²) -->
-                                    <asp:RequiredFieldValidator ID="RFV_TB_BurstingStrength" runat="server" ErrorMessage="Input Required"
-                                        ControlToValidate="TB_BurstingStrength" ValidationGroup="Submit" InitialValue=""
-                                        Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-
-                                    <!-- Range Validator for BS (Kg/cm²) to ensure input is between 0 and 1000 -->
-                                    <asp:RangeValidator ID="RV_TB_BurstingStrength" runat="server" ControlToValidate="TB_BurstingStrength"
-                                        ValidationGroup="Submit" ErrorMessage="Invalid BS" MinimumValue="0"
-                                        MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
-
-                                    <!-- Input TextBox for BS (Kg/cm²) -->
+                                    <asp:Label ID="Lbl_TB_BurstingStrength" runat="server" AssociatedControlID="TB_BurstingStrength" Text="BS (Kg/cm²):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_BurstingStrength" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_BurstingStrength" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RangeValidator ID="RV_TB_BurstingStrength" runat="server" ControlToValidate="TB_BurstingStrength" ValidationGroup="Submit" ErrorMessage="[5 - 12]" MinimumValue="5" MaximumValue="12" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_BurstingStrength" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter BS (Kg/cm²)">
-                                        </asp:TextBox>
+                                        <asp:TextBox ID="TB_BurstingStrength" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter BS (Kg/cm²)" onkeyup="validateRange(5, 12, 'divRemarks_BurstingStrength')"></asp:TextBox>
+                                    </div>
+                                    <!-- Remarks Field -->
+                                    <div class="mt-2" id="divRemarks_BurstingStrength" style="display: none;">
+                                        <asp:Label ID="Lbl_Remarks_BurstingStrength" runat="server" Text="BS Remarks:" ForeColor="Red" Font-Size="Small"></asp:Label>
+                                        <asp:TextBox ID="TB_Remarks_BurstingStrength" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter BS- Out of Range Remarks"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -457,9 +494,14 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_CompressionStrength" runat="server" AssociatedControlID="TB_CompressionStrength" Text="Compression Strength (kg/cm²):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_CompressionStrength" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_CompressionStrength" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RangeValidator ID="RV_TB_CompressionStrength" runat="server" ControlToValidate="TB_CompressionStrength" ValidationGroup="Submit" ErrorMessage="Invalid Compression Strength" MinimumValue="0" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_TB_CompressionStrength" runat="server" ControlToValidate="TB_CompressionStrength" ValidationGroup="Submit" ErrorMessage="[250 - 1000]" MinimumValue="250" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_CompressionStrength" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Compression Strength (kg/cm²)"></asp:TextBox>
+                                        <asp:TextBox ID="TB_CompressionStrength" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Compression Strength (kg/cm²)" onkeyup="validateRange2(250, 100, 'divRemarks_CompressionStrength')"></asp:TextBox>
+                                    </div>
+                                    <!-- Remarks Field -->
+                                    <div class="mt-2" id="divRemarks_CompressionStrength" style="display: none;">
+                                        <asp:Label ID="Lbl_Remarks_CompressionStrength" runat="server" Text="Compression Strength Remarks:" ForeColor="Red" Font-Size="Small"></asp:Label>
+                                        <asp:TextBox ID="TB_Remarks_CompressionStrength" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Compression Strength Remarks"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -468,9 +510,14 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_FlutePercent" runat="server" AssociatedControlID="TB_FlutePercent" Text="Flute %:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_FlutePercent" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_FlutePercent" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RangeValidator ID="RV_TB_FlutePercent" runat="server" ControlToValidate="TB_FlutePercent" ValidationGroup="Submit" ErrorMessage="Invalid Flute Percentage" MinimumValue="0" MaximumValue="100" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
-                                    <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_FlutePercent" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Flute Percentage"></asp:TextBox>
+                                    <asp:RangeValidator ID="RV_TB_FlutePercent" runat="server" ControlToValidate="TB_FlutePercent" ValidationGroup="Submit" ErrorMessage="[40 - 60]" MinimumValue="40" MaximumValue="60" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                    <div class="input-group-sm"> 
+                                        <asp:TextBox ID="TB_FlutePercent" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Flute Percentage" onkeyup="validateRange3(40, 60, 'divRemarks_TB_FlutePercent')"></asp:TextBox>
+                                    </div>
+                                    <!-- Remarks Field -->
+                                    <div class="mt-2" id="divRemarks_TB_FlutePercent" style="display: none;">
+                                        <asp:Label ID="Label2" runat="server" Text="Flute % Remarks:" ForeColor="Red" Font-Size="Small"></asp:Label>
+                                        <asp:TextBox ID="TB_Remarks_FlutePercent" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Flute % Remarks"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -479,9 +526,14 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_MoisturePercent" runat="server" AssociatedControlID="TB_MoisturePercent" Text="Moisture %:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_MoisturePercent" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_MoisturePercent" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RangeValidator ID="RV_TB_MoisturePercent" runat="server" ControlToValidate="TB_MoisturePercent" ValidationGroup="Submit" ErrorMessage="Invalid Moisture Percentage" MinimumValue="0" MaximumValue="100" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_TB_MoisturePercent" runat="server" ControlToValidate="TB_MoisturePercent" ValidationGroup="Submit" ErrorMessage="[7 - 9]" MinimumValue="7" MaximumValue="9" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_MoisturePercent" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Moisture Percentage"></asp:TextBox>
+                                        <asp:TextBox ID="TB_MoisturePercent" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Moisture Percentage" onkeyup="validateRange4(7, 9, 'divRemarks_MoisturePercent')"></asp:TextBox>
+                                    </div>
+                                    <!-- Remarks Field -->
+                                    <div class="mt-2" id="divRemarks_MoisturePercent" style="display: none;">
+                                        <asp:Label ID="Label3" runat="server" Text="Moisture % Remarks:" ForeColor="Red" Font-Size="Small"></asp:Label>
+                                        <asp:TextBox ID="TB_Remarks_MoisturePercent" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Moisture % Remarks"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
