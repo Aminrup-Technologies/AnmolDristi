@@ -177,8 +177,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.aspx" />
+    <Content Include="Aata_Maida_Approval.aspx" />
+    <Content Include="Aata_Maida_Detailed.aspx" />
     <Content Include="Aata_Maida_Form.aspx" />
     <Content Include="aata_maida_frmctrl.aspx" />
+    <Content Include="Aata_Maida_Submitter.aspx" />
     <Content Include="add_branch.aspx" />
     <Content Include="add_brandtypes.aspx" />
     <Content Include="add_company.aspx" />
@@ -330,6 +333,20 @@
     <Compile Include="404.aspx.designer.cs">
       <DependentUpon>404.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Aata_Maida_Approval.aspx.cs">
+      <DependentUpon>Aata_Maida_Approval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Aata_Maida_Approval.aspx.designer.cs">
+      <DependentUpon>Aata_Maida_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Aata_Maida_Detailed.aspx.cs">
+      <DependentUpon>Aata_Maida_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Aata_Maida_Detailed.aspx.designer.cs">
+      <DependentUpon>Aata_Maida_Detailed.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Aata_Maida_Form.aspx.cs">
       <DependentUpon>Aata_Maida_Form.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -343,6 +360,13 @@
     </Compile>
     <Compile Include="aata_maida_frmctrl.aspx.designer.cs">
       <DependentUpon>aata_maida_frmctrl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Aata_Maida_Submitter.aspx.cs">
+      <DependentUpon>Aata_Maida_Submitter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Aata_Maida_Submitter.aspx.designer.cs">
+      <DependentUpon>Aata_Maida_Submitter.aspx</DependentUpon>
     </Compile>
     <Compile Include="add_branch.aspx.cs">
       <DependentUpon>add_branch.aspx</DependentUpon>

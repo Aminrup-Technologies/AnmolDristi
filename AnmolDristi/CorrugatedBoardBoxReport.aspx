@@ -494,9 +494,9 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_CompressionStrength" runat="server" AssociatedControlID="TB_CompressionStrength" Text="Compression Strength (kg/cm²):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_CompressionStrength" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_CompressionStrength" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RangeValidator ID="RV_TB_CompressionStrength" runat="server" ControlToValidate="TB_CompressionStrength" ValidationGroup="Submit" ErrorMessage="[250 - 1000]" MinimumValue="250" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                    <asp:RangeValidator ID="RV_TB_CompressionStrength" runat="server" ControlToValidate="TB_CompressionStrength" ValidationGroup="Submit" ErrorMessage="[100 - 1000]" MinimumValue="100" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_CompressionStrength" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Compression Strength (kg/cm²)" onkeyup="validateRange2(250, 100, 'divRemarks_CompressionStrength')"></asp:TextBox>
+                                        <asp:TextBox ID="TB_CompressionStrength" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Compression Strength (kg/cm²)" onkeyup="validateRange2(100, 1000, 'divRemarks_CompressionStrength')"></asp:TextBox>
                                     </div>
                                     <!-- Remarks Field -->
                                     <div class="mt-2" id="divRemarks_CompressionStrength" style="display: none;">

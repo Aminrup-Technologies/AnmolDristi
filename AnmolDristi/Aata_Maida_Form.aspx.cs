@@ -616,11 +616,13 @@ namespace AnmolDristi
             string vehicleNo = string.IsNullOrEmpty(TB_VehicleNo.Text) ? null : TB_VehicleNo.Text;
 
             int? mfgNameyesno = string.IsNullOrEmpty(RBL_ManufNameAdd.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_ManufNameAdd.SelectedValue);
+            string mfgNameyesnoRemarks = string.IsNullOrEmpty(TXB_ManufNameAdd_Remarks.Text) ? null : TXB_ManufNameAdd_Remarks.Text;
             string mfgName = string.IsNullOrEmpty(TB_MfgName.Text) ? null : TB_MfgName.Text;
 
             DateTime? bbDate = string.IsNullOrEmpty(TB_BeforeDate.Text) ? (DateTime?)null : DateTime.Parse(TB_BeforeDate.Text).Date;
 
             int? fssaiyesno = string.IsNullOrEmpty(RBL_FassaiNoLogo.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_FassaiNoLogo.SelectedValue);
+            string fssaiyesnoRemarks = string.IsNullOrEmpty(TXB_FassaiNoLogo_Remarks.Text) ? null : TXB_FassaiNoLogo_Remarks.Text;
             string licenceNo = string.IsNullOrEmpty(TB_FssaiNo.Text) ? null : TB_FssaiNo.Text;
 
             int? logo = string.IsNullOrEmpty(RBL_Fssai_Logo.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Fssai_Logo.SelectedValue);
@@ -679,6 +681,13 @@ namespace AnmolDristi
 
             string bromate = string.IsNullOrEmpty(TB_Bromate.Text) ? null : TB_Bromate.Text;
 
+            int submitstatus = 0;
+            if (!string.IsNullOrEmpty(ash?.ToString()) && !string.IsNullOrEmpty(insolubleAsh?.ToString()) && !string.IsNullOrEmpty(glutentContent?.ToString()) && !string.IsNullOrEmpty(alcoholicAcidity?.ToString()))
+            {
+                submitstatus = 1;
+            }
+
+
             DateTime submittedDate = DateTime.Now.Date;
             TimeSpan submittedTime = DateTime.Now.TimeOfDay;
             int submittedById = Convert.ToInt32(Session["USERID"].ToString());
@@ -720,11 +729,14 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@VehicleNo", (object)vehicleNo ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@MfgYesNo", (object)mfgNameyesno ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@MfgYesNoRemarks", (object)mfgNameyesnoRemarks ?? DBNull.Value);
                         command.Parameters.AddWithValue("@MfgName", (object)mfgName ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@BeforeDate", (object)bbDate ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@fssaiYesNo", (object)fssaiyesno ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@fssaiYesNoRemarks", (object)fssaiyesnoRemarks ?? DBNull.Value);
+
                         command.Parameters.AddWithValue("@FssaiNo", (object)licenceNo ?? DBNull.Value);
                         command.Parameters.AddWithValue("@Fssai_Logo", (object)logo ?? DBNull.Value);
                         command.Parameters.AddWithValue("@Veg_Logo", (object)vegLogo ?? DBNull.Value);
@@ -793,7 +805,7 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@Approver2EmployeeCode", (object)approver2EmployeeCode ?? DBNull.Value);
                         command.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", (object)dottedLineApproverEmployeeCode ?? DBNull.Value);
 
-
+                        command.Parameters.AddWithValue("@Submission_Status", submitstatus);
                         // Execute the query
                         command.ExecuteNonQuery();
                         MakeInputsReadOnly();
