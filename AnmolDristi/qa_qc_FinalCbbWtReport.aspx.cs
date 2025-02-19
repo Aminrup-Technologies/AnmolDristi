@@ -1027,7 +1027,7 @@ namespace AnmolDristi
                 lblMessage.ForeColor = System.Drawing.Color.Green;
             }
 
-
+            Int32 pkts = Convert.ToInt32(TB_NoPacks.Text.ToString());
             int viewMode = 1;
             int deleteMode = 0;
             string approver1EmployeeCode = Approver1CodeLabel.Text.ToString();
@@ -1039,7 +1039,7 @@ namespace AnmolDristi
                 InsertIntoTRN_FINAL_CBB_Weights(
                     cbbPK, formID, submittedById, submittedDate, submittedTime, shift,
                     submittedByEmployeeCode, plantName, plantLine, productCategory, productBrand,
-                    brandSKU, batchNo, mrp, viewMode,
+                    brandSKU, batchNo, mrp, pkts, viewMode,
                     deleteMode, approver1EmployeeCode,
                     approver2EmployeeCode,
                     dottedLineApproverEmployeeCode
@@ -1268,7 +1268,7 @@ namespace AnmolDristi
         string cbbPK, int formID, int submittedById, DateTime submittedDate, TimeSpan submittedTime,
         string shift, string submittedByEmployeeCode, string plantName, string line,
         string productCategory, string productBrand, string skuId, string batchNo,
-        decimal mrp, int viewMode,
+        decimal mrp, Int32 pkts, int viewMode,
         int deleteMode, string approver1EmployeeCode,
         string approver2EmployeeCode,
         string dottedLineApproverEmployeeCode)
@@ -1280,14 +1280,14 @@ namespace AnmolDristi
                 INSERT INTO [dbo].[TRN_FINAL_CBB_Weights] (
                     [CBB_PK], [FormID], [SubmittedById], [SubmittedDate], [SubmittedTime], 
                     [Shift], [SubmittedByEmployeeCode], [PlantName], [Line], [ProductCategory], 
-                    [ProductBrand], [SKUId], [BatchNo], [MRP],
+                    [ProductBrand], [SKUId], [BatchNo], [MRP], [NumberPkts],
                     [ViewMode], [DeleteMode], [Approver1EmployeeCode],
                     [Approver2EmployeeCode],
                     [DottedLineApproverEmployeeCode]
                 ) VALUES (
                     @CBB_PK, @FormID, @SubmittedById, @SubmittedDate, @SubmittedTime, 
                     @Shift, @SubmittedByEmployeeCode, @PlantName, @Line, @ProductCategory, 
-                    @ProductBrand, @SKUId, @BatchNo, @MRP,
+                    @ProductBrand, @SKUId, @BatchNo, @MRP, @NumberPkts,
                     @ViewMode, @DeleteMode, @Approver1EmployeeCode,
                     @Approver2EmployeeCode,
                     @DottedLineApproverEmployeeCode
@@ -1310,6 +1310,7 @@ namespace AnmolDristi
                     command.Parameters.AddWithValue("@SKUId", skuId);
                     command.Parameters.AddWithValue("@BatchNo", batchNo);
                     command.Parameters.AddWithValue("@MRP", mrp);
+                    command.Parameters.AddWithValue("@NumberPkts", mrp);
                     //command.Parameters.AddWithValue("@GrossWeightJson", grossWeightJson);
                     //command.Parameters.AddWithValue("@AverageGrossWeight", averageGrossWeight.HasValue ? (object)averageGrossWeight.Value : DBNull.Value);
                     command.Parameters.AddWithValue("@ViewMode", viewMode);

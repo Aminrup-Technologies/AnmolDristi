@@ -30,18 +30,6 @@
                 font-weight: bold;
             }
 
-        /*.nav-tabs .nav-link.active {
-    background-color: #17a2b8;
-    color: white;
-    border: 2px solid #17a2b8;
-    border-radius: 5px;
-}
-
-.nav-tabs .nav-link:hover {
-   
-    color: #17a2b8;
-}*/
-
         .approver-photo {
             width: 50px;
             height: 50px;
@@ -79,7 +67,7 @@
             <div class="page-title">
                 <div class="title_left">
                     <h3>
-                        <asp:Label ID="lbl_docname" runat="server" Text="Detailed View"></asp:Label>
+                        <asp:Label ID="lbl_docname" runat="server" Text="HM Bag/ PP Bag Report"></asp:Label>
                     </h3>
                 </div>
             </div>
@@ -88,7 +76,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="Detailed View"></asp:Label>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="ANMOL/DOC/CORP/QC/PKNG/03"></asp:Label>
                             </h2>
                             <div class="clearfix"></div>
                         </div>
@@ -111,11 +99,22 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3">
+                                                    <%--<div class="col-md-3">
                                                         <div class="mb-3">
                                                             <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:DropDownList>
+                                                            </div>
+                                                        </div>
+                                                    </div>--%>
+
+                                                    <div class="col-md-3">
+                                                        <div class="mb-3">
+                                                            <asp:Label ID="Lbl_TB_MatVarietyName" runat="server" AssociatedControlID="TB_MatVarietyName" Text="Material / Variety" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:RequiredFieldValidator ID="RFV_TB_MatVarietyName" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_MatVarietyName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                            <asp:RegularExpressionValidator ID="REV_TB_MatVarietyName" runat="server" ControlToValidate="TB_MatVarietyName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                            <div class="input-group-sm">
+                                                                <asp:TextBox ID="TB_MatVarietyName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Material / Variety" MaxLength="50"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -174,12 +173,13 @@
                                                         </div>
                                                     </div>
 
+
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
                                                             <asp:Label ID="Lbl_TB_Std_Dimension" runat="server" AssociatedControlID="TB_Std_Dimension" Text=" Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                            <asp:Label ID="Label_TB_Std_Dimension" runat="server"  ForeColor="Red"></asp:Label>
+                                                            <asp:Label ID="Label_TB_Std_Dimension" runat="server" ForeColor="Red"></asp:Label>
                                                             <div class="input-group-sm">
-                                                                <asp:TextBox ID="TB_Std_Dimension" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ></asp:TextBox>
+                                                                <asp:TextBox ID="TB_Std_Dimension" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -188,7 +188,7 @@
                                                         <div class="mb-3">
                                                             <asp:Label ID="Label19" runat="server" AssociatedControlID="TXB_Std_Dimension_Remarks" Text="Dimension Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
-                                                                <asp:TextBox ID="TXB_Std_Dimension_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ></asp:TextBox>
+                                                                <asp:TextBox ID="TXB_Std_Dimension_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -196,9 +196,9 @@
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
                                                             <asp:Label ID="Lbl_TB_GSM" runat="server" AssociatedControlID="TB_GSM" Text="GSM/WT per 10 PS(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                            <asp:Label ID="Label_Std_GSM" runat="server"  ForeColor="Red"></asp:Label>
+                                                            <asp:Label ID="Label_Std_GSM" runat="server" ForeColor="Red"></asp:Label>
                                                             <div class="input-group-sm">
-                                                                <asp:TextBox ID="TB_GSM" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ></asp:TextBox>
+                                                                <asp:TextBox ID="TB_GSM" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -207,7 +207,7 @@
                                                         <div class="mb-3">
                                                             <asp:Label ID="Label5" runat="server" AssociatedControlID="TXB_GSM_Remarks" Text="GSM/WT per 10 PS Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
-                                                                <asp:TextBox ID="TXB_GSM_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ></asp:TextBox>
+                                                                <asp:TextBox ID="TXB_GSM_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -216,7 +216,7 @@
                                                         <div class="mb-3">
                                                             <asp:Label ID="Lbl_Remarks" runat="server" AssociatedControlID="TXB_Remarks" Text="Remarks :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
-                                                                <asp:TextBox ID="TXB_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval("Remarks") %>' TextMode="MultiLine" Rows="5" Width="100%"></asp:TextBox>
+                                                                <asp:TextBox ID="TXB_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval("Remarks") %>' TextMode="MultiLine" Rows="2" Width="100%"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -226,14 +226,14 @@
                                                 </div>
 
                                                 <%--Button--%>
-                                                <div class="col-md-3">
-                                                    <div class="mb-3">
-                                                        <asp:Label ID="Lbl_BasicbtnApprove" runat="server" AssociatedControlID="" Text="Click on your ACTION" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                <div class="col-md-12">
+                                                    <div class="mb-12">
+                                                        <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="Click on your ACTION" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                         <div class="input-group input-group-sm">
-                                                            <asp:Button ID="BtnValidate" runat="server" Text="Re-Validate inputs" CssClass="btn btn-warning btn-sm" CausesValidation="true" />
-                                                            <asp:Button ID="BtnApprove" runat="server" Text="Approve" CssClass="btn btn-success btn-sm" CausesValidation="false" OnClick="BtnApprove_Click" />
-                                                            <asp:Button ID="BtnReject" runat="server" Text="Reject" CssClass="btn btn-sm btn-danger" CausesValidation="false" OnClick="BtnReject_Click" />
-                                                            <asp:Button ID="BtnBack" runat="server" Text="Back" CssClass="btn btn-sm btn-info" CausesValidation="false" PostBackUrl="~/overwrap_approval.aspx" />
+                                                            <asp:Button ID="btnSubmit" runat="server" Text="Re-Validate Inputs" CssClass="btn btn-warning btn-sm" ValidationGroup="Submit" CausesValidation="true" />
+                                                            <asp:Button ID="btnApprove" runat="server" Text="Approve" CssClass="btn btn-success btn-sm" CausesValidation="false" OnClick="btnApprove_Click" />
+                                                            <asp:Button ID="btnReject" runat="server" Text="Reject" CssClass="btn btn-danger btn-sm" CausesValidation="false" OnClick="btnReject_Click" />
+                                                            <asp:Button ID="btnBack" runat="server" Text="Back" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="btnBack_Click" />
                                                         </div>
                                                     </div>
                                                 </div>

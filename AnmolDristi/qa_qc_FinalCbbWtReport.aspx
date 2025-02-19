@@ -146,9 +146,9 @@
 
             // Update the values on the page
             document.getElementById('<%= lblAvgWeights.ClientID %>').innerHTML = averageWeight;
-            document.getElementById('<%= lblMinValue.ClientID %>').innerHTML = minWeight + " gm";
-            document.getElementById('<%= lblMaxValue.ClientID %>').innerHTML = maxWeight + " gm";
-            document.getElementById('<%= lblDiffMinMax.ClientID %>').innerHTML = difference + " gm";
+            document.getElementById('<%= lblMinValue.ClientID %>').innerHTML = minWeight + " kgs";
+            document.getElementById('<%= lblMaxValue.ClientID %>').innerHTML = maxWeight + " kgs";
+            document.getElementById('<%= lblDiffMinMax.ClientID %>').innerHTML = difference + " kgs";
         }
 
 
@@ -348,9 +348,23 @@
                                                                 </div>
                                                             </div>
 
+
+
+                                                            <div class="col-md-3" id="RowCount_DIV" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Label7" runat="server" AssociatedControlID="TB_NoPacks" Text="No Of Packs in 1 CBB:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required" InitialValue="" ValidationGroup="Submit" ControlToValidate="TB_NoPacks" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="Submit" ControlToValidate="TB_NoPacks" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RangeValidator ID="RangeValidator1" runat="server" ValidationGroup="Submit" ControlToValidate="TB_NoPacks" ErrorMessage="[10 - 500]" ForeColor="Red" MinimumValue="10" MaximumValue="500" Type="Double" Display="Static"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_NoPacks" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="false" Text=""></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="lblMRP" runat="server" AssociatedControlID="TXT_MRP" Text="MRP:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:Label ID="lblMRP" runat="server" AssociatedControlID="TXT_MRP" Text="Packet MRP:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_MRP" runat="server" ErrorMessage="MRP Required" InitialValue="" ControlToValidate="TXT_MRP" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                                                     <asp:RegularExpressionValidator ID="REV_MRP" runat="server" ControlToValidate="TXT_MRP" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
                                                                     <asp:RangeValidator ID="RV_MRP" runat="server" ControlToValidate="TXT_MRP" ErrorMessage="[0.00 - 9999.99]" ForeColor="Red" MinimumValue="0.00" MaximumValue="9999.99" Type="Double" Display="Static"></asp:RangeValidator>
@@ -361,10 +375,9 @@
                                                             </div>
 
                                                             <div class="col-md-12 text-center">
-
+                                                                <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
                                                                 <asp:Button ID="Btn_Save" runat="server" Text="Proceed Next" OnClick="Btn_Save_Click" CausesValidation="true" ValidationGroup="Submit" CssClass="btn btn-sm btn-primary" />
                                                                 <asp:Button ID="Btn_Reset" runat="server" Text="Reset" OnClick="Btn_Reset_Click" CssClass="btn btn-sm btn-warning" />
-                                                                <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
                                                                 <asp:Button ID="btn_home1" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" PostBackUrl="~/home.aspx" />
                                                             </div>
 
@@ -375,20 +388,6 @@
 
                                                     <div class="tab-pane fade" id="GrossWeightData" role="tabpanel" aria-labelledby="GrossWeightData-tab">
                                                         <div class="x_content">
-
-                                                            <div class="col-md-3" id="RowCount_DIV" runat="server" visible="true">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label7" runat="server" AssociatedControlID="TXT_MRP" Text="No Of Packs in 1 CBB:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="MRP Required" InitialValue="" ValidationGroup="Submit2" ControlToValidate="TXT_MRP" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="Submit2" ControlToValidate="TXT_MRP" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <asp:RangeValidator ID="RangeValidator1" runat="server" ValidationGroup="Submit2" ControlToValidate="TXT_MRP" ErrorMessage="[10 - 25]" ForeColor="Red" MinimumValue="10" MaximumValue="25" Type="Double" Display="Static"></asp:RangeValidator>--%>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_NoPacks" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true" Text="25"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-
                                                             <asp:GridView ID="GridView1" runat="server" Visible="true" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
                                                                     <asp:TemplateField HeaderText="No of Packs">
@@ -428,7 +427,7 @@
 
                                                         <div class="col-md-6" id="Div1" runat="server" visible="true">
                                                             <!-- Table structure for Min, Max, Difference, and Average -->
-                                                            <table class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" style="width:100%;">
+                                                            <table class="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap" style="width: 100%;">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Min Value</th>

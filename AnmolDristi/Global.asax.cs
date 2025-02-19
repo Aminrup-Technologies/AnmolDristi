@@ -73,73 +73,73 @@ namespace AnmolDristi
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            // Retrieve the last error
-            Exception ex = Server.GetLastError();
+            //// Retrieve the last error
+            //Exception ex = Server.GetLastError();
 
-            if (ex != null)
-            {
-                // Clear the error to prevent ASP.NET from showing its default error page
-                Server.ClearError();
+            //if (ex != null)
+            //{
+            //    // Clear the error to prevent ASP.NET from showing its default error page
+            //    Server.ClearError();
 
-                // Send email notification for the error
-                try
-                {
-                    var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
+            //    // Send email notification for the error
+            //    try
+            //    {
+            //        var recipients = EmailRecipientManager.GetRecipients("ErrorNotifications");
 
-                    // Build the error details
-                    string subject = "Application Error Notification";
-                    string body = $@"
-                <h1>An error occurred in the application</h1>
-                <p><strong>Message:</strong> {ex.Message}</p>
-                <p><strong>Source:</strong> {ex.Source}</p>
-                <p><strong>TargetSite:</strong> {ex.TargetSite}</p>
-                <p><strong>Stack Trace:</strong></p>
-                <pre>{ex.StackTrace}</pre>";
+            //        // Build the error details
+            //        string subject = "Application Error Notification";
+            //        string body = $@"
+            //            <h1>An error occurred in the application</h1>
+            //            <p><strong>Message:</strong> {ex.Message}</p>
+            //            <p><strong>Source:</strong> {ex.Source}</p>
+            //            <p><strong>TargetSite:</strong> {ex.TargetSite}</p>
+            //            <p><strong>Stack Trace:</strong></p>
+            //            <pre>{ex.StackTrace}</pre>";
 
-                    EmailNotifier.Notify(subject, body, recipients);
-                }
-                catch (Exception emailEx)
-                {
-                    // Log email notification failure to avoid masking the original error
-                    // Consider adding a fallback mechanism, e.g., logging emailEx to a file or database
-                    System.Diagnostics.Debug.WriteLine($"Failed to send error notification: {emailEx.Message}");
-                }
+            //        EmailNotifier.Notify(subject, body, recipients);
+            //    }
+            //    catch (Exception emailEx)
+            //    {
+            //        // Log email notification failure to avoid masking the original error
+            //        // Consider adding a fallback mechanism, e.g., logging emailEx to a file or database
+            //        System.Diagnostics.Debug.WriteLine($"Failed to send error notification: {emailEx.Message}");
+            //    }
 
-                // Check if debugging is enabled
-                if (HttpContext.Current.IsDebuggingEnabled)
-                {
-                    // In debug mode, show detailed error information
-                    Response.Write("<h1>Error Details</h1>");
-                    Response.Write($"<p>{ex.Message}</p>");
-                    Response.Write($"<pre>{ex.StackTrace}</pre>");
-                    Response.End(); // Stop further processing
-                    return;
-                }
+            //    // Check if debugging is enabled
+            //    if (HttpContext.Current.IsDebuggingEnabled)
+            //    {
+            //        // In debug mode, show detailed error information
+            //        Response.Write("<h1>Error Details</h1>");
+            //        Response.Write($"<p>{ex.Message}</p>");
+            //        Response.Write($"<pre>{ex.StackTrace}</pre>");
+            //        Response.End(); // Stop further processing
+            //        return;
+            //    }
 
-                // Handle HTTP-specific exceptions
-                HttpException httpEx = ex as HttpException;
-                string redirectUrl;
+            //    // Handle HTTP-specific exceptions
+            //    HttpException httpEx = ex as HttpException;
+            //    string redirectUrl;
 
-                if (httpEx != null)
-                {
-                    int httpCode = httpEx.GetHttpCode();
+            //    if (httpEx != null)
+            //    {
+            //        int httpCode = httpEx.GetHttpCode();
 
-                    // Handle 404 errors specifically
-                    redirectUrl = httpCode == 404 ? "~/404.aspx" : "~/Error.aspx";
-                }
-                else
-                {
-                    // General error page for non-HTTP exceptions
-                    redirectUrl = "~/Error.aspx";
-                }
+            //        // Handle 404 errors specifically
+            //        redirectUrl = httpCode == 404 ? "~/404.aspx" : "~/Error.aspx";
+            //    }
+            //    else
+            //    {
+            //        // General error page for non-HTTP exceptions
+            //        redirectUrl = "~/Error.aspx";
+            //    }
 
-                // Redirect to the appropriate error page
-                if (!Response.HeadersWritten)
-                {
-                    Response.Redirect(redirectUrl, false);
-                    Context.ApplicationInstance.CompleteRequest(); // End the request pipeline gracefully
-                }
-            }
+            //    // Redirect to the appropriate error page
+            //    if (!Response.HeadersWritten)
+            //    {
+            //        Response.Redirect(redirectUrl, false);
+            //        Context.ApplicationInstance.CompleteRequest(); // End the request pipeline gracefully
+            //    }
+            //}
         }
 
 

@@ -72,6 +72,56 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:HiddenField ID="hdn_shiftvalue" runat="server" />
     <asp:HiddenField ID="hdn_formid" runat="server" />
+    <script type="text/javascript">
+        // Function to calculate oil percentage
+        function calculateOilPercentage() {
+            var weightWithOilInput = parseFloat(document.getElementById('<%= TB_wgtwoil.ClientID %>').value) || 0;
+            var weightWithoutOilInput = parseFloat(document.getElementById('<%= TB_wgtwtoil.ClientID %>').value) || 0;
+            if (weightWithOilInput && weightWithoutOilInput) {
+                var oilPercentage = ((weightWithOilInput - weightWithoutOilInput) / weightWithOilInput) * 100;
+                console.log("Weight with oil input:", oilPercentage);
+                document.getElementById('<%= TB_oilpercent.ClientID %>').value = oilPercentage.toFixed(2);
+            } else {
+                console.error("One or more input elements not found.");
+            }
+        }
+
+        function validateRadioButtons(source, args) {
+            var yesChecked = document.getElementById('<%= RB_Yes.ClientID %>').checked;
+            var noChecked = document.getElementById('<%= RB_No.ClientID %>').checked;
+            args.IsValid = yesChecked || noChecked;  // Ensures at least one option is selected
+        }
+
+        function toggleFields() {
+            var yesChecked = document.getElementById('<%= RB_Yes.ClientID %>').checked;
+            var startTime = document.getElementById('<%= TB_StartTime.ClientID %>');
+            var stopTime = document.getElementById('<%= TB_StopTime.ClientID %>');
+            var reason = document.getElementById('<%= TB_Reason.ClientID %>');
+
+            if (!yesChecked) {  // If "No" is selected, set defaults
+                startTime.value = "00:00:00";
+                stopTime.value = "00:00:00";
+                reason.value = "N/A";
+                startTime.readOnly = true;
+                stopTime.readOnly = true;
+                reason.readOnly = true;
+            } else {  // If "Yes" is selected, enable input fields
+                startTime.value = "";
+                stopTime.value = "";
+                reason.value = "";
+                startTime.readOnly = false;
+                stopTime.readOnly = false;
+                reason.readOnly = false;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleFields();
+            document.getElementById('<%= RB_Yes.ClientID %>').addEventListener('change', toggleFields);
+            document.getElementById('<%= RB_No.ClientID %>').addEventListener('change', toggleFields);
+        });
+
+    </script>
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
@@ -157,7 +207,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3">
+                                                            <%--<div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Label5" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_DDL_BrandSKU" runat="server" ErrorMessage="Required" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_BrandSKU" InitialValue="0" Display="Dynamic"></asp:RequiredFieldValidator>
@@ -165,7 +215,7 @@
                                                                         <asp:DropDownList ID="DDL_BrandSKU" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>--%>
 
                                                             <%--<div class="col-md-3">
                                                                 <div class="mb-3">
@@ -202,7 +252,54 @@
                                                     <%--  oven section start --%>
                                                     <div class="tab-pane fade" id="ovenReport" role="tabpanel" aria-labelledby="ovenReport-tab">
                                                         <div class="x_content">
+                                                            <div class="col-md-12">
+                                                                <h4 class="text-left text-info">Sample Details</h4>
+                                                                <hr />
+                                                            </div>
+
                                                             <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_BiscuitsPerPkt" runat="server" AssociatedControlID="TB_BiscuitsPerPkt" Text="No. of Biscuits(in Pcs):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_BiscuitsPerPkt" runat="server" ErrorMessage="Required" ControlToValidate="TB_BiscuitsPerPkt" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_BiscuitsPerPkt" runat="server" ControlToValidate="TB_BiscuitsPerPkt" ForeColor="Red" ValidationGroup="Submit2" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_BiscuitsPerPkt" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_BiscuitsPerPkt" ErrorMessage="No. of Bis./Pkt. should be between 1 and 1000" ForeColor="Red" MinimumValue="1" MaximumValue="1000" Type="Integer" Display="Dynamic"></asp:RangeValidator>
+
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_BiscuitsPerPkt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter No. of Biscuits(in Pcs)" MaxLength="100"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Gauge (in mm) Section -->
+                                                            <%-- <div class="row mb-3">--%>
+                                                            <%-- <div class="col-md-12 text-center mb-3">
+                                                                    <h4 style="color: blue;">DRY</h4>
+                                                                </div>--%>
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_Gauge" runat="server" AssociatedControlID="TB_Gauge" Text=" Dry Gauge Size (mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_Gauge" runat="server" ErrorMessage="Required" ControlToValidate="TB_Gauge" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_Gauge" runat="server" ControlToValidate="TB_Gauge" ForeColor="Red" ValidationGroup="Submit2" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_Gauge" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_Gauge" ErrorMessage="Gauge should be between 0.00 mm and 1000.00 mm" ForeColor="Red" MinimumValue="0.00" MaximumValue="100.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_Gauge" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Gauge (in mm)" MaxLength="5"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3" id="TB_BakingTime_DIV" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_BakingTime" runat="server" AssociatedControlID="TB_BakingTime" Text="Baking Time (mm:ss) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_BakingTime" runat="server" ErrorMessage="Required" ValidationGroup="Submit2" ControlToValidate="TB_BakingTime" Display="Dynamic" ForeColor="Red" InitialValue="00:00"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_BakingTime" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_BakingTime" ForeColor="Red" ErrorMessage="Please enter time in mm:ss format" ValidationExpression="^([0-9][0-9]):([0-5][0-9])$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_BakingTime" runat="server" ControlToValidate="TB_BakingTime" ValidationGroup="Submit2" ErrorMessage="[00:00 - 15:00]" ForeColor="Red" MinimumValue="00:00" MaximumValue="15:00" Type="String" Display="Dynamic"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_BakingTime" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Baking Time (mm:ss)" Text="00:00"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <%--<div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_TB_BTRPM" runat="server" AssociatedControlID="TB_BTRPM" Text="B.T/R.P.M:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_TB_BTRPM" runat="server" ErrorMessage="Required" ControlToValidate="TB_BTRPM" ValidationGroup="Submit2" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -212,59 +309,24 @@
                                                                         <asp:TextBox ID="TB_BTRPM" runat="server" CssClass="form-control form-control-sm rounded" Placeholder=" Enter B.T/R.P.M" MaxLength="10"></asp:TextBox>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>--%>
 
-
-                                                            <!-- Gauge (in mm) Section -->
-                                                            <%-- <div class="row mb-3">--%>
-                                                            <%-- <div class="col-md-12 text-center mb-3">
-                                                                    <h4 style="color: blue;">DRY</h4>
-                                                                </div>--%>
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Lbl_TB_Gauge" runat="server" AssociatedControlID="TB_Gauge" Text=" Dry Gauge (mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_TB_Gauge" runat="server" ErrorMessage="Required" ControlToValidate="TB_Gauge" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_TB_Gauge" runat="server" ControlToValidate="TB_Gauge" ForeColor="Red" ValidationGroup="Submit2" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <asp:RangeValidator ID="RV_TB_Gauge" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_Gauge" ErrorMessage="Gauge should be between 0.00 mm and 1000.00 mm" ForeColor="Red" MinimumValue="0.00" MaximumValue="100.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Gauge" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Gauge (in mm)" MaxLength="5"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="col-md-12">
+                                                                <hr />
                                                             </div>
-                                                            <!-- Weight (in gm) Section -->
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Lbl_TB_Weight" runat="server" AssociatedControlID="TB_Weight" Text="Dry Weight (gm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_TB_Weight" runat="server" ErrorMessage="Required" ControlToValidate="TB_Weight" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_TB_Weight" runat="server" ControlToValidate="TB_Weight" ForeColor="Red" ValidationGroup="Submit2" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <asp:RangeValidator ID="RV_TB_Weight" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_Weight" ErrorMessage="Weight should be between 0.00 gm and 1000.00 gm" ForeColor="Red" MinimumValue="0.00" MaximumValue="500.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Weight" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Weight (in gm)" MaxLength="5"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <%-- </div>--%>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Lbl_TB_DippedWeight" runat="server" AssociatedControlID="TB_DippedWeight" Text="Dipped Weight (gm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_TB_DippedWeight" runat="server" ErrorMessage="Required" ControlToValidate="TB_DippedWeight" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_TB_DippedWeight" runat="server" ControlToValidate="TB_DippedWeight" ForeColor="Red" ValidationGroup="Submit2" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <asp:RangeValidator ID="RV_TB_DippedWeight" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_DippedWeight" ErrorMessage="Dipped Weight should be between 0.00 gm and 1000.00 gm" ForeColor="Red" MinimumValue="0.00" MaximumValue="500.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_DippedWeight" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Dipped Weight (in gm)" MaxLength="5"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="col-md-12">
+                                                                <h4 class="text-left text-info">Dimensions Details</h4>
+                                                                <hr />
                                                             </div>
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_TB_Length" runat="server" AssociatedControlID="TB_Length" Text="Length (for square shape in mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_TB_Length" runat="server" ErrorMessage="Required" ControlToValidate="TB_Length" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_Length" runat="server" ErrorMessage="Required" ControlToValidate="TB_Length" InitialValue="" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                                                     <asp:RegularExpressionValidator ID="REV_TB_Length" runat="server" ControlToValidate="TB_Length" ForeColor="Red" ValidationGroup="Submit2" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <asp:RangeValidator ID="RV_TB_Length" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_Length" ErrorMessage="Length should be between 1.00 mm and 1000.00 mm" ForeColor="Red" MinimumValue="1.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_Length" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_Length" ErrorMessage="Length should be between 1.00 mm and 1000.00 mm" ForeColor="Red" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
                                                                     <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_Length" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Length (in mm)" MaxLength="5"></asp:TextBox>
+                                                                        <asp:TextBox ID="TB_Length" runat="server" CssClass="form-control form-control-sm rounded" Text="" Placeholder="Enter Length (in mm)" MaxLength="5"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -273,7 +335,7 @@
                                                                     <asp:Label ID="Lbl_TB_Width" runat="server" AssociatedControlID="TB_Width" Text="Width (for square shape in mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_TB_Width" runat="server" ErrorMessage="Required" ControlToValidate="TB_Width" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                                                     <asp:RegularExpressionValidator ID="REV_TB_Width" runat="server" ControlToValidate="TB_Width" ForeColor="Red" ValidationGroup="Submit2" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <asp:RangeValidator ID="RV_TB_Width" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_Width" ErrorMessage="Width should be between 1.00 mm and 1000.00 mm" ForeColor="Red" MinimumValue="1.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_Width" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_Width" ErrorMessage="Width should be between 1.00 mm and 1000.00 mm" ForeColor="Red" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
                                                                     <div class="input-group-sm">
                                                                         <asp:TextBox ID="TB_Width" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Width (in mm)" MaxLength="5"></asp:TextBox>
                                                                     </div>
@@ -292,7 +354,80 @@
                                                                 </div>
                                                             </div>
 
+                                                            <div class="col-md-12">
+                                                                <hr />
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <h4 class="text-left text-info">Weitage Details</h4>
+                                                                <hr />
+                                                            </div>
+
+                                                            <div class="col-md-3" id="TB_wgtwtoil_DIV" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_wgtwtoil" runat="server" AssociatedControlID="TB_wgtwtoil" Text="Weight without oil /Dry Weight (g):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_wgtwtoil" ValidationGroup="Submit2" runat="server" ErrorMessage="*" InitialValue="" ControlToValidate="TB_wgtwtoil" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_wgtwtoil" ValidationGroup="Submit2" runat="server" ControlToValidate="TB_wgtwtoil" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_wgtwtoil" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_wgtwtoil" ErrorMessage="Weight with oil should be between 0.00 and 100.00 kg" ForeColor="Red" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_wgtwtoil" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Weight with oil (0.00 - 100.00 g)" Text="" oninput="calculateOilPercentage()"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="col-md-3" id="TB_wgtwoil_DIV" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_wgtwoil" runat="server" AssociatedControlID="TB_wgtwoil" Text="Weight with oil / Dipped Weight (g):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_wgtwoil" runat="server" ValidationGroup="Submit2" ErrorMessage="*" InitialValue="" ControlToValidate="TB_wgtwoil" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_wgtwoil" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_wgtwoil" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_wgtwoil" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_wgtwoil" ErrorMessage="Weight without oil should be between 0.00 and 1000.00 g" ForeColor="Red" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_wgtwoil" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Weight without oil (0.00 - 1000.00 g)" Text="" oninput="calculateOilPercentage()"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+
+                                                            <div class="col-md-3" id="TB_oilpercent_DIV" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_oilpercent" runat="server" AssociatedControlID="TB_oilpercent" Text="Oil Percentage (%):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_oilpercent" runat="server" ValidationGroup="Submit2" InitialValue="0.00" ErrorMessage="*" ControlToValidate="TB_oilpercent" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_oilpercent" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_oilpercent" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_oilpercent" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_oilpercent" ErrorMessage="0.00% and 50.00%" ForeColor="Red" MinimumValue="0.00" MaximumValue="50.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_oilpercent" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Oil Percentage (0.00% - 100.00%)" Text="0.00" ReadOnly="false"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <%--<div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_Weight" runat="server" AssociatedControlID="TB_Weight" Text="Dry Weight (gm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_Weight" runat="server" ErrorMessage="Required" ControlToValidate="TB_Weight" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_Weight" runat="server" ControlToValidate="TB_Weight" ForeColor="Red" ValidationGroup="Submit2" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_Weight" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_Weight" ErrorMessage="Weight should be between 0.00 gm and 1000.00 gm" ForeColor="Red" MinimumValue="0.00" MaximumValue="500.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_Weight" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Weight (in gm)" MaxLength="5"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                             <div class="col-md-3">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_TB_DippedWeight" runat="server" AssociatedControlID="TB_DippedWeight" Text="Dipped Weight (gm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_TB_DippedWeight" runat="server" ErrorMessage="Required" ControlToValidate="TB_DippedWeight" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator ID="REV_TB_DippedWeight" runat="server" ControlToValidate="TB_DippedWeight" ForeColor="Red" ValidationGroup="Submit2" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                                    <asp:RangeValidator ID="RV_TB_DippedWeight" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_DippedWeight" ErrorMessage="Dipped Weight should be between 0.00 gm and 1000.00 gm" ForeColor="Red" MinimumValue="0.00" MaximumValue="500.00" Type="Double" Display="Dynamic"></asp:RangeValidator>
+                                                                    <div class="input-group-sm">
+                                                                        <asp:TextBox ID="TB_DippedWeight" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Dipped Weight (in gm)" MaxLength="5"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>--%>
+
+                                                            <%--<div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_TB_PktWeight" runat="server" AssociatedControlID="TB_PktWeight" Text="Pkt. Weight (in gm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_TB_PktWeight" runat="server" ErrorMessage="Required" ControlToValidate="TB_PktWeight" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -302,19 +437,29 @@
                                                                         <asp:TextBox ID="TB_PktWeight" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Pkt. Weight (in gm)" MaxLength="5"></asp:TextBox>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Lbl_TB_BiscuitsPerPkt" runat="server" AssociatedControlID="TB_BiscuitsPerPkt" Text="No. of Bis./Pkt.:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_TB_BiscuitsPerPkt" runat="server" ErrorMessage="Required" ControlToValidate="TB_BiscuitsPerPkt" ValidationGroup="Submit2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_TB_BiscuitsPerPkt" runat="server" ControlToValidate="TB_BiscuitsPerPkt" ForeColor="Red" ValidationGroup="Submit2" ErrorMessage="Numeric Only" ValidationExpression="^\d+(\.\d{1,2})?$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <asp:RangeValidator ID="RV_TB_BiscuitsPerPkt" runat="server" ValidationGroup="Submit2" ControlToValidate="TB_BiscuitsPerPkt" ErrorMessage="No. of Bis./Pkt. should be between 1 and 1000" ForeColor="Red" MinimumValue="1" MaximumValue="1000" Type="Integer" Display="Dynamic"></asp:RangeValidator>
+                                                            </div>--%>
 
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_BiscuitsPerPkt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter No. of Bis./Pkt." MaxLength="100"></asp:TextBox>
-                                                                    </div>
+
+                                                            <div class="col-md-12">
+                                                                <hr />
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <h4 class="text-left text-info">Oven Downtime Details (If Applicable)</h4>
+                                                                <hr />
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_Applicable" runat="server" Text="Is Applicable?" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                                                    <asp:RadioButton ID="RB_Yes" runat="server" GroupName="Applicable" Text=" Yes" />
+                                                                    <asp:RadioButton ID="RB_No" runat="server" GroupName="Applicable" Text=" No" />
+                                                                    <asp:CustomValidator ID="CV_Applicable" runat="server"
+                                                                        ErrorMessage="Please select Yes or No."
+                                                                        ForeColor="Red" Display="Dynamic" ValidationGroup="Submit2"
+                                                                        ClientValidationFunction="validateRadioButtons"></asp:CustomValidator>
                                                                 </div>
                                                             </div>
+
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_TB_StartTime" runat="server" AssociatedControlID="TB_StartTime" Text="Oven Stopage Start Time:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>

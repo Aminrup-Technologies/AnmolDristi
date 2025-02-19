@@ -346,13 +346,13 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_DimensionStd;
         
         /// <summary>
-        /// RV_TB_DimensionStd control.
+        /// CV_TB_DimensionStd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_DimensionStd;
+        protected global::System.Web.UI.WebControls.CustomValidator CV_TB_DimensionStd;
         
         /// <summary>
         /// TB_DimensionStd control.
@@ -400,15 +400,6 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_DimensionObs;
         
         /// <summary>
-        /// RV_TB_DimensionObs control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_DimensionObs;
-        
-        /// <summary>
         /// TB_DimensionObs control.
         /// </summary>
         /// <remarks>
@@ -416,6 +407,24 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_DimensionObs;
+        
+        /// <summary>
+        /// lbl_Dimension_ObsRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Dimension_ObsRemarks;
+        
+        /// <summary>
+        /// TB_Dimension_ObsRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Dimension_ObsRemarks;
         
         /// <summary>
         /// Std_gsmwt_Div control.
@@ -454,13 +463,13 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_GMS_Std;
         
         /// <summary>
-        /// RV_TB_GMS_Std control.
+        /// CV_TB_GMS_Std control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_GMS_Std;
+        protected global::System.Web.UI.WebControls.CustomValidator CV_TB_GMS_Std;
         
         /// <summary>
         /// TB_GMS_Std control.
@@ -508,15 +517,6 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_GSM_Obs;
         
         /// <summary>
-        /// RV_TB_GSM_Obs control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_GSM_Obs;
-        
-        /// <summary>
         /// TB_GSM_Obs control.
         /// </summary>
         /// <remarks>
@@ -524,6 +524,24 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_GSM_Obs;
+        
+        /// <summary>
+        /// lbl_GSM_ObsRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_GSM_ObsRemarks;
+        
+        /// <summary>
+        /// GSM_ObsRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox GSM_ObsRemarks;
         
         /// <summary>
         /// Lbl_TB_Remarks control.

@@ -436,7 +436,7 @@ namespace AnmolDristi
             if (DDL_ProductBrand.SelectedIndex != 0)
             {
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
-                BrandSKUBinder(selectedProductBrandValue);
+                //BrandSKUBinder(selectedProductBrandValue);
 
                 DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
 
@@ -494,30 +494,30 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowSKUInvalidErrorNotification", DDL_ProductBrand_Error_script, false);
             }
         }
-        private void BrandSKUBinder(string selectedProductBrandValue)
-        {
-            string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue";
-            string textField = "SKU_name";
-            string valueField = "SKUId";
+        //private void BrandSKUBinder(string selectedProductBrandValue)
+        //{
+        //    string query = "SELECT SKUId, SKU_name FROM MST_Brand_SKU WHERE brand_id = @SelectedPlantValue";
+        //    string textField = "SKU_name";
+        //    string valueField = "SKUId";
 
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedProductBrandValue), out recordsBound);
+        //    bool recordsBound;
+        //    DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedProductBrandValue), out recordsBound);
 
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
+        //    if (!recordsBound)
+        //    {
+        //        DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
 
-                string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
-                    new PNotify({
-                        title: 'Error',
-                        text: 'An error occurred!',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
-            }
-        }
+        //        string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
+        //            new PNotify({
+        //                title: 'Error',
+        //                text: 'An error occurred!',
+        //                type: 'error',
+        //                styling: 'bootstrap3'
+        //            });
+        //        </script>";
+        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
+        //    }
+        //}
 
 
         protected void Btn_Basic_Data_Click(object sender, EventArgs e)
@@ -530,8 +530,10 @@ namespace AnmolDristi
             string plantLine = DDL_PlantLine.SelectedValue;
             string productCategory = DDL_ProductCategory.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue;
-            string brandSKU = DDL_BrandSKU.SelectedValue;
+            //string brandSKU = DDL_BrandSKU.SelectedValue;
             //string varietyPacket = TB_VartyPkt.Text;
+
+            string brandSKU = string.Empty;
             string varietyPacket = string.Empty;
             string RejectionKgs = TB_RejectionKgs.Text;
             string shift = hdn_shiftvalue.Value.ToString();
@@ -674,7 +676,7 @@ namespace AnmolDristi
             DDL_PlantLine.SelectedIndex = -1;
             DDL_ProductCategory.SelectedIndex = -1;
             DDL_ProductBrand.SelectedIndex = -1;
-            DDL_BrandSKU.SelectedIndex = -1;
+            //DDL_BrandSKU.SelectedIndex = -1;
 
 
             //TB_VartyPkt.Text = string.Empty;
@@ -693,58 +695,95 @@ namespace AnmolDristi
 
         protected void btn_oven_save_Click(object sender, EventArgs e)
         {
-            // Capture the form data
-            string btRpm = TB_BTRPM.Text.Trim();
-            string dryGauge = TB_Gauge.Text.Trim();
-            string dryWeight = TB_Weight.Text.Trim();
-            string dippedWeight = TB_DippedWeight.Text.Trim();
-            string squareShapeLength = TB_Length.Text.Trim();
-            string squareShapeWidth = TB_Width.Text.Trim();
-            string roundShapeDiameter = TB_Diameter.Text.Trim();
-            string pktWeight = TB_PktWeight.Text.Trim();
-            string biscuitsPerPkt = TB_BiscuitsPerPkt.Text.Trim();
-            string ovenStartTimeStr = TB_StartTime.Text.Trim();
-            string ovenStopTimeStr = TB_StopTime.Text.Trim();
-            string reason = TB_Reason.Text.Trim();
-
-            try
+            if (OVN_Id != string.Empty)
             {
-                // Convert oven start and stop times to TimeSpan objects
-                TimeSpan ovenStartTime = TimeSpan.Parse(ovenStartTimeStr);
-                TimeSpan ovenStopTime = TimeSpan.Parse(ovenStopTimeStr);
+                // Capture the form data
+                //string btRpm = TB_BTRPM.Text.Trim();
+                string btRpm = TB_BakingTime.Text.ToString();
+                string dryGauge = TB_Gauge.Text.Trim();
+                //string dryWeight = TB_Weight.Text.Trim();
+                //string dippedWeight = TB_DippedWeight.Text.Trim();
+                string dryWeight = TB_wgtwtoil.Text.Trim();
+                string dippedWeight = TB_wgtwoil.Text.Trim();
+                string oilpercent = string.Empty;
+                string squareShapeLength = TB_Length.Text.Trim();
+                string squareShapeWidth = TB_Width.Text.Trim();
+                string roundShapeDiameter = TB_Diameter.Text.Trim();
+                //string pktWeight = TB_PktWeight.Text.Trim();
+                //the below field stores the oil percentage value
+                string pktWeight = TB_oilpercent.Text.Trim();
+                string biscuitsPerPkt = TB_BiscuitsPerPkt.Text.Trim();
+                string ovenStartTimeStr = TB_StartTime.Text.Trim();
+                string ovenStopTimeStr = TB_StopTime.Text.Trim();
+                string reason = TB_Reason.Text.Trim();
 
-                // Calculate Oven Loss Time as a TimeSpan
-                TimeSpan ovenLossTimeSpan = ovenStopTime - ovenStartTime;
-                if (ovenLossTimeSpan < TimeSpan.Zero)
+                try
                 {
-                    ovenLossTimeSpan = TimeSpan.Zero; // Adjust if stop time is before start time
+                    // Convert oven start and stop times to TimeSpan objects
+                    TimeSpan ovenStartTime = TimeSpan.Parse(ovenStartTimeStr);
+                    TimeSpan ovenStopTime = TimeSpan.Parse(ovenStopTimeStr);
+
+                    // Calculate Oven Loss Time as a TimeSpan
+                    TimeSpan ovenLossTimeSpan = ovenStopTime - ovenStartTime;
+                    if (ovenLossTimeSpan < TimeSpan.Zero)
+                    {
+                        ovenLossTimeSpan = TimeSpan.Zero; // Adjust if stop time is before start time
+                    }
+
+                    // Convert Oven Loss Time to SQL TIME format (HH:mm:ss)
+                    string ovenLossTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                        ovenLossTimeSpan.Hours, ovenLossTimeSpan.Minutes, ovenLossTimeSpan.Seconds);
+
+                    // Assume the primary key is obtained or passed as a parameter (e.g., from a hidden field or query string)
+                    //int primaryKey = int.Parse(GenerateUniqueOVNId().Value);
+
+                    // Call the method to update the database
+
+                    UpdateOvenReport(btRpm, dryGauge, dryWeight, dippedWeight, squareShapeLength, squareShapeWidth, roundShapeDiameter, pktWeight, biscuitsPerPkt, ovenStartTimeStr, ovenStopTimeStr, ovenLossTime, reason);
+                    lbl_oven.Text = "Data updated successfully.";
+                    lbl_oven.ForeColor = System.Drawing.Color.Green;
+
+                    string Data_SuccessScript2 = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Data Success',
+                                text: 'Recorded Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                    // RegisterStartupScript adds the JavaScript code to the page
+                    ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification2", Data_SuccessScript2, false);
                 }
-
-                // Convert Oven Loss Time to SQL TIME format (HH:mm:ss)
-                string ovenLossTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                    ovenLossTimeSpan.Hours, ovenLossTimeSpan.Minutes, ovenLossTimeSpan.Seconds);
-
-                // Assume the primary key is obtained or passed as a parameter (e.g., from a hidden field or query string)
-                //int primaryKey = int.Parse(GenerateUniqueOVNId().Value);
-
-                // Call the method to update the database
-
-                UpdateOvenReport(btRpm, dryGauge, dryWeight, dippedWeight, squareShapeLength, squareShapeWidth, roundShapeDiameter, pktWeight, biscuitsPerPkt, ovenStartTimeStr, ovenStopTimeStr, ovenLossTime, reason);
-                lbl_oven.Text = "Data updated successfully.";
-                lbl_oven.ForeColor = System.Drawing.Color.Green;
+                catch (FormatException ex)
+                {
+                    lbl_oven.Text = "Invalid time format: " + ex.Message;
+                    lbl_oven.ForeColor = System.Drawing.Color.Red;
+                    // Handle format errors for date parsing
+                    //throw new Exception("Invalid time format: " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    // Handle general errors
+                    lbl_oven.Text = "Error: " + ex.Message;
+                    lbl_oven.ForeColor = System.Drawing.Color.Red;
+                }
             }
-            catch (FormatException ex)
+            else
             {
-                lbl_oven.Text = "Invalid time format: " + ex.Message;
-                lbl_oven.ForeColor = System.Drawing.Color.Red;
-                // Handle format errors for date parsing
-                //throw new Exception("Invalid time format: " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                // Handle general errors
-                lbl_oven.Text = "Error: " + ex.Message;
-                lbl_oven.ForeColor = System.Drawing.Color.Red;
+                string NO_BasicData = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'NO Basic Data',
+                                text: 'Initiate from Step-1!!',
+                                type: 'warning',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                // RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "NO_BasicData_Error", NO_BasicData, false);
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('basicData-tab').click();", true);
             }
         }
 
@@ -753,21 +792,21 @@ namespace AnmolDristi
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             string query = @"
-        UPDATE TRN_FINAL_OVEN_REPORT
-        SET BT_RPM = @BT_RPM,
-            Dry_Gauge = @Dry_Gauge,
-            Dry_Weight = @Dry_Weight,
-            Dipped_Weight = @Dipped_Weight,
-            Square_Shape_Length = @Square_Shape_Length,
-            Square_Shape_Width = @Square_Shape_Width,
-            Round_Shape_Diameter = @Round_Shape_Diameter,
-            PktWeight = @PktWeight,
-            BiscuitsPerPkt = @BiscuitsPerPkt,
-            Oven_Start_Time = @Oven_Start_Time,
-            Oven_Stop_Time = @Oven_Stop_Time,
-            Oven_Loss_Time = @Oven_Loss_Time,
-            Reason = @Reason
-        WHERE OVN_Id = @OVN_Id";
+                UPDATE TRN_FINAL_OVEN_REPORT
+                SET BT_RPM = @BT_RPM,
+                    Dry_Gauge = @Dry_Gauge,
+                    Dry_Weight = @Dry_Weight,
+                    Dipped_Weight = @Dipped_Weight,
+                    Square_Shape_Length = @Square_Shape_Length,
+                    Square_Shape_Width = @Square_Shape_Width,
+                    Round_Shape_Diameter = @Round_Shape_Diameter,
+                    PktWeight = @PktWeight,
+                    BiscuitsPerPkt = @BiscuitsPerPkt,
+                    Oven_Start_Time = @Oven_Start_Time,
+                    Oven_Stop_Time = @Oven_Stop_Time,
+                    Oven_Loss_Time = @Oven_Loss_Time,
+                    Reason = @Reason
+                WHERE OVN_Id = @OVN_Id";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -806,14 +845,16 @@ namespace AnmolDristi
         protected void btn_oven_reset_Click(object sender, EventArgs e)
         {
             // Clear all input fields
-            TB_BTRPM.Text = string.Empty;
+            TB_BakingTime.Text = string.Empty;
             TB_Gauge.Text = string.Empty;
-            TB_Weight.Text = string.Empty;
-            TB_DippedWeight.Text = string.Empty;
+            //dry weight
+            TB_wgtwtoil.Text = string.Empty;
+            //dipped weight
+            TB_wgtwoil.Text = string.Empty;
             TB_Length.Text = string.Empty;
             TB_Width.Text = string.Empty;
             TB_Diameter.Text = string.Empty;
-            TB_PktWeight.Text = string.Empty;
+            //TB_PktWeight.Text = string.Empty;
             TB_BiscuitsPerPkt.Text = string.Empty;
             TB_StartTime.Text = string.Empty;
             TB_StopTime.Text = string.Empty;

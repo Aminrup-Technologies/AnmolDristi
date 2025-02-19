@@ -196,6 +196,31 @@
                                     <asp:Label ID="Label22" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>RM-0
                             </a>
+                            <a class="btn btn-app" href="rm_class_1_frmctrl.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:Label ID="Label23" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>RM-1
+                            </a>
+                            <a class="btn btn-app" href="#">
+                                <span class="badge bg-warning">WIP
+                                    <asp:Label ID="Label24" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>RM-2
+                            </a>
+                            <a class="btn btn-app" href="rm_class_3_frmctrl.aspx">
+                                <span class="badge bg-green">OK
+                                    <asp:Label ID="Label25" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>RM-3
+                            </a>
+                            <a class="btn btn-app" href="#">
+                                <span class="badge bg-warning">WIP
+                                    <asp:Label ID="Label26" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>RM-4
+                            </a>
+                            <a class="btn btn-app" href="#">
+                                <span class="badge bg-warning">WIP
+                                    <asp:Label ID="Label27" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>RM-5
+                            </a>
                         </div>
                     </div>
                 </div>

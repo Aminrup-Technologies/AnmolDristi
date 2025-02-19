@@ -66,50 +66,184 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
         function validateGSM() {
-            // Get the value of the GSM input field
-            var gsmValue = parseFloat(document.getElementById('<%=TB_GMS_Std.ClientID %>').value);
-
-            // Get the remark section element
+            var gsmValue = document.getElementById("TB_GMS_Std").value.trim();
             var remarkSection = document.getElementById("remarkSection");
 
-            // Valid range for GSM (Standard value = 100g, Lower Tolerance = 99.5g, Upper Tolerance = 101g)
-            var lowerLimit = 0.00;
-            var upperLimit = 1000.0;
+            var minLimit = 0.00;
+            var maxLimit = 1000.00;
 
-            // Check if the GSM value is outside the valid range
-            if (gsmValue < lowerLimit || gsmValue > upperLimit) {
-                // Show the remark section if the value is outside the range
-                remarkSection.style.display = "block";
+            // Regular expressions
+            var singleValuePattern = /^\d+(\.\d+)?$/;
+            var rangePattern = /^(\d+(\.\d+)?)\s*to\s*(\d+(\.\d+)?)$/;
+            var tolerancePattern = /^(\d+(\.\d+)?)\s*±\s*(\d+(\.\d+)?)%$/;
+
+            let isValid = false;
+
+            if (singleValuePattern.test(gsmValue)) {
+                let value = parseFloat(gsmValue);
+                isValid = value >= minLimit && value <= maxLimit;
+            }
+            else if (rangePattern.test(gsmValue)) {
+                let matches = gsmValue.match(rangePattern);
+                let lower = parseFloat(matches[1]);
+                let upper = parseFloat(matches[3]);
+                isValid = lower >= minLimit && upper <= maxLimit;
+            }
+            else if (tolerancePattern.test(gsmValue)) {
+                let matches = gsmValue.match(tolerancePattern);
+                let base = parseFloat(matches[1]);
+                let tolerance = parseFloat(matches[3]);
+                let lower = base - (base * (tolerance / 100));
+                let upper = base + (base * (tolerance / 100));
+                isValid = lower >= minLimit && upper <= maxLimit;
+            }
+
+            if (!isValid) {
+                remarkSection.style.display = "block"; // Show remark section if invalid
             } else {
-                // Hide the remark section if the value is within the valid range
-                remarkSection.style.display = "none";
+                remarkSection.style.display = "none";  // Hide if valid
             }
         }
-    </script>
-    <script type="text/javascript">
+
+        function validateObservedGSM() {
+            var stdGSMInput = document.getElementById('<%= TB_GMS_Std.ClientID %>').value.trim();
+            var obsGSMValue = parseFloat(document.getElementById('<%= TB_GSM_Obs.ClientID %>').value);
+            var remarksDiv = document.getElementById("GSM_ObsremarkSection");
+            var rangeText = document.getElementById("GSM_ValidRange");
+
+            console.log("Raw STD GSM Input:", stdGSMInput);
+            console.log("Raw Observed GSM Input:", obsGSMValue);
+
+            var regex = /^([\d.]+)\s*±\s*([\d.]+)%?$/; // Regex to match "27.3 ± 5%" format
+
+            var stdGSMValue, tolerancePercent;
+
+            if (regex.test(stdGSMInput)) {
+                var matches = stdGSMInput.match(regex);
+                stdGSMValue = parseFloat(matches[1]); // Extract standard value (e.g., 27.3)
+                tolerancePercent = parseFloat(matches[2]) / 100; // Convert 5% to 0.05
+            } else {
+                stdGSMValue = parseFloat(stdGSMInput); // If no ± tolerance, assume no percentage
+                tolerancePercent = 0.05; // Default tolerance to 5%
+            }
+
+            console.log("Parsed STD GSM Value:", stdGSMValue);
+            console.log("Parsed Tolerance Percentage:", tolerancePercent * 100, "%");
+
+            if (isNaN(stdGSMValue)) {
+                rangeText.innerHTML = "Expected Range: (Enter a valid STD GSM first)";
+                rangeText.style.color = "red";
+                console.warn("Invalid STD GSM Value. Cannot calculate range.");
+                return;
+            }
+
+            // Calculate tolerance range dynamically
+            var tolerance = stdGSMValue * tolerancePercent;
+            var lowerLimit = (stdGSMValue - tolerance).toFixed(2);
+            var upperLimit = (stdGSMValue + tolerance).toFixed(2);
+
+            console.log("Calculated Tolerance Value:", tolerance);
+            console.log("Expected Range:", lowerLimit, "-", upperLimit);
+
+            // Show expected range
+            rangeText.innerHTML = `Expected Range: ${lowerLimit} - ${upperLimit}`;
+            rangeText.style.color = "green";
+
+            // Validate Observed GSM
+            if (!isNaN(obsGSMValue)) {
+                console.log("Observed GSM Value:", obsGSMValue);
+                if (obsGSMValue < lowerLimit || obsGSMValue > upperLimit) {
+                    console.warn("Observed GSM is OUT of range. Showing remark section.");
+                    remarksDiv.style.display = "block"; // Show remarks
+                } else {
+                    console.log("Observed GSM is WITHIN range. Hiding remark section.");
+                    remarksDiv.style.display = "none"; // Hide remarks
+                }
+            } else {
+                console.warn("Invalid Observed GSM Value.");
+            }
+        }
+
+
+
+        function validateObservedDimension() {
+            var stdDimInput = document.getElementById('<%= TB_DimensionStd.ClientID %>').value.trim();
+            var obsDimValue = parseFloat(document.getElementById('<%= TB_DimensionObs.ClientID %>').value);
+            var remarksDiv = document.getElementById("Dimension_ObsremarkSection");
+            var rangeText = document.getElementById("Dimension_ValidRange");
+
+            console.log("Raw STD Dimension Input:", stdDimInput);
+            console.log("Raw Observed Dimension Input:", obsDimValue);
+
+            var regex = /^([\d.]+)\s*±\s*([\d.]+)%?$/; // Regex to match "27.3 ± 5%" format
+
+            var stdDimValue, tolerancePercent;
+
+            if (regex.test(stdDimInput)) {
+                var matches = stdDimInput.match(regex);
+                stdDimValue = parseFloat(matches[1]); // Extract standard value (e.g., 27.3)
+                tolerancePercent = parseFloat(matches[2]) / 100; // Convert 5% to 0.05
+            } else {
+                stdDimValue = parseFloat(stdDimInput); // If no ± tolerance, assume no percentage
+                tolerancePercent = 0.0; // Default tolerance to 5%
+            }
+
+            console.log("Parsed STD Dimension Value:", stdDimValue);
+            console.log("Parsed Tolerance Percentage:", tolerancePercent * 100, "%");
+
+            if (isNaN(stdDimValue)) {
+                rangeText.innerHTML = "Expected Range: (Enter a valid STD Dimension first)";
+                rangeText.style.color = "red";
+                console.warn("Invalid STD Dimension Value. Cannot calculate range.");
+                return;
+            }
+
+            // Calculate tolerance range dynamically
+            var tolerance = stdDimValue * tolerancePercent;
+            var lowerLimit = (stdDimValue - tolerance).toFixed(2);
+            var upperLimit = (stdDimValue + tolerance).toFixed(2);
+
+            console.log("Calculated Tolerance Value:", tolerance);
+            console.log("Expected Range:", lowerLimit, "-", upperLimit);
+
+            // Show expected range
+            rangeText.innerHTML = `Expected Range: ${lowerLimit} - ${upperLimit}`;
+            rangeText.style.color = "green";
+
+            // Validate Observed Dimension
+            if (!isNaN(obsDimValue)) {
+                console.log("Observed Dimension Value:", obsDimValue);
+                if (obsDimValue < lowerLimit || obsDimValue > upperLimit) {
+                    console.warn("Observed Dimension is OUT of range. Showing remark section.");
+                    remarksDiv.style.display = "block"; // Show remarks
+                } else {
+                    console.log("Observed Dimension is WITHIN range. Hiding remark section.");
+                    remarksDiv.style.display = "none"; // Hide remarks
+                }
+            } else {
+                console.warn("Invalid Observed Dimension Value.");
+            }
+        }
+
+
+
+
         function validateDimension() {
-            // Get the value of the Dimension input field
             var dimensionValue = parseFloat(document.getElementById('<%= TB_DimensionStd.ClientID %>').value);
-
-            // Get the remark section element
             var remarkSection = document.getElementById("remarkSection1");
-
-            // Valid range for dimension: 99.5mm to 101mm
             var lowerLimit = 0.00;
             var upperLimit = 1000.00;
-
-            // Check if the Dimension value is outside the valid range
             if (isNaN(dimensionValue) || dimensionValue < lowerLimit || dimensionValue > upperLimit) {
-                // Show the remark section if the value is outside the range (below 99.5 or above 101)
                 remarkSection.style.display = "block";
             } else {
-                // Hide the remark section if the value is within the valid range
                 remarkSection.style.display = "none";
             }
         }
     </script>
+
     <asp:HiddenField ID="hdn_formid" runat="server" />
     <asp:HiddenField ID="hdn_shiftvalue" runat="server" />
+
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
@@ -221,46 +355,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3" id="Std_Dim_Div" runat="server" visible="true">
+
+                            <%--<div class="col-md-3" id="Std_Dim_Div" runat="server" visible="true">
                                 <div class="mb-3">
-                                    <!-- Label for Standard Dimension (in mm) -->
-                                    <asp:Label ID="LBL_DimensionStd" runat="server" AssociatedControlID="TB_DimensionStd" Text="Standard Dimension (in mm):"
-                                        ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:Literal ID="span_Dimension" runat="server"
-                                        Text='<%# string.IsNullOrEmpty(Eval("Dimension_Std")?.ToString()) ? "0.00" : Eval("Dimension_Std") %>'></asp:Literal>
-
-                                    <!-- Required Field Validator -->
-                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionStd" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStd"
-                                        ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-
-                                    <!-- Range Validator to ensure the input is within the valid range -->
-                                    <asp:RangeValidator ID="RV_TB_DimensionStd" runat="server" ControlToValidate="TB_DimensionStd" ValidationGroup="Submit"
-                                        ErrorMessage="Value must be between 0.00mm and 1000.0mm" MinimumValue="0.00" MaximumValue="1000.00" Type="Double"
-                                        Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
-
-                                    <!-- Input TextBox for Standard Dimension (in mm) -->
+                                    <asp:Label ID="LBL_DimensionStd" runat="server" AssociatedControlID="TB_DimensionStd" Text="Standard Dimension (in mm):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Literal ID="span_Dimension" runat="server" Text='<%# string.IsNullOrEmpty(Eval("Dimension_Std")?.ToString()) ? "0.00" : Eval("Dimension_Std") %>'></asp:Literal>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionStd" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStd" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RangeValidator ID="RV_TB_DimensionStd" runat="server" ControlToValidate="TB_DimensionStd" ValidationGroup="Submit" ErrorMessage="Value must be between 0.00mm and 1000.0mm" MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DimensionStd" runat="server" CssClass="form-control form-control-sm rounded"
-                                            Placeholder="Enter 0.00mm and 1000.0mm Dimension" Text="0.00" MaxLength="10" OnKeyUp="validateDimension()"
-                                            ClientIDMode="Static"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionStd" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter 0.00mm and 1000.0mm Dimension" Text="0.00" MaxLength="10" OnKeyUp="validateDimension()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Hidden Remark Section -->
-                            <div class="col-md-3" id="remarkSection1" style="display: none;">
-                                <div class="mb-3">
-                                    <!-- Label for Remark -->
-                                    <asp:Label ID="Lbl_Remark_Dimension" runat="server" AssociatedControlID="TB_Remarks" Text="Please provide a remark for deviation:"
-                                        ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                            </div>--%>
 
-                                    <!-- Input TextBox for Remark -->
+                            <%--<div class="col-md-3" id="remarkSection1" style="display: none;">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_Remark_Dimension" runat="server" AssociatedControlID="TB_Remarks" Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Remark_Dimension" runat="server" CssClass="form-control form-control-sm rounded"
-                                            Placeholder="Enter remark for deviation"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Remark_Dimension" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter remark for deviation"></asp:TextBox>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                            </div>--%>
+
+                            <%--<div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_DimensionObs" runat="server" AssociatedControlID="TB_DimensionObs" Text="Observed Dimension (in mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_DimensionObs" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionObs" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -269,57 +386,94 @@
                                         <asp:TextBox ID="TB_DimensionObs" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Observed Dimension (in mm)"></asp:TextBox>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3"  id="Std_gsmwt_Div" runat="server" visible="true">
+                            </div>--%>
+
+                            <div class="col-md-3" id="Std_Dim_Div" runat="server" visible="true">
                                 <div class="mb-3">
-                                    <!-- Label for GSM/WT per 10 PS (STD) -->
-                                    <asp:Label ID="Lbl_TB_GMS_Std" runat="server" AssociatedControlID="TB_GMS_Std"
-                                        Text="GSM/WT per 10 PS (STD):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:Literal ID="span_GMS" runat="server"
-                                        Text='<%# string.IsNullOrEmpty(Eval("GMS_Std")?.ToString()) ? "0.00" : Eval("GMS_Std") %>'></asp:Literal>
-
-                                    <!-- Required Field Validator -->
-                                    <asp:RequiredFieldValidator ID="RFV_TB_GMS_Std" runat="server" ErrorMessage="Input Required"
-                                        ControlToValidate="TB_GMS_Std" ValidationGroup="Submit" InitialValue="" Display="Dynamic"
-                                        ForeColor="Red"></asp:RequiredFieldValidator>
-
-                                    <!-- Range Validator to ensure the input is within the valid range -->
-                                    <asp:RangeValidator ID="RV_TB_GMS_Std" runat="server" ControlToValidate="TB_GMS_Std"
-                                        ValidationGroup="Submit" ErrorMessage="Value must be between 0.00g to 1000.00g"
-                                        MinimumValue="0.00" MaximumValue="1000.00" Type="Double" Display="Dynamic"
-                                        ForeColor="Red"></asp:RangeValidator>
-                                    <!-- Input TextBox for GSM/WT per 10 PS (STD) -->
+                                    <asp:Label ID="LBL_DimensionStd" runat="server" AssociatedControlID="TB_DimensionStd" Text="Dimension (STD):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Literal ID="span_Dimension" runat="server" Text='<%# string.IsNullOrEmpty(Eval("GMS_Std")?.ToString()) ? "0.00" : Eval("GMS_Std") %>'></asp:Literal>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionStd" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionStd" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:CustomValidator ID="CV_TB_DimensionStd" runat="server" ControlToValidate="TB_DimensionStd" ValidationGroup="Submit" ErrorMessage="Invalid input format! Use: '27.3 ± 5%', '8.2 to 10.2', or '420'" Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_GMS_Std" runat="server" CssClass="form-control form-control-sm rounded"
-                                            Placeholder="Enter 0.00g to 1000.00g GSM/Weight per 10 PS" Text="0.00" MaxLength="10"
-                                            OnKeyUp="validateGSM()" ClientIDMode="Static"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DimensionStd" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter STD Dimension" MaxLength="10" onkeyup="validateObservedDimension()" ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Hidden Remark Section -->
+
+                            <div class="col-md-3" id="remarkSection1" style="display: none;">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_Remark_Dimension" runat="server" AssociatedControlID="TB_Remark_Dimension" Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Remark_Dimension" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter remark for deviation"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_DimensionObs" runat="server" AssociatedControlID="TB_DimensionObs" Text="Dimension (OBS):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_DimensionObs" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionObs" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_DimensionObs" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Observed Dimension" MaxLength="10" onkeyup="validateObservedDimension()" ClientIDMode="Static"></asp:TextBox>
+                                        <small id="Dimension_ValidRange" class="form-text text-muted" style="font-weight: bold; color: green;">
+                                            Expected Range: (STD Value Missing)
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="Dimension_ObsremarkSection" style="display: none;">
+                                <div class="mb-3">
+                                    <asp:Label ID="lbl_Dimension_ObsRemarks" runat="server" AssociatedControlID="TB_Dimension_ObsRemarks" Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Dimension_ObsRemarks" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter remark for deviation"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="Std_gsmwt_Div" runat="server" visible="true">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_GMS_Std" runat="server" AssociatedControlID="TB_GMS_Std" Text="GSM/WT per 10 PS (STD):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Literal ID="span_GMS" runat="server" Text='<%# string.IsNullOrEmpty(Eval("GMS_Std")?.ToString()) ? "0.00" : Eval("GMS_Std") %>'></asp:Literal>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_GMS_Std" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_GMS_Std" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:CustomValidator ID="CV_TB_GMS_Std" runat="server" ControlToValidate="TB_GMS_Std" ValidationGroup="Submit" ErrorMessage="Invalid input format! Use: '27.3 ± 5%', '8.2 to 10.2', or '420'" Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_GMS_Std" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter STD GSM" MaxLength="10" onkeyup="validateObservedGSM()" ClientIDMode="Static"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-3" id="remarkSection" style="display: none;">
                                 <div class="mb-3">
-                                    <!-- Label for Remark -->
-                                    <asp:Label ID="Lbl_Remark_GSM" runat="server" AssociatedControlID="TB_Remark_GSM"
-                                        Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
-
-                                    <!-- Input TextBox for Remark -->
+                                    <asp:Label ID="Lbl_Remark_GSM" runat="server" AssociatedControlID="TB_Remark_GSM" Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Remark_GSM" runat="server" CssClass="form-control form-control-sm rounded"
-                                            Placeholder="Enter remark for deviation"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Remark_GSM" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter remark for deviation"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_GSM_Obs" runat="server" AssociatedControlID="TB_GSM_Obs" Text="GSM/WT per 10 PS (OBS):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_GSM_Obs" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_GSM_Obs" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RangeValidator ID="RV_TB_GSM_Obs" runat="server" ControlToValidate="TB_GSM_Obs" ValidationGroup="Submit" ErrorMessage="Invalid GSM/Weight" MinimumValue="0" MaximumValue="1000" Type="Double" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_GSM_Obs" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Observed GSM/Weight per 10 PS" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="TB_GSM_Obs" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Observed GSM" MaxLength="10" onkeyup="validateObservedGSM()" ClientIDMode="Static"></asp:TextBox>
+                                        <small id="GSM_ValidRange" class="form-text text-muted" style="font-weight: bold; color: green;">
+                                            Expected Range: (STD Value Missing)
+                                        </small>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-3" id="GSM_ObsremarkSection" style="display: none;">
+                                <div class="mb-3">
+                                    <asp:Label ID="lbl_GSM_ObsRemarks" runat="server" AssociatedControlID="TB_Remark_GSM" Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="GSM_ObsRemarks" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter remark for deviation"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_Remarks" runat="server" AssociatedControlID="TB_Remarks" Text="Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -335,7 +489,6 @@
                                     <div class="input-group input-group-sm">
                                         <asp:Button ID="btn_overwrap_submit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="btn_overwrap_submit_Click" />
                                         <asp:Button ID="btn_overwrap_reset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="btn_overwrap_reset_Click" />
-                                        <%--<asp:Button ID="Button1" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />--%>
                                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                     </div>
                                 </div>
@@ -356,12 +509,9 @@
 
                         </div>
                         <div class="x_content">
-                            <!-- Approver Flow Diagram -->
                             <div class="approver-flow">
                                 <div class="approver-item">
-                                    <p>
-                                        <asp:Label ID="Label9" runat="server" Text="Approver 1" />
-                                    </p>
+                                    <p><asp:Label ID="Label9" runat="server" Text="Approver 1" /></p>
                                     <asp:Image ID="Image3" runat="server" ImageUrl="~/WebData/No_Image.jpg" class="approver-photo" />
                                     <p>
                                         <asp:Label ID="Approver1NameLabel" runat="server" Text='<%# Eval("Approver1Name") %>' />

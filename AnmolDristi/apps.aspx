@@ -210,7 +210,7 @@
                                             <div class="col-md-55">
                                                 <div class="thumbnail">
                                                     <div class="image view view-first">
-                                                        <a href="http://115.112.186.71:80/login.aspx" target="_blank">
+                                                        <a href="http://115.112.186.71:8005/login.aspx" target="_blank">
                                                             <img style="width: 70%; display: block;" src="WebData/confbook.png" alt="image" height="100px" />
                                                         </a>
                                                     </div>

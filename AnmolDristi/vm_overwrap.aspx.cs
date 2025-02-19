@@ -175,7 +175,6 @@ namespace AnmolDristi
                         c.FormID as FormID,
                         'NA' as RecordID,
                         p.plant_name AS PlantName,
-                        pb.brand_name AS ProductBrand,
                         c.SubmittedByEmployeeCode as EmpCode,
                         u.EmployeeName AS EmpName,
                         c.SubmittedDate as SDate,
@@ -194,8 +193,6 @@ namespace AnmolDristi
                         TRN_OVERWRAP c
                     LEFT JOIN 
                         MST_PlantDetails p ON c.PlantName = p.plant_id
-                    LEFT JOIN
-                        MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
                     LEFT JOIN
                         MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
                     WHERE 

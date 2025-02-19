@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Aata_Maida_Form.aspx.cs" Inherits="AnmolDristi.Aata_Maida_Form" %>
+﻿<%@ Page Title="AIL | QC RM - Atta/ Maida" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Aata_Maida_Form.aspx.cs" Inherits="AnmolDristi.Aata_Maida_Form" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -111,8 +111,8 @@
 
             // Calculate difference in days
             const differenceInDays = (bestBeforeDate - mfgDate) / (1000 * 60 * 60 * 24);
-            if (differenceInDays < 0 || differenceInDays > 30) {
-                alert("Best Before Date must be within 30 days from the Manufacturing Date.");
+            if (differenceInDays < 0 || differenceInDays > 90) {
+                alert("Best Before Date must be within 90 days from the Manufacturing Date.");
                 bestBeforeDateInput.value = ""; // Reset invalid best before date
             }
 
@@ -237,7 +237,6 @@
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
-                    // Display a PNotify notification
                     new PNotify({
                         title: 'A Mail will be sent',
                         text: 'You have selected "Not Ok". Please provide additional remarks.',
@@ -645,20 +644,9 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_BrandName" runat="server" AssociatedControlID="TB_BrandName" Text="Brand Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_BrandName" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_BrandName" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_BrandName" ValidationGroup="Submit" runat="server" ControlToValidate="TB_BrandName" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="^[A-Za-z\s]+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_BrandName" ValidationGroup="Submit" runat="server" ControlToValidate="TB_BrandName" ForeColor="Red" ErrorMessage="Alphabet Only" ValidationExpression="^[A-Za-z\s]+$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_BrandName" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Supplier Brand Name"></asp:TextBox>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3" id="QuantityDIV" runat="server">
-                                <div class="mb-3">
-                                    <asp:Label ID="Lbl_TB_Quantity" runat="server" AssociatedControlID="TB_Quantity" Text="Quantity Supplied:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_TB_Quantity" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Quantity" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_Quantity" ValidationGroup="Submit" runat="server" ControlToValidate="TB_Quantity" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Quantity" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Quantity Value(in pkts)"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -670,6 +658,17 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_Supplier" runat="server" ControlToValidate="TB_Supplier" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Alphabet Only" ValidationExpression="^[A-Za-z\s]+$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_Supplier" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Text="" Placeholder="Supplier (3-20 characters)" MaxLength="20"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="QuantityDIV" runat="server">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_Quantity" runat="server" AssociatedControlID="TB_Quantity" Text="Quantity Supplied:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Quantity" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Quantity" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Quantity" ValidationGroup="Submit" runat="server" ControlToValidate="TB_Quantity" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Quantity" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Quantity Value(in pkts)"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -831,7 +830,6 @@
                                 <div class="mb-6">
                                     <asp:RequiredFieldValidator ID="RFV_TB_BeforeDate" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_BeforeDate" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:Label ID="Lbl_TB_BeforeDate" runat="server" AssociatedControlID="TB_BeforeDate" Text="Best Before Date : 30 days from manufacturing date & In clear readable form" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_BeforeDate" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" TextMode="Date" oninput="validateBestBeforeDate()"></asp:TextBox>
                                     </div>
@@ -864,7 +862,7 @@
 
                             <div class="col-md-6" id="VegLogoDIV" runat="server">
                                 <div class="mb-6">
-                                    <asp:RequiredFieldValidator ID="RFV_RBL_Veg_Logo" runat="server" ErrorMessage="*" ValidationGroup="Submit" ForeColor="Red" ControlToValidate="RBL_Fssai_Logo" Display="Static"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RFV_RBL_Veg_Logo" runat="server" ErrorMessage="*" ValidationGroup="Submit" ForeColor="Red" ControlToValidate="RBL_Veg_Logo" Display="Static"></asp:RequiredFieldValidator>
                                     <asp:Label ID="Label_Veg_Logo" runat="server" AssociatedControlID="RBL_Veg_Logo" Text=" Veg Logo : Must be present" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group-sm">
                                         <asp:RadioButtonList ID="RBL_Veg_Logo" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%">
@@ -1406,6 +1404,4 @@
 
         </div>
     </div>
-
-
 </asp:Content>
