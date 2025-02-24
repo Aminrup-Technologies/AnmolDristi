@@ -18,17 +18,17 @@ namespace AnmolDristi
         static string User_Photo = string.Empty;
         // Default folders
         static readonly string rootFolder = @"C:\";
-        static readonly string localFolder = @"D:\";
+        static readonly string localFolder = @"C:\";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                Img_CpLogo.ImageUrl = "WebData/Anmol_Logo.png";
-                lbl_companyname.Text = "Anmol Industries Limited";
+                Img_CpLogo.ImageUrl = "WebData/OH4Y_Logo.png";
+                lbl_companyname.Text = "Aminrup technologies";
                 lbl_currentyr.Text = DateTime.Now.Year.ToString();
-                lbl_compfooter.Text = "Anmol Industries Limited";
-                lbl_owner.Text = "IT Department";
+                lbl_compfooter.Text = "Aminrup technologies";
+                lbl_owner.Text = "Sufiya Naaz";
                 txt_loginid.Focus();
             }
         }
