@@ -28,6 +28,7 @@
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,6 +80,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="csm_massmeeting.aspx" />
     <Content Include="home.aspx" />
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
@@ -133,6 +135,13 @@
     </Compile>
     <Compile Include="blank.aspx.designer.cs">
       <DependentUpon>blank.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="csm_massmeeting.aspx.cs">
+      <DependentUpon>csm_massmeeting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="csm_massmeeting.aspx.designer.cs">
+      <DependentUpon>csm_massmeeting.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\QCInspectorDataAccess.cs" />
     <Compile Include="DatabaseHelper.cs" />
