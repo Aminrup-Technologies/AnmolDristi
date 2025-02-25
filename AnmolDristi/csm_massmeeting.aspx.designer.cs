@@ -15,13 +15,13 @@ namespace AnmolDristi
     {
 
         /// <summary>
-        /// hdn_meetingID control.
+        /// hdnPointsDiscussed control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdn_meetingID;
+        protected global::System.Web.UI.WebControls.HiddenField hdnPointsDiscussed;
 
         /// <summary>
         /// lbl_Date control.

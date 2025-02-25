@@ -17,8 +17,8 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:HiddenField ID="hdn_meetingID" runat="server" />
-
+    <%--<asp:HiddenField ID="hdn_meetingID" runat="server" />--%>
+     <asp:HiddenField ID="hdnPointsDiscussed" runat="server" /> 
 
 
   
@@ -174,8 +174,21 @@
                                         else {
                                             alert("At least one point is required.");
                                         }
+                                        }
+                                    function preparePoints() {
+                                            var container = document.getElementById('<%= PointsContainer.ClientID %>');
+                                            var inputs = container.getElementsByTagName('input');
+                                            var pointsArray = [];
+
+                                    for (var i = 0; i < inputs.length; i++) {
+                                        if (inputs[i].type === "text" && inputs[i].value.trim() !== "") {
+                                            pointsArray.push(inputs[i].value.trim());
+                                        }
                                     }
-                                </script>
+
+                                        document.getElementById('<%= hdnPointsDiscussed.ClientID %>').value = pointsArray.join(" | ");
+                                    }
+                                    </script>
 
 
 
@@ -198,7 +211,8 @@
                     <div class="mb-3">
                         <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                         <div class="input-group input-group-sm">
-                            <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
+                           <%-- <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />--%>
+                            <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClientClick="preparePoints();" OnClick="BtnSubmit_Click" />
                             <asp:Label ID="lblMsg" runat="server" ForeColor="Green" ></asp:Label>
                             <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                             <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />

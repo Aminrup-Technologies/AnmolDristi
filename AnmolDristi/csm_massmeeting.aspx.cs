@@ -41,7 +41,8 @@ namespace AnmolDristi
             string Designation = tb_des.Text;
             string Location = tb_loc.Text;
             string RFID = tb_rfid.Text;
-            string Points_Discussed= tb_points.Text;
+           // string Points_Discussed= tb_points.Text;
+            string Points_Discussed = hdnPointsDiscussed.Value;
             DateTime? Meeting_Date = string.IsNullOrEmpty(TB_Date.Text) ? (DateTime?)null : Convert.ToDateTime(TB_Date.Text);
             TimeSpan? Meeting_Time = string.IsNullOrEmpty(tb_time.Text) ? (TimeSpan?)null : TimeSpan.Parse(tb_time.Text);
             
