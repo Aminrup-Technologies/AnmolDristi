@@ -37,6 +37,12 @@
                                 <i class="fa fa-edit"></i>Mass Meeting
 
                             </a>
+                            <a class="btn btn-app" href="csm_massmeeting_report.aspx">
+                            <span class="badge bg-green">Ok
+                            <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
+                            <i class="fa fa-edit"></i>CSM Mass Meeting Report
+
+                            </a>
                         </div>
                     </div>
                 </div>

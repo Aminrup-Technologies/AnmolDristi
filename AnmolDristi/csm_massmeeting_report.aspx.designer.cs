@@ -7,47 +7,38 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AnmolDristi.qaqc
+namespace AnmolDristi
 {
 
 
-    public partial class qaqc_home
+    public partial class csm_massmeeting_report
     {
 
         /// <summary>
-        /// QC_Panel control.
+        /// gvMeetings control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl QC_Panel;
+        protected global::System.Web.UI.WebControls.GridView gvMeetings;
 
         /// <summary>
-        /// lbl_tbttodaycount control.
+        /// BtnReset control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_tbttodaycount;
+        protected global::System.Web.UI.WebControls.Button BtnReset;
 
         /// <summary>
-        /// Label1 control.
+        /// btn_home control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Button btn_home;
     }
 }

@@ -21,18 +21,8 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //TB_Date.Text = "";
-            //tb_time.Text = "";
-            //tb_loc.Text = "";
-            //tb_name.Text = "";
-            //tb_des.Text = "";
-            //tb_rfid.Text = "";
-            //tb_points.Text = "";
-           
-
-
+            
         }
-        
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -46,9 +36,6 @@ namespace AnmolDristi
             DateTime? Meeting_Date = string.IsNullOrEmpty(TB_Date.Text) ? (DateTime?)null : Convert.ToDateTime(TB_Date.Text);
             TimeSpan? Meeting_Time = string.IsNullOrEmpty(tb_time.Text) ? (TimeSpan?)null : TimeSpan.Parse(tb_time.Text);
             
-
-
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -130,6 +117,7 @@ namespace AnmolDristi
         {
 
         }
+        
 
 
 
