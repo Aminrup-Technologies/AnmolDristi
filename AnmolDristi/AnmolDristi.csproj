@@ -97,6 +97,7 @@
   <ItemGroup>
     <Content Include="blank.aspx" />
     <Content Include="login.aspx" />
+    <Content Include="csm_ppe_checklist_report.aspx" />
     <Content Include="WebData\No_Image.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -180,6 +181,13 @@
     </Compile>
     <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="csm_ppe_checklist_report.aspx.cs">
+      <DependentUpon>csm_ppe_checklist_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="csm_ppe_checklist_report.aspx.designer.cs">
+      <DependentUpon>csm_ppe_checklist_report.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
