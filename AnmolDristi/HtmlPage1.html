@@ -1,0 +1,1030 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="css/style1.css">
+</head>
+<body>
+    <div class="right_col" role="main">
+        <div class="container py-4">
+            <div class="row mb-0 mb-md-2">
+                <%-- Date Input--%>
+                <div class="col-12 col-md-3 mb-2 mb-md-0">
+                    <label for="date" class="form-label">Date <sup class="text-danger">*</sup></label>
+                    <input id="date" type="date" class="form-control">
+                    <div class="error-font text-danger mt-1" id="date_error">
+                    </div>
+                </div>
+
+                <!-- Department Input 1 -->
+                <div class="col-12 col-md-3 mb-2 mb-md-0">
+                    <label for="department1" class="form-label">Department <sup class="text-danger">*</sup></label>
+                    <textarea id="department1" class="form-control w-100" rows="1"></textarea>
+                    <div class="error-font text-danger mt-1" id="department_error">
+                    </div>
+                </div>
+
+                <!-- Department Input 2 -->
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                    <label for="department2" class="form-label">Job Tile <sup class="text-danger">*</sup></label>
+                    <textarea id="department2" class="form-control w-100" rows="1"></textarea>
+                    <div class="error-font text-danger mt-1" id="jobtile_error">
+                    </div>
+                </div>
+            </div>
+
+            <form id="auditForm">
+                <div class="accordion" id="question_accordion">
+                    <!-- first section question -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading_1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse_1" aria-expanded="true" aria-controls="collapse_1">
+                                <h1 class="form-heading">Sort Out - SEIRI</h1>
+                            </button>
+                        </h2>
+                        <div id="collapse_1" class="accordion-collapse collapse show" aria-labelledby="heading_1"
+                             data-bs-parent="#question_accordion">
+                            <div class="accordion-body">
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Is the floor area free of unwanted items? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question"
+                                                           id="question_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question"
+                                                           id="question_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_textarea" id="question_textarea"></textarea>
+                                        <div id="question_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are tops and insides of all cupboards, shelves, tables,
+                                            etc. free of
+                                            unwanted items? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_1"
+                                                           id="question_1_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_1_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_1"
+                                                           id="question_1_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_1_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_1_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_1_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_1_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_1_textarea"
+                                                  id="question_1_textarea"></textarea>
+                                        <div id="question_1_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are Items stored according to frequencyof use? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_2"
+                                                           id="question_2_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_2_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_2"
+                                                           id="question_2_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_2_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_2_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_2_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_2_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_2_textarea"
+                                                  id="question_2_textarea"></textarea>
+                                        <div id="question_2_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are walls free of old posters, calendars, pictures,
+                                            notices etc.? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_3"
+                                                           id="question_3_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_3_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_3"
+                                                           id="question_3_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_3_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_3_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_3_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_3_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_3_textarea"
+                                                  id="question_3_textarea"></textarea>
+                                        <div id="question_3_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Is there a general clutter free appearance? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_4"
+                                                           id="question_4_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_4_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_4"
+                                                           id="question_4_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_4_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_4_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_4_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_4_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_4_textarea"
+                                                  id="question_4_textarea"></textarea>
+                                        <div id="question_4_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- second section question -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading_2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse_2" aria-expanded="false" aria-controls="collapse_2">
+                                <h1 class="form-heading">SET IN ORDER-SEITON</h1>
+                            </button>
+                        </h2>
+                        <div id="collapse_2" class="accordion-collapse collapse" aria-labelledby="heading_2"
+                             data-bs-parent="#question_accordion">
+                            <div class="accordion-body">
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are direction indications available to all facilities from
+                                            the entrance
+                                            onwards? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_5"
+                                                           id="question_5_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_5_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_5"
+                                                           id="question_5_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_5_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_5_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_5_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_5_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_5_textarea"
+                                                  id="question_5_textarea"></textarea>
+                                        <div id="question_5_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Do all items of equipment have identification labels ?
+                                            <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_6"
+                                                           id="question_6_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_6_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_6"
+                                                           id="question_6_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_6_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_6_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_6_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_6_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_6_textarea"
+                                                  id="question_6_textarea"></textarea>
+                                        <div id="question_6_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are all rooms, cubicles and similar areas clearly numbered
+                                            or named? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_7"
+                                                           id="question_7_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_7_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_7"
+                                                           id="question_7_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_7_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_7_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_7_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_7_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_7_textarea"
+                                                  id="question_7_textarea"></textarea>
+                                        <div id="question_7_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are specific areas demarcated for garbage/rejects/waste,
+                                            etc. <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_8"
+                                                           id="question_8_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_8_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_8"
+                                                           id="question_8_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_8_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_8_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_8_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_8_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_8_textarea"
+                                                  id="question_8_textarea"></textarea>
+                                        <div id="question_8_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are switches, fan regulators, controls, etc. labelled?
+                                            <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_9"
+                                                           id="question_9_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_9_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_9"
+                                                           id="question_9_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_9_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_9_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_9_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_9_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_9_textarea"
+                                                  id="question_9_textarea"></textarea>
+                                        <div id="question_9_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are all cables, wires, pipes etc, neat and straight? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_10"
+                                                           id="question_10_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_10_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_10"
+                                                           id="question_10_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_10_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_10_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_10_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_10_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_10_textarea"
+                                                  id="question_10_textarea"></textarea>
+                                        <div id="question_10_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            is colour coding used effectively for easy identification?
+                                            <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_11"
+                                                           id="question_11_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_11_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_11"
+                                                           id="question_11_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_11_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_11_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_11_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_11_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_11_textarea"
+                                                  id="question_11_textarea"></textarea>
+                                        <div id="question_11_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Is there a general appearance of orderliness? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_12"
+                                                           id="question_12_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_12_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_12"
+                                                           id="question_12_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_12_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_12_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_12_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_12_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_12_textarea"
+                                                  id="question_12_textarea"></textarea>
+                                        <div id="question_12_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Is it easy to find any item/document without delay? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_13"
+                                                           id="question_13_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_13_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_13"
+                                                           id="question_13_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_13_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_13_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_13_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_13_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_13_textarea"
+                                                  id="question_13_textarea"></textarea>
+                                        <div id="question_13_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- third section question -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading_3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse_3" aria-expanded="false" aria-controls="collapse_3">
+                                <h1 class="form-heading">SHINE-SEISO</h1>
+                            </button>
+                        </h2>
+                        <div id="collapse_3" class="accordion-collapse collapse" aria-labelledby="heading_3"
+                             data-bs-parent="#question_accordion">
+                            <div class="accordion-body">
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are cleaning schedules available and displayed? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_14"
+                                                           id="question_14_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_14_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_14"
+                                                           id="question_14_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_14_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_14_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_14_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_14_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_14_textarea"
+                                                  id="question_14_textarea"></textarea>
+                                        <div id="question_14_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are floors, walls, windows doors etc. maintained at a high
+                                            level of
+                                            cleanliness? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_15"
+                                                           id="question_15_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_15_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_15"
+                                                           id="question_15_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_15_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_15_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_15_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_15_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_15_textarea"
+                                                  id="question_15_textarea"></textarea>
+                                        <div id="question_15_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are Items stored according to frequencyof use? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_16"
+                                                           id="question_16_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_16_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_16"
+                                                           id="question_16_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_16_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_16_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_16_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_16_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_16_textarea"
+                                                  id="question_16_textarea"></textarea>
+                                        <div id="question_16_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are machines, equipment, tools, furniture maintained al a
+                                            high level of
+                                            cleanliness and their maintenance schedules displayed? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_17"
+                                                           id="question_17_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_17_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_17"
+                                                           id="question_17_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_17_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_17_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_17_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_17_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_17_textarea"
+                                                  id="question_17_textarea"></textarea>
+                                        <div id="question_17_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Is there a general appearance of cleanliness all round?
+                                            <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_18"
+                                                           id="question_18_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_18_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_18"
+                                                           id="question_18_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_18_not_ok">
+                                                        Not
+                                                        OK
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_18_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_18_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_18_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_18_textarea"
+                                                  id="question_18_textarea"></textarea>
+                                        <div id="question_18_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- fourth section question -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading_4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse_4" aria-expanded="false" aria-controls="collapse_4">
+                                <h1 class="form-heading">STANDARDIZE-SEIKETSU</h1>
+                            </button>
+                        </h2>
+                        <div id="collapse_4" class="accordion-collapse collapse" aria-labelledby="heading_4"
+                             data-bs-parent="#question_accordion">
+                            <div class="accordion-body">
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are all 55 procedures standardized? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_19"
+                                                           id="question_19_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_19_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_19"
+                                                           id="question_19_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_19_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_19_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_19_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_19_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_19_textarea"
+                                                  id="question_19_textarea"></textarea>
+                                        <div id="question_19_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are standard check lists used to regularly inspect 5s?
+                                            <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_20"
+                                                           id="question_20_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_20_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_20"
+                                                           id="question_20_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_20_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_20_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_20_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_20_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_20_textarea"
+                                                  id="question_20_textarea"></textarea>
+                                        <div id="question_20_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are labels, notices etc. standardized? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_21"
+                                                           id="question_21_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_21_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_21"
+                                                           id="question_21_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_21_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_21_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_21_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_21_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_21_textarea"
+                                                  id="question_21_textarea"></textarea>
+                                        <div id="question_21_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Do isles/gangways have a standard size and colour? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_22"
+                                                           id="question_22_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_22_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_22"
+                                                           id="question_22_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_22_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_22_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_22_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_22_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_22_textarea"
+                                                  id="question_22_textarea"></textarea>
+                                        <div id="question_22_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Are pipes, cables etc. colourcoded? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_23"
+                                                           id="question_23_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_23_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_23"
+                                                           id="question_23_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_23_not_ok">
+                                                        Not
+                                                        OK
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_23_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_23_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_23_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_23_textarea"
+                                                  id="question_23_textarea"></textarea>
+                                        <div id="question_23_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- five section question -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading_4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse_4" aria-expanded="false" aria-controls="collapse_4">
+                                <h1 class="form-heading">SUSTAIN-SHITSUKE</h1>
+                            </button>
+                        </h2>
+                        <div id="collapse_4" class="accordion-collapse collapse" aria-labelledby="heading_4"
+                             data-bs-parent="#question_accordion">
+                            <div class="accordion-body">
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            is there a system for how and when the 55 activities will
+                                            be implemented?
+                                            <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_24"
+                                                           id="question_24_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_24_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_24"
+                                                           id="question_24_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_24_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_24_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_24_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_24_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_24_textarea"
+                                                  id="question_24_textarea"></textarea>
+                                        <div id="question_24_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <asp:legend class="fs-6 mb-0">
+                                            Does management provide support to 55 programme by
+                                            recognition, resources
+                                            and leadership? <sup class="text-danger">*</sup>
+                                        </asp:legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_25"
+                                                           id="question_25_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_25_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_25"
+                                                           id="question_25_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_25_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_25_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_25_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_25_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_25_textarea"
+                                                  id="question_25_textarea"></textarea>
+                                        <div id="question_25_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Have first 350 become a part of the Dally work? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_26"
+                                                           id="question_26_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_26_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_26"
+                                                           id="question_26_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_26_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_26_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_26_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_26_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_26_textarea"
+                                                  id="question_26_textarea"></textarea>
+                                        <div id="question_26_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-border">
+                                    <div class="d-block d-sm-flex align-items-sm-center">
+                                        <legend class="fs-6 mb-0">
+                                            Do employees show positive interest in 55 activities? <sup class="text-danger">*</sup>
+                                        </legend>
+                                        <div class="min-widht-option">
+                                            <div class="d-flex justify-content-sm-between pt-2 pt-sm-0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="question_27"
+                                                           id="question_27_ok" value="Ok">
+                                                    <label class="form-check-label" for="question_27_ok">OK</label>
+                                                </div>
+                                                <div class="form-check ms-3 ms-sm-0">
+                                                    <input class="form-check-input" type="radio" name="question_27"
+                                                           id="question_27_not_ok" value="Not OK">
+                                                    <label class="form-check-label" for="question_27_not_ok">Not OK</label>
+                                                </div>
+                                            </div>
+                                            <div class="error-font text-danger text-sm-end mt-1" id="question_27_error">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="question_27_remarks" class="mt-1 d-none">
+                                        <label class="mb-1" for="question_27_textarea">
+                                            Remarks <sup class="text-danger">*</sup>
+                                        </label>
+                                        <textarea class="w-100" name="question_27_textarea"
+                                                  id="question_27_textarea"></textarea>
+                                        <div id="question_27_remarkserror" class="text-danger error-font mt-1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- final submit button -->
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" class="btn btn-outline-primary rounded-pill">Final Submit</button>
+                </div>
+            </form>
+            <!-- Modal -->
+            <div class="modal fade" id="formsubmitModal" tabindex="-1" aria-labelledby="formsubmitModalLabel"
+                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="formsubmitModalLabel">Thank You!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Your response has been recorded successfully.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Okay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
