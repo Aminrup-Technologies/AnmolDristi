@@ -261,7 +261,10 @@
     <Content Include="rm_class_1_frmctrl.aspx" />
     <Content Include="RM_Class_1_Submitter.aspx" />
     <Content Include="RM_Class_3.aspx" />
+    <Content Include="RM_Class_3_Approval.aspx" />
+    <Content Include="RM_Class_3_FinalApproval.aspx" />
     <Content Include="rm_class_3_frmctrl.aspx" />
+    <Content Include="RM_Class_3_Report.aspx" />
     <Content Include="viewusers.aspx" />
     <Content Include="vm_ccp_checklist.aspx" />
     <Content Include="vm_leak_test.aspx" />
@@ -971,12 +974,33 @@
     <Compile Include="RM_Class_3.aspx.designer.cs">
       <DependentUpon>RM_Class_3.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RM_Class_3_Approval.aspx.cs">
+      <DependentUpon>RM_Class_3_Approval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class_3_Approval.aspx.designer.cs">
+      <DependentUpon>RM_Class_3_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3_FinalApproval.aspx.cs">
+      <DependentUpon>RM_Class_3_FinalApproval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class_3_FinalApproval.aspx.designer.cs">
+      <DependentUpon>RM_Class_3_FinalApproval.aspx</DependentUpon>
+    </Compile>
     <Compile Include="rm_class_3_frmctrl.aspx.cs">
       <DependentUpon>rm_class_3_frmctrl.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="rm_class_3_frmctrl.aspx.designer.cs">
       <DependentUpon>rm_class_3_frmctrl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3_Report.aspx.cs">
+      <DependentUpon>RM_Class_3_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class_3_Report.aspx.designer.cs">
+      <DependentUpon>RM_Class_3_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="UploadImageHandler.ashx.cs">
       <DependentUpon>UploadImageHandler.ashx</DependentUpon>
