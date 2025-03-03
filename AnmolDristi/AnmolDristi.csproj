@@ -265,6 +265,11 @@
     <Content Include="RM_Class_3_FinalApproval.aspx" />
     <Content Include="rm_class_3_frmctrl.aspx" />
     <Content Include="RM_Class_3_Report.aspx" />
+    <Content Include="RM_Class_5.aspx" />
+    <Content Include="RM_Class_5_Approval.aspx" />
+    <Content Include="RM_Class_5_Detailed.aspx" />
+    <Content Include="rm_class_5_frmctrl.aspx" />
+    <Content Include="RM_Class_5_Submitter.aspx" />
     <Content Include="viewusers.aspx" />
     <Content Include="vm_ccp_checklist.aspx" />
     <Content Include="vm_leak_test.aspx" />
@@ -1001,6 +1006,41 @@
     </Compile>
     <Compile Include="RM_Class_3_Report.aspx.designer.cs">
       <DependentUpon>RM_Class_3_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_5.aspx.cs">
+      <DependentUpon>RM_Class_5.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class_5.aspx.designer.cs">
+      <DependentUpon>RM_Class_5.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_5_Approval.aspx.cs">
+      <DependentUpon>RM_Class_5_Approval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class_5_Approval.aspx.designer.cs">
+      <DependentUpon>RM_Class_5_Approval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_5_Detailed.aspx.cs">
+      <DependentUpon>RM_Class_5_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class_5_Detailed.aspx.designer.cs">
+      <DependentUpon>RM_Class_5_Detailed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rm_class_5_frmctrl.aspx.cs">
+      <DependentUpon>rm_class_5_frmctrl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rm_class_5_frmctrl.aspx.designer.cs">
+      <DependentUpon>rm_class_5_frmctrl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_5_Submitter.aspx.cs">
+      <DependentUpon>RM_Class_5_Submitter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class_5_Submitter.aspx.designer.cs">
+      <DependentUpon>RM_Class_5_Submitter.aspx</DependentUpon>
     </Compile>
     <Compile Include="UploadImageHandler.ashx.cs">
       <DependentUpon>UploadImageHandler.ashx</DependentUpon>
