@@ -82,6 +82,7 @@
   <ItemGroup>
     <Content Include="csm_massmeeting.aspx" />
     <Content Include="csm_massmeeting_report.aspx" />
+    <Content Include="Csm_massmeeting_Update.aspx" />
     <Content Include="home.aspx" />
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
@@ -150,6 +151,13 @@
     </Compile>
     <Compile Include="csm_massmeeting_report.aspx.designer.cs">
       <DependentUpon>csm_massmeeting_report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Csm_massmeeting_Update.aspx.cs">
+      <DependentUpon>Csm_massmeeting_Update.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Csm_massmeeting_Update.aspx.designer.cs">
+      <DependentUpon>Csm_massmeeting_Update.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\QCInspectorDataAccess.cs" />
     <Compile Include="DatabaseHelper.cs" />

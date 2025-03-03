@@ -100,6 +100,13 @@ namespace AnmolDristi
                     throw new Exception("Transaction failed", ex);
                 }
             }
+            TB_Date.Text = string.Empty;
+            tb_time.Text= string.Empty;
+            tb_loc.Text = string.Empty;
+            tb_name.Text = string.Empty;
+            tb_des.Text = string.Empty;
+            tb_rfid.Text = string.Empty;
+            tb_points.Text = string.Empty;
         }
 
        

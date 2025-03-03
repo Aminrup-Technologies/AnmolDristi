@@ -15,13 +15,58 @@ namespace AnmolDristi
     {
 
         /// <summary>
-        /// gvMeetings control.
+        /// lbl_FromDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvMeetings;
+        protected global::System.Web.UI.WebControls.Label lbl_FromDate;
+
+        /// <summary>
+        /// RFV_TB_FromDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_FromDate;
+
+        /// <summary>
+        /// TB_FromDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_FromDate;
+
+        /// <summary>
+        /// Lbl_ToDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_ToDate;
+
+        /// <summary>
+        /// TB_ToDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_ToDate;
+
+        /// <summary>
+        /// BtnSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSubmit;
 
         /// <summary>
         /// BtnReset control.
@@ -33,12 +78,12 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Button BtnReset;
 
         /// <summary>
-        /// btn_home control.
+        /// gvMeetings control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_home;
+        protected global::System.Web.UI.WebControls.GridView gvMeetings;
     }
 }
