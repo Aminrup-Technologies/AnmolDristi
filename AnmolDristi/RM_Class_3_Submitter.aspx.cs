@@ -11,7 +11,7 @@ using System.Text;
 
 namespace AnmolDristi
 {
-    public partial class RM_Class_3_Approval : System.Web.UI.Page
+    public partial class RM_Class_3_Submitter : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -147,7 +147,7 @@ namespace AnmolDristi
 
         protected void ReportbtnReset_Click(object sender, EventArgs e)
         {
-            Response.Redirect("RM_Class_3_Approval.aspx");
+            Response.Redirect("RM_Class_3_Submitter.aspx");
         }
 
         protected void ReportbtnSubmit_Click(object sender, EventArgs e)
@@ -339,7 +339,7 @@ namespace AnmolDristi
                 if (id > 0)
                 {
                     // Redirect with the correct DBID.
-                    Response.Redirect("RM_Class_3_Detailed.aspx?Id=" + id);
+                    Response.Redirect("RM_Class_3_Detailed.aspx?Id=" + id + "&source=submitter");
                 }
                 else
                 {
@@ -350,8 +350,5 @@ namespace AnmolDristi
             }
         }
 
-
-
     }
-
 }

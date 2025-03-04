@@ -147,7 +147,7 @@ namespace AnmolDristi
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connStr))
             {
-                using (SqlCommand cmd = new SqlCommand("GetBrandFieldsControl", conn))
+                using (SqlCommand cmd = new SqlCommand("GetRMFieldsControl", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@material_id", material_id);
@@ -329,7 +329,7 @@ namespace AnmolDristi
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connStr))
             {
-                using (SqlCommand cmd = new SqlCommand("UpdateBrandFieldsControl", conn))
+                using (SqlCommand cmd = new SqlCommand("UpdateRMFieldsControl", conn))
                 {
                     try
                     {
@@ -405,7 +405,7 @@ namespace AnmolDristi
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connStr))
             {
-                using (SqlCommand cmd = new SqlCommand("DeleteBrandFieldsControl", conn))
+                using (SqlCommand cmd = new SqlCommand("DeleteRMFieldsControl", conn))
                 {
                     try
                     {

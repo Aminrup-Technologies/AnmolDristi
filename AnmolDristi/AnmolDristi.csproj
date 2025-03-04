@@ -262,9 +262,11 @@
     <Content Include="RM_Class_1_Submitter.aspx" />
     <Content Include="RM_Class_3.aspx" />
     <Content Include="RM_Class_3_Approval.aspx" />
+    <Content Include="RM_Class_3_Detailed.aspx" />
     <Content Include="RM_Class_3_FinalApproval.aspx" />
     <Content Include="rm_class_3_frmctrl.aspx" />
     <Content Include="RM_Class_3_Report.aspx" />
+    <Content Include="RM_Class_3_Submitter.aspx" />
     <Content Include="RM_Class_4.aspx" />
     <Content Include="RM_Class_4_Approval.aspx" />
     <Content Include="RM_Class_4_Detailed.aspx" />
@@ -991,6 +993,13 @@
     <Compile Include="RM_Class_3_Approval.aspx.designer.cs">
       <DependentUpon>RM_Class_3_Approval.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RM_Class_3_Detailed.aspx.cs">
+      <DependentUpon>RM_Class_3_Detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class_3_Detailed.aspx.designer.cs">
+      <DependentUpon>RM_Class_3_Detailed.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RM_Class_3_FinalApproval.aspx.cs">
       <DependentUpon>RM_Class_3_FinalApproval.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1011,6 +1020,13 @@
     </Compile>
     <Compile Include="RM_Class_3_Report.aspx.designer.cs">
       <DependentUpon>RM_Class_3_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class_3_Submitter.aspx.cs">
+      <DependentUpon>RM_Class_3_Submitter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class_3_Submitter.aspx.designer.cs">
+      <DependentUpon>RM_Class_3_Submitter.aspx</DependentUpon>
     </Compile>
     <Compile Include="RM_Class_4.aspx.cs">
       <DependentUpon>RM_Class_4.aspx</DependentUpon>

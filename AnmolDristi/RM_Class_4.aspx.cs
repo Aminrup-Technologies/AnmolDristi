@@ -666,31 +666,6 @@ namespace AnmolDristi
             }
         }
 
-        private void PlantLinesBinder(string selectedPlantValue)
-        {
-            string query = "SELECT line_id, line_name FROM MST_Plant_Lines WHERE plant_id = @SelectedPlantValue";
-            string textField = "line_name";
-            string valueField = "line_id";
-
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_PlantLine, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedPlantValue), out recordsBound);
-
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
-
-                string PlantLinesBinder_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'An error occurred!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantLinesBinderErrorNotification", PlantLinesBinder_Error_script, false);
-            }
-        }
-
         private void ShowErrorNotification(string message)
         {
             string script = $@"<script type='text/javascript'>
@@ -703,63 +678,6 @@ namespace AnmolDristi
                       </script>";
             ClientScript.RegisterStartupScript(this.GetType(), "ErrorNotification", script, false);
         }
-
-        private void LineBrandsBinder(string selectedPlantValue, string selectedPlantLineValue)
-        {
-            // Construct the SQL query with parameters
-            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId ";
-            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
-
-            // Create SQL parameters for plant_id and line_id
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@PlantId", selectedPlantValue),
-            };
-
-            // Call the BindDropDownList method with parameters
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
-
-            // Check if any records were bound
-            if (!recordsBound)
-            {
-                string ProductBrands_Error_script = @"<script type='text/javascript'>
-                    new PNotify({
-                        title: 'Error',
-                        text: 'No Brands found for the selected plant and line!',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
-            }
-        }
-        protected void DDL_ProductBrand_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (DDL_ProductBrand.SelectedIndex != 0)
-            {
-                string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
-
-            }
-            else
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
-
-                string DDL_ProductBrand_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'Invalid Selection!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowSKUInvalidErrorNotification", DDL_ProductBrand_Error_script, false);
-            }
-        }
-
 
         private bool UploadImage1()
         {
@@ -920,8 +838,12 @@ namespace AnmolDristi
 
             string materialName = DDL_Material.SelectedValue;
             string plantName = DDL_Plant.SelectedValue;
-            string line = DDL_PlantLine.SelectedValue;
-            string productBrand = string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) ? null : DDL_ProductBrand.Text;
+
+            //string line = DDL_PlantLine.SelectedValue;
+            //string productBrand = string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) ? null : DDL_ProductBrand.Text;
+
+            string line = string.Empty;
+            string productBrand = string.Empty;
 
             string supplier = string.IsNullOrEmpty(TB_Supplier.Text) ? null : TB_Supplier.Text;
             string challanNo = string.IsNullOrEmpty(TB_ChallanNo.Text) ? null : TB_ChallanNo.Text;
@@ -1122,8 +1044,8 @@ namespace AnmolDristi
         {
             DDL_Plant.Enabled = false;
             DDL_Material.Enabled = false;
-            DDL_PlantLine.Enabled = false;
-            DDL_ProductBrand.Enabled = false;
+            //DDL_PlantLine.Enabled = false;
+            //DDL_ProductBrand.Enabled = false;
 
             TB_Supplier.ReadOnly = true;
             TB_ChallanNo.ReadOnly = true;
@@ -1281,10 +1203,10 @@ namespace AnmolDristi
 
                 case "ProductBrand":
 
-                    BrandDIV.Visible = criteria.IsVisible;
+                    //BrandDIV.Visible = criteria.IsVisible;
 
-                    RFV_DDL_ProductBrand.ErrorMessage = criteria.RequiredFieldErrorMessage;
-                    RFV_DDL_ProductBrand.Enabled = criteria.IsRequired;
+                    //RFV_DDL_ProductBrand.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    //RFV_DDL_ProductBrand.Enabled = criteria.IsRequired;
 
                     break;
 

@@ -11,7 +11,7 @@ namespace AnmolDristi
 {
 
 
-    public partial class RM_Class_3_Approval
+    public partial class RM_Class_3_Submitter
     {
 
         /// <summary>

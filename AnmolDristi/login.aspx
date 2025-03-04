@@ -57,7 +57,7 @@
                                 <br />
                                 <div>
                                     <p>
-                                        © 2023-<asp:Label ID="lbl_currentyr" runat="server" Text="2024"></asp:Label>
+                                        © 2024-<asp:Label ID="lbl_currentyr" runat="server" Text="2024"></asp:Label>
                                         All Rights Reserved. <span style="font-weight: bold; color: red;">
                                             <a href="https://www.anmolindustries.com/" target="_blank">
                                                 <asp:Label ID="lbl_compfooter" runat="server" Text="N/A"></asp:Label></a><br />
