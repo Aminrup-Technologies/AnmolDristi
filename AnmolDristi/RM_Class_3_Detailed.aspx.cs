@@ -550,8 +550,11 @@ namespace AnmolDristi
 
         private void StandardValue_Binder(string MaterialId, string PlantId)
         {
-            DataTable dataTable = DatabaseHelper.GetRMFieldsControlByPlantId(Convert.ToInt32(MaterialId), Convert.ToInt32(PlantId));
-
+            //DataTable dataTable = DatabaseHelper.GetRMFieldsControlByPlantId(Convert.ToInt32(MaterialId), Convert.ToInt32(PlantId));
+            DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByMaterialIdAndPlantId(
+                    Convert.ToInt16(MaterialId),
+                    Convert.ToInt16(PlantId)
+                );
 
             // Example: Querying the DataTable for a specific field name
             //string fieldName = "no_of_pcs"; // Specify the field name you want to query
