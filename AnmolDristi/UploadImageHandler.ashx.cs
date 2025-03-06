@@ -34,6 +34,12 @@ namespace AnmolDristi
                         case "QCIR/DesignImp":
                             targetFolderPath = context.Server.MapPath("~/UploadedFiles/QCIR/DesignImp/");
                             break;
+                        case "QAPC/MaidaImage":
+                            targetFolderPath = context.Server.MapPath("~/UploadedFiles/QAPC/MaidaImage/");
+                            break;
+                        case "QAPC/BBImage":
+                            targetFolderPath = context.Server.MapPath("~/UploadedFiles/QAPC/BBImage/");
+                            break;
                         // Add more cases as needed for different prefixes
                         default:
                             targetFolderPath = context.Server.MapPath("~/UploadedFiles/DefaultFolder/");

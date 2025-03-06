@@ -1133,7 +1133,154 @@
             });
         });
 
+
+        function displayImage(input) {
+            var file = input.files[0];
+            if (!file) return;
+
+            var prefix = input.getAttribute("data-prefix");
+            console.log('PrefixValue: ' + prefix + '');
+            var img = document.createElement("img");
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                img.src = e.target.result;
+
+                img.onload = function () {
+                    var canvas = document.createElement("canvas");
+                    var ctx = canvas.getContext("2d");
+
+                    var maxWidth = 1200; // Increased resolution
+                    var maxHeight = 1200; // Optional max height
+                    var width = img.width;
+                    var height = img.height;
+
+                    // Resize based on maxWidth while maintaining aspect ratio
+                    if (width > maxWidth || height > maxHeight) {
+                        if (width > height) {
+                            height = Math.floor((maxWidth / width) * height);
+                            width = maxWidth;
+                        } else {
+                            width = Math.floor((maxHeight / height) * width);
+                            height = maxHeight;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    canvas.toBlob(function (blob) {
+                        var formData = new FormData();
+
+                        var fileExtension = file.name.split('.').pop(); // Get the file extension
+                        var newFileName = prefix + "_" + new Date().getTime() + "." + fileExtension; // Create new filename with prefix
+
+                        formData.append("image", blob, newFileName); // Append file with new filename
+                        formData.append("prefix", prefix); // Append the prefix for folder selection
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "/UploadImageHandler.ashx", true);
+
+                        xhr.upload.onprogress = function (event) {
+                            if (event.lengthComputable) {
+                                var percentComplete = (event.loaded / event.total) * 100;
+                                console.log('Upload progress: ' + percentComplete + '%');
+                            }
+                        };
+
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                var imageElement = document.querySelector('img[data-prefix="' + prefix + '"]');
+                                console.log("Image Display Element: ", imageElement);
+                                var labelElement = document.querySelector('span[data-prefix="' + prefix + '"]');
+                                console.log("Hidden Element: ", labelElement);
+
+                                if (imageElement) {
+
+                                    imageElement.style.display = 'block';
+                                    imageElement.src = response.imageUrl; // Update image source
+                                    console.log("Image URL: " + response.imageUrl);
+                                } else {
+                                    console.error("Image element not found for prefix: " + prefix);
+                                }
+
+                                if (labelElement) {
+                                    labelElement.innerText = response.imageUrl;
+                                    //labelElement.textContent = response.imageUrl;
+                                }
+
+                                // Now use if-else to bind to individual hidden fields
+                                if (prefix === "QAPC/MaidaImage") {
+                                    document.getElementById('<%= hdn_img1.ClientID %>').value = response.imageUrl;
+                                } else if (prefix === "QAPC/BBImage") {
+                                    document.getElementById('<%= hdn_img2.ClientID %>').value = response.imageUrl;
+                                }
+
+                                // Clear the file input uploader
+                            input.value = '';
+
+                            new PNotify({
+                                title: 'Upload Success',
+                                text: 'Image Saved!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        } else {
+                            new PNotify({
+                                title: 'Upload Failed',
+                                text: 'An error occurred during the upload.',
+                                type: 'error',
+                                styling: 'bootstrap3'
+                            });
+                        }
+                        };
+
+                        xhr.send(formData);
+                    }, 'image/jpeg', 0.9); // Compress to 80% quality
+                };
+            };
+
+        reader.readAsDataURL(file);
+    }
+
+    function validateImage1() {
+        var fileInput = document.getElementById('<%= FU_MaidaImage.ClientID %>');
+        if (fileInput.files.length === 0) {
+            new PNotify({
+                title: 'Validation Error',
+                text: 'Please select a file to upload.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
+            return false;
+        }
+        return true;
+    }
+
+    function validateImages() {
+        var image1 = document.getElementById('<%= uploadedImage1.ClientID %>'); // First image
+            var image2 = document.getElementById('<%= uploadedImage2.ClientID %>'); // Second image
+
+            // Check if images are displayed
+            if (image1.style.display === 'none' && image2.style.display === 'none') {
+                new PNotify({
+                    title: 'Missing Input',
+                    text: 'Please upload at least one image before submitting.',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission if all validations pass
+        }
+
     </script>
+
+    <asp:HiddenField ID="hdn_img1" runat="server" />
+    <asp:HiddenField ID="hdn_img2" runat="server" />
 
     <div class="right_col" role="main">
         <div class="container">
@@ -1931,7 +2078,7 @@
                                                             </div>
 
                                                             <%--Image part--%>
-                                                            <div class="col-md-3" id="FU_MaidaImage_Upldr" runat="server" visible="true">
+                                                            <%--<div class="col-md-3" id="FU_MaidaImage_Upldr" runat="server" visible="true">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_FU_MaidaImage" runat="server" AssociatedControlID="FU_MaidaImage" Text="Maida Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_FU_MaidaImage" runat="server" ErrorMessage="*" ControlToValidate="FU_MaidaImage" Display="Dynamic" ValidationGroup="ValidationGroup1" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -1948,9 +2095,29 @@
 
                                                             <div class="col-md-3" id="FU_MaidaImage_img" runat="server" visible="false">
                                                                 <asp:Image ID="uploadedImage1" runat="server" CssClass="img-fluid" />
+                                                            </div>--%>
+
+                                                            <div class="col-md-3" id="FU_MaidaImage_Upldr" runat="server" data-prefix="QAPC/MaidaImage">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_FU_MaidaImage" runat="server" AssociatedControlID="FU_MaidaImage" Text="Maida Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_FU_MaidaImage" runat="server" ErrorMessage="*" ControlToValidate="FU_MaidaImage" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:CustomValidator ID="CV_FU_MaidaImage" runat="server" ControlToValidate="FU_BBImage" Display="Dynamic" ValidationGroup="BasicDataSave" ErrorMessage="Please upload file"></asp:CustomValidator>
+                                                                    <asp:Label ID="lblErrorMessage2" runat="server" CssClass="text-danger"></asp:Label>
+                                                                    <div class="input-group input-group-sm">
+                                                                        <asp:FileUpload ID="FU_MaidaImage" runat="server" CssClass="form-control rounded" data-prefix="QAPC/MaidaImage" onchange="displayImage(this);" />
+                                                                        <asp:Label ID="lbl_QAPC_MaidaImg" runat="server" Text="" CssClass="image-label" data-prefix="QAPC/MaidaImage" Visible="true" ForeColor="Black"></asp:Label>
+                                                                        <span class="input-group-btn">
+                                                                            <asp:Button ID="BtnUploadFU_MaidaImage" Visible="false" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateImage1();" ValidationGroup="ValidationGroup1" CausesValidation="false" />
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
 
-                                                            <div class="col-md-3" id="FU_BBImage_Upldr" runat="server" visible="true">
+                                                            <div class="col-md-3" id="FU_MaidaImage_img" runat="server" data-prefix="QAPC/MaidaImage">
+                                                                <asp:Image ID="uploadedImage1" runat="server" CssClass="img-fluid" data-prefix="QAPC/MaidaImage" Style="display: none;" />
+                                                            </div>
+
+                                                            <%--<div class="col-md-3" id="FU_BBImage_Upldr" runat="server" visible="true">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_FU_BBImage" runat="server" AssociatedControlID="FU_BBImage" Text="Broken Biscuit Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_FU_BBImage" runat="server" ErrorMessage="*" ControlToValidate="FU_BBImage" Display="Dynamic" ValidationGroup="ValidationGroup2" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -1967,6 +2134,26 @@
 
                                                             <div class="col-md-3" id="FU_BBImage_Img" runat="server" visible="false">
                                                                 <asp:Image ID="uploadedImage2" runat="server" CssClass="img-fluid" />
+                                                            </div>--%>
+
+                                                            <div class="col-md-3" id="FU_BBImage_Upldr" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_FU_BBImage" runat="server" AssociatedControlID="FU_BBImage" Text="Broken Biscuit Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_FU_BBImage" runat="server" ErrorMessage="*" ControlToValidate="FU_BBImage" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:CustomValidator ID="CV_FU_BBImage" runat="server" ControlToValidate="FU_BBImage" Display="Dynamic" ValidationGroup="BasicDataSave" ErrorMessage="Please upload file"></asp:CustomValidator>
+                                                                    <asp:Label ID="lblErrorMessage1" runat="server" CssClass="text-danger"></asp:Label>
+                                                                    <div class="input-group input-group-sm">
+                                                                        <asp:FileUpload ID="FU_BBImage" runat="server" CssClass="form-control rounded" data-prefix="QAPC/BBImage" onchange="displayImage(this);" />
+                                                                        <asp:Label ID="lbl_QAPC_BBImage" runat="server" Text="" CssClass="image-label" data-prefix="QAPC/BBImage" Visible="true" ForeColor="Black"></asp:Label>
+                                                                        <span class="input-group-btn">
+                                                                            <asp:Button ID="BtnUploadFU_BBImage" runat="server" Visible="false" CausesValidation="false" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm1();" ValidationGroup="ValidationGroup2" />
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3" id="FU_BBImage_Img" runat="server" data-prefix="QAPC/BBImage">
+                                                                <asp:Image ID="uploadedImage2" runat="server" CssClass="img-fluid" data-prefix="QAPC/BBImage" Style="display: none;" />
                                                             </div>
 
                                                             <%--Button--%>
@@ -1974,7 +2161,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_BasicbtnSubmit" runat="server" AssociatedControlID="BasicBtnSubmit" Text="Click to SAVE Basic Data" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="BasicBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-primary btn-sm" ValidationGroup="BasicDataSave" CausesValidation="true" OnClick="BasicBtnSubmit_Click" />
+                                                                        <asp:Button ID="BasicBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-primary btn-sm" ValidationGroup="BasicDataSave" OnClientClick="validateImages();" CausesValidation="true" OnClick="BasicBtnSubmit_Click" />
                                                                         <asp:Button ID="BasicBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BasicBtnReset_Click" />
                                                                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                                                     </div>
