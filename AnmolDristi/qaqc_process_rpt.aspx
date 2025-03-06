@@ -754,7 +754,7 @@
         var gridViewData = [];
 
         // Function to calculate deviation and update the grid data
-        function calculateDeviation(inputElement) {
+        function calculateDeviation_old(inputElement) {
             // Find the row that contains the input element
             var row = inputElement.closest('tr');
             //console.log('rows:', row);
@@ -827,6 +827,74 @@
             updateGridViewData(slValue, rowData);
         }
 
+        // Function to calculate deviation and update the grid data
+        function calculateDeviation(inputElement) {
+            //console.log("Function called: calculateDeviation");
+
+            var row = inputElement.closest('tr');
+            if (!row) {
+                //console.error("Row not found! Exiting function.");
+                return;
+            }
+
+            var slCell = row.querySelector('td');
+            if (!slCell) {
+                //console.error("SL cell not found! Exiting function.");
+                return;
+            }
+            var slValue = slCell.textContent.trim();
+            //console.log("Serial Number (Sl):", slValue);
+
+            var standardWeightElement = row.querySelector('.standard-weight');
+            var actualWeightElement = row.querySelector('.actual-weight');
+            var deviationWeightElement = row.querySelector('.deviation-weight');
+            var deviationPercentageElement = row.querySelector('.deviation-percentage');
+
+            if (!standardWeightElement || !actualWeightElement || !deviationWeightElement || !deviationPercentageElement) {
+                //console.error("One or more required input elements not found! Exiting function.");
+                return;
+            }
+
+            var standardWeight = parseFloat(standardWeightElement.value) || 0;
+            var actualWeight = parseFloat(actualWeightElement.value) || 0;
+
+            var deviationWeight = actualWeight - standardWeight;
+            deviationWeightElement.value = deviationWeight.toFixed(2);
+
+            var deviationPercentage = standardWeight !== 0 ? (deviationWeight * 100) / standardWeight : 0;
+            deviationPercentageElement.value = deviationPercentage.toFixed(2);
+
+            if (Math.abs(deviationPercentage) > 5) {
+                //console.warn("Deviation exceeds 5%! Triggering notification...");
+                setTimeout(function () {
+                    new PNotify({
+                        title: 'Deviation Alert',
+                        text: 'Weight deviation exceeds 5%',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200);
+            }
+
+            var varietyElement = row.querySelector('.variety');
+            var varietyName = varietyElement ? varietyElement.value.trim() : "Unknown";
+            //console.log("Variety Name:", varietyName);
+
+            var rowData = {
+                Sl: slValue,
+                Variety: varietyName,
+                StandardWeight: standardWeight,
+                ActualWeight: actualWeight,
+                DeviationWeight: deviationWeight.toFixed(2),
+                DeviationPercentage: deviationPercentage.toFixed(2)
+            };
+            //console.log("Row Data Object:", rowData);
+
+            updateGridViewData(slValue, rowData);
+            //console.log("Global GridView Data updated.");
+        }
+
+
         // Function to update the global array with the current row's data
         function updateGridViewData(slValue, rowData) {
             // Find the existing row in gridViewData with the matching Sl value
@@ -854,7 +922,7 @@
 
             // Convert data to JSON
             var jsonData = JSON.stringify(gridViewData);
-            //console.log('Data to be sent:', jsonData);
+            console.log('Data to be sent:', jsonData);
 
             // Send data to the server
             var xhr = new XMLHttpRequest();
@@ -1013,9 +1081,9 @@
             let enabledTabs = new Set(['basicData']); // Initially enable the first tab
 
             // Disable all tabs except the first one initially
-            for (let i = 0; i < tabIds.length; i++) {
-                document.querySelector(`a[href="#${tabIds[i]}"]`).classList.add('disabled');
-            }
+            //for (let i = 0; i < tabIds.length; i++) {
+            //    document.querySelector(`a[href="#${tabIds[i]}"]`).classList.add('disabled');
+            //}
 
             // Function to check if the current tab is filled and enable the next tab
             function checkTabContent(index) {
@@ -1904,9 +1972,9 @@
                                                             <%--Button--%>
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="Lbl_BasicbtnSubmit" runat="server" AssociatedControlID="BasicBtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:Label ID="Lbl_BasicbtnSubmit" runat="server" AssociatedControlID="BasicBtnSubmit" Text="Click to SAVE Basic Data" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="BasicBtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="BasicDataSave" CausesValidation="true" OnClick="BasicBtnSubmit_Click" />
+                                                                        <asp:Button ID="BasicBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-primary btn-sm" ValidationGroup="BasicDataSave" CausesValidation="true" OnClick="BasicBtnSubmit_Click" />
                                                                         <asp:Button ID="BasicBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BasicBtnReset_Click" />
                                                                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                                                     </div>
@@ -2193,7 +2261,7 @@
                                                     <%-- Weight Data Starts Here--%>
                                                     <div class="tab-pane fade" id="weight" role="tabpanel" aria-labelledby="weight-tab">
                                                         <div class="x-content">
-                                                            <asp:GridView ID="GridView1" Width="100%" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
+                                                            <%--<asp:GridView ID="GridView1" Width="100%" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
 
                                                                     <asp:TemplateField HeaderText="Sl" HeaderStyle-Width="5%">
@@ -2234,8 +2302,118 @@
                                                                     </asp:TemplateField>
 
                                                                 </Columns>
+                                                            </asp:GridView>--%>
+
+                                                            <asp:GridView ID="GridView1" Width="100%" runat="server" AutoGenerateColumns="False"
+                                                                CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
+                                                                <Columns>
+
+                                                                    <asp:TemplateField HeaderText="Sl" HeaderStyle-Width="5%">
+                                                                        <ItemTemplate>
+                                                                            <%# Container.DataItemIndex + 1 %>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <asp:TemplateField HeaderText="Variety" HeaderStyle-Width="35%">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtVariety" runat="server" CssClass="variety form-control form-control-sm rounded" Text='<%# Eval("sap_IngredientName") %>' ReadOnly='<%# Convert.ToInt32(Eval("BOM_Qnty")) == 0 ? false : true %>'></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <asp:TemplateField HeaderText="Standard Weight" HeaderStyle-Width="15%">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtStandardWeight" runat="server" CssClass="standard-weight form-control form-control-sm rounded"
+                                                                                ReadOnly='<%# Convert.ToInt32(Eval("BOM_Qnty")) == 0 ? false : true %>' ForeColor="DimGray" Text='<%# Eval("BOM_Qnty") %>'></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <asp:TemplateField HeaderText="Actual Weight" HeaderStyle-Width="15%">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtActualWeight" runat="server" ClientIDMode="Static" CssClass="form-control form-control-sm rounded actual-weight" onkeyup="calculateDeviation(this)"></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <asp:TemplateField HeaderText="Deviation Weight" HeaderStyle-Width="15%">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtDeviation" runat="server" CssClass="deviation-weight form-control form-control-sm rounded"
+                                                                                ReadOnly="true"></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <asp:TemplateField HeaderText="Deviation Percentage" HeaderStyle-Width="15%">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtDeviationPercentage" runat="server" CssClass="deviation-percentage form-control form-control-sm rounded"
+                                                                                ReadOnly="true"></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                </Columns>
                                                             </asp:GridView>
-                                                            <asp:Button ID="WgtbtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" ValidationGroup="SubmitRM" CausesValidation="false" Enabled="false" Text="Submit" OnClientClick="return validateGridView() && collectAndSendData();" OnClick="WgtbtnSubmit_Click" />
+
+                                                            <%--<asp:GridView ID="GridView1" Width="100%" runat="server" AutoGenerateColumns="False"
+                                                                CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap"
+                                                                OnRowEditing="GridView1_RowEditing"
+                                                                OnRowUpdating="GridView1_RowUpdating"
+                                                                OnRowCancelingEdit="GridView1_RowCancelingEdit">
+
+                                                                <Columns>
+                                                                    <asp:TemplateField HeaderText="Sl" HeaderStyle-Width="5%">
+                                                                        <ItemTemplate>
+                                                                            <%# Container.DataItemIndex + 1 %>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <asp:TemplateField HeaderText="Variety" HeaderStyle-Width="35%">
+                                                                        <ItemTemplate>
+                                                                            <span class="variety"><%# Eval("sap_IngredientName") %></span>
+                                                                        </ItemTemplate>
+                                                                        <EditItemTemplate>
+                                                                            <asp:TextBox ID="txtVariety" runat="server" CssClass="form-control form-control-sm" Text='<%# Eval("sap_IngredientName") %>'></asp:TextBox>
+                                                                        </EditItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <asp:TemplateField HeaderText="Standard Weight" HeaderStyle-Width="15%">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtStandardWeight" runat="server" CssClass="standard-weight form-control form-control-sm" ReadOnly="true" Width="50%" ForeColor="DimGray" Text='<%# Eval("BOM_Qnty") %>'></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                        <EditItemTemplate>
+                                                                            <asp:TextBox ID="txtStandardWeightEdit" runat="server" CssClass="form-control form-control-sm" Text='<%# Eval("BOM_Qnty") %>'></asp:TextBox>
+                                                                        </EditItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <asp:TemplateField HeaderText="Actual Weight" HeaderStyle-Width="15%">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtActualWeight" runat="server" ClientIDMode="Static" CssClass="form-control form-control-sm" Width="70%" onkeyup="calculateDeviation(this)"></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                        <EditItemTemplate>
+                                                                            <asp:TextBox ID="txtActualWeightEdit" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
+                                                                        </EditItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <asp:TemplateField HeaderText="Deviation Weight" HeaderStyle-Width="15%">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtDeviation" runat="server" CssClass="deviation-weight form-control form-control-sm" ReadOnly="true"></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                    <asp:TemplateField HeaderText="Deviation Percentage" HeaderStyle-Width="15%">
+                                                                        <ItemTemplate>
+                                                                            <asp:TextBox ID="txtDeviationPercentage" runat="server" CssClass="deviation-percentage form-control form-control-sm" ReadOnly="true"></asp:TextBox>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField HeaderText="Actions" HeaderStyle-Width="10%">
+                                                                        <ItemTemplate>
+                                                                            <asp:LinkButton ID="btnEdit" runat="server" CommandName="Edit" CssClass="btn btn-warning btn-sm" CausesValidation="false">Edit</asp:LinkButton>
+                                                                        </ItemTemplate>
+                                                                        <EditItemTemplate>
+                                                                            <asp:LinkButton ID="btnUpdate" runat="server" CommandName="Update" CssClass="btn btn-success btn-sm" CausesValidation="false">Update</asp:LinkButton>
+                                                                            <asp:LinkButton ID="btnCancel" runat="server" CommandName="Cancel" CssClass="btn btn-danger btn-sm" CausesValidation="false">Cancel</asp:LinkButton>
+                                                                        </EditItemTemplate>
+                                                                    </asp:TemplateField>
+
+                                                                </Columns>
+                                                            </asp:GridView>--%>
+                                                            <asp:Button ID="WgtbtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" ValidationGroup="SubmitRM" CausesValidation="false" Enabled="false" Text="Proceed Next" OnClientClick="return validateGridView() && collectAndSendData();" OnClick="WgtbtnSubmit_Click" />
                                                             <asp:Button ID="WgtbtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="WgtbtnReset_Click" />
                                                         </div>
                                                     </div>
@@ -2360,7 +2538,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_SpongeBtnSubmit" runat="server" AssociatedControlID="SpongeBtnSubmit" Text="Click to Proceed" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="SpongeBtnSubmit" runat="server" Text="Save" CssClass="btn btn-success btn-sm" Enabled="false" ValidationGroup="SpongeSubmit" CausesValidation="false" OnClick="SpongeBtnSubmit_Click" />
+                                                                        <asp:Button ID="SpongeBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-success btn-sm" Enabled="false" ValidationGroup="SpongeSubmit" CausesValidation="false" OnClick="SpongeBtnSubmit_Click" />
                                                                         <asp:Button ID="SpongeBtnNotApplicable" runat="server" Text="N/A or SKIP" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="SpongeBtnNotApplicable_Click" />
                                                                         <asp:Button ID="Spongebtn_Reset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="Spongebtn_Reset_Click" />
 
@@ -2577,9 +2755,9 @@
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="lbl_DoughBtnSubmit" runat="server" AssociatedControlID="DoughBtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:Label ID="lbl_DoughBtnSubmit" runat="server" AssociatedControlID="DoughBtnSubmit" Text="Click to SAVE Dough Data" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="DoughBtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="DoughSubmit" CausesValidation="false" OnClick="DoughBtnSubmit_Click" />
+                                                                        <asp:Button ID="DoughBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="DoughSubmit" CausesValidation="false" OnClick="DoughBtnSubmit_Click" />
                                                                         <asp:Button ID="DoughBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="DoughBtnReset_Click" />
                                                                     </div>
                                                                 </div>
@@ -2626,7 +2804,7 @@
 
                                                         </div>
 
-                                                        <asp:Button ID="OvenBtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" Text="Submit" CausesValidation="false" Enabled="false" ValidationGroup="SubmitOven" OnClientClick="return validateGridView1() && collectAndSendData1(); " OnClick="OvenBtnSubmit_Click" />
+                                                        <asp:Button ID="OvenBtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" Text="Proceed Next" CausesValidation="false" Enabled="false" ValidationGroup="SubmitOven" OnClientClick="return validateGridView1() && collectAndSendData1(); " OnClick="OvenBtnSubmit_Click" />
                                                         <asp:Button ID="OvenBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="OvenBtnReset_Click" />
 
                                                     </div>
@@ -2674,7 +2852,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_FinalBtnSubmit" runat="server" AssociatedControlID="FinalBtnSubmit" Text="Click to Submit" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="FinalBtnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="VerifiedSubmit" CausesValidation="false" OnClick="FinalBtnSubmit_Click" />
+                                                                        <asp:Button ID="FinalBtnSubmit" runat="server" Text="Final Submit" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="VerifiedSubmit" CausesValidation="false" OnClick="FinalBtnSubmit_Click" />
                                                                         <asp:Button ID="FinalBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="FinalBtnReset_Click" />
                                                                     </div>
                                                                 </div>

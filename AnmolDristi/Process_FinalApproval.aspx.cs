@@ -968,10 +968,10 @@ namespace AnmolDristi
                             if (dt.Rows.Count > 0)
                             {
                                 DataRow row = dt.Rows[0];
-                                string spongeid = dt.Rows[0]["FinalSubmit_Status"].ToString();
-                                if (dt.Rows[0]["FinalSubmit_Status"] != DBNull.Value && !string.IsNullOrEmpty(dt.Rows[0]["FinalSubmit_Status"].ToString()))
+                                string status = dt.Rows[0]["FinalSubmission"].ToString();
+                                if (dt.Rows[0]["FinalSubmission"] != DBNull.Value && !string.IsNullOrEmpty(dt.Rows[0]["FinalSubmission"].ToString()))
                                 {
-                                    if (spongeid =="1")
+                                    if (status == "1")
                                     {
                                         RBL_BalanceCondition.SelectedValue = dt.Rows[0]["WghBalanceCond"].ToString();
                                         TXB_BalanceCondition_Remarks.Text = dt.Rows[0]["WghtBalanceCmnt"].ToString();

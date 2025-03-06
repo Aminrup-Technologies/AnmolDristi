@@ -514,18 +514,8 @@ namespace AnmolDristi
         private void GetSAPCodes(int brandId)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = @"
-                        SELECT 
-                            p.[sap_code] AS Plant_SAP_Code,
-                            b.[brand_sapcode] AS Brand_SAP_Code
-                        FROM 
-                           [MST_PlantDetails] p
-                        JOIN 
-                            [MST_LineCatBrands] b
-                        ON 
-                            p.[plant_id] = b.[plant_id]
-                        AND 
-                            b.[brand_id] = @brand_id"; // Using parameterized query for brand_id
+            string query = @"SELECT p.[sap_code] AS Plant_SAP_Code, b.[brand_sapcode] AS Brand_SAP_Code FROM [MST_PlantDetails] p JOIN [MST_LineCatBrands] b ON p.[plant_id] = b.[plant_id] AND  b.[brand_id]= @brand_id"; 
+            // Using parameterized query for brand_id
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -991,6 +981,10 @@ namespace AnmolDristi
                 //Make the inputs readonly
                 MakeInputsReadOnly();
 
+                //enable the button in second tab
+                WgtbtnSubmit.Enabled = true;
+                WgtbtnSubmit.Visible = true;
+
                 //BindGridViewfromDB(plantName, productBrand);
             }
             catch (Exception ex)
@@ -1237,6 +1231,10 @@ namespace AnmolDristi
 
                     //Make the inputs readonly
                     MakeInputsReadOnly2();
+
+                    DoughBtnSubmit.Visible = true;
+                    DoughBtnSubmit.Enabled = true;
+
                 }
                 catch (Exception ex)
                 {
@@ -1329,6 +1327,9 @@ namespace AnmolDristi
 
                 //Make the inputs readonly
                 MakeInputsReadOnly3();
+
+                OvenBtnSubmit.Visible = true;
+                OvenBtnSubmit.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -1422,7 +1423,7 @@ namespace AnmolDristi
                 {
                     con.Open();
 
-                    string query = "UPDATE TRN_ProcessChecking_BasicData SET WghBalanceCond=@WghBalanceCond, WghtBalanceCmnt=@WghtBalanceCmnt, RawBiscuitWgt=@RawBiscuitWgt where PcrNo=@PcrNo";
+                    string query = "UPDATE TRN_ProcessChecking_BasicData SET WghBalanceCond=@WghBalanceCond, WghtBalanceCmnt=@WghtBalanceCmnt, RawBiscuitWgt=@RawBiscuitWgt, FinalSubmission=@FinalSubmission where PcrNo=@PcrNo";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
@@ -1430,6 +1431,7 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@WghBalanceCond", balanceCond);
                         cmd.Parameters.AddWithValue("@WghtBalanceCmnt", commentForBalanceCond);
                         cmd.Parameters.AddWithValue("@RawBiscuitWgt", rawBiscuitWgt);
+                        cmd.Parameters.AddWithValue("@FinalSubmission", 1);
                         cmd.ExecuteNonQuery();
                     }
 
@@ -1619,9 +1621,62 @@ namespace AnmolDristi
 
             };
 
+            // Add 5 blank rows
+            for (int i = 0; i < 5; i++)
+            {
+                dataSave.Add(new VarietyInfo { Sl = dataSave.Count + 1, sap_IngredientName = "", BOM_Qnty = 0 });
+            }
+            // Store in Session for postback persistence
+            Session["VarietyData"] = dataSave;
+
             // Bind to GridView
             GridView1.DataSource = dataSave;
             GridView1.DataBind();
+        }
+
+        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridView1.EditIndex = e.NewEditIndex;
+            BindGridView(); // Rebind the data to refresh the GridView
+        }
+
+        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            // Retrieve the original data source (e.g., from ViewState or Session)
+            List<VarietyInfo> data = (List<VarietyInfo>)Session["VarietyData"];
+            if (data == null)
+            {
+                // Handle the case where data is missing
+                return;
+            }
+
+            // Get the GridView row
+            int index = e.RowIndex;
+            GridViewRow row = GridView1.Rows[index];
+
+            // Retrieve values from input fields
+            string variety = ((TextBox)row.FindControl("txtVariety")).Text;
+            string standardWeight = ((TextBox)row.FindControl("txtStandardWeightEdit")).Text;
+
+            // Update the list
+            data[index].sap_IngredientName = variety;
+            data[index].BOM_Qnty = int.Parse(standardWeight);
+
+            // Save updated data back to Session
+            Session["VarietyData"] = data;
+
+            // Reset edit index
+            GridView1.EditIndex = -1;
+
+            // Rebind the updated list
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+        }
+
+        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView1.EditIndex = -1;
+            BindGridView(); // Rebind to show the original data
         }
 
         private void BindGridViewfromDB(string Plant_Id, string Brand_Id)
@@ -1630,7 +1685,7 @@ namespace AnmolDristi
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             // Query to fetch data from the database
-            string query = "SELECT ROW_NUMBER() OVER (ORDER BY ComponentDescription) AS Sl, ComponentDescription as sap_IngredientName, BOMQuantity as BOM_Qnty FROM PlantMaterialData where PlantID=@plant_id and MaterialID=@brand_id and IsActive=1 order by Id";
+            string query = "SELECT ROW_NUMBER() OVER (ORDER BY ComponentDescription) AS Sl, ComponentDescription as sap_IngredientName, BOMQuantity as BOM_Qnty FROM PlantMaterialData where PlantID=@plant_id and MaterialID=@brand_id and IsActive=1 order by Sl";
 
             // Create a DataTable to hold the data
             DataTable dataTable = new DataTable();
@@ -1658,18 +1713,20 @@ namespace AnmolDristi
                     }
                 }
 
-                // Check if DataTable contains any rows
-                if (dataTable.Rows.Count > 0)
-                {
-                    // Bind the DataTable to the GridView
-                    GridView1.DataSource = dataTable;
-                    GridView1.DataBind();
-                }
-                else
-                {
-                    // Call another function if no records are found
-                    BindGridView();
-                }
+                //// Check if DataTable contains any rows
+                //if (dataTable.Rows.Count > 0)
+                //{
+                //    // Bind the DataTable to the GridView
+                //    GridView1.DataSource = dataTable;
+                //    GridView1.DataBind();
+                //}
+                //else
+                //{
+                //    // Call another function if no records are found
+                //    BindGridView();
+                //}
+
+                BindGridView();
             }
             catch (Exception ex)
             {
@@ -1708,12 +1765,13 @@ namespace AnmolDristi
                 {
                     con.Open();
 
-                    string query = "UPDATE TRN_ProcessChecking_BasicData SET RM_Weights=@RM_Weights where PcrNo=@PcrNo";
+                    string query = "UPDATE TRN_ProcessChecking_BasicData SET RM_Weights=@RM_Weights, RM_Status=@RM_Status where PcrNo=@PcrNo";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@PcrNo ", PcrNo);
                         cmd.Parameters.AddWithValue("@RM_Weights", jsonData);
+                        cmd.Parameters.AddWithValue("@RM_Status", 1);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -1731,6 +1789,9 @@ namespace AnmolDristi
             WgtbtnSubmit.CssClass = "btn btn-sm btn-success";
             WgtbtnReset.Enabled = false;
 
+            SpongeBtnSubmit.Enabled = true;
+            SpongeBtnSubmit.Visible = true;
+
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Data Success',
@@ -1743,6 +1804,7 @@ namespace AnmolDristi
             //// RegisterStartupScript adds the JavaScript code to the page
             ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('spongeData-tab').click();", true);
+
 
 
         }
@@ -1801,12 +1863,13 @@ namespace AnmolDristi
                 {
                     con.Open();
 
-                    string query = "UPDATE TRN_ProcessChecking_BasicData SET Oven_Temperatures=@Oven_Temperatures where PcrNo=@PcrNo";
+                    string query = "UPDATE TRN_ProcessChecking_BasicData SET Oven_Temperatures=@Oven_Temperatures, OvenData_Status=@OvenData_Status where PcrNo=@PcrNo";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@PcrNo ", PcrNo);
                         cmd.Parameters.AddWithValue("@Oven_Temperatures", jsonData);
+                        cmd.Parameters.AddWithValue("@OvenData_Status", 1);
                         cmd.ExecuteNonQuery();
                     }
 
@@ -1826,6 +1889,10 @@ namespace AnmolDristi
             OvenBtnSubmit.CssClass = "btn btn-sm btn-success";
             OvenBtnReset.Enabled = false;
 
+
+            FinalBtnSubmit.Enabled = true;
+            FinalBtnSubmit.Visible = true;
+
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Data Success',
@@ -1838,6 +1905,8 @@ namespace AnmolDristi
             //// RegisterStartupScript adds the JavaScript code to the page
             ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "SwitchTab", "document.getElementById('verificationData-tab').click();", true);
+
+            
 
         }
         protected void OvenBtnReset_Click(object sender, EventArgs e)
@@ -1857,6 +1926,8 @@ namespace AnmolDristi
                 QAProcessCheckingDataAcess dataAccess = new QAProcessCheckingDataAcess();
                 dataAccess.InsertSpongeData(PcrNo, null, null, null, null, null, null, null, null, null, null, "No");
 
+                DoughBtnSubmit.Enabled = true;
+                DoughBtnSubmit.Visible = true;
 
                 //Make the inputs readonly
                 MakeInputsReadOnly2();
