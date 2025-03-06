@@ -762,6 +762,181 @@ namespace AnmolDristi
 
         protected void BasicBtnSubmit_Click(object sender, EventArgs e)
         {
+            // Ensure hidden fields have values before proceeding
+            if (!string.IsNullOrWhiteSpace(hdn_img1.Value) && !string.IsNullOrWhiteSpace(hdn_img2.Value))
+            {
+                try
+                {
+                    // Collect form data
+                    ProcessCheckingBasicData data = CollectFormData();
+
+                    // Save the data
+                    SaveData(data);
+
+                    // Make inputs read-only and enable the next step
+                    MakeInputsReadOnly();
+                    WgtbtnSubmit.Enabled = true;
+                    WgtbtnSubmit.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    ShowErrorNotification(ex.Message);
+                }
+            }
+            else
+            {
+                // Show error message if hidden fields are empty
+                ShowErrorNotification("Please upload both images before submitting.");
+            }
+        }
+
+
+        private ProcessCheckingBasicData CollectFormData()
+        {
+            return new ProcessCheckingBasicData
+            {
+                PcrNo = GenerateUnique(),
+                FormID = Convert.ToInt32(hdn_formid.Value.ToString()),
+                SubmittedDate = DateTime.Now.Date,
+                SubmittedTime = DateTime.Now.TimeOfDay,
+                Shift = hdn_shiftvalue.Value.ToString(),
+                SubmittedById = Convert.ToInt32(Session["USERID"].ToString()),
+                SubmittedByEmployeeCode = Session["WORKMAN"].ToString(),
+                PlantName = DDL_Plant.SelectedValue,
+                Line = DDL_PlantLine.SelectedValue,
+                ProductCategory = DDL_ProductCategory.SelectedValue,
+                ProductBrand = DDL_ProductBrand.SelectedValue,
+                SKUId = DDL_BrandSKU.SelectedValue,
+
+                ProcessWaterTemp = string.IsNullOrWhiteSpace(TB_ProcessWaterTemp.Text) ? (decimal?)null : decimal.Parse(TB_ProcessWaterTemp.Text),
+                ProcessWaterCmnt = TXB_ProcessWaterTemp_Remarks.Text,
+
+                WaterPH = string.IsNullOrWhiteSpace(TB_WaterPH.Text) ? (decimal?)null : decimal.Parse(TB_WaterPH.Text),
+                WaterPhCmnt = TXB_WaterPH_Remarks.Text,
+
+                WaterHardness = string.IsNullOrWhiteSpace(TB_WaterHardness.Text) ? (decimal?)null : decimal.Parse(TB_WaterHardness.Text),
+                HardnessCmnt = TXB_WaterHardness_Remarks.Text,
+
+                WaterTest = TB_WaterTest.Text,
+
+                TDS = string.IsNullOrWhiteSpace(TB_TDS.Text) ? (decimal?)null : decimal.Parse(TB_TDS.Text),
+                TdsCmnt = TXB_TDS_Remarks.Text,
+
+                MaidaBrand = TB_MaidaBrand.Text,
+                MaidaBatchNo = TB_MaidaBatchNo.Text,
+                MaidaMfgDate = string.IsNullOrWhiteSpace(TB_MaidaMfg.Text) ? (DateTime?)null : DateTime.Parse(TB_MaidaMfg.Text),
+                MaidaAppearanceColor = Convert.ToInt32(RBL_MaidaColorApp.SelectedValue),
+                CommentForMaidaColor = TXB_MaidaColorApp_Remarks.Text,
+
+                MaidaFlavorAndTaste = Convert.ToInt32(RBL_MaidaFlavorTaste.SelectedValue),
+                CommentsForMaidaFlavourAndTaste = TXB_MaidaFlavorTaste_Remarks.Text,
+
+                MaidaGrittiness = Convert.ToInt32(RBL_MaidaGrittiness.SelectedValue),
+                CommentForGrittiness = TXB_MaidaGrittiness_Remarks.Text,
+
+                BBAppearanceColor = Convert.ToInt32(RBL_BBColorApp.SelectedValue),
+                CommentForBBColor = TXB_BBColorApp_Remarks.Text,
+
+                BBMouthFeel = Convert.ToInt32(RBL_BBMouthFeel.SelectedValue),
+                CommentForBBMouthFeel = TXB_BBMouthFeel_Remarks.Text,
+
+                BBFlavorAndTaste = Convert.ToInt32(RBL_BBFlavorTaste.SelectedValue),
+                CommentForBBFlavorAndTaste = TXB_BBFlavorTaste_Remarks.Text,
+
+                HvoSmell = Convert.ToInt32(RBL_HvoSmell.SelectedValue),
+                CommentForHvoSmell = TXB_HvoSmell_Remarks.Text,
+
+                HvoTaste = Convert.ToInt32(RBL_HvoTaste.SelectedValue),
+                CommentForHvoTaste = TXB_HvoTaste_Remarks.Text,
+
+                HvoTemp = string.IsNullOrWhiteSpace(TB_HvoTemp.Text) ? (decimal?)null : decimal.Parse(TB_HvoTemp.Text),
+                HvoCmnt = TXB_HvoTemp_Remarks.Text,
+
+                SmpSmell = Convert.ToInt32(RBL_SMPSmell.SelectedValue),
+                CommentForSmpSmell = TXB_SMPSmell_Remarks.Text,
+
+                SmpTaste = Convert.ToInt32(RBL_SMPTaste.SelectedValue),
+                CommentForSmpTaste = TXB_SMPTaste_Remarks.Text,
+
+                SmpColor = Convert.ToInt32(RBL_SMPColor.SelectedValue),
+                CommentForSmpColor = TXB_SMPColor_Remarks.Text,
+
+                SyrupTemp = string.IsNullOrWhiteSpace(TB_SyrupTemp.Text) ? (decimal?)null : decimal.Parse(TB_SyrupTemp.Text),
+                SyrupCmnt = TXB_SyrupTemp_Remarks.Text,
+
+                SyrupColor = Convert.ToInt32(RBL_SyrupColor.SelectedValue),
+                CommentForSyrupColor = TXB_SyrupColor_Remarks.Text,
+
+                SyrupPH = string.IsNullOrWhiteSpace(TB_SyrupPH.Text) ? (decimal?)null : decimal.Parse(TB_SyrupPH.Text),
+                SyrupPhCmnt = TXB_SyrupPH_Remarks.Text,
+
+                InvertSyrpBucketFilter = Convert.ToInt32(RBL_InvertSyrupBucket.SelectedValue),
+                CommentForISBF = TXB_InvertSyrupBucket_Remarks.Text,
+
+                SugarSolBucketFilter = Convert.ToInt32(RBL_SugarSolBucket.SelectedValue),
+                CommentForSSBF = TXB_SugarSolBucket_Remarks.Text,
+
+                CreamerBucketFilter = Convert.ToInt32(RBL_CreamerBucketFilter.SelectedValue),
+                CommentForCBF = TXB_CreamerBucket_Remarks.Text,
+
+                SugarGrindedSheet = Convert.ToInt32(RBL_SugarGrinder.SelectedValue),
+                CommentForSGS = TXB_SugarGrinder_Remarks.Text,
+
+                OilSystemBucketFilter = Convert.ToInt32(RBL_OilSystem.SelectedValue),
+                CommentForOSBF = TXB_OilSystem_Remarks.Text,
+
+                OilSpray = Convert.ToInt32(RBL_OilSpray.SelectedValue),
+                CommentForOilSpray = TXB_OilSpray_Remarks.Text,
+
+                MilkSpray = Convert.ToInt32(RBL_MilkSpray.SelectedValue),
+                CommentForMilkSpray = TXB_MilkSpray_Remarks.Text,
+
+                ColdRoomTemp = string.IsNullOrWhiteSpace(TB_ColdRoomTemp.Text) ? (decimal?)null : decimal.Parse(TB_ColdRoomTemp.Text),
+                ColdRoomCmnt = TXB_ColdRoomTemp_Remarks.Text,
+
+                DeepFreezeTemp = string.IsNullOrWhiteSpace(TB_DeepFreezeTemp.Text) ? (decimal?)null : decimal.Parse(TB_DeepFreezeTemp.Text),
+                DeepFreezeCmnt = TXB_DeepFreezeTemp_Remarks.Text,
+
+                MaidaImageUrl = hdn_img1.Value,
+                BBImageUrl = hdn_img2.Value,
+
+                Approver1EmployeeCode = Approver1CodeLabel.Text.ToString(),
+                Approver2EmployeeCode = Approver2CodeLabel.Text.ToString(),
+                DottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text.ToString(),
+            };
+        }
+
+        private void SaveData(ProcessCheckingBasicData data)
+        {
+            QAProcessCheckingDataAcess dal = new QAProcessCheckingDataAcess();
+            dal.InsertProcessCheckingBasicData(data);
+        }
+
+        //private void ShowErrorNotification(string errorMessage)
+        //{
+        //    string sanitizedMessage = errorMessage.Replace("'", "\\'");
+        //    string errorScript = "<script type='text/javascript'>\n" +
+        //                         $"new PNotify({{\n" +
+        //                         "    title: 'Error',\n" +
+        //                         $"    text: '{sanitizedMessage}',\n" +
+        //                         "    type: 'error',\n" +
+        //                         "    styling: 'bootstrap3'\n" +
+        //                         "});\n" +
+        //                         "</script>";
+        //    ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+        //}
+
+
+        private void HandleError(Exception ex)
+        {
+            string errorMessage = ex.Message.Replace("'", "\\'");
+            string errorScript = $"<script>new PNotify({{ title: 'Error', text: '{errorMessage}', type: 'error', styling: 'bootstrap3' }});</script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+            // Optionally, log the error to a database or file
+        }
+
+        protected void BasicBtnSubmit_Click1(object sender, EventArgs e)
+        {
             // Retrieve values from controls
             string pcrNo = GenerateUnique();  // Generate unique value
             string plantName = DDL_Plant.SelectedValue;

@@ -360,9 +360,9 @@ namespace AnmolDristi
 
                                 imgMaida.ImageUrl = dt.Rows[0]["MaidaImageUrl"].ToString();
                                 imgBB.ImageUrl = dt.Rows[0]["BBImageUrl"].ToString();
-                                if (row.Table.Columns.Contains("DesignAndImplementation") && !Convert.IsDBNull(row["DesignAndImplementation"]))
+                                if (row.Table.Columns.Contains("MaidaImageUrl") && !Convert.IsDBNull(row["MaidaImageUrl"]))
                                 {
-                                    string imageUrl = row["DesignAndImplementation"].ToString();
+                                    string imageUrl = row["MaidaImageUrl"].ToString();
 
                                     // Validate if the image URL exists on the server
                                     if (File.Exists(Server.MapPath(imageUrl)))
@@ -394,9 +394,9 @@ namespace AnmolDristi
                                     //FU_DesgImp_Img.Visible = false;
                                 }
 
-                                if (row.Table.Columns.Contains("ColourAndAppearance") && !Convert.IsDBNull(row["ColourAndAppearance"]))
+                                if (row.Table.Columns.Contains("BBImageUrl") && !Convert.IsDBNull(row["BBImageUrl"]))
                                 {
-                                    string imageUrl = row["ColourAndAppearance"].ToString();
+                                    string imageUrl = row["BBImageUrl"].ToString();
 
                                     // Validate if the image URL exists on the server
                                     if (File.Exists(Server.MapPath(imageUrl)))

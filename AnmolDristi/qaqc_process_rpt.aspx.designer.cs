@@ -2002,15 +2002,6 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.Label lbl_QAPC_MaidaImg;
         
         /// <summary>
-        /// BtnUploadFU_MaidaImage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnUploadFU_MaidaImage;
-        
-        /// <summary>
         /// FU_MaidaImage_img control.
         /// </summary>
         /// <remarks>
@@ -2090,15 +2081,6 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_QAPC_BBImage;
-        
-        /// <summary>
-        /// BtnUploadFU_BBImage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnUploadFU_BBImage;
         
         /// <summary>
         /// FU_BBImage_Img control.
