@@ -1,13 +1,6 @@
-﻿<%@ Page Title="ppechecklist" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="csm_ppechecklist.aspx.cs" Inherits="AnmolDristi.csm_ppechecklist" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="csm_ppechecklist_detailed.aspx.cs" Inherits="AnmolDristi.csm_ppechecklist_detailed" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-    <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
-
     <style type="text/css">
         .rmv_border .form-control {
             border: none !important;
@@ -18,12 +11,8 @@
         }
     </style>
 
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <asp:ScriptManager runat="server" />
-
     <%--js when not okay--%>
     <script type="text/javascript">
 
@@ -152,13 +141,15 @@
             }
         };
 
+
+
     </script>
 
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h5>CSM : Workers PPE Checklist</h5>
+                    <h5>Workers PPE Checklist Report</h5>
                 </div>
             </div>
 
@@ -167,11 +158,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="x_panel">
-                        <div class="x_title">
-                            <h2>DOC/CSM/PPC/002</h2>
 
-                            <div class="clearfix"></div>
-                        </div>
                         <div class="x_content">
 
                             <div class="col-md-3">
@@ -564,11 +551,14 @@
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <asp:Label ID="lbl_msg" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                             <div class="input-group input-group-sm">
-                                <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
-                                <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
-                                <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
+
+                     <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="btn btn-warning btn-sm" ValidationGroup="Update" CausesValidation="true" OnClick="btnUpdate_Click" />
+<asp:Button ID="btnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm" ValidationGroup="Delete" CausesValidation="false" OnClick="btnDelete_Click" />
+<asp:Button ID="btnSave" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="btnSave_Click" />
+<asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-secondary btn-sm" ValidationGroup="Cancel" CausesValidation="false" OnClick="btnCancel_Click" />
+         
+
                             </div>
                         </div>
                     </div>
@@ -577,9 +567,11 @@
             </div>
         </div>
 
-
     </div>
 
+
 </asp:Content>
+
+
 
 

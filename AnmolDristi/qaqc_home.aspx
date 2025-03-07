@@ -32,12 +32,25 @@
 
                             </a>
 
-                            <a class="btn btn-app" href="csm_ppechecklist.aspx">
+                            <a class="btn btn-app" href="csm_ppechecklist.aspx"> 
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>PPE Checklist
 
                             </a>
+                            <a class="btn btn-app" href="ppe_report.aspx">
+                                <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>PPE Checklist Report
+
+                            </a>
+                            <a class="btn btn-app" href="SN_CRUD_Oprtn.aspx">
+                                <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Practice CRUD Operation
+
+                            </a>
+                            
                         </div>
                     </div>
                 </div>

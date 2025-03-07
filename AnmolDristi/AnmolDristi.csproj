@@ -81,11 +81,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="csm_ppechecklist.aspx" />
+    <Content Include="csm_ppechecklist_detailed.aspx" />
     <Content Include="home.aspx" />
     <Content Include="packages.config" />
+    <Content Include="ppe_report.aspx" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
+    <Content Include="SN_CRUD_Oprtn.aspx" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -143,6 +146,13 @@
     <Compile Include="csm_ppechecklist.aspx.designer.cs">
       <DependentUpon>csm_ppechecklist.aspx</DependentUpon>
     </Compile>
+    <Compile Include="csm_ppechecklist_detailed.aspx.cs">
+      <DependentUpon>csm_ppechecklist_detailed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="csm_ppechecklist_detailed.aspx.designer.cs">
+      <DependentUpon>csm_ppechecklist_detailed.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DAL\QCInspectorDataAccess.cs" />
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="DB_Utility_OH4Y.cs" />
@@ -167,6 +177,13 @@
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ppe_report.aspx.cs">
+      <DependentUpon>ppe_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ppe_report.aspx.designer.cs">
+      <DependentUpon>ppe_report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="qaqc_home.aspx.cs">
       <DependentUpon>qaqc_home.aspx</DependentUpon>
@@ -188,6 +205,13 @@
     </Compile>
     <Compile Include="csm_ppe_checklist_report.aspx.designer.cs">
       <DependentUpon>csm_ppe_checklist_report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SN_CRUD_Oprtn.aspx.cs">
+      <DependentUpon>SN_CRUD_Oprtn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SN_CRUD_Oprtn.aspx.designer.cs">
+      <DependentUpon>SN_CRUD_Oprtn.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
