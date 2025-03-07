@@ -2019,6 +2019,25 @@
                                                                 <asp:Image ID="uploadedImage1" runat="server" CssClass="img-fluid" data-prefix="QAPC/MaidaImage" Style="display: none;" />
                                                             </div>
 
+                                                            <%--<div class="col-md-3" id="FU_BBImage_Upldr" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_FU_BBImage" runat="server" AssociatedControlID="FU_BBImage" Text="Broken Biscuit Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_FU_BBImage" runat="server" ErrorMessage="*" ControlToValidate="FU_BBImage" Display="Dynamic" ValidationGroup="ValidationGroup2" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:CustomValidator ID="CV_FU_BBImage" runat="server" ControlToValidate="FU_BBImage" Display="Dynamic" ValidationGroup="ValidationGroup2" ErrorMessage="Please upload file"></asp:CustomValidator>
+                                                                    <asp:Label ID="lblErrorMessage1" runat="server" CssClass="text-danger"></asp:Label>
+                                                                    <div class="input-group input-group-sm">
+                                                                        <asp:FileUpload ID="FU_BBImage" runat="server" CssClass="form-control rounded" />
+                                                                        <span class="input-group-btn">
+                                                                            <asp:Button ID="BtnUploadFU_BBImage" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm2();" OnClick="BtnUploadFU_BBImage_Click" ValidationGroup="ValidationGroup2" CausesValidation="true" />
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3" id="FU_BBImage_Img" runat="server" visible="false">
+                                                                <asp:Image ID="uploadedImage2" runat="server" CssClass="img-fluid" />
+                                                            </div>--%>
+
                                                             <div class="col-md-3" id="FU_BBImage_Upldr" runat="server" visible="true">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_FU_BBImage" runat="server" AssociatedControlID="FU_BBImage" Text="Broken Biscuit Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -2039,8 +2058,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_BasicbtnSubmit" runat="server" AssociatedControlID="BasicBtnSubmit" Text="Click to SAVE Basic Data" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <%--<asp:Button ID="BasicBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-primary btn-sm" ValidationGroup="BasicDataSave" OnClientClick="if (typeof(Page_ClientValidate) == 'function') { return Page_ClientValidate('BasicDataSave') && validateImages(); } return validateImages();" CausesValidation="true" OnClick="BasicBtnSubmit_Click" />--%>
-                                                                        <asp:Button ID="BasicBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-primary btn-sm" ValidationGroup="BasicDataSave" OnClientClick="return validateForm();" CausesValidation="true" OnClick="BasicBtnSubmit_Click" />
+                                                                        <asp:Button ID="BasicBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-primary btn-sm" ValidationGroup="BasicDataSave" OnClientClick="validateImages();" CausesValidation="true" OnClick="BasicBtnSubmit_Click" />
                                                                         <asp:Button ID="BasicBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BasicBtnReset_Click" />
                                                                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                                                     </div>
