@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.IO;
 using DocumentFormat.OpenXml.Wordprocessing;
+using System.Globalization;
 
 namespace AnmolDristi
 {
@@ -587,7 +588,7 @@ namespace AnmolDristi
 
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
-            Console.Write("Button clicked");
+            //Console.Write("Button clicked");
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             string amfId = GenerateUnique();  // Generate unique value
@@ -607,10 +608,36 @@ namespace AnmolDristi
             //string sizeRemarks = string.IsNullOrEmpty(TXB_Size_Remarks.Text) ? null : TXB_Size_Remarks.Text;
 
             string challanNo = string.IsNullOrEmpty(TB_ChallanNo.Text) ? null : TB_ChallanNo.Text;
-            DateTime? challanDate = string.IsNullOrEmpty(TB_ChallanDate.Text) ? (DateTime?)null : DateTime.Parse(TB_ChallanDate.Text).Date;
+            //DateTime? challanDate = string.IsNullOrEmpty(TB_ChallanDate.Text) ? (DateTime?)null : DateTime.Parse(TB_ChallanDate.Text).Date;
 
+            List<DateTime?> challanDates = TB_ChallanDate.Text
+            .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(dateStr =>
+            {
+                DateTime parsedDate;
+                return DateTime.TryParseExact(dateStr.Trim(), "dd-MM-yyyy",
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate)
+                    ? (DateTime?)parsedDate
+                    : null;
+            })
+            .ToList();
 
-            DateTime? mfgDate = string.IsNullOrEmpty(TB_Mfg.Text) ? (DateTime?)null : DateTime.Parse(TB_Mfg.Text).Date;
+            //DateTime? mfgDate = string.IsNullOrEmpty(TB_Mfg.Text) ? (DateTime?)null : DateTime.Parse(TB_Mfg.Text).Date;
+
+            List<DateTime?> mfgDates = string.IsNullOrEmpty(TB_Mfg.Text)
+            ? new List<DateTime?>() // Return an empty list if the textbox is empty
+            : TB_Mfg.Text
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries) // Split by commas
+                .Select(dateStr =>
+                {
+                    DateTime parsedDate;
+                    return DateTime.TryParseExact(dateStr.Trim(), "dd-MM-yyyy",
+                        CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate)
+                        ? (DateTime?)parsedDate
+                        : null;
+                })
+                .ToList();
+
             string batchNo = string.IsNullOrEmpty(TB_BatchNo.Text) ? null : TB_BatchNo.Text;
             string lotNo = string.IsNullOrEmpty(TB_LotNo.Text) ? null : TB_LotNo.Text;
             string vehicleNo = string.IsNullOrEmpty(TB_VehicleNo.Text) ? null : TB_VehicleNo.Text;
@@ -722,8 +749,17 @@ namespace AnmolDristi
                         //command.Parameters.AddWithValue("@Size_Remarks", (object)sizeRemarks ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@ChallanNo", (object)challanNo ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@ChallanDate", (object)challanDate ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Mfg", (object)mfgDate ?? DBNull.Value);
+                        //command.Parameters.AddWithValue("@ChallanDate", (object)challanDate ?? DBNull.Value);
+                        //command.Parameters.AddWithValue("@Mfg", (object)mfgDate ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@Challan_Dates", challanDates.Any()
+                            ? string.Join(",", challanDates.Where(d => d.HasValue).Select(d => d.Value.ToString("yyyy-MM-dd")))
+                            : (object)DBNull.Value);
+
+                        command.Parameters.AddWithValue("@Mfg_Dates", mfgDates.Any()
+                            ? string.Join(",", mfgDates.Where(d => d.HasValue).Select(d => d.Value.ToString("yyyy-MM-dd")))
+                            : (object)DBNull.Value);
+
                         command.Parameters.AddWithValue("@BatchNo", (object)batchNo ?? DBNull.Value);
                         command.Parameters.AddWithValue("@LotNo", (object)lotNo ?? DBNull.Value);
                         command.Parameters.AddWithValue("@VehicleNo", (object)vehicleNo ?? DBNull.Value);

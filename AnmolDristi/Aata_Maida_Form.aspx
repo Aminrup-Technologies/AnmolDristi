@@ -699,14 +699,14 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_ChallanNo" runat="server" AssociatedControlID="TB_ChallanNo" Text="Challan No. :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_ChallanNo" runat="server" ErrorMessage="Input Required" ValidationGroup="Submit" ControlToValidate="TB_ChallanNo" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_ChallanNo" runat="server" ControlToValidate="TB_ChallanNo" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_ChallanNo" runat="server" ControlToValidate="TB_ChallanNo" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Single quote (') is not allowed" ValidationExpression="^[^']*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_ChallanNo" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Challan No"></asp:TextBox>
+                                        <asp:TextBox ID="TB_ChallanNo" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" MaxLength="50" Placeholder="Challan No"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-3" id="ChallanDateDIV" runat="server">
+                            <%--<div class="col-md-3" id="ChallanDateDIV" runat="server">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_ChallanDate" runat="server" AssociatedControlID="TB_ChallanDate" Text="Challan Date :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_ChallanDate" runat="server" ErrorMessage="Date is required " ValidationGroup="Submit" ControlToValidate="TB_ChallanDate" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -714,14 +714,46 @@
                                         <asp:TextBox ID="TB_ChallanDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date" ValidationGroup="Submit"></asp:TextBox>
                                     </div>
                                 </div>
+                            </div>--%>
+
+                            <div class="col-md-3" id="ChallanDateDIV" runat="server">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_ChallanDate" runat="server" AssociatedControlID="TB_ChallanDate" Text="Challan Date :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_ChallanDate" runat="server" ErrorMessage="Date is required " ValidationGroup="Submit" ControlToValidate="TB_ChallanDate" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_ChallanDate" runat="server" 
+                                        ControlToValidate="TB_ChallanDate" ValidationGroup="Submit" ForeColor="Red" 
+                                        ErrorMessage="Enter valid dates in DD-MM-YYYY format, separated by commas" 
+                                        ValidationExpression="^(\d{2}-\d{2}-\d{4})(,\s*\d{2}-\d{2}-\d{4})*$" 
+                                        Display="Dynamic">
+                                    </asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_ChallanDate" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit"></asp:TextBox>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="col-md-3" id="MfgDIV" runat="server">
+                            <%--<div class="col-md-3" id="MfgDIV" runat="server">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_Mfg" runat="server" AssociatedControlID="TB_Mfg" Text=" Mfg. Date :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_Mfg" runat="server" ErrorMessage="Date is required " ValidationGroup="Submit" ControlToValidate="TB_Mfg" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_Mfg" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="" TextMode="Date"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>--%>
+
+                            <div class="col-md-3" id="MfgDIV" runat="server">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_Mfg" runat="server" AssociatedControlID="TB_Mfg" Text=" Mfg. Date :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_Mfg" runat="server" ErrorMessage="Date is required " ValidationGroup="Submit" ControlToValidate="TB_Mfg" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Dates" runat="server" 
+                                        ControlToValidate="TB_Mfg" ValidationGroup="Submit" ForeColor="Red" 
+                                        ErrorMessage="Enter valid dates in DD-MM-YYYY format, separated by commas" 
+                                        ValidationExpression="^(\d{2}-\d{2}-\d{4})(,\s*\d{2}-\d{2}-\d{4})*$" 
+                                        Display="Dynamic">
+                                    </asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Mfg" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder=""></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -730,7 +762,7 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_BatchNo" runat="server" AssociatedControlID="TB_BatchNo" Text="Mfg. Batch No. :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_BatchNo" runat="server" ErrorMessage="Input Required" ValidationGroup="Submit" ControlToValidate="TB_BatchNo" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_BatchNo" runat="server" ControlToValidate="TB_BatchNo" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_BatchNo" runat="server" ControlToValidate="TB_BatchNo" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Alphanumeric Only" ValidationExpression="^[^']*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_BatchNo" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Batch No"></asp:TextBox>
                                     </div>
