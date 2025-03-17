@@ -19,6 +19,7 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!IsPostBack)
             {
                 if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
@@ -28,16 +29,67 @@ namespace AnmolDristi
                 else
                 {
 
-                    lbl_docname.Text = "Search Filter for QC Daily RM Class 3 Report";
+                    lbl_docname.Text = "Search Filter for QC RM Class 3 Report";
                     lbl_viewname.Text = "View and Search for Detailed View || ";
 
-                    PlantBinder();
+                    MaterialBinder();
                     loadAlldata();
-
                 }
 
             }
         }
+
+        private void MaterialBinder()
+        {
+            string query = "SELECT Material_Id, Material_Name FROM RM_Material where Class = 3";
+            string textField = "Material_Name";
+            string valueField = "Material_Id";
+
+            bool recordsBound;
+            DatabaseHelper.BindDropDownList(query, DDL_Material, textField, valueField, out recordsBound);
+
+            if (!recordsBound)
+            {
+                DatabaseHelper.BindWithDefaultNoRecords(DDL_Material);
+
+                string MaterialBinder_Error_script = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Error',
+                                text: 'An error occurred!',
+                                type: 'error',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowRegionBinderErrorNotification", MaterialBinder_Error_script, false);
+            }
+        }
+
+        protected void DDL_Material_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (DDL_Material.SelectedIndex != 0)
+            {
+                string selectedMaterialValue = DDL_Material.SelectedValue.ToString();
+                PlantBinder();
+
+                // Call method to show relevant controls based on selected material
+                //DivBinders(selectedMaterialValue);
+            }
+            else
+            {
+                DatabaseHelper.BindWithDefaultNoRecords(DDL_Plant);
+
+                string DDL_Material_Error_script = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Error',
+                                text: 'Invalid Selection!',
+                                type: 'error',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowRegionInvalidErrorNotification", DDL_Material_Error_script, false);
+            }
+        }
+
 
         private void PlantBinder()
         {
@@ -74,12 +126,10 @@ namespace AnmolDristi
             if (DDL_Plant.SelectedIndex != 0)
             {
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
-                MaterialBinder(selectedPlantValue);
+
             }
             else
             {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_Material);
-
                 string DDL_Plant_Error_script = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Error',
@@ -90,117 +140,9 @@ namespace AnmolDristi
                         </script>";
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_Plant_Error_script, false);
             }
-
         }
 
-        private void MaterialBinder(string selectedPlantValue)
-        {
-            string query = "SELECT Material_Id, Material_Name FROM RM_Material where Class = 3 ";
-            string textField = "Material_Name";
-            string valueField = "Material_Id";
 
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_Material, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedPlantValue), out recordsBound);
-
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_Material);
-
-                string MaterialBinder_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'An error occurred!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowRegionBinderErrorNotification", MaterialBinder_Error_script, false);
-            }
-        }
-
-        protected void DDL_Material_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (DDL_Material.SelectedIndex != 0)
-            {
-                string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
-                string selectedMaterialValue = DDL_Material.SelectedValue.ToString();
-                ProductBrandsBinder(selectedPlantValue);
-
-            }
-            else
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
-
-                string DDL_Material_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'Invalid Selection!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowRegionInvalidErrorNotification", DDL_Material_Error_script, false);
-            }
-        }
-
-        private void ProductBrandsBinder(string selectedPlantValue)
-        {
-            // Construct the SQL query with parameters
-            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId";
-            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
-
-            // Create SQL parameters for plant_id and line_id
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@PlantId", selectedPlantValue)
-            };
-
-            // Call the BindDropDownList method with parameters
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
-
-            // Check if any records were bound
-            if (!recordsBound)
-            {
-                string ProductBrands_Error_script = @"<script type='text/javascript'>
-                    new PNotify({
-                        title: 'Error',
-                        text: 'No Brands found for the selected plant and line!',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
-            }
-        }
-
-        protected void DDL_ProductBrand_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (DDL_ProductBrand.SelectedIndex != 0)
-            {
-                string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
-
-                System.Data.DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
-
-            }
-            else
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
-
-                string DDL_ProductBrand_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'Invalid Selection!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", DDL_ProductBrand_Error_script, false);
-            }
-        }
 
         protected void ReportbtnCancel_Click(object sender, EventArgs e)
         {
@@ -226,34 +168,30 @@ namespace AnmolDristi
 
                 string query = @"
                     SELECT TOP(30)
-                        c.ID AS DBID,
-                        c.FormID as FormID,
-                        'NA' as RecordID,
-                        p.plant_name AS PlantName,
-                        m.material_name AS MaterialName,
-		                ISNULL(pb.brand_name, 'N/A') AS ProductBrand,
-                        c.SubmittedByEmployeeCode as EmpCode,
-                        u.EmployeeName AS EmpName,
-                        c.SubmittedDate as SDate,
-                        c.SubmittedTime as STime,
-                        c.Approver1EmployeeCode as L1,
-                        c.Approver1_Status,
-                        c.Approver1_TimeStamp,
-                        c.Approver2EmployeeCode as L2,
-                        c.Approver2_Status,
-                        c.Approver2_TimeStamp,
-                        c.DottedLineApproverEmployeeCode as L3,
-                        c.DottedApprover_Status,
-                        c.DottedApprover_TimeStamp,
-                        c.Material_Image
+                    c.ID AS DBID,
+                    c.FormID as FormID,
+                    'NA' as RecordID,
+	                m.Material_Name AS MaterialName,
+                    p.plant_name AS PlantName,
+                    c.SubmittedByEmployeeCode as EmpCode,
+                    u.EmployeeName AS EmpName,
+                    c.SubmittedDate as SDate,
+                    c.SubmittedTime as STime,
+                    c.Approver1EmployeeCode as L1,
+                    c.Approver1_Status,
+                    c.Approver1_TimeStamp,
+                    c.Approver2EmployeeCode as L2,
+                    c.Approver2_Status,
+                    c.Approver2_TimeStamp,
+                    c.DottedLineApproverEmployeeCode as L3,
+                    c.DottedApprover_Status,
+                    c.DottedApprover_TimeStamp
                     FROM 
                         TRN_RM_CLASS_3 c
-                    LEFT JOIN 
-                        MST_PlantDetails p ON c.PlantName = p.plant_id
-                    LEFT JOIN 
+                    LEFT JOIN
                         RM_MATERIAL m ON c.MaterialName = m.Material_Id
                     LEFT JOIN 
-                        MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
+                        MST_PlantDetails p ON c.PlantName = p.plant_id
                     LEFT JOIN
                         MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
                     WHERE 
@@ -262,7 +200,6 @@ namespace AnmolDristi
                         c.[SubmittedDate] DESC, 
                         c.[SubmittedTime] DESC;
                 ";
-
 
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
@@ -292,13 +229,13 @@ namespace AnmolDristi
                 SELECT 
                     c.ID AS DBID,
                     c.FormID AS FormID,
+	                m.Material_Name AS MaterialName,
                     p.plant_name AS PlantName,
-                    m.material_name AS MaterialName,
-		            ISNULL(pb.brand_name, 'N/A') AS ProductBrand,
                     c.SubmittedByEmployeeCode AS EmpCode,
                     u.EmployeeName AS EmpName,
                     c.SubmittedDate AS SDate,
                     c.SubmittedTime AS STime,
+                    'No Comment' AS Remarks,
                     c.Approver1EmployeeCode AS L1,
                     c.Approver1_Status,
                     c.Approver1_TimeStamp,
@@ -307,15 +244,12 @@ namespace AnmolDristi
                     c.Approver2_TimeStamp,
                     c.DottedLineApproverEmployeeCode AS L3,
                     c.DottedApprover_Status,
-                    c.DottedApprover_TimeStamp,
-                    c.Material_Image
+                    c.DottedApprover_TimeStamp
                 FROM TRN_RM_CLASS_3 c
-                LEFT JOIN MST_PlantDetails p ON c.PlantName = p.plant_id
                 LEFT JOIN RM_MATERIAL m ON c.MaterialName = m.Material_Id
-                LEFT JOIN MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
+                LEFT JOIN MST_PlantDetails p ON c.PlantName = p.plant_id
                 LEFT JOIN MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
                 WHERE 1 = 1");
-
 
             var parameters = new List<SqlParameter>();
 
@@ -330,6 +264,12 @@ namespace AnmolDristi
             {
                 queryBuilder.Append(" AND c.SubmittedDate <= @DateTo");
                 parameters.Add(new SqlParameter("@DateTo", SqlDbType.Date) { Value = dateTo.Value.Date });
+            }
+
+            if (!string.IsNullOrEmpty(DDL_Material.SelectedValue) && DDL_Material.SelectedValue != "0")
+            {
+                queryBuilder.Append(" AND c.MaterialName = @Material_Id");
+                parameters.Add(new SqlParameter("@Material_Id", SqlDbType.Int) { Value = DDL_Material.SelectedValue });
             }
 
             if (!string.IsNullOrEmpty(DDL_Plant.SelectedValue) && DDL_Plant.SelectedValue != "0")
@@ -350,11 +290,11 @@ namespace AnmolDristi
             //    parameters.Add(new SqlParameter("@ProductCategory", SqlDbType.Int) { Value = DDL_ProductCategory.SelectedValue });
             //}
 
-            if (!string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) && DDL_ProductBrand.SelectedValue != "0")
-            {
-                queryBuilder.Append(" AND c.ProductBrand = @ProductBrand");
-                parameters.Add(new SqlParameter("@ProductBrand", SqlDbType.Int) { Value = DDL_ProductBrand.SelectedValue });
-            }
+            //if (!string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) && DDL_ProductBrand.SelectedValue != "0")
+            //{
+            //    queryBuilder.Append(" AND c.ProductBrand = @ProductBrand");
+            //    parameters.Add(new SqlParameter("@ProductBrand", SqlDbType.Int) { Value = DDL_ProductBrand.SelectedValue });
+            //}
 
             queryBuilder.Append(" ORDER BY c.SubmittedDate DESC, c.SubmittedTime DESC");
 
@@ -393,18 +333,17 @@ namespace AnmolDristi
             return dt;
         }
 
-
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "View")
             {
                 // Get the DBID from the CommandArgument.
-                int dbid = Convert.ToInt32(e.CommandArgument);
+                int id = Convert.ToInt32(e.CommandArgument);
 
-                if (dbid > 0)
+                if (id > 0)
                 {
                     // Redirect with the correct DBID.
-                    Response.Redirect("RM_Class_3_FinalApproval.aspx?DBID=" + dbid + "&source=report");
+                    Response.Redirect("RM_Class_3_FinalApproval.aspx?Id=" + id + "&source=submitter");
                 }
                 else
                 {
@@ -415,7 +354,7 @@ namespace AnmolDristi
             }
         }
 
-       
+
 
     }
 }

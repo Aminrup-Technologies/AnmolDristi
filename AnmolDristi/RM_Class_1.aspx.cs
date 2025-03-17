@@ -1140,6 +1140,7 @@ namespace AnmolDristi
             decimal? quantity = !string.IsNullOrWhiteSpace(TB_Quantity.Text) ? Convert.ToDecimal(TB_Quantity.Text) : (decimal?)null;
             string quantityRemarks = string.IsNullOrEmpty(TXB_Quantity_Remarks.Text) ? null : TXB_Quantity_Remarks.Text;
 
+
             string color = string.IsNullOrEmpty(DDL_Color.SelectedItem.Text) ? null : DDL_Color.Text;
             string colorRemarks = string.IsNullOrEmpty(TXB_Color_Remarks.Text) ? null : TXB_Color_Remarks.Text;
 

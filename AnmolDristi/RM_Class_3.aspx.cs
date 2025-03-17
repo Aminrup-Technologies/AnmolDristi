@@ -875,38 +875,55 @@ namespace AnmolDristi
             //string line = DDL_PlantLine.SelectedValue;
             //string productBrand = string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) ? null : DDL_ProductBrand.Text;
 
-            string line = string.Empty;
-            string productBrand = string.Empty;
+            //string line = string.Empty;
+            //string productBrand = string.Empty;
+
+            string Brand = string.IsNullOrEmpty(TB_BrandName.Text) ? null : TB_BrandName.Text;
+            DateTime? receivingDate = string.IsNullOrEmpty(TB_ReceivingDate.Text) ? (DateTime?)null : DateTime.Parse(TB_ReceivingDate.Text).Date;
+
+            decimal? quantity = !string.IsNullOrWhiteSpace(TB_Quantity.Text) ? Convert.ToDecimal(TB_Quantity.Text) : (decimal?)null;
+            string quantityRemarks = string.IsNullOrEmpty(TXB_Quantity_Remarks.Text) ? null : TXB_Quantity_Remarks.Text;
+
+            decimal? sampleSize = !string.IsNullOrWhiteSpace(TB_Size.Text) ? Convert.ToDecimal(TB_Size.Text) : (decimal?)null;
 
             string supplier = string.IsNullOrEmpty(TB_Supplier.Text) ? null : TB_Supplier.Text;
             string challanNo = string.IsNullOrEmpty(TB_ChallanNo.Text) ? null : TB_ChallanNo.Text;
             DateTime? challanDate = string.IsNullOrEmpty(TB_ChallanDate.Text) ? (DateTime?)null : DateTime.Parse(TB_ChallanDate.Text).Date;
             string lotNo = string.IsNullOrEmpty(TB_LotNo.Text) ? null : TB_LotNo.Text;
+            string batchNo = string.IsNullOrEmpty(TB_BatchNo.Text) ? null : TB_BatchNo.Text;
             DateTime? pkdMfgDate = string.IsNullOrEmpty(TB_PkdMfg.Text) ? (DateTime?)null : DateTime.Parse(TB_PkdMfg.Text).Date;
+            DateTime? bbDate = string.IsNullOrEmpty(TB_BeforeDate.Text) ? (DateTime?)null : DateTime.Parse(TB_BeforeDate.Text).Date;
             string vehicleNo = string.IsNullOrEmpty(TB_VehicleNo.Text) ? null : TB_VehicleNo.Text;
 
             string mfgName = string.IsNullOrEmpty(TB_MfgName.Text) ? null : TB_MfgName.Text;
-
-            DateTime? bbDate = string.IsNullOrEmpty(TB_BeforeDate.Text) ? (DateTime?)null : DateTime.Parse(TB_BeforeDate.Text).Date;
             string licenceNo = string.IsNullOrEmpty(TB_FssaiNo.Text) ? null : TB_FssaiNo.Text;
 
-            int? logo = string.IsNullOrEmpty(RBL_Fssai_Logo.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Fssai_Logo.SelectedValue);
+            int? mfgNameAdd_YesNo = string.IsNullOrEmpty(RBL_ManufNameAdd.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_ManufNameAdd.SelectedValue);
+            string mfgNameAdd_YesNoRemarks = string.IsNullOrEmpty(TXB_ManufNameAdd_Remarks.Text) ? null : TXB_ManufNameAdd_Remarks.Text;
+
+            int? pkdMfgDate_YesNo = string.IsNullOrEmpty(RBL_ManufDatePkd.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_ManufDatePkd.SelectedValue);
+            string pkdMfgDate_YesNoRemarks = string.IsNullOrEmpty(TXB_ManufDatePkd_Remarks.Text) ? null : TXB_ManufDatePkd_Remarks.Text;
+
+            int? bbDate_YesNo = string.IsNullOrEmpty(RBL_Bestb4date.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Bestb4date.SelectedValue);
+            string bbDate_YesNoRemarks = string.IsNullOrEmpty(TXB_Bestb4date_Remarks.Text) ? null : TXB_Bestb4date_Remarks.Text;
+
+            int? batchNo_YesNo = string.IsNullOrEmpty(RBL_BatchLotNo.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_BatchLotNo.SelectedValue);
+            string batchNo_YesNoRemarks = string.IsNullOrEmpty(TXB_BatchLotNo_Remarks.Text) ? null : TXB_BatchLotNo_Remarks.Text;
+
+            int? fssailogo = string.IsNullOrEmpty(RBL_Fssai_Logo.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Fssai_Logo.SelectedValue);
             int? vegLogo = string.IsNullOrEmpty(RBL_Veg_Logo.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Veg_Logo.SelectedValue);
+
+            int? smell = string.IsNullOrEmpty(RBL_Smell.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Smell.SelectedValue);
+            string smellRemarks = string.IsNullOrEmpty(TXB_Smell_Remarks.Text) ? null : TXB_Smell_Remarks.Text;
+
+            int? odourAfterAcidification = string.IsNullOrWhiteSpace(RBL_OdourAfterAcidification.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_OdourAfterAcidification.SelectedValue);
+            string odourAfterAcidificationRemarks = string.IsNullOrEmpty(TXB_OdourAfterAcidification_Remarks.Text) ? null : TXB_OdourAfterAcidification_Remarks.Text;
 
             int? packing = string.IsNullOrEmpty(RBL_Packing_Condition.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Packing_Condition.SelectedValue);
             string packingRemarks = string.IsNullOrEmpty(TXB_PackingCondition_Remarks.Text) ? null : TXB_PackingCondition_Remarks.Text;
 
-            decimal? quantity = !string.IsNullOrWhiteSpace(TB_Quantity.Text) ? Convert.ToDecimal(TB_Quantity.Text) : (decimal?)null;
-            string quantityRemarks = string.IsNullOrEmpty(TXB_Quantity_Remarks.Text) ? null : TXB_Quantity_Remarks.Text;
-
-            int? grade = string.IsNullOrWhiteSpace(RBL_Grade.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Grade.SelectedValue);
-            string gradeRemarks = string.IsNullOrEmpty(TXB_Grade_Remarks.Text) ? null : TXB_Grade_Remarks.Text;
-
             int? color = string.IsNullOrWhiteSpace(RBL_Colour.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Colour.SelectedValue);
             string colorRemarks = string.IsNullOrEmpty(TXB_Colour_Remarks.Text) ? null : TXB_Colour_Remarks.Text;
-
-            int? smell = string.IsNullOrEmpty(RBL_Smell.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Smell.SelectedValue);
-            string smellRemarks = string.IsNullOrEmpty(TXB_Smell_Remarks.Text) ? null : TXB_Smell_Remarks.Text;
 
             int? appearance = string.IsNullOrEmpty(RBL_Appearance.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Appearance.SelectedValue);
             string appearanceRemarks = string.IsNullOrEmpty(TXB_Appearance_Remarks.Text) ? null : TXB_Appearance_Remarks.Text;
@@ -914,7 +931,8 @@ namespace AnmolDristi
             int? taste = string.IsNullOrEmpty(RBL_TasteFlavor.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_TasteFlavor.SelectedValue);
             string tasteRemarks = string.IsNullOrEmpty(TXB_TasteFlavor_Remarks.Text) ? null : TXB_TasteFlavor_Remarks.Text;
 
-            string foreignImpurites = string.IsNullOrEmpty(TB_Foreign_Impurities.Text) ? null : TB_Foreign_Impurities.Text;
+            int? grade = string.IsNullOrWhiteSpace(RBL_Grade.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Grade.SelectedValue);
+            string gradeRemarks = string.IsNullOrEmpty(TXB_Grade_Remarks.Text) ? null : TXB_Grade_Remarks.Text;
 
             decimal? ph = !string.IsNullOrWhiteSpace(TB_PH.Text) ? Convert.ToDecimal(TB_PH.Text) : (decimal?)null;
             string phRemarks = string.IsNullOrEmpty(TXB_PH_Remarks.Text) ? null : TXB_PH_Remarks.Text;
@@ -971,6 +989,14 @@ namespace AnmolDristi
             string wimRemarks = string.IsNullOrEmpty(TXB_WIM.Text) ? null : TXB_WIM.Text;
 
             int? beverage = string.IsNullOrEmpty(RBL_Beverage.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Beverage.SelectedValue);
+            
+            int? foreignMatters = string.IsNullOrEmpty(RBL_ForeignMatters.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_ForeignMatters.SelectedValue);
+            string foreignMattersRemarks = string.IsNullOrEmpty(TXB_ForeignMatters_Remarks.Text) ? null : TXB_ForeignMatters_Remarks.Text;
+
+            string foreignImpurites = string.IsNullOrEmpty(TB_Foreign_Impurities.Text) ? null : TB_Foreign_Impurities.Text;
+
+            int? accepted = string.IsNullOrEmpty(RBL_AppStatus.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_AppStatus.SelectedValue);
+            string acceptedRemarks = string.IsNullOrEmpty(TXB_AppStatus_Remarks.Text) ? null : TXB_AppStatus_Remarks.Text;
 
             DateTime submittedDate = DateTime.Now.Date;
             TimeSpan submittedTime = DateTime.Now.TimeOfDay;
@@ -996,36 +1022,53 @@ namespace AnmolDristi
 
                         command.Parameters.AddWithValue("@MaterialName", materialName);
                         command.Parameters.AddWithValue("@PlantName", plantName);
-                        command.Parameters.AddWithValue("@Line", line);
-                        command.Parameters.AddWithValue("@ProductBrand", (object)productBrand ?? DBNull.Value);
+                        //command.Parameters.AddWithValue("@Line", line);
 
-                        command.Parameters.AddWithValue("@Supplier_Name", (object)supplier ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Challan_No", (object)challanNo ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Challan_Date", (object)challanDate ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Lot_No", (object)lotNo ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Pkd_Date", (object)pkdMfgDate ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Vehicle_No", (object)vehicleNo ?? DBNull.Value);
-
-                        command.Parameters.AddWithValue("@MfgName", (object)mfgName ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@BeforeDate", (object)bbDate ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@FssaiNo", (object)licenceNo ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Fssai_Logo", (object)logo ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Veg_Logo", (object)vegLogo ?? DBNull.Value);
-
-                        command.Parameters.AddWithValue("@Packing_Condition", (object)packing ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@PackingCondition_Remarks", (object)packingRemarks ?? DBNull.Value);
-
-                        command.Parameters.AddWithValue("@Grade", (object)grade ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@CommentsForGrade", (object)gradeRemarks ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@ProductBrand", (object)Brand ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@ReceivingDate", (object)receivingDate ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@Quantity", (object)quantity ?? DBNull.Value);
                         command.Parameters.AddWithValue("@CommentsForQuantity", (object)quantityRemarks ?? DBNull.Value);
 
-                        command.Parameters.AddWithValue("@Color", (object)color ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@CommentsForColor", (object)colorRemarks ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@SampleSize", (object)sampleSize ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Supplier_Name", (object)supplier ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Challan_No", (object)challanNo ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Challan_Date", (object)challanDate ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Lot_No", (object)lotNo ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@MfgBatchNo", (object)batchNo ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Pkd_Date", (object)pkdMfgDate ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@BeforeDate", (object)bbDate ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Vehicle_No", (object)vehicleNo ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@MfgName", (object)mfgName ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@FssaiNo", (object)licenceNo ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@MfgYesNo", (object)mfgNameAdd_YesNo ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@MfgYesNoRemarks", (object)mfgNameAdd_YesNoRemarks ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@PkdDate_YesNo", (object)pkdMfgDate_YesNo ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@PkdDateYesNoRemarks", (object)pkdMfgDate_YesNoRemarks ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@BestbfrDate_YesNo", (object)bbDate_YesNo ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@BestbfrDate_YesNoRemarks", (object)bbDate_YesNoRemarks ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@BatchLotNo_YesNo", (object)batchNo_YesNo ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@BatchLotNo_YesNoRemarks", (object)batchNo_YesNoRemarks ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@Fssai_Logo", (object)fssailogo ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Veg_Logo", (object)vegLogo ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@Smell", (object)smell ?? DBNull.Value);
                         command.Parameters.AddWithValue("@CommentsForSmell", (object)smellRemarks ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@OdourAftrAcid", (object)odourAfterAcidification ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@OdourAftrAcid_Remarks", (object)odourAfterAcidificationRemarks ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@Packing_Condition", (object)packing ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@PackingCondition_Remarks", (object)packingRemarks ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@Color", (object)color ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@CommentsForColor", (object)colorRemarks ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@Appearance", (object)appearance ?? DBNull.Value);
                         command.Parameters.AddWithValue("@CommentsForAppearance", (object)appearanceRemarks ?? DBNull.Value);
@@ -1033,7 +1076,8 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@Taste", (object)taste ?? DBNull.Value);
                         command.Parameters.AddWithValue("@CommentsForTaste", (object)tasteRemarks ?? DBNull.Value);
 
-                        command.Parameters.AddWithValue("@Foreign_Matter_Impurities", (object)foreignImpurites ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Grade", (object)grade ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@CommentsForGrade", (object)gradeRemarks ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@PH", (object)ph ?? DBNull.Value);
                         command.Parameters.AddWithValue("@CommentsForPH", (object)phRemarks ?? DBNull.Value);
@@ -1087,9 +1131,16 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@CommentsForSulphatedAsh", (object)sulphatedAshRemarks ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@WIM", (object)wim ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@CommentsForWIM", (object)wim ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@CommentsForWIM", (object)wimRemarks ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@Beverage", (object)beverage ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@Foreign_Matter_YesNo", (object)foreignMatters ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Foreign_Matter_YesNoRemarks", (object)foreignMattersRemarks ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Foreign_Matter_Impurities", (object)foreignImpurites ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@ApprovalStatus", (object)accepted ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@Remarks", (object)acceptedRemarks ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@Material_Image", (object)ImgLink1 ?? DBNull.Value);
 
@@ -1101,7 +1152,7 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@Approver1EmployeeCode", (object)approver1EmployeeCode ?? DBNull.Value);
                         command.Parameters.AddWithValue("@Approver2EmployeeCode", (object)approver2EmployeeCode ?? DBNull.Value);
                         command.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", (object)dottedLineApproverEmployeeCode ?? DBNull.Value);
-
+                        
 
                         // Execute the query
                         command.ExecuteNonQuery();
@@ -1131,18 +1182,36 @@ namespace AnmolDristi
             //DDL_PlantLine.Enabled = false;
             //DDL_ProductBrand.Enabled = false;
 
+            TB_BrandName.ReadOnly = true;
+            TB_ReceivingDate.ReadOnly = true;
+
+            TB_Quantity.ReadOnly = true;
+            TXB_Quantity_Remarks.ReadOnly = true;
+
+            TB_Size.ReadOnly = true;
             TB_Supplier.ReadOnly = true;
             TB_ChallanNo.ReadOnly = true;
             TB_ChallanDate.ReadOnly = true;
-            TB_Quantity.ReadOnly = true;
-            TXB_Quantity_Remarks.ReadOnly = true;
             TB_LotNo.ReadOnly = true;
+            TB_BatchNo.ReadOnly = true;
             TB_PkdMfg.ReadOnly = true;
+            TB_BeforeDate.ReadOnly = true;
             TB_VehicleNo.ReadOnly = true;
 
             TB_MfgName.ReadOnly = true;
-            TB_BeforeDate.ReadOnly = true;
             TB_FssaiNo.ReadOnly = true;
+
+            RBL_ManufNameAdd.Enabled = false ;
+            TXB_ManufNameAdd_Remarks.ReadOnly = true;
+
+            RBL_ManufDatePkd.Enabled = false ;
+            TXB_ManufDatePkd_Remarks.ReadOnly = true;
+
+            RBL_Bestb4date.Enabled = false ;
+            TXB_Bestb4date_Remarks.ReadOnly = true;
+
+            RBL_BatchLotNo.Enabled = false ;
+            TXB_BatchLotNo_Remarks.ReadOnly = true;
 
             RBL_Fssai_Logo.Enabled = false;
             RBL_Veg_Logo.Enabled = false;
@@ -1153,77 +1222,83 @@ namespace AnmolDristi
             RBL_Grade.Enabled = false;
             TXB_Grade_Remarks.ReadOnly = true;
 
+            RBL_OdourAfterAcidification.Enabled = false ;
+            TXB_OdourAfterAcidification_Remarks.ReadOnly = true;
+
             RBL_Smell.Enabled = false;
             TXB_Smell_Remarks.ReadOnly = true;
 
             RBL_Appearance.Enabled = false;
             TXB_Appearance_Remarks.ReadOnly = true;
 
-            //DDL_Color.Enabled = false;
-            //TXB_Color_Remarks.ReadOnly = true;
             RBL_Colour.Enabled = false;
             TXB_Colour_Remarks.ReadOnly = true;
 
             RBL_TasteFlavor.Enabled = false;
             TXB_TasteFlavor_Remarks.ReadOnly = true;
 
-            TB_Foreign_Impurities.ReadOnly = true;
-
             TB_PH.ReadOnly = true;
             TXB_PH_Remarks.ReadOnly = true;
 
             TB_Moisture.ReadOnly = true;
             TXB_Moisture_Remarks.ReadOnly = true;
-
+            
             TB_TotalAsh.ReadOnly = true;
             TXB_Ash_Remarks.ReadOnly = true;
-
+            
             TB_InsolubleAsh.ReadOnly = true;
             TXB_InsolubleAsh_Remarks.ReadOnly = true;
-
+            
             TB_TotalSolid.ReadOnly = true;
             TXB_Solid_Remarks.ReadOnly = true;
-
+            
             TB_Dextrose.ReadOnly = true;
             TXB_Dextrose_Remarks.ReadOnly = true;
-
+            
             TB_TitrableAcidity.ReadOnly = true;
             TXB_TitrableAcidity_Remarks.ReadOnly = true;
-
+            
             TB_AlcoholicAcidity.ReadOnly = true;
             TXB_AlcoholicAcidity.ReadOnly = true;
-
+            
             TB_SO2.ReadOnly = true;
             TXB_SO2_Remarks.ReadOnly = true;
-
+            
             TB_GlycerineContent.ReadOnly = true;
             TXB_GlycerineContent_Remarks.ReadOnly = true;
-
+            
             TB_GlucoseContent.ReadOnly = true;
             TXB_GlucoseContent_Remarks.ReadOnly = true;
-
+            
             TB_LossOnDrying.ReadOnly = true;
             TXB_LossOnDrying_Remarks.ReadOnly = true;
-
+            
             TB_Solubility.ReadOnly = true;
             TXB_Solubility_Remarks.ReadOnly = true;
-
+            
             TB_ShapeOrSize.ReadOnly = true;
             TXB_ShapeOrSize_Remarks.ReadOnly = true;
-
+            
             TB_Sucrose.ReadOnly = true;
             TXB_Sucrose.ReadOnly = true;
-
+            
             TB_Sulphide.ReadOnly = true;
             TXB_Sulphide.ReadOnly = true;
-
+            
             TB_SulphatedAsh.ReadOnly = true;
             TXB_SulphatedAsh_Remarks.ReadOnly = true;
-
+            
             TB_WIM.ReadOnly = true;
             TXB_WIM.ReadOnly = true;
 
             RBL_Beverage.Enabled = false;
+
+            RBL_ForeignMatters.Enabled = false;
+            TXB_ForeignMatters_Remarks.ReadOnly = true;
+            TB_Foreign_Impurities.ReadOnly = true;
+
+            RBL_AppStatus.Enabled = false;
+            TXB_AppStatus_Remarks.ReadOnly = true;
 
             BtnSave.Enabled = false;
             BtnSave.Text = "SAVED";
@@ -1315,8 +1390,10 @@ namespace AnmolDristi
 
                     ReceivingDate.Visible = criteria.IsVisible;
                     lbl_TB_ReceivingDate.Text = criteria.DisplayName;
+
                     RFV_TB_ReceivingDate.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_ReceivingDate.Enabled = criteria.IsRequired;
+
                     TB_ReceivingDate.Attributes["placeholder"] = criteria.RangeErrorMessage;
                     break;
 
@@ -1324,14 +1401,19 @@ namespace AnmolDristi
 
                     QuantityDIV.Visible = criteria.IsVisible;
                     Lbl_TB_Quantity.Text = criteria.DisplayName;
+
                     RFV_TB_Quantity.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Quantity.Enabled = criteria.IsRequired;
+
                     TB_Quantity.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
                     REV_TB_Quantity.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_Quantity.ValidationExpression = criteria.RegularExpression;
                     REV_TB_Quantity.Enabled = criteria.IsRegularExpressionRequired;
+
                     CV_TB_Quantity.ErrorMessage = criteria.RangeErrorMessage;
                     CV_TB_Quantity.Enabled = criteria.IsRangeRequired;
+
                     hdnMinQtyValue.Value = criteria.MinimumValue.ToString();
                     hdnMaxQtyValue.Value = criteria.MaximumValue.ToString();
                     break;
@@ -1340,28 +1422,36 @@ namespace AnmolDristi
 
                     SizeDIV.Visible = criteria.IsVisible;
                     Lbl_TB_Size.Text = criteria.DisplayName;
+
                     RFV_TB_Size.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Size.Enabled = criteria.IsRequired;
+
                     TB_Size.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
                     REV_TB_Size.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_Size.ValidationExpression = criteria.RegularExpression;
                     REV_TB_Size.Enabled = criteria.IsRegularExpressionRequired;
+
                     CV_TB_Size.ErrorMessage = criteria.RangeErrorMessage;
                     CV_TB_Size.Enabled = criteria.IsRangeRequired;
+
                     hdnMinSizeValue.Value = criteria.MinimumValue.ToString();
                     hdnMaxSizeValue.Value = criteria.MaximumValue.ToString();
                     break;
 
-
                 case "Supplier":
                     SupplierDIV.Visible = criteria.IsVisible;
                     Lbl_TB_Supplier.Text = criteria.DisplayName;
+
                     RFV_TB_Supplier.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Supplier.Enabled = criteria.IsRequired;
+
                     TB_Supplier.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
                     REV_TB_Supplier.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_Supplier.ValidationExpression = criteria.RegularExpression;
                     REV_TB_Supplier.Enabled = criteria.IsRegularExpressionRequired;
+
                     hdnMinSupplierValue.Value = criteria.MinimumValue.ToString();
                     hdnMaxSupplierValue.Value = criteria.MaximumValue.ToString();
                     break;
@@ -1369,21 +1459,30 @@ namespace AnmolDristi
                 case "ProductBrand":
                     BrandDIV.Visible = criteria.IsVisible;
                     Lbl_TB_BrandName.Text = criteria.DisplayName;
+
                     RFV_TB_BrandName.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_BrandName.Enabled = criteria.IsRequired;
+
                     TB_BrandName.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
                     REV_TB_BrandName.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_BrandName.ValidationExpression = criteria.RegularExpression;
                     REV_TB_BrandName.Enabled = criteria.IsRegularExpressionRequired;
+
+                    hdnMinBrandValue.Value = criteria.MinimumValue.ToString();
+                    hdnMaxBrandValue.Value = criteria.MaximumValue.ToString();
                     break;
 
                 case "BatchNo":
 
                     BatchNoDIV.Visible = criteria.IsVisible;
                     Lbl_TB_BatchNo.Text = criteria.DisplayName;
+
                     RFV_TB_BatchNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_BatchNo.Enabled = criteria.IsRequired;
+
                     TB_BatchNo.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
                     REV_TB_BatchNo.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_BatchNo.ValidationExpression = criteria.RegularExpression;
                     REV_TB_BatchNo.Enabled = criteria.IsRegularExpressionRequired;
@@ -1393,9 +1492,12 @@ namespace AnmolDristi
 
                     ChallanNoDIV.Visible = criteria.IsVisible;
                     Lbl_TB_ChallanNo.Text = criteria.DisplayName;
+
                     RFV_TB_ChallanNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_ChallanNo.Enabled = criteria.IsRequired;
+
                     TB_ChallanNo.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
                     REV_TB_ChallanNo.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_ChallanNo.ValidationExpression = criteria.RegularExpression;
                     REV_TB_ChallanNo.Enabled = criteria.IsRegularExpressionRequired;
@@ -1405,17 +1507,21 @@ namespace AnmolDristi
 
                     ChallanDateDIV.Visible = criteria.IsVisible;
                     Lbl_TB_ChallanDate.Text = criteria.DisplayName;
+
                     RFV_TB_ChallanDate.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_ChallanDate.Enabled = criteria.IsRequired;
                     break;
 
-                case "Lot/Batch":
+                case "Lot/Gate":
 
                     LotNoDIV.Visible = criteria.IsVisible;
                     Lbl_TB_LotNo.Text = criteria.DisplayName;
+
                     RFV_TB_LotNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_LotNo.Enabled = criteria.IsRequired;
+
                     TB_LotNo.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
                     REV_TB_LotNo.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_LotNo.ValidationExpression = criteria.RegularExpression;
                     REV_TB_LotNo.Enabled = criteria.IsRegularExpressionRequired;
@@ -1425,6 +1531,7 @@ namespace AnmolDristi
 
                     PkdMfgDIV.Visible = criteria.IsVisible;
                     Lbl_TB_PkdMfg.Text = criteria.DisplayName;
+
                     RFV_TB_PkdMfg.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_PkdMfg.Enabled = criteria.IsRequired;
                     break;
@@ -1433,6 +1540,7 @@ namespace AnmolDristi
 
                     BeforeDateDIV.Visible = criteria.IsVisible;
                     Lbl_TB_BeforeDate.Text = criteria.DisplayName;
+
                     RFV_TB_BeforeDate.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_BeforeDate.Enabled = criteria.IsRequired;
                     break;
@@ -1441,9 +1549,12 @@ namespace AnmolDristi
 
                     VehicleNoDIV.Visible = criteria.IsVisible;
                     Lbl_TB_VehicleNo.Text = criteria.DisplayName;
+
                     RFV_TB_VehicleNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_VehicleNo.Enabled = criteria.IsRequired;
+
                     TB_VehicleNo.Attributes["placeholder"] = criteria.RangeErrorMessage;
+                    
                     REV_TB_VehicleNo.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_VehicleNo.ValidationExpression = criteria.RegularExpression;
                     REV_TB_VehicleNo.Enabled = criteria.IsRegularExpressionRequired;
@@ -1452,7 +1563,8 @@ namespace AnmolDristi
                 case "Grade":
 
                     GradeDIV.Visible = criteria.IsVisible;
-                    //Lbl_TB_VehicleNo.Text = criteria.DisplayName;
+                    Lbl_RBL_Grade.Text = criteria.DisplayName;
+
                     RFV_RBL_Grade.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Grade.Enabled = criteria.IsRequired;
                     break;
@@ -1462,12 +1574,16 @@ namespace AnmolDristi
 
                     MfgNameDIV.Visible = criteria.IsVisible;
                     Lbl_TB_MfgName.Text = criteria.DisplayName;
+
                     RFV_TB_MfgName.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_MfgName.Enabled = criteria.IsRequired;
+                    
                     TB_MfgName.Attributes["placeholder"] = criteria.RangeErrorMessage;
+                    
                     REV_TB_MfgName.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_MfgName.ValidationExpression = criteria.RegularExpression;
                     REV_TB_MfgName.Enabled = criteria.IsRegularExpressionRequired;
+                    
                     hdnMinMfgNameValue.Value = criteria.MinimumValue.ToString();
                     hdnMaxMfgNameValue.Value = criteria.MaximumValue.ToString();
                     break;             
@@ -1476,12 +1592,16 @@ namespace AnmolDristi
 
                     FssaiNoDIV.Visible = criteria.IsVisible;
                     Lbl_TB_FssaiNo.Text = criteria.DisplayName;
+                    
                     RFV_TB_FssaiNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_FssaiNo.Enabled = criteria.IsRequired;
+                    
                     TB_FssaiNo.Attributes["placeholder"] = criteria.RegularExpressionErrorMessage;
+                    
                     REV_TB_FssaiNo.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_FssaiNo.ValidationExpression = criteria.RegularExpression;
                     REV_TB_FssaiNo.Enabled = criteria.IsRegularExpressionRequired;
+                    
                     hdnMinLicenseNoValue.Value = criteria.MinimumValue.ToString();
                     hdnMaxLicenseNoValue.Value = criteria.MaximumValue.ToString();
                     break;
@@ -1492,6 +1612,7 @@ namespace AnmolDristi
                 case "MfgNameAddYNo":
                     Label_ManufNameAdd.Text = criteria.DisplayName;
                     ManufNameAddDIV.Visible = criteria.IsVisible;
+                    
                     RFV_RBL_ManufNameAdd.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_ManufNameAdd.Enabled = criteria.IsRequired;
                     break;
@@ -1499,6 +1620,7 @@ namespace AnmolDristi
                 case "MfdYNo":
                     Label_ManufDatePkd.Text = criteria.DisplayName;
                     ManufDatePkdDIV.Visible = criteria.IsVisible;
+                    
                     RFV_RBL_ManufDatePkd.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_ManufDatePkd.Enabled = criteria.IsRequired;
                     break;
@@ -1506,6 +1628,7 @@ namespace AnmolDristi
                 case "BestBeforeDate":
                     Lbl_Bestb4date.Text = criteria.DisplayName;
                     Bestb4dateDIV.Visible = criteria.IsVisible;
+                    
                     RFV_RBL_Bestb4date.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Bestb4date.Enabled = criteria.IsRequired;
                     break;
@@ -1513,6 +1636,7 @@ namespace AnmolDristi
                 case "BatchLotYNo":
                     Label_BatchLotNo.Text = criteria.DisplayName;
                     BatchLotNoDIV.Visible = criteria.IsVisible;
+                    
                     RFV_RBL_BatchLotNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_BatchLotNo.Enabled = criteria.IsRequired;
                     break;
@@ -1520,6 +1644,7 @@ namespace AnmolDristi
                 case "FssaiLogo":
                     Label_Fssai_Logo.Text = criteria.DisplayName;
                     FssaiLogoDIV.Visible = criteria.IsVisible;
+                    
                     RFV_RBL_Fssai_Logo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Fssai_Logo.Enabled = criteria.IsRequired;
                     break;
@@ -1527,6 +1652,7 @@ namespace AnmolDristi
                 case "VegLogo":
                     Label_Veg_Logo.Text = criteria.DisplayName;
                     VegLogoDIV.Visible = criteria.IsVisible;
+                    
                     RFV_RBL_Veg_Logo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Veg_Logo.Enabled = criteria.IsRequired;
                     break;
@@ -1534,6 +1660,7 @@ namespace AnmolDristi
                 case "OFA":
                     Label_OdourAfterAcidification.Text = criteria.DisplayName;
                     OdourAfterAcidificationDIV.Visible = criteria.IsVisible;
+                    
                     RFV_RBL_OdourAfterAcidification.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_OdourAfterAcidification.Enabled = criteria.IsRequired;
                     break;
@@ -1542,6 +1669,7 @@ namespace AnmolDristi
 
                     PackingConditionDIV.Visible = criteria.IsVisible;
                     Label_Packing_Condition.Text = criteria.DisplayName;
+                    
                     RFV_RBL_Packing_Condition.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Packing_Condition.Enabled = criteria.IsRequired;
 
@@ -1551,6 +1679,7 @@ namespace AnmolDristi
 
                     ColourDIV.Visible = criteria.IsVisible;
                     Label_Colour.Text = criteria.DisplayName;
+                   
                     RFV_RBL_Colour.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Colour.Enabled = criteria.IsRequired;
 
@@ -1560,6 +1689,7 @@ namespace AnmolDristi
 
                     SmellDIV.Visible = criteria.IsVisible;
                     Label_Smell.Text = criteria.DisplayName;
+                    
                     RFV_RBL_Smell.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Smell.Enabled = criteria.IsRequired;
 
@@ -1569,6 +1699,7 @@ namespace AnmolDristi
 
                     AppearanceDIV.Visible = criteria.IsVisible;
                     Label_Appearance.Text = criteria.DisplayName;
+                   
                     RFV_RBL_Appearance.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Appearance.Enabled = criteria.IsRequired;
 
@@ -1578,6 +1709,7 @@ namespace AnmolDristi
 
                     TasteFlavorDIV.Visible = criteria.IsVisible;
                     LabelTasteFlavor.Text = criteria.DisplayName;
+                   
                     RFV_RBL_TasteFlavor.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_TasteFlavor.Enabled = criteria.IsRequired;
 
@@ -1587,6 +1719,7 @@ namespace AnmolDristi
 
                     ForeignMattersDIV.Visible = criteria.IsVisible;
                     Label_ForeignMatters.Text = criteria.DisplayName;
+                    
                     RFV_RBL_ForeignMatters.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_ForeignMatters.Enabled = criteria.IsRequired;
 
@@ -1596,6 +1729,7 @@ namespace AnmolDristi
                     //Textbox Input
                     ImpuritiesDIV.Visible = criteria.IsVisible;
                     Lbl_TB_Foreign_Impurities.Text = criteria.DisplayName;
+                    
                     RFV_TB_Foreign_Impurities.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Foreign_Impurities.Enabled = criteria.IsRequired;
 
@@ -1613,6 +1747,7 @@ namespace AnmolDristi
 
                     PHDIV.Visible = criteria.IsVisible;
                     Lbl_TB_PH.Text = criteria.DisplayName;
+                    
                     RFV_TB_PH.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_PH.Enabled = criteria.IsRequired;
 
@@ -1633,6 +1768,7 @@ namespace AnmolDristi
 
                     MoistureDIV.Visible = criteria.IsVisible;
                     Lbl_TB_Moisture.Text = criteria.DisplayName;
+                    
                     RFV_TB_Moisture.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Moisture.Enabled = criteria.IsRequired;
 
@@ -1653,6 +1789,7 @@ namespace AnmolDristi
 
                     AshDIV.Visible = criteria.IsVisible;
                     Lbl_TB_TotalAsh.Text = criteria.DisplayName;
+                    
                     RFV_TB_TotalAsh.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_TotalAsh.Enabled = criteria.IsRequired;
 
@@ -1673,6 +1810,7 @@ namespace AnmolDristi
 
                     InsolubleAshDIV.Visible = criteria.IsVisible;
                     Lbl_TB_InsolubleAsh.Text = criteria.DisplayName;
+                   
                     RFV_TB_InsolubleAsh.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_InsolubleAsh.Enabled = criteria.IsRequired;
 
@@ -1693,6 +1831,7 @@ namespace AnmolDristi
 
                     SolidDIV.Visible = criteria.IsVisible;
                     Lbl_TB_TotalSolid.Text = criteria.DisplayName;
+                    
                     RFV_TB_TotalSolid.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_TotalSolid.Enabled = criteria.IsRequired;
 
@@ -1713,6 +1852,7 @@ namespace AnmolDristi
 
                     DextroseDIV.Visible = criteria.IsVisible;
                     Lbl_TB_Dextrose.Text = criteria.DisplayName;
+                    
                     RFV_TB_Dextrose.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Dextrose.Enabled = criteria.IsRequired;
 
@@ -1733,6 +1873,7 @@ namespace AnmolDristi
 
                     TitrableAcidityDIV.Visible = criteria.IsVisible;
                     Lbl_TB_TitrableAcidity.Text = criteria.DisplayName;
+                    
                     RFV_TB_TitrableAcidity.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_TitrableAcidity.Enabled = criteria.IsRequired;
 
@@ -1753,6 +1894,7 @@ namespace AnmolDristi
 
                     AlcoholicAcidityDIV.Visible = criteria.IsVisible;
                     Lbl_TB_AlcoholicAcidity.Text = criteria.DisplayName;
+                    
                     RFV_TB_AlcoholicAcidity.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_AlcoholicAcidity.Enabled = criteria.IsRequired;
 
@@ -1773,6 +1915,7 @@ namespace AnmolDristi
 
                     SO2DIV.Visible = criteria.IsVisible;
                     Lbl_TB_SO2.Text = criteria.DisplayName;
+                    
                     RFV_TB_SO2.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_SO2.Enabled = criteria.IsRequired;
 
@@ -1793,6 +1936,7 @@ namespace AnmolDristi
 
                     GlycerineContentDIV.Visible = criteria.IsVisible;
                     Lbl_TB_GlycerineContent.Text = criteria.DisplayName;
+                    
                     RFV_TB_GlycerineContent.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_GlycerineContent.Enabled = criteria.IsRequired;
 
@@ -1813,6 +1957,7 @@ namespace AnmolDristi
 
                     GlucoseContentDIV.Visible = criteria.IsVisible;
                     Lbl_TB_GlucoseContent.Text = criteria.DisplayName;
+                    
                     RFV_TB_GlucoseContent.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_GlucoseContent.Enabled = criteria.IsRequired;
 
@@ -1833,6 +1978,7 @@ namespace AnmolDristi
 
                     LossOnDryingDIV.Visible = criteria.IsVisible;
                     Lbl_TB_LossOnDrying.Text = criteria.DisplayName;
+                    
                     RFV_TB_LossOnDrying.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_LossOnDrying.Enabled = criteria.IsRequired;
 
@@ -1853,6 +1999,7 @@ namespace AnmolDristi
 
                     SolubilityDIV.Visible = criteria.IsVisible;
                     Lbl_TB_Solubility.Text = criteria.DisplayName;
+                    
                     RFV_TB_Solubility.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Solubility.Enabled = criteria.IsRequired;
 
@@ -1873,6 +2020,7 @@ namespace AnmolDristi
 
                     ShapeOrSizeDIV.Visible = criteria.IsVisible;
                     Lbl_TB_ShapeOrSize.Text = criteria.DisplayName;
+                    
                     RFV_TB_ShapeOrSize.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_ShapeOrSize.Enabled = criteria.IsRequired;
 
@@ -1893,6 +2041,7 @@ namespace AnmolDristi
 
                     SulphatedAshDIV.Visible = criteria.IsVisible;
                     Lbl_TB_SulphatedAsh.Text = criteria.DisplayName;
+                    
                     RFV_TB_SulphatedAsh.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_SulphatedAsh.Enabled = criteria.IsRequired;
 
@@ -1913,6 +2062,7 @@ namespace AnmolDristi
 
                     SucroseDIV.Visible = criteria.IsVisible;
                     Lbl_TB_Sucrose.Text = criteria.DisplayName;
+                    
                     RFV_TB_Sucrose.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Sucrose.Enabled = criteria.IsRequired;
 
@@ -1933,6 +2083,7 @@ namespace AnmolDristi
 
                     SulphideDIV.Visible = criteria.IsVisible;
                     Lbl_TB_Sulphide.Text = criteria.DisplayName;
+                    
                     RFV_TB_Sulphide.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Sulphide.Enabled = criteria.IsRequired;
 
@@ -1953,6 +2104,7 @@ namespace AnmolDristi
 
                     WIMDIV.Visible = criteria.IsVisible;
                     Lbl_TB_WIM.Text = criteria.DisplayName;
+                    
                     RFV_TB_WIM.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_WIM.Enabled = criteria.IsRequired;
 
@@ -1973,10 +2125,19 @@ namespace AnmolDristi
 
                     BeverageDIV.Visible = criteria.IsVisible;
                     Lbl_RBL_Beverage.Text = criteria.DisplayName;
+                    
                     RFV_RBL_Beverage.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Beverage.Enabled = criteria.IsRequired;
 
                     break;
+
+                case "Acceptance":
+                    AppStatusDIV.Visible = criteria.IsVisible;
+                    LabelAppStatus.Text = criteria.DisplayName;
+
+                    RFV_RBL_AppStatus.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_RBL_AppStatus.Enabled = criteria.IsRequired;
+                    break ;
 
 
                 default:

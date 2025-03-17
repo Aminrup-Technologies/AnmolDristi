@@ -24,40 +24,13 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Label lbl_docname;
 
         /// <summary>
-        /// Label1 control.
+        /// Label_DDL_Material control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-
-        /// <summary>
-        /// RFV_DDL_Plant control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Plant;
-
-        /// <summary>
-        /// DDL_Plant control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDL_Plant;
-
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label Label_DDL_Material;
 
         /// <summary>
         /// RFV_DDL_Material control.
@@ -78,31 +51,31 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.DropDownList DDL_Material;
 
         /// <summary>
-        /// Label4 control.
+        /// Label_DDL_Plant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label Label_DDL_Plant;
 
         /// <summary>
-        /// RFV_DDL_ProductBrand control.
+        /// RFV_DDL_Plant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_ProductBrand;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_DDL_Plant;
 
         /// <summary>
-        /// DDL_ProductBrand control.
+        /// DDL_Plant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDL_ProductBrand;
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Plant;
 
         /// <summary>
         /// Lbl_Date_From control.
