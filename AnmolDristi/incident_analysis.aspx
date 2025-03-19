@@ -481,7 +481,49 @@
                                     }
                                 </script>
 
-                                <!-- Task Being Performed -->
+
+
+                                <!-- Merged Field: Task & Description -->
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <asp:Label ID="lblTaskDescription" runat="server" Text="Task & Incident Description:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="txtTaskDescription" runat="server" CssClass="form-control form-control-sm rounded"
+                                                TextMode="MultiLine" Rows="4" MaxLength="500"></asp:TextBox>
+
+                                            <!-- Required Field Validator -->
+                                            <asp:RequiredFieldValidator ID="rfvTaskDescription" runat="server"
+                                                ControlToValidate="txtTaskDescription"
+                                                ErrorMessage="This field is required."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+
+                                            <!-- Minimum Length Validator (At least 10 characters) -->
+                                            <asp:RegularExpressionValidator ID="revTaskDescriptionMinLength" runat="server"
+                                                ControlToValidate="txtTaskDescription"
+                                                ValidationExpression="^.{10,}$"
+                                                ErrorMessage="Description must be at least 10 characters long."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RegularExpressionValidator>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                                <%--       <!-- Task Being Performed -->
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <asp:Label ID="lblTask" runat="server" Text="Task Being Performed:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -524,7 +566,7 @@
 
 
                                 <!-- Description of Incident (Textarea) -->
-                                <div class="col-md-12">
+                                <%-- <div class="col-md-12">
                                     <div class="mb-3">
                                         <asp:Label ID="lblDescription" runat="server" Text="Description of Incident:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
@@ -550,11 +592,11 @@
 
                                         </div>
                                     </div>
-                                </div>
+                                </div>--%>
 
 
 
-                                <!-- Contributing Factors Section -->
+                               <%-- <!-- Contributing Factors Section -->
                                 <div class="col-md-12">
                                     <h4 class="form-label" style="color: Blue; font-weight: bold; font-size: small;">Contributing Factors</h4>
                                 </div>
@@ -670,10 +712,9 @@
                                         attachValidation("chkWorkSystem", "errWorkSystem");
                                         attachValidation("chkPeople", "errPeople");
                                     });
-                                </script>
+                                </script>--%>
 
 
-                                <!-- Root Cause Analysis Table -->
 
                                 <!-- Root Cause Analysis Table -->
                                 <div class="col-md-12">
@@ -695,17 +736,23 @@
                                             </asp:TableHeaderRow>
                                             <asp:TableRow>
                                                 <asp:TableCell>
-                                                    <asp:TextBox ID="txtWhy1" runat="server" CssClass="form-control"></asp:TextBox></asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy1" runat="server" CssClass="form-control"></asp:TextBox>
+                                                </asp:TableCell>
                                                 <asp:TableCell>
-                                                    <asp:TextBox ID="txtWhy2" runat="server" CssClass="form-control"></asp:TextBox></asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy2" runat="server" CssClass="form-control"></asp:TextBox>
+                                                </asp:TableCell>
                                                 <asp:TableCell>
-                                                    <asp:TextBox ID="txtWhy3" runat="server" CssClass="form-control"></asp:TextBox></asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy3" runat="server" CssClass="form-control"></asp:TextBox>
+                                                </asp:TableCell>
                                                 <asp:TableCell>
-                                                    <asp:TextBox ID="txtWhy4" runat="server" CssClass="form-control"></asp:TextBox></asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy4" runat="server" CssClass="form-control"></asp:TextBox>
+                                                </asp:TableCell>
                                                 <asp:TableCell>
-                                                    <asp:TextBox ID="txtWhy5" runat="server" CssClass="form-control"></asp:TextBox></asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy5" runat="server" CssClass="form-control"></asp:TextBox>
+                                                </asp:TableCell>
                                                 <asp:TableCell>
-                                                    <asp:TextBox ID="txtWhy6" runat="server" CssClass="form-control"></asp:TextBox></asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy6" runat="server" CssClass="form-control"></asp:TextBox>
+                                                </asp:TableCell>
                                             </asp:TableRow>
                                         </asp:Table>
                                     </div>
@@ -961,6 +1008,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </asp:Content>

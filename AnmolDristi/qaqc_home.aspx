@@ -58,11 +58,17 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            
+
                             <a class="btn btn-app" href="incident_analysis.aspx">
-                                <span class="badge bg-red">Shift : 1
+                                <span class="badge bg-green">Closed
         <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Incident Analysis
+
+                            </a>
+                            <a class="btn btn-app" href="KYT.aspx">
+                                <span class="badge bg-red">WIP
+                                    <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>KYT Report
 
                             </a>
                         </div>

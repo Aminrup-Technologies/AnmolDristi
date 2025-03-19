@@ -34,7 +34,7 @@ namespace AnmolDristi
             SELECT 
                 i.IncidentID, i.IncidentClassification, i.DateOfIncident, i.Location, i.Department, 
                 p.NameOfPersonInvolved, p.AnyWitness, p.WitnessNames, p.ReportedBy, 
-                inv.DescriptionOfIncident, inv.ContributingFactors_Environment, inv.CorrectiveActions
+                 inv.CorrectiveActions
             FROM IncidentDetails i
             LEFT JOIN PeopleInvolved p ON i.IncidentID = p.IncidentID
             LEFT JOIN InvestigationActions inv ON i.IncidentID = inv.IncidentID
@@ -46,8 +46,8 @@ namespace AnmolDristi
                     {
                         DataTable dt = new DataTable();
                         da.Fill(dt);
-                        gvIncidentData.DataSource = dt;
-                        gvIncidentData.DataBind();
+                    //    gvIncidentData.DataSource = dt;
+                     //   gvIncidentData.DataBind();
                     }
                 }
             }
@@ -114,8 +114,7 @@ namespace AnmolDristi
             txtReportedBy.Text = "";
             txtVendorName.Text = "";
             txtInjuredPersons.Text = "";
-            txtTaskBeingPerformed.Text = "";
-            txtDescription.Text = "";
+            txtTaskDescription.Text = ""; // Merged field
             txtWhy1.Text = "";
             txtCorrectiveActions.Text = "";
             txtPreventiveActions.Text = "";
@@ -144,12 +143,16 @@ namespace AnmolDristi
             int totalInjuredPersons = int.Parse(txtInjuredPersons.Text);
 
             string investigationTeamMembers = txtInvestigationMember1.Text;
-            string taskBeingPerformed = txtTaskBeingPerformed.Text;
-            string descriptionOfIncident = txtDescription.Text;
-            string contributingFactorsEnvironment = chkEnvironment.Text;
-            string contributingFactorsEquipmentMaterials = chkEquipment.Text;
-            string contributingFactorsWorkSystems = chkWorkSystem.Text;
-            string contributingFactorsPeople = chkPeople.Text;
+
+            string taskAndDescription = txtTaskDescription.Text;
+
+
+            //string taskBeingPerformed = txtTaskBeingPerformed.Text;
+            //string descriptionOfIncident = txtDescription.Text;
+            //  string contributingFactorsEnvironment = chkEnvironment.Text;
+            //  string contributingFactorsEquipmentMaterials = chkEquipment.Text;
+            //   string contributingFactorsWorkSystems = chkWorkSystem.Text;
+            //   string contributingFactorsPeople = chkPeople.Text;
             string rootCauseAnalysis = txtWhy1.Text;
             string correctiveActions = txtCorrectiveActions.Text;
             string preventiveActions = txtPreventiveActions.Text;
@@ -203,12 +206,15 @@ namespace AnmolDristi
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@IncidentID", incidentID);
                         cmd.Parameters.AddWithValue("@InvestigationTeamMembers", investigationTeamMembers);
-                        cmd.Parameters.AddWithValue("@TaskBeingPerformed", taskBeingPerformed);
-                        cmd.Parameters.AddWithValue("@DescriptionOfIncident", descriptionOfIncident);
-                        cmd.Parameters.AddWithValue("@ContributingFactors_Environment", contributingFactorsEnvironment);
-                        cmd.Parameters.AddWithValue("@ContributingFactors_Equipment_Materials", contributingFactorsEquipmentMaterials);
-                        cmd.Parameters.AddWithValue("@ContributingFactors_WorkSystems", contributingFactorsWorkSystems);
-                        cmd.Parameters.AddWithValue("@ContributingFactors_People", contributingFactorsPeople);
+                        cmd.Parameters.AddWithValue("@TaskAndDescription", taskAndDescription);
+                       
+
+                        //cmd.Parameters.AddWithValue("@TaskBeingPerformed", taskBeingPerformed);
+                        //cmd.Parameters.AddWithValue("@DescriptionOfIncident", descriptionOfIncident);
+                        //   cmd.Parameters.AddWithValue("@ContributingFactors_Environment", contributingFactorsEnvironment);
+                        //   cmd.Parameters.AddWithValue("@ContributingFactors_Equipment_Materials", contributingFactorsEquipmentMaterials);
+                        //   cmd.Parameters.AddWithValue("@ContributingFactors_WorkSystems", contributingFactorsWorkSystems);
+                        //   cmd.Parameters.AddWithValue("@ContributingFactors_People", contributingFactorsPeople);
                         cmd.Parameters.AddWithValue("@RootCauseAnalysis", rootCauseAnalysis);
                         cmd.Parameters.AddWithValue("@CorrectiveActions", correctiveActions);
                         cmd.Parameters.AddWithValue("@PreventiveActions", preventiveActions);
