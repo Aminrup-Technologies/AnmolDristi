@@ -31,23 +31,17 @@
                                 <i class="fa fa-edit"></i>Inspector Report
 
                             </a>
-                            <a class="btn btn-app" href="#">
+                            <a class="btn btn-app" href="csm_soptrainings.aspx">
                                 <span class="badge bg-red">Batch : 1
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Wheat Flour report
-
-                            </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-orange">Consignment : 1
-                                    <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>CB Box Report
+                                <i class="fa fa-edit"></i>SOP Training
 
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-12" id="Div1" runat="server" visible="true">
+                <div class="col-md-12" id="Div1" runat="server" visible="false">
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>QA Forms</h2>

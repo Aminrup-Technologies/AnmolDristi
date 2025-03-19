@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" href="WebData/Anmol_Logo.png" type="image/ico" />
+    <link rel="icon" href="WebData/Aminrup_Logo.png" type="image/ico" />
 
     <title>Anmol</title>
 
@@ -105,7 +105,7 @@
                         <div class="left_col scroll-view">
                             <div class="navbar nav_title" style="border: 0;">
                                 <a href="#" class="site_title">
-                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/Anmol_Logo.png" Height="40" Width="50" /><span>&nbsp;&nbsp;ANMOL</span>
+                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/Aminrup_Logo.png" Height="40" Width="50" /><span>&nbsp;&nbsp;ANMOL</span>
                                 </a>
                             </div>
 
