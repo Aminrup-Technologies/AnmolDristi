@@ -78,7 +78,7 @@
             <div class="page-title">
                 <div class="title_left">
                     <h3>
-                        <asp:Label ID="lbl_docname" runat="server" Text="Detailed View"></asp:Label>
+                        <asp:Label ID="lbl_docname" runat="server" Text="Corrugated Board Box"></asp:Label>
                     </h3>
                 </div>
             </div>
@@ -121,9 +121,36 @@
 
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
+                                                            <asp:Label ID="Lbl_TB_NoOfPkt" runat="server" AssociatedControlID="TB_NoOfPkt" Text="No of Packets :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <div class="input-group-sm">
+                                                                <asp:TextBox ID="TB_NoOfPkt" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3" runat="server" visible="false">
+                                                        <div class="mb-3">
+                                                            <asp:Label ID="Label6" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <div class="input-group-sm">
+                                                                <asp:DropDownList ID="DDL_BrandSKU" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:DropDownList>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div class="mb-3">
                                                             <asp:Label ID="Lbl_TB_Supplier" runat="server" AssociatedControlID="TB_Supplier" Text="Supplier :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TB_Supplier" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval("SupplierName") %>'></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3" id="SizeDIV" runat="server">
+                                                        <div class="mb-3">
+                                                            <asp:Label ID="Lbl_TB_Size" runat="server" AssociatedControlID="TB_Size" Text="Sample Size :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <div class="input-group-sm">
+                                                                <asp:TextBox ID="TB_Size" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Placeholder="Size(in pkts)"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -249,6 +276,13 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="col-md-3" style="display: none;">
+                                                        <div class="mb-3">
+                                                            <asp:Label ID="Lbl_Remarks_BurstingStrength" runat="server" Text="BS Remarks:" ForeColor="Red" Font-Size="Small"></asp:Label>
+                                                            <asp:TextBox ID="TB_Remarks_BurstingStrength" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Placeholder="Enter BS- Out of Range Remarks"></asp:TextBox>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
                                                             <asp:Label ID="Lbl_TB_CompressionStrength" runat="server" AssociatedControlID="TB_CompressionStrength" Text="Compression Strength (kg/cm²):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -258,12 +292,27 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-3" style="display: none;">
+                                                        <div class="mb-3">
+                                                            <asp:Label ID="Lbl_Remarks_CompressionStrength" runat="server" Text="Compression Strength Remarks:" ForeColor="Red" Font-Size="Small"></asp:Label>
+                                                            <asp:TextBox ID="TB_Remarks_CompressionStrength" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Placeholder="Enter Compression Strength Remarks"></asp:TextBox>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-3" >
                                                         <div class="mb-3">
                                                             <asp:Label ID="Lbl_TB_FlutePercent" runat="server" AssociatedControlID="TB_FlutePercent" Text="Flute %:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TB_FlutePercent" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                                             </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3" style="display: none;">
+                                                        <div class="mb-3">
+                                                            <asp:Label ID="Label10" runat="server" Text="Flute % Remarks:" ForeColor="Red" Font-Size="Small"></asp:Label>
+                                                            <asp:TextBox ID="TB_Remarks_FlutePercent" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Placeholder="Enter Flute % Remarks"></asp:TextBox>
                                                         </div>
                                                     </div>
 
@@ -276,6 +325,13 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="col-md-3" style="display: none;">
+                                                        <div class="mb-3">
+                                                            <asp:Label ID="Label12" runat="server" Text="Moisture % Remarks:" ForeColor="Red" Font-Size="Small"></asp:Label>
+                                                            <asp:TextBox ID="TB_Remarks_MoisturePercent" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Placeholder="Enter Moisture % Remarks"></asp:TextBox>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
                                                             <asp:Label ID="Lbl_Remarks" runat="server" AssociatedControlID="TXB_Remarks" Text="Remarks :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -284,13 +340,10 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
                                                 </div>
 
                                                 <%--Button--%>
-                                                <div class="col-md-3">
+                                                <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <asp:Label ID="Lbl_BasicbtnApprove" runat="server" AssociatedControlID="" Text="Click on your ACTION" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                         <div class="input-group input-group-sm">
@@ -432,5 +485,4 @@
         }
 
     </script>
-
 </asp:Content>

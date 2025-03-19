@@ -30,7 +30,7 @@ namespace AnmolDristi
                     hdn_formid.Value = string.Empty;
 
 
-                    lbl_docname.Text = "QC - Daily Laminate Testing Report Report";
+                    lbl_docname.Text = "QC - Daily Laminate Testing Report";
                     lbl_docnumber.Text = "ANMOL/DOC/CORP/QC/PKNG/01";
                     PlantBinder();
 
@@ -210,9 +210,10 @@ namespace AnmolDristi
             if (DDL_ProductBrand.SelectedIndex != 0)
             {
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
-                StandardValueBinder(selectedProductBrandValue);
                 lbl_DDL_ProductBrand_Value.Text = selectedProductBrandValue;
                 BrandSKUBinder(selectedProductBrandValue);
+
+                StandardValueBinder(selectedProductBrandValue);
 
 
                 //System.Data.DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
@@ -418,28 +419,39 @@ namespace AnmolDristi
 
             string plantName = DDL_Plant.SelectedValue;
             string productBrand = DDL_ProductBrand.SelectedValue;
-            string supplier = TB_Supplier.Text;
+
+            string supplier = string.IsNullOrEmpty(TB_Supplier.Text) ? null : TB_Supplier.Text;
+            decimal? sampleSize = !string.IsNullOrEmpty(TB_Size.Text) ? Convert.ToDecimal(TB_Size.Text) : (decimal?)null;
+
             int smell = Convert.ToInt32(RBL_Smell.SelectedValue);
-            string smellRemarks = TXB_Smell_Remarks.Text;
-            string challanNo = TB_ChallanNo.Text;
+            string smellRemarks = string.IsNullOrEmpty(TXB_Smell_Remarks.Text) ? null : TXB_Smell_Remarks.Text;
+
+            string challanNo = string.IsNullOrEmpty(TB_ChallanNo.Text) ? null : TB_ChallanNo.Text;
             DateTime challanDate = DateTime.Parse(TB_ChallanDate.Text).Date;
-            string lotNo = TB_LotNo.Text;
-            string vehicleNo = TB_VehicleNo.Text;
-            decimal bond = Convert.ToDecimal(TB_Bond.Text);
-            decimal seal = Convert.ToDecimal(TB_Seal.Text);
-            decimal stdLength = Convert.ToDecimal(span_L.Text);
-            decimal obsLength = Convert.ToDecimal(TB_Length.Text);
-            string lengthRemarks = TXB_Length_Remarks.Text;
-            decimal stdWidth = Convert.ToDecimal(span_W.Text);
-            decimal obsWidth = Convert.ToDecimal(TB_Width.Text);
-            string widthRemarks = TXB_Width_Remarks.Text;
-            decimal stdHeight = Convert.ToDecimal(span_H.Text); 
-            decimal obsHeight = Convert.ToDecimal(TB_Height.Text);
-            string heightRemarks =TXB_Height_Remarks.Text;
-            decimal stdGsm = Convert.ToDecimal(span_GSM.Text);
-            decimal obsGsm = Convert.ToDecimal(TB_GSM.Text);
-            string gsmRemarks =TXB_GSM_Remarks.Text;
-            string remarks = TXB_Remarks.Text;
+
+            string lotNo = string.IsNullOrEmpty(TB_LotNo.Text) ? null : TB_LotNo.Text;
+            string vehicleNo = string.IsNullOrEmpty(TB_VehicleNo.Text) ? null : TB_VehicleNo.Text;
+
+            decimal? bond = !string.IsNullOrEmpty(TB_Bond.Text) ? Convert.ToDecimal(TB_Bond.Text) : (decimal?)null;
+            decimal? seal = !string.IsNullOrEmpty(TB_Seal.Text) ? Convert.ToDecimal(TB_Seal.Text) : (decimal?)null;
+
+            decimal? stdLength = !string.IsNullOrEmpty(TB_Std_DimensionL.Text) ? Convert.ToDecimal(TB_Std_DimensionL.Text) : (decimal?)null;
+            decimal? obsLength = !string.IsNullOrEmpty(TB_Length.Text) ? Convert.ToDecimal(TB_Length.Text) : (decimal?)null;
+            string lengthRemarks = string.IsNullOrEmpty(TXB_Length_Remarks.Text) ? null : TXB_Length_Remarks.Text;
+
+            decimal? stdWidth = !string.IsNullOrEmpty(TB_Std_DimensionW.Text) ? Convert.ToDecimal(TB_Std_DimensionW.Text) : (decimal?)null;
+            decimal? obsWidth = !string.IsNullOrEmpty(TB_Width.Text) ? Convert.ToDecimal(TB_Width.Text) : (decimal?)null;
+            string widthRemarks = string.IsNullOrEmpty(TXB_Width_Remarks.Text) ? null : TXB_Width_Remarks.Text;
+
+            decimal? stdHeight = !string.IsNullOrEmpty(TB_Std_DimensionH.Text) ? Convert.ToDecimal(TB_Std_DimensionH.Text) : (decimal?)null;
+            decimal? obsHeight = !string.IsNullOrEmpty(TB_Height.Text) ? Convert.ToDecimal(TB_Height.Text) : (decimal?)null;
+            string heightRemarks =string.IsNullOrEmpty(TXB_Height_Remarks.Text) ? null : TXB_Height_Remarks.Text;
+
+            decimal? stdGsm = !string.IsNullOrEmpty(TB_Std_GSM.Text) ? Convert.ToDecimal(TB_Std_GSM.Text) : (decimal?)null;
+            decimal? obsGsm = !string.IsNullOrEmpty(TB_GSM.Text) ? Convert.ToDecimal(TB_GSM.Text) : (decimal?)null;
+            string gsmRemarks = string.IsNullOrEmpty(TXB_GSM_Remarks.Text) ? null : TXB_GSM_Remarks.Text;
+
+            string remarks = string.IsNullOrEmpty(TXB_Remarks.Text) ? null : TXB_Remarks.Text;
 
             DateTime submittedDate = DateTime.Now.Date;
             TimeSpan submittedTime = DateTime.Now.TimeOfDay;
@@ -466,6 +478,7 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@PlantName", plantName);
                         command.Parameters.AddWithValue("@ProductBrand", productBrand);
                         command.Parameters.AddWithValue("@Supplier_Name", supplier);
+                        command.Parameters.AddWithValue("@SampleSize", sampleSize);
                         command.Parameters.AddWithValue("@Smell", smell);
                         command.Parameters.AddWithValue("@Smell_Remarks", smellRemarks);
                         command.Parameters.AddWithValue("@Challan_No", challanNo);
@@ -532,22 +545,36 @@ namespace AnmolDristi
             DDL_BrandSKU.Enabled = false;
 
             TB_Supplier.ReadOnly = true;
+            TB_Size.ReadOnly = true;
+
             RBL_Smell.Enabled = false;
             TXB_Smell_Remarks.ReadOnly = true;
+
             TB_ChallanNo.ReadOnly = true;
             TB_ChallanDate.ReadOnly = true;
+
             TB_LotNo.ReadOnly = true;
             TB_VehicleNo.ReadOnly = true;
+
             TB_Bond.ReadOnly = true;
             TB_Seal.ReadOnly = true;
+
+            TB_Std_DimensionL.ReadOnly = true;
             TB_Length.ReadOnly = true;
             TXB_Length_Remarks.ReadOnly = true;
+
+            TB_Std_DimensionW.ReadOnly = true;
             TB_Width.ReadOnly = true;
             TXB_Width_Remarks.ReadOnly = true;
+
+            TB_Std_DimensionH.ReadOnly = true;
             TB_Height.ReadOnly = true;
             TXB_Height_Remarks.ReadOnly = true;
+
+            TB_Std_GSM.ReadOnly = true;
             TB_GSM.ReadOnly = true;
             TXB_GSM_Remarks.ReadOnly = true;
+
             TXB_Remarks.ReadOnly = true;
 
             BtnSubmit.Enabled = false;

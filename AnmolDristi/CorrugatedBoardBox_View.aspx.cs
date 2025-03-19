@@ -12,6 +12,7 @@ using System.IO;
 using System.Web.Services;
 using System.Security.Cryptography;
 using System.Text;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace AnmolDristi
 {
@@ -338,12 +339,12 @@ namespace AnmolDristi
             if (e.CommandName == "View")
             {
                 // Get the DBID from the CommandArgument.
-                int dbid = Convert.ToInt32(e.CommandArgument);
+                int id = Convert.ToInt32(e.CommandArgument);
 
-                if (dbid > 0)
+                if (id > 0)
                 {
                     // Redirect with the correct DBID.
-                    Response.Redirect("CorrugatedBoardBox_Detailed.aspx?DBID=" + dbid + "&source=report");
+                    Response.Redirect("CorrugatedBoardBox_Detailed.aspx?Id=" + id + "&source=submitter");
                 }
                 else
                 {

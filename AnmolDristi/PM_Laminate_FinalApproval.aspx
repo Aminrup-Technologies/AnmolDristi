@@ -78,7 +78,7 @@
             <div class="page-title">
                 <div class="title_left">
                     <h3>
-                        <asp:Label ID="lbl_docname" runat="server" Text="Detailed View"></asp:Label>
+                        <asp:Label ID="lbl_docname" runat="server" Text="Daily Laminate Testing"></asp:Label>
                     </h3>
                 </div>
             </div>
@@ -128,6 +128,15 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="col-md-3" id="SizeDIV" runat="server">
+                                                        <div class="mb-3">
+                                                            <asp:Label ID="Lbl_TB_Size" runat="server" AssociatedControlID="TB_Size" Text="Sample Size :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <div class="input-group-sm">
+                                                                <asp:TextBox ID="TB_Size" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
                                                             <asp:Label ID="LabelSmell" runat="server" AssociatedControlID="RBL_Smell" Text="Smell :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -142,7 +151,7 @@
 
                                                     <div class="col-md-3" id="SmellRemarksDiv" style="display: none;">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="LabelSmellRemarks" runat="server" AssociatedControlID="TXB_Smell_Remarks" Text="Smell (Not Ok)" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="LabelSmellRemarks" runat="server" AssociatedControlID="TXB_Smell_Remarks" Text="Smell (Not Ok)" ForeColor="Brown" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TXB_Smell_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval("Smell_Remarks") %>'></asp:TextBox>
                                                             </div>
@@ -205,8 +214,8 @@
 
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TB_Length" runat="server" AssociatedControlID="TB_Length" Text="Length Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                            <asp:Label ID="Label_Std_Length" runat="server" Text='<%# Eval("Std_Length") %>' EnableViewState="false" ForeColor="Red"></asp:Label>
+                                                            <asp:Label ID="Lbl_TB_Length" runat="server" AssociatedControlID="TB_Length" Text="Observed Length Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_Std_Length" runat="server" Text='<%# "Std L value" + Eval("Std_Length") %>' EnableViewState="false" ForeColor="Red"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TB_Length" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval("Obs_Length") %>'></asp:TextBox>
                                                             </div>
@@ -224,8 +233,8 @@
 
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TB_Width" runat="server" AssociatedControlID="TB_Width" Text="Width Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                            <asp:Label ID="Label_Std_Width" runat="server" Text='<%# Eval("Std_Width") %>' EnableViewState="false" ForeColor="Red"></asp:Label>
+                                                            <asp:Label ID="Lbl_TB_Width" runat="server" AssociatedControlID="TB_Width" Text=" Observed Width Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_Std_Width" runat="server" Text='<%#Eval("Std_Width")%>' EnableViewState="false" ForeColor="Red"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TB_Width" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval( "Obs_Width") %>'></asp:TextBox>
                                                             </div>
@@ -241,11 +250,11 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-3" runat="server" visible="false">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TB_Height" runat="server" AssociatedControlID="TB_Height" Text="Height Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Lbl_TB_Height" runat="server" AssociatedControlID="TB_Height" Text="Observed Height Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
-                                                                <asp:Label ID="Label_Std_Height" runat="server" Text='<%# Eval("Std_Height") %>' EnableViewState="false" ForeColor="Red"></asp:Label>
+                                                                <asp:Label ID="Label_Std_Height" runat="server" Text='<%#Eval("Std_Height")%>' EnableViewState="false" ForeColor="Red"></asp:Label>
                                                                 <asp:TextBox ID="TB_Height" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval(" Obs_Height") %>'></asp:TextBox>
                                                             </div>
                                                         </div>
@@ -262,8 +271,8 @@
 
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TB_GSM" runat="server" AssociatedControlID="TB_GSM" Text="GSM Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                            <asp:Label ID="Label_Std_GSM" runat="server" Text=' <%# Eval("GMS_Std") %>' EnableViewState="false" ForeColor="Red"></asp:Label>
+                                                            <asp:Label ID="Lbl_TB_GSM" runat="server" AssociatedControlID="TB_GSM" Text="Observed GSM Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Label_Std_GSM" runat="server" Text='<%#Eval("GMS_Std")%>' EnableViewState="false" ForeColor="Red"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TB_GSM" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval("GSM_Obs") %>'></asp:TextBox>
                                                             </div>
@@ -293,7 +302,7 @@
                                                 </div>
 
                                                 <%--Button--%>
-                                                <div class="col-md-3">
+                                                <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <asp:Label ID="Lbl_BasicbtnApprove" runat="server" AssociatedControlID="" Text="Click on your ACTION" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                         <div class="input-group input-group-sm">
