@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AnmolDristi {
-    
-    
-    public partial class Dristi {
-        
+namespace AnmolDristi
+{
+
+
+    public partial class Dristi
+    {
+
         /// <summary>
         /// head control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
-        
+
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// Image1 control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image Image1;
-        
+
         /// <summary>
         /// ProfilePic_1 control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic_1;
-        
+
         /// <summary>
         /// lbl_loginusername1 control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_loginusername1;
-        
+
         /// <summary>
         /// HomePage control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl HomePage;
-        
+
         /// <summary>
         /// Home1 control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Home1;
-        
+
         /// <summary>
         /// QualityForms control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl QualityForms;
-        
+
         /// <summary>
         /// DataMastering control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DataMastering;
-        
+
         /// <summary>
         /// Works control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Works;
-        
+
         /// <summary>
         /// WorkCountry control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkCountry;
-        
+
         /// <summary>
         /// WorkState control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkState;
-        
+
         /// <summary>
         /// WorkRegion control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkRegion;
-        
+
         /// <summary>
         /// ProfilePic_2 control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic_2;
-        
+
         /// <summary>
         /// lbl_loginusername2 control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_loginusername2;
-        
+
         /// <summary>
         /// ContentPlaceHolder1 control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
-        
+
         /// <summary>
         /// lblTime1 control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTime1;
-        
+
         /// <summary>
         /// lblTime control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTime;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// btn_lgout control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_lgout;
-        
+
         /// <summary>
         /// ShowPopup control.
         /// </summary>

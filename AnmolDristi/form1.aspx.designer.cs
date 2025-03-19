@@ -11,115 +11,106 @@ namespace AnmolDristi
 {
 
 
-    public partial class WebForm1
+    public partial class form1
     {
 
         /// <summary>
-        /// date control.
+        /// lbl1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox date;
+        protected global::System.Web.UI.WebControls.Label lbl1;
 
         /// <summary>
-        /// department1 control.
+        /// firstname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox department1;
+        protected global::System.Web.UI.WebControls.TextBox firstname;
 
         /// <summary>
-        /// department2 control.
+        /// lbl2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox department2;
+        protected global::System.Web.UI.WebControls.Label lbl2;
 
         /// <summary>
-        /// rbQuestionOk control.
+        /// lastname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbQuestionOk;
+        protected global::System.Web.UI.WebControls.TextBox lastname;
 
         /// <summary>
-        /// rbQuestionNotOk control.
+        /// lbl3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbQuestionNotOk;
+        protected global::System.Web.UI.WebControls.Label lbl3;
 
         /// <summary>
-        /// question_remarks_1 control.
+        /// city control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl question_remarks_1;
+        protected global::System.Web.UI.WebControls.TextBox city;
 
         /// <summary>
-        /// txtQuestionRemarks control.
+        /// btnInsert control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQuestionRemarks;
+        protected global::System.Web.UI.WebControls.Button btnInsert;
 
         /// <summary>
-        /// rbQuestionOk2 control.
+        /// btnDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbQuestionOk2;
+        protected global::System.Web.UI.WebControls.Button btnDelete;
 
         /// <summary>
-        /// rbQuestionNotOk2 control.
+        /// btnUpdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbQuestionNotOk2;
+        protected global::System.Web.UI.WebControls.Button btnUpdate;
 
         /// <summary>
-        /// question_remarks_2 control.
+        /// btnView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl question_remarks_2;
+        protected global::System.Web.UI.WebControls.Button btnView;
 
         /// <summary>
-        /// txtQuestionRemarks2 control.
+        /// gridview1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQuestionRemarks2;
-
-        /// <summary>
-        /// btnSubmit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSubmit;
+        protected global::System.Web.UI.WebControls.GridView gridview1;
     }
 }
