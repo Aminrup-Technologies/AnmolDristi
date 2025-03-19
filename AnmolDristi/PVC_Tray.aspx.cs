@@ -316,6 +316,7 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 lbl_DDL_Plant_Value.Text = selectedPlantValue;
                 //ProductBrandsBinder(selectedPlantValue);
+                BrandSKUBinder(selectedPlantValue);
                 LoadApprovers(selectedPlantValue);
             }
             else
@@ -334,12 +335,39 @@ namespace AnmolDristi
             }
         }
 
+        private void BrandSKUBinder(string selectedPlantValue)
+        {
+            string query = "SELECT b.SKUId, b.SKU_name FROM MST_Brand_SKU b JOIN MST_LineCatBrands l ON b.brand_id = l.brand_id WHERE l.plant_id = 100 AND b.ViewMode = 1 ORDER BY b.SKUId;";
+            string textField = "SKU_name";
+            string valueField = "SKUId";
+
+            bool recordsBound;
+            DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedPlantValue), out recordsBound);
+
+            if (!recordsBound)
+            {
+                DatabaseHelper.BindWithDefaultNoRecords(DDL_BrandSKU);
+
+                string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Error',
+                                text: 'No Records Found!',
+                                type: 'warning',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
+            }
+        }
+
         private void MakeInputsReadOnly()
         {
             DDL_Plant.Enabled = false;
+            DDL_BrandSKU.Enabled = false;
             TB_ChalanNo.ReadOnly = true;
             TB_MatVarietyName.ReadOnly = true;
             TB_Supplier.ReadOnly = true;
+            TB_Size.ReadOnly = true;
             TB_ChalanDate.ReadOnly = true;
             TB_LotNo.ReadOnly = true;
             TB_VehicleNo.ReadOnly = true;
@@ -416,7 +444,9 @@ namespace AnmolDristi
 
             string plantName = DDL_Plant.SelectedValue;
             string productBrand = TB_MatVarietyName.Text.ToString();
+            string brandSku = DDL_BrandSKU.SelectedValue;
             string Supplier_Name = TB_Supplier.Text;
+            decimal? sampleSize = !string.IsNullOrEmpty(TB_Size.Text) ? Convert.ToDecimal(TB_Size.Text) : (decimal?)null;
             string Challan_No = TB_ChalanNo.Text;
             DateTime? Challan_Date = string.IsNullOrEmpty(TB_ChalanDate.Text) ? (DateTime?)null : Convert.ToDateTime(TB_ChalanDate.Text);
             string Lot_No = TB_LotNo.Text;
@@ -446,9 +476,9 @@ namespace AnmolDristi
                     conn.Open();
 
                     // SQL Insert Query
-                    string query = @"INSERT INTO TRN_PVC_Tray (PVCID, FormID, PlantName, ProductBrand, Supplier_Name, Challan_No, Challan_Date, Lot_No, Vehicle_No, Dimension_Std_L, Dimension_Std_W, Dimension_Std_H, GSM_Std, Dimension_Obs_L, Dimension_Obs_W, Dimension_Obs_H, GSM_Obs, Remarks, SubmittedById, SubmittedByEmployeeCode, SubmittedDate, SubmittedTime, Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode, Approver1_Status, Approver2_Status, DottedApprover_Status, SubmissionStatus)
+                    string query = @"INSERT INTO TRN_PVC_Tray (PVCID, FormID, PlantName, ProductBrand, BrandSku, Supplier_Name, SampleSize, Challan_No, Challan_Date, Lot_No, Vehicle_No, Dimension_Std_L, Dimension_Std_W, Dimension_Std_H, GSM_Std, Dimension_Obs_L, Dimension_Obs_W, Dimension_Obs_H, GSM_Obs, Remarks, SubmittedById, SubmittedByEmployeeCode, SubmittedDate, SubmittedTime, Approver1EmployeeCode, Approver2EmployeeCode, DottedLineApproverEmployeeCode, Approver1_Status, Approver2_Status, DottedApprover_Status, SubmissionStatus)
                     VALUES
-                    (@PVCID, @FormID, @PlantName, @ProductBrand, @Supplier_Name, @Challan_No, @Challan_Date, @Lot_No, @Vehicle_No, @Dimension_Std_L, @Dimension_Std_W, @Dimension_Std_H, @GSM_Std, @Dimension_Obs_L, @Dimension_Obs_W, @Dimension_Obs_H, @GSM_Obs, @Remarks, @SubmittedById, @SubmittedByEmployeeCode, @SubmittedDate, @SubmittedTime, @Approver1EmployeeCode, @Approver2EmployeeCode, @DottedLineApproverEmployeeCode, @Approver1_Status, @Approver2_Status, @DottedApprover_Status, @SubmissionStatus)";
+                    (@PVCID, @FormID, @PlantName, @ProductBrand, @BrandSku, @Supplier_Name, @SampleSize, @Challan_No, @Challan_Date, @Lot_No, @Vehicle_No, @Dimension_Std_L, @Dimension_Std_W, @Dimension_Std_H, @GSM_Std, @Dimension_Obs_L, @Dimension_Obs_W, @Dimension_Obs_H, @GSM_Obs, @Remarks, @SubmittedById, @SubmittedByEmployeeCode, @SubmittedDate, @SubmittedTime, @Approver1EmployeeCode, @Approver2EmployeeCode, @DottedLineApproverEmployeeCode, @Approver1_Status, @Approver2_Status, @DottedApprover_Status, @SubmissionStatus)";
 
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -458,7 +488,9 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@FormID", 14);
                         cmd.Parameters.AddWithValue("@PlantName", plantName);
                         cmd.Parameters.AddWithValue("@ProductBrand", productBrand);
+                        cmd.Parameters.AddWithValue("@BrandSku", brandSku);
                         cmd.Parameters.AddWithValue("@Supplier_Name", Supplier_Name);
+                        cmd.Parameters.AddWithValue("@SampleSize", sampleSize);
                         cmd.Parameters.AddWithValue("@Challan_No", Challan_No);
                         cmd.Parameters.AddWithValue("@Challan_Date", Challan_Date);
                         cmd.Parameters.AddWithValue("@Lot_No", Lot_No);
@@ -507,8 +539,6 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, true);
             }
         }
-
-
 
         private void LoadApprovers(string selectedPlantValue)
         {

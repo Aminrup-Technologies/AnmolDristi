@@ -156,13 +156,14 @@ namespace AnmolDristi
 		{
 			public string PlantName { get; set; }
 
-			public string ProductBrand { get; set; }
+			public string Material { get; set; }
 
 			public string SubmittedDate { get; set; }
 			public string SubmittedTime { get; set; }
 			public string SubmittedById { get; set; }
 			public string Supplier_Name { get; set; }
-			public string RjtdQty { get; set; }
+            public string SampleSize { get; set; }
+            public string RjtdQty { get; set; }
 			public string Challan_No { get; set; }
 			public string Challan_Date { get; set; }
 			public string Lot_No { get; set; }
@@ -212,7 +213,7 @@ namespace AnmolDristi
 
 					cmd.Parameters.AddWithValue("@selectedPlantValue", string.IsNullOrEmpty(DDL_Plant.SelectedValue) || DDL_Plant.SelectedValue == "0" ? (object)DBNull.Value : Convert.ToInt32(DDL_Plant.SelectedValue));
 
-					cmd.Parameters.AddWithValue("@ProductBrand", string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) || DDL_ProductBrand.SelectedValue == "0" ? (object)DBNull.Value : Convert.ToInt32(DDL_ProductBrand.SelectedValue));
+					//cmd.Parameters.AddWithValue("@ProductBrand", string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) || DDL_ProductBrand.SelectedValue == "0" ? (object)DBNull.Value : Convert.ToInt32(DDL_ProductBrand.SelectedValue));
 
 					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
 					{
@@ -236,7 +237,7 @@ namespace AnmolDristi
 						c.FormID as FormID,
 						c.PVCID as RecordID,
 						p.plant_name AS PlantName,
-						c.ProductBrand AS ProductBrand,
+						c.ProductBrand AS Material,
 						c.SubmittedByEmployeeCode as EmpCode,
 						u.EmployeeName AS EmpName,
 						c.SubmittedDate as SDate,
@@ -290,7 +291,7 @@ namespace AnmolDristi
 					c.FormID AS FormID,
 					c.PVCID as RecordID,
 					p.plant_name AS PlantName,
-					c.ProductBrand AS ProductBrand,
+					c.ProductBrand AS Material,
 					c.SubmittedByEmployeeCode AS EmpCode,
 					u.EmployeeName AS EmpName,
 					c.SubmittedDate AS SDate,
@@ -328,11 +329,11 @@ namespace AnmolDristi
 				parameters.Add(new SqlParameter("@PlantId", SqlDbType.Int) { Value = DDL_Plant.SelectedValue });
 			}
 
-			if (!string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) && DDL_ProductBrand.SelectedValue != "0")
-			{
-				queryBuilder.Append(" AND c.ProductBrand = @ProductBrand");
-				parameters.Add(new SqlParameter("@ProductBrand", SqlDbType.Int) { Value = DDL_ProductBrand.SelectedValue });
-			}
+			//if (!string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) && DDL_ProductBrand.SelectedValue != "0")
+			//{
+			//	queryBuilder.Append(" AND c.ProductBrand = @ProductBrand");
+			//	parameters.Add(new SqlParameter("@ProductBrand", SqlDbType.Int) { Value = DDL_ProductBrand.SelectedValue });
+			//}
 
 			queryBuilder.Append(" ORDER BY c.SubmittedDate DESC, c.SubmittedTime DESC");
 
