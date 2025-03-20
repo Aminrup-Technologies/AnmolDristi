@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -227,6 +229,7 @@ namespace AnmolDristi
             //string productBrand = DDL_ProductBrand.SelectedValue;
             string productBrand = TB_MatVarietyName.Text.ToString();
 
+            decimal sampleSize = Convert.ToDecimal(TB_Size.Text);
             string supplier = TB_SupplierName.Text;
             string challanNo = TB_ChallanNo.Text;
             DateTime challanDate;
@@ -241,25 +244,52 @@ namespace AnmolDristi
             string printingColour = TB_PrintingColour.Text;
             string adhesiveProperty = TB_AdhesiveProperty.Text;
 
-            decimal dimensionStd;
-            if (!decimal.TryParse(TB_StandardDimension.Text, out dimensionStd))
+            // Extract Standard Dimension (Only the numeric part)
+            decimal dimensionStd = 0;
+            string dimStdInput = TB_StandardDimension.Text.Trim();
+            if (!string.IsNullOrEmpty(dimStdInput))
             {
-                // Handle invalid decimal input, e.g., show a message to the user
-                dimensionStd = 0; // Default or handle as appropriate
+                Regex regex = new Regex(@"^([\d.]+)"); // Match only the first numeric part
+                Match match = regex.Match(dimStdInput);
+                if (match.Success)
+                    dimensionStd = Convert.ToDecimal(match.Groups[1].Value, CultureInfo.InvariantCulture);
             }
 
-            decimal dimensionObs;
-            if (!decimal.TryParse(TB_DimensionObservation.Text, out dimensionObs))
+            // Extract Observed Dimension
+            decimal dimensionObs = 0;
+            if (!decimal.TryParse(TB_DimensionObservation.Text.Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out dimensionObs))
             {
-                // Handle invalid decimal input, e.g., show a message to the user
-                dimensionObs = 0; // Default or handle as appropriate
+                dimensionObs = 0; // Handle invalid input
             }
 
-            string remarkForDimensionStd = TB_StandardDimensionRemarks.Text;
+            string remarkForDimensionStd = string.IsNullOrEmpty(TB_StandardDimensionRemarks.Text) ? null : TB_StandardDimensionRemarks.Text;
 
-            decimal gsmStd = Convert.ToDecimal(TB_StandardGSM.Text);
-            decimal gsmObs = Convert.ToDecimal(TB_GSMObservation.Text);
-            string remarkForGsmStd = TB_GSMRemarks.Text;
+            // Extract Standard GSM and its tolerance
+            decimal gsmStd = 0, gsmTolerancePercent = 0.05m; // Default tolerance 5%
+            string gsmStdInput = TB_StandardGSM.Text.Trim();
+
+            Regex gsmRegex = new Regex(@"^([\d.]+)\s*±\s*([\d.]+)%?$"); // Match "30.5 ± 5%"
+            Match gsmMatch = gsmRegex.Match(gsmStdInput);
+
+            if (gsmMatch.Success)
+            {
+                gsmStd = Convert.ToDecimal(gsmMatch.Groups[1].Value, CultureInfo.InvariantCulture);
+                gsmTolerancePercent = Convert.ToDecimal(gsmMatch.Groups[2].Value, CultureInfo.InvariantCulture) / 100; // Convert 5% to 0.05
+            }
+            else
+            {
+                decimal.TryParse(gsmStdInput, NumberStyles.Any, CultureInfo.InvariantCulture, out gsmStd);
+                gsmTolerancePercent = 0.05m; // Default 5% tolerance
+            }
+
+            // Extract Observed GSM
+            decimal gsmObs = 0;
+            if (!decimal.TryParse(TB_GSMObservation.Text.Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out gsmObs))
+            {
+                gsmObs = 0; // Handle invalid input
+            }
+
+            string remarkForGsmStd = string.IsNullOrEmpty(TB_GSMRemarks.Text) ? null : TB_GSMRemarks.Text;
 
             string remarks = TB_Remarks.Text;
 
@@ -293,6 +323,7 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@PlantName", plantName);
                         command.Parameters.AddWithValue("@ProductBrand", productBrand);
                         command.Parameters.AddWithValue("@SupplierName", supplier);
+                        command.Parameters.AddWithValue("@SampleSize", sampleSize);
                         command.Parameters.AddWithValue("@ChallanNo", challanNo);
                         command.Parameters.AddWithValue("@ChallanDate", challanDate);
                         command.Parameters.AddWithValue("@LotGateNo", lotGateNo);
@@ -354,6 +385,7 @@ namespace AnmolDristi
             //DDL_ProductBrand.Enabled = false;
             TB_MatVarietyName.ReadOnly = true;
             TB_SupplierName.ReadOnly = true;
+            TB_Size.ReadOnly = true;
             TB_ChallanNo.ReadOnly = true;
             TB_ChallanDate.ReadOnly = true;
             TB_LotNo.ReadOnly = true;

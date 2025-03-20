@@ -79,7 +79,7 @@
             <div class="page-title">
                 <div class="title_left">
                     <h3>
-                        <asp:Label ID="lbl_docname" runat="server" Text="Detailed View"></asp:Label>
+                        <asp:Label ID="lbl_docname" runat="server" Text="HM/BOPP Tape"></asp:Label>
                     </h3>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-3" runat="server" visible="false">
                                                         <div class="mb-3">
                                                             <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
@@ -122,9 +122,28 @@
 
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
+                                                            <asp:Label ID="Lbl_TB_MatVarietyName" runat="server" AssociatedControlID="TB_MatVarietyName" Text="Material / Variety" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <div class="input-group-sm">
+                                                                <asp:TextBox ID="TB_MatVarietyName" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div class="mb-3">
                                                             <asp:Label ID="Lbl_TB_Supplier" runat="server" AssociatedControlID="TB_Supplier" Text="Supplier :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TB_Supplier" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval("SupplierName") %>'></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-3" id="SizeDIV" runat="server">
+                                                        <div class="mb-3">
+                                                            <asp:Label ID="Lbl_TB_Size" runat="server" AssociatedControlID="TB_Size" Text="Sample Size :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <div class="input-group-sm">
+                                                                <asp:TextBox ID="TB_Size" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -184,7 +203,7 @@
 
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TB_Std_Dimension" runat="server" AssociatedControlID="TB_Std_Dimension" Text=" Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Lbl_TB_Std_Dimension" runat="server" AssociatedControlID="TB_Std_Dimension" Text="Observed Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <asp:Label ID="Label_TB_Std_Dimension" runat="server" Text='<%# Eval("DimensionStd") %>' EnableViewState="false" ForeColor="Red"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TB_Std_Dimension" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval("DimensionObs") %>'></asp:TextBox>
@@ -203,7 +222,7 @@
 
                                                     <div class="col-md-3">
                                                         <div class="mb-3">
-                                                            <asp:Label ID="Lbl_TB_GSM" runat="server" AssociatedControlID="TB_GSM" Text="GSM Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                            <asp:Label ID="Lbl_TB_GSM" runat="server" AssociatedControlID="TB_GSM" Text="Observed GSM Dimension(in mm.) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                             <asp:Label ID="Label_Std_GSM" runat="server" Text=' <%# Eval("GMS_Std") %>' EnableViewState="false" ForeColor="Red"></asp:Label>
                                                             <div class="input-group-sm">
                                                                 <asp:TextBox ID="TB_GSM" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text='<%#  Eval("GSM_Obs") %>'></asp:TextBox>
@@ -234,7 +253,7 @@
                                                 </div>
 
                                                 <%--Button--%>
-                                                <div class="col-md-3">
+                                                <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <asp:Label ID="Lbl_BasicbtnApprove" runat="server" AssociatedControlID="" Text="Click on your ACTION" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                         <div class="input-group input-group-sm">
@@ -336,7 +355,7 @@
 
 
         window.onload = function () {
-            
+
             // Check and toggle textboxes based on the value range
             toggleAllRemarksTextboxVisibility()
         };
@@ -345,8 +364,8 @@
         function toggleAllRemarksTextboxVisibility() {
             // Define a mapping of observed values, standard values, and remarks TextBoxes
             var fields = [
-            { obsId: '<%= TB_Std_Dimension.ClientID %>', stdId: '<%= Label_TB_Std_Dimension.ClientID %>', remarksId: '<%= TXB_Std_Dimension_Remarks.ClientID %>' },
-            { obsId: '<%= TB_GSM.ClientID %>', stdId: '<%= Label_Std_GSM.ClientID %>', remarksId: '<%= TXB_GSM_Remarks.ClientID %>' }
+                { obsId: '<%= TB_Std_Dimension.ClientID %>', stdId: '<%= Label_TB_Std_Dimension.ClientID %>', remarksId: '<%= TXB_Std_Dimension_Remarks.ClientID %>' },
+                { obsId: '<%= TB_GSM.ClientID %>', stdId: '<%= Label_Std_GSM.ClientID %>', remarksId: '<%= TXB_GSM_Remarks.ClientID %>' }
             ];
 
             fields.forEach(function (field) {

@@ -69,6 +69,24 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.DropDownList DDL_ProductBrand;
 
         /// <summary>
+        /// Lbl_TB_MatVarietyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_MatVarietyName;
+
+        /// <summary>
+        /// TB_MatVarietyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_MatVarietyName;
+
+        /// <summary>
         /// Lbl_TB_Supplier control.
         /// </summary>
         /// <remarks>
@@ -85,6 +103,33 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_Supplier;
+
+        /// <summary>
+        /// SizeDIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SizeDIV;
+
+        /// <summary>
+        /// Lbl_TB_Size control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_Size;
+
+        /// <summary>
+        /// TB_Size control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Size;
 
         /// <summary>
         /// Lbl_TB_ChallanNo control.
