@@ -21,7 +21,7 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
@@ -31,11 +31,11 @@ namespace AnmolDristi
             string Designation = tb_des.Text;
             string Location = tb_loc.Text;
             string RFID = tb_rfid.Text;
-           // string Points_Discussed= tb_points.Text;
+            // string Points_Discussed= tb_points.Text;
             string Points_Discussed = hdnPointsDiscussed.Value;
             DateTime? Meeting_Date = string.IsNullOrEmpty(TB_Date.Text) ? (DateTime?)null : Convert.ToDateTime(TB_Date.Text);
             TimeSpan? Meeting_Time = string.IsNullOrEmpty(tb_time.Text) ? (TimeSpan?)null : TimeSpan.Parse(tb_time.Text);
-            
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -86,7 +86,7 @@ namespace AnmolDristi
                     using (SqlCommand cmd = new SqlCommand("InsertPointsData", conn, transaction))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@Points_Discussed",Points_Discussed);
+                        cmd.Parameters.AddWithValue("@Points_Discussed", Points_Discussed);
                         cmd.Parameters.AddWithValue("@Attendees_ID", Attendees_ID);
                         cmd.ExecuteNonQuery();
                     }
@@ -101,7 +101,7 @@ namespace AnmolDristi
                 }
             }
             TB_Date.Text = string.Empty;
-            tb_time.Text= string.Empty;
+            tb_time.Text = string.Empty;
             tb_loc.Text = string.Empty;
             tb_name.Text = string.Empty;
             tb_des.Text = string.Empty;
@@ -109,27 +109,12 @@ namespace AnmolDristi
             tb_points.Text = string.Empty;
         }
 
-       
+
         protected void BtnReset_Click(object sender, EventArgs e)
         {
             Response.Redirect("csm_massmeeting.aspx");
 
 
         }
-        protected void addbutton(object sender, EventArgs e)
-        {
-
-        }
-        protected void removebutton(object sender, EventArgs e)
-        {
-
-        }
-        
-
-
-
-
-
     }
 }
-

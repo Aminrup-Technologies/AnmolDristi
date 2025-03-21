@@ -40,9 +40,21 @@
                             <a class="btn btn-app" href="csm_massmeeting_report.aspx">
                             <span class="badge bg-green">Ok
                             <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
-                            <i class="fa fa-edit"></i>CSM Mass Meeting Report
+                            <i class="fa fa-edit"></i>Mass Meeting Report
 
                             </a>
+                            <a class="btn btn-app" href="csm_massmeeting_record.aspx">
+                                  <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                  <i class="fa fa-edit"></i>Mass Meeting Record
+
+                            </a>
+                             <a class="btn btn-app" href="housekeeping_audit.aspx">
+                         <span class="badge bg-green">Ok
+                        <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
+                           <i class="fa fa-edit"></i>House Keeping Audit
+
+                           </a>
                         </div>
                     </div>
                 </div>

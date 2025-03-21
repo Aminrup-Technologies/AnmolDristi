@@ -22,6 +22,7 @@ namespace AnmolDristi
                     int meetingID = Convert.ToInt32(Request.QueryString["MeetingID"]);
                     HiddenMeetingID.Value = meetingID.ToString();
                     LoadMeetingDetails(meetingID);
+                   
 
                 }
                 else
@@ -62,6 +63,7 @@ namespace AnmolDristi
                 }
             }
         }
+        
         protected void BtnUpdate_Click(object sender, EventArgs e)
         {
             int meetingID = Convert.ToInt32(HiddenMeetingID.Value);
@@ -105,10 +107,6 @@ namespace AnmolDristi
             }
             lblMsg.Text = "Update completed successfully!";
         }
-            
-            
-           
-        
         protected void BtnBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("csm_massmeeting_report.aspx");

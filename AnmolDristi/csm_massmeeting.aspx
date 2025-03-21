@@ -180,6 +180,8 @@
                                         document.getElementById('<%= hdnPointsDiscussed.ClientID %>').value = pointsArray.join(" | ");
                                     }
                                 </script>
+
+
                             </div>
 
 
@@ -206,8 +208,9 @@
                     </div>
                 </div>
 
-            </div>
+            <%--</div>--%>
         </div>
+    </div>
     </div>
 </asp:Content>
 

@@ -99,36 +99,14 @@
                                     </div>
                                   </div>
                                   </div>
-  
+
+
+                       
+
+</div>
          </div>
-     </div>
- </div>
+         </div>
 
-
-
-                     <%-- <asp:GridView ID="gvPointsDiscussed" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered"
-    DataKeyNames="Attendees_ID" OnRowDeleting="gvPointsDiscussed_RowDeleting">
-    <Columns>
-        <!-- Points Discussed Column -->
-        <asp:TemplateField HeaderText="Points Discussed">
-            <ItemTemplate>
-                <asp:Label ID="lblPoint" runat="server" Text='<%# Eval("Points_Discussed") %>'></asp:Label>
-                <asp:Literal ID="ltlPointsDiscussed" runat="server" Text='<%# Eval("Points_Discussed") %>' Mode="PassThrough"></asp:Literal>
-            </ItemTemplate>
-            <EditItemTemplate >
-                <asp:TextBox ID="txtPoint" runat="server" Text='<%# Bind("Points_Discussed") %>' CssClass="form-control"></asp:TextBox>
-            </EditItemTemplate>
-        </asp:TemplateField>
-        
-        <!-- Action Column (Delete Button) -->
-        <asp:TemplateField HeaderText="Actions">
-            <ItemTemplate>
-                <asp:Button ID="btnDelete" runat="server" CommandName="Delete" Text="Delete" CssClass="btn btn-danger btn-sm"
-                    OnClientClick="return confirm('Are you sure you want to delete this point?');" />
-            </ItemTemplate>
-        </asp:TemplateField>
-    </Columns>
-</asp:GridView>--%>
 
              <%--Button--%>
              <div class="col-md-3">
@@ -141,5 +119,8 @@
                      </div>
                  </div>
              </div>
+             </div>
+         </div>
+         </div>
 
 </asp:Content>

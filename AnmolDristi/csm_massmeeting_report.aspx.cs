@@ -69,51 +69,7 @@ namespace AnmolDristi
                 }
             }
         }
-        //protected void BtnUpdate_Click(object sender, EventArgs e)
-        //{
-        //    Button btn = (Button)sender;
-        //    GridViewRow row = (GridViewRow)btn.NamingContainer;
-
-        //    int meetingID = Convert.ToInt32(gvMeetings.DataKeys[row.RowIndex].Value);
-        //    string meetingTime = ((TextBox)row.FindControl("txtMeetingTime")).Text;
-        //    string meetingDate = ((TextBox)row.FindControl("txtMeetingDate")).Text;
-        //    string location = ((TextBox)row.FindControl("txtLocation")).Text;
-        //    string employeeName = ((TextBox)row.FindControl("txtEmployeeName")).Text;
-        //    string designation = ((TextBox)row.FindControl("txtDesignation")).Text;
-        //    string rfid = ((TextBox)row.FindControl("txtRFID")).Text;
-        //    string pointsDiscussed = ((TextBox)row.FindControl("txtPointsDiscussed")).Text;
-
-        //    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        conn.Open();
-        //        string query = @"UPDATE Meeting 
-        //                 SET Meeting_Time = @Meeting_Time, Meeting_Date = @Meeting_Date, Location = @Location 
-        //                 WHERE Meeting_ID = @Meeting_ID;
-
-        //                 UPDATE Attendees 
-        //                 SET Employee_Name = @Employee_Name, Designation = @Designation, RFID = @RFID 
-        //                 WHERE Meeting_ID = @Meeting_ID;
-
-        //                 UPDATE Points 
-        //                 SET Points_Discussed = @Points_Discussed 
-        //                 WHERE Attendees_ID IN (SELECT Attendees_ID FROM Attendees WHERE Meeting_ID = @Meeting_ID)";
-
-        //        using (SqlCommand cmd = new SqlCommand(query, conn))
-        //        {
-        //            cmd.Parameters.AddWithValue("@Meeting_ID", meetingID);
-        //            cmd.Parameters.AddWithValue("@Meeting_Time", meetingTime);
-        //            cmd.Parameters.AddWithValue("@Meeting_Date", meetingDate);
-        //            cmd.Parameters.AddWithValue("@Location", location);
-        //            cmd.Parameters.AddWithValue("@Employee_Name", employeeName);
-        //            cmd.Parameters.AddWithValue("@Designation", designation);
-        //            cmd.Parameters.AddWithValue("@RFID", rfid);
-        //            cmd.Parameters.AddWithValue("@Points_Discussed", pointsDiscussed);
-        //            cmd.ExecuteNonQuery();
-        //        }
-        //    }
-        //    LoadMeetings(); // Refresh grid after update
-        //}
+       
 
         protected void BtnEdit_Click(object sender, EventArgs e)
         {
@@ -174,7 +130,7 @@ namespace AnmolDristi
                 A.RFID,
                 P.Points_Discussed
             FROM Meeting M
-            INNER JOIN Attendees A ON M.Meeting_ID = A.Meeting_ID
+            INNER JOIN Attendees A ON M.Meeting_ID = A.Meeting_ID 
             INNER JOIN Points P ON A.Attendees_ID = P.Attendees_ID
             WHERE M.Meeting_Date = @FromDate";
 

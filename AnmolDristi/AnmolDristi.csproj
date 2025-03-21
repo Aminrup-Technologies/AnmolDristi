@@ -81,10 +81,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="csm_massmeeting.aspx" />
+    <Content Include="csm_massmeeting_record.aspx" />
     <Content Include="csm_massmeeting_report.aspx" />
     <Content Include="Csm_massmeeting_Update.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="housekeeping_audit.aspx" />
     <Content Include="packages.config" />
+    <Content Include="practice.aspx" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
@@ -99,6 +102,7 @@
   <ItemGroup>
     <Content Include="blank.aspx" />
     <Content Include="login.aspx" />
+    <Content Include="trail.aspx" />
     <Content Include="WebData\No_Image.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -145,6 +149,13 @@
     <Compile Include="csm_massmeeting.aspx.designer.cs">
       <DependentUpon>csm_massmeeting.aspx</DependentUpon>
     </Compile>
+    <Compile Include="csm_massmeeting_record.aspx.cs">
+      <DependentUpon>csm_massmeeting_record.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="csm_massmeeting_record.aspx.designer.cs">
+      <DependentUpon>csm_massmeeting_record.aspx</DependentUpon>
+    </Compile>
     <Compile Include="csm_massmeeting_report.aspx.cs">
       <DependentUpon>csm_massmeeting_report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -176,12 +187,26 @@
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="housekeeping_audit.aspx.cs">
+      <DependentUpon>housekeeping_audit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="housekeeping_audit.aspx.designer.cs">
+      <DependentUpon>housekeeping_audit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="practice.aspx.cs">
+      <DependentUpon>practice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="practice.aspx.designer.cs">
+      <DependentUpon>practice.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="qaqc_home.aspx.cs">
@@ -197,6 +222,13 @@
     </Compile>
     <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="trail.aspx.cs">
+      <DependentUpon>trail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="trail.aspx.designer.cs">
+      <DependentUpon>trail.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
