@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head runat="server">
-    <title>Quality Reporting</title>
+    <title>CSM Reporting</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -33,7 +33,7 @@
                             <div class="form-group row">
                                 <asp:Label ID="Label1" runat="server" AssociatedControlID="txt_loginid" CssClass="control-label col-md-4 col-sm-6 label-align" Font-Bold="true" Text="USER ID"></asp:Label>
                                 <div class="col-md-8 col-sm-6">
-                                    <asp:TextBox ID="txt_loginid" runat="server" CssClass="form-control" placeholder="AHO__"></asp:TextBox>
+                                    <asp:TextBox ID="txt_loginid" runat="server" CssClass="form-control" placeholder="EMP CODE"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required" ForeColor="Red" ControlToValidate="txt_loginid" SetFocusOnError="true" Display="Dynamic"></asp:RequiredFieldValidator>
                                 </div>
                             </div>

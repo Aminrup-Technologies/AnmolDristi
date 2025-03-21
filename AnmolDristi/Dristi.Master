@@ -206,7 +206,7 @@
                 <asp:Label ID="lblTime1" runat="server" Text="N/A" Font-Bold="true" ForeColor="IndianRed" Visible="true"></asp:Label>
                     || Time :<asp:Label ID="lblTime" runat="server" Text="N/A" Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
                     || © 2021-2025
-                <asp:Label ID="Label1" runat="server" Text="Anmol " Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
+                <asp:Label ID="Label1" runat="server" Text="Aminrup " Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
 
                 </div>
                 <div class="clearfix"></div>
