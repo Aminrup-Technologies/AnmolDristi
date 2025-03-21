@@ -76,15 +76,6 @@ namespace AnmolDristi {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Home1;
         
         /// <summary>
-        /// QualityForms control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl QualityForms;
-        
-        /// <summary>
         /// DataMastering control.
         /// </summary>
         /// <remarks>
@@ -94,40 +85,31 @@ namespace AnmolDristi {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DataMastering;
         
         /// <summary>
-        /// Works control.
+        /// CSM_Module control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Works;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CSM_Module;
         
         /// <summary>
-        /// WorkCountry control.
+        /// Li1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkCountry;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Li1;
         
         /// <summary>
-        /// WorkState control.
+        /// Li2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkState;
-        
-        /// <summary>
-        /// WorkRegion control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkRegion;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Li2;
         
         /// <summary>
         /// ProfilePic_2 control.

@@ -26,9 +26,9 @@
             <div class="login_wrapper">
                 <div class="login_form">
                     <section class="login_content">
-                        <asp:Image ID="Img_CpLogo" runat="server" ImageUrl="#" Height="120" Width="180" />
+                        <asp:Image ID="Img_CpLogo" runat="server" ImageUrl="#" Height="120" Width="160" />
                         <h1>
-                            <asp:Label ID="lbl_companyname" runat="server" Text="Automation & Technical Services"></asp:Label></h1>
+                            <asp:Label ID="lbl_companyname" runat="server" Text="Aminrup Technologies"></asp:Label></h1>
                         <div class="form-horizontal">
                             <div class="form-group row">
                                 <asp:Label ID="Label1" runat="server" AssociatedControlID="txt_loginid" CssClass="control-label col-md-4 col-sm-6 label-align" Font-Bold="true" Text="USER ID"></asp:Label>
@@ -56,7 +56,7 @@
                                 <br />
                                 <div>
                                     <p>
-                                        © 2023-<asp:Label ID="lbl_currentyr" runat="server" Text="2024"></asp:Label>
+                                        © 2021-<asp:Label ID="lbl_currentyr" runat="server" Text="2024"></asp:Label>
                                         All Rights Reserved. <span style="font-weight: bold; color:red;">
                                             <asp:Label ID="lbl_compfooter" runat="server" Text="N/A"></asp:Label><br /></span> Powered by <a href="#" target="_blank">
                                                 <asp:Label ID="lbl_owner" runat="server" Text="N/A"></asp:Label></a>

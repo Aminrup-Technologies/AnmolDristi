@@ -89,6 +89,7 @@
     <Content Include="qaqc_home.aspx" />
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
+    <Content Include="WebData\OH4Y_Logo.png" />
     <Content Include="WebForm2.aspx" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
@@ -105,7 +106,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="WebData\Anmol_Logo.png" />
     <Content Include="WebData\Internal\ats_logo.jpg" />
     <Content Include="WebData\Internal\ats_translogo.png" />
     <Content Include="WebData\Internal\ats_webheader.png" />
