@@ -2,7 +2,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    
+
 
     <style type="text/css">
         .remove-border {
@@ -27,7 +27,6 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
@@ -166,6 +165,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
                                 <!-- SOP NO -->
                                 <div class="col-md-3">
                                     <div class="mb-3">
@@ -315,8 +317,23 @@
                                 </div>
 
                                 <!-- Submit Button -->
-                                <div class="col-md-12 text-center">
-                                    <asp:Button ID="btnSubmit" runat="server" Text="Submit Report" CssClass="btn btn-primary"/>
+                                <%-- <div class="col-md-12 text-center">
+                                    <asp:Button ID="btnSubmit" runat="server" Text="Submit Report" CssClass="btn btn-primary" OnClick="SubmitKYTIncidentData_Click" />
+
+                                    <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+                                </div>--%>
+
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <%--<asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>--%>
+                                        <div class="input-group input-group-sm">
+                                            <asp:Button ID="btnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="SubmitKYTIncidentData_Click" />
+                                            <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
+                                            <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                        </div>
+                                        <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" />
+
+                                    </div>
                                 </div>
 
                             </div>

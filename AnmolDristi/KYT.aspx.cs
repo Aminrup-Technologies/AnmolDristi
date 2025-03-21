@@ -12,27 +12,6 @@ namespace AnmolDristi
 {
     public partial class KYT : System.Web.UI.Page
     {
-
-        //protected System.Web.UI.WebControls.Label lblMessage; 
-
-        //protected System.Web.UI.WebControls.TextBox txtWorksite;
-        //protected System.Web.UI.WebControls.TextBox txtDepartment;
-        //protected System.Web.UI.WebControls.TextBox txtLocation;
-        //protected System.Web.UI.WebControls.TextBox txtDate;
-        //protected System.Web.UI.WebControls.TextBox txtJobID;
-        //protected System.Web.UI.WebControls.TextBox txtActivity;
-        //protected System.Web.UI.WebControls.TextBox txtSOPNo;
-        //protected System.Web.UI.WebControls.TextBox txtVender;
-        //protected System.Web.UI.WebControls.TextBox txtSlNo;
-        //protected System.Web.UI.WebControls.TextBox txtHiddenHazards;
-        //protected System.Web.UI.WebControls.TextBox txtConsequence;
-        //protected System.Web.UI.WebControls.TextBox txtCounterMeasures;
-        //protected System.Web.UI.WebControls.DropDownList ddlPriority;
-        //protected System.Web.UI.WebControls.FileUpload fuPhotograph;
-
-
-
-
         protected void Page_Load_KYT(object sender, EventArgs e)  
         {
             if (!IsPostBack)
@@ -76,6 +55,9 @@ namespace AnmolDristi
                 SaveKYTIncidentData(); // Save form data
                 lblMessage.ForeColor = System.Drawing.Color.Green;
                 lblMessage.Text = "KYT Incident data saved successfully!";
+                btnSubmit.Enabled = false;
+                btnSubmit.Text = "Saved";
+                btnSubmit.CssClass = "btn btn-success";
 
                 LoadKYTIncidentDetails(); // Refresh GridView
             }
@@ -129,7 +111,6 @@ namespace AnmolDristi
             //    }
             //}
 
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -137,34 +118,40 @@ namespace AnmolDristi
 
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand(@"
-                        INSERT INTO KYT_Table1 (KYT_WorksiteName, KYT_Department, KYT_Location, KYT_Date, KYT_JobID, KYT_Activity, KYT_SOPNo, KYT_Vendor) 
-                        VALUES (@KYTWorksiteName, @KYTDepartment, @KYTLocation, @KYTDate, @KYTJobID, @KYTActivity, @KYTSOPNo, @KYTVendor);
-                        SELECT SCOPE_IDENTITY();", conn, transaction))
+                    // Insert into KYT_Table1 using SP
+                    using (SqlCommand cmd = new SqlCommand("usp_InsertKYTData", conn, transaction))
                     {
-                        cmd.Parameters.AddWithValue("@KYTWorksiteName", kytWorksiteName ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@KYTDepartment", kytDepartment);
-                        cmd.Parameters.AddWithValue("@KYTLocation", kytLocation);
-                        cmd.Parameters.AddWithValue("@KYTDate", kytDate ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@KYTJobID", kytJobID);
-                        cmd.Parameters.AddWithValue("@KYTActivity", kytActivity);
-                        cmd.Parameters.AddWithValue("@KYTSOPNo", kytSOPNo);
-                        cmd.Parameters.AddWithValue("@KYTVendor", kytVendor);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@KYTWorksiteName", (object)kytWorksiteName ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTDepartment", (object)kytDepartment ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTLocation", (object)kytLocation ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTDate", (object)kytDate ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTJobID", (object)kytJobID ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTActivity", (object)kytActivity ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTSOPNo", (object)kytSOPNo ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTVendor", (object)kytVendor ?? DBNull.Value);
 
-                        kytIncidentID = Convert.ToInt32(cmd.ExecuteScalar());
+                        SqlParameter outputParam = new SqlParameter("@KYTIncidentID", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(outputParam);
+
+                        cmd.ExecuteNonQuery();
+                        kytIncidentID = (int)outputParam.Value;
                     }
 
-                    using (SqlCommand cmd = new SqlCommand(@"
-                        INSERT INTO KYT_Table2 (ID, KYT_SlNo, KYT_HiddenHazards, KYT_Consequence, KYT_CounterMeasures, KYT_PriorityValue, KYT_PhotographPath) 
-                        VALUES (@ID, @KYTSLNo, @KYTHiddenHazards, @KYTConsequence, @KYTCounterMeasures, @KYTPriorityValue, @KYTPhotographPath)", conn, transaction))
+                    // Insert into KYT_Table2 using SP
+                    using (SqlCommand cmd = new SqlCommand("usp_InsertKYTDetails", conn, transaction))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@ID", kytIncidentID);
-                        cmd.Parameters.AddWithValue("@KYTSLNo", kytSlNo);
-                        cmd.Parameters.AddWithValue("@KYTHiddenHazards", kytHiddenHazards);
-                        cmd.Parameters.AddWithValue("@KYTConsequence", kytConsequence);
-                        cmd.Parameters.AddWithValue("@KYTCounterMeasures", kytCounterMeasures);
-                        cmd.Parameters.AddWithValue("@KYTPriorityValue", kytPriorityValue);
-                        cmd.Parameters.AddWithValue("@KYTPhotographPath", kytPhotographPath ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTSLNo", (object)kytSlNo ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTHiddenHazards", (object)kytHiddenHazards ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTConsequence", (object)kytConsequence ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTCounterMeasures", (object)kytCounterMeasures ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTPriorityValue", (object)kytPriorityValue ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@KYTPhotographPath", (object)kytPhotographPath ?? DBNull.Value);
 
                         cmd.ExecuteNonQuery();
                     }
@@ -177,9 +164,10 @@ namespace AnmolDristi
                     throw new Exception("Transaction failed: " + ex.Message);
                 }
             }
+
         }
 
-        protected void ResetKYTIncidentForm_Click(object sender, EventArgs e) // Renamed
+        protected void BtnReset_Click(object sender, EventArgs e) // Renamed
         {
             // Matching the ASPX control names
             txtWorksite.Text = "";
@@ -201,6 +189,11 @@ namespace AnmolDristi
 
             lblMessage.Text = "KYT Form reset successfully!";
             lblMessage.ForeColor = System.Drawing.Color.Blue;
+        }
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

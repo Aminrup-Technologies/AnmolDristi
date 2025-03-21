@@ -995,9 +995,10 @@
                                             <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                         </div>
                                         <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" />
-
                                     </div>
                                 </div>
+
+
 
                                 <!-- End row -->
                             </div>
