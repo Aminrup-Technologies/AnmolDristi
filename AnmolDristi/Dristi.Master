@@ -11,7 +11,7 @@
 
     <link rel="icon" href="WebData/Anmol_Logo.png" type="image/ico" />
 
-    <title>Anmol</title>
+    <title>UAT</title>
 
     <link href="Resources/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="Resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -105,7 +105,7 @@
                         <div class="left_col scroll-view">
                             <div class="navbar nav_title" style="border: 0;">
                                 <a href="#" class="site_title">
-                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/Anmol_Logo.png" Height="40" Width="50" /><span>&nbsp;&nbsp;ANMOL</span>
+                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/OH4Y_Logo.png" Height="40" Width="50" /><span>&nbsp;&nbsp;UAT</span>
                                 </a>
                             </div>
 
@@ -133,17 +133,15 @@
                                         <li id="HomePage" runat="server" visible="true"><a><i class="fa fa-home"></i>Home <span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li id="Home1" runat="server" visible="true"><a href="home.aspx">Dashboard-1<span class="label label-success pull-right">Click !!</span></a></li>
-                                                <li id="QualityForms" runat="server" visible="true"><a href="qaqc_home.aspx">QA/QC<span class="label label-success pull-right">Click !!</span></a></li>
                                             </ul>
                                         </li>
 
-                                        <li id="DataMastering" runat="server" visible="false"><a><i class="fa fa-database"></i>Data Mastering <span class="fa fa-chevron-down"></span></a>
+                                        <li id="DataMastering" runat="server" visible="true"><a><i class="fa fa-database"></i>New Development<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
-                                                <li id="Works" runat="server" visible="false"><a>Works<span class="fa fa-chevron-down"></span></a>
+                                                <li id="CSM_Module" runat="server" visible="true"><a>CSM<span class="fa fa-chevron-down"></span></a>
                                                     <ul class="nav child_menu">
-                                                        <li id="WorkCountry" runat="server" class="sub_menu"><a href="work_country.aspx">Work Country</a></li>
-                                                        <li id="WorkState" runat="server"><a href="work_states.aspx">Work States</a></li>
-                                                        <li id="WorkRegion" runat="server"><a href="work_region.aspx">Work Regions</a></li>
+                                                        <li id="Li1" runat="server" class="sub_menu"><a href="incident_analysis.aspx">Incident Reporting</a></li>
+                                                        <li id="Li2" runat="server" class="sub_menu"><a href="KYT.aspx">KYT Report</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -207,8 +205,8 @@
                     Autologout >
                 <asp:Label ID="lblTime1" runat="server" Text="N/A" Font-Bold="true" ForeColor="IndianRed" Visible="true"></asp:Label>
                     || Time :<asp:Label ID="lblTime" runat="server" Text="N/A" Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
-                    || © 2021-2024
-                <asp:Label ID="Label1" runat="server" Text="Anmol " Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
+                    || © 2021-2025
+                <asp:Label ID="Label1" runat="server" Text="Aminrup " Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
 
                 </div>
                 <div class="clearfix"></div>
@@ -245,26 +243,26 @@
             <%--- Logout Modal -------- END --%>
 
             <!-- Small modal -->
-			<asp:Button ID="ShowPopup" runat="server" Text="Button" class="btn btn-primary" Visible="false" data-toggle="modal" data-target=".bs-example-modal-sm" />
-			<div id="MyPopup" class="modal fade bs-example-modal-sm" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-dialog modal-sm">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title" id="myModalLabel2"></h4>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-						</div>
+            <asp:Button ID="ShowPopup" runat="server" Text="Button" class="btn btn-primary" Visible="false" data-toggle="modal" data-target=".bs-example-modal-sm" />
+            <div id="MyPopup" class="modal fade bs-example-modal-sm" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel2"></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                        </div>
 
-					</div>
-				</div>
-			</div>
-			<!-- Small Modal - END---->
+                    </div>
+                </div>
+            </div>
+            <!-- Small Modal - END---->
             <script type="text/javascript">
                 document.addEventListener("DOMContentLoaded", function () {
                     document.getElementById('content').style.display = 'block';
