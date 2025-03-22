@@ -96,10 +96,6 @@
              text-align: center;
          }
 
-     /* Fix Column Width */
-     /*#gvAttendees th, #gvAttendees td {
- min-width: 120px;*/ /* Ensures proper column width */
-     /*}*/
  </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -280,7 +276,7 @@
         <div class="mb-3">
             <asp:Label ID="lbl_btnsave1" runat="server" AssociatedControlID="btnsave1" Text="Click to Save" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
             <div class="input-group">
-                <asp:Button ID="btnsave1" runat="server" Text="Save" CssClass="btn btn-success" ValidationGroup="Save1" CausesValidation="true" OnClientClick="saveMeetingData(); return false;" OnClick="btnsave1_Click" />
+                <asp:Button ID="btnsave1" runat="server" Text="Save" CssClass="btn btn-success" ValidationGroup="Save1" CausesValidation="true"  OnClick="btnsave1_Click" />
                 <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
 
             </div>
@@ -290,9 +286,8 @@
     <asp:HiddenField ID="HiddenField_MMId" runat="server" />
 
 </div>  
-
+    
 <%--SECOND PANEL --%>
-
    <div class="tab-pane fade" id="Attendees">
    <div class="col-md-6">
           <div class="mb-3">
@@ -384,6 +379,7 @@
                   <asp:Label ID="lbl_btnAddAttendees" runat="server" AssociatedControlID="btnAddAttendees" Text="Add Attendees" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                   <div class="input-group">
                       <asp:Button ID="btnAddAttendees" Text="Add Attendees" runat="server" CssClass="btn btnStyle " OnClick="btnAddAttendees_Click" />
+                      <asp:Label ID="lblMsg1" runat="server" ></asp:Label>
 
                   </div>
               </div>
@@ -404,6 +400,11 @@
                           <asp:BoundField DataField="AttendeeCode" HeaderText="Attendee Code" />
                           <asp:BoundField DataField="GatePassNo" HeaderText="Gate Pass No" />
                           <asp:BoundField DataField="Designation" HeaderText="Designation" />
+                          <asp:TemplateField HeaderText="Image Preview">
+                          <ItemTemplate>
+                               <asp:Image ID="imgPreview" runat="server" ImageUrl='<%# Eval("ImagePath") %>' Width="50px" Height="50px" />
+                           </ItemTemplate>
+            </asp:TemplateField>
                       </Columns>
                   </asp:GridView>
               </div>
@@ -425,7 +426,7 @@
 
 
   </div>
-
+   
   <%-- THIRD PANEL--%>
 
   <div class="tab-pane fade" id="Points">
@@ -487,7 +488,7 @@
           <div class="mb-3">
               <asp:Label ID="lbl_btnsave3" runat="server" AssociatedControlID="btnsave3" Text="Click to Save" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
               <div class="input-group">
-                  <asp:Button ID="btnsave3" runat="server" Text="Save" CssClass="btn btn-success btn-sm" ValidationGroup="save3" CausesValidation="true" OnClientClick="savePointsData(); return false;" OnClick="btnsave3_Click" />
+                  <asp:Button ID="btnsave3" runat="server" Text="Save" CssClass="btn btn-success btn-sm"  CausesValidation="true"  OnClick="btnsave3_Click" />
               </div>
           </div>
       </div>
@@ -504,7 +505,7 @@
                                 
                             </div>
 
-                        </div>
+                      
                     </div>
                 </div>
 
@@ -530,38 +531,6 @@
 
     </div>
          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-     <script type="text/javascript">
-
-       document.addEventListener("DOMContentLoaded", function () {
-           // Function to calculate duration
-           function calculateDuration() {
-               var startTime = document.getElementById('<%= TB_StartTime.ClientID %>').value;
-                   var endTime = document.getElementById('<%= TB_EndTime.ClientID %>').value;
-                   var durationField = document.getElementById('<%= TB_Duration.ClientID %>');
-                   var hiddenDuration = document.getElementById('<%= hfDuration.ClientID %>');
-
-               if (startTime && endTime) {
-                   var start = new Date("1970-01-01T" + startTime + "Z");
-                   var end = new Date("1970-01-01T" + endTime + "Z");
-                   var diff = (end - start) / 60000; // Convert ms to minutes
-                   if (diff < 0) diff += 1440; // Handle cases where endTime is past midnight
-
-                   var durationText = diff + " minutes";
-                   durationField.value = durationText;
-                   hiddenDuration.value = durationText; // Store value in hidden field
-               }
-           }
-
-           // Attach the function to the End Time field change event
-           document.getElementById('<%= TB_EndTime.ClientID %>').addEventListener("change", calculateDuration);
-       });
-
-
-
-
-
-
-   </script>
   
    <script type="text/javascript">
        function calculateDuration() {
@@ -586,19 +555,9 @@
            return false;
        }
 
-       function enableNextPanel(currentBtnId, nextPanelId) {
-           if (calculateDuration()) {
-               var panel = document.getElementById(nextPanelId);
-               if (panel) {
-                   panel.style.display = "block"; // Show next panel
-               }
-
-               var currentButton = document.getElementById(currentBtnId);
-               if (currentButton) {
-                   currentButton.disabled = true; // Disable current Save button
-               }
-           }
-       }
+       
    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     
 </asp:Content>

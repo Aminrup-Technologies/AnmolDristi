@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
+using System.IO;
 
 namespace AnmolDristi
 {
@@ -15,8 +16,75 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            InitializeGrid();
+        }
+        private void InitializeGrid()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("SLNO");
+            dt.Columns.Add("AgendaTitle");
+            dt.Columns.Add("PointBy");
+            dt.Columns.Add("AgendaPointDescription");
+            dt.Columns.Add("Duration");
+            dt.Columns.Add("RefPhotoBefore");
+            dt.Columns.Add("AgendaPointAfter");
+            dt.Columns.Add("RefPhotoAfter");
+
+            // Add an empty row to allow input
+            dt.Rows.Add("1", "", "", "", "", "", "", "");
+
+            ViewState["GridViewData"] = dt;
+            GridView1.DataSource = dt;
+            GridView1.DataBind();
+        }
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            DataTable dt = ViewState["GridViewData"] as DataTable;
+            if (dt == null) return;
+
+            // Preserve the existing input before adding a new row
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                TextBox txtAgendaTitle = (TextBox)row.FindControl("txtAgendaTitle");
+                TextBox txtPointBy = (TextBox)row.FindControl("txtPointBy");
+                TextBox txtAgendaDesc = (TextBox)row.FindControl("txtAgendaDesc");
+                TextBox txtDuration = (TextBox)row.FindControl("txtDuration");
+                TextBox txtAgendaDescAfter = (TextBox)row.FindControl("txtAgendaDescAfter");
+
+                dt.Rows[row.RowIndex]["AgendaTitle"] = txtAgendaTitle.Text;
+                dt.Rows[row.RowIndex]["PointBy"] = txtPointBy.Text;
+                dt.Rows[row.RowIndex]["AgendaPointDescription"] = txtAgendaDesc.Text;
+                dt.Rows[row.RowIndex]["Duration"] = txtDuration.Text;
+                dt.Rows[row.RowIndex]["AgendaPointAfter"] = txtAgendaDescAfter.Text;
+            }
+
+            if (e.CommandName == "AddMore")
+            {
+                int newSLNo = dt.Rows.Count + 1;
+                dt.Rows.Add(newSLNo.ToString(), "", "", "", "", "", "", "");
+            }
+            else if (e.CommandName == "Remove")
+            {
+                int rowIndex = Convert.ToInt32(e.CommandArgument);
+                if (dt.Rows.Count > 1) // Ensure at least one row remains
+                {
+                    dt.Rows.RemoveAt(rowIndex);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        dt.Rows[i]["SLNO"] = (i + 1).ToString(); // Reorder SLNO
+                    }
+                }
+            }
+
+            ViewState["GridViewData"] = dt;
+            GridView1.DataSource = dt;
+            GridView1.DataBind();
+        }
+        protected void btnsave3_Click(object sender, EventArgs e)
+        {
 
         }
+
         protected void btnsave1_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(DDL_WorkRegion.SelectedValue) ||
@@ -28,6 +96,7 @@ namespace AnmolDristi
             }
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             string meetingId = Guid.NewGuid().ToString();
+           
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -47,14 +116,14 @@ namespace AnmolDristi
                     cmd.Parameters.AddWithValue("@Meeting_Date", TB_Date.Text);
                     cmd.Parameters.AddWithValue("@Meeting_StartTime", TB_StartTime.Text);
                     cmd.Parameters.AddWithValue("@Meeting_EndTime", TB_EndTime.Text);
-                    cmd.Parameters.AddWithValue("@SubmitterCode", "SUB001"); // Update with actual submitter ID
+                    cmd.Parameters.AddWithValue("@SubmitterCode", "SUB001"); 
                     cmd.Parameters.AddWithValue("@RegionCode", DDL_WorkRegion.SelectedValue);
                     cmd.Parameters.AddWithValue("@CompanyCode", DDL_Company.SelectedValue);
                     cmd.Parameters.AddWithValue("@DeptCode", DDL_Department.SelectedValue);
                     cmd.Parameters.AddWithValue("@LocationCode", DDL_Location.SelectedValue);
                     cmd.Parameters.AddWithValue("@ExactLocation", TB_ExactLocation.Text);
                     cmd.Parameters.AddWithValue("@Coordinator_Name", TB_CoordinatorName.Text);
-                    cmd.Parameters.AddWithValue("@LastModifiedByCode", "USER001"); // Replace with actual user ID
+                    cmd.Parameters.AddWithValue("@LastModifiedByCode", "USER001");
 
                     try
                     {
@@ -105,11 +174,33 @@ namespace AnmolDristi
                 dt.Columns.Add("GatePassNo");
                 dt.Columns.Add("AttendeeType");
                 dt.Columns.Add("Designation");
+                dt.Columns.Add("ImagePath"); // New column for image path
             }
             else
             {
                 dt = (DataTable)ViewState["Attendees"];
             }
+            string imagePath = "";
+            if (imgupload.HasFile)
+            {
+                string fileExtension = Path.GetExtension(imgupload.FileName).ToLower();
+                if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
+                {
+                    lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
+                    lblMsg1.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
+
+                string folderPath = Server.MapPath("~/Uploads/");
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                string fileName = Path.GetFileName(imgupload.FileName);
+                imagePath = "~/Uploads/" + fileName;
+                imgupload.SaveAs(folderPath + fileName);
+            }
+
 
             DataRow dr = dt.NewRow();
             dr["EmployeeOrNot"] = rbEmployee.SelectedItem != null ? rbEmployee.SelectedItem.Text : "";
@@ -118,6 +209,7 @@ namespace AnmolDristi
             dr["AttendeeCode"] = txtAttendeeCode.Text.Trim();
             dr["GatePassNo"] = txtgatepassno.Text.Trim();
             dr["Designation"] = txtdes.Text.Trim();
+            dr["ImagePath"] = imagePath; // Store image path
             dt.Rows.Add(dr);
 
             ViewState["Attendees"] = dt;
@@ -161,15 +253,21 @@ namespace AnmolDristi
                 List<string> attendeeTypes = new List<string>();
                 List<string> designations = new List<string>();
                 List<string> gatePassNos = new List<string>();
+                List<string> imagePaths = new List<string>();
 
                 // Iterate through GridView rows and collect data
                 foreach (GridViewRow row in gvAttendees.Rows)
                 {
-                    attendeeCodes.Add(row.Cells[2].Text.Trim()); // AttendeeCode
-                    employeeNames.Add(row.Cells[1].Text.Trim()); // EmployeeName
-                    attendeeTypes.Add(row.Cells[4].Text.Trim()); // Attendee_Type
+                    attendeeCodes.Add(row.Cells[3].Text.Trim()); // AttendeeCode
+                    employeeNames.Add(row.Cells[2].Text.Trim()); // EmployeeName
+                    attendeeTypes.Add(row.Cells[1].Text.Trim()); // Attendee_Type
                     designations.Add(row.Cells[5].Text.Trim()); // Designation
-                    gatePassNos.Add(row.Cells[3].Text.Trim()); // Gate Pass No
+                    gatePassNos.Add(row.Cells[4].Text.Trim()); // Gate Pass No
+                    Image imgControl = (Image)row.FindControl("imgPreview");
+                    if (imgControl != null && !string.IsNullOrEmpty(imgControl.ImageUrl))
+                    {
+                        imagePaths.Add(imgControl.ImageUrl);
+                    }
                 }
 
                 // Convert lists to comma-separated strings
@@ -178,15 +276,9 @@ namespace AnmolDristi
                 string strAttendeeTypes = string.Join(",", attendeeTypes);
                 string strDesignations = string.Join(",", designations);
                 string strGatePassNos = string.Join(",", gatePassNos);
+                string strImagePaths = string.Join(",", imagePaths);
 
-                byte[] imageBytes = null;
-                if (imgupload.HasFile)
-                {
-                    using (System.IO.BinaryReader br = new System.IO.BinaryReader(imgupload.PostedFile.InputStream))
-                    {
-                        imageBytes = br.ReadBytes(imgupload.PostedFile.ContentLength);
-                    }
-                }
+                
 
                 // Database connection
                 string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -205,15 +297,10 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@Attendee_Type", strAttendeeTypes);
                         cmd.Parameters.AddWithValue("@Designation", strDesignations);
                         cmd.Parameters.AddWithValue("@Gate_passno", strGatePassNos);
+                        cmd.Parameters.Add("@Image_upload", SqlDbType.NVarChar).Value = strImagePaths;
 
-                        if (imageBytes != null)
-                        {
-                            cmd.Parameters.Add("@Image_upload", SqlDbType.VarBinary).Value = imageBytes;
-                        }
-                        else
-                        {
-                            cmd.Parameters.Add("@Image_upload", SqlDbType.VarBinary).Value = DBNull.Value;
-                        }
+
+
 
 
 

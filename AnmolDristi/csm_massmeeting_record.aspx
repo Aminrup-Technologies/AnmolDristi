@@ -82,7 +82,7 @@
 
             /* Hover Effect */
             #gvAttendees tr:hover {
-                background-color: #d1ecf1 !important; /* Light blue */
+                background-color: #d1ecf1; /* Light blue */
                 transition: 0.3s;
             }
 
@@ -97,10 +97,7 @@
                 text-align: center;
             }
 
-        /* Fix Column Width */
-        /*#gvAttendees th, #gvAttendees td {
-    min-width: 120px;*/ /* Ensures proper column width */
-        /*}*/
+      
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -441,8 +438,8 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <asp:Label ID="lbl_txtAttendeeCode" runat="server" AssociatedControlID="txtAttendeeCode" Text="Ateendees Code" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                                                    <asp:RequiredFieldValidator ID="RFV_txtAttendeeCode" runat="server" ErrorMessage="*" ControlToValidate="txtAttendeeCode" ValidationGroup="Save2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                    <asp:RegularExpressionValidator ID="REV_txtAttendeeCode" runat="server" ControlToValidate="txtAttendeeCode" ForeColor="Red" ValidationGroup="add2" ErrorMessage="AlphaNumeric Only" ValidationExpression="^[a-zA-Z0-9.@]{0,25}$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                    <asp:RequiredFieldValidator ID="RFV_txtAttendeeCode" runat="server" ErrorMessage="*" ControlToValidate="txtAttendeeCode"  Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator ID="REV_txtAttendeeCode" runat="server" ControlToValidate="txtAttendeeCode" ForeColor="Red"  ErrorMessage="AlphaNumeric Only" ValidationExpression="^[a-zA-Z0-9.@]{0,25}$" Display="Dynamic"></asp:RegularExpressionValidator>
 
                                                     <div class="input-group-sm">
                                                         <asp:TextBox ID="txtAttendeeCode" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
@@ -497,7 +494,7 @@
                                                     <asp:Label ID="lbl_btnAddAttendees" runat="server" AssociatedControlID="btnAddAttendees" Text="Add Attendees" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                     <div class="input-group">
                                                         <asp:Button ID="btnAddAttendees" Text="Add Attendees" runat="server" CssClass="btn btnStyle " ValidationGroup="add2" CausesValidation="true" OnClick="btnAddAttendees_Click" />
-
+                                                         <asp:Label ID="lblMsg1" runat="server" ></asp:Label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -517,6 +514,11 @@
                                                             <asp:BoundField DataField="AttendeeCode" HeaderText="Attendee Code" />
                                                             <asp:BoundField DataField="GatePassNo" HeaderText="Gate Pass No" />
                                                             <asp:BoundField DataField="Designation" HeaderText="Designation" />
+                                                            <asp:TemplateField HeaderText="Image Preview">
+                                                              <ItemTemplate>
+                                                                <asp:Image ID="imgPreview" runat="server" ImageUrl='<%# Eval("ImagePath") %>' Width="50px" Height="50px" />
+                                                               </ItemTemplate>
+                                                            </asp:TemplateField>
                                                         </Columns>
                                                     </asp:GridView>
                                                 </div>

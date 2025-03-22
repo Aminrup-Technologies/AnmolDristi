@@ -167,11 +167,33 @@ namespace AnmolDristi
                 dt.Columns.Add("GatePassNo");
                 dt.Columns.Add("AttendeeType");
                 dt.Columns.Add("Designation");
+                dt.Columns.Add("ImagePath"); // New column for image path
             }
             else
             {
                 dt = (DataTable)ViewState["Attendees"];
             }
+            string imagePath = "";
+            if (imgupload.HasFile)
+            {
+                string fileExtension = Path.GetExtension(imgupload.FileName).ToLower();
+                if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
+                {
+                    lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
+                    lblMsg1.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
+
+                string folderPath = Server.MapPath("~/Uploads/");
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                string fileName = Path.GetFileName(imgupload.FileName);
+                imagePath = "~/Uploads/" + fileName;
+                imgupload.SaveAs(folderPath + fileName);
+            }
+
 
             DataRow dr = dt.NewRow();
             dr["EmployeeOrNot"] = rbEmployee.SelectedItem != null ? rbEmployee.SelectedItem.Text : "";
@@ -180,6 +202,7 @@ namespace AnmolDristi
             dr["AttendeeCode"] = txtAttendeeCode.Text.Trim();
             dr["GatePassNo"] = txtgatepassno.Text.Trim();
             dr["Designation"] = txtdes.Text.Trim();
+            dr["ImagePath"] = imagePath; // Store image path
             dt.Rows.Add(dr);
 
             ViewState["Attendees"] = dt;
@@ -224,15 +247,21 @@ namespace AnmolDristi
                 List<string> attendeeTypes = new List<string>();
                 List<string> designations = new List<string>();
                 List<string> gatePassNos = new List<string>();
+                List<string> imagePaths = new List<string>();
 
                 // Iterate through GridView rows and collect data
                 foreach (GridViewRow row in gvAttendees.Rows)
                 {
-                    attendeeCodes.Add(row.Cells[2].Text.Trim()); // AttendeeCode
-                    employeeNames.Add(row.Cells[1].Text.Trim()); // EmployeeName
-                    attendeeTypes.Add(row.Cells[4].Text.Trim()); // Attendee_Type
+                    attendeeCodes.Add(row.Cells[3].Text.Trim()); // AttendeeCode
+                    employeeNames.Add(row.Cells[2].Text.Trim()); // EmployeeName
+                    attendeeTypes.Add(row.Cells[1].Text.Trim()); // Attendee_Type
                     designations.Add(row.Cells[5].Text.Trim()); // Designation
-                    gatePassNos.Add(row.Cells[3].Text.Trim()); // Gate Pass No
+                    gatePassNos.Add(row.Cells[4].Text.Trim()); // Gate Pass No
+                    Image imgControl = (Image)row.FindControl("imgPreview");
+                    if (imgControl != null && !string.IsNullOrEmpty(imgControl.ImageUrl))
+                    {
+                        imagePaths.Add(imgControl.ImageUrl);
+                    }
                 }
 
                 // Convert lists to comma-separated strings
@@ -241,16 +270,9 @@ namespace AnmolDristi
                 string strAttendeeTypes = string.Join(",", attendeeTypes);
                 string strDesignations = string.Join(",", designations);
                 string strGatePassNos = string.Join(",", gatePassNos);
+                string strImagePaths = string.Join(",", imagePaths);
 
-                byte[] imageBytes = null;
-                if (imgupload.HasFile)
-                {
-                    using (System.IO.BinaryReader br = new System.IO.BinaryReader(imgupload.PostedFile.InputStream))
-                    {
-                        imageBytes = br.ReadBytes(imgupload.PostedFile.ContentLength);
-                    }
-                }
-
+                
                 // Database connection
                 string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
                 using (SqlConnection conn = new SqlConnection(connString))
@@ -268,16 +290,9 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@Attendee_Type", strAttendeeTypes);
                         cmd.Parameters.AddWithValue("@Designation", strDesignations);
                         cmd.Parameters.AddWithValue("@Gate_passno", strGatePassNos);
+                        cmd.Parameters.Add("@Image_upload", SqlDbType.NVarChar).Value = strImagePaths;
 
-                        if (imageBytes != null)
-                        {
-                            cmd.Parameters.Add("@Image_upload", SqlDbType.VarBinary).Value = imageBytes;
-                        }
-                        else
-                        {
-                            cmd.Parameters.Add("@Image_upload", SqlDbType.VarBinary).Value = DBNull.Value;
-                        }
-
+                       
                         int rowsInserted = cmd.ExecuteNonQuery();
                         if (rowsInserted > 0)
                         {

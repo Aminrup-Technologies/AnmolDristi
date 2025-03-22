@@ -555,6 +555,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Button btnAddAttendees;
 
         /// <summary>
+        /// lblMsg1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMsg1;
+
+        /// <summary>
         /// pnlAttendeeTable control.
         /// </summary>
         /// <remarks>
