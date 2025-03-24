@@ -166,9 +166,30 @@
         }
 
         function toggleFassaiNoLogoRemarksDiv(radioButtonList) {
-            console.log("toggleTasteFlavorRemarksDiv function called");
+            console.log("toggleFassaiNoLogoRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("FassaiNoLogoRemarksDiv");
+            console.log("Selected value: " + selectedValue);
+            if (selectedValue === "0") {
+                remarksDiv.style.display = "block";
+                setTimeout(function () {
+                    // Display a PNotify notification
+                    new PNotify({
+                        title: 'A Mail will be sent',
+                        text: 'You have selected "Not Ok". Please provide additional remarks.',
+                        type: 'warning',
+                        styling: 'bootstrap3'
+                    });
+                }, 200); // Adjust delay as necessary
+            } else {
+                remarksDiv.style.display = "none";
+            }
+        }
+
+        function toggleBBDateYesNoRemarksDiv(radioButtonList) {
+            console.log("toggleBBDateYesNoRemarksDiv function called");
+            var selectedValue = radioButtonList.querySelector("input:checked").value;
+            var remarksDiv = document.getElementById("BBDateYesNoRemarksDiv");
             console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
@@ -209,7 +230,7 @@
         }
 
         function toggleManufNameAddRemarksDiv(radioButtonList) {
-            console.log("toggleTasteFlavorRemarksDiv function called");
+            console.log("toggleManufNameAddRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("ManufNameAddRemarksDiv");
             console.log("Selected value: " + selectedValue);
@@ -720,10 +741,10 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_ChallanDate" runat="server" AssociatedControlID="TB_ChallanDate" Text="Challan Date :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_ChallanDate" runat="server" ErrorMessage="Date is required " ValidationGroup="Submit" ControlToValidate="TB_ChallanDate" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_ChallanDate" runat="server" 
-                                        ControlToValidate="TB_ChallanDate" ValidationGroup="Submit" ForeColor="Red" 
-                                        ErrorMessage="Enter valid dates in DD-MM-YYYY format, separated by commas" 
-                                        ValidationExpression="^(\d{2}-\d{2}-\d{4})(,\s*\d{2}-\d{2}-\d{4})*$" 
+                                    <asp:RegularExpressionValidator ID="REV_TB_ChallanDate" runat="server"
+                                        ControlToValidate="TB_ChallanDate" ValidationGroup="Submit" ForeColor="Red"
+                                        ErrorMessage="Enter valid dates in DD-MM-YYYY format, separated by commas"
+                                        ValidationExpression="^(\d{2}-\d{2}-\d{4})(,\s*\d{2}-\d{2}-\d{4})*$"
                                         Display="Dynamic">
                                     </asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
@@ -746,10 +767,10 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_Mfg" runat="server" AssociatedControlID="TB_Mfg" Text=" Mfg. Date :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_Mfg" runat="server" ErrorMessage="Date is required " ValidationGroup="Submit" ControlToValidate="TB_Mfg" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_Dates" runat="server" 
-                                        ControlToValidate="TB_Mfg" ValidationGroup="Submit" ForeColor="Red" 
-                                        ErrorMessage="Enter valid dates in DD-MM-YYYY format, separated by commas" 
-                                        ValidationExpression="^(\d{2}-\d{2}-\d{4})(,\s*\d{2}-\d{2}-\d{4})*$" 
+                                    <asp:RegularExpressionValidator ID="REV_TB_Dates" runat="server"
+                                        ControlToValidate="TB_Mfg" ValidationGroup="Submit" ForeColor="Red"
+                                        ErrorMessage="Enter valid dates in DD-MM-YYYY format, separated by commas"
+                                        ValidationExpression="^(\d{2}-\d{2}-\d{4})(,\s*\d{2}-\d{2}-\d{4})*$"
                                         Display="Dynamic">
                                     </asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
@@ -801,8 +822,8 @@
 
                             <div class="col-md-3" id="ManufNameAddDIV" runat="server">
                                 <div class="mb-3">
-                                    <asp:RequiredFieldValidator ID="RFV_RBL_ManufNameAdd" runat="server" ValidationGroup="Submit" ErrorMessage="*" ForeColor="Red" ControlToValidate="RBL_ManufNameAdd" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <asp:Label ID="Label_ManufNameAdd" runat="server" AssociatedControlID="RBL_ManufNameAdd" Text="Manufacturer Name/Address : (In clear readable form)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_RBL_ManufNameAdd" runat="server" ValidationGroup="Submit" ErrorMessage="*" ForeColor="Red" ControlToValidate="RBL_ManufNameAdd" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:RadioButtonList ID="RBL_ManufNameAdd" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleManufNameAddRemarksDiv(this);">
                                             <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
@@ -846,6 +867,28 @@
                             </div>
 
 
+                            <div class="col-md-3" id="BBDateYesNoDIV" runat="server">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_BBDateYesNo" runat="server" AssociatedControlID="RBL_BBDateYesNo" Text="Best Before Date:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_BBDateYesNo" runat="server" ValidationGroup="Submit" ErrorMessage="*" ForeColor="Red" ControlToValidate="RBL_BBDateYesNo" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <div class="input-group-sm">
+                                        <asp:RadioButtonList ID="RBL_BBDateYesNo" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggleBBDateYesNoRemarksDiv(this);">
+                                            <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
+                                            <asp:ListItem Text="Not Ok" Value="0"></asp:ListItem>
+                                        </asp:RadioButtonList>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="BBDateYesNoRemarksDiv" style="display: none;">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_BBDateYesNoRemarks" runat="server" AssociatedControlID="TXB_BBDateYesNoRemarks" Text="Best Before Date (Not ok)" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_BBDateYesNoRemarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_BBDateYesNoRemarks" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TXB_BBDateYesNoRemarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="col-md-12" id="MfgNameDIV" runat="server">
                                 <div class="mb-12">
@@ -857,6 +900,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="col-md-6" id="BeforeDateDIV" runat="server">
                                 <div class="mb-6">
@@ -870,8 +914,8 @@
 
                             <div class="col-md-6" id="FssaiNoDIV" runat="server">
                                 <div class="mb-6">
-                                    <%--<asp:RequiredFieldValidator ID="RFV_TB_FssaiNo" runat="server" ErrorMessage="Input Required" ValidationGroup="Submit" ControlToValidate="TB_FssaiNo" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>--%>
                                     <asp:Label ID="Lbl_TB_FssaiNo" runat="server" AssociatedControlID="TB_FssaiNo" Text="FSSAI License No. : In clear readable form & must match with the material" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <%--<asp:RequiredFieldValidator ID="RFV_TB_FssaiNo" runat="server" ErrorMessage="Input Required" ValidationGroup="Submit" ControlToValidate="TB_FssaiNo" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>--%>
                                     <asp:RegularExpressionValidator ID="REV_TB_FssaiNo" runat="server" ControlToValidate="TB_FssaiNo" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Number Only 14 digit" Maxlength="14" ValidationExpression="^[1-9]\d*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_FssaiNo" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="FSAAI License No"></asp:TextBox>

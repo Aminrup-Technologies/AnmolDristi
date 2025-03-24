@@ -596,7 +596,7 @@ namespace AnmolDristi
 
             string materialName = DDL_Material.SelectedValue;
             string plantName = DDL_Plant.SelectedValue;
-            string line = DDL_Plant.SelectedValue;
+            //string line = DDL_PlantLine.SelectedValue;
 
             //string productBrand = DDL_ProductBrand.SelectedValue;
             string productBrand = TB_BrandName.Text.ToString();
@@ -646,6 +646,8 @@ namespace AnmolDristi
             string mfgNameyesnoRemarks = string.IsNullOrEmpty(TXB_ManufNameAdd_Remarks.Text) ? null : TXB_ManufNameAdd_Remarks.Text;
             string mfgName = string.IsNullOrEmpty(TB_MfgName.Text) ? null : TB_MfgName.Text;
 
+            int? bbdateyesno = string.IsNullOrEmpty(RBL_BBDateYesNo.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_BBDateYesNo.SelectedValue);
+            string bbdateyesnoRemarks = string.IsNullOrEmpty(TXB_BBDateYesNoRemarks.Text) ? null : TXB_BBDateYesNoRemarks.Text;
             DateTime? bbDate = string.IsNullOrEmpty(TB_BeforeDate.Text) ? (DateTime?)null : DateTime.Parse(TB_BeforeDate.Text).Date;
 
             int? fssaiyesno = string.IsNullOrEmpty(RBL_FassaiNoLogo.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_FassaiNoLogo.SelectedValue);
@@ -670,22 +672,22 @@ namespace AnmolDristi
             int? impurities = string.IsNullOrEmpty(RBL_Impurities.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Impurities.SelectedValue);
             string impuritiesRemarks = string.IsNullOrEmpty(TXB_Impurities_Remarks.Text) ? null : TXB_Impurities_Remarks.Text;
 
-            decimal? moisture = !string.IsNullOrWhiteSpace(TB_Moisture.Text) ? Convert.ToDecimal(TB_Moisture.Text) : (decimal?)null;
+            decimal? moisture = !string.IsNullOrEmpty(TB_Moisture.Text) ? Convert.ToDecimal(TB_Moisture.Text) : (decimal?)null;
             string moistureRemarks = string.IsNullOrEmpty(TXB_Moisture_Remarks.Text) ? null : TXB_Moisture_Remarks.Text;
 
-            decimal? ash = !string.IsNullOrWhiteSpace(TB_TotalAsh.Text) ? Convert.ToDecimal(TB_TotalAsh.Text) : (decimal?)null;
+            decimal? ash = !string.IsNullOrEmpty(TB_TotalAsh.Text) ? Convert.ToDecimal(TB_TotalAsh.Text) : (decimal?)null;
             string ashRemarks = string.IsNullOrEmpty(TXB_Ash_Remarks.Text) ? null : TXB_Ash_Remarks.Text;
 
-            decimal? insolubleAsh = !string.IsNullOrWhiteSpace(TB_InsolubleAsh.Text) ? Convert.ToDecimal(TB_InsolubleAsh.Text) : (decimal?)null;
+            decimal? insolubleAsh = !string.IsNullOrEmpty(TB_InsolubleAsh.Text) ? Convert.ToDecimal(TB_InsolubleAsh.Text) : (decimal?)null;
             string insolubleAshRemarks = string.IsNullOrEmpty(TXB_InsolubleAsh_Remarks.Text) ? null : TXB_InsolubleAsh_Remarks.Text;
 
-            decimal? glutentContent = !string.IsNullOrWhiteSpace(TB_GlutentContent.Text) ? Convert.ToDecimal(TB_GlutentContent.Text) : (decimal?)null;
+            decimal? glutentContent = !string.IsNullOrEmpty(TB_GlutentContent.Text) ? Convert.ToDecimal(TB_GlutentContent.Text) : (decimal?)null;
             string glutentContentRemarks = string.IsNullOrEmpty(TXB_GlutentContent_Remarks.Text) ? null : TXB_GlutentContent_Remarks.Text;
 
-            decimal? alcoholicAcidity = !string.IsNullOrWhiteSpace(TB_AlcoholicAcidity.Text) ? Convert.ToDecimal(TB_AlcoholicAcidity.Text) : (decimal?)null;
+            decimal? alcoholicAcidity = !string.IsNullOrEmpty(TB_AlcoholicAcidity.Text) ? Convert.ToDecimal(TB_AlcoholicAcidity.Text) : (decimal?)null;
             string alcoholicAcidityRemarks = string.IsNullOrEmpty(TXB_AlcoholicAcidity_Remarks.Text) ? null : TXB_AlcoholicAcidity_Remarks.Text;
 
-            decimal? absorption = !string.IsNullOrWhiteSpace(TB_Absorption.Text) ? Convert.ToDecimal(TB_Absorption.Text) : (decimal?)null;
+            decimal? absorption = !string.IsNullOrEmpty(TB_Absorption.Text) ? Convert.ToDecimal(TB_Absorption.Text) : (decimal?)null;
             string absorptionRemarks = string.IsNullOrEmpty(TXB_Absorption_Remarks.Text) ? null : TXB_Absorption_Remarks.Text;
 
             int? sediment = string.IsNullOrEmpty(TB_Sedimentation.Text) ? (int?)null : Convert.ToInt32(TB_Sedimentation.Text);
@@ -694,16 +696,16 @@ namespace AnmolDristi
             int? grittiness = string.IsNullOrEmpty(RBL_Grittiness.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Grittiness.SelectedValue);
             string grittinessRemarks = string.IsNullOrEmpty(TXB_Grittiness_Remarks.Text) ? null : TXB_Grittiness_Remarks.Text;
 
-            decimal? germ = !string.IsNullOrWhiteSpace(TB_Acidity.Text) ? Convert.ToDecimal(TB_Acidity.Text) : (decimal?)null;
+            decimal? germ = !string.IsNullOrEmpty(TB_Acidity.Text) ? Convert.ToDecimal(TB_Acidity.Text) : (decimal?)null;
             string germRemarks = string.IsNullOrEmpty(TXB_Acidity_Remarks.Text) ? null : TXB_Acidity_Remarks.Text;
 
-            decimal? granularity = !string.IsNullOrWhiteSpace(TB_Granularity.Text) ? Convert.ToDecimal(TB_Granularity.Text) : (decimal?)null;
+            decimal? granularity = !string.IsNullOrEmpty(TB_Granularity.Text) ? Convert.ToDecimal(TB_Granularity.Text) : (decimal?)null;
             string granularityRemarks = string.IsNullOrEmpty(TXB_Granularity_Remarks.Text) ? null : TXB_Granularity_Remarks.Text;
 
-            decimal? granularityRetention = !string.IsNullOrWhiteSpace(TB_GranularityRetention.Text) ? Convert.ToDecimal(TB_GranularityRetention.Text) : (decimal?)null;
+            decimal? granularityRetention = !string.IsNullOrEmpty(TB_GranularityRetention.Text) ? Convert.ToDecimal(TB_GranularityRetention.Text) : (decimal?)null;
             string granularityRetentionRemarks = string.IsNullOrEmpty(TXB_GranularityRetention_Remarks.Text) ? null : TXB_GranularityRetention_Remarks.Text;
 
-            decimal? retention = !string.IsNullOrWhiteSpace(TB_Retention.Text) ? Convert.ToDecimal(TB_Retention.Text) : (decimal?)null;
+            decimal? retention = !string.IsNullOrEmpty(TB_Retention.Text) ? Convert.ToDecimal(TB_Retention.Text) : (decimal?)null;
             string retentionRemarks = string.IsNullOrEmpty(TXB_Retention_Remarks.Text) ? null : TXB_Retention_Remarks.Text;
 
             string bromate = string.IsNullOrEmpty(TB_Bromate.Text) ? null : TB_Bromate.Text;
@@ -740,7 +742,7 @@ namespace AnmolDristi
 
                         command.Parameters.AddWithValue("@MaterialName", materialName);
                         command.Parameters.AddWithValue("@PlantName", plantName);
-                        command.Parameters.AddWithValue("@Line", line);
+                        //command.Parameters.AddWithValue("@Line", line);
                         command.Parameters.AddWithValue("@ProductBrand", productBrand);
 
                         command.Parameters.AddWithValue("@Quantity", (object)quantity ?? DBNull.Value);
@@ -768,6 +770,8 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@MfgYesNoRemarks", (object)mfgNameyesnoRemarks ?? DBNull.Value);
                         command.Parameters.AddWithValue("@MfgName", (object)mfgName ?? DBNull.Value);
 
+                        command.Parameters.AddWithValue("@BBDateYesNo", (object)bbdateyesno ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@BBDateYesNoRemarks", (object)bbdateyesnoRemarks ?? DBNull.Value);
                         command.Parameters.AddWithValue("@BeforeDate", (object)bbDate ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@fssaiYesNo", (object)fssaiyesno ?? DBNull.Value);
@@ -894,7 +898,13 @@ namespace AnmolDristi
             TB_FssaiNo.ReadOnly = true;
 
             RBL_ManufNameAdd.Enabled = false;
+            TXB_ManufNameAdd_Remarks.ReadOnly = true;
+
             RBL_FassaiNoLogo.Enabled = false;
+            TXB_FassaiNoLogo_Remarks.ReadOnly = true;
+
+            RBL_BBDateYesNo.Enabled = false;
+            TXB_BBDateYesNoRemarks.ReadOnly = true;
 
             RBL_Fssai_Logo.Enabled = false;
             RBL_Veg_Logo.Enabled = false;
@@ -994,6 +1004,17 @@ namespace AnmolDristi
         {
             switch (fieldName)
             {
+                case "BestBeforeDate":
+
+                    BeforeDateDIV.Visible = criteria.IsVisible;
+
+                    RFV_TB_BeforeDate.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_BeforeDate.Enabled = criteria.IsRequired;
+
+                    TB_BeforeDate.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    break;
+
                 case "MoistureValue":
 
                     MoistureDIV.Visible = criteria.IsVisible;
