@@ -12,7 +12,7 @@ namespace AnmolDristi
         {
         }
 
-        protected void btnSubmit(object sender, EventArgs e)
+        protected void BtnSubmit(object sender, EventArgs e)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             DateTime time_stamp = DateTime.Now; // time_stamp stores the current date and time (if needed).
