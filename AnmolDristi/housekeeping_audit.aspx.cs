@@ -7,6 +7,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
+using System.Web.Script.Serialization;
+
 
 namespace AnmolDristi
 {
@@ -15,161 +18,235 @@ namespace AnmolDristi
         private int slNo = 1;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                ViewState["SerialNumber"] = 1; // Initialize Serial Number
-            }
+            
         }
+       
         protected void btnAddObservation_Click(object sender, EventArgs e)
         {
-            // Retrieve Serial Number from ViewState
-            int serialNo = (int)ViewState["SerialNumber"];
+            DataTable dt;
 
-            TableRow row = new TableRow();
+            // Check if ViewState already holds data
+            if (ViewState["Observations"] == null)
+            {
+                dt = new DataTable();
+                dt.Columns.Add("SNo");
+                dt.Columns.Add("ObserverID");
+                dt.Columns.Add("OpeningDate");
+                dt.Columns.Add("OpenBy");
+                dt.Columns.Add("ImagePath1");
+                dt.Columns.Add("Observation");
+                dt.Columns.Add("CorrectiveAction");
+                dt.Columns.Add("ImagePath2");
+                dt.Columns.Add("ClosingDate");
+                dt.Columns.Add("CloseBy");
+                dt.Columns.Add("Status");
+            }
+            else
+            {
+                dt = (DataTable)ViewState["Observations"];
+            }
 
-            // Sl. No (Auto-Increment)
-            TableCell cell1 = new TableCell();
-            cell1.Text = serialNo.ToString();
-            row.Cells.Add(cell1);
-
-            // Before Photo (Save & Show Filename)
-            TableCell cell2 = new TableCell();
+            string imagePath = "";
             if (fileBeforePhoto.HasFile)
             {
-                string filePath = "~/Uploads/" + fileBeforePhoto.FileName;
-                fileBeforePhoto.SaveAs(Server.MapPath(filePath));
-                cell2.Text = $"<a href='{filePath}' target='_blank'>View</a>";
+                string fileExtension = Path.GetExtension(fileBeforePhoto.FileName).ToLower();
+                if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
+                {
+                    lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
+                    lblMsg1.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
+
+                string folderPath = Server.MapPath("~/Uploads/");
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                string fileName = Path.GetFileName(fileBeforePhoto.FileName);
+                imagePath = "~/Uploads/" + fileName;
+                fileBeforePhoto.SaveAs(folderPath + fileName);
             }
-            else
+            if (fileAfterPhoto.HasFile)
             {
-                cell2.Text = "No File";
+                string fileExtension = Path.GetExtension(fileAfterPhoto.FileName).ToLower();
+                if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
+                {
+                    lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
+                    lblMsg1.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
+
+                string folderPath = Server.MapPath("~/Uploads/");
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                string fileName = Path.GetFileName(fileAfterPhoto.FileName);
+                imagePath = "~/Uploads/" + fileName;
+                fileAfterPhoto.SaveAs(folderPath + fileName);
             }
-            row.Cells.Add(cell2);
-
-            // Observation
-            TableCell cell3 = new TableCell();
-            cell3.Text = txtObservation.Text;
-            row.Cells.Add(cell3);
 
 
-            // Corrective Action
-            TableCell cell4 = new TableCell();
-            cell4.Text = txtCorrectiveAction.Text;
-            row.Cells.Add(cell4);
 
-            // Status Photo (Save & Show Filename)
-            TableCell cell5 = new TableCell();
-            if (fileuploadStatus.HasFile)
-            {
-                string filePath = "~/Uploads/" + fileuploadStatus.FileName;
-                fileuploadStatus.SaveAs(Server.MapPath(filePath));
-                cell5.Text = $"<a href='{filePath}' target='_blank'>View</a>";
-            }
-            else
-            {
-                cell5.Text = "No File";
-            }
-            row.Cells.Add(cell5);
+            // Generating SNo dynamically
+            int serialNo = dt.Rows.Count + 1;
 
-            // Add Row to Table
-            tblObservations.Rows.Add(row);
+            // Create a new row and add data
+            DataRow dr = dt.NewRow();
+            dr["SNo"] = serialNo;
+            dr["ObserverID"]=txtObserverID.Text.Trim();
+            dr["OpeningDate"] = txtOpeningDate.Text.Trim();
+            dr["OpenBy"] = txtOpenBy.Text.Trim();
+            dr["ImagePath1"] = imagePath;
+            dr["Observation"] = txtObservation.Text.Trim();
+            dr["CorrectiveAction"] = txtCorrectiveAction.Text.Trim();
+            dr["ImagePath2"] = imagePath;
+            dr["ClosingDate"] = txtClosingDate.Text.Trim();
+            dr["CloseBy"] = txtCloseBy.Text.Trim();
+            dr["Status"] = ddlStatus.SelectedValue;
 
-            // Increment Serial Number and Store in ViewState
-            serialNo++;
-            ViewState["SerialNumber"] = serialNo;
+            dt.Rows.Add(dr);
 
-            // Clear Fields
+            // Save data in ViewState and bind to GridView
+            ViewState["Observations"] = dt;
+            gvObservations.DataSource = dt;
+            gvObservations.DataBind();
+
+            // Clear input fields after adding an observation
+            txtObserverID.Text = "";
+            txtOpeningDate.Text = "";
+            txtOpenBy.Text = "";
             txtObservation.Text = "";
             txtCorrectiveAction.Text = "";
+            txtClosingDate.Text = "";
+            txtCloseBy.Text = "";
+            ddlStatus.SelectedIndex = 0;
+            ScriptManager.RegisterStartupScript(this, GetType(), "clearFileInputs", "clearFileInputs();", true);
         }
-        //protected void BtnSubmit_Click(object sender, EventArgs e)
-        //{
-        //    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
-        //    string Title = "Housekeeping Audit (5S)";
-        //    string Location = txtLocation.Text;
-        //    DateTime AuditDate = Convert.ToDateTime(txtdate.Text);
-        //    string ObservationText = txtObservation.Text;
-        //    string CorrectiveAction = txtCorrectiveAction.Text;
+        private byte[] ConvertImageToByte(string imagePath)
+        {
+            if (string.IsNullOrEmpty(imagePath) || imagePath == "NULL")
+                return null;
 
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        conn.Open();
-        //        SqlTransaction transaction = conn.BeginTransaction();
+            string fullPath = Server.MapPath(imagePath); // Convert relative path to absolute
 
-        //        try
-        //        {
-        //            int AuditID;
-        //            using (SqlCommand cmd = new SqlCommand("InsertAuditInfo", conn, transaction))
-        //            {
-        //                cmd.CommandType = CommandType.StoredProcedure;
-        //                SqlParameter outputAuditID = new SqlParameter("@AuditID", SqlDbType.Int)
-        //                {
-        //                    Direction = ParameterDirection.Output
-        //                };
+            if (File.Exists(fullPath))
+            {
+                return File.ReadAllBytes(fullPath); // Convert image to byte array
+            }
 
-        //                cmd.Parameters.Add(outputAuditID);
-        //                cmd.Parameters.AddWithValue("@Title", Title);
-        //                cmd.Parameters.AddWithValue("@Location", Location);
-        //                cmd.Parameters.AddWithValue("@AuditDate", AuditDate);
-
-        //                cmd.ExecuteNonQuery();
-        //                AuditID = Convert.ToInt32(outputAuditID.Value);
-        //            }
+            return null;
+        }
 
 
 
-        //             using (SqlCommand cmd = new SqlCommand("InsertAuditObservation", conn, transaction))
-        //                {
-        //                    cmd.CommandType = CommandType.StoredProcedure;
 
-        //                    cmd.Parameters.AddWithValue("@AuditID", AuditID);
-        //                    cmd.Parameters.AddWithValue("@ObserverID", 1); // Change as per actual observer ID
-        //                    cmd.Parameters.AddWithValue("@ObservationText", );
-        //                    cmd.Parameters.AddWithValue("@CorrectiveAction",);
+        protected void BtnSubmit_Click(object sender, EventArgs e)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
-        //                //Convert images to VARBINARY
-        //                //    byte[] photoBefore = FileToByteArray(Server.MapPath());
-        //                //byte[] statusPhoto = FileToByteArray(Server.MapPath(row.Cells[5].Text));
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlTransaction transaction = conn.BeginTransaction();
+                try
+                {
+                    int auditID;
 
-        //                //cmd.Parameters.AddWithValue("@PhotoBefore", photoBefore ?? (object)DBNull.Value);
-        //                //cmd.Parameters.AddWithValue("@Status", statusPhoto ?? (object)DBNull.Value);
+                    // Step 1: Insert into AuditInfo Table
+                    using (SqlCommand cmd = new SqlCommand("InsertAuditInfo", conn, transaction))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-        //                cmd.ExecuteNonQuery();
-        //             }
+                        SqlParameter outputAuditID = new SqlParameter("@AuditID", System.Data.SqlDbType.Int)
+                        {
+                            Direction = System.Data.ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(outputAuditID);
+                        cmd.Parameters.AddWithValue("@Location", txtLocation.Text.Trim());
+                        cmd.Parameters.AddWithValue("@AuditDate", Convert.ToDateTime(txtdate.Text.Trim()));
+
+                        cmd.ExecuteNonQuery();
+                        auditID = Convert.ToInt32(outputAuditID.Value);
+                        
+                    }
+
+                    if (auditID == 0)
+                    {
+                        transaction.Rollback();
+                        lblMsg.Text = "Error: Audit ID not generated.";
+                        lblMsg.ForeColor = System.Drawing.Color.Red;
+                        return;
+                    }
 
 
-        //        transaction.Commit();
-        //        lblMsg.Text = "Audit submitted successfully!";
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            transaction.Rollback();
-        //            lblMsg.Text = "Transaction failed: " + ex.Message;
-        //        }
-        //    }
+                    //using (SqlCommand cmd = new SqlCommand("InsertAuditObservation", conn, transaction))
+                    //{
+                    //    cmd.CommandType = CommandType.StoredProcedure;
 
-        //    // Clear form fields
-        //    txtLocation.Text = string.Empty;
-        //    txtdate.Text = DateTime.Now.ToString("yyyy-MM-dd");
-        //}
+                    //    cmd.Parameters.AddWithValue("@AuditID", auditID);
+                    //    cmd.Parameters.AddWithValue("@ObserverID", txtObserverID);
+                    //    cmd.Parameters.AddWithValue("@ObservationText",txtObservation ); 
+                    //    cmd.Parameters.AddWithValue("@CorrectiveAction", txtCorrectiveAction); 
+                    //    cmd.Parameters.AddWithValue("@Status", ddlStatus.SelectedValue);  
+                    //    cmd.Parameters.AddWithValue("@OpenBy", txtOpenBy); 
+                    //    cmd.Parameters.AddWithValue("@CloseBy", txtCloseBy);
+                    //    cmd.Parameters.AddWithValue("@ClosingDate", txtClosingDate);
+                    //    cmd.Parameters.AddWithValue("@OpeningDate", txtOpeningDate);
+                    //    cmd.Parameters.AddWithValue("@PhotoBefore", fileBeforePhoto);
+                    //    cmd.Parameters.AddWithValue("@PhotoAfter", fileAfterPhoto);
 
-        //private byte[] FileToByteArray(string filePath)
-        //{
-        //    if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-        //    {
-        //        return File.ReadAllBytes(filePath);
-        //    }
-        //    return null;
-        //}
+                    //    cmd.ExecuteNonQuery();
+                    //}
+                    foreach (GridViewRow row in gvObservations.Rows)
+                    {
+                        using (SqlCommand cmd = new SqlCommand("InsertAuditObservation", conn, transaction))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            // Convert image paths to VARBINARY
+                            byte[] photoBefore = ConvertImageToByte(row.Cells[4].Text);
+                            byte[] photoAfter = ConvertImageToByte(row.Cells[7].Text);
+
+                            cmd.Parameters.AddWithValue("@AuditID", auditID);
+                            cmd.Parameters.AddWithValue("@ObserverID", row.Cells[1].Text);
+                            cmd.Parameters.AddWithValue("@PhotoBefore", (object)photoBefore ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@ObservationText", row.Cells[5].Text);
+                            cmd.Parameters.AddWithValue("@CorrectiveAction", row.Cells[6].Text);
+                            cmd.Parameters.AddWithValue("@PhotoAfter", (object)photoAfter ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@Status", row.Cells[10].Text);
+                            cmd.Parameters.AddWithValue("@OpenBy", row.Cells[3].Text);
+                            cmd.Parameters.AddWithValue("@CloseBy", row.Cells[9].Text);
+                            cmd.Parameters.AddWithValue("@ClosingDate", row.Cells[8].Text == "" ? DBNull.Value : (object)Convert.ToDateTime(row.Cells[8].Text));
+                            cmd.Parameters.AddWithValue("@OpeningDate", row.Cells[2].Text == "" ? DBNull.Value : (object)Convert.ToDateTime(row.Cells[2].Text));
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+
+
+
+                    transaction.Commit();
+                    lblMsg.Text = "Transaction completed successfully!";
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    lblMsg.Text = "Transaction failed: " + ex.Message;
+                    throw new Exception("Transaction failed", ex);
+                }
+            }
+
+
+        }
+        
         protected void BtnReset_Click(object sender, EventArgs e)
         {
             Response.Redirect("housekeeping_audit.aspx");
         }
-        //protected void btnaddObservation(object sender , EventArgs e)
-        //{
-
-        //}
+        
     }
     
 }

@@ -25,22 +25,7 @@
                           </div>
                         <div class="x_content">
 
-                          <div class="col-md-3">
-      <div class="mb-3">
-          <asp:Label ID="lbl_HandSleeves" runat="server" AssociatedControlID="rbl_HandSleeves" Text="Hand Sleeves" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-          <asp:RequiredFieldValidator ID="RFV_rbl_HandSleeves" runat="server" ErrorMessage="Select any option" ValidationGroup="Submit" ControlToValidate="rbl_HandSleeves" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-
-          <div class="input-group-sm rmv_border">
-              <asp:RadioButtonList ID="rbl_HandSleeves" runat="server" CssClass="form-control form-control-sm rounded" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="3" Width="100%" onchange="toggle_HandSleeves(this);">
-                  <asp:ListItem Text="NEW" Value="1"></asp:ListItem>
-                  <asp:ListItem Text="OK" Value="2"></asp:ListItem>
-                  <asp:ListItem Text="NOT OKAY" Value="0"></asp:ListItem>
-              </asp:RadioButtonList>
-
-          </div>
-
-      </div>
-  </div>
+                        
                            
                         </div>
                     </div>

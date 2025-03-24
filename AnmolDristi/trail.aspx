@@ -439,42 +439,103 @@
                           <asp:BoundField DataField="SLNO" HeaderText="SL.NO" />
                           <asp:TemplateField HeaderText="Agenda Title">
                               <ItemTemplate>
+                                  <asp:Label ID="lbl_txtAgendaTitle" runat="server" AssociatedControlID="txtAgendaTitle"  ></asp:Label>
+                                   <asp:RequiredFieldValidator ID="RFV_txtAgendaTitle" runat="server" ErrorMessage="*" ControlToValidate="txtAgendaTitle" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                   <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Bind("AgendaTitle") %>'></asp:TextBox>
                               </ItemTemplate>
                           </asp:TemplateField>
+                          <asp:TemplateField HeaderText="Discussed By Code">
+    <ItemTemplate>
+        <asp:Label ID="lbl_txtDiscussedByCode" runat="server" AssociatedControlID="txtDiscussedByCode"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtDiscussedByCode" runat="server" ErrorMessage="*" ControlToValidate="txtDiscussedByCode" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>  
+        <asp:TextBox ID="txtDiscussedByCode" runat="server" Text='<%# Bind("DiscussedByCode") %>'></asp:TextBox>
+    </ItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Discussion Type">
+    <ItemTemplate>
+        <asp:Label ID="lbl_ddlDiscussionType" runat="server" AssociatedControlID="ddlDiscussionType"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_ddlDiscussionType" runat="server" ErrorMessage="*" ControlToValidate="ddlDiscussionType" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>  
+        <asp:DropDownList ID="ddlDiscussionType" runat="server">
+            <asp:ListItem Text="Select" Value="" />
+            <asp:ListItem Text="Technical" Value="Technical" />
+            <asp:ListItem Text="Operational" Value="Operational" />
+            <asp:ListItem Text="Compliance" Value="Compliance" />
+        </asp:DropDownList>
+    </ItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Company">
+    <ItemTemplate>
+        <asp:Label ID="lbl_ddlCompanyCode" runat="server" AssociatedControlID="ddlCompanyCode"></asp:Label>
+         <asp:RequiredFieldValidator ID="RFV_ddlCompanyCode" runat="server" ErrorMessage="*" ControlToValidate="ddlCompanyCode" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>  
+        <asp:DropDownList ID="ddlCompanyCode" runat="server">
+            <asp:ListItem Text="Select" Value="" />
+            <asp:ListItem Text="Company A" Value="Company A" />
+            <asp:ListItem Text="Company B" Value="Comapany B" />
+            <asp:ListItem Text="Company C" Value="Comapany C" />
+        </asp:DropDownList>
+    </ItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Department">
+    <ItemTemplate>
+         <asp:Label ID="lbl_ddlDeptCode" runat="server" AssociatedControlID="ddlDeptCode"></asp:Label>
+         <asp:RequiredFieldValidator ID="RFV_ddlDeptCode" runat="server" ErrorMessage="*" ControlToValidate="ddlDeptCode" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>  
+         <asp:DropDownList ID="ddlDeptCode" runat="server">
+            <asp:ListItem Text="Select" Value="" />
+            <asp:ListItem Text="Finance" Value="Finance" />
+             <asp:ListItem Text="Mananger" Value="Manager" />
+            <asp:ListItem Text="Developer" Value="Developer" />
+        </asp:DropDownList>
+    </ItemTemplate>
+</asp:TemplateField>
+
                           <asp:TemplateField HeaderText="Point By">
                               <ItemTemplate>
+                                  <asp:Label ID="lbl_txtPointBy" runat="server" AssociatedControlID="txtPointBy"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_txtPointBy" runat="server" ErrorMessage="*" ControlToValidate="txtPointBy" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>                      
                                   <asp:TextBox ID="txtPointBy" runat="server" Text='<%# Bind("PointBy") %>'></asp:TextBox>
                               </ItemTemplate>
                           </asp:TemplateField>
                           <asp:TemplateField HeaderText="Agenda Point Description">
                               <ItemTemplate>
+                                  <asp:Label ID="lbl_txtAgendaDesc" runat="server" AssociatedControlID="txtAgendaDesc"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_txtAgendaDesc" runat="server" ErrorMessage="*" ControlToValidate="txtAgendaDesc" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>                                  
                                   <asp:TextBox ID="txtAgendaDesc" runat="server" Text='<%# Bind("AgendaPointDescription") %>'></asp:TextBox>
                               </ItemTemplate>
                           </asp:TemplateField>
                           <asp:TemplateField HeaderText="Duration">
                               <ItemTemplate>
+                                  <asp:Label ID="lbl_txtDuration" runat="server" AssociatedControlID="txtDuration"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_txtDuration" runat="server" ErrorMessage="*" ControlToValidate="txtDuration" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>                                  
                                   <asp:TextBox ID="txtDuration" runat="server" Text='<%# Bind("Duration") %>'></asp:TextBox>
                               </ItemTemplate>
                           </asp:TemplateField>
                           <asp:TemplateField HeaderText="Ref. Photograph (Before)">
                               <ItemTemplate>
+                                  <asp:Label ID="lbl_fuPhotoBefore" runat="server" AssociatedControlID="fuPhotoBefore"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_fuPhotoBefore" runat="server" ErrorMessage="*" ControlToValidate="fuPhotoBefore" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>                                  
                                   <asp:FileUpload ID="fuPhotoBefore" runat="server" />
                               </ItemTemplate>
                           </asp:TemplateField>
                           <asp:TemplateField HeaderText="Agenda Point Detailed Description (After)">
                               <ItemTemplate>
+                                  <asp:Label ID="lbl_txtAgendaDescAfter" runat="server" AssociatedControlID="txtAgendaDescAfter"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_txtAgendaDescAfter" runat="server" ErrorMessage="*" ControlToValidate="txtAgendaDescAfter" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                   <asp:TextBox ID="txtAgendaDescAfter" runat="server" Text='<%# Bind("AgendaPointAfter") %>'></asp:TextBox>
                               </ItemTemplate>
                           </asp:TemplateField>
                           <asp:TemplateField HeaderText="Ref. Photograph (After)">
                               <ItemTemplate>
+                                  <asp:Label ID="lbl_fuPhotoAfter" runat="server" AssociatedControlID="fuPhotoAfter"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_fuPhotoAfter" runat="server" ErrorMessage="*" ControlToValidate="fuPhotoAfter" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>                                 
                                   <asp:FileUpload ID="fuPhotoAfter" runat="server" />
                               </ItemTemplate>
                           </asp:TemplateField>
                           <asp:TemplateField HeaderText="Action">
                               <ItemTemplate>
-                                  <asp:Button ID="btnAddMore" runat="server" CssClass="btn btn-primary btn-sm" CommandName="AddMore" Text="Add More" />
+                                  <asp:Button ID="btnAddMore" runat="server" CssClass="btn btn-primary btn-sm" ValidationGroup="ADD" CommandName="AddMore" Text="Add More" OmClick="btnAddMore_Click" />
                                   <asp:Button ID="btnRemove" runat="server" CssClass="btn btn-danger btn-sm" CommandName="Remove" CommandArgument='<%# Container.DataItemIndex %>' Text="Remove" OnClientClick="return confirm('Are you sure you want to remove this row?');" />
                               </ItemTemplate>
                           </asp:TemplateField>

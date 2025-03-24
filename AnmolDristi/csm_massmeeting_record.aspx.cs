@@ -20,8 +20,16 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-
                 InitializeGrid();
+            }
+            RestoreUploadedFiles();
+        }
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+            if (ViewState["GridViewData"] != null)
+            {
+                GridView1.DataSource = ViewState["GridViewData"];
+                GridView1.DataBind();
             }
         }
 
@@ -30,6 +38,10 @@ namespace AnmolDristi
             DataTable dt = new DataTable();
             dt.Columns.Add("SLNO");
             dt.Columns.Add("AgendaTitle");
+            dt.Columns.Add("DiscussedByCode");
+            dt.Columns.Add("DiscussionType");
+            dt.Columns.Add("CompanyCode");
+            dt.Columns.Add("DeptCode");
             dt.Columns.Add("PointBy");
             dt.Columns.Add("AgendaPointDescription");
             dt.Columns.Add("Duration");
@@ -37,33 +49,75 @@ namespace AnmolDristi
             dt.Columns.Add("AgendaPointAfter");
             dt.Columns.Add("RefPhotoAfter");
 
-            // Add an empty row to allow input
-            dt.Rows.Add("1", "", "", "", "", "", "", "");
-
+            dt.Rows.Add("1", "", "", "", "", "", "", "", "", "", "", "");
             ViewState["GridViewData"] = dt;
             GridView1.DataSource = dt;
             GridView1.DataBind();
         }
+        private void RestoreUploadedFiles()
+        {
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                FileUpload fuBefore = (FileUpload)row.FindControl("fuPhotoBefore");
+                FileUpload fuAfter = (FileUpload)row.FindControl("fuPhotoAfter");
+                Label lbl_fuPhotoBefore = (Label)row.FindControl("lbl_fuPhotoBefore");
+                Label lbl_fuPhotoAfter = (Label)row.FindControl("lbl_fuPhotoAfter");
+
+                if (Session["FileBefore_" + row.RowIndex] != null)
+                {
+                    lbl_fuPhotoBefore.Text = "Uploaded: " + Path.GetFileName(Session["FileBefore_" + row.RowIndex].ToString());
+                }
+
+                if (Session["FileAfter_" + row.RowIndex] != null)
+                {
+                    lbl_fuPhotoAfter.Text = "Uploaded: " + Path.GetFileName(Session["FileAfter_" + row.RowIndex].ToString());
+                }
+            }
+        }
+
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             DataTable dt = ViewState["GridViewData"] as DataTable;
             if (dt == null) return;
 
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                TextBox txtAgendaTitle = (TextBox)row.FindControl("txtAgendaTitle");
+                TextBox txtDiscussedByCode = (TextBox)row.FindControl("txtDiscussedByCode");
+                DropDownList ddlDiscussionType = (DropDownList)row.FindControl("ddlDiscussionType");
+                DropDownList ddlCompanyCode = (DropDownList)row.FindControl("ddlCompanyCode");
+                DropDownList ddlDeptCode = (DropDownList)row.FindControl("ddlDeptCode");
+                TextBox txtPointBy = (TextBox)row.FindControl("txtPointBy");
+                TextBox txtAgendaDesc = (TextBox)row.FindControl("txtAgendaDesc");
+                TextBox txtDuration = (TextBox)row.FindControl("txtDuration");
+                TextBox txtAgendaDescAfter = (TextBox)row.FindControl("txtAgendaDescAfter");
+
+                dt.Rows[row.RowIndex]["AgendaTitle"] = txtAgendaTitle.Text;
+                dt.Rows[row.RowIndex]["DiscussedByCode"] = txtDiscussedByCode.Text;
+                dt.Rows[row.RowIndex]["DiscussionType"] = ddlDiscussionType.SelectedValue;
+                dt.Rows[row.RowIndex]["CompanyCode"] = ddlCompanyCode.SelectedValue;
+                dt.Rows[row.RowIndex]["DeptCode"] = ddlDeptCode.SelectedValue;
+                dt.Rows[row.RowIndex]["PointBy"] = txtPointBy.Text;
+                dt.Rows[row.RowIndex]["AgendaPointDescription"] = txtAgendaDesc.Text;
+                dt.Rows[row.RowIndex]["Duration"] = txtDuration.Text;
+                dt.Rows[row.RowIndex]["AgendaPointAfter"] = txtAgendaDescAfter.Text;
+            }
+
             if (e.CommandName == "AddMore")
             {
                 int newSLNo = dt.Rows.Count + 1;
-                dt.Rows.Add(newSLNo.ToString(), "", "", "", "", "", "", "");
+                dt.Rows.Add(newSLNo.ToString(), "", "", "", "", "", "", "", "", "", "", "");
             }
             else if (e.CommandName == "Remove")
             {
                 int rowIndex = Convert.ToInt32(e.CommandArgument);
-                if (dt.Rows.Count > 1) // Ensure at least one row remains
+                if (dt.Rows.Count > 1)
                 {
                     dt.Rows.RemoveAt(rowIndex);
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        dt.Rows[i]["SLNO"] = (i + 1).ToString(); // Reorder SLNO
+                        dt.Rows[i]["SLNO"] = (i + 1).ToString();
                     }
                 }
             }
@@ -72,6 +126,35 @@ namespace AnmolDristi
             GridView1.DataSource = dt;
             GridView1.DataBind();
         }
+        protected void btnAddMore_Click(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                
+                FileUpload fuBefore = (FileUpload)row.FindControl("fuPhotoBefore");
+                TextBox txtBeforePath = (TextBox)row.FindControl("txtPhotoBeforePath");
+
+                FileUpload fuAfter = (FileUpload)row.FindControl("fuPhotoAfter");
+                TextBox txtAfterPath = (TextBox)row.FindControl("txtPhotoAfterPath");
+
+                if (fuBefore.HasFile)
+                {
+                    string filePathBefore = "~/Uploads/" + fuBefore.FileName; // Ensure you have this folder in your project
+                    fuBefore.SaveAs(Server.MapPath(filePathBefore));
+                    txtBeforePath.Text = filePathBefore;
+                }
+
+                if (fuAfter.HasFile)
+                {
+                    string filePathAfter = "~/Uploads/" + fuAfter.FileName;
+                    fuAfter.SaveAs(Server.MapPath(filePathAfter));
+                    txtAfterPath.Text = filePathAfter;
+                }
+            }
+            lblMsg1.Text = "Files uploaded and saved successfully!";
+            lblMsg1.ForeColor = System.Drawing.Color.Green;
+        }
+
         protected void btnsave1_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(DDL_WorkRegion.SelectedValue) ||
@@ -134,12 +217,130 @@ namespace AnmolDristi
                 }
             }
         }
-        
+
         protected void btnsave3_Click(object sender, EventArgs e)
         {
+            string meetingId = HiddenField_MMId.Value; // Retrieve MM_Id
+            
+            if (string.IsNullOrEmpty(meetingId) && ViewState["MM_Id"] != null)
+            {
+                meetingId = ViewState["MM_Id"].ToString();
+            }
 
+            if (string.IsNullOrEmpty(meetingId))
+            {
+                lbl_btnsave3.Text = "Error: Meeting ID is missing!";
+                lbl_btnsave3.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlTransaction transaction = conn.BeginTransaction(); // Use transaction for atomicity
+
+                try
+                {
+                    // Step 1: Retrieve RegionCode & LocationCode from Meeting Table
+                    string regionCode = "";
+                    string locationCode = "";
+
+                    string fetchQuery = @"SELECT RegionCode, LocationCode FROM csm_massmeting_records WHERE MM_Id = @MM_Id";
+                    using (SqlCommand fetchCmd = new SqlCommand(fetchQuery, conn, transaction))
+                    {
+                        fetchCmd.Parameters.AddWithValue("@MM_Id", meetingId);
+                        SqlDataReader reader = fetchCmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            regionCode = reader["RegionCode"].ToString();
+                            locationCode = reader["LocationCode"].ToString();
+                        }
+                        reader.Close();
+                    }
+
+
+                    foreach (GridViewRow row in GridView1.Rows)
+                    {
+                        string momId = Guid.NewGuid().ToString(); // Unique MOM_Id
+
+                        TextBox txtAgendaTitle = (TextBox)row.FindControl("txtAgendaTitle");
+                        TextBox txtDiscussedByCode = (TextBox)row.FindControl("txtDiscussedByCode");
+                        DropDownList ddlDiscussionType = (DropDownList)row.FindControl("ddlDiscussionType");
+                        DropDownList ddlDeptCode = (DropDownList)row.FindControl("ddlDeptCode");
+                        DropDownList ddlCompanyCode = (DropDownList)row.FindControl("ddlCompanyCode");
+                        TextBox txtPointBy = (TextBox)row.FindControl("txtPointBy");
+                        TextBox txtAgendaDesc = (TextBox)row.FindControl("txtAgendaDesc");
+                        TextBox txtAgendaDescAfter = (TextBox)row.FindControl("txtAgendaDescAfter");
+                        TextBox txtDuration = (TextBox)row.FindControl("txtDuration");
+
+                        FileUpload fuBefore = (FileUpload)row.FindControl("fuPhotoBefore");
+                        FileUpload fuAfter = (FileUpload)row.FindControl("fuPhotoAfter");
+
+                        string photoPathBefore = SaveFile(fuBefore);
+                        string photoPathAfter = SaveFile(fuAfter);
+
+                        string insertQuery = @"
+                    INSERT INTO csm_massmeting_mom 
+                    (MM_Id, MOM_Id, DiscussedByCode, AgendaTitle, PointBy,RegionCode, LocationCode, DiscussionType,DeptCode , CompanyCode, DiscussionDescription1, DiscussionDescription2, Duration, Ref_PhotoBefore, Ref_PhotoAfter, Ref_PhotoPathBefore, Ref_PhotoPathAfter)
+                    VALUES 
+                    (@MM_Id, @MOM_Id, @DiscussedByCode, @AgendaTitle, @PointBy, @RegionCode, @LocationCode, @DiscussionType, @DeptCode ,@CompanyCode, @DiscussionDescription1, @DiscussionDescription2, @Duration, @Ref_PhotoBefore, @Ref_PhotoAfter, @Ref_PhotoPathBefore, @Ref_PhotoPathAfter)";
+
+                        using (SqlCommand cmd = new SqlCommand(insertQuery, conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@MM_Id", meetingId);
+                            cmd.Parameters.AddWithValue("@MOM_Id", momId);
+                            cmd.Parameters.AddWithValue("@DiscussedByCode", txtDiscussedByCode.Text);
+                            cmd.Parameters.AddWithValue("@AgendaTitle", txtAgendaTitle.Text);
+                            cmd.Parameters.AddWithValue("@PointBy", txtPointBy.Text);
+                            cmd.Parameters.AddWithValue("@RegionCode", regionCode); // Retrieved from Meeting table
+                            cmd.Parameters.AddWithValue("@LocationCode", locationCode);// Retrieved from Meeting table
+                            cmd.Parameters.AddWithValue("@DiscussionType", ddlDiscussionType.SelectedValue);
+                            cmd.Parameters.AddWithValue("@CompanyCode", ddlCompanyCode.SelectedValue);
+                            cmd.Parameters.AddWithValue("@DeptCode", ddlDeptCode.SelectedValue);
+                            cmd.Parameters.AddWithValue("@DiscussionDescription1", txtAgendaDesc.Text);
+                            cmd.Parameters.AddWithValue("@DiscussionDescription2", txtAgendaDescAfter.Text);
+                            cmd.Parameters.AddWithValue("@Duration", txtDuration.Text);
+                            cmd.Parameters.AddWithValue("@Ref_PhotoBefore", Path.GetFileName(photoPathBefore));
+                            cmd.Parameters.AddWithValue("@Ref_PhotoAfter", Path.GetFileName(photoPathAfter));
+                            cmd.Parameters.AddWithValue("@Ref_PhotoPathBefore", photoPathBefore);
+                            cmd.Parameters.AddWithValue("@Ref_PhotoPathAfter", photoPathAfter);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    transaction.Commit();
+                    lbl_btnsave3.Text = "Points saved successfully!";
+                    lbl_btnsave3.ForeColor = System.Drawing.Color.Green;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    lbl_btnsave3.Text = "Error: " + ex.Message;
+                    lbl_btnsave3.ForeColor = System.Drawing.Color.Red;
+                }
+            }
         }
-        
+
+        private string SaveFile(FileUpload fileUpload)
+        {
+            if (fileUpload.HasFile)
+            {
+                string folderPath = Server.MapPath("~/Uploads/");
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string filePath = folderPath + fileUpload.FileName;
+                fileUpload.SaveAs(filePath);
+                return "~/Uploads/" + fileUpload.FileName;
+            }
+            return "";
+        }
+
         protected void rbEmployee_SelectedIndexChanged(object sender, EventArgs e)
         {
             pnlAttendeeType.Visible = rbEmployee.SelectedValue == "Yes";

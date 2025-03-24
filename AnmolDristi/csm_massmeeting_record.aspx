@@ -96,6 +96,25 @@
                 white-space: nowrap; /* Prevents wrapping */
                 text-align: center;
             }
+                /* Default tab link styles */
+.nav-tabs .nav-link {
+    color: #004085; /* Deep blue text */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Hover background colors */
+.nav-tabs .nav-link:hover {
+    background-color: #cce5ff; /* Light Blue */
+    color: #000;
+    border-radius: 5px;
+}
+
+/* Active tab styling */
+.nav-tabs .nav-link.active {
+    background-color: #cce5ff; /* Soft Yellow */
+    color: #000 ;
+    border-radius: 5px;
+}
 
       
     </style>
@@ -282,122 +301,7 @@
                                             </div>
                                         </div>
                                              <asp:HiddenField ID="HiddenField_MMId" runat="server" />
-                                    </div>                                     
-
-
-
-
-                                   
-
-<%--<asp:UpdatePanel ID="updAttendees" runat="server" UpdateMode="Conditional">
-    <ContentTemplate>--%>
-
-<%--        <div class="tab-pane fade" id="Attendees">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_rbEmployee" runat="server" AssociatedControlID="rbEmployee" Text="Employee of this company?" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                    <asp:RequiredFieldValidator ID="RFV_rbEmployee" runat="server" ErrorMessage="Select any option" ValidationGroup="Save2" ControlToValidate="rbEmployee" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                    <div class="input-group-sm">
-                        <asp:RadioButtonList ID="rbEmployee" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbEmployee_SelectedIndexChanged">
-                            <asp:ListItem Text="Yes" Value="Yes"></asp:ListItem>
-                            <asp:ListItem Text="No" Value="No"></asp:ListItem>
-                        </asp:RadioButtonList>
-                    </div>
-                </div>
-            </div>
-
-            <asp:Panel ID="pnlAttendeeType" runat="server" Visible="false">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <asp:Label ID="lbl_rbAttendeeType" runat="server" AssociatedControlID="rbAttendeeType" Text="Attendees Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                        <asp:RequiredFieldValidator ID="RFV_rbAttendeeType" runat="server" ErrorMessage="Select any option" ValidationGroup="Save2" ControlToValidate="rbAttendeeType" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                        <div class="input-group-sm">
-                            <asp:RadioButtonList ID="rbAttendeeType" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbAttendeeType_SelectedIndexChanged">
-                                <asp:ListItem Text="Internal" Value="Internal"></asp:ListItem>
-                                <asp:ListItem Text="External" Value="External"></asp:ListItem>
-                            </asp:RadioButtonList>
-                        </div>
-                    </div>
-                </div>
-            </asp:Panel>
-
-            <asp:Panel ID="pnlDetails" runat="server" Visible="false">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <asp:Label ID="lbl_txtAttendeeCode" runat="server" AssociatedControlID="txtAttendeeCode" Text="Attendees Code" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                        <asp:RequiredFieldValidator ID="RFV_txtAttendeeCode" runat="server" ErrorMessage="*" ControlToValidate="txtAttendeeCode" ValidationGroup="Save2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                        <asp:RegularExpressionValidator ID="REV_txtAttendeeCode" runat="server" ControlToValidate="txtAttendeeCode" ForeColor="Red" ValidationGroup="Save2" ErrorMessage="AlphaNumeric Only" ValidationExpression="^[a-zA-Z0-9.@]{0,25}$" Display="Dynamic"></asp:RegularExpressionValidator>
-                        <div class="input-group-sm">
-                            <asp:TextBox ID="txtAttendeeCode" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <asp:Label ID="lbl_txtEmployeeName" runat="server" AssociatedControlID="txtEmployeeName" Text="Employee Name" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                        <asp:RequiredFieldValidator ID="RFV_txtEmployeeName" runat="server" ErrorMessage="*" ControlToValidate="txtEmployeeName" ValidationGroup="Save2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                        <div class="input-group-sm">
-                            <asp:TextBox ID="txtEmployeeName" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <asp:Label ID="lbl_txtdes" runat="server" AssociatedControlID="txtdes" Text="Designation" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                        <asp:RequiredFieldValidator ID="RFV_txtdes" runat="server" ErrorMessage="*" ControlToValidate="txtdes" ValidationGroup="Save2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                        <div class="input-group-sm">
-                            <asp:TextBox ID="txtdes" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <asp:Label ID="lbl_txtgatepassno" runat="server" AssociatedControlID="txtgatepassno" Text="Gate Pass Number" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                        <asp:RequiredFieldValidator ID="RFV_txtgatepassno" runat="server" ErrorMessage="*" ControlToValidate="txtgatepassno" ValidationGroup="Save2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                        <div class="input-group-sm">
-                            <asp:TextBox ID="txtgatepassno" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-            </asp:Panel>
-
-            <asp:Panel ID="pnlAttendeeTable" runat="server">
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <asp:GridView ID="gvAttendees" runat="server" CssClass="tableStyle" Width="100%" AutoGenerateColumns="False">
-                            <HeaderStyle BackColor="#5F9EA0" ForeColor="Black" Font-Bold="True" />
-                            <RowStyle BackColor="White" />
-                            <AlternatingRowStyle BackColor="Black" />
-                            <Columns>
-                                <asp:BoundField DataField="EmployeeOrNot" HeaderText="Employee?" />
-                                <asp:BoundField DataField="AttendeeType" HeaderText="Attendee Type" />
-                                <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" />
-                                <asp:BoundField DataField="AttendeeCode" HeaderText="Attendee Code" />
-                                <asp:BoundField DataField="GatePassNo" HeaderText="Gate Pass No" />
-                                <asp:BoundField DataField="Designation" HeaderText="Designation" />
-                            </Columns>
-                        </asp:GridView>
-                    </div>
-                </div>
-            </asp:Panel>
-
-            <div class="col-md-3">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_btnsave2" runat="server" AssociatedControlID="btnsave2" Text="Click to Save" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                    <div class="input-group">
-                        <asp:Button ID="btnsave2" runat="server" Text="Save" CssClass="btn btn-success" ValidationGroup="Save2" CausesValidation="true" OnClientClick="saveAttendeeData(); return false;" OnClick="btnsave2_Click" />
-                        <asp:Label ID="lbl_btnsave22" runat="server" ForeColor="Green"></asp:Label>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </ContentTemplate>
-</asp:UpdatePanel>--%>
+                                    </div>                                    
 
 
                                    <%-- <%-- SECOND PANEL--%>
@@ -530,7 +434,7 @@
                                             <div class="mb-3">
                                                 <asp:Label ID="lbl_btnsave2" runat="server" AssociatedControlID="btnsave2" Text="Click to Save" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                 <div class="input-group">
-                                                    <asp:Button ID="btnsave2" runat="server" Text="Save" CssClass="btn btn-success"  OnClientClick="saveAttendeeData(); return false;" OnClick="btnsave2_Click" />
+                                                    <asp:Button ID="btnsave2" runat="server" Text="Save" CssClass="btn btn-success"   OnClick="btnsave2_Click" />
                                                     <asp:Label ID="lbl_btnsave22" runat="server" ForeColor="Green"></asp:Label>
 
                                                 </div>
@@ -545,72 +449,137 @@
 
                                     <%-- THIRD PANEL--%>
 
-                                    <div class="tab-pane fade" id="Points">
-                                        <div class="table-responsive">
-                                            <div class="col-md-12">
-                                                <div class="mb-3">
-                                                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeaderWhenEmpty="True" CssClass="table table-bordered table-hover " OnRowCommand="GridView1_RowCommand">
-                                                        <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
-                                                        <Columns>
-                                                            <asp:BoundField DataField="SLNO" HeaderText="SL.NO" />
-                                                            <asp:TemplateField HeaderText="Agenda Title">
-                                                                <ItemTemplate>
-                                                                    <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Bind("AgendaTitle") %>'></asp:TextBox>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Point By">
-                                                                <ItemTemplate>
-                                                                    <asp:TextBox ID="txtPointBy" runat="server" Text='<%# Bind("PointBy") %>'></asp:TextBox>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Agenda Point Description">
-                                                                <ItemTemplate>
-                                                                    <asp:TextBox ID="txtAgendaDesc" runat="server" Text='<%# Bind("AgendaPointDescription") %>'></asp:TextBox>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Duration">
-                                                                <ItemTemplate>
-                                                                    <asp:TextBox ID="txtDuration" runat="server" Text='<%# Bind("Duration") %>'></asp:TextBox>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Ref. Photograph (Before)">
-                                                                <ItemTemplate>
-                                                                    <asp:FileUpload ID="fuPhotoBefore" runat="server" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Agenda Point Detailed Description (After)">
-                                                                <ItemTemplate>
-                                                                    <asp:TextBox ID="txtAgendaDescAfter" runat="server" Text='<%# Bind("AgendaPointAfter") %>'></asp:TextBox>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Ref. Photograph (After)">
-                                                                <ItemTemplate>
-                                                                    <asp:FileUpload ID="fuPhotoAfter" runat="server" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Action">
-                                                                <ItemTemplate>
-                                                                    <asp:Button ID="btnAddMore" runat="server" CssClass="btn btn-primary btn-sm" CommandName="AddMore" Text="Add More" />
-                                                                    <asp:Button ID="btnRemove" runat="server" CssClass="btn btn-danger btn-sm" CommandName="Remove" CommandArgument='<%# Container.DataItemIndex %>' Text="Remove" OnClientClick="return confirm('Are you sure you want to remove this row?');" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                        </Columns>
-                                                    </asp:GridView>
-                                                </div>
-                                            </div>
-                                        </div>
+                                     <div class="tab-pane fade" id="Points">
+      <div class="table-responsive">
+          <div class="col-md-12">
+              <div class="mb-3">
+                  <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeaderWhenEmpty="True" CssClass="table table-bordered table-hover " OnRowCommand="GridView1_RowCommand">
+                      <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
+                      <Columns>
+                          <asp:BoundField DataField="SLNO" HeaderText="SL.NO" />
+                          <asp:TemplateField HeaderText="Agenda Title">
+                              <ItemTemplate>
+                                  <asp:Label ID="lbl_txtAgendaTitle" runat="server" AssociatedControlID="txtAgendaTitle"  ></asp:Label>
+                                   <asp:RequiredFieldValidator ID="RFV_txtAgendaTitle" runat="server" ErrorMessage="*" ControlToValidate="txtAgendaTitle" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                  <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Bind("AgendaTitle") %>'></asp:TextBox>
+                              </ItemTemplate>
+                          </asp:TemplateField>
+                          <asp:TemplateField HeaderText="Discussed By Code">
+    <ItemTemplate>
+        <asp:Label ID="lbl_txtDiscussedByCode" runat="server" AssociatedControlID="txtDiscussedByCode"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtDiscussedByCode" runat="server" ErrorMessage="*" ControlToValidate="txtDiscussedByCode" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>  
+        <asp:TextBox ID="txtDiscussedByCode" runat="server" Text='<%# Bind("DiscussedByCode") %>'></asp:TextBox>
+    </ItemTemplate>
+</asp:TemplateField>
 
-                                        <div class="col-md-3">
-                                            <div class="mb-3">
-                                                <asp:Label ID="lbl_btnsave3" runat="server" AssociatedControlID="btnsave3" Text="Click to Save" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                <div class="input-group">
-                                                    <asp:Button ID="btnsave3" runat="server" Text="Save" CssClass="btn btn-success btn-sm" ValidationGroup="save3" CausesValidation="true" OnClientClick="savePointsData(); return false;" OnClick="btnsave3_Click" />
-                                                </div>
-                                            </div>
-                                        </div>
+<asp:TemplateField HeaderText="Discussion Type">
+    <ItemTemplate>
+        <asp:Label ID="lbl_ddlDiscussionType" runat="server" AssociatedControlID="ddlDiscussionType"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_ddlDiscussionType" runat="server" ErrorMessage="*" ControlToValidate="ddlDiscussionType" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>  
+        <asp:DropDownList ID="ddlDiscussionType" runat="server">
+            <asp:ListItem Text="Select" Value="" />
+            <asp:ListItem Text="Technical" Value="Technical" />
+            <asp:ListItem Text="Operational" Value="Operational" />
+            <asp:ListItem Text="Compliance" Value="Compliance" />
+        </asp:DropDownList>
+    </ItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Company">
+    <ItemTemplate>
+        <asp:Label ID="lbl_ddlCompanyCode" runat="server" AssociatedControlID="ddlCompanyCode"></asp:Label>
+         <asp:RequiredFieldValidator ID="RFV_ddlCompanyCode" runat="server" ErrorMessage="*" ControlToValidate="ddlCompanyCode" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>  
+        <asp:DropDownList ID="ddlCompanyCode" runat="server">
+            <asp:ListItem Text="Select" Value="" />
+            <asp:ListItem Text="Company A" Value="Company A" />
+            <asp:ListItem Text="Company B" Value="Comapany B" />
+            <asp:ListItem Text="Company C" Value="Comapany C" />
+        </asp:DropDownList>
+    </ItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Department">
+    <ItemTemplate>
+         <asp:Label ID="lbl_ddlDeptCode" runat="server" AssociatedControlID="ddlDeptCode"></asp:Label>
+         <asp:RequiredFieldValidator ID="RFV_ddlDeptCode" runat="server" ErrorMessage="*" ControlToValidate="ddlDeptCode" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>  
+         <asp:DropDownList ID="ddlDeptCode" runat="server">
+            <asp:ListItem Text="Select" Value="" />
+            <asp:ListItem Text="Finance" Value="Finance" />
+             <asp:ListItem Text="Mananger" Value="Manager" />
+            <asp:ListItem Text="Developer" Value="Developer" />
+        </asp:DropDownList>
+    </ItemTemplate>
+</asp:TemplateField>
+
+                          <asp:TemplateField HeaderText="Point By">
+                              <ItemTemplate>
+                                  <asp:Label ID="lbl_txtPointBy" runat="server" AssociatedControlID="txtPointBy"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_txtPointBy" runat="server" ErrorMessage="*" ControlToValidate="txtPointBy" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>                      
+                                  <asp:TextBox ID="txtPointBy" runat="server" Text='<%# Bind("PointBy") %>'></asp:TextBox>
+                              </ItemTemplate>
+                          </asp:TemplateField>
+                          <asp:TemplateField HeaderText="Agenda Point Description">
+                              <ItemTemplate>
+                                  <asp:Label ID="lbl_txtAgendaDesc" runat="server" AssociatedControlID="txtAgendaDesc"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_txtAgendaDesc" runat="server" ErrorMessage="*" ControlToValidate="txtAgendaDesc" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>                                  
+                                  <asp:TextBox ID="txtAgendaDesc" runat="server" Text='<%# Bind("AgendaPointDescription") %>'></asp:TextBox>
+                              </ItemTemplate>
+                          </asp:TemplateField>
+                          <asp:TemplateField HeaderText="Duration">
+                              <ItemTemplate>
+                                  <asp:Label ID="lbl_txtDuration" runat="server" AssociatedControlID="txtDuration"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_txtDuration" runat="server" ErrorMessage="*" ControlToValidate="txtDuration" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>     
+                                   <asp:RegularExpressionValidator ID="REV_txtDuration" runat="server" ControlToValidate="txtDuration" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Only numbers are allowed" ValidationExpression="^\d+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                  <asp:TextBox ID="txtDuration" runat="server" Text='<%# Bind("Duration") %>'></asp:TextBox>
+                              </ItemTemplate>
+                          </asp:TemplateField>
+                          <asp:TemplateField HeaderText="Ref. Photograph (Before)">
+                              <ItemTemplate>
+                                  <asp:Label ID="lbl_fuPhotoBefore" runat="server" AssociatedControlID="fuPhotoBefore"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_fuPhotoBefore" runat="server" ErrorMessage="*" ControlToValidate="fuPhotoBefore" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>                                  
+                                  <asp:FileUpload ID="fuPhotoBefore" runat="server" onchange="updateFilePath(this, 'txtPhotoBeforePath')"  />
+                                  <asp:TextBox ID="txtPhotoBeforePath" runat="server" ReadOnly="false" CssClass="form-control"></asp:TextBox>
+                              </ItemTemplate>
+                          </asp:TemplateField>
+                          <asp:TemplateField HeaderText="Agenda Point Detailed Description (After)">
+                              <ItemTemplate>
+                                  <asp:Label ID="lbl_txtAgendaDescAfter" runat="server" AssociatedControlID="txtAgendaDescAfter"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_txtAgendaDescAfter" runat="server" ErrorMessage="*" ControlToValidate="txtAgendaDescAfter" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                  <asp:TextBox ID="txtAgendaDescAfter" runat="server" Text='<%# Bind("AgendaPointAfter") %>'></asp:TextBox>
+                              </ItemTemplate>
+                          </asp:TemplateField>
+                          <asp:TemplateField HeaderText="Ref. Photograph (After)">
+                              <ItemTemplate>
+                                  <asp:Label ID="lbl_fuPhotoAfter" runat="server" AssociatedControlID="fuPhotoAfter"></asp:Label>
+                                  <asp:RequiredFieldValidator ID="RFV_fuPhotoAfter" runat="server" ErrorMessage="*" ControlToValidate="fuPhotoAfter" ValidationGroup="ADD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>                                 
+                                  <asp:FileUpload ID="fuPhotoAfter" runat="server" onchange="updateFilePath(this, 'txtPhotoAfterPath')" />
+                                  <asp:TextBox ID="txtPhotoAfterPath" runat="server" ReadOnly="false" CssClass="form-control"></asp:TextBox>
+                              </ItemTemplate>
+                          </asp:TemplateField>
+                          <asp:TemplateField HeaderText="Action">
+                              <ItemTemplate>
+                                  <asp:Button ID="btnAddMore" runat="server" CssClass="btn btn-primary btn-sm" ValidationGroup="ADD" CommandName="AddMore" Text="Add More" OmClick="btnAddMore_Click" />
+                                  <asp:Label ID="lblMsg1" runat="server"></asp:Label>
+                                  <asp:Button ID="btnRemove" runat="server" CssClass="btn btn-danger btn-sm" CommandName="Remove" CommandArgument='<%# Container.DataItemIndex %>' Text="Remove" OnClientClick="return confirm('Are you sure you want to remove this row?');" />
+                              </ItemTemplate>
+                          </asp:TemplateField>
+                      </Columns>
+                  </asp:GridView>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-3">
+          <div class="mb-3">
+              <asp:Label ID="lbl_btnsave3" runat="server" AssociatedControlID="btnsave3" Text="Click to Save" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+              <div class="input-group">
+                  <asp:Button ID="btnsave3" runat="server" Text="Save" CssClass="btn btn-success btn-sm"  CausesValidation="true"  OnClick="btnsave3_Click" />
+              </div>
+          </div>
+      </div>
 
 
-                                    </div>
+  </div>
 
 
 
@@ -810,6 +779,15 @@
         });
     </script>
 
-
+    <script type="text/javascript">
+        function updateFilePath(input, textboxId) {
+            var file = input.files[0]; // Get the selected file
+            if (file) {
+                document.getElementById(textboxId).value = file.name; // Set only the filename
+            } else {
+                document.getElementById(textboxId).value = ''; // Clear if no file is selected
+            }
+        }
+    </script>
 
 </asp:Content>

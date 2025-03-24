@@ -16,13 +16,21 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            InitializeGrid();
+            if (!IsPostBack)
+            {
+                InitializeGrid();
+            }
+            RestoreUploadedFiles();
         }
         private void InitializeGrid()
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("SLNO");
             dt.Columns.Add("AgendaTitle");
+            dt.Columns.Add("DiscussedByCode");
+            dt.Columns.Add("DiscussionType");
+            dt.Columns.Add("CompanyCode");
+            dt.Columns.Add("DeptCode");
             dt.Columns.Add("PointBy");
             dt.Columns.Add("AgendaPointDescription");
             dt.Columns.Add("Duration");
@@ -30,48 +38,110 @@ namespace AnmolDristi
             dt.Columns.Add("AgendaPointAfter");
             dt.Columns.Add("RefPhotoAfter");
 
-            // Add an empty row to allow input
-            dt.Rows.Add("1", "", "", "", "", "", "", "");
-
+            dt.Rows.Add("1", "", "", "", "", "", "", "", "", "", "", "");
             ViewState["GridViewData"] = dt;
             GridView1.DataSource = dt;
             GridView1.DataBind();
+        }
+        private void RestoreUploadedFiles()
+        {
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                FileUpload fuBefore = (FileUpload)row.FindControl("fuPhotoBefore");
+                FileUpload fuAfter = (FileUpload)row.FindControl("fuPhotoAfter");
+                Label lbl_fuPhotoBefore = (Label)row.FindControl("lbl_fuPhotoBefore");
+                Label lbl_fuPhotoAfter = (Label)row.FindControl("lbl_fuPhotoAfter");
+
+                if (Session["FileBefore_" + row.RowIndex] != null)
+                {
+                    lbl_fuPhotoBefore.Text = "Uploaded: " + Path.GetFileName(Session["FileBefore_" + row.RowIndex].ToString());
+                }
+
+                if (Session["FileAfter_" + row.RowIndex] != null)
+                {
+                    lbl_fuPhotoAfter.Text = "Uploaded: " + Path.GetFileName(Session["FileAfter_" + row.RowIndex].ToString());
+                }
+            }
+        }
+
+     
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+            if (ViewState["GridViewData"] != null)
+            {
+                GridView1.DataSource = ViewState["GridViewData"];
+                GridView1.DataBind();
+            }
         }
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             DataTable dt = ViewState["GridViewData"] as DataTable;
             if (dt == null) return;
 
-            // Preserve the existing input before adding a new row
+            // Preserve dropdown and file upload values
             foreach (GridViewRow row in GridView1.Rows)
             {
                 TextBox txtAgendaTitle = (TextBox)row.FindControl("txtAgendaTitle");
+                TextBox txtDiscussedByCode = (TextBox)row.FindControl("txtDiscussedByCode");
+                DropDownList ddlDiscussionType = (DropDownList)row.FindControl("ddlDiscussionType");
+                DropDownList ddlCompanyCode = (DropDownList)row.FindControl("ddlCompanyCode");
+                DropDownList ddlDeptCode = (DropDownList)row.FindControl("ddlDeptCode");
                 TextBox txtPointBy = (TextBox)row.FindControl("txtPointBy");
                 TextBox txtAgendaDesc = (TextBox)row.FindControl("txtAgendaDesc");
                 TextBox txtDuration = (TextBox)row.FindControl("txtDuration");
                 TextBox txtAgendaDescAfter = (TextBox)row.FindControl("txtAgendaDescAfter");
+                FileUpload fuBefore = (FileUpload)row.FindControl("fuPhotoBefore");
+                FileUpload fuAfter = (FileUpload)row.FindControl("fuPhotoAfter");
 
                 dt.Rows[row.RowIndex]["AgendaTitle"] = txtAgendaTitle.Text;
+                dt.Rows[row.RowIndex]["DiscussedByCode"] = txtDiscussedByCode.Text;
+                dt.Rows[row.RowIndex]["DiscussionType"] = ddlDiscussionType.SelectedValue;
+                dt.Rows[row.RowIndex]["CompanyCode"] = ddlCompanyCode.SelectedValue;
+                dt.Rows[row.RowIndex]["DeptCode"] = ddlDeptCode.SelectedValue;
                 dt.Rows[row.RowIndex]["PointBy"] = txtPointBy.Text;
                 dt.Rows[row.RowIndex]["AgendaPointDescription"] = txtAgendaDesc.Text;
                 dt.Rows[row.RowIndex]["Duration"] = txtDuration.Text;
                 dt.Rows[row.RowIndex]["AgendaPointAfter"] = txtAgendaDescAfter.Text;
+
+                if (fuBefore.HasFile)
+                {
+                    string filePath = "~/Uploads/" + fuBefore.FileName;
+                    fuBefore.SaveAs(Server.MapPath(filePath));
+                    Session[$"FileBefore_{row.RowIndex}"] = filePath;
+                    dt.Rows[row.RowIndex]["RefPhotoBefore"] = filePath;
+                }
+                else if (Session[$"FileBefore_{row.RowIndex}"] != null)
+                {
+                    dt.Rows[row.RowIndex]["RefPhotoBefore"] = Session[$"FileBefore_{row.RowIndex}"];
+                }
+
+                if (fuAfter.HasFile)
+                {
+                    string filePath = "~/Uploads/" + fuAfter.FileName;
+                    fuAfter.SaveAs(Server.MapPath(filePath));
+                    Session[$"FileAfter_{row.RowIndex}"] = filePath;
+                    dt.Rows[row.RowIndex]["RefPhotoAfter"] = filePath;
+                }
+                else if (Session[$"FileAfter_{row.RowIndex}"] != null)
+                {
+                    dt.Rows[row.RowIndex]["RefPhotoAfter"] = Session[$"FileAfter_{row.RowIndex}"];
+                }
             }
 
             if (e.CommandName == "AddMore")
             {
                 int newSLNo = dt.Rows.Count + 1;
-                dt.Rows.Add(newSLNo.ToString(), "", "", "", "", "", "", "");
+                dt.Rows.Add(newSLNo.ToString(), "", "", "", "", "", "", "", "", "", "", "");
             }
             else if (e.CommandName == "Remove")
             {
                 int rowIndex = Convert.ToInt32(e.CommandArgument);
-                if (dt.Rows.Count > 1) // Ensure at least one row remains
+                if (dt.Rows.Count > 1)
                 {
                     dt.Rows.RemoveAt(rowIndex);
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        dt.Rows[i]["SLNO"] = (i + 1).ToString(); // Reorder SLNO
+                        dt.Rows[i]["SLNO"] = (i + 1).ToString();
                     }
                 }
             }
@@ -80,9 +150,66 @@ namespace AnmolDristi
             GridView1.DataSource = dt;
             GridView1.DataBind();
         }
+       
+
+        protected void btnAddMore_Click(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                Label lbl_fuPhotoBefore = (Label)row.FindControl("lbl_fuPhotoBefore");
+                Label lbl_fuPhotoAfter = (Label)row.FindControl("lbl_fuPhotoAfter");
+                FileUpload fuBefore = (FileUpload)row.FindControl("fuPhotoBefore");
+                FileUpload fuAfter = (FileUpload)row.FindControl("fuPhotoAfter");
+
+                if (fuBefore.HasFile)
+                {
+                    string filePath = "~/Uploads/" + fuBefore.FileName;
+                    fuBefore.SaveAs(Server.MapPath(filePath));
+                    Session["FileBefore_" + row.RowIndex] = filePath;
+                }
+
+                if (fuAfter.HasFile)
+                {
+                    string filePath = "~/Uploads/" + fuAfter.FileName;
+                    fuAfter.SaveAs(Server.MapPath(filePath));
+                    Session["FileAfter_" + row.RowIndex] = filePath;
+                }
+            }
+        }
         protected void btnsave3_Click(object sender, EventArgs e)
         {
-
+            DataTable dt = ViewState["GridViewData"] as DataTable;
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                lblMsg.Text = "No data to save.";
+                return;
+            }
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                foreach (DataRow row in dt.Rows)
+                {
+                    string query = "INSERT INTO csm_massmeeting_templates (SLNO, AgendaTitle, DiscussedByCode, DiscussionType, CompanyCode, DeptCode, PointBy, AgendaPointDescription, Duration, RefPhotoBefore, AgendaPointAfter, RefPhotoAfter) VALUES (@SLNO, @AgendaTitle, @DiscussedByCode, @DiscussionType, @CompanyCode, @DeptCode, @PointBy, @AgendaPointDescription, @Duration, @RefPhotoBefore, @AgendaPointAfter, @RefPhotoAfter)";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@SLNO", row["SLNO"]);
+                        cmd.Parameters.AddWithValue("@AgendaTitle", row["AgendaTitle"]);
+                        cmd.Parameters.AddWithValue("@DiscussedByCode", row["DiscussedByCode"]);
+                        cmd.Parameters.AddWithValue("@DiscussionType", row["DiscussionType"]);
+                        cmd.Parameters.AddWithValue("@CompanyCode", row["CompanyCode"]);
+                        cmd.Parameters.AddWithValue("@DeptCode", row["DeptCode"]);
+                        cmd.Parameters.AddWithValue("@PointBy", row["PointBy"]);
+                        cmd.Parameters.AddWithValue("@AgendaPointDescription", row["AgendaPointDescription"]);
+                        cmd.Parameters.AddWithValue("@Duration", row["Duration"]);
+                        cmd.Parameters.AddWithValue("@RefPhotoBefore", row["RefPhotoBefore"]);
+                        cmd.Parameters.AddWithValue("@AgendaPointAfter", row["AgendaPointAfter"]);
+                        cmd.Parameters.AddWithValue("@RefPhotoAfter", row["RefPhotoAfter"]);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                lblMsg.Text = "Records inserted successfully!";
+            }
         }
 
         protected void btnsave1_Click(object sender, EventArgs e)
@@ -298,11 +425,6 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@Designation", strDesignations);
                         cmd.Parameters.AddWithValue("@Gate_passno", strGatePassNos);
                         cmd.Parameters.Add("@Image_upload", SqlDbType.NVarChar).Value = strImagePaths;
-
-
-
-
-
 
                         int rowsInserted = cmd.ExecuteNonQuery();
                         if (rowsInserted > 0)

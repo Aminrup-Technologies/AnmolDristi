@@ -109,14 +109,14 @@
 
 
 
-<div class="row">
+<%--<div class="row">
 <div class="col-md-12 col-sm-12 ">
 <div class="mb-3">
 <div class="x_title">
     <h2>Edit and Delete Your View
     </h2>
     <div class="clearfix"></div>
-</div>
+</div>--%>
 
     <div class="table-responsive">
                        <div class="x_content">
@@ -153,10 +153,7 @@
              </div>
             
 </div>   
-</div>
-     
- </div>
-</div>
+
  
 
 
