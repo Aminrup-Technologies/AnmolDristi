@@ -85,12 +85,12 @@
     <Content Include="HtmlPage1.html" />
     <Content Include="incident_analysis.aspx" />
     <Content Include="KYT.aspx" />
+    <Content Include="KYT_View.aspx" />
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
     <Content Include="WebData\OH4Y_Logo.png" />
-    <Content Include="WebForm2.aspx" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -178,6 +178,13 @@
     <Compile Include="KYT.aspx.designer.cs">
       <DependentUpon>KYT.aspx</DependentUpon>
     </Compile>
+    <Compile Include="KYT_View.aspx.cs">
+      <DependentUpon>KYT_View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="KYT_View.aspx.designer.cs">
+      <DependentUpon>KYT_View.aspx</DependentUpon>
+    </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -199,13 +206,6 @@
     </Compile>
     <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm2.aspx.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm2.aspx.designer.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -184,14 +184,15 @@ namespace AnmolDristi
             txtCounterMeasures.Text = "";
             ddlPriority.Text = "";
             //fuPhotograph.Text = "";
-            string fileName = fuPhotograph.HasFile ? fuPhotograph.FileName : "";
+            string fileName = fuPhotograph.HasFile ? fuPhotograph.FileName : null;
+
 
 
             lblMessage.Text = "KYT Form reset successfully!";
             lblMessage.ForeColor = System.Drawing.Color.Blue;
         }
 
-        protected void btnSubmit_Click(object sender, EventArgs e)
+        protected void BtnSubmit_Click(object sender, EventArgs e)
         {
 
         }
