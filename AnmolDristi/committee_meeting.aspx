@@ -24,6 +24,16 @@
         max-height: 300px; /* Adjust based on your UI */
     }
 }
+.btn-fixed-size {
+    width: 100px;
+    text-align: center;
+    font-size: 14px;
+    padding: 5px 0;
+}
+
+.points-input {
+    margin-right: 10px;
+}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -208,7 +218,7 @@
          <div class="table-responsive">
          <div class="col-md-12">
              <div class="mb-3">
-                 <asp:GridView ID="gvAttendees" runat="server" CssClass="table table-bordered table-hover " AutoGenerateColumns="False">
+                 <asp:GridView ID="gvAttendees" runat="server" DataKeyNames="SNo" CssClass="table table-bordered table-hover " AutoGenerateColumns="False">
                      <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                      <Columns>
                          <asp:BoundField DataField="SNo" HeaderText="SNo" />
@@ -221,8 +231,13 @@
                          <asp:TemplateField HeaderText="Image Preview">
                            <ItemTemplate>
                              <asp:Image ID="imgPreview" runat="server" ImageUrl='<%# Eval("ImagePath") %>' Width="50px" Height="50px" />
-                            </ItemTemplate>
+                            </ItemTemplate>                      
                          </asp:TemplateField>
+                               <asp:TemplateField HeaderText="Action">
+                                 <ItemTemplate>
+                                     <asp:Button ID="BtnDelAttendees" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelAttendees_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
+                                </ItemTemplate>
+                          </asp:TemplateField>
                      </Columns>
                  </asp:GridView>
              </div>
@@ -232,9 +247,197 @@
                       </div>
 
 
-                            
+  <div class="x_title">
+     <h2>Meeting Issue Table</h2>
+     <div class="clearfix"></div>
+ </div>                         
 
-                            
+    <div class="field" id="Issues">
+ 
+                                 
+      <div class="col-md-6">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtAgendaTitle" runat="server" AssociatedControlID="txtAgendaTitle" Text="Agenda Title" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtAgendaTitle" runat="server" ErrorMessage="*" ControlToValidate="txtAgendaTitle" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtAgendaTitle" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+        </div>
+    </div>
+</div>                          
+     <div class="col-md-6">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtIssuesDes" runat="server" AssociatedControlID="txtIssuesDes" Text="Issues Discussed" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_" runat="server" ErrorMessage="*" ValidationGroup="add1" ControlToValidate="txtIssuesDes" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div id="PointsContainer" runat="server">
+            <div class="d-flex align-items-center mb-2">
+                <asp:TextBox ID="txtIssuesDes" runat="server" CssClass="form-control form-control-sm rounded points-input"></asp:TextBox>
+                <asp:Button ID="BtnAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-sm btn-fixed-size" OnClientClick="addbutton(); return false;" />
+                <asp:Button ID="BtnRemove" runat="server" Text="Remove" CssClass="btn btn-danger btn-sm btn-fixed-size" OnClientClick="removebutton(this); return false;" />
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function addbutton() {
+
+            var container = document.getElementById('<%= PointsContainer.ClientID %>');
+
+            if (!container) {
+                console.error("Error: PointsContainer not found!");
+                return;
+            }
+
+            var div = document.createElement("div");
+            div.className = "d-flex align-items-center mb-2";
+
+            var input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control form-control-sm points-input";
+            input.placeholder = "Enter Points";
+
+            var addBtn = document.createElement("button");
+            addBtn.type = "button";
+            addBtn.className = "btn btn-primary btn-sm btn-fixed-size";
+            addBtn.textContent = "Add";
+            addBtn.onclick = addbutton;
+
+            var removeBtn = document.createElement("button");
+            removeBtn.type = "button";
+            removeBtn.className = "btn btn-danger btn-sm btn-fixed-size";
+            removeBtn.textContent = "Remove";
+            removeBtn.onclick = function () {
+                removebutton(this);
+            };
+
+            div.appendChild(input);
+            div.appendChild(addBtn);
+            div.appendChild(removeBtn);
+            container.appendChild(div);
+        }
+
+        function removebutton(button) {
+            var container = document.getElementById('<%= PointsContainer.ClientID %>');
+            if (container.children.length > 1) {
+                button.parentNode.remove();
+            }
+            else {
+                alert("At least one point is required.");
+            }
+        }
+        function preparePoints() {
+            var container = document.getElementById('<%= PointsContainer.ClientID %>');
+            var inputs = container.getElementsByTagName('input');
+            var pointsArray = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type === "text" && inputs[i].value.trim() !== "") {
+                    pointsArray.push(inputs[i].value.trim());
+                }
+            }
+
+           <%-- document.getElementById('<%= hdnPointsDiscussed.ClientID %>').value = pointsArray.join(" , ");--%>
+        }
+    </script>
+
+
+</div>
+    
+         <div class="col-md-6">
+         <div class="mb-3">
+        <asp:Label ID="lbl_txtActionBy" runat="server" AssociatedControlID="txtActionBy" Text="Action By(Responsibility)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtActionBy" runat="server" ErrorMessage="*" ControlToValidate="txtActionBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtActionBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
+        </div>
+    </div>
+</div>
+
+         <div class="col-md-6">
+         <div class="mb-3">
+        <asp:Label ID="lbl_txtTargetDate" runat="server" AssociatedControlID="txtTargetDate" Text="Target Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtTargetDate" runat="server" ErrorMessage="*" ControlToValidate="txtTargetDate" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtTargetDate" runat="server" CssClass="form-control form-control-sm rounded " TextMode="Date"></asp:TextBox>
+        </div>
+    </div>
+</div>
+
+         <div class="col-md-6">
+         <div class="mb-3">
+        <asp:Label ID="lbl_txtReviewDate" runat="server" AssociatedControlID="txtReviewDate" Text="Review Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtReviewDate" runat="server" ErrorMessage="*" ControlToValidate="txtReviewDate" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtReviewDate" runat="server" CssClass="form-control form-control-sm rounded " TextMode="Date"></asp:TextBox>
+        </div>
+    </div>
+</div>
+         <div class="col-md-6">
+         <div class="mb-3">
+        <asp:Label ID="lbl_txtReviewBy" runat="server" AssociatedControlID="txtReviewBy" Text="Review By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtReviewBy" runat="server" ErrorMessage="*" ControlToValidate="txtReviewBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtReviewBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
+        </div>
+    </div>
+</div>
+    
+         <div class="col-md-6">
+         <div class="mb-3">
+        <asp:Label ID="lbl_ddlStatus" runat="server" AssociatedControlID="ddlStatus" Text="Status" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_ddlStatus" runat="server" ErrorMessage="*" ControlToValidate="ddlStatus" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+             <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm rounded">
+                 <asp:ListItem Text="Select" Value="" />
+                 <asp:ListItem Text="Pending" Value="Pending" />
+                 <asp:ListItem Text="Completed" Value="Completed" />
+                 <asp:ListItem Text="In Progress" Value="In Progress" />
+                 <asp:ListItem Text="Approved" Value="Approved" />
+                 <asp:ListItem Text="Rejected" Value="Rejected" />
+                 <asp:ListItem Text="On Hold" Value="On Hold" />
+             </asp:DropDownList>
+        </div>
+    </div>
+</div>
+     
+                         
+
+
+     </div>
+
+
+<div class="col-md-2">
+ <div class="mt-3">
+     <asp:Button ID="btnAddIssues" runat="server" Text="Add Issues" CssClass="btn btn-primary" ValidationGroup="add1" CausesValidation="true" OnClick="btnAddIssues_Click"  OnClientClick="clearFields();" />
+    <%-- <asp:Label ID="lblMsg1" runat="server" ></asp:Label>--%>
+ </div>
+  </div>                         
+            <div class="table-responsive">
+    <div class="col-md-12">
+        <div class="mb-3">
+    <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" DataKeyNames="SNo" CssClass="table table-bordered table-hover ">
+    <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
+    <Columns>
+        <asp:BoundField DataField="SNo" HeaderText="SNo" />
+        <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title" />
+        <asp:BoundField DataField="IssuesDiscussed" HeaderText="Issues Discussed" />
+        <asp:BoundField DataField="ActionBy" HeaderText="Action By" />
+        <asp:BoundField DataField="TargetDate" HeaderText="Target Date" />
+        <asp:BoundField DataField="ReviewDate" HeaderText="Review Date" />
+        <asp:BoundField DataField="ReviewBy" HeaderText="Review By" />
+        <asp:BoundField DataField="Status" HeaderText="Status" />
+        <asp:TemplateField HeaderText="Action">
+            <ItemTemplate>
+                 <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete ?');" />
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+</asp:GridView>
+            </div>
+        </div>
+        </div>
+
+             
 
                          
 

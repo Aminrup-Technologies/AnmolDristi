@@ -192,7 +192,7 @@
     <div class="table-responsive">
     <div class="col-md-12">
         <div class="mb-3">
-    <asp:GridView ID="gvObservations" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover ">
+    <asp:GridView ID="gvObservations" runat="server"  DataKeyNames="SNo" AutoGenerateColumns="False" CssClass="table table-bordered table-hover ">
     <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
     <Columns>
         <asp:BoundField DataField="SNo" HeaderText="SNo" />
@@ -216,6 +216,11 @@
         <asp:BoundField DataField="ClosingDate" HeaderText="Closing Date" />
         <asp:BoundField DataField="CloseBy" HeaderText="Close By" />
         <asp:BoundField DataField="Status" HeaderText="Status" />
+      <asp:TemplateField HeaderText="Action">
+        <ItemTemplate>
+            <asp:Button ID="BtnDelObservation" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelObservation_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
+       </ItemTemplate>
+ </asp:TemplateField>
     </Columns>
 </asp:GridView>
             </div>
