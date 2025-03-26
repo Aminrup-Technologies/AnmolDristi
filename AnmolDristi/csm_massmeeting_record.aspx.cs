@@ -350,7 +350,7 @@ namespace AnmolDristi
         protected void rbAttendeeType_SelectedIndexChanged(object sender, EventArgs e)
         {
             bool isInternal = rbAttendeeType.SelectedValue == "Internal";
-            txtAttendeeCode.Text = isInternal ? "" : "N/A";
+            txtAttendeeCode.Text = isInternal ? "N/A" : "N/A";
             txtAttendeeCode.Enabled = isInternal;
             pnlDetails.Visible = true;
         }

@@ -21,7 +21,7 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>Mass Meeting Attendance Sheet
+                <h3>Automation And Technical Services
                 </h3>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Automation And Technical Services</h2>
+                        <h2>Housekeeping Audit(5S)</h2>
                         <div class="clearfix"></div>
                     </div>
 
@@ -57,7 +57,8 @@
          </div>
      </div>
  </div>
-   
+                                  <%--  <asp:HiddenField ID="hdnAuditID" runat="server" />
+   --%>
                                     </div>
 
  <div class="x_title">
@@ -198,10 +199,9 @@
         <asp:BoundField DataField="ObserverID" HeaderText="Oberver ID" />
         <asp:BoundField DataField="OpeningDate" HeaderText="Opening Date" />
         <asp:BoundField DataField="OpenBy" HeaderText="Open By" />
-        
-        <asp:TemplateField HeaderText="Photo (BEfore)">
+        <asp:TemplateField HeaderText="Photo (Before)">
             <ItemTemplate>
-                <asp:Image ID="imgBeforePhoto" runat="server" ImageUrl='<%# Eval("ImagePath1") %>' Width="50px" Height="50px" />
+                <asp:Image ID="imgBeforePhoto" runat="server" ImageUrl='<%# Eval("PhotoBefore") %>' Width="50px" Height="50px" />
             </ItemTemplate>
         </asp:TemplateField>
        
@@ -210,7 +210,7 @@
       
         <asp:TemplateField HeaderText="Photo (After)">
             <ItemTemplate>
-                <asp:Image ID="imgAfterPhoto" runat="server" ImageUrl='<%# Eval("ImagePAth2") %>' Width="50px" Height="50px" />
+                <asp:Image ID="imgAfterPhoto" runat="server" ImageUrl='<%# Eval("PhotoAfter") %>' Width="50px" Height="50px" />
             </ItemTemplate>
         </asp:TemplateField>
         <asp:BoundField DataField="ClosingDate" HeaderText="Closing Date" />
@@ -239,9 +239,10 @@
                     <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
                         <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
-                        <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />
+                        <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
+                        
                     </div>
                 </div>
             </div>
@@ -256,7 +257,7 @@
 <script type="text/javascript">
     function clearFileInputs() {
         $("#<%= fileBeforePhoto.ClientID %>").val('');
-        $("#<%= fileAfterPhoto.ClientID %>").val('');
+         $("#<%= fileAfterPhoto.ClientID %>").val('');
     }
 </script>
 </asp:Content>
