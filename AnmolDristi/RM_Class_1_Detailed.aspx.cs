@@ -170,136 +170,7 @@ namespace AnmolDristi
             }
         }
 
-        //private void PlantLinesBinder(string selectedPlantValue)
-        //{
-        //    string query = "SELECT line_id, line_name FROM MST_Plant_Lines WHERE plant_id = @SelectedPlantValue";
-        //    string textField = "line_name";
-        //    string valueField = "line_id";
-
-        //    bool recordsBound;
-        //    DatabaseHelper.BindDropDownList(query, DDL_PlantLine, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedPlantValue), out recordsBound);
-
-        //    if (!recordsBound)
-        //    {
-        //        DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
-
-        //        string PlantLinesBinder_Error_script = @"<script type='text/javascript'>
-        //                    new PNotify({
-        //                        title: 'Error',
-        //                        text: 'An error occurred!',
-        //                        type: 'error',
-        //                        styling: 'bootstrap3'
-        //                    });
-        //                </script>";
-        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantLinesBinderErrorNotification", PlantLinesBinder_Error_script, false);
-        //    }
-        //}
-
-        //Line--->Product--->Brand
-        private void LineProductsBinder(string selectedPlantValue, string selectedPlantLineValue)
-        {
-            // Construct the SQL query with parameters
-            string query = "SELECT category_id, category_name FROM MST_LineCategory WHERE plant_id = @PlantId";
-            string textField = "category_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "category_id"; // Assuming this is the correct field for storing in the DropDownList
-
-            // Create SQL parameters for plant_id and line_id
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@PlantId", selectedPlantValue)
-            };
-
-            // Call the BindDropDownList method with parameters
-            //bool recordsBound;
-            //DatabaseHelper.BindDropDownList(query, DDL_ProductCategory, textField, valueField, parameters, out recordsBound);
-
-            // Check if any records were bound
-            //if (!recordsBound)
-            //{
-            //    string PN_Error_script = @"<script type='text/javascript'>
-            //        new PNotify({
-            //            title: 'Error',
-            //            text: 'No line categories found for the selected plant and line!',
-            //            type: 'error',
-            //            styling: 'bootstrap3'
-            //        });
-            //    </script>";
-
-            //    // RegisterStartupScript adds the JavaScript code to the page
-            //    ClientScript.RegisterStartupScript(this.GetType(), "ShowLineProductsBinderErrorNotification", PN_Error_script, false);
-            //}
-        }
-
-        //Line--->Brand
-        private void LineBrandsBinder(string selectedPlantValue, string selectedPlantLineValue)
-        {
-            // Construct the SQL query with parameters
-            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId ";
-            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
-
-            // Create SQL parameters for plant_id and line_id
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@PlantId", selectedPlantValue),
-            };
-
-            // Call the BindDropDownList method with parameters
-            //bool recordsBound;
-            //DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
-
-            //// Check if any records were bound
-            //if (!recordsBound)
-            //{
-            //    string ProductBrands_Error_script = @"<script type='text/javascript'>
-            //        new PNotify({
-            //            title: 'Error',
-            //            text: 'No Brands found for the selected plant and line!',
-            //            type: 'error',
-            //            styling: 'bootstrap3'
-            //        });
-            //    </script>";
-
-            //    // RegisterStartupScript adds the JavaScript code to the page
-            //    ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
-            //}
-        }
-
-        //Line--->Product--->Brand
-        //private void ProductBrandsBinder(string selectedPlantValue, string selectedPlantLineValue, string selectedProductCategoryValue)
-        //{
-        //    // Construct the SQL query with parameters
-        //    string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId AND  category_id=@CategoryId";
-        //    string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-        //    string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
-
-        //    // Create SQL parameters for plant_id and line_id
-        //    SqlParameter[] parameters = new SqlParameter[]
-        //    {
-        //        new SqlParameter("@PlantId", selectedPlantValue),
-        //        new SqlParameter("@CategoryId", selectedProductCategoryValue)
-        //    };
-
-        //    // Call the BindDropDownList method with parameters
-        //    bool recordsBound;
-        //    DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
-
-        //    // Check if any records were bound
-        //    if (!recordsBound)
-        //    {
-        //        string ProductBrands_Error_script = @"<script type='text/javascript'>
-        //            new PNotify({
-        //                title: 'Error',
-        //                text: 'No Brands found for the selected plant and line!',
-        //                type: 'error',
-        //                styling: 'bootstrap3'
-        //            });
-        //        </script>";
-
-        //        // RegisterStartupScript adds the JavaScript code to the page
-        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
-        //    }
-        //}
+       
 
         private void PopulateColorDropdown()
         {
@@ -334,47 +205,6 @@ namespace AnmolDristi
                 DDL_Plant.Enabled = false;
 
 
-
-                //PlantLinesBinder(PlantId);
-                //PlantLine = dt.Rows[0]["line"].ToString();
-                //DDL_PlantLine.SelectedValue = PlantLine;
-                //DDL_PlantLine.Enabled = false;
-
-                //TB_Brand.Text = dt.Rows[0]["ProductBrand"].ToString();
-
-                //string ProductCategory = dt.Rows[0]["ProductCategory"].ToString();
-                //if (!string.IsNullOrEmpty(ProductCategory) && ProductCategory != "0")
-                //{
-                //    LineProductsBinder(PlantId, PlantLine);
-                //    if (DDL_ProductCategory.Items.FindByValue(ProductCategory) != null)
-                //    {
-                //        DDL_ProductCategory.SelectedValue = ProductCategory;
-                //        DDL_ProductCategory.Enabled = false;
-                //    }
-                //}
-
-
-                //string CategoryBrand = dt.Rows[0]["ProductBrand"].ToString();
-                //if (!string.IsNullOrEmpty(CategoryBrand) && CategoryBrand != "0")
-                //{
-                //    if (!string.IsNullOrEmpty(ProductCategory) && ProductCategory != "0")
-                //    {
-                //        // Call ProductBrandsBinder when ProductCategory is applicable
-                //        ProductBrandsBinder(PlantId, PlantLine, CategoryBrand);
-                //    }
-                //    else
-                //    {
-                //        // Call BrandsBinder when ProductCategory is not applicable
-                //        LineBrandsBinder(PlantId, PlantLine);
-                //    }
-
-                //    if (DDL_ProductBrand.Items.FindByValue(CategoryBrand) != null)
-                //    {
-                //        DDL_ProductBrand.SelectedValue = CategoryBrand;
-                //        DDL_ProductBrand.Enabled = false;
-                //    }
-                //}
-
                 TB_BrandName.Text = dt.Rows[0]["Brand"].ToString();
                 TB_Supplier.Text = dt.Rows[0]["Supplier_Name"].ToString();
 
@@ -383,6 +213,7 @@ namespace AnmolDristi
                 TB_LotNo.Text = dt.Rows[0]["Lot_No"].ToString();
                 TB_VehicleNo.Text = dt.Rows[0]["Vehicle_No"].ToString();
 
+                TB_Size.Text = dt.Rows[0]["Size"].ToString();
                 TB_Quantity.Text = dt.Rows[0]["Quantity"].ToString();
                 TXB_Quantity_Remarks.Text = dt.Rows[0]["CommentsForQuantity"].ToString();
 
@@ -409,6 +240,9 @@ namespace AnmolDristi
 
                 TB_Moisture.Text = dt.Rows[0]["Moisture"].ToString();
                 TXB_Moisture_Remarks.Text = dt.Rows[0]["CommentsForMoisture"].ToString();
+
+                TB_Protein.Text = dt.Rows[0]["Protein"].ToString();
+                TXB_Protein_Remarks.Text = dt.Rows[0]["CommentsForProtein"].ToString();
 
                 TB_TotalAsh.Text = dt.Rows[0]["Total_Ash"].ToString();
                 TXB_Ash_Remarks.Text = dt.Rows[0]["CommentsForTotalAsh"].ToString();
@@ -453,7 +287,7 @@ namespace AnmolDristi
 
                 StandardValue_Binder(MaterialId, PlantId); // Texbox bind with std values
                 string FormID = row["FormID"].ToString();
-                LoadFormDetails(FormID, PlantId, PlantLine);
+                LoadFormDetails(FormID, PlantId);
 
                 // Assume the logged-in user's Employee Code is stored in a session variable
                 string loggedInUserCode = Session["WORKMAN"].ToString(); // Example session variable
@@ -671,22 +505,12 @@ namespace AnmolDristi
                 //case "ProductCategory":
 
                 //    CategoryDIV.Visible = criteria.IsVisible;
-                //    Label_DDL_ProductCategory.Text = criteria.DisplayName;
 
                 //    RFV_DDL_ProductCategory.ErrorMessage = criteria.RequiredFieldErrorMessage;
                 //    RFV_DDL_ProductCategory.Enabled = criteria.IsRequired;
 
                 //    break;
 
-                //case "ProductBrand":
-
-                //    BrandDIV.Visible = criteria.IsVisible;
-                //    Label_DDL_ProductBrand.Text = criteria.DisplayName;
-
-                //    RFV_DDL_ProductBrand.ErrorMessage = criteria.RequiredFieldErrorMessage;
-                //    RFV_DDL_ProductBrand.Enabled = criteria.IsRequired;
-
-                //    break;
 
                 case "Brand":
 
@@ -706,9 +530,9 @@ namespace AnmolDristi
 
                     break;
 
+
                 case "Supplier":
                     SupplierDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_Supplier.Text = criteria.DisplayName;
 
                     RFV_TB_Supplier.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Supplier.Enabled = criteria.IsRequired;
@@ -728,7 +552,6 @@ namespace AnmolDristi
                 case "ChallanDate":
 
                     ChallanDateDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_ChallanDate.Text = criteria.DisplayName;
 
                     RFV_TB_ChallanDate.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_ChallanDate.Enabled = criteria.IsRequired;
@@ -738,7 +561,6 @@ namespace AnmolDristi
                 case "ChallanNo":
 
                     ChallanNoDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_ChallanNo.Text = criteria.DisplayName;
 
                     RFV_TB_ChallanNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_ChallanNo.Enabled = criteria.IsRequired;
@@ -752,10 +574,27 @@ namespace AnmolDristi
 
                     break;
 
+                case "Size":
+
+                    SizeDIV.Visible = criteria.IsVisible;
+
+                    RFV_TB_Size.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_Size.Enabled = criteria.IsRequired;
+
+                    TB_Size.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_Size.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_Size.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_Size.Enabled = criteria.IsRegularExpressionRequired;
+
+                    CV_TB_Size.ErrorMessage = criteria.RangeErrorMessage;
+                    CV_TB_Size.Enabled = criteria.IsRangeRequired;
+
+                    break;
+
                 case "Quantity":
 
                     QuantityDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_Quantity.Text = criteria.DisplayName;
 
                     RFV_TB_Quantity.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Quantity.Enabled = criteria.IsRequired;
@@ -776,7 +615,6 @@ namespace AnmolDristi
                 case "Lot/Batch":
 
                     LotNoDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_LotNo.Text = criteria.DisplayName;
 
                     RFV_TB_LotNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_LotNo.Enabled = criteria.IsRequired;
@@ -793,7 +631,6 @@ namespace AnmolDristi
                 case "Vehicle":
 
                     VehicleNoDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_VehicleNo.Text = criteria.DisplayName;
 
                     RFV_TB_VehicleNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_VehicleNo.Enabled = criteria.IsRequired;
@@ -818,7 +655,6 @@ namespace AnmolDristi
                 case "Odour/Smell":
 
                     SmellDIV.Visible = criteria.IsVisible;
-                    LabelColor.Text = criteria.DisplayName;
 
                     RFV_RBL_Smell.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Smell.Enabled = criteria.IsRequired;
@@ -828,7 +664,6 @@ namespace AnmolDristi
                 case "Appearance":
 
                     AppearanceDIV.Visible = criteria.IsVisible;
-                    RBL_Appearance.Text = criteria.DisplayName;
 
                     RFV_RBL_Appearance.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Appearance.Enabled = criteria.IsRequired;
@@ -838,7 +673,6 @@ namespace AnmolDristi
                 case "Taste/Flavor":
 
                     TasteFlavorDIV.Visible = criteria.IsVisible;
-                    RBL_TasteFlavor.Text = criteria.DisplayName;
 
                     RFV_RBL_TasteFlavor.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_TasteFlavor.Enabled = criteria.IsRequired;
@@ -848,7 +682,6 @@ namespace AnmolDristi
                 case "Foreign Matter/Impurities":
 
                     ImpuritiesDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_Foreign_Impurities.Text = criteria.DisplayName;
 
                     RFV_TB_Foreign_Impurities.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Foreign_Impurities.Enabled = criteria.IsRequired;
@@ -866,7 +699,6 @@ namespace AnmolDristi
                 case "PhValue":
 
                     PHDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_PH.Text = criteria.DisplayName;
 
                     RFV_TB_PH.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_PH.Enabled = criteria.IsRequired;
@@ -887,7 +719,6 @@ namespace AnmolDristi
                 case "MoistureValue":
 
                     MoistureDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_Moisture.Text = criteria.DisplayName;
 
                     RFV_TB_Moisture.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Moisture.Enabled = criteria.IsRequired;
@@ -905,10 +736,29 @@ namespace AnmolDristi
                     hdnMaxMoistureValue.Value = criteria.MaximumValue.ToString();
                     break;
 
+                case "ProteinValue":
+
+                    ProteinDIV.Visible = criteria.IsVisible;
+
+                    RFV_TB_Protein.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_Protein.Enabled = criteria.IsRequired;
+
+                    TB_Protein.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_Protein.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_Protein.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_Protein.Enabled = criteria.IsRegularExpressionRequired;
+
+                    CV_TB_Protein.ErrorMessage = criteria.RangeErrorMessage;
+                    CV_TB_Protein.Enabled = criteria.IsRangeRequired;
+
+                    hdnMinProteinValue.Value = criteria.MinimumValue.ToString();
+                    hdnMaxProteinValue.Value = criteria.MaximumValue.ToString();
+                    break;
+
                 case "TotalAshValue":
 
                     AshDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_TotalAsh.Text = criteria.DisplayName;
 
                     RFV_TB_TotalAsh.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_TotalAsh.Enabled = criteria.IsRequired;
@@ -929,7 +779,6 @@ namespace AnmolDristi
                 case "InsolubleAshValue":
 
                     InsolubleAshDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_InsolubleAsh.Text = criteria.DisplayName;
 
                     RFV_TB_InsolubleAsh.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_InsolubleAsh.Enabled = criteria.IsRequired;
@@ -950,7 +799,6 @@ namespace AnmolDristi
                 case "DensityValue":
 
                     DensityDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_Density.Text = criteria.DisplayName;
 
                     RFV_TB_Density.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Density.Enabled = criteria.IsRequired;
@@ -971,7 +819,6 @@ namespace AnmolDristi
                 case "FatContentValue":
 
                     FatContentDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_FatContent.Text = criteria.DisplayName;
 
                     RFV_TB_FatContent.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_FatContent.Enabled = criteria.IsRequired;
@@ -992,7 +839,6 @@ namespace AnmolDristi
                 case "TotalSolidValue":
 
                     SolidDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_TotalSolid.Text = criteria.DisplayName;
 
                     RFV_TB_TotalSolid.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_TotalSolid.Enabled = criteria.IsRequired;
@@ -1013,7 +859,6 @@ namespace AnmolDristi
                 case "ReducingSugarValue":
 
                     SugarDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_ReducingSugar.Text = criteria.DisplayName;
 
                     RFV_TB_ReducingSugar.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_ReducingSugar.Enabled = criteria.IsRequired;
@@ -1034,7 +879,6 @@ namespace AnmolDristi
                 case "DrainableSyrupValue":
 
                     SyrupDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_DrainableSyrup.Text = criteria.DisplayName;
 
                     RFV_TB_DrainableSyrup.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_DrainableSyrup.Enabled = criteria.IsRequired;
@@ -1055,7 +899,6 @@ namespace AnmolDristi
                 case "SeedValue":
 
                     SeedsDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_Matured_Immatured_Seeds.Text = criteria.DisplayName;
 
                     RFV_TB_Matured_Immatured_Seeds.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Matured_Immatured_Seeds.Enabled = criteria.IsRequired;
@@ -1076,7 +919,6 @@ namespace AnmolDristi
                 case "BrixValue":
 
                     BrixDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_Brix.Text = criteria.DisplayName;
 
                     RFV_TB_Brix.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_Brix.Enabled = criteria.IsRequired;
@@ -1097,7 +939,6 @@ namespace AnmolDristi
                 case "ShapeOrSizeValue":
 
                     ShapeOrSizeDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_ShapeOrSize.Text = criteria.DisplayName;
 
                     RFV_TB_ShapeOrSize.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_ShapeOrSize.Enabled = criteria.IsRequired;
@@ -1118,7 +959,6 @@ namespace AnmolDristi
                 case "TSValue":
 
                     TSDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_TS.Text = criteria.DisplayName;
 
                     RFV_TB_TS.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_TB_TS.Enabled = criteria.IsRequired;
@@ -1137,26 +977,27 @@ namespace AnmolDristi
                     break;
 
                 default:
+                    // Handle unrecognized field names
                     break;
             }
         }
 
 
 
-        private void LoadFormDetails(string FormID, string selectedPlantValue, string selectedPlantLineValue)
+        private void LoadFormDetails(string FormID, string selectedPlantValue)
         {
             // Replace with your actual connection string
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix_PM", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     // Set parameters for the stored procedure
                     cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue); // Replace with actual value
-                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);  // Replace with actual value
+                                                                                 //cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);  // Replace with actual value
                     cmd.Parameters.AddWithValue("@FormID", FormID); // Replace with actual value
                     cmd.Parameters.AddWithValue("@FormName", "RM_Class_1"); // Replace with actual value
 

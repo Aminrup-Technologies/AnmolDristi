@@ -35,7 +35,7 @@ namespace AnmolDristi
                     DisableReqFields();
 
                     lbl_docname.Text = "QC - RM Class 1 Report";
-                    lbl_docnumber.Text = "*******";
+                    lbl_docnumber.Text = "ANMOL/DOC/QC/1";
                     MaterialBinder();
                     PopulateColorDropdown();
 
@@ -652,62 +652,7 @@ namespace AnmolDristi
             }
         }
 
-        //private void PlantLinesBinder(string selectedPlantValue)
-        //{
-        //    string query = "SELECT line_id, line_name FROM MST_Plant_Lines WHERE plant_id = @SelectedPlantValue";
-        //    string textField = "line_name";
-        //    string valueField = "line_id";
-
-        //    bool recordsBound;
-        //    DatabaseHelper.BindDropDownList(query, DDL_PlantLine, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedPlantValue), out recordsBound);
-
-        //    if (!recordsBound)
-        //    {
-        //        DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
-
-        //        string PlantLinesBinder_Error_script = @"<script type='text/javascript'>
-        //                    new PNotify({
-        //                        title: 'Error',
-        //                        text: 'An error occurred!',
-        //                        type: 'error',
-        //                        styling: 'bootstrap3'
-        //                    });
-        //                </script>";
-        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantLinesBinderErrorNotification", PlantLinesBinder_Error_script, false);
-        //    }
-        //}
-
-
-        //protected void DDL_PlantLine_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (DDL_PlantLine.SelectedIndex != 0)
-        //    {
-        //        string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
-        //        string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
-        //        LoadApprovers(selectedPlantValue, selectedPlantLineValue);
-
-        //        //Line--->Product--->Brand
-        //        LineProductsBinder(selectedPlantValue, selectedPlantLineValue); // for material where product category is Applicable (ie.only cocoa powder)
-        //        //Line--->Brand
-        //        LineBrandsBinder(selectedPlantValue, selectedPlantLineValue);   // for material where product category is N/A (ie.,in all material excluding cocoa powder)
-        //    }
-        //    else
-        //    {
-        //        DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
-
-        //        string DDL_PlantLine_Error_script = @"<script type='text/javascript'>
-        //                    new PNotify({
-        //                        title: 'Error',
-        //                        text: 'Invalid Selection!',
-        //                        type: 'error',
-        //                        styling: 'bootstrap3'
-        //                    });
-        //                </script>";
-        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_PlantLine_Error_script, false);
-        //    }
-
-        //}
-
+        
         private void LoadApprovers(string selectedPlantValue, string selectedPlantLineValue)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -810,158 +755,7 @@ namespace AnmolDristi
         }
 
 
-        //private void LineProductsBinder(string selectedPlantValue, string selectedPlantLineValue)
-        //{
-        //    // Construct the SQL query with parameters
-        //    string query = "SELECT category_id, category_name FROM MST_LineCategory WHERE plant_id = @PlantId";
-        //    string textField = "category_name"; // Assuming this is the correct field for displaying in the DropDownList
-        //    string valueField = "category_id"; // Assuming this is the correct field for storing in the DropDownList
-
-        //    // Create SQL parameters for plant_id and line_id
-        //    SqlParameter[] parameters = new SqlParameter[]
-        //    {
-        //        new SqlParameter("@PlantId", selectedPlantValue)
-        //    };
-
-        //    // Call the BindDropDownList method with parameters
-        //    bool recordsBound;
-        //    DatabaseHelper.BindDropDownList(query, DDL_ProductCategory, textField, valueField, parameters, out recordsBound);
-
-        //    // Check if any records were bound
-        //    if (!recordsBound)
-        //    {
-        //        string PN_Error_script = @"<script type='text/javascript'>
-        //            new PNotify({
-        //                title: 'Error',
-        //                text: 'No line categories found for the selected plant and line!',
-        //                type: 'error',
-        //                styling: 'bootstrap3'
-        //            });
-        //        </script>";
-
-        //        // RegisterStartupScript adds the JavaScript code to the page
-        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowLineProductsBinderErrorNotification", PN_Error_script, false);
-        //    }
-        //}
-
-        //protected void DDL_ProductCategory_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (DDL_ProductCategory.SelectedIndex != 0)
-        //    {
-        //        string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
-        //        string selectedPlantLineValue = DDL_PlantLine.SelectedValue.ToString();
-        //        string selectedProductCategoryValue = DDL_ProductCategory.SelectedValue.ToString();
-        //        ProductBrandsBinder(selectedPlantValue, selectedPlantLineValue, selectedProductCategoryValue); //for material where product category is applicable
-        //    }
-        //    else
-        //    {
-        //        DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
-
-        //        string DDL_PlantLine_Error_script = @"<script type='text/javascript'>
-        //                    new PNotify({
-        //                        title: 'Error',
-        //                        text: 'Invalid Selection!',
-        //                        type: 'error',
-        //                        styling: 'bootstrap3'
-        //                    });
-        //                </script>";
-        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantInvalidErrorNotification", DDL_PlantLine_Error_script, false);
-        //    }
-        //}
-
-
-        //private void LineBrandsBinder(string selectedPlantValue, string selectedPlantLineValue)
-        //{
-        //    // Construct the SQL query with parameters
-        //    string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId ";
-        //    string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-        //    string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
-
-        //    // Create SQL parameters for plant_id and line_id
-        //    SqlParameter[] parameters = new SqlParameter[]
-        //    {
-        //        new SqlParameter("@PlantId", selectedPlantValue),
-        //    };
-
-        //    // Call the BindDropDownList method with parameters
-        //    bool recordsBound;
-        //    DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
-
-        //    // Check if any records were bound
-        //    if (!recordsBound)
-        //    {
-        //        string ProductBrands_Error_script = @"<script type='text/javascript'>
-        //            new PNotify({
-        //                title: 'Error',
-        //                text: 'No Brands found for the selected plant and line!',
-        //                type: 'error',
-        //                styling: 'bootstrap3'
-        //            });
-        //        </script>";
-
-        //        // RegisterStartupScript adds the JavaScript code to the page
-        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
-        //    }
-        //}
-
-        //private void ProductBrandsBinder(string selectedPlantValue, string selectedPlantLineValue, string selectedProductCategoryValue)
-        //{
-        //    // Construct the SQL query with parameters
-        //    string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId AND  category_id=@CategoryId";
-        //    string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-        //    string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
-
-        //    // Create SQL parameters for plant_id and line_id
-        //    SqlParameter[] parameters = new SqlParameter[]
-        //    {
-        //        new SqlParameter("@PlantId", selectedPlantValue),
-        //        new SqlParameter("@CategoryId", selectedProductCategoryValue)
-        //    };
-
-        //    // Call the BindDropDownList method with parameters
-        //    bool recordsBound;
-        //    DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
-
-        //    // Check if any records were bound
-        //    if (!recordsBound)
-        //    {
-        //        string ProductBrands_Error_script = @"<script type='text/javascript'>
-        //            new PNotify({
-        //                title: 'Error',
-        //                text: 'No Brands found for the selected plant and line!',
-        //                type: 'error',
-        //                styling: 'bootstrap3'
-        //            });
-        //        </script>";
-
-        //        // RegisterStartupScript adds the JavaScript code to the page
-        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
-        //    }
-        //}
-        //protected void DDL_ProductBrand_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (DDL_ProductBrand.SelectedIndex != 0)
-        //    {
-        //        string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
-
-        //    }
-        //    else
-        //    {
-        //        DatabaseHelper.BindWithDefaultNoRecords(DDL_ProductBrand);
-
-        //        string DDL_ProductBrand_Error_script = @"<script type='text/javascript'>
-        //                    new PNotify({
-        //                        title: 'Error',
-        //                        text: 'Invalid Selection!',
-        //                        type: 'error',
-        //                        styling: 'bootstrap3'
-        //                    });
-        //                </script>";
-        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowSKUInvalidErrorNotification", DDL_ProductBrand_Error_script, false);
-        //    }
-        //}
-
-
+        
         private bool UploadImage1()
         {
             bool imgSaved = false;
@@ -1136,6 +930,7 @@ namespace AnmolDristi
             string lotNo = string.IsNullOrEmpty(TB_LotNo.Text) ? null : TB_LotNo.Text;
             string vehicleNo = string.IsNullOrEmpty(TB_VehicleNo.Text) ? null : TB_VehicleNo.Text;
 
+            decimal? size = !string.IsNullOrWhiteSpace(TB_Size.Text) ? Convert.ToDecimal(TB_Size.Text) : (decimal?)null;
 
             decimal? quantity = !string.IsNullOrWhiteSpace(TB_Quantity.Text) ? Convert.ToDecimal(TB_Quantity.Text) : (decimal?)null;
             string quantityRemarks = string.IsNullOrEmpty(TXB_Quantity_Remarks.Text) ? null : TXB_Quantity_Remarks.Text;
@@ -1159,6 +954,9 @@ namespace AnmolDristi
 
             decimal? moisture = !string.IsNullOrWhiteSpace(TB_Moisture.Text) ? Convert.ToDecimal(TB_Moisture.Text) : (decimal?)null;
             string moistureRemarks = string.IsNullOrEmpty(TXB_PH_Remarks.Text) ? null : TXB_PH_Remarks.Text;
+
+            decimal? protein = !string.IsNullOrWhiteSpace(TB_Protein.Text) ? Convert.ToDecimal(TB_Protein.Text) : (decimal?)null;
+            string proteinRemarks = string.IsNullOrEmpty(TXB_Protein_Remarks.Text) ? null : TXB_Protein_Remarks.Text;
 
             decimal? ash = !string.IsNullOrWhiteSpace(TB_TotalAsh.Text) ? Convert.ToDecimal(TB_TotalAsh.Text) : (decimal?)null;
             string ashRemarks = string.IsNullOrEmpty(TXB_Ash_Remarks.Text) ? null : TXB_Ash_Remarks.Text;
@@ -1231,6 +1029,7 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@Lot_No", (object)lotNo ?? DBNull.Value);
                         command.Parameters.AddWithValue("@Vehicle_No", (object)vehicleNo ?? DBNull.Value);
 
+                        command.Parameters.AddWithValue("@Size", (object)size ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@Quantity", (object)quantity ?? DBNull.Value);
                         command.Parameters.AddWithValue("@CommentsForQuantity", (object)quantityRemarks ?? DBNull.Value);
@@ -1254,6 +1053,9 @@ namespace AnmolDristi
 
                         command.Parameters.AddWithValue("@Moisture", (object)moisture ?? DBNull.Value);
                         command.Parameters.AddWithValue("@CommentsForMoisture", (object)moistureRemarks ?? DBNull.Value);
+
+                        command.Parameters.AddWithValue("@Protein", (object)protein ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@CommentsForProtein", (object)proteinRemarks ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@Total_Ash", (object)ash ?? DBNull.Value);
                         command.Parameters.AddWithValue("@CommentsForAsh", (object)ashRemarks ?? DBNull.Value);
@@ -1336,11 +1138,14 @@ namespace AnmolDristi
             TB_Supplier.ReadOnly = true;
             TB_ChallanNo.ReadOnly = true;
             TB_ChallanDate.ReadOnly = true;
-            TB_Quantity.ReadOnly = true;
-            TXB_Quantity_Remarks.ReadOnly = true;
             TB_LotNo.ReadOnly = true;
             TB_VehicleNo.ReadOnly = true;
 
+            TB_Size.ReadOnly = true;
+
+            TB_Quantity.ReadOnly = true;
+            TXB_Quantity_Remarks.ReadOnly = true;
+            
             RBL_Smell.Enabled = false;
             TXB_Smell_Remarks.ReadOnly = true;
 
@@ -1360,6 +1165,9 @@ namespace AnmolDristi
 
             TB_Moisture.ReadOnly = true;
             TXB_Moisture_Remarks.ReadOnly = true;
+
+            TB_Protein.ReadOnly = true;
+            TXB_Protein_Remarks.ReadOnly = true;
 
             TB_TotalAsh.ReadOnly = true;
             TXB_Ash_Remarks.ReadOnly = true;
@@ -1485,6 +1293,7 @@ namespace AnmolDristi
 
                 //    break;
 
+
                 case "Brand":
 
                     BrandDIV.Visible = criteria.IsVisible;
@@ -1544,6 +1353,24 @@ namespace AnmolDristi
                     REV_TB_ChallanNo.ValidationExpression = criteria.RegularExpression;
                     REV_TB_ChallanNo.Enabled = criteria.IsRegularExpressionRequired;
 
+
+                    break;
+
+                case "Size":
+
+                    SizeDIV.Visible = criteria.IsVisible;
+
+                    RFV_TB_Size.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_Size.Enabled = criteria.IsRequired;
+
+                    TB_Size.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_Size.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_Size.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_Size.Enabled = criteria.IsRegularExpressionRequired;
+
+                    CV_TB_Size.ErrorMessage = criteria.RangeErrorMessage;
+                    CV_TB_Size.Enabled = criteria.IsRangeRequired;
 
                     break;
 
@@ -1689,6 +1516,26 @@ namespace AnmolDristi
 
                     hdnMinMoistureValue.Value = criteria.MinimumValue.ToString();
                     hdnMaxMoistureValue.Value = criteria.MaximumValue.ToString();
+                    break;
+
+                case "ProteinValue":
+
+                    ProteinDIV.Visible = criteria.IsVisible;
+
+                    RFV_TB_Protein.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_Protein.Enabled = criteria.IsRequired;
+
+                    TB_Protein.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_Protein.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_Protein.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_Protein.Enabled = criteria.IsRegularExpressionRequired;
+
+                    CV_TB_Protein.ErrorMessage = criteria.RangeErrorMessage;
+                    CV_TB_Protein.Enabled = criteria.IsRangeRequired;
+
+                    hdnMinProteinValue.Value = criteria.MinimumValue.ToString();
+                    hdnMaxProteinValue.Value = criteria.MaximumValue.ToString();
                     break;
 
                 case "TotalAshValue":

@@ -219,6 +219,28 @@
             }
         }
 
+        function validateProteinValue(textbox) {
+            console.log("validateProteinValue function called");
+
+            // Retrieve elements and values
+            var proteinValue = parseFloat(document.getElementById('<%= TB_Protein.ClientID %>').value);
+            var remarksDiv = document.getElementById("ProteinRemarksDIV");
+            var minProteinValue = parseFloat(document.getElementById('<%= hdnMinProteinValue.ClientID %>').value);
+            var maxProteinValue = parseFloat(document.getElementById('<%= hdnMaxProteinValue.ClientID %>').value);
+
+            // Define the valid range
+            //var minProteinValue = 20.00;
+            //var maxProteinValue = 30.00;
+
+            // Check if Protein value is within the valid range
+            if (!isNaN(proteinValue) && proteinValue !== "" && proteinValue < minProteinValue || proteinValue > maxProteinValue) {
+                remarksDiv.style.display = "block";
+
+            } else {
+                remarksDiv.style.display = "none";
+            }
+        }
+
         function validateAshValue(textBox) {
             console.log("validateAshValue function called");
 
@@ -543,6 +565,9 @@
     <asp:HiddenField ID="hdnMinMoistureValue" runat="server" />
     <asp:HiddenField ID="hdnMaxMoistureValue" runat="server" />
 
+    <asp:HiddenField ID="hdnMinProteinValue" runat="server" />
+    <asp:HiddenField ID="hdnMaxProteinValue" runat="server" />
+
     <asp:HiddenField ID="hdnMinTotalAshValue" runat="server" />
     <asp:HiddenField ID="hdnMaxTotalAshValue" runat="server" />
 
@@ -688,6 +713,18 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_ChallanDate" runat="server" ErrorMessage="Date is required " ValidationGroup="Submit" ControlToValidate="TB_ChallanDate" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_ChallanDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date" ValidationGroup="Submit"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="SizeDIV" runat="server">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_Size" runat="server" AssociatedControlID="TB_Size" Text="Sample Size :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Size" runat="server" ValidationGroup="Submit" ErrorMessage="Input Required" ControlToValidate="TB_Size" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Size" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Size" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:CustomValidator ID="CV_TB_Size" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [1.00-10.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Size" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Size(in pkts)"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -876,6 +913,28 @@
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Moisture_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Moisture_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TXB_Moisture_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="ProteinDIV" runat="server">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_Protein" runat="server" AssociatedControlID="TB_Protein" Text="Protein(%):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Protein" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Protein" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Protein" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Protein" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:CustomValidator ID="CV_TB_Protein" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Protein" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Protein Value " oninput="validateProteinValue(this);"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="ProteinRemarksDIV" style="display: none;">
+                                <div class="mb-3">
+                                    <asp:Label ID="Label_TXB_Protein_Remarks" runat="server" AssociatedControlID="TXB_Protein_Remarks" Text="Protein Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TXB_Protein_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Protein_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TXB_Protein_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1078,7 +1137,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3" id="ShapeOrSizeDIV" runat="server">
+                            <div class="col-md-3" id="ShapeOrSizeDIV" runat="server" visible="false">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_ShapeOrSize" runat="server" AssociatedControlID="TB_ShapeOrSize" Text="ShapeOrSize  :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_ShapeOrSize" runat="server" ValidationGroup="Submit" ErrorMessage="Input Required" ControlToValidate="TB_ShapeOrSize" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
