@@ -336,14 +336,22 @@
                 }
             }
 
-           <%-- document.getElementById('<%= hdnPointsDiscussed.ClientID %>').value = pointsArray.join(" , ");--%>
+          <%-- ////document.getElementById('<%= hdnPointsDiscussed.ClientID %>').value = pointsArray.join(" , ");--%>
         }
     </script>
 
 
 </div>
-    
-         <div class="col-md-6">
+             <div class="col-md-6">
+         <div class="mb-3">
+        <asp:Label ID="lbl_txtReviewBy" runat="server" AssociatedControlID="txtReviewBy" Text="Review By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtReviewBy" runat="server" ErrorMessage="*" ControlToValidate="txtReviewBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtReviewBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
+        </div>
+    </div>
+</div>
+                 <div class="col-md-6">
          <div class="mb-3">
         <asp:Label ID="lbl_txtActionBy" runat="server" AssociatedControlID="txtActionBy" Text="Action By(Responsibility)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtActionBy" runat="server" ErrorMessage="*" ControlToValidate="txtActionBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -352,8 +360,7 @@
         </div>
     </div>
 </div>
-
-         <div class="col-md-6">
+                 <div class="col-md-4">
          <div class="mb-3">
         <asp:Label ID="lbl_txtTargetDate" runat="server" AssociatedControlID="txtTargetDate" Text="Target Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtTargetDate" runat="server" ErrorMessage="*" ControlToValidate="txtTargetDate" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -363,7 +370,7 @@
     </div>
 </div>
 
-         <div class="col-md-6">
+         <div class="col-md-4">
          <div class="mb-3">
         <asp:Label ID="lbl_txtReviewDate" runat="server" AssociatedControlID="txtReviewDate" Text="Review Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtReviewDate" runat="server" ErrorMessage="*" ControlToValidate="txtReviewDate" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -372,17 +379,9 @@
         </div>
     </div>
 </div>
-         <div class="col-md-6">
-         <div class="mb-3">
-        <asp:Label ID="lbl_txtReviewBy" runat="server" AssociatedControlID="txtReviewBy" Text="Review By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtReviewBy" runat="server" ErrorMessage="*" ControlToValidate="txtReviewBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtReviewBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
-        </div>
-    </div>
-</div>
+
     
-         <div class="col-md-6">
+         <div class="col-md-4">
          <div class="mb-3">
         <asp:Label ID="lbl_ddlStatus" runat="server" AssociatedControlID="ddlStatus" Text="Status" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_ddlStatus" runat="server" ErrorMessage="*" ControlToValidate="ddlStatus" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -408,7 +407,7 @@
 
 <div class="col-md-2">
  <div class="mt-3">
-     <asp:Button ID="btnAddIssues" runat="server" Text="Add Issues" CssClass="btn btn-primary" ValidationGroup="add1" CausesValidation="true" OnClick="btnAddIssues_Click"  OnClientClick="clearFields();" />
+     <asp:Button ID="btnAddIssues" runat="server" Text="Add Issues" CssClass="btn btn-success" ValidationGroup="add1" CausesValidation="true"  OnClientClick="preparePoints();" OnClick="btnAddIssues_Click"  />
     <%-- <asp:Label ID="lblMsg1" runat="server" ></asp:Label>--%>
  </div>
   </div>                         
@@ -450,19 +449,20 @@
             </div>
 
 
-            <%--Button--%>
-           <%-- <div class="col-md-3">
+           <%-- <%--Button--%>
+           <div class="col-md-3">
                 <div class="mb-3">
                     <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
                         <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
+                        
                         <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         
                     </div>
                 </div>
-            </div>--%>
+            </div>
 
         </div>
     </div>
