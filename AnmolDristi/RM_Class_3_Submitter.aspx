@@ -129,7 +129,7 @@
                                   <ItemTemplate>
                                       <asp:Button ID="btn_viewdetails" runat="server" Text="View" Font-Size="Smaller" CssClass="btn btn-sm btn-warning" CommandName="View" CausesValidation="false" CommandArgument='<%# Eval("DBID") %>' />
                                   </ItemTemplate>
-                              </asp:TemplateField>
+                              </asp:TemplateField> 
                           </Columns>
                       </asp:GridView>
 

@@ -29,6 +29,7 @@ namespace AnmolDristi
         public static string App1_Status = string.Empty;
         public static string App2_Status = string.Empty;
         public static string DottedApp_Status = string.Empty;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -86,21 +87,14 @@ namespace AnmolDristi
             string query = @"
                         SELECT
                         P.MaterialName as MaterialId,
-                        P.PlantName as PlantID,
-	                    P.Line,
-	                    P.ProductBrand,
-
+                        P.PlantName as PlantID ,
                         M.Material_Name,
                         A.plant_name,
-	                    L.line_name,
-	                    pb.brand_name,
                         P.*
                     FROM
                         TRN_RM_CLASS_3 P
                     LEFT JOIN dbo.RM_MATERIAL M ON P.MaterialName = M.Material_Id
                     LEFT JOIN dbo.MST_PlantDetails A ON P.PlantName = A.plant_id
-                    LEFT JOIN dbo.MST_Plant_Lines L ON P.Line = L.line_id
-                    LEFT JOIN dbo.MST_LineCatBrands pb ON P.ProductBrand = pb.brand_id
                     WHERE P.Id = @Id";
 
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -173,79 +167,6 @@ namespace AnmolDristi
             }
         }
 
-        private void PlantLinesBinder(string selectedPlantValue)
-        {
-            string query = "SELECT line_id, line_name FROM MST_Plant_Lines WHERE plant_id = @SelectedPlantValue";
-            string textField = "line_name";
-            string valueField = "line_id";
-
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_PlantLine, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedPlantValue), out recordsBound);
-
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_PlantLine);
-
-                string PlantLinesBinder_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'An error occurred!',
-                                type: 'error',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowPlantLinesBinderErrorNotification", PlantLinesBinder_Error_script, false);
-            }
-        }
-
-        private void LineBrandsBinder(string selectedPlantValue, string selectedPlantLineValue)
-        {
-            // Construct the SQL query with parameters
-            string query = "SELECT brand_id, brand_name FROM MST_LineCatBrands WHERE plant_id = @PlantId ";
-            string textField = "brand_name"; // Assuming this is the correct field for displaying in the DropDownList
-            string valueField = "brand_id"; // Assuming this is the correct field for storing in the DropDownList
-
-            // Create SQL parameters for plant_id and line_id
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@PlantId", selectedPlantValue),
-            };
-
-            // Call the BindDropDownList method with parameters
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_ProductBrand, textField, valueField, parameters, out recordsBound);
-
-            // Check if any records were bound
-            if (!recordsBound)
-            {
-                string ProductBrands_Error_script = @"<script type='text/javascript'>
-                    new PNotify({
-                        title: 'Error',
-                        text: 'No Brands found for the selected plant and line!',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                </script>";
-
-                // RegisterStartupScript adds the JavaScript code to the page
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowProductBrandsBinderErrorNotification", ProductBrands_Error_script, false);
-            }
-        }
-
-        private void PopulateColorDropdown()
-        {
-            // Add the "Select" option as the first item
-            DDL_Color.Items.Add(new ListItem("Select", "0")); // Empty value for default selection
-
-            // Add items to the DropDownList
-            DDL_Color.Items.Add(new ListItem("Brown", "Brown"));
-            DDL_Color.Items.Add(new ListItem("Yellow", "Yellow"));
-            DDL_Color.Items.Add(new ListItem("White", "White"));
-            DDL_Color.Items.Add(new ListItem("Colourless", "Colourless"));
-            DDL_Color.Items.Add(new ListItem("Other", "Other"));
-
-        }
-
 
         void getDetails(DataTable dt)
         {
@@ -265,54 +186,53 @@ namespace AnmolDristi
                 DDL_Plant.SelectedValue = PlantId;
                 DDL_Plant.Enabled = false;
 
-                PlantLinesBinder(PlantId);
-                PlantLine = dt.Rows[0]["line"].ToString();
-                DDL_PlantLine.SelectedValue = PlantLine;
-                DDL_PlantLine.Enabled = false;
+                TB_ReceivingDate.Text = Convert.ToDateTime(dt.Rows[0]["ReceivingDate"]).ToString("dd-MM-yyyy");
 
-                //TB_Brand.Text = dt.Rows[0]["ProductBrand"].ToString();
+                TB_Quantity.Text = dt.Rows[0]["Quantity"].ToString();
+                TXB_Quantity_Remarks.Text = dt.Rows[0]["CommentsForQuantity"].ToString();
 
-                string CategoryBrand = dt.Rows[0]["ProductBrand"].ToString();
-                if (!string.IsNullOrEmpty(CategoryBrand) && CategoryBrand != "0")
-                {
-                    LineBrandsBinder(PlantId, PlantLine);
-
-                    if (DDL_ProductBrand.Items.FindByValue(CategoryBrand) != null)
-                    {
-                        DDL_ProductBrand.SelectedValue = CategoryBrand;
-                        DDL_ProductBrand.Enabled = false;
-                    }
-                }
-
-
+                TB_Size.Text = dt.Rows[0]["SampleSize"].ToString();
+                TB_BrandName.Text = dt.Rows[0]["ProductBrand"].ToString();
                 TB_Supplier.Text = dt.Rows[0]["Supplier_Name"].ToString();
+                TB_BatchNo.Text = dt.Rows[0]["MfgBatchNo"].ToString();
 
                 TB_ChallanNo.Text = dt.Rows[0]["Challan_No"].ToString();
-                TB_ChallanDate.Text = dt.Rows[0]["Challan_Date"].ToString();
                 TB_LotNo.Text = dt.Rows[0]["Lot_No"].ToString();
                 TB_VehicleNo.Text = dt.Rows[0]["Vehicle_No"].ToString();
-                TB_PkdMfg.Text = dt.Rows[0]["Pkd_Date"].ToString();
+
+                TB_ChallanDate.Text =dt.Rows[0]["Challan_Dates"].ToString();
+                TB_Mfg.Text = dt.Rows[0]["Mfg_Dates"].ToString();
+                TB_BeforeDate.Text = dt.Rows[0]["BB_Dates"].ToString();
 
                 TB_MfgName.Text = dt.Rows[0]["MfgName"].ToString();
-                TB_BeforeDate.Text = dt.Rows[0]["BeforeDate"].ToString();
                 TB_FssaiNo.Text = dt.Rows[0]["FssaiNo"].ToString();
+
+                RBL_ManufNameAdd.SelectedValue = dt.Rows[0]["MfgYesNo"].ToString();
+                TXB_ManufNameAdd_Remarks.Text = dt.Rows[0]["MfgYesNoRemarks"].ToString();
+
+                RBL_ManufDatePkd.SelectedValue = dt.Rows[0]["PkdDate_YesNo"].ToString();
+                TXB_ManufDatePkd_Remarks.Text = dt.Rows[0]["PkdDateYesNoRemarks"].ToString();
+
+                RBL_Bestb4date.SelectedValue = dt.Rows[0]["BestbfrDate_YesNo"].ToString();
+                TXB_Bestb4date_Remarks.Text = dt.Rows[0]["BestbfrDate_YesNoRemarks"].ToString();
+
+                RBL_BatchLotNo.SelectedValue = dt.Rows[0]["BatchLotNo_YesNo"].ToString();
+                TXB_BatchLotNo_Remarks.Text = dt.Rows[0]["BatchLotNo_YesNoRemarks"].ToString();
+
                 RBL_Fssai_Logo.SelectedValue = dt.Rows[0]["Fssai_Logo"].ToString();
                 RBL_Veg_Logo.SelectedValue = dt.Rows[0]["Veg_Logo"].ToString();
 
                 RBL_Packing_Condition.SelectedValue = dt.Rows[0]["Packing_Condition"].ToString();
                 TXB_PackingCondition_Remarks.Text = dt.Rows[0]["PackingCondition_Remarks"].ToString();
 
-                TB_Quantity.Text = dt.Rows[0]["Quantity"].ToString();
-                TXB_Quantity_Remarks.Text = dt.Rows[0]["CommentsForQuantity"].ToString();
-
                 RBL_Grade.SelectedValue = dt.Rows[0]["Grade"].ToString();
                 TXB_Grade_Remarks.Text = dt.Rows[0]["CommentsForGrade"].ToString();
 
-                PopulateColorDropdown();
-                Color = dt.Rows[0]["Color"].ToString();
-                DDL_Color.SelectedValue = Color;
-                TXB_Color_Remarks.Text = dt.Rows[0]["CommentsForColor"].ToString();
-                DDL_Color.Enabled = false;
+                RBL_Colour.SelectedValue = dt.Rows[0]["Color"].ToString();
+                TXB_Colour_Remarks.Text = dt.Rows[0]["CommentsForColor"].ToString();
+
+                RBL_OdourAfterAcidification.SelectedValue = dt.Rows[0]["OdourAftrAcid"].ToString();
+                TXB_OdourAfterAcidification_Remarks.Text = dt.Rows[0]["OdourAftrAcid_Remarks"].ToString();
 
                 RBL_Smell.SelectedValue = dt.Rows[0]["Smell"].ToString();
                 TXB_Smell_Remarks.Text = dt.Rows[0]["CommentsForSmell"].ToString();
@@ -322,8 +242,6 @@ namespace AnmolDristi
 
                 RBL_TasteFlavor.SelectedValue = dt.Rows[0]["Taste"].ToString();
                 TXB_TasteFlavor_Remarks.Text = dt.Rows[0]["CommentsForTaste"].ToString();
-
-                TB_Foreign_Impurities.Text = dt.Rows[0]["Foreign_Matter_Impurities"].ToString();
 
                 TB_PH.Text = dt.Rows[0]["PH"].ToString();
                 TXB_PH_Remarks.Text = dt.Rows[0]["CommentsForPH"].ToString();
@@ -381,12 +299,21 @@ namespace AnmolDristi
 
                 RBL_Beverage.SelectedValue = dt.Rows[0]["Beverage"].ToString();
 
+                RBL_ForeignMatters.SelectedValue = dt.Rows[0]["Foreign_Matter_YesNo"].ToString();
+                TXB_ForeignMatters_Remarks.Text = dt.Rows[0]["Foreign_Matter_YesNoRemarks"].ToString();
+
+                TB_Foreign_Impurities.Text = dt.Rows[0]["Foreign_Matter_Impurities"].ToString();
+
                 imgMaterial.ImageUrl = dt.Rows[0]["Material_Image"].ToString();
+
+                RBL_AppStatus.SelectedValue = dt.Rows[0]["ApprovalStatus"].ToString();
+                TXB_AppStatus_Remarks.Text = dt.Rows[0]["Remarks"].ToString();
+
 
 
                 StandardValue_Binder(MaterialId, PlantId); // Texbox bind with std values
                 string FormID = row["FormID"].ToString();
-                LoadFormDetails(FormID, PlantId, PlantLine);
+                LoadFormDetails(FormID, PlantId);
 
                 // Assume the logged-in user's Employee Code is stored in a session variable
                 string loggedInUserCode = Session["WORKMAN"].ToString(); // Example session variable
@@ -550,11 +477,8 @@ namespace AnmolDristi
 
         private void StandardValue_Binder(string MaterialId, string PlantId)
         {
-            //DataTable dataTable = DatabaseHelper.GetRMFieldsControlByPlantId(Convert.ToInt32(MaterialId), Convert.ToInt32(PlantId));
-            DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByMaterialIdAndPlantId(
-                    Convert.ToInt16(MaterialId),
-                    Convert.ToInt16(PlantId)
-                );
+            DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByMaterialIdAndPlantId(Convert.ToInt32(MaterialId), Convert.ToInt32(PlantId));
+
 
             // Example: Querying the DataTable for a specific field name
             //string fieldName = "no_of_pcs"; // Specify the field name you want to query
@@ -604,59 +528,15 @@ namespace AnmolDristi
         {
             switch (fieldName)
             {
-                case "ProductBrand":
+                case "ReceivingDate":
 
-                    BrandDIV.Visible = criteria.IsVisible;
-                    Label_DDL_ProductBrand.Text = criteria.DisplayName;
+                    ReceivingDate.Visible = criteria.IsVisible;
+                    lbl_TB_ReceivingDate.Text = criteria.DisplayName;
 
-                    RFV_DDL_ProductBrand.ErrorMessage = criteria.RequiredFieldErrorMessage;
-                    RFV_DDL_ProductBrand.Enabled = criteria.IsRequired;
+                    RFV_TB_ReceivingDate.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_ReceivingDate.Enabled = criteria.IsRequired;
 
-                    break;
-
-                case "Supplier":
-                    SupplierDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_Supplier.Text = criteria.DisplayName;
-
-                    RFV_TB_Supplier.ErrorMessage = criteria.RequiredFieldErrorMessage;
-                    RFV_TB_Supplier.Enabled = criteria.IsRequired;
-
-                    TB_Supplier.Attributes["placeholder"] = criteria.RangeErrorMessage;
-
-                    REV_TB_Supplier.ErrorMessage = criteria.RegularExpressionErrorMessage;
-                    REV_TB_Supplier.ValidationExpression = criteria.RegularExpression;
-                    REV_TB_Supplier.Enabled = criteria.IsRegularExpressionRequired;
-
-                    hdnMinSupplierValue.Value = criteria.MinimumValue.ToString();
-                    hdnMaxSupplierValue.Value = criteria.MaximumValue.ToString();
-
-                    break;
-
-                case "ChallanDate":
-
-                    ChallanDateDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_ChallanDate.Text = criteria.DisplayName;
-
-                    RFV_TB_ChallanDate.ErrorMessage = criteria.RequiredFieldErrorMessage;
-                    RFV_TB_ChallanDate.Enabled = criteria.IsRequired;
-
-                    break;
-
-                case "ChallanNo":
-
-                    ChallanNoDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_ChallanNo.Text = criteria.DisplayName;
-
-                    RFV_TB_ChallanNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
-                    RFV_TB_ChallanNo.Enabled = criteria.IsRequired;
-
-                    TB_ChallanNo.Attributes["placeholder"] = criteria.RangeErrorMessage;
-
-                    REV_TB_ChallanNo.ErrorMessage = criteria.RegularExpressionErrorMessage;
-                    REV_TB_ChallanNo.ValidationExpression = criteria.RegularExpression;
-                    REV_TB_ChallanNo.Enabled = criteria.IsRegularExpressionRequired;
-
-
+                    TB_ReceivingDate.Attributes["placeholder"] = criteria.RangeErrorMessage;
                     break;
 
                 case "Quantity":
@@ -680,7 +560,101 @@ namespace AnmolDristi
                     hdnMaxQtyValue.Value = criteria.MaximumValue.ToString();
                     break;
 
-                case "Lot/Batch":
+                case "Sample":
+
+                    SizeDIV.Visible = criteria.IsVisible;
+                    Lbl_TB_Size.Text = criteria.DisplayName;
+
+                    RFV_TB_Size.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_Size.Enabled = criteria.IsRequired;
+
+                    TB_Size.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_Size.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_Size.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_Size.Enabled = criteria.IsRegularExpressionRequired;
+
+                    CV_TB_Size.ErrorMessage = criteria.RangeErrorMessage;
+                    CV_TB_Size.Enabled = criteria.IsRangeRequired;
+
+                    hdnMinSizeValue.Value = criteria.MinimumValue.ToString();
+                    hdnMaxSizeValue.Value = criteria.MaximumValue.ToString();
+                    break;
+
+                case "Supplier":
+                    SupplierDIV.Visible = criteria.IsVisible;
+                    Lbl_TB_Supplier.Text = criteria.DisplayName;
+
+                    RFV_TB_Supplier.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_Supplier.Enabled = criteria.IsRequired;
+
+                    TB_Supplier.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_Supplier.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_Supplier.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_Supplier.Enabled = criteria.IsRegularExpressionRequired;
+
+                    hdnMinSupplierValue.Value = criteria.MinimumValue.ToString();
+                    hdnMaxSupplierValue.Value = criteria.MaximumValue.ToString();
+                    break;
+
+                case "ProductBrand":
+                    BrandDIV.Visible = criteria.IsVisible;
+                    Lbl_TB_BrandName.Text = criteria.DisplayName;
+
+                    RFV_TB_BrandName.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_BrandName.Enabled = criteria.IsRequired;
+
+                    TB_BrandName.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_BrandName.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_BrandName.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_BrandName.Enabled = criteria.IsRegularExpressionRequired;
+
+                    hdnMinBrandValue.Value = criteria.MinimumValue.ToString();
+                    hdnMaxBrandValue.Value = criteria.MaximumValue.ToString();
+                    break;
+
+                case "BatchNo":
+
+                    BatchNoDIV.Visible = criteria.IsVisible;
+                    Lbl_TB_BatchNo.Text = criteria.DisplayName;
+
+                    RFV_TB_BatchNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_BatchNo.Enabled = criteria.IsRequired;
+
+                    TB_BatchNo.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_BatchNo.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_BatchNo.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_BatchNo.Enabled = criteria.IsRegularExpressionRequired;
+                    break;
+
+                case "ChallanNo":
+
+                    ChallanNoDIV.Visible = criteria.IsVisible;
+                    Lbl_TB_ChallanNo.Text = criteria.DisplayName;
+
+                    RFV_TB_ChallanNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_ChallanNo.Enabled = criteria.IsRequired;
+
+                    TB_ChallanNo.Attributes["placeholder"] = criteria.RangeErrorMessage;
+
+                    REV_TB_ChallanNo.ErrorMessage = criteria.RegularExpressionErrorMessage;
+                    REV_TB_ChallanNo.ValidationExpression = criteria.RegularExpression;
+                    REV_TB_ChallanNo.Enabled = criteria.IsRegularExpressionRequired;
+                    break;
+
+                case "ChallanDate":
+
+                    ChallanDateDIV.Visible = criteria.IsVisible;
+                    Lbl_TB_ChallanDate.Text = criteria.DisplayName;
+
+                    RFV_TB_ChallanDate.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_ChallanDate.Enabled = criteria.IsRequired;
+                    break;
+
+                case "Lot/Gate":
 
                     LotNoDIV.Visible = criteria.IsVisible;
                     Lbl_TB_LotNo.Text = criteria.DisplayName;
@@ -693,8 +667,24 @@ namespace AnmolDristi
                     REV_TB_LotNo.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_LotNo.ValidationExpression = criteria.RegularExpression;
                     REV_TB_LotNo.Enabled = criteria.IsRegularExpressionRequired;
+                    break;
 
+                case "Pkd/MfgDate":
 
+                    MfgDIV.Visible = criteria.IsVisible;
+                    Lbl_TB_Mfg.Text = criteria.DisplayName;
+
+                    RFV_TB_Mfg.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_Mfg.Enabled = criteria.IsRequired;
+                    break;
+
+                case "BeforeDate":
+
+                    BeforeDateDIV.Visible = criteria.IsVisible;
+                    Lbl_TB_BeforeDate.Text = criteria.DisplayName;
+
+                    RFV_TB_BeforeDate.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_TB_BeforeDate.Enabled = criteria.IsRequired;
                     break;
 
                 case "Vehicle":
@@ -710,17 +700,6 @@ namespace AnmolDristi
                     REV_TB_VehicleNo.ErrorMessage = criteria.RegularExpressionErrorMessage;
                     REV_TB_VehicleNo.ValidationExpression = criteria.RegularExpression;
                     REV_TB_VehicleNo.Enabled = criteria.IsRegularExpressionRequired;
-
-                    break;
-
-                case "Pkd/MfgDate":
-
-                    PkdMfgDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_PkdMfg.Text = criteria.DisplayName;
-
-                    RFV_TB_PkdMfg.ErrorMessage = criteria.RequiredFieldErrorMessage;
-                    RFV_TB_PkdMfg.Enabled = criteria.IsRequired;
-
                     break;
 
                 case "Grade":
@@ -730,9 +709,9 @@ namespace AnmolDristi
 
                     RFV_RBL_Grade.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Grade.Enabled = criteria.IsRequired;
-
                     break;
 
+                //--Optional Inputs----//
                 case "MfgName/Address":
 
                     MfgNameDIV.Visible = criteria.IsVisible;
@@ -749,17 +728,6 @@ namespace AnmolDristi
 
                     hdnMinMfgNameValue.Value = criteria.MinimumValue.ToString();
                     hdnMaxMfgNameValue.Value = criteria.MaximumValue.ToString();
-
-                    break;
-
-                case "BestBeforeDate":
-
-                    BeforeDateDIV.Visible = criteria.IsVisible;
-                    Lbl_TB_BeforeDate.Text = criteria.DisplayName;
-
-                    RFV_TB_BeforeDate.ErrorMessage = criteria.RequiredFieldErrorMessage;
-                    RFV_TB_BeforeDate.Enabled = criteria.IsRequired;
-
                     break;
 
                 case "LicenceNo":
@@ -778,27 +746,65 @@ namespace AnmolDristi
 
                     hdnMinLicenseNoValue.Value = criteria.MinimumValue.ToString();
                     hdnMaxLicenseNoValue.Value = criteria.MaximumValue.ToString();
+                    break;
 
+
+                //---Yes / No Inputs
+
+                case "MfgNameAddYNo":
+                    Label_ManufNameAdd.Text = criteria.DisplayName;
+                    ManufNameAddDIV.Visible = criteria.IsVisible;
+
+                    RFV_RBL_ManufNameAdd.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_RBL_ManufNameAdd.Enabled = criteria.IsRequired;
+                    break;
+
+                case "MfdYNo":
+                    Label_ManufDatePkd.Text = criteria.DisplayName;
+                    ManufDatePkdDIV.Visible = criteria.IsVisible;
+
+                    RFV_RBL_ManufDatePkd.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_RBL_ManufDatePkd.Enabled = criteria.IsRequired;
+                    break;
+
+                case "BestBeforeDate":
+                    Lbl_Bestb4date.Text = criteria.DisplayName;
+                    Bestb4dateDIV.Visible = criteria.IsVisible;
+
+                    RFV_RBL_Bestb4date.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_RBL_Bestb4date.Enabled = criteria.IsRequired;
+                    break;
+
+                case "BatchLotYNo":
+                    Label_BatchLotNo.Text = criteria.DisplayName;
+                    BatchLotNoDIV.Visible = criteria.IsVisible;
+
+                    RFV_RBL_BatchLotNo.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_RBL_BatchLotNo.Enabled = criteria.IsRequired;
                     break;
 
                 case "FssaiLogo":
-
-                    FssaiLogoDIV.Visible = criteria.IsVisible;
                     Label_Fssai_Logo.Text = criteria.DisplayName;
+                    FssaiLogoDIV.Visible = criteria.IsVisible;
 
                     RFV_RBL_Fssai_Logo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Fssai_Logo.Enabled = criteria.IsRequired;
-
                     break;
 
                 case "VegLogo":
-
-                    VegLogoDIV.Visible = criteria.IsVisible;
                     Label_Veg_Logo.Text = criteria.DisplayName;
+                    VegLogoDIV.Visible = criteria.IsVisible;
 
                     RFV_RBL_Veg_Logo.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Veg_Logo.Enabled = criteria.IsRequired;
+                    break;
 
+                case "OFA":
+                    Label_OdourAfterAcidification.Text = criteria.DisplayName;
+                    OdourAfterAcidificationDIV.Visible = criteria.IsVisible;
+
+                    RFV_RBL_OdourAfterAcidification.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_RBL_OdourAfterAcidification.Enabled = criteria.IsRequired;
                     break;
 
                 case "PackingCondition":
@@ -813,18 +819,18 @@ namespace AnmolDristi
 
                 case "Color":
 
-                    ColorDIV.Visible = criteria.IsVisible;
-                    LabelColor.Text = criteria.DisplayName;
+                    ColourDIV.Visible = criteria.IsVisible;
+                    Label_Colour.Text = criteria.DisplayName;
 
-                    RFV_DDL_Color.ErrorMessage = criteria.RequiredFieldErrorMessage;
-                    RFV_DDL_Color.Enabled = criteria.IsRequired;
+                    RFV_RBL_Colour.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_RBL_Colour.Enabled = criteria.IsRequired;
 
                     break;
 
                 case "Odour/Smell":
 
                     SmellDIV.Visible = criteria.IsVisible;
-                    LabelSmell.Text = criteria.DisplayName;
+                    Label_Smell.Text = criteria.DisplayName;
 
                     RFV_RBL_Smell.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Smell.Enabled = criteria.IsRequired;
@@ -834,7 +840,7 @@ namespace AnmolDristi
                 case "Appearance":
 
                     AppearanceDIV.Visible = criteria.IsVisible;
-                    LabelAppearance.Text = criteria.DisplayName;
+                    Label_Appearance.Text = criteria.DisplayName;
 
                     RFV_RBL_Appearance.ErrorMessage = criteria.RequiredFieldErrorMessage;
                     RFV_RBL_Appearance.Enabled = criteria.IsRequired;
@@ -851,8 +857,18 @@ namespace AnmolDristi
 
                     break;
 
-                case "ForeignMatter/Impurities":
+                case "Impurities":
 
+                    ForeignMattersDIV.Visible = criteria.IsVisible;
+                    Label_ForeignMatters.Text = criteria.DisplayName;
+
+                    RFV_RBL_ForeignMatters.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_RBL_ForeignMatters.Enabled = criteria.IsRequired;
+
+                    break;
+
+                case "ForeignMatter/Impurities":
+                    //Textbox Input
                     ImpuritiesDIV.Visible = criteria.IsVisible;
                     Lbl_TB_Foreign_Impurities.Text = criteria.DisplayName;
 
@@ -1257,6 +1273,14 @@ namespace AnmolDristi
 
                     break;
 
+                case "Acceptance":
+                    AppStatusDIV.Visible = criteria.IsVisible;
+                    LabelAppStatus.Text = criteria.DisplayName;
+
+                    RFV_RBL_AppStatus.ErrorMessage = criteria.RequiredFieldErrorMessage;
+                    RFV_RBL_AppStatus.Enabled = criteria.IsRequired;
+                    break;
+
 
                 default:
                     break;
@@ -1265,20 +1289,20 @@ namespace AnmolDristi
 
 
 
-        private void LoadFormDetails(string FormID, string selectedPlantValue, string selectedPlantLineValue)
+        private void LoadFormDetails(string FormID, string selectedPlantValue)
         {
             // Replace with your actual connection string
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix", conn))
+                using (SqlCommand cmd = new SqlCommand("usp_GetFormsApprovalMatrix_PM", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     // Set parameters for the stored procedure
                     cmd.Parameters.AddWithValue("@PlantId", selectedPlantValue); // Replace with actual value
-                    cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);  // Replace with actual value
+                    //cmd.Parameters.AddWithValue("@LineId", selectedPlantLineValue);  // Replace with actual value
                     cmd.Parameters.AddWithValue("@FormID", FormID); // Replace with actual value
                     cmd.Parameters.AddWithValue("@FormName", "RM_Class_3"); // Replace with actual value
 
@@ -1335,6 +1359,7 @@ namespace AnmolDristi
             UpdateColumnBasedOnApproverType();
             LoadRecordData(RecordID);
         }
+
         protected void BtnReject_Click(object sender, EventArgs e)
         {
             RejectionBasedOnApproverType();
@@ -1492,7 +1517,6 @@ namespace AnmolDristi
                 }
             }
         }
-
 
 
     }
