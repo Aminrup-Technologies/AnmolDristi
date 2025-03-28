@@ -9,6 +9,13 @@
         .remarks_border .form-control {
             border: 1px solid #808080;
         }
+
+        @media print {
+    input[type="submit"] {
+        display: none !important;
+    }
+}
+
     </style>
 
 </asp:Content>
@@ -141,6 +148,17 @@
             }
         };
 
+      
+    //        function printReport() {
+    //    var printContents = document.body.innerHTML;  // Get the whole page content
+    //        var originalContents = document.body.innerHTML;
+
+    //        document.body.innerHTML = printContents;  // Set only the required part
+    //        window.print();  // Trigger print
+
+    //        document.body.innerHTML = originalContents;  // Restore original page
+    //}
+  
 
 
     </script>
@@ -557,7 +575,8 @@
 <asp:Button ID="btnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm" ValidationGroup="Delete" CausesValidation="false" OnClick="btnDelete_Click" />
 <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="btnSave_Click" />
 <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-secondary btn-sm" ValidationGroup="Cancel" CausesValidation="false" OnClick="btnCancel_Click" />
-         
+         <%--<asp:Button ID="btnPrint" runat="server" CssClass="btn btn-success" Text="Print" OnClientClick="printReport(); return false;" />--%>
+
 
                             </div>
                         </div>

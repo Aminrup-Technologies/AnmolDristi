@@ -83,6 +83,7 @@
     <Content Include="csm_ppechecklist.aspx" />
     <Content Include="csm_ppechecklist_detailed.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="Line_Walk_Status.aspx" />
     <Content Include="packages.config" />
     <Content Include="ppe_report.aspx" />
     <Content Include="qaqc_home.aspx" />
@@ -100,7 +101,6 @@
   <ItemGroup>
     <Content Include="blank.aspx" />
     <Content Include="login.aspx" />
-    <Content Include="csm_ppe_checklist_report.aspx" />
     <Content Include="WebData\No_Image.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -170,6 +170,13 @@
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Line_Walk_Status.aspx.cs">
+      <DependentUpon>Line_Walk_Status.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Line_Walk_Status.aspx.designer.cs">
+      <DependentUpon>Line_Walk_Status.aspx</DependentUpon>
+    </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -198,13 +205,6 @@
     </Compile>
     <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="csm_ppe_checklist_report.aspx.cs">
-      <DependentUpon>csm_ppe_checklist_report.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="csm_ppe_checklist_report.aspx.designer.cs">
-      <DependentUpon>csm_ppe_checklist_report.aspx</DependentUpon>
     </Compile>
     <Compile Include="SN_CRUD_Oprtn.aspx.cs">
       <DependentUpon>SN_CRUD_Oprtn.aspx</DependentUpon>
