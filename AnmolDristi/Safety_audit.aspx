@@ -29,7 +29,7 @@
         }
     </style>
 
-   
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -251,7 +251,7 @@
                                             <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <%--<tr>
                                         <td><b>Select Field:</b></td>
                                         <td>
                                             <asp:DropDownList ID="ddlDescriptionFields" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="DdlDescriptionFields_SelectedIndexChanged">
@@ -264,13 +264,51 @@
                                                 <asp:ListItem Text="Unsafe Act Conditions" Value="UnsafeAct"></asp:ListItem>
                                             </asp:DropDownList>
                                         </td>
-                                    </tr>
+                                    </tr>--%>
                                     <tr>
+                                        <td><b>Good Citizens
+                                        </b></td>
+                                        <td>
+                                            <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control form-control-sm rounded">
+                                                <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
+                                                <asp:ListItem Text="Untidy area minor issues sets poor example" Value="Untidy area minor issues sets poor example"></asp:ListItem>
+                                                <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="Restricted access, Unacceptable trash, Disorderly"></asp:ListItem>
+                                                <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="Rule or procedure Violation, Potential injury"></asp:ListItem>
+                                                <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="Unsafe condition, Serious injury potential"></asp:ListItem>
+                                                <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
+                                                <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
+                                            </asp:DropDownList>
+
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="DropDownList1" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><b>No. of Violations
+                                        </b></td>
+                                        <td>
+                                            <asp:DropDownList ID="DropDownList2" runat="server" CssClass="form-control form-control-sm rounded">
+                                                <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
+                                                <asp:ListItem Text="Untidy area minor issues sets poor example" Value="Untidy area minor issues sets poor example"></asp:ListItem>
+                                                <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="Restricted access, Unacceptable trash, Disorderly"></asp:ListItem>
+                                                <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="Rule or procedure Violation, Potential injury"></asp:ListItem>
+                                                <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="Unsafe condition, Serious injury potential"></asp:ListItem>
+                                                <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
+                                                <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
+                                            </asp:DropDownList>
+
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="DropDownList2" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+
+                                    <%--<tr>
                                         <td><b>Options:</b></td>
                                         <td>
                                             <asp:Panel ID="pnlRadioButtons" runat="server" CssClass="radio-options"></asp:Panel>
                                         </td>
-                                    </tr>
+                                    </tr>--%>
                                 </table>
 
 
@@ -289,7 +327,7 @@
 
 
 
-                            
+
                             </div>
                         </div>
                     </div>
