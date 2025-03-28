@@ -325,7 +325,6 @@
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <%--<asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>--%>
                                         <div class="input-group input-group-sm">
                                             <asp:Button ID="btnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="SubmitKYTIncidentData_Click" />
                                             <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />

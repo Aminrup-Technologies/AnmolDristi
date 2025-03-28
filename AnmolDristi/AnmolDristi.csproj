@@ -90,6 +90,8 @@
     <Content Include="qaqc_home.aspx" />
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
+    <Content Include="Safety_audit.aspx" />
+    <Content Include="Safety_View.aspx" />
     <Content Include="WebData\OH4Y_Logo.png" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
@@ -206,6 +208,20 @@
     </Compile>
     <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
       <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety_audit.aspx.cs">
+      <DependentUpon>Safety_audit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety_audit.aspx.designer.cs">
+      <DependentUpon>Safety_audit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety_View.aspx.cs">
+      <DependentUpon>Safety_View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety_View.aspx.designer.cs">
+      <DependentUpon>Safety_View.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

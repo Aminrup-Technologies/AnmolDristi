@@ -142,9 +142,12 @@
                                                     <ul class="nav child_menu">
                                                         <li id="Li1" runat="server" class="sub_menu"><a href="incident_analysis.aspx">Incident Reporting</a></li>
                                                         <li id="Li2" runat="server" class="sub_menu"><a href="KYT.aspx">KYT Report</a></li>
+                                                        <li id="Li3" runat="server" class="sub_menu"><a href="Safety_audit.aspx">Safety Report</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
+
+
                                         </li>
 
                                     </ul>
