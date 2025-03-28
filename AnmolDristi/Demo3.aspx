@@ -25,7 +25,6 @@
         }
     </style>
     <%--///--%>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%-- <script type="text/javascript">
@@ -213,9 +212,9 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-">
+                                <div class="col-md-4  ">
                                     <div class="form-group">
-                                        <asp:Label ID="lbl_Dept" runat="server" AssociatedControlID="TB_Dept" Text="Department:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" placeholder=""></asp:Label>
+                                        <asp:Label CssClass="" ID="lbl_Dept" runat="server" AssociatedControlID="TB_Dept" Text="Department:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" placeholder=""></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_Dept" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Dept" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:TextBox ID="TB_Dept" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     </div>
@@ -223,7 +222,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <asp:Label ID="lbl_Job" runat="server" AssociatedControlID="TB_Job" Text="Job :" ForeColor="Blue" Font-Bold="true" Font-Size="Small" placeholder=""></asp:Label>
-                                      <asp:RequiredFieldValidator ID="RFV_TB_Job" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Job" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_Job" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Job" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
 
                                         <asp:TextBox ID="TB_Job" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
 
@@ -269,19 +268,19 @@
                                                 <div class="col-md-10">
                                                     <asp:Label ID="lbl5" runat="server" Text=" Are tops and insides of all cupboards, shelves, tables,  etc. free of unwanted items?"
                                                         Font-Bold="false" Font-Size="Small"></asp:Label>
-                                                 <%--   rfv--%>
+                                                    <%--   rfv--%>
                                                 </div>
                                                 <div class="col-md-2 d-flex justify-content-betwen">
                                                     <asp:RadioButtonList ID="Text5" runat="server" RepeatDirection="Horizontal" CssClass="w-100" onchange="toggleRemarksSection(this);">
                                                         <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                         <asp:ListItem Text="Not Ok" Value="2"></asp:ListItem>
                                                     </asp:RadioButtonList>
-                                                    
+
                                                 </div>
                                                 <div class="col-md-12 remarks-section" style="display: none;">
                                                     <asp:Label runat="server" Text=" Remarks" CssClass="mb-0" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                          <%--          rfv all question --%>
-                                                    
+                                                    <%--          rfv all question --%>
+
                                                     <div class="input-group-sm">
                                                         <asp:TextBox runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                                         <asp:FileUpload runat="server" CssClass="mt-2"></asp:FileUpload>
@@ -356,7 +355,7 @@
                                                     <asp:Label runat="server" Text=" Remarks" CssClass="mb-0" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                     <div class="input-group-sm">
                                                         <asp:TextBox runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                                                        <asp:FileUpload runat="server" CssClass="mt-2"></asp:FileUpload>
+                                                        <asp:FileUpload runat="server" CssClass="mt-2 bg-primary"></asp:FileUpload>
                                                     </div>
                                                     <!-- Error Message -->
                                                     <span class="error-message text-danger" style="display: none;">Remarks are required when selecting "Not Ok".</span>
@@ -794,7 +793,7 @@
 
                                             </div>
                                         </div>
-                                        
+
                                         <div class="p-2 border">
                                             <div class="row">
                                                 <div class="col-md-10">
@@ -830,7 +829,7 @@
                                                         <asp:ListItem Text="Ok" Value="1"></asp:ListItem>
                                                         <asp:ListItem Text="Not Ok" Value="2"></asp:ListItem>
                                                     </asp:RadioButtonList>
-                                                                      
+
                                                 </div>
                                                 <div class="col-md-12 remarks-section" style="display: none;">
                                                     <asp:Label runat="server" Text=" Remarks" CssClass="mb-0" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -995,16 +994,16 @@
                                         <div class="col-12 d-flex justify-content-center">
                                             <button type="button" class="btn btn-danger btn-sm collapse-link">Cancel</button>
                                             <button type="reset" class="btn btn-warning btn-sm">Reset</button>
-                                               <%--<asp:Button ID="btn_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" OnClientClick="return ValidateFormField()" />--%>
-                                            <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" OnClientClick="return validateForm();"  />
-                                            
-    
+                                            <%--<asp:Button ID="btn_submit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" OnClientClick="return ValidateFormField()" />--%>
+                                            <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" OnClientClick="return validateForm();" />
+
+
 
 
                                         </div>
                                     </div>
-                                    <div class="row text-center">
-                                        <div class=" col-12 ">
+                                    <div class="row ">
+                                        <div class=" col-12 text-center ">
                                             <asp:Label ID="lbl_msg" runat="server" Text="Click SUBMIT to Save Data!!"></asp:Label>
                                         </div>
                                     </div>
