@@ -12,6 +12,7 @@ using System.IO;
 using System.Web.Services;
 using System.Security.Cryptography;
 using System.Text;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace AnmolDristi
 {
@@ -73,7 +74,7 @@ namespace AnmolDristi
             {
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 ProductBrandsBinder(selectedPlantValue);
-                
+
             }
             else
             {
@@ -130,7 +131,7 @@ namespace AnmolDristi
             if (DDL_ProductBrand.SelectedIndex != 0)
             {
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
-                
+
 
 
             }
@@ -179,7 +180,7 @@ namespace AnmolDristi
                         c.FormID as FormID,
                         'NA' as RecordID,
                         p.plant_name AS PlantName,
-                        pb.brand_name AS ProductBrand,
+                        c.ProductBrand AS Material,
                         c.SubmittedByEmployeeCode as EmpCode,
                         u.EmployeeName AS EmpName,
                         c.SubmittedDate as SDate,
@@ -198,8 +199,6 @@ namespace AnmolDristi
                         TRN_BOPP_Tape c
                     LEFT JOIN 
                         MST_PlantDetails p ON c.PlantName = p.plant_id
-                    LEFT JOIN
-                        MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
                     LEFT JOIN
                         MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
                     WHERE 
@@ -238,7 +237,7 @@ namespace AnmolDristi
                     c.ID AS DBID,
                     c.FormID AS FormID,
                     p.plant_name AS PlantName,
-                    pb.brand_name AS ProductBrand,
+                    c.ProductBrand AS Material,
                     c.SubmittedByEmployeeCode AS EmpCode,
                     u.EmployeeName AS EmpName,
                     c.SubmittedDate AS SDate,
@@ -255,7 +254,6 @@ namespace AnmolDristi
                     c.DottedApprover_TimeStamp
                 FROM TRN_BOPP_Tape c
                 LEFT JOIN MST_PlantDetails p ON c.PlantName = p.plant_id
-                LEFT JOIN MST_LineCatBrands pb ON c.ProductBrand = pb.brand_id
                 LEFT JOIN MST_UserMaster u ON c.SubmittedByEmployeeCode = u.EmployeeCode
                 WHERE 1 = 1");
 
@@ -292,11 +290,11 @@ namespace AnmolDristi
             //    parameters.Add(new SqlParameter("@ProductCategory", SqlDbType.Int) { Value = DDL_ProductCategory.SelectedValue });
             //}
 
-            if (!string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) && DDL_ProductBrand.SelectedValue != "0")
-            {
-                queryBuilder.Append(" AND c.ProductBrand = @ProductBrand");
-                parameters.Add(new SqlParameter("@ProductBrand", SqlDbType.Int) { Value = DDL_ProductBrand.SelectedValue });
-            }
+            //if (!string.IsNullOrEmpty(DDL_ProductBrand.SelectedValue) && DDL_ProductBrand.SelectedValue != "0")
+            //{
+            //    queryBuilder.Append(" AND c.ProductBrand = @ProductBrand");
+            //    parameters.Add(new SqlParameter("@ProductBrand", SqlDbType.Int) { Value = DDL_ProductBrand.SelectedValue });
+            //}
 
             queryBuilder.Append(" ORDER BY c.SubmittedDate DESC, c.SubmittedTime DESC");
 
@@ -340,12 +338,12 @@ namespace AnmolDristi
             if (e.CommandName == "View")
             {
                 // Get the DBID from the CommandArgument.
-                int dbid = Convert.ToInt32(e.CommandArgument);
+                int id = Convert.ToInt32(e.CommandArgument);
 
-                if (dbid > 0)
+                if (id > 0)
                 {
                     // Redirect with the correct DBID.
-                    Response.Redirect("bopp_tape_Detailed.aspx?DBID=" + dbid + "&source=report");
+                    Response.Redirect("bopp_tape_Detailed.aspx?Id=" + id + "&source=submitter");
                 }
                 else
                 {

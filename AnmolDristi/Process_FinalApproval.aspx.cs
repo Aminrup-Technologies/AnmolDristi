@@ -360,9 +360,9 @@ namespace AnmolDristi
 
                                 imgMaida.ImageUrl = dt.Rows[0]["MaidaImageUrl"].ToString();
                                 imgBB.ImageUrl = dt.Rows[0]["BBImageUrl"].ToString();
-                                if (row.Table.Columns.Contains("DesignAndImplementation") && !Convert.IsDBNull(row["DesignAndImplementation"]))
+                                if (row.Table.Columns.Contains("MaidaImageUrl") && !Convert.IsDBNull(row["MaidaImageUrl"]))
                                 {
-                                    string imageUrl = row["DesignAndImplementation"].ToString();
+                                    string imageUrl = row["MaidaImageUrl"].ToString();
 
                                     // Validate if the image URL exists on the server
                                     if (File.Exists(Server.MapPath(imageUrl)))
@@ -394,9 +394,9 @@ namespace AnmolDristi
                                     //FU_DesgImp_Img.Visible = false;
                                 }
 
-                                if (row.Table.Columns.Contains("ColourAndAppearance") && !Convert.IsDBNull(row["ColourAndAppearance"]))
+                                if (row.Table.Columns.Contains("BBImageUrl") && !Convert.IsDBNull(row["BBImageUrl"]))
                                 {
-                                    string imageUrl = row["ColourAndAppearance"].ToString();
+                                    string imageUrl = row["BBImageUrl"].ToString();
 
                                     // Validate if the image URL exists on the server
                                     if (File.Exists(Server.MapPath(imageUrl)))
@@ -968,10 +968,10 @@ namespace AnmolDristi
                             if (dt.Rows.Count > 0)
                             {
                                 DataRow row = dt.Rows[0];
-                                string spongeid = dt.Rows[0]["FinalSubmit_Status"].ToString();
-                                if (dt.Rows[0]["FinalSubmit_Status"] != DBNull.Value && !string.IsNullOrEmpty(dt.Rows[0]["FinalSubmit_Status"].ToString()))
+                                string status = dt.Rows[0]["FinalSubmission"].ToString();
+                                if (dt.Rows[0]["FinalSubmission"] != DBNull.Value && !string.IsNullOrEmpty(dt.Rows[0]["FinalSubmission"].ToString()))
                                 {
-                                    if (spongeid =="1")
+                                    if (status == "1")
                                     {
                                         RBL_BalanceCondition.SelectedValue = dt.Rows[0]["WghBalanceCond"].ToString();
                                         TXB_BalanceCondition_Remarks.Text = dt.Rows[0]["WghtBalanceCmnt"].ToString();

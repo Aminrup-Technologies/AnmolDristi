@@ -116,6 +116,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <%--<div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Label4" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Material / Variety" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -126,6 +127,17 @@
                                     </div>
                                 </div>
                             </div>--%>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Label2" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_DDL_BrandSKU" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_BrandSKU" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <div class="input-group-sm">
+                                        <asp:DropDownList ID="DDL_BrandSKU" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_Supplier" runat="server" AssociatedControlID="TB_Supplier" Text="Supplier Name :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -135,6 +147,19 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-3" id="SizeDIV" runat="server">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_Size" runat="server" AssociatedControlID="TB_Size" Text="Sample Size :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Size" runat="server" ValidationGroup="Submit" ErrorMessage="Input Required" ControlToValidate="TB_Size" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Size" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Size" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:RangeValidator ID="CV_TB_Size" runat="server" ControlToValidate="TB_Size" ErrorMessage="[10 - 40]" ForeColor="Red" MinimumValue="10" MaximumValue="40"></asp:RangeValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Size" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Size(in pkts)"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_ChalanNo" runat="server" AssociatedControlID="TB_ChalanNo" Text="Chalan No. :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>

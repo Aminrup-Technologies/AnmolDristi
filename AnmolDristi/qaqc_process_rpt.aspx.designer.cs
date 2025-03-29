@@ -31,6 +31,24 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.HiddenField hdn_shiftvalue;
         
         /// <summary>
+        /// hdn_img1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdn_img1;
+        
+        /// <summary>
+        /// hdn_img2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdn_img2;
+        
+        /// <summary>
         /// lbl_docname control.
         /// </summary>
         /// <remarks>
@@ -1975,13 +1993,13 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.FileUpload FU_MaidaImage;
         
         /// <summary>
-        /// BtnUploadFU_MaidaImage control.
+        /// lbl_QAPC_MaidaImg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnUploadFU_MaidaImage;
+        protected global::System.Web.UI.WebControls.Label lbl_QAPC_MaidaImg;
         
         /// <summary>
         /// FU_MaidaImage_img control.
@@ -2056,13 +2074,13 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.FileUpload FU_BBImage;
         
         /// <summary>
-        /// BtnUploadFU_BBImage control.
+        /// lbl_QAPC_BBImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnUploadFU_BBImage;
+        protected global::System.Web.UI.WebControls.Label lbl_QAPC_BBImage;
         
         /// <summary>
         /// FU_BBImage_Img control.

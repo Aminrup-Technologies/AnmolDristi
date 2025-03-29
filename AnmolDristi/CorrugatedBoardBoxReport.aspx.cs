@@ -142,7 +142,8 @@ namespace AnmolDristi
             {
                 string selectedProductBrandValue = DDL_ProductBrand.SelectedValue.ToString();
                 StandardValueBinder(selectedProductBrandValue);
-                BrandSKUBinder(selectedProductBrandValue);
+                //BrandSKUBinder(selectedProductBrandValue);
+
                 System.Data.DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByBrandId(Convert.ToInt16(selectedProductBrandValue));
 
 
@@ -325,34 +326,41 @@ namespace AnmolDristi
 
             decimal dimensionStdL = Convert.ToDecimal(TB_DimensionStdL.Text);
             decimal dimensionObsL = Convert.ToDecimal(TB_DimensionObsL.Text);
-            string remarkForDimensionStdL = TB_Remark_DimensionL.Text;
+            string remarkForDimensionStdL = string.IsNullOrEmpty(TB_Remark_DimensionL.Text) ? null : TB_Remark_DimensionL.Text;
 
             decimal dimensionStdW = Convert.ToDecimal(TB_DimensionStdW.Text);
             decimal dimensionObsW = Convert.ToDecimal(TB_DimensionObsW.Text);
-            string remarkForDimensionStdW = TB_Remark_DimensionW.Text;
+            string remarkForDimensionStdW = string.IsNullOrEmpty(TB_Remark_DimensionW.Text) ? null : TB_Remark_DimensionW.Text;
 
             decimal dimensionStdH = Convert.ToDecimal(TB_DimensionStdH.Text);
             decimal dimensionObsH = Convert.ToDecimal(TB_DimensionObsH.Text);
-            string remarkForDimensionStdH = TB_Remark_DimensionH.Text;
+            string remarkForDimensionStdH = string.IsNullOrEmpty(TB_Remark_DimensionH.Text) ? null : TB_Remark_DimensionH.Text;
 
             decimal gmsStd = Convert.ToDecimal(TB_GSMStd.Text);
             decimal gsmObs = Convert.ToDecimal(TB_GSMObs.Text);
-            string remarkForGsmStd = TB_Remark_GSMStd.Text;
+            string remarkForGsmStd = string.IsNullOrEmpty(TB_Remark_GSMStd.Text) ? null : TB_Remark_GSMStd.Text;
 
             //Below remarks fields are added on 14-Jan-2025
             decimal bsKgPerCm2 = Convert.ToDecimal(TB_BurstingStrength.Text);
-            string bsremarks = TB_Remarks_BurstingStrength.Text;
+            string bsremarks = string.IsNullOrEmpty(TB_Remarks_BurstingStrength.Text) ? null : TB_Remarks_BurstingStrength.Text;
+
             decimal compStrength = Convert.ToDecimal(TB_CompressionStrength.Text);
-            string csremarks = TB_Remarks_CompressionStrength.Text;
+            string csremarks = string.IsNullOrEmpty(TB_Remarks_CompressionStrength.Text) ? null : TB_Remarks_CompressionStrength.Text;
+
             decimal flutePercentage = Convert.ToDecimal(TB_FlutePercent.Text);
-            string fluteremarks = TB_Remarks_FlutePercent.Text;
+            string fluteremarks = string.IsNullOrEmpty(TB_Remarks_FlutePercent.Text) ? null : TB_Remarks_FlutePercent.Text;
+
             decimal moisturePercentage = Convert.ToDecimal(TB_MoisturePercent.Text);
-            string moistremarks = TB_Remarks_MoisturePercent.Text;
+            string moistremarks = string.IsNullOrEmpty(TB_Remarks_MoisturePercent.Text) ? null : TB_Remarks_MoisturePercent.Text; 
             string remarks = TB_Remarks.Text;
 
             string approver1EmployeeCode = Approver1CodeLabel.Text;
             string approver2EmployeeCode = Approver2CodeLabel.Text;
             string dottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text;
+
+            // added on 18-Mar-2025
+            decimal noOfPackets = Convert.ToDecimal(TB_NoOfPkt.Text);
+            decimal sampleSize = Convert.ToDecimal(TB_Size.Text);
 
             try
             {
@@ -377,6 +385,8 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@ChallanDate", challanDate);
                         command.Parameters.AddWithValue("@LotGateNo", lotGateNo);
                         command.Parameters.AddWithValue("@VehicleNo", vehicleNo);
+                        command.Parameters.AddWithValue("@NoOfPackets", noOfPackets);
+                        command.Parameters.AddWithValue("@SampleSize", sampleSize);
                         command.Parameters.AddWithValue("@DimensionStd_L", dimensionStdL);
                         command.Parameters.AddWithValue("@RemarkForDimensionStd_L", remarkForDimensionStdL);
                         command.Parameters.AddWithValue("@DimensionStd_W", dimensionStdW);
@@ -442,6 +452,9 @@ namespace AnmolDristi
             TB_LotNo.ReadOnly = true;
             TB_VehicleNo.ReadOnly = true;
 
+            TB_NoOfPkt.ReadOnly = true;
+            TB_Size.ReadOnly = true;
+
             // Dimension fields
             TB_DimensionStdL.ReadOnly = true;
             TB_DimensionObsL.ReadOnly = true;
@@ -461,9 +474,16 @@ namespace AnmolDristi
             TB_Remark_GSMStd.ReadOnly = true;
 
             TB_BurstingStrength.ReadOnly = true;
+            TB_Remarks_BurstingStrength.ReadOnly = true;
+
             TB_CompressionStrength.ReadOnly = true;
+            TB_Remarks_CompressionStrength.ReadOnly = true;
+
             TB_FlutePercent.ReadOnly = true;
+            TB_Remarks_FlutePercent.ReadOnly=true;
+
             TB_MoisturePercent.ReadOnly = true;
+            TB_Remarks_MoisturePercent.ReadOnly = true;    
 
             // Remarks
             TB_Remarks.ReadOnly = true;

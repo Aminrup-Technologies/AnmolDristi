@@ -106,9 +106,10 @@
         function toggleAllRadioDivs() {
             // Define a mapping of RadioButtonLists and their respective remarks divs
             var mapping = {
-            '<%= RBL_Smell.ClientID %>': 'SmellRemarksDiv',
-            '<%= RBL_TasteFlavor.ClientID %>': 'TasteFlavorRemarksDiv',
-            '<%= RBL_Appearance.ClientID %>': 'AppearanceRemarksDiv',
+                '<%= RBL_Smell.ClientID %>': 'SmellRemarksDiv',
+                '<%= RBL_TasteFlavor.ClientID %>': 'TasteFlavorRemarksDiv',
+                '<%= RBL_Appearance.ClientID %>': 'AppearanceRemarksDiv',
+                '<%= RBL_AppStatus.ClientID %>': 'AppStatusRemarksDiv',
             };
 
             // Loop through each mapping and toggle the div visibility based on the selected value
@@ -637,6 +638,9 @@
     <asp:HiddenField ID="hdnMinMoistureValue" runat="server" />
     <asp:HiddenField ID="hdnMaxMoistureValue" runat="server" />
 
+    <asp:HiddenField ID="hdnMinProteinValue" runat="server" />
+    <asp:HiddenField ID="hdnMaxProteinValue" runat="server" />
+
     <asp:HiddenField ID="hdnMinTotalAshValue" runat="server" />
     <asp:HiddenField ID="hdnMaxTotalAshValue" runat="server" />
 
@@ -699,7 +703,7 @@
                                     <asp:Label ID="Label_DDL_Material" runat="server" AssociatedControlID="DDL_Material" Text="Material Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_Material" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_Material" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_Material" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
+                                        <asp:DropDownList ID="DDL_Material" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ValidationGroup="Submit" AutoPostBack="true"></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
@@ -709,40 +713,40 @@
                                     <asp:Label ID="Lbl_DDL_Plant" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
+                                        <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ValidationGroup="Submit" AutoPostBack="true"></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
 
                             <%--<div class="col-md-3" id="PlantLineDIV" runat="server">
-                                <div class="mb-3">
-                                    <asp:Label ID="Label2" runat="server" AssociatedControlID="DDL_PlantLine" Text="Select Line" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_DDL_PlantLine" runat="server" ErrorMessage="*" ValidationGroup="Submit" ForeColor="Red" ControlToValidate="DDL_PlantLine" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
-                                    <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
-                                    </div>
-                                </div>
-                            </div>--%>
+        <div class="mb-3">
+            <asp:Label ID="Label2" runat="server" AssociatedControlID="DDL_PlantLine" Text="Select Line" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+            <asp:RequiredFieldValidator ID="RFV_DDL_PlantLine" runat="server" ErrorMessage="*" ValidationGroup="Submit" ForeColor="Red" ControlToValidate="DDL_PlantLine" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
+            <div class="input-group-sm">
+                <asp:DropDownList ID="DDL_PlantLine" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" AutoPostBack="true" OnSelectedIndexChanged="DDL_PlantLine_SelectedIndexChanged"></asp:DropDownList>
+            </div>
+        </div>
+    </div>--%>
 
                             <%--<div class="col-md-3" id="CategoryDIV" runat="server">
-                                <div class="mb-3">
-                                    <asp:Label ID="Label_DDL_ProductCategory" runat="server" AssociatedControlID="DDL_ProductCategory" Text="Product Category" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_DDL_ProductCategory" runat="server" ErrorMessage="*" ForeColor="Red" InitialValue="0" ValidationGroup="Submit" ControlToValidate="DDL_ProductCategory" Display="Dynamic"></asp:RequiredFieldValidator>
-                                    <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
-                                    </div>
-                                </div>
-                            </div>--%>
+        <div class="mb-3">
+            <asp:Label ID="Label_DDL_ProductCategory" runat="server" AssociatedControlID="DDL_ProductCategory" Text="Product Category" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+            <asp:RequiredFieldValidator ID="RFV_DDL_ProductCategory" runat="server" ErrorMessage="*" ForeColor="Red" InitialValue="0" ValidationGroup="Submit" ControlToValidate="DDL_ProductCategory" Display="Dynamic"></asp:RequiredFieldValidator>
+            <div class="input-group-sm">
+                <asp:DropDownList ID="DDL_ProductCategory" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductCategory_SelectedIndexChanged"></asp:DropDownList>
+            </div>
+        </div>
+    </div>--%>
 
                             <%--<div class="col-md-3" id="BrandDIV" runat="server">
-                                <div class="mb-3">
-                                    <asp:Label ID="Label_DDL_ProductBrand" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_ProductBrand" InitialValue="0" Display="Dynamic"></asp:RequiredFieldValidator>
-                                    <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
-                                    </div>
-                                </div>
-                            </div>--%>
+        <div class="mb-3">
+            <asp:Label ID="Label_DDL_ProductBrand" runat="server" AssociatedControlID="DDL_ProductBrand" Text="Product Brand" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+            <asp:RequiredFieldValidator ID="RFV_DDL_ProductBrand" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_ProductBrand" InitialValue="0" Display="Dynamic"></asp:RequiredFieldValidator>
+            <div class="input-group-sm">
+                <asp:DropDownList ID="DDL_ProductBrand" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" AutoPostBack="true" OnSelectedIndexChanged="DDL_ProductBrand_SelectedIndexChanged"></asp:DropDownList>
+            </div>
+        </div>
+    </div>--%>
 
                             <div class="col-md-3" id="SupplierDIV" runat="server">
                                 <div class="mb-3">
@@ -750,7 +754,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_Supplier" runat="server" ErrorMessage="Input Required" ValidationGroup="Submit" ControlToValidate="TB_Supplier" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_Supplier" runat="server" ControlToValidate="TB_Supplier" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Alphabet Only" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Supplier" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Text="" Placeholder="Supplier (3-20 characters)" MaxLength="20"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Supplier" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Text="" Placeholder="Supplier (3-30 characters)" MaxLength="30"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -761,7 +765,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_BrandName" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_BrandName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_BrandName" runat="server" ControlToValidate="TB_BrandName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphabet Only" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_BrandName" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Text="" Placeholder="Brand Name (3-30 characters)" MaxLength="50"></asp:TextBox>
+                                        <asp:TextBox ID="TB_BrandName" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Text="" Placeholder="Brand Name (3-30 characters)" MaxLength="50"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -772,7 +776,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_ChallanNo" runat="server" ErrorMessage="Input Required" ValidationGroup="Submit" ControlToValidate="TB_ChallanNo" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_ChallanNo" runat="server" ControlToValidate="TB_ChallanNo" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_ChallanNo" runat="server" CssClass="form-control form-control-sm rounded" Text="" ValidationGroup="Submit" Placeholder="Challan No"></asp:TextBox>
+                                        <asp:TextBox ID="TB_ChallanNo" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" Text="" ValidationGroup="Submit" Placeholder="Challan No"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -782,7 +786,19 @@
                                     <asp:Label ID="Lbl_TB_ChallanDate" runat="server" AssociatedControlID="TB_ChallanDate" Text="Challan Date :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_ChallanDate" runat="server" ErrorMessage="Date is required " ValidationGroup="Submit" ControlToValidate="TB_ChallanDate" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_ChallanDate" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TB_ChallanDate" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="SizeDIV" runat="server">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_Size" runat="server" AssociatedControlID="TB_Size" Text="Sample Size :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Size" runat="server" ValidationGroup="Submit" ErrorMessage="Input Required" ControlToValidate="TB_Size" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Size" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Size" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:CustomValidator ID="CV_TB_Size" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [1.00-10.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Size" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Size(in pkts)"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -794,7 +810,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_Quantity" ValidationGroup="Submit" runat="server" ControlToValidate="TB_Quantity" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_Quantity" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [1000.00-2000.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Quantity" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Quantity Value(in kg) " oninput="validateQuantityValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Quantity" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Quantity Value(in kg) " oninput="validateQuantityValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -804,7 +820,7 @@
                                     <asp:Label ID="Label_TXB_Quantity_Remarks" runat="server" AssociatedControlID="TXB_Quantity_Remarks" Text="Quantity Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Quantity_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Quantity_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Quantity_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Quantity_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -815,7 +831,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_LotNo" runat="server" ErrorMessage="Input Required" ValidationGroup="Submit" ControlToValidate="TB_LotNo" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_LotNo" runat="server" ControlToValidate="TB_LotNo" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_LotNo" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Lot/Gate No"></asp:TextBox>
+                                        <asp:TextBox ID="TB_LotNo" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Lot/Gate No"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -826,7 +842,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_VehicleNo" runat="server" ErrorMessage="Input Required" ValidationGroup="Submit" ControlToValidate="TB_VehicleNo" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_VehicleNo" runat="server" ControlToValidate="TB_VehicleNo" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_VehicleNo" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Vehicle No"></asp:TextBox>
+                                        <asp:TextBox ID="TB_VehicleNo" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Vehicle No"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -836,7 +852,7 @@
                                     <asp:Label ID="LabelColor" runat="server" AssociatedControlID="DDL_Color" Text=" Color  :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_Color" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_Color" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_Color" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit"></asp:DropDownList>
+                                        <asp:DropDownList ID="DDL_Color" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" AutoPostBack="true" ></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
@@ -846,7 +862,7 @@
                                     <asp:Label ID="LabelColorRemarksDiv" runat="server" AssociatedControlID="TXB_Color_Remarks" Text="Color (Others)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_ColorRemarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Color_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Color_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Color_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -869,7 +885,7 @@
                                     <asp:Label ID="LabelSmellRemarks" runat="server" AssociatedControlID="TXB_Smell_Remarks" Text="Smell (Not Ok)" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Smell_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Smell_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Smell_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Smell_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -892,7 +908,7 @@
                                     <asp:Label ID="LabelAppearancepRemarks" runat="server" AssociatedControlID="TXB_Appearance_Remarks" Text=" Appearance (Not Ok)" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Appearance_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Appearance_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Appearance_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Appearance_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -915,18 +931,18 @@
                                     <asp:Label ID="LabelTasteFlavorRemarks" runat="server" AssociatedControlID="TXB_TasteFlavor_Remarks" Text=" Taste/Flavor  (Not Ok)" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_TasteFlavor_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_TasteFlavor_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_TasteFlavor_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_TasteFlavor_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-3" id="ImpuritiesDIV" runat="server">
                                 <div class="mb-3">
-                                    <asp:Label ID="Lbl_TB_Foreign_Impurities" runat="server" AssociatedControlID="TB_Foreign_Impurities" Text="ForeignMatter/Impurities :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="Lbl_TB_Foreign_Impurities" runat="server" AssociatedControlID="TB_Foreign_Impurities" Text="Foreign Matter/Impurities :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_Foreign_Impurities" runat="server" ValidationGroup="Submit" ErrorMessage="Input Required" ControlToValidate="TB_Foreign_Impurities" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_Foreign_Impurities" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Foreign_Impurities" ForeColor="Red" ErrorMessage="Alphabet Only" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Foreign_Impurities" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="ForeignMatter/Impurities (3-20 characters)" MaxLength="20"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Foreign_Impurities" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="ForeignMatter/Impurities (3-20 characters)" MaxLength="20"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -938,7 +954,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_PH" runat="server" ControlToValidate="TB_PH" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_PH" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_PH" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="PH Value" oninput="validatePhValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_PH" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="PH Value" oninput="validatePhValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -948,7 +964,7 @@
                                     <asp:Label ID="Lbl_TXB_PH_Remarks" runat="server" AssociatedControlID="TXB_PH_Remarks" Text="PH Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_PH_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_PH_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_PH_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_PH_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -960,7 +976,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_Moisture" runat="server" ControlToValidate="TB_Moisture" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_Moisture" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Moisture" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Moisture Value" oninput="validateMoistureValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Moisture" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Moisture Value" oninput="validateMoistureValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -970,7 +986,29 @@
                                     <asp:Label ID="Lbl_TXB_Moisture_Remarks" runat="server" AssociatedControlID="TXB_Moisture_Remarks" Text="Moisture Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Moisture_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Moisture_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Moisture_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Moisture_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="ProteinDIV" runat="server">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_Protein" runat="server" AssociatedControlID="TB_Protein" Text="Protein(%):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_Protein" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Protein" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_Protein" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Protein" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:CustomValidator ID="CV_TB_Protein" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_Protein" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Protein Value " oninput="validateProteinValue(this);"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="ProteinRemarksDIV" style="display: none;">
+                                <div class="mb-3">
+                                    <asp:Label ID="Label_TXB_Protein_Remarks" runat="server" AssociatedControlID="TXB_Protein_Remarks" Text="Protein Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TXB_Protein_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Protein_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TXB_Protein_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -982,7 +1020,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_TotalAsh" runat="server" ControlToValidate="TB_TotalAsh" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_TotalAsh" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_TotalAsh" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Total Ash Value " oninput="validateAshValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_TotalAsh" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Total Ash Value " oninput="validateAshValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -992,7 +1030,7 @@
                                     <asp:Label ID="Lbl_TXB_Ash_Remarks" runat="server" AssociatedControlID="TXB_Ash_Remarks" Text="Total Ash Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Ash_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Ash_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Ash_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Ash_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1004,7 +1042,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_InsolubleAsh" runat="server" ControlToValidate="TB_InsolubleAsh" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_InsolubleAsh" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_InsolubleAsh" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Insoluble Ash Value " oninput="validateInsolubleAshValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_InsolubleAsh" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Insoluble Ash Value " oninput="validateInsolubleAshValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1014,7 +1052,7 @@
                                     <asp:Label ID="Label_TXB_InsolubleAsh_Remarks" runat="server" AssociatedControlID="TXB_InsolubleAsh_Remarks" Text="Insoluble Ash Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_InsolubleAsh_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_InsolubleAsh_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_InsolubleAsh_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_InsolubleAsh_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1026,7 +1064,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_Density" runat="server" ControlToValidate="TB_Density" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_Density" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Density" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Density Value " oninput="validateDensityValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Density" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Density Value " oninput="validateDensityValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1036,7 +1074,7 @@
                                     <asp:Label ID="Label_TXB_Density_Remarks" runat="server" AssociatedControlID="TXB_Density_Remarks" Text="Density Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Density_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Density_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Density_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Density_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1048,7 +1086,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_FatContent" runat="server" ControlToValidate="TB_FatContent" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_FatContent" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_FatContent" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Fat Content Value " onblur="validateFatValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_FatContent" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Fat Content Value " oninput="validateFatValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1058,7 +1096,7 @@
                                     <asp:Label ID="Label_TXB_Fat_Remarks" runat="server" AssociatedControlID="TXB_Fat_Remarks" Text="Fat Content Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Fat_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Fat_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Fat_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Fat_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1070,7 +1108,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_TotalSolid" runat="server" ControlToValidate="TB_TotalSolid" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_TotalSolid" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_TotalSolid" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Total Solids Value " oninput="validateSolidValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_TotalSolid" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Total Solids Value " oninput="validateSolidValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1080,7 +1118,7 @@
                                     <asp:Label ID="Label_TXB_Solid_Remarks" runat="server" AssociatedControlID="TXB_Solid_Remarks" Text="Total Solids Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Solid_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Solid_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Solid_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Solid_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1092,7 +1130,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_ReducingSugar" runat="server" ControlToValidate="TB_ReducingSugar" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_ReducingSugar" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_ReducingSugar" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Reducing Sugar Value " oninput="validateSugarValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_ReducingSugar" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Reducing Sugar Value " oninput="validateSugarValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1102,7 +1140,7 @@
                                     <asp:Label ID="Label_TXB_Sugar_Remarks" runat="server" AssociatedControlID="TXB_Sugar_Remarks" Text="Reducing Sugar Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Sugar_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Sugar_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Sugar_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Sugar_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1114,7 +1152,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_DrainableSyrup" runat="server" ControlToValidate="TB_DrainableSyrup" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_DrainableSyrup" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_DrainableSyrup" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Drainable Syrup Value " oninput="validateSyrupValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_DrainableSyrup" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Drainable Syrup Value " oninput="validateSyrupValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1124,7 +1162,7 @@
                                     <asp:Label ID="Label_TXB_Syrup_Remarks" runat="server" AssociatedControlID="TXB_Syrup_Remarks" Text="Drainable Syrup Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Syrup_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Syrup_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Syrup_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Syrup_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1136,7 +1174,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_Matured_Immatured_Seeds" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Matured_Immatured_Seeds" ForeColor="Red" ErrorMessage="Integer Only" ValidationExpression="^[1-9]\d*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_Matured_Immatured_Seeds" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [2 -4]kg" Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Matured_Immatured_Seeds" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="No. Of Seeds Value(in kg) " oninput="validateSeedsValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Matured_Immatured_Seeds" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="No. Of Seeds Value(in kg) " oninput="validateSeedsValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1146,7 +1184,7 @@
                                     <asp:Label ID="LabelTXB_Seeds_Remarks" runat="server" AssociatedControlID="TXB_Seeds_Remarks" Text="No. Of Matured Immatured Seeds Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Seeds_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Seeds_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Seeds_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Seeds_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1158,7 +1196,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_Brix" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Brix" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_Brix" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_Brix" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Brix Value " oninput="validateBrixValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_Brix" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="Brix Value " oninput="validateBrixValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1168,19 +1206,19 @@
                                     <asp:Label ID="Label_TXB_Brix_Remarks" runat="server" AssociatedControlID="TXB_Brix_Remarks" Text="Brix Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_Brix_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_Brix_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_Brix_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_Brix_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-3" id="ShapeOrSizeDIV" runat="server">
+                            <div class="col-md-3" id="ShapeOrSizeDIV" runat="server" visible="false">
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_ShapeOrSize" runat="server" AssociatedControlID="TB_ShapeOrSize" Text="ShapeOrSize  :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_ShapeOrSize" runat="server" ValidationGroup="Submit" ErrorMessage="Input Required" ControlToValidate="TB_ShapeOrSize" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_ShapeOrSize" runat="server" ValidationGroup="Submit" ControlToValidate="TB_ShapeOrSize" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_ShapeOrSize" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [2.00-3.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_ShapeOrSize" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="ShapeOrSize(in mm)" oninput="validateShapeOrSizeValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_ShapeOrSize" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="ShapeOrSize(in mm)" oninput="validateShapeOrSizeValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1190,7 +1228,7 @@
                                     <asp:Label ID="Label_TXB_ShapeOrSize_Remarks" runat="server" AssociatedControlID="TXB_ShapeOrSize_Remarks" Text="ShapeOrSize Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_ShapeOrSize_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_ShapeOrSize_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_ShapeOrSize_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_ShapeOrSize_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1202,7 +1240,7 @@
                                     <asp:RegularExpressionValidator ID="REV_TB_TS" runat="server" ControlToValidate="TB_TS" ValidationGroup="Submit" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:CustomValidator ID="CV_TB_TS" runat="server" ValidationGroup="Submit" ErrorMessage="Input Range [20.00-30.00]." Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_TS" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="TS Value " oninput="validateTsValue(this);"></asp:TextBox>
+                                        <asp:TextBox ID="TB_TS" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true" ValidationGroup="Submit" Placeholder="TS Value " oninput="validateTsValue(this);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1212,7 +1250,7 @@
                                     <asp:Label ID="Label_TXB_TS_Remarks" runat="server" AssociatedControlID="TXB_TS_Remarks" Text="TS Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_TS_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_TS_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_TS_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_TS_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -1235,11 +1273,21 @@
                                     <asp:Label ID="LabelAppStatusRemarks" runat="server" AssociatedControlID="TXB_AppStatus_Remarks" Text="Approval Status Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TXB_AppStatus_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_AppStatus_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TXB_AppStatus_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                        <asp:TextBox ID="TXB_AppStatus_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
 
+
+                            <%--<div class="col-md-3" id="AppStatusRemarksDiv" style="display: none;">
+                        <div class="mb-3">
+                            <asp:Label ID="LabelAppStatusRemarks" runat="server" AssociatedControlID="TXB_AppStatus_Remarks" Text="Application Status (Rejected)" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                            <asp:RequiredFieldValidator ID="RFV_TXB_AppStatus_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_AppStatus_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
+                            <div class="input-group-sm">
+                                <asp:TextBox ID="TXB_AppStatus_Remarks" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ReadOnly="true"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>--%>
 
 
                             <%--Image part--%>
@@ -1248,7 +1296,6 @@
                                 <asp:Label ID="LblMaterialImg" runat="server" Text="Material Bag Image" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                 <asp:Image ID="imgMaterial" runat="server" ImageUrl='<%# Eval("Material_Image") != null ? ResolveUrl(Eval("Material_Image").ToString()) : "~/Images/placeholder.jpg" %>' AlternateText="Material Bag Image" Width="100px" Height="100px" />
                             </div>
-
 
                             <%--Button--%>
                             <div class="col-md-3">

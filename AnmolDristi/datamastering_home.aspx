@@ -207,17 +207,17 @@
                                 <i class="fa fa-edit"></i>RM-2
                             </a>
                             <a class="btn btn-app" href="rm_class_3_frmctrl.aspx">
-                                <span class="badge bg-green">OK
+                                <span class="badge bg-green">Ok
                                     <asp:Label ID="Label25" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>RM-3
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">WIP
+                            <a class="btn btn-app" href="rm_class_4_frmctrl.aspx">
+                                <span class="badge bg-green">Ok
                                     <asp:Label ID="Label26" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>RM-4
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-warning">WIP
+                            <a class="btn btn-app" href="rm_class_5_frmctrl.aspx">
+                                <span class="badge bg-green">Ok
                                     <asp:Label ID="Label27" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>RM-5
                             </a>

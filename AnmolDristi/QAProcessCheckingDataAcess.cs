@@ -112,7 +112,10 @@ namespace AnmolDristi.DAL
                     command.Parameters.AddWithValue("@DeepFreezeCmnt", commentForDeepFreeze);
                     command.Parameters.AddWithValue("@MaidaImageUrl", ImgLink1);
                     command.Parameters.AddWithValue("@BBImageUrl", ImgLink2);
-
+                    command.Parameters.AddWithValue("@BasicData_Status", 1);
+                    command.Parameters.AddWithValue("@RM_Status", 0);
+                    command.Parameters.AddWithValue("@OvenData_Status", 0);
+                    command.Parameters.AddWithValue("@FinalSubmission", 0);
 
 
                     // Open the connection and execute the command
@@ -522,7 +525,7 @@ namespace AnmolDristi.DAL
                     //cmd.Parameters.AddWithValue("@Approver2_TimeStamp", (object)data.Approver2_TimeStamp ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@DottedLineApproverEmployeeCode", (object)data.DottedLineApproverEmployeeCode ?? DBNull.Value);
                     //cmd.Parameters.AddWithValue("@DottedApprover_TimeStamp", (object)data.DottedApprover_TimeStamp ?? DBNull.Value);
-
+                    cmd.Parameters.AddWithValue("@BasicData_Status", 1);
                     // Open connection and execute the command
                     conn.Open();
                     cmd.ExecuteNonQuery();

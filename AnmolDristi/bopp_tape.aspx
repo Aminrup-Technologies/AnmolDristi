@@ -70,7 +70,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
-        // JavaScript function to toggle remarks textbox
+
+        <%--// JavaScript function to toggle remarks textbox
         function toggleRemarks() {
             var inputVal = parseFloat(document.getElementById('<%= TB_StandardDimension.ClientID %>').value);
             var remarksSection = document.getElementById('RemarksSection');
@@ -92,20 +93,20 @@
             // Function to validate the Standard Dimension against the range 99.5 to 101
             function checkStandardDimension() {
                 var dimensionValue = parseFloat(document.getElementById('<%= TB_StandardDimension.ClientID %>').value);
-                    var minValue = 0.00;
-                    var maxValue = 1000.00;
+                var minValue = 0.00;
+                var maxValue = 1000.00;
 
-                    // Show remarks if the dimension value is outside the valid range
-                    if (dimensionValue < minValue || dimensionValue > maxValue) {
-                        document.getElementById('RemarksSection').style.display = 'block';
-                    } else {
-                        document.getElementById('RemarksSection').style.display = 'none';
-                    }
+                // Show remarks if the dimension value is outside the valid range
+                if (dimensionValue < minValue || dimensionValue > maxValue) {
+                    document.getElementById('RemarksSection').style.display = 'block';
+                } else {
+                    document.getElementById('RemarksSection').style.display = 'none';
                 }
+            }
 
-                // Function to validate the Standard GSM against the range 99.5 to 101
-                function checkStandardGSM() {
-                    var gsmValue = parseFloat(document.getElementById('<%= TB_StandardGSM.ClientID %>').value);
+            // Function to validate the Standard GSM against the range 99.5 to 101
+            function checkStandardGSM() {
+                var gsmValue = parseFloat(document.getElementById('<%= TB_StandardGSM.ClientID %>').value);
                 var minValue = 0.00;
                 var maxValue = 1000.00;
 
@@ -117,18 +118,142 @@
                 }
             }
 
-                // Attach event listener for Standard Dimension TextBox to validate input on keyup
-                var standardDimensionTextBox = document.getElementById('<%= TB_StandardDimension.ClientID %>');
-                if (standardDimensionTextBox) {
-                    standardDimensionTextBox.addEventListener('keyup', checkStandardDimension);
-                }
+            // Attach event listener for Standard Dimension TextBox to validate input on keyup
+            var standardDimensionTextBox = document.getElementById('<%= TB_StandardDimension.ClientID %>');
+            if (standardDimensionTextBox) {
+                standardDimensionTextBox.addEventListener('keyup', checkStandardDimension);
+            }
 
-                // Attach event listener for Standard GSM TextBox to validate input on change
-                var standardGSMTextBox = document.getElementById('<%= TB_StandardGSM.ClientID %>');
+            // Attach event listener for Standard GSM TextBox to validate input on change
+            var standardGSMTextBox = document.getElementById('<%= TB_StandardGSM.ClientID %>');
             if (standardGSMTextBox) {
                 standardGSMTextBox.addEventListener('change', checkStandardGSM);
             }
-            };
+        };--%>
+
+        
+        function validateObservedGSM() {
+            var stdGSMInput = document.getElementById('<%= TB_StandardGSM.ClientID %>').value.trim();
+            var obsGSMValue = parseFloat(document.getElementById('<%= TB_GSMObservation.ClientID %>').value);
+            var remarksDiv = document.getElementById("GSM_ObsremarkSection");
+            var rangeText = document.getElementById("GSM_ValidRange");
+
+            console.log("Raw STD GSM Input:", stdGSMInput);
+            console.log("Raw Observed GSM Input:", obsGSMValue);
+
+            var regex = /^([\d.]+)\s*±\s*([\d.]+)%?$/; // Regex to match "27.3 ± 5%" format
+
+            var stdGSMValue, tolerancePercent;
+
+            if (regex.test(stdGSMInput)) {
+                var matches = stdGSMInput.match(regex);
+                stdGSMValue = parseFloat(matches[1]); // Extract standard value (e.g., 27.3)
+                tolerancePercent = parseFloat(matches[2]) / 100; // Convert 5% to 0.05
+            } else {
+                stdGSMValue = parseFloat(stdGSMInput); // If no ± tolerance, assume no percentage
+                tolerancePercent = 0.05; // Default tolerance to 5%
+            }
+
+            console.log("Parsed STD GSM Value:", stdGSMValue);
+            console.log("Parsed Tolerance Percentage:", tolerancePercent * 100, "%");
+
+            if (isNaN(stdGSMValue)) {
+                rangeText.innerHTML = "Expected Range: (Enter a valid STD GSM first)";
+                rangeText.style.color = "red";
+                console.warn("Invalid STD GSM Value. Cannot calculate range.");
+                return;
+            }
+
+            // Calculate tolerance range dynamically
+            var tolerance = stdGSMValue * tolerancePercent;
+            var lowerLimit = (stdGSMValue - tolerance).toFixed(2);
+            var upperLimit = (stdGSMValue + tolerance).toFixed(2);
+
+            console.log("Calculated Tolerance Value:", tolerance);
+            console.log("Expected Range:", lowerLimit, "-", upperLimit);
+
+            // Show expected range
+            rangeText.innerHTML = `Expected Range: ${lowerLimit} - ${upperLimit}`;
+            rangeText.style.color = "green";
+
+            // Validate Observed GSM
+            if (!isNaN(obsGSMValue)) {
+                console.log("Observed GSM Value:", obsGSMValue);
+                if (obsGSMValue < lowerLimit || obsGSMValue > upperLimit) {
+                    console.warn("Observed GSM is OUT of range. Showing remark section.");
+                    remarksDiv.style.display = "block"; // Show remarks
+                } else {
+                    console.log("Observed GSM is WITHIN range. Hiding remark section.");
+                    remarksDiv.style.display = "none"; // Hide remarks
+                }
+            } else {
+                console.warn("Invalid Observed GSM Value.");
+            }
+        }
+
+
+
+        function validateObservedDimension() {
+            var stdDimInput = document.getElementById('<%= TB_StandardDimension.ClientID %>').value.trim();
+            var obsDimValue = parseFloat(document.getElementById('<%= TB_DimensionObservation.ClientID %>').value);
+            var remarksDiv = document.getElementById("Dimension_ObsremarkSection");
+            var rangeText = document.getElementById("Dimension_ValidRange");
+
+            console.log("Raw STD Dimension Input:", stdDimInput);
+            console.log("Raw Observed Dimension Input:", obsDimValue);
+
+            var regex = /^([\d.]+)\s*±\s*([\d.]+)?$/; // Match "30.5 ± 2" OR just "30.5"
+
+            var stdDimValue, toleranceValue;
+
+            if (regex.test(stdDimInput)) {
+                var matches = stdDimInput.match(regex);
+                stdDimValue = parseFloat(matches[1]); // Extract standard value (e.g., 30.5)
+                toleranceValue = matches[2] ? parseFloat(matches[2]) : 0; // Extract tolerance if present, else 0
+            } else {
+                stdDimValue = parseFloat(stdDimInput); // If no ± tolerance, assume 0 mm tolerance
+                toleranceValue = 0; // Default tolerance to 0 mm
+            }
+
+            console.log("Parsed STD Dimension Value:", stdDimValue);
+            console.log("Parsed Tolerance Value:", toleranceValue, "mm");
+
+            if (isNaN(stdDimValue)) {
+                rangeText.innerHTML = "Expected Range: (Enter a valid STD Dimension first)";
+                rangeText.style.color = "red";
+                console.warn("Invalid STD Dimension Value. Cannot calculate range.");
+                return;
+            }
+
+            // Calculate tolerance range dynamically
+            var lowerLimit = (stdDimValue - toleranceValue).toFixed(2);
+            var upperLimit = (stdDimValue + toleranceValue).toFixed(2);
+
+            console.log("Expected Range:", lowerLimit, "-", upperLimit);
+
+            // Show expected range
+            rangeText.innerHTML = `Expected Range: ${lowerLimit} - ${upperLimit} mm`;
+            rangeText.style.color = "green";
+
+            // Validate Observed Dimension
+            if (!isNaN(obsDimValue)) {
+                console.log("Observed Dimension Value:", obsDimValue);
+                if (obsDimValue < lowerLimit || obsDimValue > upperLimit) {
+                    console.warn("Observed Dimension is OUT of range. Showing remark section.");
+                    remarksDiv.style.display = "block"; // Show remarks
+                } else {
+                    console.log("Observed Dimension is WITHIN range. Hiding remark section.");
+                    remarksDiv.style.display = "none"; // Hide remarks
+                }
+            } else {
+                console.warn("Invalid Observed Dimension Value.");
+            }
+        }
+
+
+
+
+
 
     </script>
     <asp:HiddenField ID="hdn_formid" runat="server" />
@@ -153,22 +278,24 @@
                         </div>
                         <div class="x_content">
                             <div class="row">
+
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="Label1" runat="server" AssociatedControlID="DDL_Plant" Text="Plant Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
+                                        <asp:RequiredFieldValidator ID="RFV_DDL_Plant" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_Plant" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                         <div class="input-group-sm">
                                             <asp:DropDownList ID="DDL_Plant" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true" ValidationGroup="Submit" OnSelectedIndexChanged="DDL_Plant_SelectedIndexChanged"></asp:DropDownList>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_TB_MatVarietyName" runat="server" AssociatedControlID="TB_MatVarietyName" Text="Material / Variety" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_MatVarietyName" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_MatVarietyName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_TB_MatVarietyName" runat="server" ControlToValidate="TB_MatVarietyName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_MatVarietyName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Material / Variety" MaxLength="50"></asp:TextBox>
+                                            <asp:TextBox ID="TB_MatVarietyName" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Material / Variety" MaxLength="50"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -187,17 +314,30 @@
                                         <asp:RequiredFieldValidator ID="RFV_TB_SupplierName" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_SupplierName" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_TB_SupplierName" runat="server" ControlToValidate="TB_SupplierName" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_SupplierName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Supplier Name" MaxLength="50"></asp:TextBox>
+                                            <asp:TextBox ID="TB_SupplierName" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Supplier Name" MaxLength="50"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-md-3" id="SizeDIV" runat="server">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_TB_Size" runat="server" AssociatedControlID="TB_Size" Text="Sample Size :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_Size" runat="server" ValidationGroup="Submit" ErrorMessage="Input Required" ControlToValidate="TB_Size" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_TB_Size" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Size" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
+                                        <asp:RangeValidator ID="CV_TB_Size" runat="server" ControlToValidate="TB_Size" ErrorMessage="[10 - 40]" ForeColor="Red" MinimumValue="10" MaximumValue="40"></asp:RangeValidator>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="TB_Size" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Size(in pkts)"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_TB_ChallanNo" runat="server" AssociatedControlID="TB_ChallanNo" Text="Challan No.:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_ChallanNo" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_ChallanNo" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_TB_ChallanNo" runat="server" ControlToValidate="TB_ChallanNo" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_ChallanNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Challan No." MaxLength="20"></asp:TextBox>
+                                            <asp:TextBox ID="TB_ChallanNo" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Challan No." MaxLength="20"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -207,7 +347,7 @@
                                         <asp:Label ID="Lbl_TB_ChallanDate" runat="server" AssociatedControlID="TB_ChallanDate" Text="Challan Date:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_ChallanDate" runat="server" ErrorMessage="Date Required" ControlToValidate="TB_ChallanDate" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_ChallanDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date" Placeholder="Select Challan Date"></asp:TextBox>
+                                            <asp:TextBox ID="TB_ChallanDate" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" TextMode="Date" Placeholder="Select Challan Date"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -218,7 +358,7 @@
                                         <asp:RequiredFieldValidator ID="RFV_TB_LotNo" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_LotNo" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_TB_LotNo" runat="server" ControlToValidate="TB_LotNo" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_LotNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Lot and Gate No." MaxLength="20"></asp:TextBox>
+                                            <asp:TextBox ID="TB_LotNo" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Lot and Gate No." MaxLength="20"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -228,7 +368,7 @@
                                         <asp:RequiredFieldValidator ID="RFV_TB_VehicleNo" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_VehicleNo" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_TB_VehicleNo" runat="server" ControlToValidate="TB_VehicleNo" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_VehicleNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Vehicle No." MaxLength="15"></asp:TextBox>
+                                            <asp:TextBox ID="TB_VehicleNo" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Vehicle No." MaxLength="15"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -238,7 +378,7 @@
                                         <asp:RequiredFieldValidator ID="RFV_TB_PrintingColour" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_PrintingColour" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_TB_PrintingColour" runat="server" ControlToValidate="TB_PrintingColour" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphabet Only" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_PrintingColour" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Printing Colour" MaxLength="20"></asp:TextBox>
+                                            <asp:TextBox ID="TB_PrintingColour" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Printing Colour" MaxLength="20"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -248,41 +388,40 @@
                                         <asp:RequiredFieldValidator ID="RFV_TB_AdhesiveProperty" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_AdhesiveProperty" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_TB_AdhesiveProperty" runat="server" ControlToValidate="TB_AdhesiveProperty" ForeColor="Red" ValidationGroup="Submit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_AdhesiveProperty" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Adhesive Property" MaxLength="25"></asp:TextBox>
+                                            <asp:TextBox ID="TB_AdhesiveProperty" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Adhesive Property" MaxLength="25"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <%--                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_TB_StandardDimension" runat="server" AssociatedControlID="TB_StandardDimension" Text="Standard Dimension (in mm):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_StandardDimension" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_StandardDimension" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RangeValidator ID="RV_TB_StandardDimension" runat="server" ControlToValidate="TB_StandardDimension" ValidationGroup="Submit" MinimumValue="0.00" MaximumValue="1000.0" Type="Double" ErrorMessage="Value must be between 0.00 and 1000.00 mm" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="TB_StandardDimension" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Standard Dimension" MaxLength="25"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
+                                    <!-- Dimension Observation Field (No Validation) -->
                                     <div class="mb-3">
-                                        <!-- Label for Standard Dimension -->
-                                        <asp:Label ID="Lbl_TB_StandardDimension" runat="server" AssociatedControlID="TB_StandardDimension" Text="Standard Dimension (in mm):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <!-- Required Field Validator -->
-                                        <asp:RequiredFieldValidator ID="RFV_TB_StandardDimension" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_StandardDimension" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <!-- Range Validator for 99.5 to 101 mm -->
-                                        <asp:RangeValidator ID="RV_TB_StandardDimension" runat="server" ControlToValidate="TB_StandardDimension" MinimumValue="0.00" MaximumValue="1000.0" Type="Double" ErrorMessage="Value must be between 0.00 and 1000.00 mm" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RangeValidator>
+                                        <asp:Label ID="Lbl_DimensionObservation" runat="server" AssociatedControlID="TB_DimensionObservation" Text="Observation Dimension(in mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
-                                            <!-- Textbox for Standard Dimension -->
-                                            <asp:TextBox ID="TB_StandardDimension" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Standard Dimension" MaxLength="25"></asp:TextBox>
+                                            <!-- No validation required for this input field -->
+                                            <asp:TextBox ID="TB_DimensionObservation" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Dimension Observation"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
+
+                                
                                 <!-- Remarks Textbox for invalid input (initially hidden) -->
                                 <div class="col-md-3" id="RemarksSection" style="display: none;">
                                     <div class="mb-3">
-                                        <asp:Label ID="Lbl_Remarks" runat="server" Text="Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:Label ID="Lbl_Remarks" runat="server" Text="Dimension Remarks:" ForeColor="Brown" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="TB_StandardDimensionRemarks" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Remarks" MaxLength="250"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <!-- Dimension Observation Field (No Validation) -->
-                                    <div class="mb-3">
-                                        <asp:Label ID="Lbl_DimensionObservation" runat="server" AssociatedControlID="TB_DimensionObservation" Text="Dimension Observation (in mm):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <!-- No validation required for this input field -->
-                                            <asp:TextBox ID="TB_DimensionObservation" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Dimension Observation"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -299,25 +438,99 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Hidden Remarks Field for Standard GSM Validation Deviation (Initially Hidden) -->
-                                <div class="col-md-3" id="div_GSM_Remarks" style="display: none;">
-                                    <div class="mb-3">
-                                        <asp:Label ID="Lbl_GSMRemarks" runat="server" AssociatedControlID="TB_GSMRemarks" Text="Remarks (GSM Deviation):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_GSMRemarks" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter reason for deviation"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-3">
                                     <!-- GSM Observation Field (No Validation Required) -->
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_GSMObservation" runat="server" AssociatedControlID="TB_GSMObservation" Text="GSM Observation:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="TB_GSMObservation" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter GSM Observation"></asp:TextBox>
+                                            <asp:TextBox ID="TB_GSMObservation" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter GSM Observation"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
 
+                                
+                                <!-- Hidden Remarks Field for Standard GSM Validation Deviation (Initially Hidden) -->
+                                <div class="col-md-3" id="div_GSM_Remarks" style="display: none;">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_GSMRemarks" runat="server" AssociatedControlID="TB_GSMRemarks" Text="Remarks (GSM Deviation):" ForeColor="Brown" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="TB_GSMRemarks" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter reason for deviation"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>--%>
+
+                                <%--Std--%>
+                                <div class="col-md-3" id="Std_Dim_Div" runat="server" visible="true">
+                                    <div class="mb-3">
+                                        <asp:Label ID="LBL_TB_StandardDimension" runat="server" AssociatedControlID="TB_StandardDimension" Text="Dimension (STD):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:Literal ID="span_Dimension" runat="server" Text='<%# string.IsNullOrEmpty(Eval("GMS_Std")?.ToString()) ? "0.00" : Eval("GMS_Std") %>'></asp:Literal>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_StandardDimension" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_StandardDimension" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:CustomValidator ID="CV_TB_StandardDimension" runat="server" ControlToValidate="TB_StandardDimension" ValidationGroup="Submit" ErrorMessage="Invalid format! Use '27.3 ± 2 mm' or '420 mm'."  Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="TB_StandardDimension" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="e.g., 27.3 ± 2 mm" MaxLength="15" onkeyup="validateObservedDimension()" ClientIDMode="Static"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <%-- Obs--%>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_TB_DimensionObservation" runat="server" AssociatedControlID="TB_DimensionObservation" Text="Dimension (OBS):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_DimensionObservation" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_DimensionObservation" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="TB_DimensionObservation" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Observed Dimension" MaxLength="10" onkeyup="validateObservedDimension()" ClientIDMode="Static"></asp:TextBox>
+                                            <small id="Dimension_ValidRange" class="form-text text-muted" style="font-weight: bold; color: green;">Expected Range: (STD Value Missing, enter in mm)
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <%--Remarks--%>
+                                <div class="col-md-3" id="Dimension_ObsremarkSection" style="display: none;">
+                                    <div class="mb-3">
+                                        <asp:Label ID="lbl_TB_StandardDimensionRemarks" runat="server" AssociatedControlID="TB_StandardDimensionRemarks" Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="TB_StandardDimensionRemarks" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter remark for deviation"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <%--std--%>
+                                <div class="col-md-3" id="Std_gsmwt_Div" runat="server" visible="true">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_TB_StandardGSM" runat="server" AssociatedControlID="TB_StandardGSM" Text="GSM/WT per 10 PS (STD):" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:Literal ID="span_GMS" runat="server" Text='<%# string.IsNullOrEmpty(Eval("GMS_Std")?.ToString()) ? "0.00" : Eval("GMS_Std") %>'></asp:Literal>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_StandardGSM" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_StandardGSM" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:CustomValidator ID="CV_TB_StandardGSM" runat="server" ControlToValidate="TB_StandardGSM" ValidationGroup="Submit" ErrorMessage="Invalid input format! Use: '27.3 ± 5%', '8.2 to 10.2', or '420'"  Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="TB_StandardGSM" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="e.g., 27.3 ± 2%" MaxLength="10" onkeyup="validateObservedGSM()" ClientIDMode="Static"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <%--obs--%>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_TB_GSMObservation" runat="server" AssociatedControlID="TB_GSMObservation" Text="GSM/WT per 10 PS (OBS):" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_GSMObservation" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_GSMObservation" ValidationGroup="Submit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="TB_GSMObservation" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" Placeholder="Enter Observed GSM" MaxLength="10" onkeyup="validateObservedGSM()" ClientIDMode="Static"></asp:TextBox>
+                                            <small id="GSM_ValidRange" class="form-text text-muted" style="font-weight: bold; color: green;">Expected Range: (STD Value Missing)
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <%--remarks--%>
+                                <div class="col-md-3" id="GSM_ObsremarkSection" style="display: none;">
+                                    <div class="mb-3">
+                                        <asp:Label ID="lbl_TB_GSMRemarks" runat="server" AssociatedControlID="TB_GSMRemarks" Text="Please provide a remark for deviation:" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="TB_GSMRemarks" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter remark for deviation"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
 
 
                                 <div class="col-md-3">

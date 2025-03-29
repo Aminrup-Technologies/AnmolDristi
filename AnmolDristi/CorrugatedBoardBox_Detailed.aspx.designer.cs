@@ -69,6 +69,42 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.DropDownList DDL_ProductBrand;
 
         /// <summary>
+        /// Lbl_TB_NoOfPkt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_NoOfPkt;
+
+        /// <summary>
+        /// TB_NoOfPkt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_NoOfPkt;
+
+        /// <summary>
+        /// Label6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label6;
+
+        /// <summary>
+        /// DDL_BrandSKU control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDL_BrandSKU;
+
+        /// <summary>
         /// Lbl_TB_Supplier control.
         /// </summary>
         /// <remarks>
@@ -85,6 +121,33 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_Supplier;
+
+        /// <summary>
+        /// SizeDIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SizeDIV;
+
+        /// <summary>
+        /// Lbl_TB_Size control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_TB_Size;
+
+        /// <summary>
+        /// TB_Size control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Size;
 
         /// <summary>
         /// Lbl_TB_ChallanNo control.
@@ -357,6 +420,24 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox TB_BurstingStrength;
 
         /// <summary>
+        /// Lbl_Remarks_BurstingStrength control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Remarks_BurstingStrength;
+
+        /// <summary>
+        /// TB_Remarks_BurstingStrength control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Remarks_BurstingStrength;
+
+        /// <summary>
         /// Lbl_TB_CompressionStrength control.
         /// </summary>
         /// <remarks>
@@ -373,6 +454,24 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_CompressionStrength;
+
+        /// <summary>
+        /// Lbl_Remarks_CompressionStrength control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Remarks_CompressionStrength;
+
+        /// <summary>
+        /// TB_Remarks_CompressionStrength control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Remarks_CompressionStrength;
 
         /// <summary>
         /// Lbl_TB_FlutePercent control.
@@ -393,6 +492,24 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox TB_FlutePercent;
 
         /// <summary>
+        /// Label10 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label10;
+
+        /// <summary>
+        /// TB_Remarks_FlutePercent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Remarks_FlutePercent;
+
+        /// <summary>
         /// Lbl_TB_MoisturePercent control.
         /// </summary>
         /// <remarks>
@@ -409,6 +526,24 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_MoisturePercent;
+
+        /// <summary>
+        /// Label12 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label12;
+
+        /// <summary>
+        /// TB_Remarks_MoisturePercent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Remarks_MoisturePercent;
 
         /// <summary>
         /// Lbl_Remarks control.

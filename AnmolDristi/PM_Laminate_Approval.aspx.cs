@@ -348,12 +348,12 @@ namespace AnmolDristi
             if (e.CommandName == "View")
             {
                 // Get the DBID from the CommandArgument.
-                int dbid = Convert.ToInt32(e.CommandArgument);
+                int id = Convert.ToInt32(e.CommandArgument);
 
-                if (dbid > 0)
+                if (id > 0)
                 {
                     // Redirect with the correct DBID.
-                    Response.Redirect("PM_Laminate_FinalApproval.aspx?DBID=" + dbid);
+                    Response.Redirect("PM_Laminate_FinalApproval.aspx?Id=" + id);
                 }
                 else
                 {

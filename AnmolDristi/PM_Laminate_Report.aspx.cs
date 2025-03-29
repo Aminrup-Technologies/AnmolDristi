@@ -12,6 +12,7 @@ using System.IO;
 using System.Web.Services;
 using System.Security.Cryptography;
 using System.Text;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 //using Microsoft.Office.Interop.Excel;
 //using System.Runtime.InteropServices; // Optional, for Excel interop cleanup
@@ -347,12 +348,12 @@ namespace AnmolDristi
             if (e.CommandName == "View")
             {
                 // Get the DBID from the CommandArgument.
-                int dbid = Convert.ToInt32(e.CommandArgument);
+                int id = Convert.ToInt32(e.CommandArgument);
 
-                if (dbid > 0)
+                if (id > 0)
                 {
                     // Redirect with the correct DBID.
-                    Response.Redirect("PM_Laminate_FinalApproval.aspx?DBID=" + dbid + "&source=report");
+                    Response.Redirect("PM_Laminate_FinalApproval.aspx?Id=" + id + "&source=submitter");
                 }
                 else
                 {

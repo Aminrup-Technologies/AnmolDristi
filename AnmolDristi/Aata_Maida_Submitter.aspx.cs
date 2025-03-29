@@ -334,12 +334,12 @@ namespace AnmolDristi
             if (e.CommandName == "View")
             {
                 // Get the DBID from the CommandArgument.
-                int dbid = Convert.ToInt32(e.CommandArgument);
+                int id = Convert.ToInt32(e.CommandArgument);
 
-                if (dbid > 0)
+                if (id > 0)
                 {
                     // Redirect with the correct DBID.
-                    Response.Redirect("Aata_Maida_Detailed.aspx?DBID=" + dbid + "&source=submitter");
+                    Response.Redirect("Aata_Maida_Detailed.aspx?Id=" + id + "&source=submitter");
                 }
                 else
                 {

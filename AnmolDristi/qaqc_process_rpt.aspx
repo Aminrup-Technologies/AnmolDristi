@@ -78,29 +78,32 @@
 
     <script type="text/javascript">
 
-        //maida image
-        function validateForm1() {
-            var fileUpload = document.getElementById('<%= FU_MaidaImage.ClientID %>');
-            var lblErrorMessage1 = document.getElementById('<%= lblErrorMessage1.ClientID %>');
-            if (fileUpload.files.length === 0) {
-                lblErrorMessage1.innerHTML = "Please upload file.";
-                return false;
-            } else {
-                lblErrorMessage1.innerHTML = "";
-                return true;
+        function validateForm() {
+            // Ensure Page_ClientValidate exists (avoid JavaScript errors)
+            if (typeof (Page_ClientValidate) == 'function') {
+                if (!Page_ClientValidate('BasicDataSave')) {
+                    new PNotify({
+                        title: 'Missing Input',
+                        text: 'Please complete before submitting.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });
+                    return false; // Stop form submission
+                }
             }
-        }
-        //bb image
-        function validateForm2() {
-            var fileUpload = document.getElementById('<%= FU_BBImage.ClientID %>');
-            var lblErrorMessage1 = document.getElementById('<%= lblErrorMessage2.ClientID %>');
-            if (fileUpload.files.length === 0) {
-                lblErrorMessage1.innerHTML = "Please upload file.";
-                return false;
-            } else {
-                lblErrorMessage1.innerHTML = "";
-                return true;
+
+            // Run additional image validation
+            if (!validateImages()) {
+                new PNotify({
+                    title: 'Missing Input',
+                    text: 'Invalid image selection. Please check your images.',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+                return false; // Stop form submission
             }
+
+            return true; // Allow form submission
         }
 
         function validateSubmit() {
@@ -112,17 +115,14 @@
                 errorMessageLabel.style.color = "red"; // Change color to red
                 return false; // Prevent form submission
             }
-
-            // File is selected, return true to allow form submission
             return true;
         }
 
-
         function toggleMaidaColorAppRemarksDiv(radioButtonList) {
-            console.log("toggleMaidaColorAppRemarksDiv function called");
+            //console.log("toggleMaidaColorAppRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("MaidaColorAppRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -140,10 +140,10 @@
         }
 
         function toggleMaidaFlavorTasteRemarksDiv(radioButtonList) {
-            console.log("toggleMaidaFlavorTasteRemarksDiv function called");
+            //console.log("toggleMaidaFlavorTasteRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("MaidaFlavorTasteRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -161,10 +161,10 @@
         }
 
         function toggleMaidaGrittinessRemarksDiv(radioButtonList) {
-            console.log("toggleMaidaGrittinessRemarksDiv function called");
+            //console.log("toggleMaidaGrittinessRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("MaidaGrittinessRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -182,10 +182,10 @@
         }
 
         function toggleBBColorAppRemarksDiv(radioButtonList) {
-            console.log("toggleBBColorAppRemarksDiv function called");
+            //console.log("toggleBBColorAppRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("BBColorAppRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -203,10 +203,10 @@
         }
 
         function toggleBBFlavorTasteRemarksDiv(radioButtonList) {
-            console.log("toggleBBFlavorTasteRemarksDiv function called");
+            //console.log("toggleBBFlavorTasteRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("BBFlavorTasteRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -224,10 +224,10 @@
         }
 
         function toggleBBMouthFeelRemarksDiv(radioButtonList) {
-            console.log("toggleBBMouthFeelRemarksDiv function called");
+            //console.log("toggleBBMouthFeelRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("BBMouthFeelRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -245,10 +245,10 @@
         }
 
         function toggleHvoSmellRemarksDiv(radioButtonList) {
-            console.log("toggleHvoSmellRemarksDiv function called");
+            //console.log("toggleHvoSmellRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("HvoSmellRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -266,10 +266,10 @@
         }
 
         function toggleHvoTasteRemarksDiv(radioButtonList) {
-            console.log("toggleHvoTasteRemarksDiv function called");
+            //console.log("toggleHvoTasteRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("HvoTasteRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -287,10 +287,10 @@
         }
 
         function toggleSMPSmellRemarksDiv(radioButtonList) {
-            console.log("toggleSMPSmellRemarksDiv function called");
+            //console.log("toggleSMPSmellRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("SMPSmellRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -308,10 +308,10 @@
         }
 
         function toggleSMPTasteRemarksDiv(radioButtonList) {
-            console.log("toggleSMPTasteRemarksDiv function called");
+            //console.log("toggleSMPTasteRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("SMPTasteRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -329,10 +329,10 @@
         }
 
         function toggleSMPColorRemarksDiv(radioButtonList) {
-            console.log("toggleSMPColorRemarksDiv function called");
+            //console.log("toggleSMPColorRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("SMPColorRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -350,10 +350,10 @@
         }
 
         function toggleSyrupColorRemarksDiv(radioButtonList) {
-            console.log("toggleSyrupColorRemarksDiv function called");
+            //console.log("toggleSyrupColorRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("SyrupColorRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -371,10 +371,10 @@
         }
 
         function toggleInvertSyrupBucketRemarksDiv(radioButtonList) {
-            console.log("toggleInvertSyrupBucketRemarksDiv function called");
+            //console.log("toggleInvertSyrupBucketRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("InvertSyrupBucketRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -392,10 +392,10 @@
         }
 
         function toggleSugarSolBucketRemarksDiv(radioButtonList) {
-            console.log("toggleSugarSolBucketRemarksDiv function called");
+            //console.log("toggleSugarSolBucketRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("SugarSolBucketRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -413,10 +413,10 @@
         }
 
         function toggleCreamerBucketRemarksDiv(radioButtonList) {
-            console.log("toggleCreamerBucketRemarksDiv function called");
+            //console.log("toggleCreamerBucketRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("CreamerBucketRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -434,10 +434,10 @@
         }
 
         function toggleSugarGrinderRemarksDiv(radioButtonList) {
-            console.log("toggleSugarGrinderRemarksDiv function called");
+            //console.log("toggleSugarGrinderRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("SugarGrinderRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -455,10 +455,10 @@
         }
 
         function toggleOilSystemRemarksDiv(radioButtonList) {
-            console.log("toggleOilSystemRemarksDiv function called");
+            //console.log("toggleOilSystemRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("OilSystemRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -476,10 +476,10 @@
         }
 
         function toggleOilSprayRemarksDiv(radioButtonList) {
-            console.log("toggleOilSprayRemarksDiv function called");
+            //console.log("toggleOilSprayRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("OilSprayRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -497,10 +497,10 @@
         }
 
         function toggleMilkSprayRemarksDiv(radioButtonList) {
-            console.log("toggleMilkSprayRemarksDiv function called");
+            //console.log("toggleMilkSprayRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("MilkSprayRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -518,10 +518,10 @@
         }
 
         function toggleDrumCoveredRemarksDiv(radioButtonList) {
-            console.log("toggleDrumCoveredRemarksDiv function called");
+            //console.log("toggleDrumCoveredRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("DrumCoveredRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -539,10 +539,10 @@
         }
 
         function toggleQualityRemarksDiv(radioButtonList) {
-            console.log("toggleQualityRemarksDiv function called");
+            //console.log("toggleQualityRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("QualityRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -560,10 +560,10 @@
         }
 
         function toggleMetalDetectorRemarksDiv(radioButtonList) {
-            console.log("toggleMetalDetectorRemarksDiv function called");
+            //console.log("toggleMetalDetectorRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("MetalDetectorRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -581,10 +581,10 @@
         }
 
         function toggleProcessSequenceRemarksDiv(radioButtonList) {
-            console.log("toggleProcessSequenceRemarksDiv function called");
+            //console.log("toggleProcessSequenceRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("ProcessSequenceRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -602,10 +602,10 @@
         }
 
         function toggleDoughConditionRemarksDiv(radioButtonList) {
-            console.log("toggleDoughConditionRemarksDiv function called");
+            //console.log("toggleDoughConditionRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("DoughConditionRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -623,10 +623,10 @@
         }
 
         function toggleBalanceConditionRemarksDiv(radioButtonList) {
-            console.log("toggleBalanceConditionRemarksDiv function called");
+            //console.log("toggleBalanceConditionRemarksDiv function called");
             var selectedValue = radioButtonList.querySelector("input:checked").value;
             var remarksDiv = document.getElementById("BalanceConditionRemarksDiv");
-            console.log("Selected value: " + selectedValue);
+            //console.log("Selected value: " + selectedValue);
             if (selectedValue === "0") {
                 remarksDiv.style.display = "block";
                 setTimeout(function () {
@@ -644,7 +644,7 @@
         }
 
         function toggleRoomTempRemarksDiv(textBox) {
-            console.log("toggleRoomTempRemarksDiv function called");
+            //console.log("toggleRoomTempRemarksDiv function called");
             var roomTemp = parseFloat(document.getElementById('<%=TB_RoomTemp.ClientID%>').value);
             var remarksDiv = document.getElementById("RoomTempRemarksDiv");
             if (!isNaN(roomTemp) && roomTemp !== "" && (roomTemp < 20 || roomTemp > 60)) {
@@ -656,7 +656,7 @@
         }
 
         function toggleTempRemarksDIV(textBox) {
-            console.log("toggleTempRemarksDIV function called");
+            //console.log("toggleTempRemarksDIV function called");
             var Temp = parseFloat(document.getElementById('<%=TB_Temp.ClientID%>').value);
             var remarksDiv = document.getElementById("TempRemarksDIV");
             if (!isNaN(Temp) && Temp !== "" && Temp < 20 || Temp > 60) {
@@ -668,7 +668,7 @@
         }
 
         function toggleDoughTempRemarksDIV(textBox) {
-            console.log("toggleDoughTempRemarksDIV function called");
+            //console.log("toggleDoughTempRemarksDIV function called");
             var doughTemp = parseFloat(document.getElementById('<%=TB_DoughTemp.ClientID%>').value);
             var remarksDiv = document.getElementById("DoughTempRemarksDIV");
             if (!isNaN(doughTemp) && doughTemp !== "" && doughTemp < 20 || doughTemp > 60) {
@@ -680,7 +680,7 @@
         }
 
         function togglePositionDiv(radioButtonList) {
-            console.log("togglePositionDiv function called");
+            //console.log("togglePositionDiv function called");
             var selectedValue = radioButtonList.querySelector('input[type="radio"]:checked').value;
             var ovenControlsDiv = document.getElementById('OvenControlsDiv');
             var damperControlsDiv = document.getElementById('DamperControlsDiv');
@@ -745,7 +745,14 @@
 
             // If not valid, prevent form submission
             if (!isValid) {
-                alert("Please fill all the required fields.");
+                //alert("Please fill all the required fields.");
+                new PNotify({
+                    title: 'Missing Fields',
+                    text: 'Please fill all the required fields.',
+                    type: 'error', // Can be 'warning' or 'error' depending on the severity
+                    styling: 'bootstrap3'
+                });
+
             }
 
             return isValid;
@@ -755,77 +762,71 @@
 
         // Function to calculate deviation and update the grid data
         function calculateDeviation(inputElement) {
-            // Find the row that contains the input element
+            //console.log("Function called: calculateDeviation");
+
             var row = inputElement.closest('tr');
-            //console.log('rows:', row);
+            if (!row) {
+                //console.error("Row not found! Exiting function.");
+                return;
+            }
 
-            var slValue = row.querySelector('td').textContent.trim();
-            //console.log('slValue:', slValue);
-            // Retrieve the Standard Weight, Actual Weight, and Deviation Weight elements from the same row
+            var slCell = row.querySelector('td');
+            if (!slCell) {
+                //console.error("SL cell not found! Exiting function.");
+                return;
+            }
+            var slValue = slCell.textContent.trim();
+            //console.log("Serial Number (Sl):", slValue);
+
             var standardWeightElement = row.querySelector('.standard-weight');
+            var actualWeightElement = row.querySelector('.actual-weight');
+            var deviationWeightElement = row.querySelector('.deviation-weight');
+            var deviationPercentageElement = row.querySelector('.deviation-percentage');
+
+            if (!standardWeightElement || !actualWeightElement || !deviationWeightElement || !deviationPercentageElement) {
+                //console.error("One or more required input elements not found! Exiting function.");
+                return;
+            }
+
             var standardWeight = parseFloat(standardWeightElement.value) || 0;
-            //console.log('Standard Weight:', standardWeight);
-
-            var actualWeightElement = row.querySelector('#txtActualWeight');
             var actualWeight = parseFloat(actualWeightElement.value) || 0;
-            //console.log('Actual Weight:', actualWeight);
 
-            // Calculate the deviation
             var deviationWeight = actualWeight - standardWeight;
-            //console.log('Deviation Weight:', deviationWeight);
+            deviationWeightElement.value = deviationWeight.toFixed(2);
 
-            // Get the Deviation Weight element from the same row
-            var deviationWeightElement = row.querySelector('#txtDeviation');
+            var deviationPercentage = standardWeight !== 0 ? (deviationWeight * 100) / standardWeight : 0;
+            deviationPercentageElement.value = deviationPercentage.toFixed(2);
 
-            // Format the deviation weight to two decimal places
-            var formattedDeviationWeight = deviationWeight.toFixed(2);
-            //console.log('Formatted Deviation Weight:', formattedDeviationWeight);
-
-            // Update the Deviation Weight TextBox
-            deviationWeightElement.value = formattedDeviationWeight;
-
-            //-------------------------------------
-            // Calculate the deviation percentage
-            var deviationPercentage = (deviationWeight * 100) / standardWeight;
-            //console.log('Deviation Percentage:', deviationPercentage);
-            if (deviationPercentage > 5) {
+            if (Math.abs(deviationPercentage) > 5) {
+                //console.warn("Deviation exceeds 5%! Triggering notification...");
                 setTimeout(function () {
-                    // Display a PNotify notification
                     new PNotify({
-                        title: 'Deviation',
-                        text: 'Weight percentage greater than 5% ',
+                        title: 'Deviation Alert',
+                        text: 'Weight deviation exceeds 5%',
                         type: 'warning',
                         styling: 'bootstrap3'
                     });
-                }, 200);
+                }, 100);
             }
 
-            // Get the Deviation Percentage element from the same row
-            var deviationPercentageElement = row.querySelector('#txtDeviationPercentage');
+            var varietyElement = row.querySelector('.variety');
+            var varietyName = varietyElement ? varietyElement.value.trim() : "Unknown";
+            //console.log("Variety Name:", varietyName);
 
-            // Format the deviation percentage to two decimal places
-            var formattedDeviationPercentage = deviationPercentage.toFixed(2);
-            //console.log('Formatted Deviation Percentage:', formattedDeviationPercentage);
-
-            // Update the Deviation Percentage TextBox
-            deviationPercentageElement.value = formattedDeviationPercentage;
-            //---------------------------------
-
-
-            // Build JSON data for the current row
             var rowData = {
                 Sl: slValue,
-                Variety: row.querySelector('.variety').textContent.trim(),
+                Variety: varietyName,
                 StandardWeight: standardWeight,
                 ActualWeight: actualWeight,
-                DeviationWeight: formattedDeviationWeight,
-                DeviationPercentage: formattedDeviationPercentage
+                DeviationWeight: deviationWeight.toFixed(2),
+                DeviationPercentage: deviationPercentage.toFixed(2)
             };
-            //console.log('rowData:', rowData);
+            //console.log("Row Data Object:", rowData);
 
-            // Update global array with current row data
             updateGridViewData(slValue, rowData);
+            //console.log("Global GridView Data updated.");
         }
+
 
         // Function to update the global array with the current row's data
         function updateGridViewData(slValue, rowData) {
@@ -840,7 +841,7 @@
             }
 
             // Log the updated data for debugging
-            console.log('GridView Data Updated:', gridViewData);
+            //console.log('GridView Data Updated:', gridViewData);
         }
 
         function collectAndSendData() {
@@ -864,7 +865,7 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        console.log('Data successfully sent to server');
+                        //console.log('Data successfully sent to server');
                     } else {
                         console.log('Error sending data:', xhr.statusText);
                     }
@@ -973,7 +974,7 @@
             }
 
             // Log the updated data for debugging
-            console.log('GridView Data Updated:', gridViewData1);
+            //console.log('GridView Data Updated:', gridViewData1);
         }
 
         function collectAndSendData1() {
@@ -999,9 +1000,9 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        console.log('Data successfully sent to server');
+                        //console.log('Data successfully sent to server');
                     } else {
-                        console.log('Error sending data:', xhr.statusText);
+                        //console.log('Error sending data:', xhr.statusText);
                     }
                 }
             };
@@ -1013,9 +1014,9 @@
             let enabledTabs = new Set(['basicData']); // Initially enable the first tab
 
             // Disable all tabs except the first one initially
-            for (let i = 0; i < tabIds.length; i++) {
-                document.querySelector(`a[href="#${tabIds[i]}"]`).classList.add('disabled');
-            }
+            //for (let i = 0; i < tabIds.length; i++) {
+            //    document.querySelector(`a[href="#${tabIds[i]}"]`).classList.add('disabled');
+            //}
 
             // Function to check if the current tab is filled and enable the next tab
             function checkTabContent(index) {
@@ -1046,10 +1047,15 @@
             // Attach click event listeners to each tab
             tabIds.forEach((tabId, index) => {
                 document.querySelector(`a[href="#${tabId}"]`).addEventListener('click', function (e) {
-                    // Prevent navigation if the tab is not enabled
                     if (!enabledTabs.has(tabId)) {
                         e.preventDefault(); // Prevent navigation
-                        alert('Please complete the current section before proceeding.');
+                        //alert('Please complete the current section before proceeding.');
+                        new PNotify({
+                            title: 'Access Denied',
+                            text: 'Please complete the previous section before proceeding.',
+                            type: 'warning', // Can be 'success', 'error', 'info', 'warning'
+                            styling: 'bootstrap3'
+                        });
                     }
                 });
 
@@ -1065,7 +1071,141 @@
             });
         });
 
+
+        function displayImage(input) {
+            var file = input.files[0];
+            if (!file) return;
+
+            var prefix = input.getAttribute("data-prefix");
+            //console.log('PrefixValue: ' + prefix + '');
+            var img = document.createElement("img");
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                img.src = e.target.result;
+
+                img.onload = function () {
+                    var canvas = document.createElement("canvas");
+                    var ctx = canvas.getContext("2d");
+
+                    var maxWidth = 1200; // Increased resolution
+                    var maxHeight = 1200; // Optional max height
+                    var width = img.width;
+                    var height = img.height;
+
+                    // Resize based on maxWidth while maintaining aspect ratio
+                    if (width > maxWidth || height > maxHeight) {
+                        if (width > height) {
+                            height = Math.floor((maxWidth / width) * height);
+                            width = maxWidth;
+                        } else {
+                            width = Math.floor((maxHeight / height) * width);
+                            height = maxHeight;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    canvas.toBlob(function (blob) {
+                        var formData = new FormData();
+
+                        var fileExtension = file.name.split('.').pop(); // Get the file extension
+                        var newFileName = prefix + "_" + new Date().getTime() + "." + fileExtension; // Create new filename with prefix
+
+                        formData.append("image", blob, newFileName); // Append file with new filename
+                        formData.append("prefix", prefix); // Append the prefix for folder selection
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "/UploadImageHandler.ashx", true);
+
+                        xhr.upload.onprogress = function (event) {
+                            if (event.lengthComputable) {
+                                var percentComplete = (event.loaded / event.total) * 100;
+                                //console.log('Upload progress: ' + percentComplete + '%');
+                            }
+                        };
+
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                var imageElement = document.querySelector('img[data-prefix="' + prefix + '"]');
+                                //console.log("Image Display Element: ", imageElement);
+                                var labelElement = document.querySelector('span[data-prefix="' + prefix + '"]');
+                                //console.log("Hidden Element: ", labelElement);
+
+                                if (imageElement) {
+
+                                    imageElement.style.display = 'block';
+                                    imageElement.src = response.imageUrl; // Update image source
+                                    console.log("Image URL: " + response.imageUrl);
+                                } else {
+                                    //console.error("Image element not found for prefix: " + prefix);
+                                }
+
+                                if (labelElement) {
+                                    labelElement.innerText = response.imageUrl;
+                                    //labelElement.textContent = response.imageUrl;
+                                }
+
+                                // Now use if-else to bind to individual hidden fields
+                                if (prefix === "QAPC/MaidaImage") {
+                                    document.getElementById('<%= hdn_img1.ClientID %>').value = response.imageUrl;
+                                } else if (prefix === "QAPC/BBImage") {
+                                    document.getElementById('<%= hdn_img2.ClientID %>').value = response.imageUrl;
+                                }
+
+                                // Clear the file input uploader
+                            input.value = '';
+
+                            new PNotify({
+                                title: 'Upload Success',
+                                text: 'Image Saved!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        } else {
+                            new PNotify({
+                                title: 'Upload Failed',
+                                text: 'An error occurred during the upload.',
+                                type: 'error',
+                                styling: 'bootstrap3'
+                            });
+                        }
+                        };
+
+                        xhr.send(formData);
+                    }, 'image/jpeg', 0.9); // Compress to 80% quality
+                };
+            };
+
+        reader.readAsDataURL(file);
+    }
+
+    function validateImages() {
+        var image1 = document.getElementById('<%= uploadedImage1.ClientID %>'); // First image
+            var image2 = document.getElementById('<%= uploadedImage2.ClientID %>'); // Second image
+
+            // Check if images are displayed
+        if (image1.style.display === 'none' && image2.style.display === 'none') {
+            console.log("Image Element Checking");
+                new PNotify({
+                    title: 'Missing Input',
+                    text: 'Please upload at least one image before submitting.',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission if all validations pass
+        }
+
     </script>
+
+    <asp:HiddenField ID="hdn_img1" runat="server" />
+    <asp:HiddenField ID="hdn_img2" runat="server" />
 
     <div class="right_col" role="main">
         <div class="container">
@@ -1862,27 +2002,24 @@
                                                                 </div>
                                                             </div>
 
-                                                            <%--Image part--%>
-                                                            <div class="col-md-3" id="FU_MaidaImage_Upldr" runat="server" visible="true">
+                                                            <div class="col-md-3" id="FU_MaidaImage_Upldr" runat="server" data-prefix="QAPC/MaidaImage">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_FU_MaidaImage" runat="server" AssociatedControlID="FU_MaidaImage" Text="Maida Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_FU_MaidaImage" runat="server" ErrorMessage="*" ControlToValidate="FU_MaidaImage" Display="Dynamic" ValidationGroup="ValidationGroup1" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:CustomValidator ID="CV_FU_MaidaImage" runat="server" ControlToValidate="FU_BBImage" Display="Dynamic" ValidationGroup="ValidationGroup1" ErrorMessage="Please upload file"></asp:CustomValidator>
+                                                                    <asp:RequiredFieldValidator ID="RFV_FU_MaidaImage" runat="server" ErrorMessage="*" ControlToValidate="FU_MaidaImage" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:CustomValidator ID="CV_FU_MaidaImage" runat="server" ControlToValidate="FU_BBImage" Display="Dynamic" ValidationGroup="BasicDataSave" ErrorMessage="Please upload file"></asp:CustomValidator>
                                                                     <asp:Label ID="lblErrorMessage2" runat="server" CssClass="text-danger"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:FileUpload ID="FU_MaidaImage" runat="server" CssClass="form-control rounded" onchange="displayImage(this);" />
-                                                                        <span class="input-group-btn">
-                                                                            <asp:Button ID="BtnUploadFU_MaidaImage" runat="server" CssClass="btn btn-primary btn-sm" Text="Upload" OnClientClick="return validateForm1();" OnClick="BtnUploadFU_MaidaImage_Click" ValidationGroup="ValidationGroup1" CausesValidation="true" />
-                                                                        </span>
+                                                                        <asp:FileUpload ID="FU_MaidaImage" runat="server" CssClass="form-control rounded" data-prefix="QAPC/MaidaImage" onchange="displayImage(this);" />
+                                                                        <asp:Label ID="lbl_QAPC_MaidaImg" runat="server" Text="" CssClass="image-label" data-prefix="QAPC/MaidaImage" Visible="true" ForeColor="Black"></asp:Label>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3" id="FU_MaidaImage_img" runat="server" visible="false">
-                                                                <asp:Image ID="uploadedImage1" runat="server" CssClass="img-fluid" />
+                                                            <div class="col-md-3" id="FU_MaidaImage_img" runat="server" data-prefix="QAPC/MaidaImage">
+                                                                <asp:Image ID="uploadedImage1" runat="server" CssClass="img-fluid" data-prefix="QAPC/MaidaImage" Style="display: none;" />
                                                             </div>
 
-                                                            <div class="col-md-3" id="FU_BBImage_Upldr" runat="server" visible="true">
+                                                            <%--<div class="col-md-3" id="FU_BBImage_Upldr" runat="server" visible="true">
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_FU_BBImage" runat="server" AssociatedControlID="FU_BBImage" Text="Broken Biscuit Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <asp:RequiredFieldValidator ID="RFV_FU_BBImage" runat="server" ErrorMessage="*" ControlToValidate="FU_BBImage" Display="Dynamic" ValidationGroup="ValidationGroup2" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -1899,14 +2036,29 @@
 
                                                             <div class="col-md-3" id="FU_BBImage_Img" runat="server" visible="false">
                                                                 <asp:Image ID="uploadedImage2" runat="server" CssClass="img-fluid" />
+                                                            </div>--%>
+
+                                                            <div class="col-md-3" id="FU_BBImage_Upldr" runat="server" visible="true">
+                                                                <div class="mb-3">
+                                                                    <asp:Label ID="Lbl_FU_BBImage" runat="server" AssociatedControlID="FU_BBImage" Text="Broken Biscuit Appearance" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:RequiredFieldValidator ID="RFV_FU_BBImage" runat="server" ErrorMessage="*" ControlToValidate="FU_BBImage" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                    <asp:CustomValidator ID="CV_FU_BBImage" runat="server" ControlToValidate="FU_BBImage" Display="Dynamic" ValidationGroup="BasicDataSave" ErrorMessage="Please upload file"></asp:CustomValidator>
+                                                                    <asp:Label ID="lblErrorMessage1" runat="server" CssClass="text-danger"></asp:Label>
+                                                                    <div class="input-group input-group-sm">
+                                                                        <asp:FileUpload ID="FU_BBImage" runat="server" CssClass="form-control rounded" data-prefix="QAPC/BBImage" onchange="displayImage(this);" />
+                                                                        <asp:Label ID="lbl_QAPC_BBImage" runat="server" Text="" CssClass="image-label" data-prefix="QAPC/BBImage" Visible="true" ForeColor="Black"></asp:Label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
 
-                                                            <%--Button--%>
+                                                            <div class="col-md-3" id="FU_BBImage_Img" runat="server" data-prefix="QAPC/BBImage">
+                                                                <asp:Image ID="uploadedImage2" runat="server" CssClass="img-fluid" data-prefix="QAPC/BBImage" Style="display: none;" />
+                                                            </div>
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="Lbl_BasicbtnSubmit" runat="server" AssociatedControlID="BasicBtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:Label ID="Lbl_BasicbtnSubmit" runat="server" AssociatedControlID="BasicBtnSubmit" Text="Click to SAVE Basic Data" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="BasicBtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="BasicDataSave" CausesValidation="true" OnClick="BasicBtnSubmit_Click" />
+                                                                        <asp:Button ID="BasicBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-primary btn-sm" ValidationGroup="BasicDataSave" OnClientClick="validateImages();" CausesValidation="true" OnClick="BasicBtnSubmit_Click" />
                                                                         <asp:Button ID="BasicBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BasicBtnReset_Click" />
                                                                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                                                     </div>
@@ -1918,282 +2070,11 @@
                                                     </div>
                                                     <%-- Basic Data ends here--%>
 
-                                                    <%--Raw Material Weight Data Starts Here--%>
-                                                    <%--<div class="tab-pane fade" id="rawMaterial" role="tabpanel" aria-labelledby="rawMaterial-tab">
-                                                        <div class="x-content">
-
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="LabelMaidaBrandName" runat="server" AssociatedControlID="TB_MaidaBrandName" Text="Maida Brand Name :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_MaidaBrandName" runat="server" ErrorMessage="Input Required" ControlToValidate="TB_MaidaBrandName" ValidationGroup="RawSubmit" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_MaidaBrandName" runat="server" ControlToValidate="TB_MaidaBrandName" ForeColor="Red" ValidationGroup="RawSubmit" ErrorMessage="Alphanumeric Only" ValidationExpression="^[a-zA-Z0-9, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_MaidaBrandName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Maida Brand Name (3-20 characters)" MaxLength="20"></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label48" runat="server" AssociatedControlID="TB_MaidaActWgt" Text="Maida :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_MaidaActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_MaidaActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_MaidaActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_MaidaActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_MaidaActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Maida actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label49" runat="server" AssociatedControlID="TB_SugarActWgt" Text="Sugar :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_SugarActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_SugarActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_SugarActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_SugarActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_SugarActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Sugar actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label50" runat="server" AssociatedControlID="TB_ButterActWgt" Text="Butter :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_ButterActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_ButterActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_ButterActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_ButterActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_ButterActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Butter actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label51" runat="server" AssociatedControlID="TB_SMPActWgt" Text="S.M.P. :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_SMPActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_SMPActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_SMPActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_SMPActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_SMPActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder=".M.P. actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label52" runat="server" AssociatedControlID="TB_PWActWgt" Text="Process Water :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_PWActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_PWActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_PWActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_PWActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_PWActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Process Water actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label53" runat="server" AssociatedControlID="TB_LecithinActWgt" Text="Lecithin :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_LecithinActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_LecithinActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_LecithinActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_LecithinActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_LecithinActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Lecithin actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label54" runat="server" AssociatedControlID="TB_GMSActWgt" Text="GMS Paste :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_GMSActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_GMSActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_GMSActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_GMSActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_GMSActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="GMS Paste actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label55" runat="server" AssociatedControlID="TB_SSLActWgt" Text="SSL Paste/ LS. Powder :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_SSLActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_SSLActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_SSLActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_SSLActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_SSLActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="SSL Paste/ LS. Powder actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label56" runat="server" AssociatedControlID="TB_GlucoseActWgt" Text="Glucose :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_GlucoseActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_GlucoseActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_GlucoseActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_GlucoseActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_GlucoseActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Glucose actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label57" runat="server" AssociatedControlID="TB_HVOActWgt" Text="HVO :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_HVOActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_HVOActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_HVOActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_HVOActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_HVOActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="HVO actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label58" runat="server" AssociatedControlID="TB_SyrupActWgt" Text="Syrup :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_SyrupActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_SyrupActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_SyrupActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_SyrupActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_SyrupActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Syrup actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label59" runat="server" AssociatedControlID="TB_MaltActWgt" Text="Malt :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_MaltActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_MaltActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_MaltActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_MaltActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_MaltActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Malt actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label60" runat="server" AssociatedControlID="TB_BBActWgt" Text="Broken Biscuit :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_BBActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_BBActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_BBActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_BBActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_BBActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Broken Biscuit actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label61" runat="server" AssociatedControlID="TB_ABCActWgt" Text="A.B.C. :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_ABCActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_ABCActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_ABCActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_ABCActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_ABCActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="A.B.C. actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label62" runat="server" AssociatedControlID="TB_SBCActWgt" Text="S.B.C. :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_SBCActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_SBCActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_SBCActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_SBCActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_SBCActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="S.B.C. actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label63" runat="server" AssociatedControlID="TB_SMBSActWgt" Text="S.M.B.S. :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_SMBSActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_SMBSActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_SMBSActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_SMBSActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_SMBSActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="S.M.B.S. actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label64" runat="server" AssociatedControlID="TB_WheyPowderActWgt" Text="Whey Powder :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_WheyPowderActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_WheyPowderActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_WheyPowderActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_WheyPowderActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_WheyPowderActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Whey Powder actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label65" runat="server" AssociatedControlID="TB_MilkActWgt" Text="Condence Milk :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_MilkActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_MilkActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_MilkActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_MilkActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_MilkActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Condence Milk actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label66" runat="server" AssociatedControlID="TB_SaltActWgt" Text="Condence Milk :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_SaltActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_SaltActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_SaltActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_SaltActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_SaltActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Salt actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label67" runat="server" AssociatedControlID="TB_YeastActWgt" Text="Yeast (Smell & Wt) :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_YeastActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_YeastActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_YeastActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_YeastActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_YeastActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Yeast (Smell & Wt) actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label68" runat="server" AssociatedControlID="TB_E1ActWgt" Text="E1 :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_E1ActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_E1ActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_E1ActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_E1ActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_E1ActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="E1 actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Label69" runat="server" AssociatedControlID="TB_CaramelActWgt" Text="Caramel :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <asp:RequiredFieldValidator ID="RFV_CaramelActWgt" runat="server" ErrorMessage="*" ValidationGroup="RawSubmit" ControlToValidate="TB_CaramelActWgt" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator ID="REV_CaramelActWgt" runat="server" ValidationGroup="RawSubmit" ControlToValidate="TB_CaramelActWgt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                                                    <div class="input-group-sm">
-                                                                        <asp:TextBox ID="TB_CaramelActWgt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Caramel actual wgt "></asp:TextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3">
-                                                                    <asp:Label ID="Lbl_RawBtnSubmit" runat="server" AssociatedControlID="RawBtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                                                    <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="RawBtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="RawSubmit" CausesValidation="true" OnClick="RawBtnSubmit_Click" />
-                                                                        <asp:Button ID="RawBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="RawBtnReset_Click" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>--%>
-                                                    <%--Raw Material Weight Data Ends Here--%>
-
                                                     <%-- Weight Data Starts Here--%>
                                                     <div class="tab-pane fade" id="weight" role="tabpanel" aria-labelledby="weight-tab">
                                                         <div class="x-content">
-                                                            <asp:GridView ID="GridView1" Width="100%" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
+                                                            <asp:GridView ID="GridView1" Width="100%" runat="server" AutoGenerateColumns="False"
+                                                                CssClass="table table-striped table-hover table-bordered table-responsive table-sm table-condensed text-wrap">
                                                                 <Columns>
 
                                                                     <asp:TemplateField HeaderText="Sl" HeaderStyle-Width="5%">
@@ -2204,38 +2085,40 @@
 
                                                                     <asp:TemplateField HeaderText="Variety" HeaderStyle-Width="35%">
                                                                         <ItemTemplate>
-                                                                            <span class="variety"><%# Eval("sap_IngredientName") %></span>
+                                                                            <asp:TextBox ID="txtVariety" runat="server" CssClass="variety form-control form-control-sm rounded" Text='<%# Eval("sap_IngredientName") %>' ReadOnly='<%# Convert.ToInt32(Eval("BOM_Qnty")) == 0 ? false : true %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
-
                                                                     <asp:TemplateField HeaderText="Standard Weight" HeaderStyle-Width="15%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtStandardWeight" runat="server" CssClass="standard-weight form-control form-control-sm rounded" ReadOnly="true" Width="50%" ForeColor="DimGray" ClientIDMode="Static" Text='<%# Eval("BOM_Qnty") %>'></asp:TextBox>
+                                                                            <asp:TextBox ID="txtStandardWeight" runat="server" CssClass="standard-weight form-control form-control-sm rounded"
+                                                                                ReadOnly='<%# Convert.ToInt32(Eval("BOM_Qnty")) == 0 ? false : true %>' ForeColor="DimGray" Text='<%# Eval("BOM_Qnty") %>'></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Actual Weight" HeaderStyle-Width="15%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtActualWeight" runat="server" ClientIDMode="Static" CssClass="form-control form-control-sm rounded" Width="70%" onkeyup="calculateDeviation(this)"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtActualWeight" runat="server" ClientIDMode="Static" CssClass="form-control form-control-sm rounded actual-weight" onkeyup="calculateDeviation(this)"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Deviation Weight" HeaderStyle-Width="15%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtDeviation" runat="server" ClientIDMode="Static" CssClass="deviation-weight form-control form-control-sm rounded" ReadOnly="true"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtDeviation" runat="server" CssClass="deviation-weight form-control form-control-sm rounded"
+                                                                                ReadOnly="true"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="Deviation Percentage" HeaderStyle-Width="15%">
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox ID="txtDeviationPercentage" runat="server" ClientIDMode="Static" CssClass="deviation-percentage form-control form-control-sm rounded" ReadOnly="true"></asp:TextBox>
+                                                                            <asp:TextBox ID="txtDeviationPercentage" runat="server" CssClass="deviation-percentage form-control form-control-sm rounded"
+                                                                                ReadOnly="true"></asp:TextBox>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                 </Columns>
                                                             </asp:GridView>
-                                                            <asp:Button ID="WgtbtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" ValidationGroup="SubmitRM" CausesValidation="false" Enabled="false" Text="Submit" OnClientClick="return validateGridView() && collectAndSendData();" OnClick="WgtbtnSubmit_Click" />
+                                                            <asp:Button ID="WgtbtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" ValidationGroup="SubmitRM" CausesValidation="false" Enabled="false" Text="Proceed Next" OnClientClick="return validateGridView() && collectAndSendData();" OnClick="WgtbtnSubmit_Click" />
                                                             <asp:Button ID="WgtbtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="WgtbtnReset_Click" />
                                                         </div>
                                                     </div>
@@ -2360,7 +2243,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_SpongeBtnSubmit" runat="server" AssociatedControlID="SpongeBtnSubmit" Text="Click to Proceed" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="SpongeBtnSubmit" runat="server" Text="Save" CssClass="btn btn-success btn-sm" Enabled="false" ValidationGroup="SpongeSubmit" CausesValidation="false" OnClick="SpongeBtnSubmit_Click" />
+                                                                        <asp:Button ID="SpongeBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-success btn-sm" Enabled="false" ValidationGroup="SpongeSubmit" CausesValidation="false" OnClick="SpongeBtnSubmit_Click" />
                                                                         <asp:Button ID="SpongeBtnNotApplicable" runat="server" Text="N/A or SKIP" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="SpongeBtnNotApplicable_Click" />
                                                                         <asp:Button ID="Spongebtn_Reset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="Spongebtn_Reset_Click" />
 
@@ -2577,9 +2460,9 @@
 
                                                             <div class="col-md-3">
                                                                 <div class="mb-3">
-                                                                    <asp:Label ID="lbl_DoughBtnSubmit" runat="server" AssociatedControlID="DoughBtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                                    <asp:Label ID="lbl_DoughBtnSubmit" runat="server" AssociatedControlID="DoughBtnSubmit" Text="Click to SAVE Dough Data" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="DoughBtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="DoughSubmit" CausesValidation="false" OnClick="DoughBtnSubmit_Click" />
+                                                                        <asp:Button ID="DoughBtnSubmit" runat="server" Text="Proceed Next" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="DoughSubmit" CausesValidation="false" OnClick="DoughBtnSubmit_Click" />
                                                                         <asp:Button ID="DoughBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="DoughBtnReset_Click" />
                                                                     </div>
                                                                 </div>
@@ -2626,7 +2509,7 @@
 
                                                         </div>
 
-                                                        <asp:Button ID="OvenBtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" Text="Submit" CausesValidation="false" Enabled="false" ValidationGroup="SubmitOven" OnClientClick="return validateGridView1() && collectAndSendData1(); " OnClick="OvenBtnSubmit_Click" />
+                                                        <asp:Button ID="OvenBtnSubmit" runat="server" CssClass="btn btn-primary btn-sm" Text="Proceed Next" CausesValidation="false" Enabled="false" ValidationGroup="SubmitOven" OnClientClick="return validateGridView1() && collectAndSendData1(); " OnClick="OvenBtnSubmit_Click" />
                                                         <asp:Button ID="OvenBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="OvenBtnReset_Click" />
 
                                                     </div>
@@ -2674,7 +2557,7 @@
                                                                 <div class="mb-3">
                                                                     <asp:Label ID="Lbl_FinalBtnSubmit" runat="server" AssociatedControlID="FinalBtnSubmit" Text="Click to Submit" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                                                     <div class="input-group input-group-sm">
-                                                                        <asp:Button ID="FinalBtnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="VerifiedSubmit" CausesValidation="false" OnClick="FinalBtnSubmit_Click" />
+                                                                        <asp:Button ID="FinalBtnSubmit" runat="server" Text="Final Submit" CssClass="btn btn-primary btn-sm" Enabled="false" ValidationGroup="VerifiedSubmit" CausesValidation="false" OnClick="FinalBtnSubmit_Click" />
                                                                         <asp:Button ID="FinalBtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="FinalBtnReset_Click" />
                                                                     </div>
                                                                 </div>
