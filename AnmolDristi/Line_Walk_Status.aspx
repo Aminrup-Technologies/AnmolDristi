@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Line Walk Status" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Line_Walk_Status.aspx.cs" Inherits="AnmolDristi.Line_Walk_Status" %>
+﻿<%@ Page Title="CSM : Line Walk Report" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Line_Walk_Status.aspx.cs" Inherits="AnmolDristi.Line_Walk_Status" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <!-- SweetAlert2 CDN -->
@@ -21,10 +21,8 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-
         $(document).ready(function () {
             // Add new Team Member input
             $("#btnAddName").click(function () {
@@ -54,30 +52,31 @@
             });
 
             // Add new Image Upload input
-            $("#btnAddImage").click(function () {
-                let newImageInput = `<div class="d-flex align-items-center mb-2 image-upload-group">
-                                 <input type="file" class="form-control form-control-sm rounded me-2 image-input" accept="image/*" />
-                                 <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
-                             </div>`;
-                $("#imageUploadContainer").append(newImageInput);
-            });
+            //$("#btnAddImage").click(function () {
+            //    let newImageInput = `<div class="d-flex align-items-center mb-2 image-upload-group">
+            //                     <input type="file" class="form-control form-control-sm rounded me-2 image-input" accept="image/*" />
+            //                     <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
+            //                 </div>`;
+            //    $("#imageUploadContainer").append(newImageInput);
+            //});
+
             // Add new Image Upload input for Snaps
-            $("#btnAddSnap").click(function () {
-                let newSnapInput = `<div class="d-flex align-items-center mb-2 snap-upload-group">
-                                 <input type="file" class="form-control form-control-sm rounded me-2 snap-input" accept="image/*" />
-                                 <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
-                             </div>`;
-                $("#snapUploadContainer").append(newSnapInput);
-            });
+            //$("#btnAddSnap").click(function () {
+            //    let newSnapInput = `<div class="d-flex align-items-center mb-2 snap-upload-group">
+            //                     <input type="file" class="form-control form-control-sm rounded me-2 snap-input" accept="image/*" />
+            //                     <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
+            //                 </div>`;
+            //    $("#snapUploadContainer").append(newSnapInput);
+            //});
 
 
             // Remove dynamically added input fields
             $(document).on("click", ".btn-remove", function () {
                 $(this).closest(".name-input-group, .observation-input-group, .recommendation-input-group,.image-upload-group, .snap-upload-group ").remove();
             });
+
         });
     </script>
-
 
     <div class="right_col" role="main">
         <div class="container">
@@ -91,13 +90,11 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Line Walk Status of COB</h2>
+                            <h2>CSM : Line Walk Report</h2>
                             <div class="clearfix"></div>
                         </div>
 
                         <div class="x_content">
-                            <!-- Row 1: Date, Job Description, Job ID -->
-                            <!-- Step 1: Job Details -->
 
                             <h2 class="green-heading">Step 1: Job Details</h2>
                             <hr />
@@ -128,11 +125,12 @@
                                 </div>
                             </div>
 
-                            <!-- Row 2: Team Members, Upload Image -->
-                            <!-- Step 2: Team Details -->
+
                             <hr>
-                            <h2 class="green-heading">Step 2: Team Details</h2>
+                            <h2 class="green-heading">Step 2[A]: Team Members</h2>
                             <hr />
+
+
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="mb-4">
@@ -147,7 +145,12 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
+                            <hr>
+                            <h2 class="green-heading">Step 2[B]: Team Members Photograph</h2>
+                            <hr />
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_TM_Images" runat="server" AssociatedControlID="File_TM_Images" Text="Upload Team Members Image" ForeColor="Blue" Font-Bold="true"></asp:Label>
@@ -156,21 +159,19 @@
                                         <div id="imageUploadContainer">
                                             <div class="d-flex mb-2">
                                                 <asp:FileUpload ID="File_TM_Images" runat="server" CssClass="form-control form-control-sm rounded me-2" />
-                                                <button type="button" id="btnAddImage" class="btn btn-success btn-sm">+Add</button>
+                                                <button type="button" id="btnAddImage" class="btn btn-success btn-sm">Upload</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
 
-                            <!-- Row 3: locaion, Observation, Recommendation, Responsibility -->
-                            <!-- Step 3: Observations and Recommendations -->
                             <hr>
                             <h2 class="green-heading">Step 3: Observations & Recommendations</h2>
                             <hr />
-                            <div class="row">
+
+
+                            <div class=" row repeator">
                                 <div class="col-md-4">
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_location" runat="server" AssociatedControlID="TB_location" Text="Area/Location" ForeColor="Blue" Font-Bold="true"></asp:Label>
@@ -181,13 +182,13 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-4">
-                                        <asp:Label ID="Lbl_Observation_Points" runat="server" AssociatedControlID="TB_Observation_Points" Text="Observation Points" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:Label ID="Lbl_Observation_Points" runat="server" AssociatedControlID="TB_Observation_Points" Text="Detailed Observation Point" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_Observation_Points" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Observation_Points" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
 
                                         <div id="observationInputContainer">
                                             <div class="d-flex mb-2">
                                                 <asp:TextBox ID="TB_Observation_Points" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Observation"></asp:TextBox>
-                                                <button type="button" id="btnAddObservation" class="btn btn-success btn-sm">+Add</button>
+                                                <%--<button type="button" id="btnAddObservation" class="btn btn-success btn-sm">+Add</button>--%>
                                             </div>
                                         </div>
                                     </div>
@@ -195,26 +196,21 @@
 
                                 <div class="col-md-4">
                                     <div class="mb-4">
-                                        <asp:Label ID="Lbl_Recommendation_Points" runat="server" AssociatedControlID="TB_Recommendation_Points" Text="Recommendation Points" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:Label ID="Lbl_Recommendation_Points" runat="server" AssociatedControlID="TB_Recommendation_Points" Text="Recommendation Given" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_Recommendation_Points" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Recommendation_Points" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
 
                                         <div id="recommendationInputContainer">
                                             <div class="d-flex mb-2">
                                                 <asp:TextBox ID="TB_Recommendation_Points" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Recommendation"></asp:TextBox>
-                                                <button type="button" id="btnAddRecommendation" class="btn btn-success btn-sm">+Add</button>
+                                                <%--<button type="button" id="btnAddRecommendation" class="btn btn-success btn-sm">+Add</button>--%>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-
-                            </div>
-
-                            <!-- Row 4: Target Date,Remarks, Upload Snaps -->
-                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="mb-4">
-                                        <asp:Label ID="Lbl_resp" runat="server" AssociatedControlID="TB_resp" Text="Responsibility" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:Label ID="Lbl_resp" runat="server" AssociatedControlID="TB_resp" Text="Responsibility Given To" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_resp" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_resp" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:TextBox ID="TB_resp" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     </div>
@@ -226,6 +222,7 @@
                                         <asp:TextBox ID="TB_targetDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
                                     </div>
                                 </div>
+
                                 <div class="col-md-4">
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_remarks" runat="server" AssociatedControlID="TB_remarks" Text="Remarks/Compliance" ForeColor="Blue" Font-Bold="true"></asp:Label>
@@ -242,38 +239,46 @@
                                         <div id="snapUploadContainer">
                                             <div class="d-flex mb-2">
                                                 <asp:FileUpload ID="File_Snaps" runat="server" CssClass="form-control form-control-sm rounded me-2" />
-                                                <button type="button" id="btnAddSnap" class="btn btn-success btn-sm">+Add</button>
+                                                <button type="button" id="btnAddSnap" class="btn btn-success btn-sm">Upload</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-
-
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-4">
+                                        <asp:Label ID="Label1" runat="server" Text="Click to Add More" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <button type="button" id="btnAddMore" class="btn btn-primary btn-sm mt-3 form-control form-control-sm">+ Add More</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- x_content -->
 
-                    </div>
+                        <hr>
+                        <h2 class="green-heading">Step-4 : Final Submission</h2>
+                        <hr />
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mb-4 text-center">
-                                <asp:Label ID="lbl_msg" runat="server" AssociatedControlID="BtnSubmit"
-                                    Text="Click to SAVE!" ForeColor="Blue" Font-Bold="true" Font-Size="Small">
-                                </asp:Label>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-4 text-center">
+                                    <asp:Label ID="lbl_msg" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SUBMIT!" ForeColor="Blue" Font-Bold="true" Font-Size="Small">
+                                    </asp:Label>
 
-                                <div class="d-flex justify-content-center gap-2 mt-2">
-                                    <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" />
-                                    <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
-                                    <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                    <div class="d-flex justify-content-center gap-2 mt-2">
+                                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit Record" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" />
+                                        <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
+                                        <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+
         </div>
     </div>
+
 </asp:Content>
