@@ -255,6 +255,9 @@
     <Content Include="qaqc_rotary_line.aspx" />
     <Content Include="qa_qc_FinalCbbWtReport.aspx" />
     <Content Include="redirect.aspx" />
+    <Content Include="RM_Class2.aspx" />
+    <Content Include="RM_Class2_FrmCtrl.aspx" />
+    <Content Include="RM_Class5.aspx" />
     <Content Include="RM_Class_1.aspx" />
     <Content Include="RM_Class_1_Approval.aspx" />
     <Content Include="RM_Class_1_Detailed.aspx" />
@@ -943,6 +946,27 @@
     </Compile>
     <Compile Include="redirect.aspx.designer.cs">
       <DependentUpon>redirect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class2.aspx.cs">
+      <DependentUpon>RM_Class2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class2.aspx.designer.cs">
+      <DependentUpon>RM_Class2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class2_FrmCtrl.aspx.cs">
+      <DependentUpon>RM_Class2_FrmCtrl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class2_FrmCtrl.aspx.designer.cs">
+      <DependentUpon>RM_Class2_FrmCtrl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_Class5.aspx.cs">
+      <DependentUpon>RM_Class5.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_Class5.aspx.designer.cs">
+      <DependentUpon>RM_Class5.aspx</DependentUpon>
     </Compile>
     <Compile Include="RM_Class_1.aspx.cs">
       <DependentUpon>RM_Class_1.aspx</DependentUpon>
