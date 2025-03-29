@@ -11,12 +11,12 @@
             margin-left: 5px !important;
             padding: 0.1rem !important 0.375rem;
         }
-        h2.green-heading{
-            color: #26B99A!important;
-            font-weight: 500!important;
-            font-size: 1.5rem!important;
+
+        h2.green-heading {
+            color: #26B99A !important;
+            font-weight: 500 !important;
+            font-size: 1.5rem !important;
         }
-     
     </style>
 
 </asp:Content>
@@ -76,22 +76,16 @@
                 $(this).closest(".name-input-group, .observation-input-group, .recommendation-input-group,.image-upload-group, .snap-upload-group ").remove();
             });
         });
-
-
-
-
-
-
     </script>
 
 
     <div class="right_col" role="main">
         <div class="container">
-            <div class="page-title">
+            <%--<div class="page-title">
                 <div class="title_left">
                     <h2>Automation & Technical Services</h2>
                 </div>
-            </div>
+            </div>--%>
 
             <div class="row">
                 <div class="col-md-12 col-sm-12">
@@ -104,10 +98,10 @@
                         <div class="x_content">
                             <!-- Row 1: Date, Job Description, Job ID -->
                             <!-- Step 1: Job Details -->
-                           
+
                             <h2 class="green-heading">Step 1: Job Details</h2>
                             <hr />
-      
+
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="mb-4">
@@ -261,18 +255,15 @@
                         <!-- x_content -->
 
                     </div>
-                    <!-- x_panel -->
-                    <!-- Submit Button -->
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-4 text-center">
-                                <!-- Center-align content -->
                                 <asp:Label ID="lbl_msg" runat="server" AssociatedControlID="BtnSubmit"
                                     Text="Click to SAVE!" ForeColor="Blue" Font-Bold="true" Font-Size="Small">
                                 </asp:Label>
 
                                 <div class="d-flex justify-content-center gap-2 mt-2">
-                                    <!-- Centering buttons -->
                                     <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" />
                                     <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                                     <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/home.aspx" />
@@ -285,12 +276,4 @@
             </div>
         </div>
     </div>
-
-
-
-
 </asp:Content>
-
-
-
-

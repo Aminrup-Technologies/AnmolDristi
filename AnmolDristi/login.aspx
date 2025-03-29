@@ -56,10 +56,10 @@
                                 <br />
                                 <div>
                                     <p>
-                                        © 2023-<asp:Label ID="lbl_currentyr" runat="server" Text="2024"></asp:Label>
-                                        All Rights Reserved. <span style="font-weight: bold; color:red;">
-                                            <asp:Label ID="lbl_compfooter" runat="server" Text="N/A"></asp:Label><br /></span> Powered by <a href="#" target="_blank">
-                                                <asp:Label ID="lbl_owner" runat="server" Text="N/A"></asp:Label></a>
+                                        2021-<asp:Label ID="lbl_currentyr" runat="server" Text="2024"></asp:Label>
+                                        All Rights Reserved. <span style="font-weight: bold; color: red;">
+                                            <asp:Label ID="lbl_compfooter" runat="server" Text="N/A"></asp:Label><br />
+                                        </span>Powered by <a href="#" target="_blank">©<asp:Label ID="lbl_owner" runat="server" Text="N/A"></asp:Label></a>
                                     </p>
                                 </div>
                             </div>

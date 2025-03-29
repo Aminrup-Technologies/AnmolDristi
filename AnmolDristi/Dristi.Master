@@ -133,22 +133,9 @@
                                         <li id="HomePage" runat="server" visible="true"><a><i class="fa fa-home"></i>Home <span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li id="Home1" runat="server" visible="true"><a href="home.aspx">Dashboard-1<span class="label label-success pull-right">Click !!</span></a></li>
-                                                <li id="QualityForms" runat="server" visible="true"><a href="qaqc_home.aspx">QA/QC<span class="label label-success pull-right">Click !!</span></a></li>
+                                                <li id="CSM" runat="server" visible="true"><a href="qaqc_home.aspx">New Developments<span class="label label-success pull-right">Click !!</span></a></li>
                                             </ul>
                                         </li>
-
-                                        <li id="DataMastering" runat="server" visible="false"><a><i class="fa fa-database"></i>Data Mastering <span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li id="Works" runat="server" visible="false"><a>Works<span class="fa fa-chevron-down"></span></a>
-                                                    <ul class="nav child_menu">
-                                                        <li id="WorkCountry" runat="server" class="sub_menu"><a href="work_country.aspx">Work Country</a></li>
-                                                        <li id="WorkState" runat="server"><a href="work_states.aspx">Work States</a></li>
-                                                        <li id="WorkRegion" runat="server"><a href="work_region.aspx">Work Regions</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -207,8 +194,8 @@
                     Autologout >
                 <asp:Label ID="lblTime1" runat="server" Text="N/A" Font-Bold="true" ForeColor="IndianRed" Visible="true"></asp:Label>
                     || Time :<asp:Label ID="lblTime" runat="server" Text="N/A" Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
-                    || © 2021-2024
-                <asp:Label ID="Label1" runat="server" Text="Anmol " Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
+                    || © 2021-2025
+                <asp:Label ID="Label1" runat="server" Text="Aminrup Technologies" Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
 
                 </div>
                 <div class="clearfix"></div>
