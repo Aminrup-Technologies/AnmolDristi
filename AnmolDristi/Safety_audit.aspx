@@ -25,7 +25,7 @@
 
 
         .radio-options label {
-            margin-right: 15px; /* Adds space between radio buttons */
+            margin-right: 15px;
         }
     </style>
 
@@ -56,12 +56,7 @@
                                         <asp:Label ID="lblDepartment" runat="server" Text="Department:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtDepartment" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Department"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvDepartment" runat="server"
-                                                ControlToValidate="txtDepartment"
-                                                ErrorMessage="Department is required."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
+                                            <asp:RequiredFieldValidator ID="rfvDepartment" runat="server" ControlToValidate="txtDepartment" ErrorMessage="Department is required." ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
@@ -72,12 +67,7 @@
                                         <asp:Label ID="lblSection" runat="server" Text="Section:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtSection" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Section"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvSection" runat="server"
-                                                ControlToValidate="txtSection"
-                                                ErrorMessage="Section is required."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
+                                            <asp:RequiredFieldValidator ID="rfvSection" runat="server" ControlToValidate="txtSection" ErrorMessage="Section is required" ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
@@ -89,10 +79,7 @@
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="rfvDate" runat="server"
-                                                ControlToValidate="txtDate"
-                                                ErrorMessage="Date is required."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
+                                                ControlToValidate="txtDate" ErrorMessage="Date is required." ForeColor="Red" Display="Dynamic">
                                             </asp:RequiredFieldValidator>
                                         </div>
                                     </div>
@@ -121,33 +108,21 @@
                                         <asp:Label ID="lblContractorVendorCode" runat="server" Text="Contractor Vendor Code:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtContractorVendorCode" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Contractor Vendor Code"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvContractorVendorCode" runat="server"
-                                                ControlToValidate="txtContractorVendorCode"
-                                                ErrorMessage="Contractor Vendor Code is required."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
+                                            <asp:RequiredFieldValidator ID="rfvContractorVendorCode" runat="server" ControlToValidate="txtContractorVendorCode" ErrorMessage="Contractor Vendor Code is required." ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Total Contractor People -->
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="lblTotalContractorPeople" runat="server" Text="Total Contractor People:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtTotalContractorPeople" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Number" Placeholder="Enter Total Contractor People"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvTotalContractorPeople" runat="server"
-                                                ControlToValidate="txtTotalContractorPeople"
-                                                ErrorMessage="Total Contractor People is required."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
+                                            <asp:RequiredFieldValidator ID="rfvTotalContractorPeople" runat="server" ControlToValidate="txtTotalContractorPeople" ErrorMessage="Total Contractor People is required." ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Severity Level -->
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="lblSeverityLevel" runat="server" Text="Severity Level:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -162,18 +137,12 @@
                                                 <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
                                             </asp:DropDownList>
 
-                                            <asp:RequiredFieldValidator ID="rfvSeverityLevel" runat="server"
-                                                ControlToValidate="ddlSeverityLevel"
-                                                InitialValue=""
-                                                ErrorMessage="Please select a Severity Level."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
+                                            <asp:RequiredFieldValidator ID="rfvSeverityLevel" runat="server" ControlToValidate="ddlSeverityLevel" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
                                             </asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Team Members Section -->
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <asp:Label ID="lblTeamMembers" runat="server" Text="Team Members:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -251,7 +220,7 @@
                                             <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <%--<tr>
+                                    <tr>
                                         <td><b>Select Field:</b></td>
                                         <td>
                                             <asp:DropDownList ID="ddlDescriptionFields" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="DdlDescriptionFields_SelectedIndexChanged">
@@ -264,7 +233,7 @@
                                                 <asp:ListItem Text="Unsafe Act Conditions" Value="UnsafeAct"></asp:ListItem>
                                             </asp:DropDownList>
                                         </td>
-                                    </tr>--%>
+                                    </tr>
                                     <tr>
                                         <td><b>Good Citizens
                                         </b></td>
@@ -303,15 +272,13 @@
                                         </td>
                                     </tr>
 
-                                    <%--<tr>
+                                    <tr>
                                         <td><b>Options:</b></td>
                                         <td>
                                             <asp:Panel ID="pnlRadioButtons" runat="server" CssClass="radio-options"></asp:Panel>
                                         </td>
-                                    </tr>--%>
+                                    </tr>
                                 </table>
-
-
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
@@ -324,9 +291,6 @@
 
                                     </div>
                                 </div>
-
-
-
 
                             </div>
                         </div>
