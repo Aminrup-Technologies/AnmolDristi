@@ -71,8 +71,8 @@
                                 <i class="fa fa-edit"></i>Class 1
 
                             </a>
-                            <a class="btn btn-app" href="#">
-                                <span class="badge bg-orange">N/A
+                            <a class="btn btn-app" href="RM_Class2.aspx">
+                                <span class="badge bg-orange">WIP
                                     <asp:Label ID="Label7" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Class 2
                             </a>
@@ -86,12 +86,12 @@
                                     <asp:Label ID="Label9" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Class 4
                             </a>
-                            <a class="btn btn-app" href="RM_Class_5.aspx">
-                                <span class="badge bg-green">Ok
+                            <a class="btn btn-app" href="RM_Class5.aspx">
+                                <span class="badge bg-orange">WIP
                                     <asp:Label ID="Label10" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Class 5
                             </a>
-                            
+
                         </div>
                     </div>
                 </div>
