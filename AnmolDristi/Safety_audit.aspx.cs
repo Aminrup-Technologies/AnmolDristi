@@ -17,10 +17,10 @@ namespace AnmolDristi
             if (!IsPostBack)
             {
                 //pnlRadioButtons.Controls.Clear();
-                if(ViewState["SelectedDDLValue"]!= null)
-                {
-                    ddlDescriptionFields.SelectedValue = ViewState["SelectedDDLValue"].ToString();
-                }
+                //if(ViewState["SelectedDDLValue"]!= null)
+                //{
+                //    ddlDescriptionFields.SelectedValue = ViewState["SelectedDDLValue"].ToString();
+                //}
                 LoadSafetyAuditDetails();// Clear existing controls
             }
         }

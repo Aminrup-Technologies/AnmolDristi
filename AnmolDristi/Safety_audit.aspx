@@ -251,7 +251,7 @@
                                             <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <%--<tr>
+                                    <tr>
                                         <td><b>Select Field:</b></td>
                                         <td>
                                             <asp:DropDownList ID="ddlDescriptionFields" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="DdlDescriptionFields_SelectedIndexChanged">
@@ -264,7 +264,7 @@
                                                 <asp:ListItem Text="Unsafe Act Conditions" Value="UnsafeAct"></asp:ListItem>
                                             </asp:DropDownList>
                                         </td>
-                                    </tr>--%>
+                                    </tr>
                                     <tr>
                                         <td><b>Good Citizens
                                         </b></td>
@@ -303,12 +303,12 @@
                                         </td>
                                     </tr>
 
-                                    <%--<tr>
+                                    <tr>
                                         <td><b>Options:</b></td>
                                         <td>
                                             <asp:Panel ID="pnlRadioButtons" runat="server" CssClass="radio-options"></asp:Panel>
                                         </td>
-                                    </tr>--%>
+                                    </tr>
                                 </table>
 
 
