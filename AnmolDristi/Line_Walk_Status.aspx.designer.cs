@@ -13,6 +13,15 @@ namespace AnmolDristi {
     public partial class Line_Walk_Status {
         
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        
+        /// <summary>
         /// Lbl_Date control.
         /// </summary>
         /// <remarks>
@@ -94,31 +103,67 @@ namespace AnmolDristi {
         protected global::System.Web.UI.WebControls.TextBox TB_ID;
         
         /// <summary>
-        /// Lbl_TM_Names control.
+        /// Lbl_EmployeeType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_TM_Names;
+        protected global::System.Web.UI.WebControls.Label Lbl_EmployeeType;
         
         /// <summary>
-        /// RFV_TB_TM_Names control.
+        /// rbOwnEmployee control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_TM_Names;
+        protected global::System.Web.UI.WebControls.RadioButton rbOwnEmployee;
         
         /// <summary>
-        /// TB_TM_Names control.
+        /// rbExternalMember control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_TM_Names;
+        protected global::System.Web.UI.WebControls.RadioButton rbExternalMember;
+        
+        /// <summary>
+        /// lblEmployeeCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmployeeCode;
+        
+        /// <summary>
+        /// txtEmployeeCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEmployeeCode;
+        
+        /// <summary>
+        /// lblExternalName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExternalName;
+        
+        /// <summary>
+        /// txtExternalName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtExternalName;
         
         /// <summary>
         /// Lbl_TM_Images control.

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -25,6 +28,43 @@ namespace AnmolDristi
                 }
             }
         }
+
+        [WebMethod]
+        public static string GetEmployeeName(string empCode)
+        {
+            string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            string query = "SELECT EmployeeName FROM MST_UserMaster WHERE EmployeeCode = @EmpCode";
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@EmpCode", empCode);
+                    con.Open();
+                    object result = cmd.ExecuteScalar();
+                    return result != null ? result.ToString() : "";
+                }
+            }
+        }
+
+        [WebMethod]
+        public static string SaveMembers(string internalEmployeesCSV, string externalMembersCSV)
+        {
+            string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                con.Open();
+                string query = "INSERT INTO tbl_Members (InternalEmployees, ExternalMembers) VALUES (@Internal, @External)";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Internal", string.IsNullOrEmpty(internalEmployeesCSV) ? (object)DBNull.Value : internalEmployeesCSV);
+                    cmd.Parameters.AddWithValue("@External", string.IsNullOrEmpty(externalMembersCSV) ? (object)DBNull.Value : externalMembersCSV);
+                    //cmd.ExecuteNonQuery();
+                }
+            }
+            return "Members saved successfully!";
+        }
+
 
         //        protected void BtnSubmit_Click(object sender, EventArgs e)
         //        {

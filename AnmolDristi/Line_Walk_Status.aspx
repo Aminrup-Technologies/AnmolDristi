@@ -21,8 +21,9 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
             // Add new Team Member input
             $("#btnAddName").click(function () {
@@ -76,6 +77,129 @@
             });
 
         });
+
+        function showNotification(title, text, type) {
+            new PNotify({
+                title: title,
+                text: text,
+                type: type,
+                styling: 'bootstrap3',
+                delay: 2000 // Auto-hide after 2 seconds
+            });
+        }
+
+        var membersList = [];
+
+        function toggleFields() {
+            var isOwnEmployee = document.getElementById('<%= rbOwnEmployee.ClientID %>').checked;
+            document.getElementById('employeeCodeDiv').style.display = isOwnEmployee ? 'block' : 'none';
+            document.getElementById('externalMemberDiv').style.display = isOwnEmployee ? 'none' : 'block';
+        }
+
+        function fetchEmployeeName() {
+            var empCode = document.getElementById('<%= txtEmployeeCode.ClientID %>').value.trim();
+            if (empCode === "") {
+                document.getElementById('lblEmployeeName').innerText = "";
+                return;
+            }
+
+            if (typeof PageMethods !== "undefined") {
+                PageMethods.GetEmployeeName(empCode, function (response) {
+                    document.getElementById('lblEmployeeName').innerText = response ? "Employee Name: " + response : "Employee not found.";
+                    if (!response) {
+                        showNotification("Warning", "Employee not found!", "warning");
+                    }
+                }, function (error) {
+                    console.error("Error fetching employee name:", error);
+                    showNotification("Error", "Failed to fetch employee name.", "error");
+                });
+            } else {
+                console.error("PageMethods is not enabled.");
+                showNotification("Error", "PageMethods is not enabled.", "error");
+            }
+        }
+
+        function addMember() {
+            var type = document.getElementById('<%= rbOwnEmployee.ClientID %>').checked ? "Own Employee" : "External Member";
+            var empCode = document.getElementById('<%= txtEmployeeCode.ClientID %>').value.trim();
+            var empName = document.getElementById('<%= rbOwnEmployee.ClientID %>').checked ? document.getElementById('lblEmployeeName').innerText.replace("Employee Name: ", "").trim() : document.getElementById('<%= txtExternalName.ClientID %>').value.trim();
+
+            if (type === "Own Employee" && (empCode === "" || empName === "")) {
+                showNotification("Warning", "Please enter a valid Employee Code.", "warning");
+                return;
+            }
+            if (type === "External Member" && empName === "") {
+                showNotification("Warning", "Please enter the Name for the Internal / External Member.", "warning");
+                return;
+            }
+
+            membersList.push({ type: type, code: empCode, name: empName });
+            updateGridView();
+
+            document.getElementById('<%= txtEmployeeCode.ClientID %>').value = "";
+            document.getElementById('lblEmployeeName').innerText = "";
+            document.getElementById('<%= txtExternalName.ClientID %>').value = "";
+
+            showNotification("Success", "Member added successfully!", "success");
+        }
+
+        function updateGridView() {
+            var grid = document.getElementById("membersGrid");
+            grid.innerHTML = "<tr><th>SL</th><th>Type of Employee</th><th>Employee Code</th><th>Employee Name</th><th>Action</th></tr>";
+
+            membersList.forEach((member, index) => {
+                grid.innerHTML += `<tr>
+                    <td>${index + 1}</td>
+                    <td>${member.type}</td>
+                    <td>${member.code}</td>
+                    <td>${member.name}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="removeMember(${index})">Remove</button></td>
+                </tr>`;
+            });
+        }
+
+        function removeMember(index) {
+            membersList.splice(index, 1);
+            updateGridView();
+            showNotification("Info", "Member removed successfully!", "info");
+        }
+
+        function saveMembersToDB() {
+            if (membersList.length === 0) {
+                showNotification("error", "No members to save!");
+                return;
+            }
+
+            var internalEmployees = [];
+            var externalMembers = [];
+
+            membersList.forEach(member => {
+                if (member.type === "Own Employee") {
+                    internalEmployees.push(member.code);
+                } else {
+                    externalMembers.push(member.name);
+                }
+            });
+
+            var dataToSend = {
+                internalEmployeesCSV: internalEmployees.join(","),
+                externalMembersCSV: externalMembers.join(",")
+            };
+
+            if (typeof PageMethods !== "undefined") {
+                PageMethods.SaveMembers(dataToSend.internalEmployeesCSV, dataToSend.externalMembersCSV, function (response) {
+                    showNotification("success", response);
+                    membersList = [];
+                    updateGridView();
+                }, function (error) {
+                    console.error("Error saving members:", error);
+                    showNotification("error", "Error saving members.");
+                });
+            } else {
+                console.error("PageMethods is not enabled.");
+                showNotification("error", "PageMethods is not enabled.");
+            }
+        }
     </script>
 
     <div class="right_col" role="main">
@@ -131,7 +255,7 @@
                             <hr />
 
 
-                            <div class="row">
+                            <%--<div class="row">
                                 <div class="col-md-4">
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_TM_Names" runat="server" AssociatedControlID="TB_TM_Names" Text="Team Members Present Names" ForeColor="Blue" Font-Bold="true"></asp:Label>
@@ -144,6 +268,48 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>--%>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-6">
+                                        <asp:Label ID="Lbl_EmployeeType" runat="server" Text="Select Member Type : " ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:RadioButton ID="rbOwnEmployee" runat="server" GroupName="EmployeeType" Text=" Own Employee" onclick="toggleFields()" ClientIDMode="Static" />
+                                        <asp:RadioButton ID="rbExternalMember" runat="server" GroupName="EmployeeType" Text=" External Member" onclick="toggleFields()" ClientIDMode="Static" />
+
+                                    </div>
+                                    <!-- Employee Code Input -->
+                                    <div id="employeeCodeDiv" style="display: none;">
+                                        <asp:Label ID="lblEmployeeCode" runat="server" Text="Enter Employee Code" Font-Bold="true"></asp:Label>
+                                        <asp:TextBox ID="txtEmployeeCode" runat="server" CssClass="form-control form-control-sm" ClientIDMode="Static" onkeyup="fetchEmployeeName()"></asp:TextBox>
+                                        <label id="lblEmployeeName" style="color: green; font-weight: bold;"></label>
+                                    </div>
+
+                                    <!-- External Member Name Input -->
+                                    <div id="externalMemberDiv" style="display: none;">
+                                        <asp:Label ID="lblExternalName" runat="server" Text="Enter Name" Font-Bold="true"></asp:Label>
+                                        <asp:TextBox ID="txtExternalName" runat="server" CssClass="form-control form-control-sm" ClientIDMode="Static"></asp:TextBox>
+                                    </div>
+
+                                    <!-- Add Button -->
+                                    <button type="button" class="btn btn-primary btn-sm mt-2" onclick="addMember()">Add Member</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <h4 class="mt-6">Added Members</h4>
+                                        <table id="membersGrid" class="col-lg-12 table table-bordered table-responsive">
+                                            <tr>
+                                                <th>SL</th>
+                                                <th>Type of Employee</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <button type="button" class="btn btn-success btn-sm mt-2" onclick="saveMembersToDB()">Save Members</button>
                                 </div>
                             </div>
 
@@ -165,6 +331,8 @@
                                     </div>
                                 </div>
                             </div>
+
+
 
                             <hr>
                             <h2 class="green-heading">Step 3: Observations & Recommendations</h2>
