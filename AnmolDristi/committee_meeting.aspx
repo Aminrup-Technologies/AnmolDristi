@@ -112,7 +112,7 @@
      <h2>Attendance Table</h2>
      <div class="clearfix"></div>
  </div>
-                        
+                
                   <div class="field" id="Attendees">
   <div class="col-md-6">
          <div class="mb-3">
@@ -143,7 +143,7 @@
          </div>
      </asp:Panel>
 
-     <asp:Panel ID="pnlDetails" runat="server" Visible="false">
+     <asp:Panel ID="pnlDetails" runat="server" Visible="false"> 
 
          <div class="col-md-2">
              <div class="mb-3">
@@ -201,8 +201,11 @@
                  </div>
              </div>
          </div>
-
         
+
+           </asp:Panel>
+      </div>
+         <asp:Panel ID="pnlDetails1" runat="server" Visible="false"> 
          <div class="col-md-2">
              <div class="mb-3">
                  <asp:Label ID="lbl_btnAddAttendees" runat="server" AssociatedControlID="btnAddAttendees" Text="Add Attendees" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -212,7 +215,10 @@
                  </div>
              </div>
          </div>
-     </asp:Panel>
+       
+  </asp:Panel>
+
+      
     
      <asp:Panel ID="pnlAttendeeTable" runat="server">
          <div class="table-responsive">
@@ -244,7 +250,7 @@
          </div>
              </div>
      </asp:Panel>
-                      </div>
+                      
 
 
   <div class="x_title">
@@ -252,6 +258,7 @@
      <div class="clearfix"></div>
  </div>                         
 
+   
     <div class="field" id="Issues">
  
                                  

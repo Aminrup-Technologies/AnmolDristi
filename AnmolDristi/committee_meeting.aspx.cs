@@ -15,12 +15,13 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+           
         }
         protected void rbEmployee_SelectedIndexChanged(object sender, EventArgs e)
         {
             pnlAttendeeType.Visible = rbEmployee.SelectedValue == "Yes";
             pnlDetails.Visible = rbEmployee.SelectedValue == "No";
+            pnlDetails1.Visible = rbEmployee.SelectedValue == "No";
         }
 
         protected void rbAttendeeType_SelectedIndexChanged(object sender, EventArgs e)
@@ -29,26 +30,43 @@ namespace AnmolDristi
             txtAttendeeCode.Text = isInternal ? "" : "N/A";
             txtAttendeeCode.Enabled = isInternal;
             pnlDetails.Visible = true;
+            pnlDetails1.Visible = true;
         }
         protected void btnAddAttendees_Click(object sender, EventArgs e)
         {
             DataTable dt;
-            if (ViewState["Attendees"] == null)
+
+            // Ensure ViewState["Attendees"] is initialized
+            if (ViewState["Attendance"] == null)
             {
                 dt = new DataTable();
                 dt.Columns.Add("SNo");
                 dt.Columns.Add("EmployeeOrNot");
                 dt.Columns.Add("EmployeeName");
-                dt.Columns.Add("AttendeeCode");
+                dt.Columns.Add("AttendeeCode"); // Ensure AttendeeCode exists
                 dt.Columns.Add("AttendanceStatus");
                 dt.Columns.Add("AttendeeType");
                 dt.Columns.Add("Designation");
-                dt.Columns.Add("ImagePath"); // New column for image path
+                dt.Columns.Add("ImagePath"); // Ensure ImagePath exists
+
+                ViewState["Attendance"] = dt;
             }
             else
             {
-                dt = (DataTable)ViewState["Attendees"];
+                dt = (DataTable)ViewState["Attendance"];
+
+                // Ensure all necessary columns exist before using them
+                string[] requiredColumns = { "SNo", "EmployeeOrNot", "EmployeeName", "AttendeeCode", "AttendanceStatus", "AttendeeType", "Designation", "ImagePath" };
+                foreach (string column in requiredColumns)
+                {
+                    if (!dt.Columns.Contains(column))
+                    {
+                        dt.Columns.Add(column);
+                    }
+                }
             }
+
+
             string imagePath = "";
             if (imgupload.HasFile)
             {
@@ -83,7 +101,7 @@ namespace AnmolDristi
             dr["ImagePath"] = imagePath; // Store image path
             dt.Rows.Add(dr);
 
-            ViewState["Attendees"] = dt;
+            ViewState["Attendance"] = dt;
             gvAttendees.DataSource = dt;
             gvAttendees.DataBind();
 
@@ -197,7 +215,7 @@ namespace AnmolDristi
             }
 
             int sNo = Convert.ToInt32(gvAttendees.DataKeys[row.RowIndex].Value);
-            DataTable dt = ViewState["Attendees"] as DataTable;
+            DataTable dt = ViewState["Attendance"] as DataTable;
 
             if (dt != null)
             {
@@ -216,13 +234,13 @@ namespace AnmolDristi
 
                 if (dt.Rows.Count == 0)
                 {
-                    ViewState["Attendees"] = null;
+                    ViewState["Attendance"] = null;
                     gvAttendees.DataSource = null;
                     gvAttendees.DataBind();
                 }
                 else
                 {
-                    ViewState["Attendees"] = dt;
+                    ViewState["Attendance"] = dt;
                     gvAttendees.DataSource = dt;
                     gvAttendees.DataBind();
                 }
@@ -236,138 +254,98 @@ namespace AnmolDristi
         }
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
-            if (ViewState["Attendees"] == null)
-            {
-                lblMsg1.Text = "No Attendance to save.";
-                lblMsg1.ForeColor = System.Drawing.Color.Red;
-                BtnSubmit.Enabled = true; // Re-enable button
-                return;
-            }
-            DataTable dt = (DataTable)ViewState["Issues"];
-
-            if (ViewState["Issues"] == null)
-            {
-                lblMsg1.Text = "No Issues to save.";
-                lblMsg1.ForeColor = System.Drawing.Color.Red;
-                BtnSubmit.Enabled = true; // Re-enable button
-                return;
-            }
-            DataTable dts = (DataTable)ViewState["Issues"];
-
-            DateTime? Meeting_Date = string.IsNullOrEmpty(txtdate.Text) ? (DateTime?)null : Convert.ToDateTime(txtdate.Text);
-            TimeSpan? Meeting_Time = string.IsNullOrEmpty(txtTime.Text) ? (TimeSpan?)null : TimeSpan.Parse(txtTime.Text);
-
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connStr))
             {
                 conn.Open();
-                SqlTransaction transaction = conn.BeginTransaction();
+                SqlTransaction transaction = conn.BeginTransaction(); // Start transaction
+
                 try
                 {
-                    int MeetingID;
+                    // 1. Insert into Committee_MeetingReview (Parent Table)
+                    string insertMeetingQuery = @"INSERT INTO Committee_MeetingReview (MeetingNo, Title, MeetingDate, MeetingTime, Venue, ChairedBy) 
+                                          OUTPUT INSERTED.MeetingID 
+                                          VALUES (@MeetingNo, @Title, @MeetingDate, @MeetingTime, @Venue, @ChairedBy)";
 
-                    // Step 1: Insert into Committee Meeting Table 
-                    using (SqlCommand cmd = new SqlCommand("InsertCommitteeMeetingReview", conn, transaction))
+                    int meetingID;
+                    using (SqlCommand cmd = new SqlCommand(insertMeetingQuery, conn, transaction))
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        SqlParameter outputMeetingID = new SqlParameter("@MeetingID", SqlDbType.Int)
-                        {
-                            Direction = ParameterDirection.Output
-                        };
-                        cmd.Parameters.Add(outputMeetingID);
+                        cmd.Parameters.AddWithValue("@MeetingNo", txtMeetingNo.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Title", "Internal Safety Committee meeting");
+                        cmd.Parameters.AddWithValue("@MeetingDate", Convert.ToDateTime(txtdate.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@MeetingTime", TimeSpan.Parse(txtTime.Text.Trim()));
                         cmd.Parameters.AddWithValue("@Venue", txtVenue.Text.Trim());
                         cmd.Parameters.AddWithValue("@ChairedBy", txtChairedBy.Text.Trim());
-                        cmd.Parameters.AddWithValue("@MeetingDate", Meeting_Date);
-                        cmd.Parameters.AddWithValue("@MeetingTime", Meeting_Time);
-                        cmd.Parameters.AddWithValue("@MeetingNo", txtMeetingNo.Text.Trim());
 
-                        cmd.ExecuteNonQuery();
-                        MeetingID = Convert.ToInt32(outputMeetingID.Value);
+                        meetingID = (int)cmd.ExecuteScalar(); // Get newly inserted MeetingID
                     }
 
-                    if (MeetingID == 0)
+                    // 2. Insert into Committee_MeetingAttendance (Attendees GridView)
+                    if (ViewState["Attendance"] != null)
                     {
-                        transaction.Rollback();
-                        lblMsg.Text = "Error: Meeting ID not generated.";
-                        lblMsg.ForeColor = System.Drawing.Color.Red;
-                        return;
-                    }
-
-
-
-                    // Step 2: Insert into Attendees Table
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        int AttendanceID;
-                        using (SqlCommand cmd = new SqlCommand("InsertCommitteeMeetingAttendance", conn, transaction))
+                        DataTable dtAttendees = (DataTable)ViewState["Attendance"];
+                        foreach (DataRow row in dtAttendees.Rows)
                         {
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter outputAttendanceID = new SqlParameter("@AttendanceID", SqlDbType.Int)
-                            {
-                                Direction = ParameterDirection.Output
-                            };
-                            cmd.Parameters.Add(outputAttendanceID);
-                            cmd.Parameters.AddWithValue("@MeetingID", MeetingID);
-                            cmd.Parameters.AddWithValue("@Name", row["EmployeeName"].ToString());
-                            cmd.Parameters.AddWithValue("@Designation", row["Designation"].ToString());
-                            cmd.Parameters.AddWithValue("@AttendeeCode", row["AttendeeCode"].ToString());
-                            cmd.Parameters.AddWithValue("@Attendee_Type", row["AttendeeType"].ToString());
-                            cmd.Parameters.AddWithValue("@AttendanceStatus", row["AttendanceStatus"].ToString());
-                            cmd.Parameters.AddWithValue("@Image_upload",row["ImagePath"] == DBNull.Value || row["ImagePath"] == null ? (object)DBNull.Value : row["ImagePath"].ToString());
+                            string insertAttendeeQuery = @"INSERT INTO Committee_MeetingAttendance (MeetingID, Name, Designation, AttendeeCode, Attendee_Type, Image_upload, AttendanceStatus)
+                                                   VALUES (@MeetingID, @Name, @Designation, @AttendeeCode, @Attendee_Type, @Image_upload, @AttendanceStatus)";
 
-                            
-                            cmd.ExecuteNonQuery();
-                            AttendanceID = Convert.ToInt32(outputAttendanceID.Value);
+                            using (SqlCommand cmd = new SqlCommand(insertAttendeeQuery, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@MeetingID", meetingID);
+                                cmd.Parameters.AddWithValue("@Name", row["EmployeeName"].ToString());
+                                cmd.Parameters.AddWithValue("@Designation", row["Designation"].ToString());
+                                cmd.Parameters.AddWithValue("@AttendeeCode", row["AttendeeCode"].ToString());
+                                cmd.Parameters.AddWithValue("@Attendee_Type", row["AttendeeType"].ToString());
+                                cmd.Parameters.AddWithValue("@Image_upload", row["ImagePath"].ToString());
+                                cmd.Parameters.AddWithValue("@AttendanceStatus", row["AttendanceStatus"].ToString());
+
+                                cmd.ExecuteNonQuery();
+                            }
                         }
                     }
 
-                    // Step 3: Insert into committee Issues table
-                    foreach (DataRow row in dts.Rows)
+                    // 3. Insert into Committee_MeetingIssues (Issues GridView)
+                    if (ViewState["Issues"] != null)
                     {
-                        int IssueID;
-                        using (SqlCommand cmd = new SqlCommand("InsertCommitteeMeetingAttendance", conn, transaction))
+                        DataTable dtIssues = (DataTable)ViewState["Issues"];
+                        foreach (DataRow row in dtIssues.Rows)
                         {
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter outputIssueID = new SqlParameter("@IssueID ", SqlDbType.Int)
+                            string insertIssueQuery = @"INSERT INTO Committee_MeetingIssues (MeetingID, IssueDescription, ResponsiblePerson, TargetDate, ReviewDate, AgendaTitle, Status,ReviewBy)
+                                                VALUES (@MeetingID, @IssueDescription, @ResponsiblePerson, @TargetDate, @ReviewDate, @AgendaTitle, @Status,@ReviewBy)";
+
+                            using (SqlCommand cmd = new SqlCommand(insertIssueQuery, conn, transaction))
                             {
-                                Direction = ParameterDirection.Output
-                            };
-                            cmd.Parameters.Add(outputIssueID);
-                            cmd.Parameters.AddWithValue("@MeetingID", MeetingID);
-                            cmd.Parameters.AddWithValue("@AgendaTitle", row["AgendaTitle"].ToString());
-                            cmd.Parameters.AddWithValue("@ResponsiblePerson", row["ActionBy"].ToString());
-                            cmd.Parameters.AddWithValue("@IssueDescription", row["IssuesDiscussed"].ToString());
-                            cmd.Parameters.AddWithValue("@ReviewBy", row["ReviewBy"].ToString());
-                            cmd.Parameters.AddWithValue("@Status", row["Status"].ToString());
-                            cmd.Parameters.AddWithValue("@TargetDate ",
-                                string.IsNullOrEmpty(row["TargetDate"].ToString()) ? DBNull.Value : (object)Convert.ToDateTime(row["TargetDate"]));
+                                cmd.Parameters.AddWithValue("@MeetingID", meetingID);
+                                cmd.Parameters.AddWithValue("@IssueDescription", row["IssuesDiscussed"].ToString());
+                                cmd.Parameters.AddWithValue("@ResponsiblePerson", row["ActionBy"].ToString());
+                                cmd.Parameters.AddWithValue("@TargetDate", Convert.ToDateTime(row["TargetDate"]));
+                                cmd.Parameters.AddWithValue("@ReviewDate", Convert.ToDateTime(row["ReviewDate"]));
+                                cmd.Parameters.AddWithValue("@AgendaTitle", row["AgendaTitle"].ToString());
+                                cmd.Parameters.AddWithValue("@Status", row["Status"].ToString());
+                                cmd.Parameters.AddWithValue("@ReviewBy", row["ReviewBy"].ToString());
 
-                            cmd.Parameters.AddWithValue("@ReviewDate",
-                                string.IsNullOrEmpty(row["ReviewDate"].ToString()) ? DBNull.Value : (object)Convert.ToDateTime(row["ReviewDate"]));
-
-
-                            cmd.ExecuteNonQuery();
-                            IssueID = Convert.ToInt32(outputIssueID.Value);
+                                cmd.ExecuteNonQuery();
+                            }
                         }
                     }
 
-
-                    transaction.Commit();
-                    lblMsg.Text = "Transaction completed successfully!";
+                    transaction.Commit(); // Commit if everything is successful
+                    lblMsg.Text = "Data saved successfully!";
                     lblMsg.ForeColor = System.Drawing.Color.Green;
                 }
                 catch (Exception ex)
                 {
-                    transaction.Rollback();
-                    lblMsg.Text = "Transaction failed: " + ex.Message;
+                    transaction.Rollback(); // Rollback if any error occurs
+                    lblMsg.Text = "Error: " + ex.Message;
                     lblMsg.ForeColor = System.Drawing.Color.Red;
                 }
             }
         }
+
+
+
     }
 
 
-    
+
 }

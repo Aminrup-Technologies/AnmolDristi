@@ -233,12 +233,12 @@ namespace AnmolDristi
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("@AuditID", auditID);
-                            cmd.Parameters.AddWithValue("@ObserverID", row["ObserverID"].ToString());
-                            cmd.Parameters.AddWithValue("@ObservationText", row["Observation"].ToString());
-                            cmd.Parameters.AddWithValue("@CorrectiveAction", row["CorrectiveAction"].ToString());
-                            cmd.Parameters.AddWithValue("@Status", row["Status"].ToString());
-                            cmd.Parameters.AddWithValue("@OpenBy", row["OpenBy"].ToString());
-                            cmd.Parameters.AddWithValue("@CloseBy", row["CloseBy"].ToString());
+                            cmd.Parameters.AddWithValue("@ObserverID",row["ObserverID"].ToString());
+                            cmd.Parameters.AddWithValue("@ObservationText",row["Observation"].ToString());
+                            cmd.Parameters.AddWithValue("@CorrectiveAction",row["CorrectiveAction"].ToString());
+                            cmd.Parameters.AddWithValue("@Status",row["Status"].ToString());
+                            cmd.Parameters.AddWithValue("@OpenBy",row["OpenBy"].ToString());
+                            cmd.Parameters.AddWithValue("@CloseBy",row["CloseBy"].ToString());
                             
 
                             cmd.Parameters.AddWithValue("@ClosingDate",

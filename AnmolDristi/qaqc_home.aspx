@@ -51,6 +51,12 @@
                                  <i class="fa fa-edit"></i>Committee Meeting
 
                               </a>
+                            <a class="btn btn-app" href="committee_meeting_report.aspx">
+ <span class="badge bg-green">Ok
+<asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
+   <i class="fa fa-edit"></i>Committee Meeting Report
+
+</a>
                         </div>
                     </div>
                 </div>
