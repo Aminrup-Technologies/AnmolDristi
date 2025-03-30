@@ -1705,7 +1705,7 @@ namespace AnmolDristi
                 cmd.Dispose();
                 Conn.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

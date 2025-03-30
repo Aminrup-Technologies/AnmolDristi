@@ -45,6 +45,12 @@
                            <i class="fa fa-edit"></i>House Keeping Audit
 
                            </a>
+                                                        <a class="btn btn-app" href="housekeeping_audit_report.aspx">
+ <span class="badge bg-green">Ok
+<asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
+   <i class="fa fa-edit"></i>HouseKeeping Report
+
+</a>
                               <a class="btn btn-app" href="committee_meeting.aspx">
                                <span class="badge bg-green">Ok
                               <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
