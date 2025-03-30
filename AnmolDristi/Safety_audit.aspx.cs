@@ -70,51 +70,51 @@ namespace AnmolDristi
         }
 
 
-        protected void DdlDescriptionFields_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        //protected void DdlDescriptionFields_SelectedIndexChanged(object sender, EventArgs e)
+        //{
             
-            //pnlRadioButtons.Controls.Clear(); // Clear previous radio buttons
+        //    //pnlRadioButtons.Controls.Clear(); // Clear previous radio buttons
 
-            string selectedValue = ddlDescriptionFields.SelectedValue;
-            ViewState["SelectedDDLValue"] = selectedValue;
-
-
-            if (selectedValue == "GoodCitizens")
-            {
-                pnlRadioButtons.Controls.Add(new Literal { Text = "<b>Good Citizens:</b><br/>" });
-                pnlRadioButtons.Controls.Add(CreateRadioButton("GoodCitizens", "Yes", "Yes"));
-                pnlRadioButtons.Controls.Add(new Literal { Text = "&nbsp;&nbsp;" }); // Adding space
-                pnlRadioButtons.Controls.Add(CreateRadioButton("GoodCitizens", "No", "No"));
-            }
-            else if (selectedValue == "NoOfViolations" || selectedValue == "Severity" || selectedValue == "ViolationSeverity" || selectedValue == "FourAndFive")
-            {
-                pnlRadioButtons.Controls.Add(new Literal { Text = "<b>Choose a Value:</b><br/>" });
-                for (int i = 0; i <= 6; i++)
-                {
-                    pnlRadioButtons.Controls.Add(CreateRadioButton(selectedValue, i.ToString(), i.ToString()));
-                    pnlRadioButtons.Controls.Add(new Literal { Text = "&nbsp;&nbsp;" }); // Add space between buttons
-                }
-            }
-            else if (selectedValue == "UnsafeAct")
-            {
-                pnlRadioButtons.Controls.Add(new Literal { Text = "<b>Unsafe Act & Condition:</b><br/>" });
-                pnlRadioButtons.Controls.Add(CreateRadioButton("UnsafeAct", "Good", "Good"));
-                pnlRadioButtons.Controls.Add(new Literal { Text = "&nbsp;&nbsp;" }); // Add space
-                pnlRadioButtons.Controls.Add(CreateRadioButton("UnsafeAct", "Bad", "Bad"));
-            }
-        }
+        //    string selectedValue = ddlDescriptionFields.SelectedValue;
+        //    ViewState["SelectedDDLValue"] = selectedValue;
 
 
-        private RadioButton CreateRadioButton(string groupName, string value, string text)
-        {
-            RadioButton rb = new RadioButton
-            {
-                GroupName = groupName,
-                Text = text,
-                ID = "rb_" + groupName + "_" + value
-            };
-            return rb;
-        }
+        //    if (selectedValue == "GoodCitizens")
+        //    {
+        //        pnlRadioButtons.Controls.Add(new Literal { Text = "<b>Good Citizens:</b><br/>" });
+        //        pnlRadioButtons.Controls.Add(CreateRadioButton("GoodCitizens", "Yes", "Yes"));
+        //        pnlRadioButtons.Controls.Add(new Literal { Text = "&nbsp;&nbsp;" }); // Adding space
+        //        pnlRadioButtons.Controls.Add(CreateRadioButton("GoodCitizens", "No", "No"));
+        //    }
+        //    else if (selectedValue == "NoOfViolations" || selectedValue == "Severity" || selectedValue == "ViolationSeverity" || selectedValue == "FourAndFive")
+        //    {
+        //        pnlRadioButtons.Controls.Add(new Literal { Text = "<b>Choose a Value:</b><br/>" });
+        //        for (int i = 0; i <= 6; i++)
+        //        {
+        //            pnlRadioButtons.Controls.Add(CreateRadioButton(selectedValue, i.ToString(), i.ToString()));
+        //            pnlRadioButtons.Controls.Add(new Literal { Text = "&nbsp;&nbsp;" }); // Add space between buttons
+        //        }
+        //    }
+        //    else if (selectedValue == "UnsafeAct")
+        //    {
+        //        pnlRadioButtons.Controls.Add(new Literal { Text = "<b>Unsafe Act & Condition:</b><br/>" });
+        //        pnlRadioButtons.Controls.Add(CreateRadioButton("UnsafeAct", "Good", "Good"));
+        //        pnlRadioButtons.Controls.Add(new Literal { Text = "&nbsp;&nbsp;" }); // Add space
+        //        pnlRadioButtons.Controls.Add(CreateRadioButton("UnsafeAct", "Bad", "Bad"));
+        //    }
+        //}
+
+
+        //private RadioButton CreateRadioButton(string groupName, string value, string text)
+        //{
+        //    RadioButton rb = new RadioButton
+        //    {
+        //        GroupName = groupName,
+        //        Text = text,
+        //        ID = "rb_" + groupName + "_" + value
+        //    };
+        //    return rb;
+        //}
 
 
 
@@ -196,20 +196,29 @@ namespace AnmolDristi
             string vendorCode = txtContractorVendorCode.Text;
             int totalPeople = Convert.ToInt32(txtTotalContractorPeople.Text);
 
-            string severityLevel = ddlSeverityLevel.SelectedValue;
+            //string severityLevel = ddlSeverityLevel.SelectedValue;
             string teamMembers = txtTeamMember1.Text;
 
             string description = txtDescription.Text;
-            string selectField = ddlDescriptionFields.SelectedValue;
-            string options = "";
-            foreach (Control control in pnlRadioButtons.Controls)
-            {
-                RadioButton rb = control as RadioButton;
-                if (rb != null && rb.Checked)
-                {
-                    options = rb.Text;
-                }
-            }
+            string goodCitizens = DropDownList1.SelectedValue;
+            int noOfViolations = Convert.ToInt32(DropDownList2.Text);
+            int severity = Convert.ToInt32(DropDownList3.Text);
+            int violationSeverity = Convert.ToInt32(DropDownList4.Text);
+            int fourAndFive = Convert.ToInt32(DropDownList5.Text);
+            string unsafeAct = DropDownList6.SelectedValue;
+
+
+
+            //string selectField = ddlDescriptionFields.SelectedValue;
+            //string options = "";
+            //foreach (Control control in pnlRadioButtons.Controls)
+            //{
+            //    RadioButton rb = control as RadioButton;
+            //    if (rb != null && rb.Checked)
+            //    {
+            //        options = rb.Text;
+            //    }
+            //}
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -222,12 +231,12 @@ namespace AnmolDristi
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        // Add only the parameters that exist in the stored procedure
+                       
                         cmd.Parameters.AddWithValue("@Department", department);
                         cmd.Parameters.AddWithValue("@Section", section);
                         cmd.Parameters.AddWithValue("@Date", date);
                         cmd.Parameters.AddWithValue("@Time", time);
-                        cmd.Parameters.AddWithValue("@ContractorVendorCode", vendorCode); // Use the correct param name
+                        cmd.Parameters.AddWithValue("@ContractorVendorCode", vendorCode); 
                         cmd.Parameters.AddWithValue("@TotalContractorPeople", totalPeople);
 
                         // Add the output parameter to capture the generated AuditID
@@ -238,7 +247,7 @@ namespace AnmolDristi
                         cmd.Parameters.Add(outputIdParam);
 
                         cmd.ExecuteNonQuery();
-                        auditID = (int)outputIdParam.Value; // Retrieve the output value
+                        auditID = (int)outputIdParam.Value; 
                     }
 
                     // Call stored procedure for severity table
@@ -246,24 +255,12 @@ namespace AnmolDristi
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@AuditID", auditID);
-                        cmd.Parameters.AddWithValue("@SeverityLevel", severityLevel);
+                        //cmd.Parameters.AddWithValue("@SeverityLevel", severityLevel);
                         cmd.Parameters.AddWithValue("@TeamMembers", teamMembers);
                         cmd.ExecuteNonQuery();
                     }
 
-                    // Call stored procedure for description table
-                    //    using (SqlCommand cmd = new SqlCommand("[MahimaGupta_CSMS].usp_InsertSafetyAuditDescription", conn, transaction))
-                    //    {
-                    //        cmd.CommandType = CommandType.StoredProcedure;
-                    //        cmd.Parameters.AddWithValue("@AuditID", auditID);
-                    //        cmd.Parameters.AddWithValue("@Description", description);
-                    //        cmd.Parameters.AddWithValue("@SelectField", selectField);
-                    //        cmd.Parameters.AddWithValue("@Options", options);
-                    //        cmd.ExecuteNonQuery();
-                    //    }
-
-                    //    transaction.Commit();
-                    //}
+                  
 
                     using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.usp_InsertSafetyAuditDescription", conn, transaction))
                     {
@@ -271,10 +268,17 @@ namespace AnmolDristi
 
                         cmd.Parameters.Add("@AuditID", SqlDbType.Int).Value = auditID;
                         cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 1000).Value = description;
-                        cmd.Parameters.Add("@SelectField", SqlDbType.NVarChar, 255).Value = selectField;
-                        cmd.Parameters.Add("@Options", SqlDbType.NVarChar, 255).Value = string.IsNullOrEmpty(options) ? (object)DBNull.Value : options;
+                        cmd.Parameters.Add("@GoodCitizens", SqlDbType.NVarChar, 10).Value = goodCitizens;
+                        cmd.Parameters.Add("@NoOfViolations", SqlDbType.Int).Value = noOfViolations;
+                        cmd.Parameters.Add("@Severity", SqlDbType.Int).Value = severity;
+                        cmd.Parameters.Add("@ViolationSeverity", SqlDbType.Int).Value = violationSeverity;
+                        cmd.Parameters.Add("@FourAndFive", SqlDbType.Int).Value = fourAndFive;
+                        cmd.Parameters.Add("@UnsafeAct", SqlDbType.NVarChar, 50).Value = unsafeAct;
+                        
+                        //cmd.Parameters.Add("@SelectField", SqlDbType.NVarChar, 255).Value = selectField;
+                        //cmd.Parameters.Add("@Options", SqlDbType.NVarChar, 255).Value = string.IsNullOrEmpty(options) ? (object)DBNull.Value : options;
 
-                        Console.WriteLine($"AuditID: {auditID}, Description: {description}, SelectField: {selectField}, Options: {options}");
+                        //Console.WriteLine($"AuditID: {auditID}, Description: {description}, SelectField: {selectField}, Options: {options}");
                         cmd.ExecuteNonQuery();
                     }
 
@@ -301,17 +305,17 @@ namespace AnmolDristi
             txtContractorVendorCode.Text = "";
             txtTotalContractorPeople.Text = "";
             txtTeamMember1.Text = "";
-            ddlSeverityLevel.SelectedIndex = 0;
-            txtDescription.Text = "";
-            ddlDescriptionFields.SelectedIndex = 0;
-            foreach (Control control in pnlRadioButtons.Controls)
-            {
-                RadioButton rb = control as RadioButton;
-                if (rb != null)
-                {
-                    rb.Checked = false; // Uncheck each radio button
-                }
-            }
+            //ddlSeverityLevel.SelectedIndex = 0;
+            //txtDescription.Text = "";
+            //ddlDescriptionFields.SelectedIndex = 0;
+            //foreach (Control control in pnlRadioButtons.Controls)
+            //{
+            //    RadioButton rb = control as RadioButton;
+            //    if (rb != null)
+            //    {
+            //        rb.Checked = false; // Uncheck each radio button
+            //    }
+            //}
 
             lblMessage.Text = "Form reset successfully!";
             lblMessage.ForeColor = System.Drawing.Color.Blue;

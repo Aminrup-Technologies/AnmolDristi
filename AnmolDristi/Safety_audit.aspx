@@ -123,7 +123,9 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <!--Severity Level -->
+
+                         <%--       <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="lblSeverityLevel" runat="server" Text="Severity Level:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
@@ -141,7 +143,7 @@
                                             </asp:RequiredFieldValidator>
                                         </div>
                                     </div>
-                                </div>
+                                </div>--%>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -220,7 +222,9 @@
                                             <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <tr>
+
+
+                                <%--    <tr>
                                         <td><b>Select Field:</b></td>
                                         <td>
                                             <asp:DropDownList ID="ddlDescriptionFields" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="DdlDescriptionFields_SelectedIndexChanged">
@@ -233,7 +237,9 @@
                                                 <asp:ListItem Text="Unsafe Act Conditions" Value="UnsafeAct"></asp:ListItem>
                                             </asp:DropDownList>
                                         </td>
-                                    </tr>
+                                    </tr>--%>
+
+
                                     <tr>
                                         <td><b>Good Citizens
                                         </b></td>
@@ -252,6 +258,8 @@
                                             </asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
+
+
 
                                     <tr>
                                         <td><b>No. of Violations
@@ -272,12 +280,96 @@
                                         </td>
                                     </tr>
 
+
+
                                     <tr>
+                                        <td><b>Severity
+                                        </b></td>
+                                        <td>
+                                            <asp:DropDownList ID="DropDownList3" runat="server" CssClass="form-control form-control-sm rounded">
+                                                <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
+                                                <asp:ListItem Text="Untidy area minor issues sets poor example" Value="Untidy area minor issues sets poor example"></asp:ListItem>
+                                                <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="Restricted access, Unacceptable trash, Disorderly"></asp:ListItem>
+                                                <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="Rule or procedure Violation, Potential injury"></asp:ListItem>
+                                                <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="Unsafe condition, Serious injury potential"></asp:ListItem>
+                                                <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
+                                                <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
+                                            </asp:DropDownList>
+
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="DropDownList2" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td><b>Violation X Severity
+                                        </b></td>
+                                        <td>
+                                            <asp:DropDownList ID="DropDownList4" runat="server" CssClass="form-control form-control-sm rounded">
+                                                <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
+                                                <asp:ListItem Text="Untidy area minor issues sets poor example" Value="Untidy area minor issues sets poor example"></asp:ListItem>
+                                                <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="Restricted access, Unacceptable trash, Disorderly"></asp:ListItem>
+                                                <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="Rule or procedure Violation, Potential injury"></asp:ListItem>
+                                                <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="Unsafe condition, Serious injury potential"></asp:ListItem>
+                                                <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
+                                                <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
+                                            </asp:DropDownList>
+
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="DropDownList2" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                                    <tr>
+                                        <td><b>4 & 5
+                                        </b></td>
+                                        <td>
+                                            <asp:DropDownList ID="DropDownList5" runat="server" CssClass="form-control form-control-sm rounded">
+                                                <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
+                                                <asp:ListItem Text="Untidy area minor issues sets poor example" Value="Untidy area minor issues sets poor example"></asp:ListItem>
+                                                <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="Restricted access, Unacceptable trash, Disorderly"></asp:ListItem>
+                                                <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="Rule or procedure Violation, Potential injury"></asp:ListItem>
+                                                <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="Unsafe condition, Serious injury potential"></asp:ListItem>
+                                                <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
+                                                <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
+                                            </asp:DropDownList>
+
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="DropDownList2" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td><b>Unsafe Act Conditions
+                                        </b></td>
+                                        <td>
+                                            <asp:DropDownList ID="DropDownList6" runat="server" CssClass="form-control form-control-sm rounded">
+                                                <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
+                                                <asp:ListItem Text="Untidy area minor issues sets poor example" Value="Untidy area minor issues sets poor example"></asp:ListItem>
+                                                <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="Restricted access, Unacceptable trash, Disorderly"></asp:ListItem>
+                                                <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="Rule or procedure Violation, Potential injury"></asp:ListItem>
+                                                <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="Unsafe condition, Serious injury potential"></asp:ListItem>
+                                                <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
+                                                <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
+                                            </asp:DropDownList>
+
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="DropDownList2" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+
+                                    <%--                                    <tr>
                                         <td><b>Options:</b></td>
                                         <td>
                                             <asp:Panel ID="pnlRadioButtons" runat="server" CssClass="radio-options"></asp:Panel>
                                         </td>
-                                    </tr>
+                                    </tr>--%>
                                 </table>
 
                                 <div class="col-md-3">
