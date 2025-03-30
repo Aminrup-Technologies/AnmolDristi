@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Safety_audit.aspx.cs" Inherits="AnmolDristi.Safety_audit" %>
+﻿<%@ Page Title="CSM | Safety Audit" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Safety_audit.aspx.cs" Inherits="AnmolDristi.Safety_audit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
