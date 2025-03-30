@@ -16,7 +16,7 @@
     max-height: 400px; /* Adjust based on need */
     overflow-x: auto;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    
    }
 
 @media (max-width: 768px) {
@@ -37,6 +37,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+     <asp:HiddenField ID="hdnPointsDiscussed" runat="server" />
         <div class="right_col" role="main">
     <div class="container">
         <div class="page-title">
@@ -343,7 +344,7 @@
                 }
             }
 
-          <%-- ////document.getElementById('<%= hdnPointsDiscussed.ClientID %>').value = pointsArray.join(" , ");--%>
+          document.getElementById('<%= hdnPointsDiscussed.ClientID %>').value = pointsArray.join(" , ");
         }
     </script>
 
