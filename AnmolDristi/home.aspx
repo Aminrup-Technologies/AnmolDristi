@@ -13,7 +13,7 @@
                         </h4>
 
                         <div class="right col-md-6 col-sm-4 text-center">
-                            <img id="ProfilePic_3" runat="server" src="~/WebData/No_Image.jpg" width="200" height="260" alt="ProfilePhoto" class="img-circle img-fluid small">
+                            <img id="ProfilePic_3" runat="server" src="~/WebData/Internal/OH4Y_Logo.png" width="200" height="260" alt="ProfilePhoto" class="img-circle img-fluid small">
                         </div>
 
                         <div class="left col-md-6 col-sm-8 text-left">

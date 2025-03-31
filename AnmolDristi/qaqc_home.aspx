@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="qaqc_home.aspx.cs" Inherits="AnmolDristi.qaqc.qaqc_home" %>
+﻿<%@ Page Title="CSMS" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="qaqc_home.aspx.cs" Inherits="AnmolDristi.qaqc.qaqc_home" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -7,7 +7,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h2>Quality Report Forms</h2>
+                    <h2>CSMS Documentation</h2>
                 </div>
             </div>
 
@@ -17,7 +17,7 @@
                 <div class="col-md-12" id="QC_Panel" runat="server" visible="true">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>QC Forms</h2>
+                            <h2>CSMS Form & Reports</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -25,38 +25,30 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <a class="btn btn-app" href="qaqc_inspector_rpt.aspx">
-                                <span class="badge bg-red">Shift : 2
-                                    <asp:Label ID="lbl_tbttodaycount" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Inspector Report
-
-                            </a>
-                            
-                           
                             <a class="btn btn-app" href="csm_massmeeting_record.aspx">
-                                  <span class="badge bg-green">Ok
+                                <span class="badge bg-green">Ok
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                  <i class="fa fa-edit"></i>Mass Meeting Record
+                                <i class="fa fa-edit"></i>Mass Meeting Record
 
                             </a>
-                             <a class="btn btn-app" href="housekeeping_audit.aspx">
-                         <span class="badge bg-green">Ok
+                            <a class="btn btn-app" href="housekeeping_audit.aspx">
+                                <span class="badge bg-green">Ok
                         <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
-                           <i class="fa fa-edit"></i>House Keeping Audit
+                                <i class="fa fa-edit"></i>House Keeping Audit
 
-                           </a>
-                              <a class="btn btn-app" href="committee_meeting.aspx">
-                               <span class="badge bg-green">Ok
+                            </a>
+                            <a class="btn btn-app" href="committee_meeting.aspx">
+                                <span class="badge bg-green">Ok
                               <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                 <i class="fa fa-edit"></i>Committee Meeting
+                                <i class="fa fa-edit"></i>Committee Meeting
 
-                              </a>
+                            </a>
                             <a class="btn btn-app" href="committee_meeting_report.aspx">
- <span class="badge bg-green">Ok
-<asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
-   <i class="fa fa-edit"></i>Committee Meeting Report
+                                <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Committee Meeting Report
 
-</a>
+                            </a>
                         </div>
                     </div>
                 </div>

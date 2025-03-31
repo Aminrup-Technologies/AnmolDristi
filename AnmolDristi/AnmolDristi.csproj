@@ -92,7 +92,6 @@
     <Content Include="packages.config" />
     <Content Include="practice.aspx" />
     <Content Include="qaqc_home.aspx" />
-    <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
@@ -106,11 +105,11 @@
     <Content Include="blank.aspx" />
     <Content Include="login.aspx" />
     <Content Include="trail.aspx" />
+    <Content Include="WebData\Internal\OH4Y_Logo.png" />
     <Content Include="WebData\No_Image.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="WebData\Anmol_Logo.png" />
     <Content Include="WebData\Internal\ats_logo.jpg" />
     <Content Include="WebData\Internal\ats_translogo.png" />
     <Content Include="WebData\Internal\ats_webheader.png" />
@@ -239,13 +238,6 @@
     </Compile>
     <Compile Include="qaqc_home.aspx.designer.cs">
       <DependentUpon>qaqc_home.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="qaqc_inspector_rpt.aspx.cs">
-      <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
-      <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
     </Compile>
     <Compile Include="trail.aspx.cs">
       <DependentUpon>trail.aspx</DependentUpon>

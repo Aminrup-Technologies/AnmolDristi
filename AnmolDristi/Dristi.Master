@@ -9,9 +9,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" href="WebData/Anmol_Logo.png" type="image/ico" />
+    <link rel="icon" href="WebData/Internal/OH4Y_Logo.png" type="image/ico" />
 
-    <title>Anmol</title>
+    <title>Aminrup</title>
 
     <link href="Resources/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="Resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -105,7 +105,7 @@
                         <div class="left_col scroll-view">
                             <div class="navbar nav_title" style="border: 0;">
                                 <a href="#" class="site_title">
-                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/Anmol_Logo.png" Height="40" Width="50" /><span>&nbsp;&nbsp;ANMOL</span>
+                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/Internal/OH4Y_Logo.png" Height="40" Width="50" /><span>&nbsp;&nbsp;Aminrup</span>
                                 </a>
                             </div>
 
@@ -114,7 +114,7 @@
                             <!-- menu profile quick info -->
                             <div class="profile clearfix">
                                 <div class="profile_pic">
-                                    <img id="ProfilePic_1" src="~/WebData/No_Image.jpg" runat="server" alt="..." class="img-circle profile_img">
+                                    <img id="ProfilePic_1" src="~/WebData/Internal/OH4Y_Logo.png" runat="server" alt="..." class="img-circle profile_img">
                                 </div>
                                 <div class="profile_info">
                                     Hi,
@@ -133,22 +133,9 @@
                                         <li id="HomePage" runat="server" visible="true"><a><i class="fa fa-home"></i>Home <span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li id="Home1" runat="server" visible="true"><a href="home.aspx">Dashboard-1<span class="label label-success pull-right">Click !!</span></a></li>
-                                                <li id="QualityForms" runat="server" visible="true"><a href="qaqc_home.aspx">QA/QC<span class="label label-success pull-right">Click !!</span></a></li>
+                                                <li id="QualityForms" runat="server" visible="true"><a href="qaqc_home.aspx">New Developments<span class="label label-success pull-right">Click !!</span></a></li>
                                             </ul>
                                         </li>
-
-                                        <li id="DataMastering" runat="server" visible="false"><a><i class="fa fa-database"></i>Data Mastering <span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li id="Works" runat="server" visible="false"><a>Works<span class="fa fa-chevron-down"></span></a>
-                                                    <ul class="nav child_menu">
-                                                        <li id="WorkCountry" runat="server" class="sub_menu"><a href="work_country.aspx">Work Country</a></li>
-                                                        <li id="WorkState" runat="server"><a href="work_states.aspx">Work States</a></li>
-                                                        <li id="WorkRegion" runat="server"><a href="work_region.aspx">Work Regions</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -183,7 +170,7 @@
                                 <ul class="navbar-right">
                                     <li class="nav-item dropdown open" style="padding-left: 15px;">
                                         <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                            <img id="ProfilePic_2" runat="server" alt="" src="~/WebData/No_Image.jpg"><asp:Label ID="lbl_loginusername2" runat="server" Text="Login_Name"></asp:Label>
+                                            <img id="ProfilePic_2" runat="server" alt="" src="~/WebData/Internal/OH4Y_Logo.png"><asp:Label ID="lbl_loginusername2" runat="server" Text="Login_Name"></asp:Label>
                                         </a>
                                         <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                             <a class="dropdown-item" href="manage_profile.aspx">Manage Profile</a>
@@ -207,8 +194,8 @@
                     Autologout >
                 <asp:Label ID="lblTime1" runat="server" Text="N/A" Font-Bold="true" ForeColor="IndianRed" Visible="true"></asp:Label>
                     || Time :<asp:Label ID="lblTime" runat="server" Text="N/A" Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
-                    || © 2021-2024
-                <asp:Label ID="Label1" runat="server" Text="Anmol " Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
+                    || © 2021-2025
+                <asp:Label ID="Label1" runat="server" Text="Aminrup Technologies " Font-Bold="true" ForeColor="Black" Visible="true"></asp:Label>
 
                 </div>
                 <div class="clearfix"></div>
