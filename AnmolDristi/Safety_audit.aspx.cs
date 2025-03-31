@@ -130,15 +130,15 @@ namespace AnmolDristi
                 {
                     conn.Open();
                     string query = @"
-            SELECT 
-                sa.AuditID, sa.Department, sa.Section, sa.Date, sa.Time, 
-                sa.ContractorVendorCode, sa.TotalContractorPeople, 
-                sev.SeverityLevel, sev.TeamMembers,
-                sdesc.Description, sdesc.SelectField, sdesc.Options
-            FROM SafetyAuditRecords sa
-            LEFT JOIN SafetyAuditSeverity sev ON sa.AuditID = sev.AuditID
-            LEFT JOIN SafetyAuditDescription sdesc ON sa.AuditID = sdesc.AuditID
-            ORDER BY sa.Date DESC";
+                        SELECT 
+                            sa.AuditID, sa.Department, sa.Section, sa.Date, sa.Time, 
+                            sa.ContractorVendorCode, sa.TotalContractorPeople, 
+                            sev.SeverityLevel, sev.TeamMembers,
+                            sdesc.Description, sdesc.SelectField, sdesc.Options
+                        FROM SafetyAuditRecords sa
+                        LEFT JOIN SafetyAuditSeverity sev ON sa.AuditID = sev.AuditID
+                        LEFT JOIN SafetyAuditDescription sdesc ON sa.AuditID = sdesc.AuditID
+                        ORDER BY sa.Date DESC";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
