@@ -11,17 +11,8 @@ namespace AnmolDristi
 {
 
 
-    public partial class committee_meeting
+    public partial class Committee_meeting_update
     {
-
-        /// <summary>
-        /// hdnPointsDiscussed control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnPointsDiscussed;
 
         /// <summary>
         /// lbl_txtdate control.

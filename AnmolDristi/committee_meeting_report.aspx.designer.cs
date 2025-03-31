@@ -15,49 +15,49 @@ namespace AnmolDristi
     {
 
         /// <summary>
-        /// lbl_FromDate control.
+        /// lbl_txtFromDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_FromDate;
+        protected global::System.Web.UI.WebControls.Label lbl_txtFromDate;
 
         /// <summary>
-        /// RFV_TB_FromDate control.
+        /// RFV_txtFromDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_FromDate;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtFromDate;
 
         /// <summary>
-        /// TB_FromDate control.
+        /// txtFromDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_FromDate;
+        protected global::System.Web.UI.WebControls.TextBox txtFromDate;
 
         /// <summary>
-        /// Lbl_ToDate control.
+        /// Lbl_txtToDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_ToDate;
+        protected global::System.Web.UI.WebControls.Label Lbl_txtToDate;
 
         /// <summary>
-        /// TB_ToDate control.
+        /// txtToDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_ToDate;
+        protected global::System.Web.UI.WebControls.TextBox txtToDate;
 
         /// <summary>
         /// BtnSubmit control.
@@ -87,12 +87,12 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Button BtnReset;
 
         /// <summary>
-        /// gvMeetings control.
+        /// gvMeeting control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvMeetings;
+        protected global::System.Web.UI.WebControls.GridView gvMeeting;
     }
 }

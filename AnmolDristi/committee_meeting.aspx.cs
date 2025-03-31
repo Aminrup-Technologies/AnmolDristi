@@ -135,12 +135,13 @@ namespace AnmolDristi
             }
             // Generating SNo dynamically
             int serialNo = dts.Rows.Count + 1;
+            string allIssues = hdnPointsDiscussed.Value.Trim();
 
             DataRow dr = dts.NewRow();
             dr["SNo"] = serialNo;
             dr["AgendaTitle"] = txtAgendaTitle.Text.Trim();
             dr["ActionBy"] = txtActionBy.Text.Trim();
-            dr["IssuesDiscussed"] = txtIssuesDes.Text.Trim();
+            dr["IssuesDiscussed"] = allIssues;
             dr["TargetDate"] = txtTargetDate.Text.Trim();
             dr["ReviewDate"] = txtReviewDate.Text.Trim();
             dr["ReviewBy"] = txtReviewBy.Text.Trim();
@@ -156,7 +157,7 @@ namespace AnmolDristi
             txtAgendaTitle.Text="";
             txtReviewBy.Text = "";
             txtTargetDate.Text = "";
-            txtIssuesDes.Text = "";
+            hdnPointsDiscussed.Value = "";
             txtReviewDate.Text = "";
             ddlStatus.SelectedIndex = 0;
             

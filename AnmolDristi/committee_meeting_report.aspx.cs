@@ -29,111 +29,212 @@ namespace AnmolDristi
             //}
             if (!IsPostBack)
             {
-                LoadMeetings();
+                LoadMeetingData();
             }
         }
-
-        private void LoadMeetings()
+        private void LoadMeetingData()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                conn.Open();
-                string query = @"SELECT 
+                string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    conn.Open(); 
+
+                    string query = @"
+                    SELECT 
                     MeetingID, 
                     MeetingNo, 
                     Title, 
-                    MeetingDate, 
-                    MeetingTime, 
+                    CONVERT(VARCHAR(10), MeetingDate, 23) AS MeetingDate, 
+                    CONVERT(VARCHAR(8), MeetingTime, 108) AS MeetingTime,
                     Venue, 
-                    ChairedBy
-                FROM Committee_MeetingReview
-                ORDER BY MeetingDate DESC";
-            
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    gvMeetings.DataSource = dt;
-                    gvMeetings.DataBind();
-                }
-            }
-        }
-
-        
-
-        protected void BtnSubmit_Click(object sender, EventArgs e)
-        {
-           
-
-            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connStr))
-            {
-                try
-                {
-                    conn.Open();
-                   
-                    string query = @"SELECT MeetingID, MeetingNo, Title, MeetingDate, MeetingTime, Venue, ChairedBy
-                             FROM Committee_MeetingReview
-                             WHERE MeetingDate BETWEEN @FromDate AND @ToDate
-                             ORDER BY MeetingDate DESC";
+                    ChairedBy 
+                    FROM Committee_MeetingReview where MeetingID is not null";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@FromDate", Convert.ToDateTime(TB_FromDate.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@ToDate", Convert.ToDateTime(TB_ToDate.Text.Trim()));
-
-                        //cmd.Parameters.AddWithValue("@FromDate", fromDate.ToString("yyyy-MM-dd"));
-                        //cmd.Parameters.AddWithValue("@ToDate", toDate.ToString("yyyy-MM-dd"));
-
-                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
-                            da.Fill(dt);
+                            sda.Fill(dt);
 
                             if (dt.Rows.Count > 0)
                             {
-                                gvMeetings.DataSource = dt; // Bind to GridView
-                                gvMeetings.DataBind();
+                                gvMeeting.DataSource = dt;
+                                gvMeeting.DataBind();
                             }
                             else
                             {
-                                gvMeetings.DataSource = null;
-                                gvMeetings.DataBind();
-                                lblMsg.Text = "No records found!";
-                                lblMsg.ForeColor = System.Drawing.Color.Red;
+                                gvMeeting.DataSource = null;
+                                gvMeeting.DataBind();
+                                Response.Write("<script>alert('No records found.');</script>");
                             }
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    lblMsg.Text = "Error: " + ex.Message;
-                    lblMsg.ForeColor = System.Drawing.Color.Red;
-                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
             }
         }
+        protected void BtnSubmit_Click(object sender, EventArgs e)
+        {
+            string fromDate = txtFromDate.Text;
+            string toDate = txtToDate.Text;
+
+            if (string.IsNullOrEmpty(fromDate) || string.IsNullOrEmpty(toDate))
+            {
+                lblMsg.Text = "Please select both From Date and To Date.";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"
+            SELECT 
+            MeetingID, 
+            MeetingNo, 
+            Title, 
+            CONVERT(VARCHAR(10), MeetingDate, 23) AS MeetingDate, 
+            CONVERT(VARCHAR(8), MeetingTime, 108) AS MeetingTime,
+            Venue, 
+            ChairedBy 
+            FROM Committee_MeetingReview
+            WHERE MeetingDate BETWEEN @FromDate AND @ToDate";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.Add("@FromDate", SqlDbType.Date).Value = DateTime.ParseExact(fromDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                    cmd.Parameters.Add("@ToDate", SqlDbType.Date).Value = DateTime.ParseExact(toDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    gvMeeting.DataSource = dt;
+                    gvMeeting.DataBind();
+                }
+            }
+            txtFromDate.Text = "";
+            txtToDate.Text = "";
+        }
+
+
+        //protected void BtnSubmit_Click(object sender, EventArgs e)
+        //{
+        //    string fromDate = txtFromDate.Text;
+        //    string toDate = txtToDate.Text;
+
+
+        //    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    {
+        //        conn.Open();
+        //        string query = @"
+        //        SELECT 
+        //            MeetingID, 
+        //            MeetingNo, 
+        //            Title, 
+        //            CONVERT(VARCHAR(10), MeetingDate, 23) AS MeetingDate, 
+        //            CONVERT(VARCHAR(8), MeetingTime, 108) AS MeetingTime,
+        //            Venue, 
+        //            ChairedBy 
+        //        FROM Committee_MeetingReview";
+
+        //        if (!string.IsNullOrEmpty(toDate))
+        //        {
+        //            query = @"
+        //        SELECT 
+        //            MeetingID, 
+        //            MeetingNo, 
+        //            Title, 
+        //            CONVERT(VARCHAR(10), MeetingDate, 23) AS MeetingDate, 
+        //            CONVERT(VARCHAR(8), MeetingTime, 108) AS MeetingTime,
+        //            Venue, 
+        //            ChairedBy 
+        //        FROM Committee_MeetingReview
+        //        WHERE MeetingDate BETWEEN @FromDate AND @ToDate";
+        //        }
+
+        //        using (SqlCommand cmd = new SqlCommand(query, conn))
+        //        {
+        //            cmd.Parameters.AddWithValue("@FromDate", fromDate);
+        //            if (!string.IsNullOrEmpty(toDate))
+        //            {
+        //                cmd.Parameters.AddWithValue("@ToDate", toDate);
+        //            }
+
+        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
+        //            DataTable dt = new DataTable();
+        //            da.Fill(dt);
+        //            gvMeeting.DataSource = dt;
+        //            gvMeeting.DataBind();
+        //        }
+        //    }
+        //    txtFromDate.Text = string.Empty;
+        //    txtToDate.Text = string.Empty;
+        //}
+
+
+
 
         protected void BtnEdit_Click(object sender, EventArgs e)
         {
 
         }
+
         protected void BtnDelete_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Get the MeetingID of the selected row
+                Button btn = (Button)sender;
+                GridViewRow row = (GridViewRow)btn.NamingContainer;
+                int meetingID = Convert.ToInt32(gvMeeting.DataKeys[row.RowIndex].Value);
 
+                string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    conn.Open();
+                    string query = "DELETE FROM Committee_MeetingReview WHERE MeetingID = @MeetingID";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MeetingID", meetingID);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            // Refresh the GridView after deletion
+                            LoadMeetingData();
+                        }
+                        else
+                        {
+                            Response.Write("<script>alert('Error: Unable to delete record.');</script>");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
+            }
         }
+
         protected void BtnReset_Click(object sender, EventArgs e)
         {
             Response.Redirect("committee_meeting_report.aspx");
-            TB_FromDate.Text = string.Empty;
-            TB_ToDate.Text = string.Empty;
+            txtFromDate.Text = "";
+            txtToDate.Text = "";
 
-            // Optional: Clear the GridView as well
-            gvMeetings.DataSource = null;
-            gvMeetings.DataBind();
+            // Clear GridView
+            gvMeeting.DataSource = null;
+            gvMeeting.DataBind();
         }
 
 

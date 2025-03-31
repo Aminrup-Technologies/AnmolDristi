@@ -1,44 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="committee_meeting.aspx.cs" Inherits="AnmolDristi.committee_meeting" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Committee_meeting_update.aspx.cs" Inherits="AnmolDristi.Committee_meeting_update" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        .btnStyle {
-    width: 120px;
-    height: 35px;
-    color: black;
-    background-color: coral;
-    font-size: 16px;
-    text-align: center;
-    border: none;
-    border-radius: 5px;
-}
-   .table-responsive {
-    width: 100%;
-    max-height: 400px; /* Adjust based on need */
-    overflow-x: auto;
-    overflow-y: auto;
-    
-   }
 
-@media (max-width: 768px) {
-    .table-responsive {
-        max-height: 300px; /* Adjust based on your UI */
-    }
-}
-.btn-fixed-size {
-    width: 100px;
-    text-align: center;
-    font-size: 14px;
-    padding: 5px 0;
-}
-
-.points-input {
-    margin-right: 10px;
-}
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <asp:HiddenField ID="hdnPointsDiscussed" runat="server" />
-        <div class="right_col" role="main">
+            <div class="right_col" role="main">
     <div class="container">
         <div class="page-title">
             <div class="title_left">
@@ -286,67 +251,7 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        function addbutton() {
-
-            var container = document.getElementById('<%= PointsContainer.ClientID %>');
-
-            if (!container) {
-                console.error("Error: PointsContainer not found!");
-                return;
-            }
-
-            var div = document.createElement("div");
-            div.className = "d-flex align-items-center mb-2";
-
-            var input = document.createElement("input");
-            input.type = "text";
-            input.className = "form-control form-control-sm points-input";
-            input.placeholder = "Enter Points";
-
-            var addBtn = document.createElement("button");
-            addBtn.type = "button";
-            addBtn.className = "btn btn-primary btn-sm btn-fixed-size";
-            addBtn.textContent = "Add";
-            addBtn.onclick = addbutton;
-
-            var removeBtn = document.createElement("button");
-            removeBtn.type = "button";
-            removeBtn.className = "btn btn-danger btn-sm btn-fixed-size";
-            removeBtn.textContent = "Remove";
-            removeBtn.onclick = function () {
-                removebutton(this);
-            };
-
-            div.appendChild(input);
-            div.appendChild(addBtn);
-            div.appendChild(removeBtn);
-            container.appendChild(div);
-        }
-
-        function removebutton(button) {
-            var container = document.getElementById('<%= PointsContainer.ClientID %>');
-            if (container.children.length > 1) {
-                button.parentNode.remove();
-            }
-            else {
-                alert("At least one point is required.");
-            }
-        }
-        function preparePoints() {
-            var container = document.getElementById('<%= PointsContainer.ClientID %>');
-            var inputs = container.getElementsByTagName('input');
-            var pointsArray = [];
-
-            for (var i = 0; i < inputs.length; i++) {
-                if (inputs[i].type === "text" && inputs[i].value.trim() !== "") {
-                    pointsArray.push(inputs[i].value.trim());
-                }
-            }
-
-          document.getElementById('<%= hdnPointsDiscussed.ClientID %>').value = pointsArray.join(" , ");
-        }
-    </script>
+   
 
 
 </div>
@@ -477,5 +382,4 @@
 </div>
     
 </div>
-   
 </asp:Content>

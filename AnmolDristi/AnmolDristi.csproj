@@ -82,12 +82,14 @@
   <ItemGroup>
     <Content Include="committee_meeting.aspx" />
     <Content Include="committee_meeting_report.aspx" />
+    <Content Include="Committee_meeting_update.aspx" />
     <Content Include="csm_massmeeting.aspx" />
     <Content Include="csm_massmeeting_record.aspx" />
     <Content Include="csm_massmeeting_report.aspx" />
     <Content Include="Csm_massmeeting_Update.aspx" />
     <Content Include="home.aspx" />
     <Content Include="housekeeping_audit.aspx" />
+    <Content Include="housekeeping_audit_report.aspx" />
     <Content Include="MassMeeting_Report.aspx" />
     <Content Include="packages.config" />
     <Content Include="practice.aspx" />
@@ -158,6 +160,13 @@
     <Compile Include="committee_meeting_report.aspx.designer.cs">
       <DependentUpon>committee_meeting_report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Committee_meeting_update.aspx.cs">
+      <DependentUpon>Committee_meeting_update.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Committee_meeting_update.aspx.designer.cs">
+      <DependentUpon>Committee_meeting_update.aspx</DependentUpon>
+    </Compile>
     <Compile Include="csm_massmeeting.aspx.cs">
       <DependentUpon>csm_massmeeting.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -209,6 +218,13 @@
     </Compile>
     <Compile Include="housekeeping_audit.aspx.designer.cs">
       <DependentUpon>housekeeping_audit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="housekeeping_audit_report.aspx.cs">
+      <DependentUpon>housekeeping_audit_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="housekeeping_audit_report.aspx.designer.cs">
+      <DependentUpon>housekeeping_audit_report.aspx</DependentUpon>
     </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>

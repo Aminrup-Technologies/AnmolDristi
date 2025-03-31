@@ -11,88 +11,97 @@ namespace AnmolDristi
 {
 
 
-    public partial class practice
+    public partial class housekeeping_audit_report
     {
 
         /// <summary>
-        /// hdnPointsDiscussed control.
+        /// lbl_txtfromdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnPointsDiscussed;
+        protected global::System.Web.UI.WebControls.Label lbl_txtfromdate;
 
         /// <summary>
-        /// lbl_txtIssuesDes control.
+        /// RFV_txtfromdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_txtIssuesDes;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtfromdate;
 
         /// <summary>
-        /// RFV_txtIssuesDes control.
+        /// txtfromdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtIssuesDes;
+        protected global::System.Web.UI.WebControls.TextBox txtfromdate;
 
         /// <summary>
-        /// PointsContainer control.
+        /// Lbl_txttodate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PointsContainer;
+        protected global::System.Web.UI.WebControls.Label Lbl_txttodate;
 
         /// <summary>
-        /// txtIssuesDes control.
+        /// RFV_txttodate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIssuesDes;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txttodate;
 
         /// <summary>
-        /// BtnAdd control.
+        /// txttodate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnAdd;
+        protected global::System.Web.UI.WebControls.TextBox txttodate;
 
         /// <summary>
-        /// BtnRemove control.
+        /// BtnSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnRemove;
+        protected global::System.Web.UI.WebControls.Button BtnSubmit;
 
         /// <summary>
-        /// btnAddIssues control.
+        /// lblMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddIssues;
+        protected global::System.Web.UI.WebControls.Label lblMsg;
 
         /// <summary>
-        /// gvIssues control.
+        /// BtnReset control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvIssues;
+        protected global::System.Web.UI.WebControls.Button BtnReset;
+
+        /// <summary>
+        /// gvAudit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvAudit;
     }
 }
