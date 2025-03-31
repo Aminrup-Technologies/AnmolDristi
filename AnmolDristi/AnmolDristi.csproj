@@ -103,6 +103,7 @@
   <ItemGroup>
     <Content Include="blank.aspx" />
     <Content Include="login.aspx" />
+    <Content Include="training_report.aspx" />
     <Content Include="WebData\Aminrup_Logo.png" />
     <Content Include="WebData\No_Image.jpg" />
     <Content Include="Web.config">
@@ -182,6 +183,13 @@
     </Compile>
     <Compile Include="qaqc_home.aspx.designer.cs">
       <DependentUpon>qaqc_home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="training_report.aspx.cs">
+      <DependentUpon>training_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="training_report.aspx.designer.cs">
+      <DependentUpon>training_report.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
