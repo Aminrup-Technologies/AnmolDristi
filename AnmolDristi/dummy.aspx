@@ -146,15 +146,17 @@
             body {
                 background-color: white;
             }
+
             .report-container {
                 box-shadow: none;
                 padding: 0;
             }
+
             .no-print {
                 display: none;
             }
         }
-        
+
         .action-buttons {
             position: fixed;
             top: 20px;
@@ -163,7 +165,7 @@
             flex-direction: column;
             gap: 10px;
         }
-        
+
         .action-button {
             padding: 10px 20px;
             background-color: #0056b3;
@@ -174,11 +176,11 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             text-align: center;
         }
-        
-        .action-button:hover {
-            background-color: #003d80;
-        }
-        
+
+            .action-button:hover {
+                background-color: #003d80;
+            }
+
         .form-editor {
             background: white;
             padding: 20px;
@@ -186,28 +188,28 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
-        
+
         .form-section {
             margin-bottom: 20px;
         }
-        
+
         .input-group {
             margin-bottom: 15px;
         }
-        
+
         .input-label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        
+
         .form-control {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        
+
         .editor-button {
             padding: 10px 15px;
             background-color: #0056b3;
@@ -217,7 +219,7 @@
             cursor: pointer;
             margin-right: 10px;
         }
-        
+
         .view-toggle {
             margin-bottom: 20px;
         }
@@ -231,10 +233,10 @@
             <asp:Button ID="btnExportPDF" runat="server" Text="Export to PDF" CssClass="action-button" OnClick="btnExportPDF_Click" />
             <asp:Button ID="btnSave" runat="server" Text="Save Report" CssClass="action-button" OnClick="btnSave_Click" />
         </div>
-        
+
         <asp:Panel ID="pnlEditor" runat="server" CssClass="form-editor no-print" Visible="false">
             <h2>Edit Mass Meeting Report</h2>
-            
+
             <div class="form-section">
                 <h3>Report Information</h3>
                 <div class="input-group">
@@ -266,10 +268,10 @@
                     <asp:TextBox ID="txtRegion" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
             </div>
-            
+
             <div class="form-section">
                 <h3>Attendance</h3>
-                <asp:GridView ID="gvEditAttendance" runat="server" AutoGenerateColumns="false" ShowFooter="true" 
+                <asp:GridView ID="gvEditAttendance" runat="server" AutoGenerateColumns="false" ShowFooter="true"
                     OnRowCommand="gvEditAttendance_RowCommand" DataKeyNames="RowIndex" CssClass="grid-view">
                     <Columns>
                         <asp:TemplateField HeaderText="Sl.No">
@@ -322,7 +324,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Actions">
                             <ItemTemplate>
-                                <asp:Button ID="btnRemove" runat="server" Text="Remove" CommandName="RemoveAttendee" 
+                                <asp:Button ID="btnRemove" runat="server" Text="Remove" CommandName="RemoveAttendee"
                                     CommandArgument='<%# Container.DataItemIndex %>' CssClass="editor-button" />
                             </ItemTemplate>
                             <FooterTemplate>
@@ -332,10 +334,10 @@
                     </Columns>
                 </asp:GridView>
             </div>
-            
+
             <div class="form-section">
                 <h3>Meeting Details</h3>
-                <asp:GridView ID="gvEditMeetingDetails" runat="server" AutoGenerateColumns="false" ShowFooter="true" 
+                <asp:GridView ID="gvEditMeetingDetails" runat="server" AutoGenerateColumns="false" ShowFooter="true"
                     OnRowCommand="gvEditMeetingDetails_RowCommand" DataKeyNames="RowIndex" CssClass="grid-view">
                     <Columns>
                         <asp:TemplateField HeaderText="Sl.No">
@@ -380,7 +382,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Actions">
                             <ItemTemplate>
-                                <asp:Button ID="btnRemove" runat="server" Text="Remove" CommandName="RemoveDetail" 
+                                <asp:Button ID="btnRemove" runat="server" Text="Remove" CommandName="RemoveDetail"
                                     CommandArgument='<%# Container.DataItemIndex %>' CssClass="editor-button" />
                             </ItemTemplate>
                             <FooterTemplate>
@@ -390,10 +392,10 @@
                     </Columns>
                 </asp:GridView>
             </div>
-            
+
             <div class="form-section">
                 <h3>Feedback</h3>
-                <asp:GridView ID="gvEditFeedback" runat="server" AutoGenerateColumns="false" ShowFooter="true" 
+                <asp:GridView ID="gvEditFeedback" runat="server" AutoGenerateColumns="false" ShowFooter="true"
                     OnRowCommand="gvEditFeedback_RowCommand" DataKeyNames="RowIndex" CssClass="grid-view">
                     <Columns>
                         <asp:TemplateField HeaderText="Sl.No">
@@ -430,7 +432,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Actions">
                             <ItemTemplate>
-                                <asp:Button ID="btnRemove" runat="server" Text="Remove" CommandName="RemoveFeedback" 
+                                <asp:Button ID="btnRemove" runat="server" Text="Remove" CommandName="RemoveFeedback"
                                     CommandArgument='<%# Container.DataItemIndex %>' CssClass="editor-button" />
                             </ItemTemplate>
                             <FooterTemplate>
@@ -440,13 +442,13 @@
                     </Columns>
                 </asp:GridView>
             </div>
-            
+
             <div class="form-section">
                 <asp:Button ID="btnUpdateReport" runat="server" Text="Update Report" OnClick="btnUpdateReport_Click" CssClass="editor-button" />
                 <asp:Button ID="btnCancelEdit" runat="server" Text="Cancel" OnClick="btnCancelEdit_Click" CssClass="editor-button" />
             </div>
         </asp:Panel>
-        
+
         <asp:Panel ID="pnlReport" runat="server" CssClass="report-container">
             <div class="report-header">
                 <div class="logo-container">
@@ -455,7 +457,8 @@
                 </div>
                 <div class="report-title">MASS MEETING REPORT</div>
                 <div style="font-weight: bold;">
-                    <asp:Literal ID="ltlMMRId" runat="server"></asp:Literal> |
+                    <asp:Literal ID="ltlMMRId" runat="server"></asp:Literal>
+                    |
                     <asp:Literal ID="ltlReportDate" runat="server"></asp:Literal>
                 </div>
             </div>
@@ -527,19 +530,23 @@
             <div class="summary-section">
                 <div class="summary-item">
                     <div>Total Participants</div>
-                    <div class="summary-value"><asp:Literal ID="ltlTotalParticipants" runat="server"></asp:Literal></div>
+                    <div class="summary-value">
+                        <asp:Literal ID="ltlTotalParticipants" runat="server"></asp:Literal></div>
                 </div>
                 <div class="summary-item">
                     <div>Topics Discussed</div>
-                    <div class="summary-value"><asp:Literal ID="ltlTopicsDiscussed" runat="server"></asp:Literal></div>
+                    <div class="summary-value">
+                        <asp:Literal ID="ltlTopicsDiscussed" runat="server"></asp:Literal></div>
                 </div>
                 <div class="summary-item">
                     <div>Total Discussion Duration</div>
-                    <div class="summary-value"><asp:Literal ID="ltlTotalDuration" runat="server"></asp:Literal></div>
+                    <div class="summary-value">
+                        <asp:Literal ID="ltlTotalDuration" runat="server"></asp:Literal></div>
                 </div>
                 <div class="summary-item">
                     <div>Feedback Received</div>
-                    <div class="summary-value"><asp:Literal ID="ltlFeedbackReceived" runat="server"></asp:Literal></div>
+                    <div class="summary-value">
+                        <asp:Literal ID="ltlFeedbackReceived" runat="server"></asp:Literal></div>
                 </div>
             </div>
 
