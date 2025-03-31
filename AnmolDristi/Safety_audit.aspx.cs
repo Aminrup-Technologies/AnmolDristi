@@ -16,6 +16,11 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
+                if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
+                {
+                    Response.Redirect("login.aspx");
+                }
+
                 //pnlRadioButtons.Controls.Clear();
                 //if(ViewState["SelectedDDLValue"]!= null)
                 //{
