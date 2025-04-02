@@ -2085,6 +2085,69 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox TXB_WIM;
 
         /// <summary>
+        /// AppStatusDIV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AppStatusDIV;
+
+        /// <summary>
+        /// LabelAppStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelAppStatus;
+
+        /// <summary>
+        /// RFV_RBL_AppStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_RBL_AppStatus;
+
+        /// <summary>
+        /// RBL_AppStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList RBL_AppStatus;
+
+        /// <summary>
+        /// LabelAppStatusRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelAppStatusRemarks;
+
+        /// <summary>
+        /// RFV_TXB_AppStatus_Remarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TXB_AppStatus_Remarks;
+
+        /// <summary>
+        /// TXB_AppStatus_Remarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXB_AppStatus_Remarks;
+
+        /// <summary>
         /// FU_MaterialImage_Upldr control.
         /// </summary>
         /// <remarks>

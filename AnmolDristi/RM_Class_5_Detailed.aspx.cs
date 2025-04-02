@@ -265,17 +265,8 @@ namespace AnmolDristi
                 TB_Brix.Text = dt.Rows[0]["Brix"].ToString();
                 TXB_Brix_Remarks.Text = dt.Rows[0]["CommentsForBrix"].ToString();
 
-                string appStatus = dt.Rows[0]["AppStatus"].ToString();
-                string appStatusRemarks = dt.Rows[0]["AppStatusRemarks"].ToString();
-
-                string script = $@"
-                        
-                        console.log('Retrieved AppStatus:', '{appStatus}');
-                        document.getElementById('RBL_AppStatus_{appStatus}').checked = true;
-                        document.getElementById('TXB_AppStatus_Remarks').value = '{appStatusRemarks}';
-                        
-                    ";
-                ClientScript.RegisterStartupScript(this.GetType(), "SetValues", script, true);
+                RBL_AppStatus.SelectedValue = dt.Rows[0]["AppStatus"].ToString();
+                TXB_AppStatus_Remarks.Text = dt.Rows[0]["AppStatusRemarks"].ToString();
 
                 TB_WIM.Text = dt.Rows[0]["WIM"].ToString();
                 TXB_WIM.Text = dt.Rows[0]["CommentsForWIM"].ToString();
@@ -449,8 +440,8 @@ namespace AnmolDristi
 
         private void StandardValue_Binder(string MaterialId, string PlantId)
         {
-           // DataTable dataTable = DatabaseHelper.GetRMFieldsControlByPlantId(Convert.ToInt32(MaterialId), Convert.ToInt32(PlantId));
-            DataTable dataTable = new DataTable();
+            DataTable dataTable = DatabaseHelper.GetBrandFieldsControlByMaterialIdAndPlantId(Convert.ToInt32(MaterialId), Convert.ToInt32(PlantId));
+
 
             // Example: Querying the DataTable for a specific field name
             //string fieldName = "no_of_pcs"; // Specify the field name you want to query
@@ -492,6 +483,7 @@ namespace AnmolDristi
                 // Use the criteria as needed
                 // For example, you can pass it to a method to set up validators
                 SetUpValidatorsForField(fieldName, criteria);
+                
 
             }
         }
