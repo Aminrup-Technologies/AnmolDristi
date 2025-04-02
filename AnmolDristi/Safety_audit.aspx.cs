@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Services;
 
 namespace AnmolDristi
 {
@@ -166,6 +167,76 @@ namespace AnmolDristi
         }
 
 
+        protected void btnAddSection_Click(object sender, EventArgs e)
+        {
+            // Create a new section (table) programmatically
+            Table newSection = new Table();
+            newSection.CssClass = "table table-bordered";
+
+            // Create rows and columns for Description, DropDownLists, and Validators
+            TableRow row1 = new TableRow();
+            row1.Cells.Add(new TableCell { Text = "<b>Description:</b>" });
+            row1.Cells.Add(new TableCell
+            {
+                Controls = { new TextBox { ID = "txtDescription", CssClass = "form-control", TextMode = TextBoxMode.MultiLine } }
+            });
+            newSection.Rows.Add(row1);
+
+            // Repeat similar steps for all other fields like DropDownLists, RequiredFieldValidators
+            TableRow row2 = new TableRow();
+            row2.Cells.Add(new TableCell { Text = "<b>Good Citizens</b>" });
+            row2.Cells.Add(new TableCell
+            {
+                Controls = { new DropDownList { ID = "DropDownList1", CssClass = "form-control form-control-sm rounded" } }
+            });
+            newSection.Rows.Add(row2);
+
+            // Repeat for other sections like "No. of Violations", "Severity", "Violation X Severity", etc.
+
+            // Add the new section to the PlaceHolder
+           // phSections.Controls.Add(newSection);
+        }
+
+
+
+        [WebMethod]
+        public static string GetEmployeeName(string empCode)
+        {
+            string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            string query = "SELECT EmployeeName FROM MST_UserMaster WHERE EmployeeCode = @EmpCode";
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@EmpCode", empCode);
+                    con.Open();
+                    object result = cmd.ExecuteScalar();
+                    return result != null ? result.ToString() : "";
+                }
+            }
+        }
+
+        [WebMethod]
+        public static string SaveMembers(string internalEmployeesCSV, string externalMembersCSV)
+        {
+            string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                con.Open();
+                string query = "INSERT INTO tbl_Members (InternalEmployees, ExternalMembers) VALUES (@Internal, @External)";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Internal", string.IsNullOrEmpty(internalEmployeesCSV) ? (object)DBNull.Value : internalEmployeesCSV);
+                    cmd.Parameters.AddWithValue("@External", string.IsNullOrEmpty(externalMembersCSV) ? (object)DBNull.Value : externalMembersCSV);
+                    //cmd.ExecuteNonQuery();
+                }
+            }
+            return "Members saved successfully!";
+        }
+
+
+
 
 
 
@@ -188,6 +259,9 @@ namespace AnmolDristi
             }
         }
 
+
+
+
         private void SaveSafetyAuditData()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -202,7 +276,7 @@ namespace AnmolDristi
             int totalPeople = Convert.ToInt32(txtTotalContractorPeople.Text);
 
             //string severityLevel = ddlSeverityLevel.SelectedValue;
-            string teamMembers = txtTeamMember1.Text;
+          //  string teamMembers = txtTeamMember1.Text;
 
             string description = txtDescription.Text;
             string goodCitizens = DropDownList1.SelectedValue;
@@ -261,7 +335,7 @@ namespace AnmolDristi
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@AuditID", auditID);
                         //cmd.Parameters.AddWithValue("@SeverityLevel", severityLevel);
-                        cmd.Parameters.AddWithValue("@TeamMembers", teamMembers);
+                       // cmd.Parameters.AddWithValue("@TeamMembers", teamMembers);
                         cmd.ExecuteNonQuery();
                     }
 
@@ -309,7 +383,7 @@ namespace AnmolDristi
             txtTime.Text = "";
             txtContractorVendorCode.Text = "";
             txtTotalContractorPeople.Text = "";
-            txtTeamMember1.Text = "";
+           // txtTeamMember1.Text = "";
             //ddlSeverityLevel.SelectedIndex = 0;
             //txtDescription.Text = "";
             //ddlDescriptionFields.SelectedIndex = 0;

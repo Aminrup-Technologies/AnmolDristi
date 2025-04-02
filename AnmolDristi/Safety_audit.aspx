@@ -123,126 +123,215 @@
                                     </div>
                                 </div>
 
-                                <!--Severity Level -->
 
-                         <%--       <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblSeverityLevel" runat="server" Text="Severity Level:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:DropDownList ID="ddlSeverityLevel" runat="server" CssClass="form-control form-control-sm rounded">
-                                                <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
-                                                <asp:ListItem Text="Untidy area minor issues sets poor example" Value="Untidy area minor issues sets poor example"></asp:ListItem>
-                                                <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="Restricted access, Unacceptable trash, Disorderly"></asp:ListItem>
-                                                <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="Rule or procedure Violation, Potential injury"></asp:ListItem>
-                                                <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="Unsafe condition, Serious injury potential"></asp:ListItem>
-                                                <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
-                                                <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
-                                            </asp:DropDownList>
 
-                                            <asp:RequiredFieldValidator ID="rfvSeverityLevel" runat="server" ControlToValidate="ddlSeverityLevel" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
+                                <!-- Team member section -->
+
+                                <!-- Team member section -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-6">
+                                            <asp:Label ID="Lbl_EmployeeType" runat="server" Text="Select Member Type : " ForeColor="Blue" Font-Bold="true"></asp:Label>
+
+                                            <!-- Move the main radio button beside Own Employee -->
+                                            <label>
+                                                <asp:RadioButton ID="rbOwnEmployee" runat="server" GroupName="EmployeeType" onclick="toggleFields()" ClientIDMode="Static" />
+                                                Own Employee
+                                            </label>
+
+                                            <!-- Move the other radio button beside External Member -->
+                                            <label>
+                                                <asp:RadioButton ID="rbExternalMember" runat="server" GroupName="EmployeeType" onclick="toggleFields()" ClientIDMode="Static" />
+                                                External Member
+                                            </label>
+
                                         </div>
-                                    </div>
-                                </div>--%>
 
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblTeamMembers" runat="server" Text="Team Members:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div id="teamMembersContainer">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <asp:TextBox ID="txtTeamMember1" runat="server" CssClass="form-control form-control-sm team-member-input" placeholder="Enter Team Member Name"></asp:TextBox>
-                                                <button type="button" class="btn btn-primary btn-sm btn-fixed-size" onclick="addTeamMember()">Add</button>
-                                                <button type="button" class="btn btn-danger btn-sm btn-fixed-size" onclick="removeTeamMember(this)">Remove</button>
-                                            </div>
+                                        <!-- Employee Code Input -->
+                                        <div id="employeeCodeDiv" style="display: none;">
+                                            <asp:Label ID="lblEmployeeCode" runat="server" Text="Enter Vendor Code" Font-Bold="true"></asp:Label>
+                                            <asp:TextBox ID="txtEmployeeCode" runat="server" CssClass="form-control form-control-sm" ClientIDMode="Static" onkeyup="fetchEmployeeName()"></asp:TextBox>
+                                            <label id="lblEmployeeName" style="color: green; font-weight: bold;"></label>
                                         </div>
+
+                                        <!-- External Member Name Input -->
+                                        <div id="externalMemberDiv" style="display: none;">
+                                            <asp:Label ID="lblExternalName" runat="server" Text="Enter Name" Font-Bold="true"></asp:Label>
+                                            <asp:TextBox ID="txtExternalName" runat="server" CssClass="form-control form-control-sm" ClientIDMode="Static"></asp:TextBox>
+                                        </div>
+
+                                        <!-- Add Button -->
+                                        <button type="button" class="btn btn-primary btn-sm mt-2" onclick="addMember()">Add Member</button>
                                     </div>
                                 </div>
 
-                                <!-- JavaScript for Dynamic Team Members -->
-                                <script type="text/javascript">
-                                    function addTeamMember() {
-                                        var container = document.getElementById("teamMembersContainer");
-                                        var div = document.createElement("div");
-                                        div.className = "d-flex align-items-center mb-2";
 
-                                        var input = document.createElement("input");
-                                        input.type = "text";
-                                        input.className = "form-control form-control-sm team-member-input";
-                                        input.placeholder = "Enter Team Member Name";
 
-                                        var addBtn = document.createElement("button");
-                                        addBtn.type = "button";
-                                        addBtn.className = "btn btn-primary btn-sm btn-fixed-size";
-                                        addBtn.innerText = "Add";
-                                        addBtn.onclick = addTeamMember;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-12">
+                                            <h4 class="mt-6">Added Members</h4>
+                                            <table id="membersGrid" class="col-lg-12 table table-bordered table-responsive">
+                                                <tr>
+                                                    <th>SL</th>
+                                                    <th>Type of Employee</th>
+                                                    <th>Vendor Code</th>
+                                                    <th>Employee Name</th>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <button type="button" class="btn btn-success btn-sm mt-2" onclick="saveMembersToDB()">Save Members</button>
+                                    </div>
+                                </div>
 
-                                        var removeBtn = document.createElement("button");
-                                        removeBtn.type = "button";
-                                        removeBtn.className = "btn btn-danger btn-sm btn-fixed-size";
-                                        removeBtn.innerText = "Remove";
-                                        removeBtn.onclick = function () {
-                                            removeTeamMember(removeBtn);
-                                        };
 
-                                        div.appendChild(input);
-                                        div.appendChild(addBtn);
-                                        div.appendChild(removeBtn);
-                                        container.appendChild(div);
+                                <script>
+                                    var membersList = [];
+                                    function toggleFields() {
+                                        var isOwnEmployee = document.getElementById('<%= rbOwnEmployee.ClientID %>').checked;
+                                        document.getElementById('employeeCodeDiv').style.display = isOwnEmployee ? 'block' : 'none';
+                                        document.getElementById('externalMemberDiv').style.display = isOwnEmployee ? 'none' : 'block';
                                     }
 
-                                    function removeTeamMember(button) {
-                                        var container = document.getElementById("teamMembersContainer");
-                                        if (container.children.length > 1) {
-                                            button.parentNode.remove();
+
+
+                                    function fetchEmployeeName() {
+                                        var empCode = document.getElementById('<%= txtEmployeeCode.ClientID %>').value.trim();
+                                        if (empCode === "") {
+                                            document.getElementById('lblEmployeeName').innerText = "";
+                                            return;
+                                        }
+
+                                        if (typeof PageMethods !== "undefined") {
+                                            PageMethods.GetEmployeeName(empCode, function (response) {
+                                                document.getElementById('lblEmployeeName').innerText = response ? "Employee Name: " + response : "Employee not found.";
+                                                if (!response) {
+                                                    showNotification("Warning", "Employee not found!", "warning");
+                                                }
+                                            }, function (error) {
+                                                console.error("Error fetching employee name:", error);
+                                                showNotification("Error", "Failed to fetch employee name.", "error");
+                                            });
                                         } else {
-                                            alert("At least one team member is required.");
+                                            console.error("PageMethods is not enabled.");
+                                            showNotification("Error", "PageMethods is not enabled.", "error");
                                         }
                                     }
+
+
+
+                                    function addMember() {
+                                        var type = document.getElementById('<%= rbOwnEmployee.ClientID %>').checked ? "Own Employee" : "External Member";
+                                        var empCode = document.getElementById('<%= txtEmployeeCode.ClientID %>').value.trim();
+                                        var empName = document.getElementById('<%= rbOwnEmployee.ClientID %>').checked ? document.getElementById('lblEmployeeName').innerText.replace("Employee Name: ", "").trim() : document.getElementById('<%= txtExternalName.ClientID %>').value.trim();
+
+                                        if (type === "Own Employee" && (empCode === "" || empName === "")) {
+                                            showNotification("Warning", "Please enter a valid Employee Code.", "warning");
+                                            return;
+                                        }
+                                        if (type === "External Member" && empName === "") {
+                                            showNotification("Warning", "Please enter the Name for the Internal / External Member.", "warning");
+                                            return;
+                                        }
+
+                                        membersList.push({ type: type, code: empCode, name: empName });
+                                        updateGridView();
+
+                                        document.getElementById('<%= txtEmployeeCode.ClientID %>').value = "";
+                                        document.getElementById('lblEmployeeName').innerText = "";
+                                        document.getElementById('<%= txtExternalName.ClientID %>').value = "";
+
+                                        showNotification("Success", "Member added successfully!", "success");
+                                    }
+
+                                    function updateGridView() {
+                                        var grid = document.getElementById("membersGrid");
+                                        grid.innerHTML = "<tr><th>SL</th><th>Type of Employee</th><th>Employee Code</th><th>Employee Name</th><th>Action</th></tr>";
+
+                                        membersList.forEach((member, index) => {
+                                            grid.innerHTML += `<tr>
+                    <td>${index + 1}</td>
+                    <td>${member.type}</td>
+                    <td>${member.code}</td>
+                    <td>${member.name}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="removeMember(${index})">Remove</button></td>
+                </tr>`;
+                                        });
+                                    }
+
+
+
+                                    function removeMember(index) {
+                                        membersList.splice(index, 1);
+                                        updateGridView();
+                                        showNotification("Info", "Member removed successfully!", "info");
+                                    }
+
+                                    function saveMembersToDB() {
+                                        if (membersList.length === 0) {
+                                            showNotification("error", "No members to save!");
+                                            return;
+                                        }
+
+                                        var internalEmployees = [];
+                                        var externalMembers = [];
+
+                                        membersList.forEach(member => {
+                                            if (member.type === "Own Employee") {
+                                                internalEmployees.push(member.code);
+                                            } else {
+                                                externalMembers.push(member.name);
+                                            }
+                                        });
+
+                                        var dataToSend = {
+                                            internalEmployeesCSV: internalEmployees.join(","),
+                                            externalMembersCSV: externalMembers.join(",")
+                                        };
+
+                                        if (typeof PageMethods !== "undefined") {
+                                            PageMethods.SaveMembers(dataToSend.internalEmployeesCSV, dataToSend.externalMembersCSV, function (response) {
+                                                showNotification("success", response);
+                                                membersList = [];
+                                                updateGridView();
+                                            }, function (error) {
+                                                console.error("Error saving members:", error);
+                                                showNotification("error", "Error saving members.");
+                                            });
+                                        } else {
+                                            console.error("PageMethods is not enabled.");
+                                            showNotification("error", "PageMethods is not enabled.");
+                                        }
+                                    }
+
+
+                                    function showNotification(title, text, type) {
+                                        new PNotify({
+                                            title: title,
+                                            text: text,
+                                            type: type,
+                                            styling: 'bootstrap3',
+                                            delay: 2000 // Auto-hide after 2 seconds
+                                        });
+                                    }
+
+
+
                                 </script>
 
-                                <!-- CSS for Styling -->
-                                <style>
-                                    .btn-fixed-size {
-                                        width: 100px;
-                                        text-align: center;
-                                        font-size: 14px;
-                                        padding: 5px 0;
-                                    }
-
-                                    .team-member-input {
-                                        margin-right: 10px;
-                                    }
-                                </style>
 
 
-                                <table class="table table-bordered">
+
+
+                                <table class="table table-bordered" id="observationTable">
                                     <tr>
                                         <td><b>Description:</b></td>
                                         <td>
                                             <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                                         </td>
                                     </tr>
-
-
-                                <%--    <tr>
-                                        <td><b>Select Field:</b></td>
-                                        <td>
-                                            <asp:DropDownList ID="ddlDescriptionFields" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="DdlDescriptionFields_SelectedIndexChanged">
-                                                <asp:ListItem Text="Select" Value=""></asp:ListItem>
-                                                <asp:ListItem Text="Good Citizens" Value="GoodCitizens"></asp:ListItem>
-                                                <asp:ListItem Text="No. of Violations" Value="NoOfViolations"></asp:ListItem>
-                                                <asp:ListItem Text="Severity" Value="Severity"></asp:ListItem>
-                                                <asp:ListItem Text="Violation X Severity" Value="ViolationSeverity"></asp:ListItem>
-                                                <asp:ListItem Text="4 & 5" Value="FourAndFive"></asp:ListItem>
-                                                <asp:ListItem Text="Unsafe Act Conditions" Value="UnsafeAct"></asp:ListItem>
-                                            </asp:DropDownList>
-                                        </td>
-                                    </tr>--%>
-
-
                                     <tr>
-                                        <td><b>Good Citizens
-                                        </b></td>
+                                        <td><b>Good Citizens</b></td>
                                         <td>
                                             <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control form-control-sm rounded">
                                                 <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
@@ -253,17 +342,10 @@
                                                 <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
                                                 <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
                                             </asp:DropDownList>
-
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="DropDownList1" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
-
-
-
                                     <tr>
-                                        <td><b>No. of Violations
-                                        </b></td>
+                                        <td><b>No. of Violations</b></td>
                                         <td>
                                             <asp:DropDownList ID="DropDownList2" runat="server" CssClass="form-control form-control-sm rounded">
                                                 <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
@@ -274,17 +356,10 @@
                                                 <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
                                                 <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
                                             </asp:DropDownList>
-
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="DropDownList2" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
-
-
-
                                     <tr>
-                                        <td><b>Severity
-                                        </b></td>
+                                        <td><b>Severity</b></td>
                                         <td>
                                             <asp:DropDownList ID="DropDownList3" runat="server" CssClass="form-control form-control-sm rounded">
                                                 <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
@@ -295,16 +370,11 @@
                                                 <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
                                                 <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
                                             </asp:DropDownList>
-
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="DropDownList2" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
 
-
                                     <tr>
-                                        <td><b>Violation X Severity
-                                        </b></td>
+                                        <td><b>Violation X Severity</b></td>
                                         <td>
                                             <asp:DropDownList ID="DropDownList4" runat="server" CssClass="form-control form-control-sm rounded">
                                                 <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
@@ -315,9 +385,6 @@
                                                 <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
                                                 <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
                                             </asp:DropDownList>
-
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="DropDownList2" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
 
@@ -325,9 +392,9 @@
 
 
 
+
                                     <tr>
-                                        <td><b>4 & 5
-                                        </b></td>
+                                        <td><b>4 &5 </b></td>
                                         <td>
                                             <asp:DropDownList ID="DropDownList5" runat="server" CssClass="form-control form-control-sm rounded">
                                                 <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
@@ -344,10 +411,8 @@
                                         </td>
                                     </tr>
 
-
                                     <tr>
-                                        <td><b>Unsafe Act Conditions
-                                        </b></td>
+                                        <td><b>Unsafe Act Conditions</b></td>
                                         <td>
                                             <asp:DropDownList ID="DropDownList6" runat="server" CssClass="form-control form-control-sm rounded">
                                                 <asp:ListItem Text="Select Severity Level" Value="" Selected="True"></asp:ListItem>
@@ -358,13 +423,25 @@
                                                 <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="Immediate serious injury potential, Stop activity"></asp:ListItem>
                                                 <asp:ListItem Text="Immediately and correct" Value="Immediately and correct"></asp:ListItem>
                                             </asp:DropDownList>
-
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="DropDownList2" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
+                                </table>
 
-                                    <%--                                    <tr>
+                                <button type="button" id="btnAddObservation" class="btn btn-primary">Add More Observation</button>
+
+                                <script>
+                                    document.getElementById("btnAddObservation").addEventListener("click", function () {
+                                        var table = document.getElementById("observationTable");
+                                        var clone = table.cloneNode(true);
+                                        document.body.appendChild(clone);
+                                    });
+                                </script>
+
+
+
+
+
+                                <%--                                    <tr>
                                         <td><b>Options:</b></td>
                                         <td>
                                             <asp:Panel ID="pnlRadioButtons" runat="server" CssClass="radio-options"></asp:Panel>
