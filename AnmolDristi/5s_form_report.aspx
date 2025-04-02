@@ -57,7 +57,7 @@
             .question tr th {
                 text-transform: uppercase;
                 padding: 5px 10px;
-                border: 1px solid #ccc;
+                border: 1px solid #ccc; 
             }
 
                 .question tr th:nth-child(1) {
