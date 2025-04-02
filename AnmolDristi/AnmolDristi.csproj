@@ -83,6 +83,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="5S_F.html" />
+    <Content Include="5s_form_report.aspx" />
     <Content Include="css\StyleSheet1.css" />
     <Content Include="Demo3.aspx" />
     <Content Include="Dummy.aspx" />
@@ -139,6 +141,13 @@
     <Content Include="WebData\Internal\view.svg" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="5s_form_report.aspx.cs">
+      <DependentUpon>5s_form_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="5s_form_report.aspx.designer.cs">
+      <DependentUpon>5s_form_report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="blank.aspx.cs">
       <DependentUpon>blank.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
