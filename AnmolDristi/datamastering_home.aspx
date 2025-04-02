@@ -201,7 +201,7 @@
                                     <asp:Label ID="Label23" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>RM-1
                             </a>
-                            <a class="btn btn-app" href="#">
+                            <a class="btn btn-app" href="RM_Class2_FrmCtrl.aspx">
                                 <span class="badge bg-warning">WIP
                                     <asp:Label ID="Label24" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>RM-2
