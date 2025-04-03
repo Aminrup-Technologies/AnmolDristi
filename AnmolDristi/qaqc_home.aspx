@@ -31,50 +31,13 @@
                                 <i class="fa fa-edit"></i>Mass Meeting Form
 
                             </a>
-<<<<<<< HEAD
-                            <a class="btn btn-app" href="MassMeeting_Report.aspx">
-    <span class="badge bg-green">Ok
-        <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
-    <i class="fa fa-edit"></i>Mass Meeting Record View
-
-</a>
-                            <a class="btn btn-app" href="housekeeping_audit.aspx">
-                                <span class="badge bg-green">Ok
-                        <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>House Keeping Audit
-
-                            </a>
-                                <a class="btn btn-app" href="housekeeping_audit_report.aspx">
-        <span class="badge bg-green">Ok
-<asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
-        <i class="fa fa-edit"></i>HouseKeeping Audit View
-
-    </a>
-                            <a class="btn btn-app" href="committee_meeting.aspx">
-                                <span class="badge bg-green">Ok
-                              <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Committee Meeting
-
-                            </a>
-                            <a class="btn btn-app" href="committee_meeting_report.aspx">
-                                <span class="badge bg-green">Ok
-                                    <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Committee Meeting View
-=======
 
                             <a class="btn btn-app" href="csm_massmeeting_report.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Mass Meeting Record
->>>>>>> ba71f0ce6a700e574fc9e1f92dfd8f78f078ba9c
 
                             </a>
-                             <a class="btn btn-app" href="practice.aspx">
-     <span class="badge bg-green">Ok
-         <asp:Label ID="Label7" runat="server" Text="0" Visible="false"></asp:Label></span>
-     <i class="fa fa-edit"></i>practice
-
- </a>
                         </div>
                     </div>
                 </div>
@@ -125,9 +88,13 @@
                             </a>
                             <a class="btn btn-app" href="committee_meeting_report.aspx">
                                 <span class="badge bg-green">Ok
-                                    <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Committee Meeting Records
+                                    <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Committee Meeting Report
 
+                            <a class="btn btn-app" href="housekeeping_audit_report.aspx">
+                                <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>House Keeping Records
                             </a>
                         </div>
                     </div>
