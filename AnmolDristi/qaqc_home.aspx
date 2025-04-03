@@ -14,10 +14,10 @@
             <div class="clearfix"></div>
 
             <div class="row">
-                <div class="col-md-12" id="QC_Panel" runat="server" visible="true">
+                <div class="col-md-6" id="QC_Panel" runat="server" visible="true">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>CSM Forms</h2>
+                            <h2>CSM Forms-1</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -37,15 +37,30 @@
                                 <i class="fa fa-edit"></i>PPE Checklist Report
 
                             </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" id="Div1" runat="server" visible="true">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>CSM Forms-2</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
                             <a class="btn btn-app" href="Line_Walk_Status.aspx">
                                 <span class="badge bg-green">Ok
-                                    <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                    <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Line Walk Status
-
                             </a>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
