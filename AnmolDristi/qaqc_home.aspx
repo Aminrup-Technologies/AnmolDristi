@@ -27,14 +27,14 @@
                         <div class="x_content">
                             <a class="btn btn-app" href="csm_massmeeting_record.aspx">
                                 <span class="badge bg-green">Ok
-                                    <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                    <asp:Label ID="lbl_csm_mm_form" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Mass Meeting Form
 
                             </a>
 
                             <a class="btn btn-app" href="csm_massmeeting_report.aspx">
                                 <span class="badge bg-green">Ok
-                                    <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                    <asp:Label ID="lbl_csm_mm_report" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Mass Meeting Record
 
                             </a>
@@ -55,13 +55,13 @@
                         <div class="x_content">
                             <a class="btn btn-app" href="housekeeping_audit.aspx">
                                 <span class="badge bg-green">Ok
-                                    <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                    <asp:Label ID="lbl_csm_hkp_form" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>House Keeping Form
                             </a>
 
                             <a class="btn btn-app" href="housekeeping_audit_report.aspx">
                                 <span class="badge bg-green">Ok
-                                    <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                    <asp:Label ID="lbl_csm_hkp_rpt" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>House Keeping Records
                             </a>
 
@@ -82,19 +82,14 @@
                         <div class="x_content">
                             <a class="btn btn-app" href="committee_meeting.aspx">
                                 <span class="badge bg-green">Ok
-                                    <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                    <asp:Label ID="lbl_csm_cm_form" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Committee Meeting Form
 
                             </a>
                             <a class="btn btn-app" href="committee_meeting_report.aspx">
                                 <span class="badge bg-green">Ok
-                                    <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                    <asp:Label ID="lbl_csm_cm_rpt" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Committee Meeting Report
-
-                            <a class="btn btn-app" href="housekeeping_audit_report.aspx">
-                                <span class="badge bg-green">Ok
-                                    <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>House Keeping Records
                             </a>
                         </div>
                     </div>

@@ -24,48 +24,75 @@ namespace AnmolDristi.qaqc
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl QC_Panel;
 
         /// <summary>
-        /// Label3 control.
+        /// lbl_csm_mm_form control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label lbl_csm_mm_form;
 
         /// <summary>
-        /// Label4 control.
+        /// lbl_csm_mm_report control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
-        
+        protected global::System.Web.UI.WebControls.Label lbl_csm_mm_report;
+
         /// <summary>
-        /// Label2 control.
+        /// Div1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-        
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
+
         /// <summary>
-        /// Label5 control.
+        /// lbl_csm_hkp_form control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
-        
+        protected global::System.Web.UI.WebControls.Label lbl_csm_hkp_form;
+
         /// <summary>
-        /// Label5 control.
+        /// lbl_csm_hkp_rpt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lbl_csm_hkp_rpt;
+
+        /// <summary>
+        /// Div2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div2;
+
+        /// <summary>
+        /// lbl_csm_cm_form control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_csm_cm_form;
+
+        /// <summary>
+        /// lbl_csm_cm_rpt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_csm_cm_rpt;
     }
 }
