@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -17,12 +18,39 @@ namespace AnmolDristi
         {
            
         }
-        protected void rbEmployee_SelectedIndexChanged(object sender, EventArgs e)
+       
+
+        [WebMethod]
+        public static object GetAttendeeDetails(string attendeeCode)
         {
-            pnlAttendeeType.Visible = rbEmployee.SelectedValue == "Yes";
-            pnlDetails.Visible = rbEmployee.SelectedValue == "No";
-            pnlDetails1.Visible = rbEmployee.SelectedValue == "No";
+            string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                string query = "SELECT Name, Designation FROM Committee_MeetingAttendance WHERE AttendeeCode = @AttendeeCode";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@AttendeeCode", attendeeCode);
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        return new
+                        {
+                            success = true,
+                            name = reader["Name"].ToString(),
+                            designation = reader["Designation"].ToString()
+                        };
+                    }
+                    else
+                    {
+                        return new { success = false, message = "Attendee Code not found!" };
+                    }
+                }
+            }
         }
+
+       
 
         protected void rbAttendeeType_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -41,7 +69,7 @@ namespace AnmolDristi
             {
                 dt = new DataTable();
                 dt.Columns.Add("SNo");
-                dt.Columns.Add("EmployeeOrNot");
+               
                 dt.Columns.Add("EmployeeName");
                 dt.Columns.Add("AttendeeCode"); // Ensure AttendeeCode exists
                 dt.Columns.Add("AttendanceStatus");
@@ -92,7 +120,7 @@ namespace AnmolDristi
 
             DataRow dr = dt.NewRow();
             dr["SNo"] = serialNo;
-            dr["EmployeeOrNot"] = rbEmployee.SelectedItem != null ? rbEmployee.SelectedItem.Text : "";
+            
             dr["AttendeeType"] = rbAttendeeType.SelectedItem != null ? rbAttendeeType.SelectedItem.Text : "";
             dr["EmployeeName"] = txtEmployeeName.Text.Trim();
             dr["AttendeeCode"] = txtAttendeeCode.Text.Trim();
@@ -106,12 +134,15 @@ namespace AnmolDristi
             gvAttendees.DataBind();
 
             // Clear input fields for next attendee
-            rbEmployee.ClearSelection();
+            
             rbAttendeeType.ClearSelection();
             ddlAttendanceStatus.SelectedIndex = 0;
             txtEmployeeName.Text = "";
             txtAttendeeCode.Text = "";
             txtdes.Text = "";
+
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "showSuccessMessage();", true);
         }
 
         protected void btnAddIssues_Click(object sender, EventArgs e)
@@ -157,10 +188,14 @@ namespace AnmolDristi
             txtAgendaTitle.Text="";
             txtReviewBy.Text = "";
             txtTargetDate.Text = "";
+            txtIssuesDes.Text = "";
             hdnPointsDiscussed.Value = "";
             txtReviewDate.Text = "";
             ddlStatus.SelectedIndex = 0;
-            
+
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "showSuccessMessages();", true);
+
         }
         protected void BtnDelete_Click(object sender, EventArgs e)
         {

@@ -899,18 +899,7 @@
             addEventListenerIfExists("btnsave3", "Points", "Feedback");
         });
 
-        //function moveToNext(currentId, nextId) {
-        //    let currentDiv = document.getElementById(currentId);
-        //    let nextTab = document.querySelector(`a[href='#${nextId}']`);
-
-        //    if (validateInputs(currentDiv)) {
-        //        if (nextTab) {
-        //            new bootstrap.Tab(nextTab).show();
-        //        }
-        //    } else {
-        //        alert("Please fill all required fields before proceeding.");
-        //    }
-        //}
+        
 
         function moveToNext(currentTab, nextTab) {
             var currentTabElement = document.getElementById(currentTab + "-tab");
@@ -989,7 +978,7 @@
                 if (employeeCode.trim() !== "") {
                     $.ajax({
                         type: "POST",
-                        url: "csm_massmeeting_record.aspx/GetEmployeeDetails",
+                        url: "commitee_meeting.aspx/GetEmployeeDetails",
                         data: JSON.stringify({ empCode: employeeCode }),
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",

@@ -115,20 +115,9 @@
  </div>
                 
                   <div class="field" id="Attendees">
-  <div class="col-md-6">
-         <div class="mb-3">
-             <asp:Label ID="lbl_rbEmployee" runat="server" AssociatedControlID="rbEmployee" Text="Employee of this company?" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-             <asp:RequiredFieldValidator ID="RFV_rbEmployee" runat="server" ErrorMessage="Select any option" ValidationGroup="add2" ControlToValidate="rbEmployee" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-             <div class="input-group-sm">
-                 <asp:RadioButtonList ID="rbEmployee" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbEmployee_SelectedIndexChanged">
-                     <asp:ListItem Text="Yes" Value="Yes"></asp:ListItem>
-                     <asp:ListItem Text="No" Value="No"></asp:ListItem>
-                 </asp:RadioButtonList>
-             </div>
-         </div>
-     </div>
 
-     <asp:Panel ID="pnlAttendeeType" runat="server" Visible="false">
+                   
+     <asp:Panel ID="pnlAttendeeType" runat="server" Visible="true">
 
          <div class="col-md-6">
              <div class="mb-3">
@@ -229,7 +218,6 @@
                      <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                      <Columns>
                          <asp:BoundField DataField="SNo" HeaderText="SNo" />
-                         <asp:BoundField DataField="EmployeeOrNot" HeaderText="Employee?" />
                          <asp:BoundField DataField="AttendeeType" HeaderText="Attendee Type" />
                          <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" />
                          <asp:BoundField DataField="AttendeeCode" HeaderText="Attendee Code" />
@@ -477,5 +465,76 @@
 </div>
     
 </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var txtEmployeeName = $("#<%= txtEmployeeName.ClientID %>");
+        var txtDesignation = $("#<%= txtdes.ClientID %>");
+        var txtAttendeeCode = $("#<%= txtAttendeeCode.ClientID %>");
+        var attendeeType = $("input[name='<%= rbAttendeeType.UniqueID %>']");
+
+        function toggleFields() {
+            var isInternal = attendeeType.filter(":checked").val() === "Internal";
+            txtEmployeeName.prop("readonly", isInternal);
+            txtDesignation.prop("readonly", isInternal);
+            if (!isInternal) {
+                txtEmployeeName.val("").prop("readonly", false);
+                txtDesignation.val("").prop("readonly", false);
+            }
+        }
+
+        // On page load, apply logic
+        toggleFields();
+
+        // When Attendee Type changes
+        attendeeType.change(function () {
+            toggleFields();
+        });
+
+        // When Attendee Code is entered
+        txtAttendeeCode.on("blur", function () {
+            var attendeeCode = $(this).val().trim();
+            var isInternal = attendeeType.filter(":checked").val() === "Internal";
+
+            if (isInternal && attendeeCode !== "") {
+                $.ajax({
+                    type: "POST",
+                    url: "committee_meeting.aspx/GetAttendeeDetails",
+                    data: JSON.stringify({ attendeeCode: attendeeCode }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.d.success) {
+                            txtEmployeeName.val(response.d.name).prop("readonly", true);
+                            txtDesignation.val(response.d.designation).prop("readonly", true);
+                            $("#errorMsg").text("").hide();
+                        } else {
+                            txtEmployeeName.val("").prop("readonly", true);
+                            txtDesignation.val("").prop("readonly", true);
+                            $("#errorMsg").text(response.d.message).css("color", "red").show();
+                        }
+                    },
+                    error: function () {
+                        $("#errorMsg").text("Error fetching data").css("color", "red").show();
+                        txtEmployeeName.val("").prop("readonly", true);
+                        txtDesignation.val("").prop("readonly", true);
+                    }
+                });
+            }
+        });
+    });
+</script>
+    <script type="text/javascript">
+        function showSuccessMessage() {
+            alert("Attendee details have been added successfully!");
+        }
+    </script>
+    <script type="text/javascript">
+        function showSuccessMessages() {
+            alert("Issues have been added successfully!");
+        }
+    </script>
+
    
 </asp:Content>

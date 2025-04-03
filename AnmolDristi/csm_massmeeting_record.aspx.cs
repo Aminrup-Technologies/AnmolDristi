@@ -780,13 +780,13 @@ namespace AnmolDristi
 
         public class Attendee
         {
-            public string EmployeeOrNot { get; set; }
+            public string EmployeeOrNot { get; set; }   //from here every column of gridview is getting fetched..
             public string AttendeeType { get; set; }
             public string AttendeeCode { get; set; }
             public string EmployeeName { get; set; }
             public string Designation { get; set; }
             public string GatePassNo { get; set; }
-            //public string ImagePath { get; set; }
+            //public string ImagePath { get; set; }  //ye sir ne kyu comment kia...?unke paas uploads wla folder hoga nhi toh filepath nhi milra hoga isiliye
         }
 
 

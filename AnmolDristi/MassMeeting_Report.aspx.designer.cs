@@ -51,6 +51,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Label Lbl_ToDate;
 
         /// <summary>
+        /// RFV_TB_ToDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_ToDate;
+
+        /// <summary>
         /// TB_ToDate control.
         /// </summary>
         /// <remarks>
@@ -78,12 +87,12 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Button BtnReset;
 
         /// <summary>
-        /// gvMeetings control.
+        /// GVMeetings control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvMeetings;
+        protected global::System.Web.UI.WebControls.GridView GVMeetings;
     }
 }

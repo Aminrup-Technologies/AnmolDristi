@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data.SqlClient;
+using System.Web.Services;
+using System.Configuration;
 
 namespace AnmolDristi
 {
@@ -14,83 +12,85 @@ namespace AnmolDristi
         {
 
         }
-        protected void btnAddIssues_Click(object sender, EventArgs e)
+
+        // WebMethod to Fetch Employee Name based on EmpCode
+        [WebMethod]
+        public static object GetEmployeeName(string empCode)
         {
-            DataTable dts;
-            if (ViewState["Issues"] == null)
+            string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connString))
             {
-                dts = new DataTable();
-                dts.Columns.Add("SNo");
-                dts.Columns.Add("IssuesDiscussed");
+                string query = "SELECT EmployeeName FROM CSMS.dbo.Committee_MeetingIssues WHERE EmpCode = @EmpCode";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@EmpCode", empCode);
+                    conn.Open();
+                    object result = cmd.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        return new
+                        {
+                            success = true,
+                            employeeName = result.ToString()
+                        };
+                    }
+                    else
+                    {
+                        return new { success = false, message = "Invalid Employee Code!" };
+                    }
+                }
             }
-            else
-            {
-                dts = (DataTable)ViewState["Issues"];
-            }
-
-            // Generating SNo dynamically
-            int serialNo = dts.Rows.Count + 1;
-
-            // Retrieve issues from hidden field
-            string allIssues = hdnPointsDiscussed.Value.Trim();
-
-            if (!string.IsNullOrEmpty(allIssues))
-            {
-                DataRow dr = dts.NewRow();
-                dr["SNo"] = serialNo;
-                dr["IssuesDiscussed"] = allIssues; // Comma-separated values
-
-                dts.Rows.Add(dr);
-
-                ViewState["Issues"] = dts;
-                gvIssues.DataSource = dts;
-                gvIssues.DataBind();
-            }
-
-            // Clear input fields
-            txtIssuesDes.Text = "";
-            hdnPointsDiscussed.Value = "";
         }
 
-        //protected void btnAddIssues_Click(object sender, EventArgs e)
-        //{
-        //    DataTable dts;
-        //    if (ViewState["Issues"] == null)
-        //    {
-        //        dts = new DataTable();
-        //        dts.Columns.Add("SNo");
+        protected void rbAttendeeType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool isInternal = rbAttendeeType.SelectedValue == "Internal";
+            txtAttendeeCode.Text = isInternal ? "" : "N/A";
+            txtAttendeeCode.Enabled = isInternal;
+            pnlDetails.Visible = true;
+            pnlDetails1.Visible = true;
+        }
 
-        //        dts.Columns.Add("IssuesDiscussed");
-
-        //    }
-        //    else
-        //    {
-        //        dts = (DataTable)ViewState["Issues"];
-        //    }
-        //    // Generating SNo dynamically
-        //    int serialNo = dts.Rows.Count + 1;
-
-        //    DataRow dr = dts.NewRow();
-        //    dr["SNo"] = serialNo;
-
-        //    dr["IssuesDiscussed"] = txtIssuesDes.Text.Trim();
-
-
-        //    dts.Rows.Add(dr);
-
-        //    ViewState["Issues"] = dts;
-        //    gvIssues.DataSource = dts;
-        //    gvIssues.DataBind();
-
-        //    // Clear input fields for next attendee
-
-        //    txtIssuesDes.Text = "";
-
-
-        //}
-        protected void BtnDelete_Click(object sender, EventArgs e)
+        protected void btnAddAttendees_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void BtnDelAttendees_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // WebMethod to Fetch Attendee Details
+        [WebMethod]
+        public static object GetAttendeeDetails(string attendeeCode)
+        {
+            string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                string query = "SELECT Name, Designation FROM Committee_MeetingAttendance WHERE AttendeeCode = @AttendeeCode";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@AttendeeCode", attendeeCode);
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        return new
+                        {
+                            success = true,
+                            name = reader["Name"].ToString(),
+                            designation = reader["Designation"].ToString()
+                        };
+                    }
+                    else
+                    {
+                        return new { success = false, message = "Attendee Code not found!" };
+                    }
+                }
+            }
         }
     }
 }

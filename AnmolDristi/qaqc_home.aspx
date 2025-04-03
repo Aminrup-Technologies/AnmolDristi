@@ -31,12 +31,24 @@
                                 <i class="fa fa-edit"></i>Mass Meeting Record
 
                             </a>
+                            <a class="btn btn-app" href="MassMeeting_Report.aspx">
+    <span class="badge bg-green">Ok
+        <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
+    <i class="fa fa-edit"></i>Mass Meeting Record View
+
+</a>
                             <a class="btn btn-app" href="housekeeping_audit.aspx">
                                 <span class="badge bg-green">Ok
                         <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>House Keeping Audit
 
                             </a>
+                                <a class="btn btn-app" href="housekeeping_audit_report.aspx">
+        <span class="badge bg-green">Ok
+<asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
+        <i class="fa fa-edit"></i>HouseKeeping Audit View
+
+    </a>
                             <a class="btn btn-app" href="committee_meeting.aspx">
                                 <span class="badge bg-green">Ok
                               <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
@@ -46,9 +58,15 @@
                             <a class="btn btn-app" href="committee_meeting_report.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Committee Meeting Report
+                                <i class="fa fa-edit"></i>Committee Meeting View
 
                             </a>
+                             <a class="btn btn-app" href="practice.aspx">
+     <span class="badge bg-green">Ok
+         <asp:Label ID="Label7" runat="server" Text="0" Visible="false"></asp:Label></span>
+     <i class="fa fa-edit"></i>practice
+
+ </a>
                         </div>
                     </div>
                 </div>
