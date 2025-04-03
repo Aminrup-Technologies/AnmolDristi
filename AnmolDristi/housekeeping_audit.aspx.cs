@@ -101,10 +101,10 @@ namespace AnmolDristi
             dr["ObserverID"]=txtObserverID.Text.Trim();
             dr["OpeningDate"] = txtOpeningDate.Text.Trim();
             dr["OpenBy"] = txtOpenBy.Text.Trim();
-            //dr["ImagePath1"] = imagePath1;
+            
             dr["Observation"] = txtObservation.Text.Trim();
             dr["CorrectiveAction"] = txtCorrectiveAction.Text.Trim();
-            //dr["ImagePath2"] = imagePath2;
+            
             dr["ClosingDate"] = txtClosingDate.Text.Trim();
             dr["CloseBy"] = txtCloseBy.Text.Trim();
             dr["Status"] = ddlStatus.SelectedValue;
@@ -127,7 +127,8 @@ namespace AnmolDristi
             txtClosingDate.Text = "";
             txtCloseBy.Text = "";
             ddlStatus.SelectedIndex = 0;
-            ScriptManager.RegisterStartupScript(this, GetType(), "clearFileInputs", "clearFileInputs();", true);
+            //ScriptManager.RegisterStartupScript(this, GetType(), "clearFileInputs", "clearFileInputs();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "showSuccessMessage();", true);
         }
 
         protected void BtnDelObservation_Click(object sender, EventArgs e)

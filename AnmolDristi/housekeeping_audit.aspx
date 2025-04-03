@@ -14,7 +14,9 @@
         max-height: 300px; /* Adjust based on your UI */
     }
 }
+
     </style>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
@@ -258,11 +260,10 @@
     
 </div>
    
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
-    function clearFileInputs() {
-        $("#<%= fileBeforePhoto.ClientID %>").val('');
-         $("#<%= fileAfterPhoto.ClientID %>").val('');
-    }
-</script>
+
+    <script type="text/javascript">
+        function showSuccessMessage() {
+            alert("Attendee details have been added successfully!");
+        }
+    </script>
 </asp:Content>
