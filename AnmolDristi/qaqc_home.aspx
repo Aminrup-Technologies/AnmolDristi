@@ -14,10 +14,10 @@
             <div class="clearfix"></div>
 
             <div class="row">
-                <div class="col-md-12" id="QC_Panel" runat="server" visible="true">
+                <div class="col-md-6" id="QC_Panel" runat="server" visible="true">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>CSMS Form & Reports</h2>
+                            <h2>Mass Meeting</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -28,32 +28,73 @@
                             <a class="btn btn-app" href="csm_massmeeting_record.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Mass Meeting Record
+                                <i class="fa fa-edit"></i>Mass Meeting Form
 
                             </a>
-                            <a class="btn btn-app" href="housekeeping_audit.aspx">
-                                <span class="badge bg-green">Ok
-                        <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>House Keeping Audit
 
-                            </a>
-                            <a class="btn btn-app" href="committee_meeting.aspx">
-                                <span class="badge bg-green">Ok
-                              <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Committee Meeting
-
-                            </a>
-                            <a class="btn btn-app" href="committee_meeting_report.aspx">
+                            <a class="btn btn-app" href="csm_massmeeting_report.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Committee Meeting Report
+                                <i class="fa fa-edit"></i>Mass Meeting Record
 
                             </a>
                         </div>
                     </div>
                 </div>
 
+                <div class="col-md-6" id="Div1" runat="server" visible="true">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Housekeeping Audit</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <a class="btn btn-app" href="housekeeping_audit.aspx">
+                                <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>House Keeping Form
+                            </a>
 
+                            <a class="btn btn-app" href="housekeeping_audit_report.aspx">
+                                <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>House Keeping Records
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" id="Div2" runat="server" visible="true">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Safety Committee Meeting</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <a class="btn btn-app" href="committee_meeting.aspx">
+                                <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Committee Meeting Form
+
+                            </a>
+                            <a class="btn btn-app" href="committee_meeting_report.aspx">
+                                <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Committee Meeting Records
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
