@@ -152,10 +152,13 @@
                 padding: 0;
             }
 
-            .no-print {
-                display: none;
+            .no-print, .no-print * {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
             }
         }
+
 
         .action-buttons {
             position: fixed;
@@ -229,7 +232,7 @@
     <form id="form1" runat="server">
         <div class="action-buttons no-print">
             <asp:Button ID="btnPrint" runat="server" Text="Print Report" CssClass="action-button" OnClientClick="window.print(); return false;" />
-            <asp:Button ID="btnToggleEdit" runat="server" Text="Edit Report" CssClass="action-button" OnClick="btnToggleEdit_Click" />
+            <asp:Button ID="btnToggleEdit" runat="server" Text="Edit Report" CssClass="action-button" OnClick="btnToggleEdit_Click" Visible="false" />
             <asp:Button ID="btnExportPDF" runat="server" Text="Export to PDF" CssClass="action-button" OnClick="btnExportPDF_Click" />
             <asp:Button ID="btnSave" runat="server" Text="Save Report" CssClass="action-button" OnClick="btnSave_Click" />
         </div>
@@ -452,8 +455,8 @@
         <asp:Panel ID="pnlReport" runat="server" CssClass="report-container">
             <div class="report-header">
                 <div class="logo-container">
-                    <asp:Image ID="imgLogoLeft" runat="server" CssClass="logo" ImageUrl="~/images/company-logo.png" AlternateText="Company Logo" />
-                    <asp:Image ID="imgLogoRight" runat="server" CssClass="logo" ImageUrl="~/images/company-logo.png" AlternateText="Company Logo" />
+                    <asp:Image ID="imgLogoLeft" runat="server" CssClass="logo" ImageUrl="~/WebData/Aminrup_Logo.png" AlternateText="Company Logo" />
+                    <asp:Image ID="imgLogoRight" runat="server" CssClass="logo" ImageUrl="~/WebData/Aminrup_Logo.png" AlternateText="Company Logo" />
                 </div>
                 <div class="report-title">MASS MEETING REPORT</div>
                 <div style="font-weight: bold;">
@@ -490,7 +493,7 @@
                 </div>
             </div>
 
-            <div class="section-title">ATTENDANCE OF THIS MASS MEETING</div>
+            <div class="section-title" id="Div_Atten" runat="server">ATTENDANCE OF THIS MASS MEETING</div>
             <asp:GridView ID="gvAttendance" runat="server" AutoGenerateColumns="false" CssClass="grid-view">
                 <Columns>
                     <asp:BoundField DataField="SlNo" HeaderText="Sl.No" />

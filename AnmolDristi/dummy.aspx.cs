@@ -6,6 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
+using System.Web;
+using System.Text;
 
 namespace CompanyReportSystem
 {
@@ -29,6 +34,7 @@ namespace CompanyReportSystem
                 {
                     InitializeNewReport();
                 }
+                PopulateDummyData();
                 BindReportData();
             }
         }
@@ -174,12 +180,12 @@ namespace CompanyReportSystem
                 ltlRegion.Text = txtRegion.Text = reportInfo["Region"];
             }
 
-            BindGrid(gvAttendance, SESSION_ATTENDANCE);
-            BindGrid(gvMeetingDetails, SESSION_MEETING_DETAILS);
-            BindGrid(gvFeedback, SESSION_FEEDBACK);
-            BindGrid(gvEditAttendance, SESSION_ATTENDANCE);
-            BindGrid(gvEditMeetingDetails, SESSION_MEETING_DETAILS);
-            BindGrid(gvEditFeedback, SESSION_FEEDBACK);
+            //BindGrid(gvAttendance, SESSION_ATTENDANCE);
+            //BindGrid(gvMeetingDetails, SESSION_MEETING_DETAILS);
+            //BindGrid(gvFeedback, SESSION_FEEDBACK);
+            //BindGrid(gvEditAttendance, SESSION_ATTENDANCE);
+            //BindGrid(gvEditMeetingDetails, SESSION_MEETING_DETAILS);
+            //BindGrid(gvEditFeedback, SESSION_FEEDBACK);
 
             UpdateSummary();
         }
@@ -216,7 +222,8 @@ namespace CompanyReportSystem
         protected void btnExportPDF_Click(object sender, EventArgs e)
         {
             UpdateSessionDataFromUI();
-            ExportReport(); // Implement PDF export logic
+            ExportOld();
+            //ExportReport(); // Implement PDF export logic
         }
 
         protected void btnToggleEdit_Click(object sender, EventArgs e)
@@ -435,15 +442,6 @@ namespace CompanyReportSystem
                 }
             }
         }
-
-        private void ExportReport()
-        {
-            // Placeholder for PDF export - Use a library like iTextSharp or PdfSharp
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("content-disposition", $"attachment;filename=MassMeetingReport_{DateTime.Now:yyyyMMdd}.pdf");
-            Response.Write("PDF export functionality to be implemented");
-            Response.End();
-        }
         #endregion
 
         #region Utility Methods
@@ -483,5 +481,192 @@ namespace CompanyReportSystem
             }
         }
         #endregion
+
+        private void PopulateDummyData()
+        {
+            // **Populate Attendance Grid**
+            DataTable dtAttendance = new DataTable();
+            dtAttendance.Columns.Add("SlNo");
+            dtAttendance.Columns.Add("MemberType");
+            dtAttendance.Columns.Add("EmployeeCode");
+            dtAttendance.Columns.Add("EmployeeName");
+            dtAttendance.Columns.Add("Designation");
+            dtAttendance.Columns.Add("GatePassNo");
+
+            for (int i = 1; i <= 5; i++)
+            {
+                dtAttendance.Rows.Add(i, "Member", "EMP" + i, "Employee " + i, "Designation " + i, "GP-" + i);
+            }
+
+            gvAttendance.DataSource = dtAttendance;
+            gvAttendance.DataBind();
+
+            // **Populate Meeting Details Grid**
+            DataTable dtMeetingDetails = new DataTable();
+            dtMeetingDetails.Columns.Add("SlNo");
+            dtMeetingDetails.Columns.Add("PointType");
+            dtMeetingDetails.Columns.Add("RaisedBy");
+            dtMeetingDetails.Columns.Add("Description");
+            dtMeetingDetails.Columns.Add("Duration");
+            dtMeetingDetails.Columns.Add("RefPhoto");
+
+            for (int i = 1; i <= 5; i++)
+            {
+                dtMeetingDetails.Rows.Add(i, "Safety", "Person " + i, "Discussion about safety measures.", i + " mins", "PhotoRef-" + i);
+            }
+
+            gvMeetingDetails.DataSource = dtMeetingDetails;
+            gvMeetingDetails.DataBind();
+
+            // **Populate Feedback Grid**
+            DataTable dtFeedback = new DataTable();
+            dtFeedback.Columns.Add("SlNo");
+            dtFeedback.Columns.Add("FeedbackType");
+            dtFeedback.Columns.Add("FeedbackBy");
+            dtFeedback.Columns.Add("Description");
+            dtFeedback.Columns.Add("BeforeImage");
+            dtFeedback.Columns.Add("AfterImage");
+
+            for (int i = 1; i <= 5; i++)
+            {
+                dtFeedback.Rows.Add(i, "Positive", "User " + i, "Good meeting session.", "BeforeImg-" + i, "AfterImg-" + i);
+            }
+
+            gvFeedback.DataSource = dtFeedback;
+            gvFeedback.DataBind();
+
+            // **Populate Summary**
+            ltlTotalParticipants.Text = "50";
+            ltlTopicsDiscussed.Text = "5";
+            ltlTotalDuration.Text = "120 mins";
+            ltlFeedbackReceived.Text = "15";
+        }
+
+        private void ExportOld()
+        {
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition", "attachment;filename=MMR_Report.pdf");
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+
+            pnlReport.RenderControl(hw);
+
+            StringReader sr = new StringReader(sw.ToString());
+            Document pdfDoc = new Document(PageSize.A4, 36f, 36f, 60f, 60f);
+            HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+
+            PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+            pdfDoc.Open();
+            htmlparser.Parse(sr);
+            pdfDoc.Close();
+            Response.Write(pdfDoc);
+            Response.End();
+        }
+        private void ExportReport()
+        {
+            try
+            {
+                // Define PDF output stream
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    // Create a new PDF document
+                    Document pdfDoc = new Document(PageSize.A4, 25, 25, 25, 25);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+                    pdfDoc.Open();
+
+                    //// ✅ Add logo image (Only if the file exists)
+                    //string logoPath = Server.MapPath("~/WebData/Aminrup_Logo.png");
+
+                    //if (File.Exists(logoPath))
+                    //{
+                    //    iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(logoPath);
+                    //    img.ScaleToFit(100f, 100f);
+                    //    img.Alignment = Element.ALIGN_CENTER;
+                    //    pdfDoc.Add(img);
+                    //}
+                    //else
+                    //{
+                    //    Response.Write("Error: Logo image not found.");
+                    //    return;
+                    //}
+
+                    // Get correct file path
+                    //string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebData", "Aminrup_Logo.png");
+                    string logoPath = @"D:\OfficeWorks\AnmolOTP\AnmolDristi\AnmolDristi\WebData\Aminrup_Logo.png";
+
+                    if (File.Exists(logoPath))
+                    {
+                        iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(logoPath);
+                        img.ScaleToFit(100f, 100f);
+                        img.Alignment = Element.ALIGN_CENTER;
+                        pdfDoc.Add(img);
+                    }
+                    else
+                    {
+                        Response.Write("Error: Logo image not found at " + logoPath);
+                        return;
+                    }
+
+
+                    // ✅ Convert pnlReport content to HTML
+                    StringBuilder htmlContent = new StringBuilder();
+                    htmlContent.Append("<html><head><style>");
+                    htmlContent.Append(".report-container { font-family: Arial, sans-serif; font-size: 12px; }");
+                    htmlContent.Append(".grid-view { width: 100%; border-collapse: collapse; }");
+                    htmlContent.Append(".grid-view th, .grid-view td { border: 1px solid #000; padding: 5px; }");
+                    htmlContent.Append("</style></head><body>");
+
+                    // Adding Panel Data
+                    StringWriter sw = new StringWriter();
+                    HtmlTextWriter hw = new HtmlTextWriter(sw);
+                    pnlReport.RenderControl(hw);
+                    htmlContent.Append(sw.ToString());
+
+                    htmlContent.Append("</body></html>");
+
+                    // 3. **PARSE HTML TO PDF**
+                    using (StringReader sr = new StringReader(htmlContent.ToString()))
+                    {
+                        HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                        htmlparser.Parse(sr);
+                    }
+
+                    // Close the PDF document
+                    pdfDoc.Close();
+
+                    // Convert PDF memory stream to a byte array
+                    byte[] bytes = memoryStream.ToArray();
+
+                    // Send the PDF for download
+                    Response.Clear();
+                    Response.ContentType = "application/pdf";
+                    Response.AddHeader("content-disposition", "attachment;filename=MassMeetingReport.pdf");
+                    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                    Response.BinaryWrite(bytes);
+                    Response.End();
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Error: " + ex.Message);
+            }
+        }
+
+        // ✅ Helper function to extract HTML content
+        private string ConvertPanelToHtml(Control control)
+        {
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            control.RenderControl(hw);
+            return sw.ToString();
+        }
+
+        // ✅ Required to allow rendering GridView & other controls
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+            // Do nothing, required for ASP.NET controls
+        }
     }
 }

@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CompanyReportSystem
-{
-
-
-    public partial class MassMeetingReport
-    {
-
+namespace CompanyReportSystem {
+    
+    
+    public partial class MassMeetingReport {
+        
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
+        
         /// <summary>
         /// btnPrint control.
         /// </summary>
@@ -31,7 +29,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPrint;
-
+        
         /// <summary>
         /// btnToggleEdit control.
         /// </summary>
@@ -40,7 +38,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnToggleEdit;
-
+        
         /// <summary>
         /// btnExportPDF control.
         /// </summary>
@@ -49,7 +47,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnExportPDF;
-
+        
         /// <summary>
         /// btnSave control.
         /// </summary>
@@ -58,7 +56,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
-
+        
         /// <summary>
         /// pnlEditor control.
         /// </summary>
@@ -67,7 +65,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlEditor;
-
+        
         /// <summary>
         /// lblMMRId control.
         /// </summary>
@@ -76,7 +74,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMMRId;
-
+        
         /// <summary>
         /// txtMMRId control.
         /// </summary>
@@ -85,7 +83,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMMRId;
-
+        
         /// <summary>
         /// lblReportDate control.
         /// </summary>
@@ -94,7 +92,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblReportDate;
-
+        
         /// <summary>
         /// txtReportDate control.
         /// </summary>
@@ -103,7 +101,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtReportDate;
-
+        
         /// <summary>
         /// lblDepartment control.
         /// </summary>
@@ -112,7 +110,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDepartment;
-
+        
         /// <summary>
         /// txtDepartment control.
         /// </summary>
@@ -121,7 +119,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDepartment;
-
+        
         /// <summary>
         /// lblLocation control.
         /// </summary>
@@ -130,7 +128,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblLocation;
-
+        
         /// <summary>
         /// txtLocation control.
         /// </summary>
@@ -139,7 +137,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtLocation;
-
+        
         /// <summary>
         /// lblSubmitter control.
         /// </summary>
@@ -148,7 +146,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSubmitter;
-
+        
         /// <summary>
         /// txtSubmitter control.
         /// </summary>
@@ -157,7 +155,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSubmitter;
-
+        
         /// <summary>
         /// lblTSLMember control.
         /// </summary>
@@ -166,7 +164,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTSLMember;
-
+        
         /// <summary>
         /// txtTSLMember control.
         /// </summary>
@@ -175,7 +173,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTSLMember;
-
+        
         /// <summary>
         /// lblRegion control.
         /// </summary>
@@ -184,7 +182,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRegion;
-
+        
         /// <summary>
         /// txtRegion control.
         /// </summary>
@@ -193,7 +191,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRegion;
-
+        
         /// <summary>
         /// gvEditAttendance control.
         /// </summary>
@@ -202,7 +200,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvEditAttendance;
-
+        
         /// <summary>
         /// gvEditMeetingDetails control.
         /// </summary>
@@ -211,7 +209,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvEditMeetingDetails;
-
+        
         /// <summary>
         /// gvEditFeedback control.
         /// </summary>
@@ -220,7 +218,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvEditFeedback;
-
+        
         /// <summary>
         /// btnUpdateReport control.
         /// </summary>
@@ -229,7 +227,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnUpdateReport;
-
+        
         /// <summary>
         /// btnCancelEdit control.
         /// </summary>
@@ -238,7 +236,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancelEdit;
-
+        
         /// <summary>
         /// pnlReport control.
         /// </summary>
@@ -247,7 +245,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlReport;
-
+        
         /// <summary>
         /// imgLogoLeft control.
         /// </summary>
@@ -256,7 +254,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgLogoLeft;
-
+        
         /// <summary>
         /// imgLogoRight control.
         /// </summary>
@@ -265,7 +263,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgLogoRight;
-
+        
         /// <summary>
         /// ltlMMRId control.
         /// </summary>
@@ -274,7 +272,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlMMRId;
-
+        
         /// <summary>
         /// ltlReportDate control.
         /// </summary>
@@ -283,7 +281,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlReportDate;
-
+        
         /// <summary>
         /// ltlDepartment control.
         /// </summary>
@@ -292,7 +290,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlDepartment;
-
+        
         /// <summary>
         /// ltlLocation control.
         /// </summary>
@@ -301,7 +299,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlLocation;
-
+        
         /// <summary>
         /// ltlSubmitter control.
         /// </summary>
@@ -310,7 +308,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlSubmitter;
-
+        
         /// <summary>
         /// ltlTSLMember control.
         /// </summary>
@@ -319,7 +317,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlTSLMember;
-
+        
         /// <summary>
         /// ltlDate control.
         /// </summary>
@@ -328,7 +326,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlDate;
-
+        
         /// <summary>
         /// ltlRegion control.
         /// </summary>
@@ -337,7 +335,16 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlRegion;
-
+        
+        /// <summary>
+        /// Div_Atten control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div_Atten;
+        
         /// <summary>
         /// gvAttendance control.
         /// </summary>
@@ -346,7 +353,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvAttendance;
-
+        
         /// <summary>
         /// gvMeetingDetails control.
         /// </summary>
@@ -355,7 +362,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvMeetingDetails;
-
+        
         /// <summary>
         /// gvFeedback control.
         /// </summary>
@@ -364,7 +371,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvFeedback;
-
+        
         /// <summary>
         /// ltlTotalParticipants control.
         /// </summary>
@@ -373,7 +380,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlTotalParticipants;
-
+        
         /// <summary>
         /// ltlTopicsDiscussed control.
         /// </summary>
@@ -382,7 +389,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlTopicsDiscussed;
-
+        
         /// <summary>
         /// ltlTotalDuration control.
         /// </summary>
@@ -391,7 +398,7 @@ namespace CompanyReportSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlTotalDuration;
-
+        
         /// <summary>
         /// ltlFeedbackReceived control.
         /// </summary>
