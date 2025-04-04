@@ -12,35 +12,20 @@ namespace AnmolDristi
         protected void Page_Load(object sender, EventArgs e)
         {
             int p1r1_value = 1;
-            int p1r2_value = 0;
-            int p1r3_value = 1;
-
-            if (p1r1_value == 1)
+            lbl_p1r1_txt.Text = "is this floor area free of unwanted items?";
+            if (p1r1_value == 1) //Yes or Ok
             {
                 p1r1_tick.Visible = true;
+                p1r1_cross.Visible = false;
+                lbl_p1r1_rmrks.Visible = false;
+                lbl_p1r1_rmrks.Text = "";
             }
             else
-            {
+            {//Not Ok
+                p1r1_tick.Visible = false;
                 p1r1_cross.Visible = true;
-            }
-
-            if (p1r2_value == 1)
-            {
-                p1r2_tick.Visible = true;
-            }
-            else
-            {
-                p1r2_cross.Visible = true;
-            }
-
-
-            if (p1r3_value == 1)
-            {
-                p1r3_tick.Visible = true;
-            }
-            else
-            {
-                p1r3_cross.Visible = true;
+                lbl_p1r1_rmrks.Visible = true;
+                lbl_p1r1_rmrks.Text = "Floor was untidy and water clogs were there";
             }
         }
     }

@@ -87,88 +87,28 @@
         <div>
             <table>
                 <tr>
-                    <td class="heading">
-                        <strong>Sort Out - SEIRI</strong>
-                    </td>
+                    <td class="heading"><strong>Sort Out - SEIRI</strong></td>
                 </tr>
+
                 <tr>
                     <td>
                         <table class="question">
                             <tr>
-                                <th>Requirement
-                         </th>
-                                <th>Okay/Not OK
-                         </th>
-                                <th>Remarks
-                         </th>
-                            </tr>
-                            <%-- question--%>
-                            <tr>
-                                <td>
-                                    <asp:Label ID="lbl_1" runat="server" Text="is this floor area free of unwanted items?" Font-Bold="false" Font-Size="Small"></asp:Label>
-                                </td>
-                                <td>
-                                    <span id="p1r1_tick" runat="server" visible="false">✅</span><span id="p1r1_cross" runat="server" visible="false">❌</span>
-                                </td>
-                                <td></td>
+                                <th>Requirement</th>
+                                <th>Okay/Not OK</th>
+                                <th>Remarks</th>
                             </tr>
                             <tr>
-                                <td>
-                                    <asp:Label Class="Question" ID="lbl_2" runat="server" Text="Are tops and insides of all cupboards, shelves, tables,
-                                         etc. free of
-                                         unwanted items? "
-                                        Font-Bold="false" Font-Size="Small"></asp:Label>
-
-                                </td>
-                                <td><span id="p1r2_tick" runat="server" visible="false">✅</span><span id="p1r2_cross" runat="server" visible="false">❌</span>
-                                </td>
-                                <td>Remarks write here</td>
+                                <td><asp:Label ID="lbl_p1r1_txt" runat="server" Text="" Font-Bold="false" Font-Size="Small"></asp:Label></td>
+                                <td><span id="p1r1_tick" runat="server" visible="false">✅</span><span id="p1r1_cross" runat="server" visible="false">❌</span></td>
+                                <td><asp:Label ID="lbl_p1r1_rmrks" runat="server" Text=""></asp:Label></td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label Class="Question" ID="lbl_3" runat="server" Text="Are Items stored according to frequencyof use? "
-                                        Font-Bold="false" Font-Size="Small"></asp:Label>
-
-                                </td>
-                                <td><span id="p1r3_tick" runat="server" visible="false">✅</span><span id="p1r3_cross" runat="server" visible="false">❌</span>
-                                </td>
-                                <td>Remarks write here</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label Class="Question" ID="lbl_4" runat="server" Text="Are walls free of old posters, calendars, pictures,
-                                         notices etc.?  "
-                                        Font-Bold="false" Font-Size="Small"></asp:Label>
-
-                                </td>
-                                <td><span id="p1r4_tick" runat="server" visible="false">✅</span><span id="p1r4_cross" runat="server" visible="false">❌</span>
-                                </td>
-                                <td>Remarks write here</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label Class="Question" ID="lbl_5" runat="server" Text=" Is there a general clutter free appearance?                "
-                                        Font-Bold="false" Font-Size="Small"></asp:Label>
-
-                                </td>
-                                <td><span id="p1r5_tick" runat="server" visible="false">✅</span><span id="p1r5_cross" runat="server" visible="false">❌</span>
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td colspan="3" class="heading">
-                                    <strong>Sort Out - SEIRI</strong>
-                                </td>
-                            </tr>
-
-
-
                         </table>
 
                     </td>
                 </tr>
-            </table>
 
+            </table>
         </div>
     </form>
 </body>
