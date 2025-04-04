@@ -13,6 +13,7 @@ namespace AnmolDristi
         {
             int p1r1_value = 1;
             int p1r2_value = 0;
+            int p1r3_value = 1;
 
             if (p1r1_value == 1)
             {
@@ -30,6 +31,16 @@ namespace AnmolDristi
             else
             {
                 p1r2_cross.Visible = true;
+            }
+
+
+            if (p1r3_value == 1)
+            {
+                p1r3_tick.Visible = true;
+            }
+            else
+            {
+                p1r3_cross.Visible = true;
             }
         }
     }
