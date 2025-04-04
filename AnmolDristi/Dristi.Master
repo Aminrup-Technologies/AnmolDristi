@@ -140,9 +140,7 @@
                                             <ul class="nav child_menu">
                                                 <li id="CSM_Module" runat="server" visible="true"><a>CSM<span class="fa fa-chevron-down"></span></a>
                                                     <ul class="nav child_menu">
-                                                        <li id="Li1" runat="server" class="sub_menu"><a href="incident_analysis.aspx">Incident Reporting</a></li>
-                                                        <li id="Li2" runat="server" class="sub_menu"><a href="KYT.aspx">KYT Report</a></li>
-                                                        <li id="Li3" runat="server" class="sub_menu"><a href="Safety_audit.aspx">Safety Report</a></li>
+                                                        <li id="Li1" runat="server" class="sub_menu"><a href="qaqc_home.aspx">CSM Module</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>

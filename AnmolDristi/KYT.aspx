@@ -1,9 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="KYT.aspx.cs" Inherits="AnmolDristi.KYT" %>
-
+﻿<%@ Page Title="CSM - KYT" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="KYT.aspx.cs" Inherits="AnmolDristi.KYT" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-
     <style type="text/css">
         .remove-border {
             border: none !important;
@@ -29,16 +26,16 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
         <div class="container">
-            <div class="page-title">
+            <%--<div class="page-title">
                 <div class="title_left">
                     <h3>KYT REPORT</h3>
                 </div>
-            </div>
+            </div>--%>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Document No: KYT/01 | Date: 16/12/24 | Revision No: 01</h2>
+                            <h4>KYT REPORT</h4>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -71,11 +68,7 @@
                                         <asp:Label ID="lblWorksite" runat="server" Text="Worksite:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtWorksite" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Worksite"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvWorksite" runat="server"
-                                                ControlToValidate="txtWorksite"
-                                                ErrorMessage="Worksite is required."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
+                                            <asp:RequiredFieldValidator ID="rfvWorksite" runat="server" ControlToValidate="txtWorksite" ErrorMessage="Worksite is required." ForeColor="Red" Display="Dynamic">
                                             </asp:RequiredFieldValidator>
                                         </div>
                                     </div>
@@ -109,7 +102,7 @@
                                                 ErrorMessage="Please enter Location."
                                                 ForeColor="Red"
                                                 Display="Dynamic">
-                </asp:RequiredFieldValidator>
+                                            </asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +119,7 @@
                                                 ErrorMessage="Please enter Date."
                                                 ForeColor="Red"
                                                 Display="Dynamic">
-                </asp:RequiredFieldValidator>
+                                            </asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +154,7 @@
                                                 ErrorMessage="Please enter Activity."
                                                 ForeColor="Red"
                                                 Display="Dynamic">
-                </asp:RequiredFieldValidator>
+                                            </asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
@@ -204,134 +197,141 @@
                                                 ErrorMessage="Please enter Vender."
                                                 ForeColor="Red"
                                                 Display="Dynamic">
-                </asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- Sl. No. -->
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblSlNo" runat="server" Text="Sl. No.:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:TextBox ID="txtSlNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Number" TextMode="Number"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvSlNo" runat="server"
-                                                ControlToValidate="txtSlNo"
-                                                ErrorMessage="Please enter Sl. No.."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                </asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- Hidden Hazards -->
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblHiddenHazards" runat="server" Text="Hidden Hazards:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:TextBox ID="txtHiddenHazards" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Hidden Hazards"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvHiddenHazards" runat="server"
-                                                ControlToValidate="txtHiddenHazards"
-                                                ErrorMessage="Please enter Hidden Hazards."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                </asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- Consequence -->
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblConsequence" runat="server" Text="Consequence:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:TextBox ID="txtConsequence" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Consequence"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvConsequence" runat="server"
-                                                ControlToValidate="txtConsequence"
-                                                ErrorMessage="Please enter Consequence."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                </asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- Counter Measures -->
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblCounterMeasures" runat="server" Text="Counter Measures:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:TextBox ID="txtCounterMeasures" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Counter Measures"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvCounterMeasures" runat="server"
-                                                ControlToValidate="txtCounterMeasures"
-                                                ErrorMessage="Please enter Counter Measures."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                </asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- Priority (Dropdown instead of TextBox) -->
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblPriority" runat="server" Text="Priority:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:DropDownList ID="ddlPriority" runat="server" CssClass="form-control form-control-sm rounded">
-                                                <asp:ListItem Text="Select Priority" Value="" Selected="True"></asp:ListItem>
-                                                <asp:ListItem Text="P1" Value="P1"></asp:ListItem>
-                                                <asp:ListItem Text="P2" Value="P2"></asp:ListItem>
-                                            </asp:DropDownList>
-                                            <asp:RequiredFieldValidator ID="rfvPriority" runat="server"
-                                                ControlToValidate="ddlPriority"
-                                                InitialValue=""
-                                                ErrorMessage="Please select a Priority."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
                                             </asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
 
-
-                                <!-- Photograph Upload -->
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblPhotograph" runat="server" Text="Upload Photograph:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:FileUpload ID="fuPhotograph" runat="server" CssClass="form-control form-control-sm rounded" />
-                                            <asp:RequiredFieldValidator ID="rfvPhotograph" runat="server"
-                                                ControlToValidate="fuPhotograph"
-                                                ErrorMessage="Please upload a photograph."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Submit Button -->
-                                <%-- <div class="col-md-12 text-center">
-                                    <asp:Button ID="btnSubmit" runat="server" Text="Submit Report" CssClass="btn btn-primary" OnClick="SubmitKYTIncidentData_Click" />
-
-                                    <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
-                                </div>--%>
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <div class="input-group input-group-sm">
-                                            <asp:Button ID="btnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="SubmitKYTIncidentData_Click" />
-                                            <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
-                                            <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                            <asp:Button ID="btn_panel1" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="btn_panel1_Click" />
+                                            <asp:Button ID="btn_reset1" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" PostBackUrl="~/KYT.aspx" />
+                                            <asp:Button ID="btn_home1" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                         </div>
-                                        <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" />
+                                        <asp:Label ID="Label1" runat="server" ForeColor="Red" Font-Bold="true" />
 
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <hr />
+                                </div>
+
+                                <div class="row col-lg-12">
+                                    <div class="col-12 text-center">
+                                        <h6 class="text-primary">Add Observation(s)</h6>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-12">
+                                    <hr />
+                                </div>
+
+                                <div class="col-lg-12 small">
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <asp:Label ID="lblSlNo" runat="server" Text="Sl. No.:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                            <div class="input-group-sm">
+                                                <asp:TextBox ID="txtSlNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Number" TextMode="Number"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="rfvSlNo" runat="server"
+                                                    ControlToValidate="txtSlNo"
+                                                    ErrorMessage="Please enter Sl. No.."
+                                                    ForeColor="Red"
+                                                    Display="Dynamic">
+                                                </asp:RequiredFieldValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <asp:Label ID="lblHiddenHazards" runat="server" Text="Hidden Hazards:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                            <div class="input-group-sm">
+                                                <asp:TextBox ID="txtHiddenHazards" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Hidden Hazards"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="rfvHiddenHazards" runat="server"
+                                                    ControlToValidate="txtHiddenHazards"
+                                                    ErrorMessage="Please enter Hidden Hazards."
+                                                    ForeColor="Red"
+                                                    Display="Dynamic">
+                                                </asp:RequiredFieldValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <asp:Label ID="lblConsequence" runat="server" Text="Consequence:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                            <div class="input-group-sm">
+                                                <asp:TextBox ID="txtConsequence" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Consequence"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="rfvConsequence" runat="server" ControlToValidate="txtConsequence" ErrorMessage="Please enter Consequence." ForeColor="Red" Display="Dynamic">
+                                                </asp:RequiredFieldValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <asp:Label ID="lblCounterMeasures" runat="server" Text="Counter Measures:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                            <div class="input-group-sm">
+                                                <asp:TextBox ID="txtCounterMeasures" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Counter Measures"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="rfvCounterMeasures" runat="server" ControlToValidate="txtCounterMeasures" ErrorMessage="Please enter Counter Measures." ForeColor="Red" Display="Dynamic">
+                                                </asp:RequiredFieldValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <asp:Label ID="lblPriority" runat="server" Text="Priority:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                            <div class="input-group-sm">
+                                                <asp:DropDownList ID="ddlPriority" runat="server" CssClass="form-control form-control-sm rounded">
+                                                    <asp:ListItem Text="Select Priority" Value="" Selected="True"></asp:ListItem>
+                                                    <asp:ListItem Text="P1" Value="P1"></asp:ListItem>
+                                                    <asp:ListItem Text="P2" Value="P2"></asp:ListItem>
+                                                </asp:DropDownList>
+                                                <asp:RequiredFieldValidator ID="rfvPriority" runat="server" ControlToValidate="ddlPriority" InitialValue="" ErrorMessage="Please select a Priority." ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <asp:Label ID="lblPhotograph" runat="server" Text="Upload Photograph:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                            <div class="input-group-sm">
+                                                <asp:FileUpload ID="fuPhotograph" runat="server" CssClass="form-control form-control-sm rounded" />
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="fuPhotograph" ></asp:RequiredFieldValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- KYT Add More Button -->
+                                <div class="row col-lg-12">
+                                    <div class="col-12 text-center">
+                                        <button type="button" id="btnAddKYT" class="btn btn-success btn-sm">Add More KYT</button>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- KYT Data Table -->
+                                <div class="col-lg-12" id="KYTGrid">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="mb-3 text-center">
+                                        <div class="d-flex justify-content-center gap-2">
+                                            <asp:Button ID="btnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm fw-bold px-3" ValidationGroup="Submit" CausesValidation="true" OnClick="SubmitKYTIncidentData_Click" />
+                                            <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm fw-bold px-3" CausesValidation="false" OnClick="BtnReset_Click" />
+                                            <asp:Button ID="btn_home" runat="server" Text="Home" CssClass="btn btn-danger btn-sm fw-bold px-3" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                        </div>
+
+                                        <div class="mt-2">
+                                            <asp:Label ID="lblMessage" runat="server" CssClass="text-danger fw-bold" />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -342,38 +342,5 @@
             </div>
         </div>
     </div>
+
 </asp:Content>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
