@@ -22,13 +22,13 @@ namespace AnmolDristi {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// lbl_1 control.
+        /// lbl_p1r1_txt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_1;
+        protected global::System.Web.UI.WebControls.Label lbl_p1r1_txt;
         
         /// <summary>
         /// p1r1_tick control.
@@ -47,6 +47,15 @@ namespace AnmolDristi {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl p1r1_cross;
+        
+        /// <summary>
+        /// lbl_p1r1_rmrks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_p1r1_rmrks;
         
         /// <summary>
         /// lbl_2 control.

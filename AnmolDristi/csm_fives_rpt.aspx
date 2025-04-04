@@ -105,12 +105,14 @@
                             <%-- question--%>
                             <tr>
                                 <td>
-                                    <asp:Label ID="lbl_1" runat="server" Text="is this floor area free of unwanted items?" Font-Bold="false" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="lbl_p1r1_txt" runat="server" Text="is this floor area free of unwanted items?" Font-Bold="false" Font-Size="Small"></asp:Label>
                                 </td>
                                 <td>
                                     <span id="p1r1_tick" runat="server" visible="false">✅</span><span id="p1r1_cross" runat="server" visible="false">❌</span>
                                 </td>
-                                <td></td>
+                                <td>
+                                    <asp:Label ID="lbl_p1r1_rmrks" runat="server" Text=""></asp:Label>
+                                </td>
                             </tr>
                             <tr>
                                 <td>
