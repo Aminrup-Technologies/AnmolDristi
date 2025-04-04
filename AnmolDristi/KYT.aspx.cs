@@ -196,5 +196,10 @@ namespace AnmolDristi
         {
 
         }
+
+        protected void btn_panel1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
