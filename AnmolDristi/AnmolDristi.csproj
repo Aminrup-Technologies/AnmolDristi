@@ -84,6 +84,7 @@
     <Content Include="home.aspx" />
     <Content Include="HtmlPage1.html" />
     <Content Include="incident_analysis.aspx" />
+    <Content Include="incident_View.aspx" />
     <Content Include="KYT.aspx" />
     <Content Include="KYT_View.aspx" />
     <Content Include="packages.config" />
@@ -172,6 +173,13 @@
     </Compile>
     <Compile Include="incident_analysis.aspx.designer.cs">
       <DependentUpon>incident_analysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="incident_View.aspx.cs">
+      <DependentUpon>incident_View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="incident_View.aspx.designer.cs">
+      <DependentUpon>incident_View.aspx</DependentUpon>
     </Compile>
     <Compile Include="KYT.aspx.cs">
       <DependentUpon>KYT.aspx</DependentUpon>

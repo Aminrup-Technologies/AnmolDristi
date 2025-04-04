@@ -447,7 +447,7 @@
                                             <asp:Panel ID="pnlRadioButtons" runat="server" CssClass="radio-options"></asp:Panel>
                                         </td>
                                     </tr>--%>
-                                </table>
+                                
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
