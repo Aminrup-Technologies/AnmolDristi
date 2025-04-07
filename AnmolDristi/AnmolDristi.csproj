@@ -136,6 +136,7 @@
   <ItemGroup>
     <Compile Include="5s_form_report.aspx.cs">
       <DependentUpon>5s_form_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="5s_form_report.aspx.designer.cs">
       <DependentUpon>5s_form_report.aspx</DependentUpon>
