@@ -24,6 +24,71 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("btnAddKYT").addEventListener("click", function () {
+
+            const slNo = document.getElementById("<%= txtSlNo.ClientID %>").value.trim();
+            const hazard = document.getElementById("<%= txtHiddenHazards.ClientID %>").value.trim();
+            const consequence = document.getElementById("<%= txtConsequence.ClientID %>").value.trim();
+            const measures = document.getElementById("<%= txtCounterMeasures.ClientID %>").value.trim();
+            const priority = document.getElementById("<%= ddlPriority.ClientID %>").value;
+            const photoControl = document.getElementById("<%= fuPhotograph.ClientID %>");
+            const photoName = photoControl.files.length > 0 ? photoControl.files[0].name : "No file";
+
+            if (!slNo || !hazard || !consequence || !measures || !priority) {
+                alert("Please fill in all fields before adding.");
+                return;
+            }
+
+            let grid = document.getElementById("KYTGrid");
+            if (!grid) {
+                console.error("KYTGrid not found.");
+                return;
+            }
+
+            let table = document.getElementById("KYTTable");
+            if (!table) {
+                table = document.createElement("table");
+                table.id = "KYTTable";
+                table.className = "table table-bordered small mt-3";
+                table.innerHTML = `
+                    <thead class="table-light">
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>Hidden Hazards</th>
+                            <th>Consequence</th>
+                            <th>Counter Measures</th>
+                            <th>Priority</th>
+                            <th>Photograph</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>`;
+                grid.appendChild(table);
+            }
+
+            const tbody = table.querySelector("tbody");
+            const newRow = document.createElement("tr");
+
+            [slNo, hazard, consequence, measures, priority, photoName].forEach(text => {
+                const td = document.createElement("td");
+                td.textContent = text;
+                newRow.appendChild(td);
+            });
+
+            tbody.appendChild(newRow);
+
+            // Clear fields
+            document.getElementById("<%= txtSlNo.ClientID %>").value = "";
+            document.getElementById("<%= txtHiddenHazards.ClientID %>").value = "";
+            document.getElementById("<%= txtConsequence.ClientID %>").value = "";
+            document.getElementById("<%= txtCounterMeasures.ClientID %>").value = "";
+            document.getElementById("<%= ddlPriority.ClientID %>").selectedIndex = 0;
+            document.getElementById("<%= fuPhotograph.ClientID %>").value = "";
+        });
+    });
+    </script>
+
     <div class="right_col" role="main">
         <div class="container">
             <%--<div class="page-title">

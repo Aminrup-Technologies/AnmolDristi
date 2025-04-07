@@ -277,6 +277,11 @@
                                             }
                                         });
 
+
+                                        //  Set values in hidden fields here
+                                        document.getElementById('<%= hdnInternalEmployees.ClientID %>').value = internalEmployees.join(",");
+                                        document.getElementById('<%= hdnExternalMembers.ClientID %>').value = externalMembers.join(",");
+
                                         var dataToSend = {
                                             internalEmployeesCSV: internalEmployees.join(","),
                                             externalMembersCSV: externalMembers.join(",")
@@ -312,6 +317,10 @@
                                 <div class="col-lg-12">
                                     <hr />
                                 </div>
+
+                                <asp:HiddenField ID="hdnInternalEmployees" runat="server" />
+                                <asp:HiddenField ID="hdnExternalMembers" runat="server" />
+
 
                                 <div class="row col-lg-12">
                                     <div class="col-12 text-center">
@@ -524,6 +533,8 @@
                             <div class="col-lg-12">
                                 <hr />
                             </div>
+                            <asp:HiddenField ID="hdnObservationData" runat="server" />
+
 
                             <div class="row justify-content-center">
                                 <div class="col-12 text-center mb-3">

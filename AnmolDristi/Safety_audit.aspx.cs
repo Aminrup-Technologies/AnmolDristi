@@ -4,6 +4,9 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web.UI.WebControls;
 using System.Web.Services;
+using System.Collections.Generic;
+//using System.Text.Json;
+
 
 namespace AnmolDristi
 {
@@ -18,11 +21,7 @@ namespace AnmolDristi
                     Response.Redirect("login.aspx");
                 }
 
-                //pnlRadioButtons.Controls.Clear();
-                //if(ViewState["SelectedDDLValue"]!= null)
-                //{
-                //    ddlDescriptionFields.SelectedValue = ViewState["SelectedDDLValue"].ToString();
-                //}
+                
                 LoadSafetyAuditDetails();// Clear existing controls
             }
         }
@@ -137,9 +136,9 @@ namespace AnmolDristi
                             sa.ContractorVendorCode, sa.TotalContractorPeople, 
                             sev.SeverityLevel, sev.TeamMembers,
                             sdesc.Description, sdesc.SelectField, sdesc.Options
-                        FROM SafetyAuditRecords sa
-                        LEFT JOIN SafetyAuditSeverity sev ON sa.AuditID = sev.AuditID
-                        LEFT JOIN SafetyAuditDescription sdesc ON sa.AuditID = sdesc.AuditID
+                        FROM SafetyAudit_Main sa
+                        LEFT JOIN SafetyAudit_Severity sev ON sa.AuditID = sev.AuditID
+                        LEFT JOIN SafetyAudit_Description sdesc ON sa.AuditID = sdesc.AuditID
                         ORDER BY sa.Date DESC";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -163,7 +162,7 @@ namespace AnmolDristi
         }
 
 
-        protected void btnAddSection_Click(object sender, EventArgs e)
+        protected void BtnAddSection_Click(object sender, EventArgs e)
         {
             // Create a new section (table) programmatically
             Table newSection = new Table();
@@ -187,10 +186,6 @@ namespace AnmolDristi
             });
             newSection.Rows.Add(row2);
 
-            // Repeat for other sections like "No. of Violations", "Severity", "Violation X Severity", etc.
-
-            // Add the new section to the PlaceHolder
-           // phSections.Controls.Add(newSection);
         }
 
 
@@ -217,6 +212,7 @@ namespace AnmolDristi
         public static string SaveMembers(string internalEmployeesCSV, string externalMembersCSV)
         {
             string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            string teamMembers = (internalEmployeesCSV + "," + externalMembersCSV).Trim(',');
             using (SqlConnection con = new SqlConnection(connString))
             {
                 con.Open();
@@ -263,7 +259,7 @@ namespace AnmolDristi
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             int auditID;
 
-            // Fetching values from ASPX page controls
+           
             string department = txtDepartment.Text;
             string section = txtSection.Text;
             string date = txtDate.Text;
@@ -272,29 +268,33 @@ namespace AnmolDristi
             int totalPeople = Convert.ToInt32(txtTotalContractorPeople.Text);
 
             //string severityLevel = ddlSeverityLevel.SelectedValue;
-          //  string teamMembers = txtTeamMember1.Text;
+            //  string teamMembers = txtTeamMember1.Text;
 
-            string description = txtDescription.Text;
-            string goodCitizens = DropDownList1.SelectedValue;
-            int noOfViolations = Convert.ToInt32(DropDownList2.Text);
-            int severity = Convert.ToInt32(DropDownList3.Text);
-            int violationSeverity = Convert.ToInt32(DropDownList4.Text);
-            int fourAndFive = Convert.ToInt32(DropDownList5.Text);
-            string unsafeAct = DropDownList6.SelectedValue;
+            //string description = txtDescription.Text;
+            //string goodCitizens = DropDownList1.SelectedValue;
+            //int noOfViolations = Convert.ToInt32(DropDownList2.Text);
+            //int severity = Convert.ToInt32(DropDownList3.Text);
+            //int violationSeverity = Convert.ToInt32(DropDownList4.Text);
+            //int fourAndFive = Convert.ToInt32(DropDownList5.Text);
+            //string unsafeAct = DropDownList6.SelectedValue;
+
+            string observationDataJson = hdnObservationData.Value;
+            List<Observation> observations = new List<Observation>();
 
 
-
-            //string selectField = ddlDescriptionFields.SelectedValue;
-            //string options = "";
-            //foreach (Control control in pnlRadioButtons.Controls)
+            //if (!string.IsNullOrEmpty(observationDataJson))
             //{
-            //    RadioButton rb = control as RadioButton;
-            //    if (rb != null && rb.Checked)
-            //    {
-            //        options = rb.Text;
-            //    }
+            //    observations = JsonSerializer.Deserialize<List<Observation>>(observationDataJson);
             //}
 
+
+
+
+            string internalEmployeesCSV = Request.Form["hdnInternalEmployees"]; // Or from HiddenField
+            string externalMembersCSV = Request.Form["hdnExternalMembers"];     // Same here
+
+
+          
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -306,12 +306,12 @@ namespace AnmolDristi
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                       
+
                         cmd.Parameters.AddWithValue("@Department", department);
                         cmd.Parameters.AddWithValue("@Section", section);
                         cmd.Parameters.AddWithValue("@Date", date);
                         cmd.Parameters.AddWithValue("@Time", time);
-                        cmd.Parameters.AddWithValue("@ContractorVendorCode", vendorCode); 
+                        cmd.Parameters.AddWithValue("@ContractorVendorCode", vendorCode);
                         cmd.Parameters.AddWithValue("@TotalContractorPeople", totalPeople);
 
                         // Add the output parameter to capture the generated AuditID
@@ -322,7 +322,7 @@ namespace AnmolDristi
                         cmd.Parameters.Add(outputIdParam);
 
                         cmd.ExecuteNonQuery();
-                        auditID = (int)outputIdParam.Value; 
+                        auditID = (int)outputIdParam.Value;
                     }
 
                     // Call stored procedure for severity table
@@ -331,36 +331,40 @@ namespace AnmolDristi
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@AuditID", auditID);
                         //cmd.Parameters.AddWithValue("@SeverityLevel", severityLevel);
-                       // cmd.Parameters.AddWithValue("@TeamMembers", teamMembers);
+                        cmd.Parameters.AddWithValue("@InternalEmployees", string.IsNullOrEmpty(internalEmployeesCSV) ? (object)DBNull.Value : internalEmployeesCSV);
+                        cmd.Parameters.AddWithValue("@ExternalMembers", string.IsNullOrEmpty(externalMembersCSV) ? (object)DBNull.Value : externalMembersCSV);
+
+
                         cmd.ExecuteNonQuery();
                     }
 
-                  
-
-                    using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.usp_InsertSafetyAuditDescription", conn, transaction))
+                    foreach (var obs in observations)
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.Add("@AuditID", SqlDbType.Int).Value = auditID;
-                        cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 1000).Value = description;
-                        cmd.Parameters.Add("@GoodCitizens", SqlDbType.NVarChar, 10).Value = goodCitizens;
-                        cmd.Parameters.Add("@NoOfViolations", SqlDbType.Int).Value = noOfViolations;
-                        cmd.Parameters.Add("@Severity", SqlDbType.Int).Value = severity;
-                        cmd.Parameters.Add("@ViolationSeverity", SqlDbType.Int).Value = violationSeverity;
-                        cmd.Parameters.Add("@FourAndFive", SqlDbType.Int).Value = fourAndFive;
-                        cmd.Parameters.Add("@UnsafeAct", SqlDbType.NVarChar, 50).Value = unsafeAct;
-                        
-                        //cmd.Parameters.Add("@SelectField", SqlDbType.NVarChar, 255).Value = selectField;
-                        //cmd.Parameters.Add("@Options", SqlDbType.NVarChar, 255).Value = string.IsNullOrEmpty(options) ? (object)DBNull.Value : options;
+                        using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.usp_InsertSafetyAuditDescription", conn, transaction))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
 
-                        //Console.WriteLine($"AuditID: {auditID}, Description: {description}, SelectField: {selectField}, Options: {options}");
-                        cmd.ExecuteNonQuery();
+                            cmd.Parameters.Add("@AuditID", SqlDbType.Int).Value = auditID;
+                            cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 1000).Value = obs.Description ?? (object)DBNull.Value;
+                            cmd.Parameters.Add("@GoodCitizens", SqlDbType.NVarChar, 10).Value = obs.GoodCitizens ?? (object)DBNull.Value;
+                            cmd.Parameters.Add("@NoOfViolations", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.Violations) ? (object)DBNull.Value : Convert.ToInt32(obs.Violations);
+                            cmd.Parameters.Add("@Severity", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.Severity) ? (object)DBNull.Value : Convert.ToInt32(obs.Severity);
+                            cmd.Parameters.Add("@ViolationSeverity", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.ViolationXSeverity) ? (object)DBNull.Value : Convert.ToInt32(obs.ViolationXSeverity);
+                            cmd.Parameters.Add("@FourAndFive", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.FourAndFive) ? (object)DBNull.Value : Convert.ToInt32(obs.FourAndFive);
+                            cmd.Parameters.Add("@UnsafeAct", SqlDbType.NVarChar, 50).Value = obs.UnsafeActs ?? (object)DBNull.Value;
+
+                            //cmd.Parameters.Add("@SelectField", SqlDbType.NVarChar, 255).Value = selectField;
+                            //cmd.Parameters.Add("@Options", SqlDbType.NVarChar, 255).Value = string.IsNullOrEmpty(options) ? (object)DBNull.Value : options;
+
+                            //Console.WriteLine($"AuditID: {auditID}, Description: {description}, SelectField: {selectField}, Options: {options}");
+                            cmd.ExecuteNonQuery();
+                        }
                     }
 
-
-                    transaction.Commit();
+                        transaction.Commit();
+                    
                 }
-
 
 
                 catch (Exception ex)
@@ -371,6 +375,18 @@ namespace AnmolDristi
             }
         }
 
+
+        public class Observation
+        {
+            public string Description { get; set; }
+            public string GoodCitizens { get; set; }
+            public string Violations { get; set; }
+            public string Severity { get; set; }
+            public string ViolationXSeverity { get; set; }
+            public string FourAndFive { get; set; }
+            public string UnsafeActs { get; set; }
+        }
+
         protected void BtnReset_Click(object sender, EventArgs e)
         {
             txtDepartment.Text = "";
@@ -379,7 +395,11 @@ namespace AnmolDristi
             txtTime.Text = "";
             txtContractorVendorCode.Text = "";
             txtTotalContractorPeople.Text = "";
-           // txtTeamMember1.Text = "";
+            txtExternalName.Text = "";
+            hdnObservationData.Value = "";
+
+            //   txtInternalName.Text = "";
+            //txtTeamMember1.Text = "";
             //ddlSeverityLevel.SelectedIndex = 0;
             //txtDescription.Text = "";
             //ddlDescriptionFields.SelectedIndex = 0;
