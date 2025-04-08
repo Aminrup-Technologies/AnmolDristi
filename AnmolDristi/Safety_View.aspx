@@ -1,21 +1,31 @@
 ﻿<%@ Page Title="Safety Audit Records" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Safety_View.aspx.cs" Inherits="AnmolDristi.Safety_View" %>
 
+
+
 <asp:Content ID="Content3" ContentPlaceHolderID="head" runat="server">
     <style>
         .form-label {
             font-weight: bold;
-            color: blue;
+            color: #007bff;
             display: block;
             margin-bottom: 5px;
         }
-        
+
         .table-container {
             margin-top: 20px;
         }
-
         .btn-actions {
+    width: 70px;       /* Same width for all buttons */
+    height: 35px;      /* Optional: fix height for visual alignment */
+    padding: 5px 10px; /* Optional: control internal spacing */
+    text-align: center;
+    display: inline-block;
+}
+
+
+       /* .btn-actions {
             margin-right: 5px;
-        }
+        }*/
     </style>
 </asp:Content>
 
@@ -34,24 +44,28 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content table-container">
-                    <asp:GridView ID="gvSafetyAudit" runat="server" CssClass="table table-striped table-bordered"
-                        AutoGenerateColumns="False" DataKeyNames="AuditID" OnRowEditing="gvSafetyAudit_RowEditing"
-                        OnRowUpdating="gvSafetyAudit_RowUpdating" OnRowCancelingEdit="gvSafetyAudit_RowCancelingEdit"
-                        OnRowDeleting="gvSafetyAudit_RowDeleting">
+                    <asp:GridView ID="GvSafetyAudit" runat="server" CssClass="table table-striped table-bordered"
+                        AutoGenerateColumns="False" DataKeyNames="AuditID" OnRowEditing="GvSafetyAudit_RowEditing"
+                        OnRowUpdating="GvSafetyAudit_RowUpdating" OnRowCancelingEdit="GvSafetyAudit_RowCancelingEdit"
+                        OnRowDeleting="GvSafetyAudit_RowDeleting">
 
                         <Columns>
                             <asp:BoundField DataField="Department" HeaderText="Department" />
                             <asp:BoundField DataField="Section" HeaderText="Section" />
-                            <asp:BoundField DataField="AuditDate" HeaderText="Audit Date" DataFormatString="{0:yyyy-MM-dd}" />
-                            <asp:BoundField DataField="AuditTime" HeaderText="Audit Time" />
+                            <asp:BoundField DataField="Date" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />
+                            <asp:BoundField DataField="Time" HeaderText="Time" />
                             <asp:BoundField DataField="ContractorVendorCode" HeaderText="Vendor Code" />
-                            <asp:BoundField DataField="TotalContractorPeople" HeaderText="Total People" />
-                            <asp:BoundField DataField="TeamMembers" HeaderText="Team Members" />
-                            <asp:BoundField DataField="SeverityLevel" HeaderText="Severity Level" />
+                            <asp:BoundField DataField="TotalContractorPeople" HeaderText="Contractor Count" />
+                            <asp:BoundField DataField="InternalEmployees" HeaderText="Internal Members" />
+                            <asp:BoundField DataField="ExternalMembers" HeaderText="External Members" />
                             <asp:BoundField DataField="Description" HeaderText="Description" />
-                            <asp:BoundField DataField="SelectedField" HeaderText="Selected Field" />
-                            <asp:BoundField DataField="Options" HeaderText="Options" />
-                            
+                            <asp:BoundField DataField="GoodCitizens" HeaderText="Good Citizens" />
+                            <asp:BoundField DataField="NoOfViolations" HeaderText="Violations" />
+                            <asp:BoundField DataField="Severity" HeaderText="Severity" />
+                            <asp:BoundField DataField="ViolationXSeverity" HeaderText="Violation Severity" />
+                            <asp:BoundField DataField="FourAndFive" HeaderText="4 & 5" />
+                            <asp:BoundField DataField="UnsafeActConditions" HeaderText="Unsafe Act" />
+
                             <asp:TemplateField HeaderText="Actions">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>
