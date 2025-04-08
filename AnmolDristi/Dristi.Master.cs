@@ -28,10 +28,20 @@ namespace AnmolDristi
                     if (Session["WORKMAN"].ToString() == "AHO445" || Session["WORKMAN"].ToString() == "ADMIN")
                     {
                         AdminControl.Visible = true;
+                        WebLogins.Visible = true;
+                        WebLogins_Viewall.Visible = true;
+                    }
+                    else if (Session["WORKMAN"].ToString() == "D006")
+                    {
+                        AdminControl.Visible = false;
+                        WebLogins.Visible = true;
+                        FormsApprovals.Visible = false;
+                        WebLogins_Viewall.Visible = true;
                     }
                     else
                     {
                         AdminControl.Visible = false;
+                        WebLogins.Visible = false;
                     }
                 }
             }

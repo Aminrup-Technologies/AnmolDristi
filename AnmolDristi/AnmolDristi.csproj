@@ -328,6 +328,8 @@
     <Content Include=".bowerrc" />
     <Content Include="WebData\webdatacapture.jpg" />
     <Content Include="WebData\webtos.png" />
+    <Content Include="webdetails.aspx" />
+    <Content Include="WebsiteCredentialsView.aspx" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -457,6 +459,7 @@
     <Compile Include="add_users.aspx.designer.cs">
       <DependentUpon>add_users.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AesEncryptionHelper.cs" />
     <Compile Include="apps.aspx.cs">
       <DependentUpon>apps.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1159,6 +1162,20 @@
     </Compile>
     <Compile Include="vw_app_qcireport.aspx.designer.cs">
       <DependentUpon>vw_app_qcireport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="webdetails.aspx.cs">
+      <DependentUpon>webdetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="webdetails.aspx.designer.cs">
+      <DependentUpon>webdetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebsiteCredentialsView.aspx.cs">
+      <DependentUpon>WebsiteCredentialsView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebsiteCredentialsView.aspx.designer.cs">
+      <DependentUpon>WebsiteCredentialsView.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

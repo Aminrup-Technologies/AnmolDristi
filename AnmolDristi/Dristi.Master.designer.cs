@@ -247,6 +247,33 @@ namespace AnmolDristi {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl FormMST;
         
         /// <summary>
+        /// WebLogins control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WebLogins;
+        
+        /// <summary>
+        /// WebLogins_Add control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WebLogins_Add;
+        
+        /// <summary>
+        /// WebLogins_Viewall control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WebLogins_Viewall;
+        
+        /// <summary>
         /// ProfilePic_2 control.
         /// </summary>
         /// <remarks>
