@@ -5,7 +5,9 @@ using System.Data;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using System.Collections.Generic;
-//using System.Text.Json;
+using System.Linq;
+
+using Newtonsoft.Json;
 
 
 namespace AnmolDristi
@@ -131,15 +133,15 @@ namespace AnmolDristi
                 {
                     conn.Open();
                     string query = @"
-                        SELECT 
-                            sa.AuditID, sa.Department, sa.Section, sa.Date, sa.Time, 
-                            sa.ContractorVendorCode, sa.TotalContractorPeople, 
-                            sev.SeverityLevel, sev.TeamMembers,
-                            sdesc.Description, sdesc.SelectField, sdesc.Options
-                        FROM SafetyAudit_Main sa
-                        LEFT JOIN SafetyAudit_Severity sev ON sa.AuditID = sev.AuditID
-                        LEFT JOIN SafetyAudit_Description sdesc ON sa.AuditID = sdesc.AuditID
-                        ORDER BY sa.Date DESC";
+                     SELECT 
+                         sa.ID, sa.Department, sa.Section, sa.Date, sa.Time, 
+                         sa.ContractorVendorCode, sa.TotalContractorPeople, 
+                         sev.AuditID, sev.InternalEmployees,sev.ExternalMembers,
+                         sdesc.Description, sdesc.GoodCitizens, sdesc.NoOfViolations, sdesc.Severity,sdesc.ViolationXSeverity, sdesc.FourAndFive, sdesc.UnsafeActConditions
+                     FROM SafetyAudit_Main sa
+                     LEFT JOIN SafetyAudit_Severity sev ON sa.ID = sev.AuditID
+                     LEFT JOIN SafetyAudit_Description sdesc ON sa.ID = sdesc.AuditID
+                     ORDER BY sa.Date DESC";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -281,12 +283,11 @@ namespace AnmolDristi
             string observationDataJson = hdnObservationData.Value;
             List<Observation> observations = new List<Observation>();
 
-
-            //if (!string.IsNullOrEmpty(observationDataJson))
-            //{
-            //    observations = JsonSerializer.Deserialize<List<Observation>>(observationDataJson);
-            //}
-
+            if (!string.IsNullOrEmpty(observationDataJson))
+            {
+                //observations = JsonSerializer.Deserialize<List<Observation>>(observationDataJson);
+                observations = JsonConvert.DeserializeObject<List<Observation>>(observationDataJson);
+            }
 
 
 
@@ -338,27 +339,36 @@ namespace AnmolDristi
                         cmd.ExecuteNonQuery();
                     }
 
-                    foreach (var obs in observations)
+
+                    if (observations == null || !observations.Any())
                     {
-
-                        using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.usp_InsertSafetyAuditDescription", conn, transaction))
+                        Console.WriteLine("No observations to save.");
+                    }
+                    else
+                    {
+                        foreach (var obs in observations)
                         {
-                            cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add("@AuditID", SqlDbType.Int).Value = auditID;
-                            cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 1000).Value = obs.Description ?? (object)DBNull.Value;
-                            cmd.Parameters.Add("@GoodCitizens", SqlDbType.NVarChar, 10).Value = obs.GoodCitizens ?? (object)DBNull.Value;
-                            cmd.Parameters.Add("@NoOfViolations", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.Violations) ? (object)DBNull.Value : Convert.ToInt32(obs.Violations);
-                            cmd.Parameters.Add("@Severity", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.Severity) ? (object)DBNull.Value : Convert.ToInt32(obs.Severity);
-                            cmd.Parameters.Add("@ViolationSeverity", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.ViolationXSeverity) ? (object)DBNull.Value : Convert.ToInt32(obs.ViolationXSeverity);
-                            cmd.Parameters.Add("@FourAndFive", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.FourAndFive) ? (object)DBNull.Value : Convert.ToInt32(obs.FourAndFive);
-                            cmd.Parameters.Add("@UnsafeAct", SqlDbType.NVarChar, 50).Value = obs.UnsafeActs ?? (object)DBNull.Value;
+                            using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.usp_InsertSafetyAuditDescription", conn, transaction))
+                            {
+                                cmd.CommandType = CommandType.StoredProcedure;
 
-                            //cmd.Parameters.Add("@SelectField", SqlDbType.NVarChar, 255).Value = selectField;
-                            //cmd.Parameters.Add("@Options", SqlDbType.NVarChar, 255).Value = string.IsNullOrEmpty(options) ? (object)DBNull.Value : options;
+                                cmd.Parameters.Add("@AuditID", SqlDbType.Int).Value = auditID;
+                                cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 1000).Value = obs.Description ?? (object)DBNull.Value;
+                                cmd.Parameters.Add("@GoodCitizens", SqlDbType.NVarChar, 10).Value = obs.GoodCitizens ?? (object)DBNull.Value;
+                                cmd.Parameters.Add("@NoOfViolations", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.Violations) ? (object)DBNull.Value : Convert.ToInt32(obs.Violations);
+                                cmd.Parameters.Add("@Severity", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.Severity) ? (object)DBNull.Value : Convert.ToInt32(obs.Severity);
+                                cmd.Parameters.Add("@ViolationSeverity", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.ViolationXSeverity) ? (object)DBNull.Value : Convert.ToInt32(obs.ViolationXSeverity);
+                                cmd.Parameters.Add("@FourAndFive", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.FourAndFive) ? (object)DBNull.Value : Convert.ToInt32(obs.FourAndFive);
+                                cmd.Parameters.Add("@UnsafeAct", SqlDbType.NVarChar, 50).Value = obs.UnsafeActs ?? (object)DBNull.Value;
 
-                            //Console.WriteLine($"AuditID: {auditID}, Description: {description}, SelectField: {selectField}, Options: {options}");
-                            cmd.ExecuteNonQuery();
+                                //cmd.Parameters.Add("@SelectField", SqlDbType.NVarChar, 255).Value = selectField;
+                                //cmd.Parameters.Add("@Options", SqlDbType.NVarChar, 255).Value = string.IsNullOrEmpty(options) ? (object)DBNull.Value : options;
+
+                                //Console.WriteLine($"AuditID: {auditID}, Description: {description}, SelectField: {selectField}, Options: {options}");
+                                cmd.ExecuteNonQuery();
+                            }
+
                         }
                     }
 

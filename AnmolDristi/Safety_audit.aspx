@@ -446,10 +446,13 @@
                                 <div class="row col-lg-12" id="ObservationGrid"></div>
 
                                 <script>
+                                    let observations = [];
+
                                     document.addEventListener("DOMContentLoaded", function () {
                                         document.getElementById("btnAddObservation").addEventListener("click", function () {
                                             let descriptionBox = document.getElementById("<%= txtDescription.ClientID %>");
                                             let observationDescription = descriptionBox ? descriptionBox.value.trim() : "";
+
 
                                             if (observationDescription === "") {
                                                 alert("Please enter an Observation Description before adding.");
@@ -458,17 +461,36 @@
 
                                             let dropdowns = [
                                                 document.getElementById("<%= DropDownList1.ClientID %>"),
-                                                document.getElementById("<%= DropDownList2.ClientID %>"),
-                                                document.getElementById("<%= DropDownList3.ClientID %>"),
-                                                document.getElementById("<%= DropDownList4.ClientID %>"),
-                                                document.getElementById("<%= DropDownList5.ClientID %>"),
-                                                document.getElementById("<%= DropDownList6.ClientID %>")
+                                        document.getElementById("<%= DropDownList2.ClientID %>"),
+                                        document.getElementById("<%= DropDownList3.ClientID %>"),
+                                        document.getElementById("<%= DropDownList4.ClientID %>"),
+                                        document.getElementById("<%= DropDownList5.ClientID %>"),
+                                        document.getElementById("<%= DropDownList6.ClientID %>")
                                             ].filter(el => el !== null); // Ensure null elements are filtered out
 
                                             if (dropdowns.length === 0) {
                                                 console.error("Dropdowns not found. Check your IDs.");
                                                 return;
                                             }
+
+                                            //added 
+
+                                            let observation = {
+                                                Description: observationDescription,
+                                                GoodCitizens: dropdowns[0].value,
+                                                Violations: dropdowns[1].value,
+                                                Severity: dropdowns[2].value,
+                                                ViolationXSeverity: dropdowns[3].value,
+                                                FourAndFive: dropdowns[4].value,
+                                                UnsafeActs: dropdowns[5].value
+                                            };
+
+                                            observations.push(observation);
+
+                                            // update the hidden field
+                                            document.getElementById("<%= hdnObservationData.ClientID %>").value = JSON.stringify(observations);
+
+
 
                                             let observationGrid = document.getElementById("ObservationGrid");
                                             if (!observationGrid) {
@@ -483,18 +505,18 @@
                                                 tableContainer.className = "table table-bordered small mt-3";
 
                                                 tableContainer.innerHTML = `<thead>
-                                                                                <tr>
-                                                                                    <th>Sl</th>
-                                                                                    <th>Observation Description</th>
-                                                                                    <th>Good Citizens</th>
-                                                                                    <th>No. of Violations</th>
-                                                                                    <th>Severity</th>
-                                                                                    <th>Violation X Severity</th>
-                                                                                    <th>4 & 5</th>
-                                                                                    <th>Unsafe Act Conditions</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody></tbody>`;
+                                                  <tr>
+                                                      <th>Sl</th>
+                                                      <th>Observation Description</th>
+                                                      <th>Good Citizens</th>
+                                                      <th>No. of Violations</th>
+                                                      <th>Severity</th>
+                                                      <th>Violation X Severity</th>
+                                                      <th>4 & 5</th>
+                                                      <th>Unsafe Act Conditions</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody></tbody>`;
                                                 observationGrid.appendChild(tableContainer);
                                                 resultsTable = tableContainer;
                                             }
@@ -526,7 +548,8 @@
                                             descriptionBox.value = "";
                                         });
                                     });
-                                </script>
+  </script>
+
 
                             </div>
 
@@ -549,7 +572,7 @@
                                     </div>
 
                                     <div class="text-center mt-3">
-                                        <asp:Label ID="lblMessage" runat="server" CssClass="text-danger fw-bold" />
+                                        <asp:Label ID="lblMessage" runat="server" CssClass="fw-bold" />
                                     </div>
                                 </div>
                             </div>
