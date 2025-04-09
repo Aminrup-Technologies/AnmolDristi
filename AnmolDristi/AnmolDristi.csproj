@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="5s_form_report.aspx" />
+    <Content Include="Audit_Report.aspx" />
     <Content Include="csm_fives_rpt.aspx" />
     <Content Include="css\StyleSheet1.css" />
     <Content Include="home.aspx" />
@@ -140,6 +141,13 @@
     </Compile>
     <Compile Include="5s_form_report.aspx.designer.cs">
       <DependentUpon>5s_form_report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Audit_Report.aspx.cs">
+      <DependentUpon>Audit_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Audit_Report.aspx.designer.cs">
+      <DependentUpon>Audit_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="blank.aspx.cs">
       <DependentUpon>blank.aspx</DependentUpon>
