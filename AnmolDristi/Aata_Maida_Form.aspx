@@ -91,7 +91,7 @@
             return true;
         }
 
-        function validateBestBeforeDate() {
+        <%--function validateBestBeforeDate() {
             const mfgDateInput = document.getElementById('<%= TB_Mfg.ClientID %>');
             const bestBeforeDateInput = document.getElementById('<%= TB_BeforeDate.ClientID %>');
 
@@ -120,7 +120,99 @@
             //    alert("Best Before Date must be at least 30 days after the Manufacturing Date.");
             //    bestBeforeDateInput.value = ""; // Reset invalid best before date
             //}
+        }--%>
+
+        function validateBestBeforeDate() {
+            const mfgDateInput = document.getElementById('<%= TB_Mfg.ClientID %>');
+            const bestBeforeDateInput = document.getElementById('<%= TB_BeforeDate.ClientID %>');
+
+            if (!mfgDateInput.value || !bestBeforeDateInput.value) return;
+
+            function parseDateDDMMYYYY(dateStr) {
+                const parts = dateStr.trim().split("-");
+                if (parts.length !== 3) return null;
+
+                // Auto-detect YYYY-MM-DD (browser date input)
+                if (parseInt(parts[0], 10) > 31) {
+                    const year = parseInt(parts[0], 10);
+                    const month = parseInt(parts[1], 10) - 1;
+                    const day = parseInt(parts[2], 10);
+                    return new Date(year, month, day);
+                }
+
+                // DD-MM-YYYY format
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10) - 1;
+                const year = parseInt(parts[2], 10);
+                return new Date(year, month, day);
+            }
+
+            const mfgValues = mfgDateInput.value.split(",").map(d => d.trim());
+            const beforeValues = bestBeforeDateInput.value.split(",").map(d => d.trim());
+
+            console.log("Raw Mfg Input:", mfgDateInput.value);
+            console.log("Raw Best Before Input:", bestBeforeDateInput.value);
+            console.log("Parsed Mfg Values:", mfgValues);
+            console.log("Parsed Best Before Values:", beforeValues);
+
+            const mfgDates = mfgValues.map(parseDateDDMMYYYY).filter(d => d);
+            const bestBeforeDates = beforeValues.map(parseDateDDMMYYYY).filter(d => d);
+
+            console.log("Parsed Mfg Dates (Date Objects):", mfgDates);
+            console.log("Parsed Best Before Dates (Date Objects):", bestBeforeDates);
+
+            if (mfgDates.length === 0 || bestBeforeDates.length === 0) {
+                alert("Invalid date format. Please ensure all dates are in DD-MM-YYYY format.");
+                bestBeforeDateInput.value = "";
+                return;
+            }
+
+            if (mfgDates.length === 1 && bestBeforeDates.length > 1) {
+                const mfgDate = mfgDates[0];
+                for (let i = 0; i < bestBeforeDates.length; i++) {
+                    const bbDate = bestBeforeDates[i];
+                    const diff = (bbDate - mfgDate) / (1000 * 60 * 60 * 24);
+                    console.log(`Checking BB[${i}]: ${beforeValues[i]} vs Mfg: ${mfgValues[0]} → Diff: ${diff}`);
+                    if (diff < 0 || diff > 90 || isNaN(diff)) {
+                        alert(`Invalid: Best Before Date (${beforeValues[i]}) must be within 90 days of Mfg. Date (${mfgValues[0]}).`);
+                        bestBeforeDateInput.value = "";
+                        return;
+                    }
+                }
+            } else if (bestBeforeDates.length === 1 && mfgDates.length > 1) {
+                const bbDate = bestBeforeDates[0];
+                for (let i = 0; i < mfgDates.length; i++) {
+                    const mfgDate = mfgDates[i];
+                    const diff = (bbDate - mfgDate) / (1000 * 60 * 60 * 24);
+                    console.log(`Checking Mfg[${i}]: ${mfgValues[i]} vs BB: ${beforeValues[0]} → Diff: ${diff}`);
+                    if (diff < 0 || diff > 90 || isNaN(diff)) {
+                        alert(`Invalid: Best Before Date (${beforeValues[0]}) must be within 90 days of Mfg. Date (${mfgValues[i]}).`);
+                        bestBeforeDateInput.value = "";
+                        return;
+                    }
+                }
+            } else if (mfgDates.length === bestBeforeDates.length) {
+                for (let i = 0; i < mfgDates.length; i++) {
+                    const diff = (bestBeforeDates[i] - mfgDates[i]) / (1000 * 60 * 60 * 24);
+                    console.log(`Checking Pair ${i}: Mfg ${mfgValues[i]} → BB ${beforeValues[i]} → Diff: ${diff}`);
+                    if (diff < 0 || diff > 90 || isNaN(diff)) {
+                        alert(`Invalid: Best Before Date (${beforeValues[i]}) must be within 90 days of Mfg. Date (${mfgValues[i]}).`);
+                        bestBeforeDateInput.value = "";
+                        return;
+                    }
+                }
+            } else {
+                console.warn("Mismatch in number of dates:", mfgDates.length, bestBeforeDates.length);
+                alert("Mismatch in number of Manufacturing and Best Before Dates.");
+                bestBeforeDateInput.value = "";
+                return;
+            }
+
+            console.log("✅ All dates validated successfully.");
         }
+
+
+
 
         function toggleOdourRemarksDiv(radioButtonList) {
             console.log("toggleOdourRemarksDiv function called");
@@ -907,7 +999,7 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_BeforeDate" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_BeforeDate" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:Label ID="Lbl_TB_BeforeDate" runat="server" AssociatedControlID="TB_BeforeDate" Text="Best Before Date : 30 days from manufacturing date & In clear readable form" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_BeforeDate" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" TextMode="Date" oninput="validateBestBeforeDate()"></asp:TextBox>
+                                        <asp:TextBox ID="TB_BeforeDate" runat="server" CssClass="form-control form-control-sm rounded" ValidationGroup="Submit" TextMode="Date" oninput="setTimeout(validateBestBeforeDate, 200);"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
