@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head runat="server">
-    <title>Quality Reporting</title>
+    <title>Aminrup Technologies</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -28,7 +28,7 @@
                     <section class="login_content">
                         <asp:Image ID="Img_CpLogo" runat="server" ImageUrl="#" Height="120" Width="180" />
                         <h1>
-                            <asp:Label ID="lbl_companyname" runat="server" Text="Automation & Technical Services"></asp:Label></h1>
+                            <asp:Label ID="lbl_companyname" runat="server" Text="Abhishedk Sahu"></asp:Label></h1>
                         <div class="form-horizontal">
                             <div class="form-group row">
                                 <asp:Label ID="Label1" runat="server" AssociatedControlID="txt_loginid" CssClass="control-label col-md-4 col-sm-6 label-align" Font-Bold="true" Text="USER ID"></asp:Label>

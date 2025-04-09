@@ -11,7 +11,7 @@
 
     <link rel="icon" href="WebData/Anmol_Logo.png" type="image/ico" />
 
-    <title>Anmol</title>
+    <title>Aminrup</title>
 
     <link href="Resources/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="Resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -105,7 +105,7 @@
                         <div class="left_col scroll-view">
                             <div class="navbar nav_title" style="border: 0;">
                                 <a href="#" class="site_title">
-                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/Anmol_Logo.png" Height="40" Width="50" /><span>&nbsp;&nbsp;ANMOL</span>
+                                    <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/No_Image.jpg" Height="40" Width="50" /><span>&nbsp;&nbsp;Aminrup</span>
                                 </a>
                             </div>
 
