@@ -58,13 +58,13 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <a class="btn btn-app" href="#">
+                            <a class="btn btn-app" href="fiveS_checklist_1.aspx">
                                 <span class="badge bg-red">Shift : 1
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Process Checking
+                                <i class="fa fa-edit"></i>FiveS Checklist
 
                             </a>
-                            <a class="btn btn-app" href="#">
+                           <%-- <a class="btn btn-app" href="#">
                                 <span class="badge bg-red">Shift : 2
                                     <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Metal Detector
@@ -75,7 +75,7 @@
                                     <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Leak Test
 
-                            </a>
+                            </a>--%>
                         </div>
                     </div>
                 </div>
