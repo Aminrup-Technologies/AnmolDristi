@@ -337,7 +337,7 @@ namespace AnmolDristi
 
         private void BrandSKUBinder(string selectedPlantValue)
         {
-            string query = "SELECT b.SKUId, b.SKU_name FROM MST_Brand_SKU b JOIN MST_LineCatBrands l ON b.brand_id = l.brand_id WHERE l.plant_id = 100 AND b.ViewMode = 1 ORDER BY b.SKUId;";
+            string query = "SELECT b.SKUId, b.SKU_name FROM MST_Brand_SKU b JOIN MST_LineCatBrands l ON b.brand_id = l.brand_id WHERE l.plant_id = @SelectedPlantValue AND b.ViewMode = 1 ORDER BY b.SKUId;";
             string textField = "SKU_name";
             string valueField = "SKUId";
 

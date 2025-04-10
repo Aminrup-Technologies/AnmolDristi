@@ -459,6 +459,10 @@ namespace AnmolDristi
             public string Approver2EmployeeCode { get; set; }
             public string DottedLineApproverEmployeeCode { get; set; }
             public string Id {  get; set; }
+
+            //added on 09/04/2025
+            public string EmployeeName { get; set; }
+            public string SubmittedByEmployeeCode { get; set; }
         }
         private void BindGridView()
         {
