@@ -123,6 +123,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox TB_TM_Names;
 
         /// <summary>
+        /// btnAddName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddName;
+
+        /// <summary>
         /// Lbl_TM_Images control.
         /// </summary>
         /// <remarks>
@@ -177,6 +186,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox TB_location;
 
         /// <summary>
+        /// btnAddArea control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddArea;
+
+        /// <summary>
         /// Lbl_Observation_Points control.
         /// </summary>
         /// <remarks>
@@ -202,6 +220,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_Observation_Points;
+
+        /// <summary>
+        /// btnAddObservation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddObservation;
 
         /// <summary>
         /// Lbl_Recommendation_Points control.
@@ -231,85 +258,121 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox TB_Recommendation_Points;
 
         /// <summary>
-        /// Lbl_resp control.
+        /// btnAddRecommendation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_resp;
+        protected global::System.Web.UI.WebControls.Button btnAddRecommendation;
 
         /// <summary>
-        /// RFV_TB_resp control.
+        /// Lbl_Responsibility control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_resp;
+        protected global::System.Web.UI.WebControls.Label Lbl_Responsibility;
 
         /// <summary>
-        /// TB_resp control.
+        /// RFV_Responsibility control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_resp;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Responsibility;
 
         /// <summary>
-        /// Lbl_targetDate control.
+        /// TB_Responsibility control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_targetDate;
+        protected global::System.Web.UI.WebControls.TextBox TB_Responsibility;
 
         /// <summary>
-        /// RFV_TB_targetDate control.
+        /// btnAddResponsibility control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_targetDate;
+        protected global::System.Web.UI.WebControls.Button btnAddResponsibility;
 
         /// <summary>
-        /// TB_targetDate control.
+        /// Lbl_TargetDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_targetDate;
+        protected global::System.Web.UI.WebControls.Label Lbl_TargetDate;
 
         /// <summary>
-        /// Lbl_remarks control.
+        /// RFV_TargetDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_remarks;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TargetDate;
 
         /// <summary>
-        /// RFV_TB_remarks control.
+        /// TB_TargetDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_remarks;
+        protected global::System.Web.UI.WebControls.TextBox TB_TargetDate;
 
         /// <summary>
-        /// TB_remarks control.
+        /// btnAddTargetDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_remarks;
+        protected global::System.Web.UI.WebControls.Button btnAddTargetDate;
+
+        /// <summary>
+        /// Lbl_Remarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Remarks;
+
+        /// <summary>
+        /// RFV_Remarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Remarks;
+
+        /// <summary>
+        /// TB_Remarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_Remarks;
+
+        /// <summary>
+        /// btnAddRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddRemarks;
 
         /// <summary>
         /// Lbl_Snaps control.
@@ -337,6 +400,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload File_Snaps;
+
+        /// <summary>
+        /// btnAddSnap control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddSnap;
 
         /// <summary>
         /// lbl_msg control.

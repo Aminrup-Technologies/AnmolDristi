@@ -83,6 +83,7 @@
     <Content Include="csm_ppechecklist.aspx" />
     <Content Include="csm_ppechecklist_detailed.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="HtmlPage1.html" />
     <Content Include="Line_Walk_Status.aspx" />
     <Content Include="packages.config" />
     <Content Include="ppe_report.aspx" />
