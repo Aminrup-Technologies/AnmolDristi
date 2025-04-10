@@ -637,7 +637,7 @@ namespace AnmolDristi
 
         private decimal? TryParseDecimal(string value)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrEmpty(value))
             {
                 // Return null if the input is null, empty, or consists only of whitespace
                 return null;
@@ -648,7 +648,7 @@ namespace AnmolDristi
         }
         private int? TryParseInt(string value)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrEmpty(value))
             {
                 // Return null if the input is null, empty, or consists only of whitespace
                 return null;
@@ -1168,7 +1168,6 @@ namespace AnmolDristi
                     break;
 
 
-
                 default:
                     // Handle unrecognized field names
                     break;
@@ -1198,13 +1197,13 @@ namespace AnmolDristi
             DateTime? pkdMfgDate = string.IsNullOrEmpty(TB_PkdMfg.Text) ? (DateTime?)null : DateTime.Parse(TB_PkdMfg.Text).Date;
             string vehicleNo = string.IsNullOrEmpty(TB_VehicleNo.Text) ? null : TB_VehicleNo.Text;
 
-            decimal? quantity = !string.IsNullOrWhiteSpace(TB_Quantity.Text) ? Convert.ToDecimal(TB_Quantity.Text) : (decimal?)null;
+            decimal? quantity = !string.IsNullOrEmpty(TB_Quantity.Text) ? Convert.ToDecimal(TB_Quantity.Text) : (decimal?)null;
             string quantityRemarks = string.IsNullOrEmpty(TXB_Quantity_Remarks.Text) ? null : TXB_Quantity_Remarks.Text;
 
             string color = string.IsNullOrEmpty(DDL_Color.SelectedItem.Text) ? null : DDL_Color.Text;
             string colorRemarks = string.IsNullOrEmpty(TXB_Color_Remarks.Text) ? null : TXB_Color_Remarks.Text;
             
-            int? grade = string.IsNullOrWhiteSpace(RBL_Grade.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Grade.SelectedValue);
+            int? grade = string.IsNullOrEmpty(RBL_Grade.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Grade.SelectedValue);
             string gradeRemarks = string.IsNullOrEmpty(TXB_Grade_Remarks.Text) ? null : TXB_Grade_Remarks.Text;
 
             int? smell = string.IsNullOrEmpty(RBL_Smell.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Smell.SelectedValue);
@@ -1218,43 +1217,41 @@ namespace AnmolDristi
 
             string foreignImpurites = string.IsNullOrEmpty(TB_Foreign_Impurities.Text) ? null : TB_Foreign_Impurities.Text;
 
-            decimal? purity = !string.IsNullOrWhiteSpace(TB_Purity.Text) ? Convert.ToDecimal(TB_Purity.Text) : (decimal?)null;
+            decimal? purity = !string.IsNullOrEmpty(TB_Purity.Text) ? Convert.ToDecimal(TB_Purity.Text) : (decimal?)null;
             string purityRemarks = string.IsNullOrEmpty(TXB_Purity_Remarks.Text) ? null : TXB_Purity_Remarks.Text;
 
-            decimal? ph = !string.IsNullOrWhiteSpace(TB_PH.Text) ? Convert.ToDecimal(TB_PH.Text) : (decimal?)null;
+            decimal? ph = !string.IsNullOrEmpty(TB_PH.Text) ? Convert.ToDecimal(TB_PH.Text) : (decimal?)null;
             string phRemarks = string.IsNullOrEmpty(TXB_PH_Remarks.Text) ? null : TXB_PH_Remarks.Text;
 
-            decimal? moisture = !string.IsNullOrWhiteSpace(TB_Moisture.Text) ? Convert.ToDecimal(TB_Moisture.Text) : (decimal?)null;
+            decimal? moisture = !string.IsNullOrEmpty(TB_Moisture.Text) ? Convert.ToDecimal(TB_Moisture.Text) : (decimal?)null;
             string moistureRemarks = string.IsNullOrEmpty(TXB_Moisture_Remarks.Text) ? null : TXB_Moisture_Remarks.Text;
 
-            decimal? acid = !string.IsNullOrWhiteSpace(TB_Acid.Text) ? Convert.ToDecimal(TB_Acid.Text) : (decimal?)null;
+            decimal? acid = !string.IsNullOrEmpty(TB_Acid.Text) ? Convert.ToDecimal(TB_Acid.Text) : (decimal?)null;
             string acidRemarks = string.IsNullOrEmpty(TXB_Acid_Remarks.Text) ? null : TXB_Acid_Remarks.Text;
 
-            decimal? mpcp = !string.IsNullOrWhiteSpace(TB_Mpcp.Text) ? Convert.ToDecimal(TB_Mpcp.Text) : (decimal?)null;
+            decimal? mpcp = !string.IsNullOrEmpty(TB_Mpcp.Text) ? Convert.ToDecimal(TB_Mpcp.Text) : (decimal?)null;
             string mpcpRemarks = string.IsNullOrEmpty(TXB_Mpcp_Remarks.Text) ? null : TXB_Mpcp_Remarks.Text;
 
-            decimal? dispersabiity = !string.IsNullOrWhiteSpace(TB_Dispersability.Text) ? Convert.ToDecimal(TB_Dispersability.Text) : (decimal?)null;
+            decimal? dispersabiity = !string.IsNullOrEmpty(TB_Dispersability.Text) ? Convert.ToDecimal(TB_Dispersability.Text) : (decimal?)null;
             string dispersabiityRemarks = string.IsNullOrEmpty(TXB_Dispersability_Remarks.Text) ? null : TXB_Dispersability_Remarks.Text;
 
-            decimal? drc = !string.IsNullOrWhiteSpace(TB_Drc.Text) ? Convert.ToDecimal(TB_Drc.Text) : (decimal?)null;
+            decimal? drc = !string.IsNullOrEmpty(TB_Drc.Text) ? Convert.ToDecimal(TB_Drc.Text) : (decimal?)null;
             string drcRemarks = string.IsNullOrEmpty(TXB_Drc_Remarks.Text) ? null : TXB_Drc_Remarks.Text;
 
-            decimal? monoGlycerideContent = !string.IsNullOrWhiteSpace(TB_MonoGlycerideContent.Text) ? Convert.ToDecimal(TB_MonoGlycerideContent.Text) : (decimal?)null;
+            decimal? monoGlycerideContent = !string.IsNullOrEmpty(TB_MonoGlycerideContent.Text) ? Convert.ToDecimal(TB_MonoGlycerideContent.Text) : (decimal?)null;
             string monoGlycerideContentRemarks = string.IsNullOrEmpty(TXB_MonoGlycerideContent_Remarks.Text) ? null : TXB_MonoGlycerideContent_Remarks.Text;
 
-            decimal? neutralizingValue = !string.IsNullOrWhiteSpace(TB_Neutralizing.Text) ? Convert.ToDecimal(TB_Neutralizing.Text) : (decimal?)null;
+            decimal? neutralizingValue = !string.IsNullOrEmpty(TB_Neutralizing.Text) ? Convert.ToDecimal(TB_Neutralizing.Text) : (decimal?)null;
             string neutralizingValueRemarks = string.IsNullOrEmpty(TXB_Neutralizing_Remarks.Text) ? null : TXB_Neutralizing_Remarks.Text;
 
-            decimal? brix = !string.IsNullOrWhiteSpace(TB_Brix.Text) ? Convert.ToDecimal(TB_Brix.Text) : (decimal?)null;
+            decimal? brix = !string.IsNullOrEmpty(TB_Brix.Text) ? Convert.ToDecimal(TB_Brix.Text) : (decimal?)null;
             string brixRemarks = string.IsNullOrEmpty(TXB_Brix_Remarks.Text) ? null : TXB_Brix_Remarks.Text;
 
-            decimal? wim = !string.IsNullOrWhiteSpace(TB_WIM.Text) ? Convert.ToDecimal(TB_WIM.Text) : (decimal?)null;
+            decimal? wim = !string.IsNullOrEmpty(TB_WIM.Text) ? Convert.ToDecimal(TB_WIM.Text) : (decimal?)null;
             string wimRemarks = string.IsNullOrEmpty(TXB_WIM.Text) ? null : TXB_WIM.Text;
 
-            string appStatus = Request.Form["RBL_AppStatus"];
-            string appStatusRemarks = Request.Form["TXB_AppStatus_Remarks"]; 
-
-            int? appStatusValue = string.IsNullOrEmpty(appStatus) ? (int?)null : Convert.ToInt32(appStatus);
+            int? accepted = string.IsNullOrEmpty(RBL_AppStatus.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_AppStatus.SelectedValue);
+            string acceptedRemarks = string.IsNullOrEmpty(TXB_AppStatus_Remarks.Text) ? null : TXB_AppStatus_Remarks.Text;
 
             DateTime submittedDate = DateTime.Now.Date;
             TimeSpan submittedTime = DateTime.Now.TimeOfDay;
@@ -1345,8 +1342,8 @@ namespace AnmolDristi
                         command.Parameters.AddWithValue("@WIM", (object)wim ?? DBNull.Value);
                         command.Parameters.AddWithValue("@CommentsForWIM", (object)wimRemarks ?? DBNull.Value);
 
-                        command.Parameters.AddWithValue("@AppStatus", (object)appStatusValue ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@AppStatusRemarks", string.IsNullOrEmpty(appStatusRemarks) ? (object)DBNull.Value : appStatusRemarks);
+                        command.Parameters.AddWithValue("@AppStatus", (object)accepted ?? DBNull.Value);
+                        command.Parameters.AddWithValue("@AppStatusRemarks", (object)acceptedRemarks ?? DBNull.Value);
 
                         command.Parameters.AddWithValue("@Material_Image", (object)ImgLink1 ?? DBNull.Value);
 
@@ -1450,6 +1447,9 @@ namespace AnmolDristi
 
             TB_WIM.ReadOnly = true;
             TXB_WIM.ReadOnly = true;
+
+            RBL_AppStatus.Enabled = false;
+            TXB_AppStatus_Remarks.ReadOnly = true;
 
             BtnSubmit.Enabled = false;
             BtnSubmit.Text = "SAVED";

@@ -159,13 +159,13 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_NoOfPkt;
 
         /// <summary>
-        /// RV_TB_NoOfPkt control.
+        /// CV_TB_NoOfPkt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator RV_TB_NoOfPkt;
+        protected global::System.Web.UI.WebControls.CustomValidator CV_TB_NoOfPkt;
 
         /// <summary>
         /// TB_NoOfPkt control.

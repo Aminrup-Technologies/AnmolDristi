@@ -107,6 +107,7 @@
                 '<%= RBL_Smell.ClientID %>': 'SmellRemarksDiv',
                 '<%= RBL_TasteFlavor.ClientID %>': 'TasteFlavorRemarksDiv',
                 '<%= RBL_Appearance.ClientID %>': 'AppearanceRemarksDiv',
+                '<%= RBL_AppStatus.ClientID %>': 'AppStatusRemarksDiv',
             };
 
             // Loop through each mapping and toggle the div visibility based on the selected value
@@ -517,36 +518,38 @@
             }
         }
 
-        function toggleAppStatusRemarksDiv() {
+        function toggleAppStatusRemarksDiv(radioButtonList) {
             console.log("toggleAppStatusRemarksDiv function called");
 
-            var selectedRadio = document.querySelector('input[name="RBL_AppStatus"]:checked');
-            var remarksDiv = document.getElementById("AppStatusRemarksDiv");
-            var remarksLabel = document.getElementById("RFV_TXB_AppStatus_Remarks");
-            var remarksInput = document.getElementById("TXB_AppStatus_Remarks");
+            // Get the actual IDs of the controls rendered by ASP.NET
+            var remarksInput = document.getElementById('<%= TXB_AppStatus_Remarks.ClientID %>');
+             var remarksValidator = document.getElementById('<%= RFV_TXB_AppStatus_Remarks.ClientID %>');
 
-            var selectedValue = selectedRadio.value;
-            console.log("Selected value: " + selectedValue);
+             if (!remarksInput || !remarksValidator) {
+                 console.error("Remarks input or validator not found in the DOM.");
+                 return;
+             }
 
-            if (selectedValue === "0") {  // If "Rejected" is selected
-                remarksDiv.style.display = "block";
-                remarksLabel.style.display = "inline"; // Show * mark
-                remarksInput.setAttribute("required", "required"); // Set required attribute
+             var selectedValue = radioButtonList.querySelector("input:checked").value;
+             console.log("Selected value: " + selectedValue);
 
-                setTimeout(function () {
-                    new PNotify({
-                        title: 'Input Required',
-                        text: 'You have selected "Rejected". Remarks are mandatory.',
-                        type: 'warning',
-                        styling: 'bootstrap3'
-                    });
-                }, 200);
-            } else {  // If "Accepted" is selected
-                remarksLabel.style.display = "none"; // Hide * mark
-                remarksInput.removeAttribute("required"); // Remove required attribute
-                remarksInput.value = ""; // Clear the input field
-            }
-        }
+             if (selectedValue === "0") { // "Rejected" selected
+                 remarksInput.required = true;
+                 remarksValidator.style.display = "inline"; // Show validation error if not provided
+                 setTimeout(function () {
+                     // Display a PNotify notification
+                     new PNotify({
+                         title: 'Input Required',
+                         text: 'You have selected "Rejected". Remarks are mandatory.',
+                         type: 'warning',
+                         styling: 'bootstrap3'
+                     });
+                 }, 200); // Adjust delay as necessary
+             } else { // "Accepted" selected
+                 remarksInput.required = false;
+                 remarksValidator.style.display = "none"; // Hide validation error
+             }
+         }
 
 
 
@@ -610,7 +613,7 @@
             <div class="page-title">
                 <div class="title_left">
                     <h3>
-                        <asp:Label ID="lbl_docname" runat="server" Text="Label"></asp:Label>
+                        <asp:Label ID="lbl_docname" runat="server" Text="QC-RM CLASS 5"></asp:Label>
                     </h3>
                 </div>
             </div>
@@ -620,7 +623,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <asp:Label ID="lbl_docnumber" runat="server" Text="Label"></asp:Label>
+                                <asp:Label ID="lbl_docnumber" runat="server" Text="Detailed View"></asp:Label>
                             </h2>
                             <div class="clearfix"></div>
                         </div>
@@ -797,7 +800,7 @@
                                     <asp:Label ID="LabelColor" runat="server" AssociatedControlID="DDL_Color" Text=" Color  :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_Color" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_Color" Display="Dynamic" InitialValue="0"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <asp:DropDownList ID="DDL_Color" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly" ></asp:DropDownList>
+                                        <asp:DropDownList ID="DDL_Color" runat="server" CssClass="form-control form-control-sm rounded white-background-readonly"></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
@@ -1143,40 +1146,44 @@
                             </div>
 
 
-                            <div id="AppStatusDIV" class="col-md-3">
+                            <div class="col-md-12">
+                                <hr />
+                            </div>
+
+                            <div class="col-md-12">
+                                <h4 class="text-left text-info">Step-3: Decision Making</h4>
+                                <hr />
+                            </div>
+
+                            <div class="col-md-3" id="AppStatusDIV" runat="server">
                                 <div class="mb-3">
-                                    <label for="RBL_AppStatus" id="LabelAppStatus" style="color: Blue; font-size: Small; font-weight: bold;">Approval Status :</label>
-                                    <span id="RFV_RBL_AppStatus" style="color: Red; display: none;">*</span>
+                                    <asp:Label ID="LabelAppStatus" runat="server" AssociatedControlID="RBL_AppStatus" Text="Approval Status :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_RBL_AppStatus" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Save" ControlToValidate="RBL_AppStatus" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <table id="RBL_AppStatus" class="form-control form-control-sm rounded remove-border" cellspacing="5" cellpadding="5" onchange="toggleAppStatusRemarksDiv(this);" style="width: 100%;">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <input id="RBL_AppStatus_0" type="radio" name="RBL_AppStatus" value="1"><label for="RBL_AppStatus_0">Accepted</label></td>
-                                                    <td>
-                                                        <input id="RBL_AppStatus_1" type="radio" name="RBL_AppStatus" value="0"><label for="RBL_AppStatus_1">Rejected</label></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <asp:RadioButtonList ID="RBL_AppStatus" runat="server" CssClass="form-control form-control-sm rounded remove-border" RepeatLayout="Table" RepeatDirection="Horizontal" CellPadding="5" CellSpacing="5" RepeatColumns="2" Width="100%" onchange="toggleAppStatusRemarksDiv(this);">
+                                            <asp:ListItem Text="Accepted" Value="1"></asp:ListItem>
+                                            <asp:ListItem Text="Rejected" Value="0"></asp:ListItem>
+                                        </asp:RadioButtonList>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-3" id="AppStatusRemarksDiv">
                                 <div class="mb-3">
-                                    <label for="TXB_AppStatus_Remarks" id="LabelAppStatusRemarks" style="color: Red; font-size: Small; font-weight: bold;">Approval Status Remarks</label>
-                                    <span id="RFV_TXB_AppStatus_Remarks" style="color: Red; display: none;">*</span>
+                                    <asp:Label ID="LabelAppStatusRemarks" runat="server" AssociatedControlID="TXB_AppStatus_Remarks" Text="Approval Status Remarks" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TXB_AppStatus_Remarks" runat="server" ErrorMessage="*" ForeColor="Red" ControlToValidate="TXB_AppStatus_Remarks" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
-                                        <input name="TXB_AppStatus_Remarks" type="text" id="TXB_AppStatus_Remarks" class="form-control form-control-sm rounded">
+                                        <asp:TextBox ID="TXB_AppStatus_Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-12">
-                                <hr>
+                                <hr />
                             </div>
+
                             <div class="col-md-12">
-                                <h4 class="text-left text-info">Step-3 : Phtotgraph Attachment</h4>
+                                <h4 class="text-left text-info">Step-4 : Phtotgraph Attachment</h4>
                                 <hr>
                             </div>
 

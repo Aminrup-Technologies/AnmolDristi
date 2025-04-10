@@ -136,7 +136,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3" runat="server" visible="false" >
+                            <div class="col-md-3" runat="server" visible="false">
                                 <div class="mb-3">
                                     <asp:Label ID="Label6" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_BrandSKU" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_BrandSKU" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
@@ -146,17 +146,30 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3" >
+                            <%--<div class="col-md-3" >
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_NoOfPkt" runat="server" AssociatedControlID="TB_NoOfPkt" Text="No of Packets :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_NoOfPkt" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_NoOfPkt" Display="Dynamic" ForeColor="Red" InitialValue=""></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_NoOfPkt" runat="server" ValidationGroup="Submit" ControlToValidate="TB_NoOfPkt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <asp:RangeValidator ID="RV_TB_NoOfPkt" runat="server" ControlToValidate="TB_NoOfPkt" ErrorMessage="[10 - 40]" ForeColor="Red" MinimumValue="10" MaximumValue="60" Type="Integer" Display="Static"></asp:RangeValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_NoOfPkt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Number of Packets [10 - 40]" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="TB_NoOfPkt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Number of Packets [10 x 40]" Text=""></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>--%>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <asp:Label ID="Lbl_TB_NoOfPkt" runat="server" AssociatedControlID="TB_NoOfPkt" Text="No of Packets :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_NoOfPkt" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_NoOfPkt" Display="Dynamic" ForeColor="Red" InitialValue=""></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_NoOfPkt" runat="server" ValidationGroup="Submit" ControlToValidate="TB_NoOfPkt" ForeColor="Red" ErrorMessage="Input Required" ValidationExpression="^\d+\s*[\*xX]\s*\d+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                    <asp:CustomValidator ID="CV_TB_NoOfPkt" runat="server" ControlToValidate="TB_NoOfPkt" ValidationGroup="Submit" ErrorMessage="Invalid input format! Use: 10 * 40" Display="Dynamic" ForeColor="Red" OnServerValidate="CV_TB_NoOfPkt_ServerValidate"></asp:CustomValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_NoOfPkt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Number of Packets [10 * 40]" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="col-md-3">
                                 <div class="mb-3">
@@ -174,7 +187,7 @@
                                     <asp:Label ID="Lbl_TB_Size" runat="server" AssociatedControlID="TB_Size" Text="Sample Size :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_Size" runat="server" ValidationGroup="Submit" ErrorMessage="Input Required" ControlToValidate="TB_Size" InitialValue="" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_Size" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Size" ForeColor="Red" ErrorMessage="Decimal Only" ValidationExpression="\d+(\.\d{1,2})?" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="CV_TB_Size" runat="server" ControlToValidate="TB_Size" ErrorMessage="[10 - 40]" ForeColor="Red" MinimumValue="10" MaximumValue="40" ></asp:RangeValidator>
+                                    <asp:RangeValidator ID="CV_TB_Size" runat="server" ControlToValidate="TB_Size" ErrorMessage="[10 - 40]" ForeColor="Red" MinimumValue="10" MaximumValue="40"></asp:RangeValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_Size" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Size(in pkts)"></asp:TextBox>
                                     </div>
@@ -583,9 +596,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
 
                         </div>
                     </div>
