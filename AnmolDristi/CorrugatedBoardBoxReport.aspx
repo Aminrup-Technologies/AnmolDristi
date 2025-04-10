@@ -163,7 +163,7 @@
                                     <asp:Label ID="Lbl_TB_NoOfPkt" runat="server" AssociatedControlID="TB_NoOfPkt" Text="No of Packets :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_NoOfPkt" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_NoOfPkt" Display="Dynamic" ForeColor="Red" InitialValue=""></asp:RequiredFieldValidator>
                                     <asp:RegularExpressionValidator ID="REV_TB_NoOfPkt" runat="server" ValidationGroup="Submit" ControlToValidate="TB_NoOfPkt" ForeColor="Red" ErrorMessage="Input Required" ValidationExpression="^\d+\s*[\*xX]\s*\d+$" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:CustomValidator ID="CV_TB_NoOfPkt" runat="server" ControlToValidate="TB_NoOfPkt" ValidationGroup="Submit" ErrorMessage="Invalid input format! Use: 10 * 40" Display="Dynamic" ForeColor="Red"></asp:CustomValidator>
+                                    <asp:CustomValidator ID="CV_TB_NoOfPkt" runat="server" ControlToValidate="TB_NoOfPkt" ValidationGroup="Submit" ErrorMessage="Invalid input format! Use: 10 * 40" Display="Dynamic" ForeColor="Red" OnServerValidate="CV_TB_NoOfPkt_ServerValidate"></asp:CustomValidator>
                                     <div class="input-group-sm">
                                         <asp:TextBox ID="TB_NoOfPkt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Number of Packets [10 * 40]" Text=""></asp:TextBox>
                                     </div>
