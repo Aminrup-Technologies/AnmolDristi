@@ -1,58 +1,118 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="fiveS_checklist_1.aspx.cs" Inherits="AnmolDristi.fiveS_checklist_1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="fiveS_checklist_1.aspx.cs" Inherits="AnmolDristi.fiveS_checklist_1" Async="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+
     <script type="text/javascript">
-        // When user toggles the checkbox for each requirement
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".toggle-result-checkbox").forEach(function (checkbox) {
-                checkbox.addEventListener("change", function () {
-                    var wrapper = checkbox.closest(".requirement-item");
-                    var resultSection = wrapper.querySelector(".result-section");
-                    resultSection.style.display = checkbox.checked ? "block" : "none";
+        function validateChecklist() {
+            let isValid = true;
 
-                    if (!checkbox.checked) {
-                        // Clear selections if unchecked
-                        wrapper.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
-                        wrapper.querySelector(".hidden-fields").style.display = "none";
-                        wrapper.querySelectorAll(".rfv").forEach(v => v.style.display = "none");
+            document.querySelectorAll(".requirement-item").forEach(function (item) {
+                const selectedResult = item.querySelector("input[type='radio']:checked");
+                const remark = item.querySelector(".remark-input");
+                const photo = item.querySelector(".photo-input");
+                const remarkError = item.querySelector(".rfv.remark-error");
+                const photoError = item.querySelector(".rfv.photo-error");
+
+
+                if (remarkError) remarkError.style.display = "none";
+                if (photoError) photoError.style.display = "none";
+
+                if (selectedResult && selectedResult.value === "false") {
+                    if (!remark || remark.value.trim() === "") {
+                        if (remarkError) remarkError.style.display = "block";
+                        isValid = false;
                     }
-                });
+
+                    if (!photo || !photo.value) {
+                        if (photoError) photoError.style.display = "block";
+                        isValid = false;
+                    }
+                }
             });
-        });
 
-        // When user selects OK/NOT OK
-        function toggleInputs(rbl) {
-            const wrapper = rbl.closest(".requirement-item");
-            const selected = wrapper.querySelector('input[type="radio"]:checked');
-            const hiddenFields = wrapper.querySelector(".hidden-fields");
-
-            if (!selected) return;
-
-            if (selected.value === "0") {
-                hiddenFields.style.display = "block";
-            } else {
-                hiddenFields.style.display = "none";
-
-                const remarkBox = wrapper.querySelector(".remark-input");
-                const photoInput = wrapper.querySelector(".photo-input");
-
-                if (remarkBox) remarkBox.value = "";
-                if (photoInput) photoInput.value = "";
-
-                wrapper.querySelectorAll(".rfv").forEach(v => v.style.display = "none");
-            }
+            return isValid;
         }
 
+
+        function toggleInputs(radioBtn) {
+            const wrapper = radioBtn.closest(".requirement-item");
+            const hiddenFields = wrapper.querySelector(".hidden-fields");
+
+            // NOT OK
+            if (radioBtn.value === "false")
+            {  
+                hiddenFields.style.display = "block";
+            }
+                // OK
+            else
+                 {  
+                    hiddenFields.style.display = "none";
+
+                    const remarkBox = wrapper.querySelector(".remark-input");
+                    const photoInput = wrapper.querySelector(".photo-input");
+
+                    if (remarkBox) remarkBox.value = "";
+                    if (photoInput) photoInput.value = "";
+
+                    wrapper.querySelectorAll(".rfv").forEach(v => v.style.display = "none");
+                }
+        }
+
+        window.onload = function () {
+            
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(function (rb) {
+                rb.addEventListener("change", function () {
+                    toggleInputs(rb);
+                });
+
+                if (rb.checked) {
+                    toggleInputs(rb);
+                }
+            });
+        };
+
+        function resetFormUI() {
+            // Clear all textboxes
+            document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(function (input) {
+                input.value = "";
+            });
+
+            // Reset all radio buttons (select "OK")
+            document.querySelectorAll('.requirement-item').forEach(function (item) {
+                let okRadio = item.querySelector('input[type="radio"][value="true"]');
+                if (okRadio) okRadio.checked = true;
+            });
+
+            // Clear file inputs
+            document.querySelectorAll('.photo-input').forEach(function (fileInput) {
+                fileInput.value = "";
+            });
+
+            // Hide remark & photo fields
+            document.querySelectorAll('.hidden-fields').forEach(function (section) {
+                section.style.display = "none";
+            });
+
+            // Hide validation messages (if any)
+            document.querySelectorAll(".rfv").forEach(function (v) {
+                v.style.display = "none";
+            });
+        }
+
+
     </script>
+
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h5>Main Heading</h5>
+                    <h5 style="text-align: center; font-weight: bold"; class="text-success">CHECKLIST FOR 5S</h5>
                 </div>
             </div>
 
@@ -62,34 +122,79 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Checklist for 5s</h2>
+                            <asp:label runat="server" ForeColor="Green" Font-Bold="true" >ATS/OHS/HKS-5SCL-01</asp:label>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
+
+                            <div class="row mb-4">
+                                <!-- Date Field -->
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <asp:label for="txtDate" runat="server" class="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Date:</asp:label>
+                                    <asp:TextBox ID="txtDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="rfvDate" runat="server"
+                                        ControlToValidate="txtDate"
+                                        ErrorMessage="Date is required"
+                                        CssClass="text-danger"
+                                        Display="Dynamic"
+                                        ValidationGroup="save" />
+                                </div>
+
+                                <!-- Department Field -->
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <asp:label for="txtDepartment" runat="server" class="form-label" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Department:</asp:label>
+                                    <asp:TextBox ID="txtDepartment" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="rfvDepartment" runat="server"
+                                        ControlToValidate="txtDepartment"
+                                        ErrorMessage="Department is required"
+                                        CssClass="text-danger"
+                                        Display="Dynamic"
+                                        ValidationGroup="save" />
+                                </div>
+
+                                <!-- Job Field -->
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <asp:label for="txtJob" runat="server" class="form-label" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Job:</asp:label>
+                                    <asp:TextBox ID="txtJob" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="rfvJob" runat="server"
+                                        ControlToValidate="txtJob"
+                                        ErrorMessage="Job is required"
+                                        CssClass="text-danger"
+                                        Display="Dynamic"
+                                        ValidationGroup="save" />
+                                </div>
+                            </div>
+
+
+
                             <asp:Repeater ID="DictionaryRepeater" runat="server">
                                 <ItemTemplate>
                                     <div class="card mb-4 shadow-sm">
                                         <div class="card-header bg-primary text-white">
-                                            <h6 class="mb-0">Group <span><%# Eval("GroupSerial") %></span>: <%# Eval("Value") %></h6>
+                                            <h6 class="mb-0">
+                                                        <asp:Label ID="Grp_detail" runat="server" Text='<%# Bind("Value") %>' /></h6>
+
                                         </div>
                                         <div class="card-body">
                                             <asp:Repeater ID="ChildRepeater" runat="server" DataSource='<%# Eval("Keys") %>'>
+                                                
                                                 <ItemTemplate>
                                                     <div class="row requirement-item mb-4 p-3 border rounded needs-validation">
                                                         <div class="col-md-3">
-                                                            <label for="labelRequirementEmail4" class="form-label font-weight-bold">Requirement:<%# Eval("Serial") %></label>
-                                                            <label class="form-label"><%# Eval("Key") %></label>
+                                                            <asp:label for="labelRequirementEmail4" runat="server" class="form-label " ForeColor="Black" Font-Bold="False" Font-Size="Small">Requirement:<%# Eval("Serial") %></asp:label>
+                                                            <asp:Label ID="Requirement" class="form-label" runat="server" Text='<%# Bind("key") %>' ForeColor="Blue" Font-Bold="true" Font-Size="Small"/>
                                                         </div>
 
                                                         <div class="col-md-2">
-                                                            <label for="labelresult" class="form-label">Ok/NotOk:</label>
+                                                            <asp:label for="labelresult" class="form-label" runat="server"  ForeColor="Black" Font-Bold="False" Font-Size="Small">Ok/NotOk:</asp:label>
+
                                                             <asp:RadioButtonList ID="result" runat="server" RepeatDirection="Horizontal"
-                                                                CssClass="" onchange="toggleInputs(this)">
-                                                                <asp:ListItem Text="OK" Value="1" />
-                                                                <asp:ListItem Text="NOT OK" Value="0" />
+                                                                CssClass="" OnClientClick="toggleInputs(this)" ForeColor="Black" Font-Bold="False" Font-Size="Small">
+                                                                <asp:ListItem Text="OK" Value="true" Selected="True"  />
+                                                                <asp:ListItem Text="NOT OK" Value="false" />
                                                             </asp:RadioButtonList>
                                                             <asp:RequiredFieldValidator ID="rfvResult" runat="server"
                                                                 ControlToValidate="result"
@@ -97,30 +202,21 @@
                                                                 CssClass="text-danger rfv"
                                                                 Display="Dynamic"
                                                                 ValidationGroup="save" />
+
                                                         </div>
 
-                                                        <div class="col-md-6 hidden-fields" style="display: none;">
+                                                        <div class="col-md-6 hidden-fields" style="">
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <label for="labelremarks" class="form-label">Remarks:</label>
                                                                     <asp:TextBox ID="Remark_text" runat="server" CssClass="form-control remark-input" TextMode="MultiLine"></asp:TextBox>
-                                                                    <asp:RequiredFieldValidator ID="rfvRemark" runat="server"
-                                                                        ControlToValidate="Remark_text"
-                                                                        ErrorMessage="Remark required"
-                                                                        CssClass="text-danger rfv"
-                                                                        Display="Dynamic"
-                                                                        EnableClientScript="true" />
+                                                                    <span class="text-danger rfv remark-error" style="display: none;">Remark is required</span>
                                                                 </div>
 
                                                                 <div class="col-md-6 ">
                                                                     <label for="labelphotograph" class="form-label">Before Photographs:</label>
                                                                     <asp:FileUpload ID="Before_pic" runat="server" CssClass="form-control-file photo-input" />
-                                                                    <asp:RequiredFieldValidator ID="rfvPhoto" runat="server"
-                                                                        ControlToValidate="Before_pic"
-                                                                        ErrorMessage="Photo required"
-                                                                        CssClass="text-danger rfv"
-                                                                        Display="Dynamic"
-                                                                        EnableClientScript="true" />
+                                                                    <span class="text-danger rfv photo-error" style="display: none;">Photo is required</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -132,11 +228,23 @@
                                 </ItemTemplate>
                             </asp:Repeater>
 
+
+
                             <!-- Submit Button -->
                             <div class="text-center mt-4">
-                                <asp:Button ID="Button1" runat="server" OnClick="smt_btn_Click" Text="Submit"
-                                    CssClass="btn btn-success px-4 py-2"
-                                    ValidationGroup="save" />
+                                <asp:Button ID="submit" runat="server" OnClick="submit_Click" Text="Submit"
+                                    CssClass="btn btn-success px-4 py-2" OnClientClick="validateChecklist();" ValidationGroup="save" />
+
+                                <!-- Reset button-->
+
+                                <asp:Button ID="reset" runat="server" OnClick="reset_Click" Text="Reset"
+                                    CssClass="btn btn-secondary px-4 py-2" />
+
+                                <!-- Home button-->
+                                <asp:Button runat="server" ID="home" OnClientClick="resetFormUI()" Text="Home"
+                                    CssClass="btn btn-primary px-4 py-2" />
+
+
                             </div>
 
 
@@ -147,5 +255,4 @@
             </div>
         </div>
     </div>
-
 </asp:Content>

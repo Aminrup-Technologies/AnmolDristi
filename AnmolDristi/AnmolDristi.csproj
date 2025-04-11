@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=20.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxControlToolkit.20.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -87,7 +90,20 @@
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
     <Content Include="fiveS_checklist.aspx" />
+    <Content Include="uploads\programming-coding-editor-colorful-themes-abstract-program-code-computer-screen-internet-app-development-design-208361364.jpg" />
+    <Content Include="uploads\software-development-word-cloud-concept-grey-background-88535408.jpg" />
     <Content Include="WebForm1.aspx" />
+    <Content Include="DAL\Datasets\Checklist_details_dataset.xsc">
+      <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
+    </Content>
+    <None Include="DAL\Datasets\Checklist_details_dataset.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Checklist_details_dataset.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DAL\Datasets\Checklist_details_dataset.xss">
+      <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -131,6 +147,11 @@
     <Content Include="WebData\Internal\view.svg" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\Datasets\Checklist_details_dataset.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
+    </Compile>
     <Compile Include="fiveS_checklist_1.aspx.cs">
       <DependentUpon>fiveS_checklist_1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
