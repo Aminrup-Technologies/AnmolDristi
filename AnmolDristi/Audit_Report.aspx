@@ -5,7 +5,7 @@
 <head runat="server">
     <title>Audit_Report</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
     <style>
         @media print {
@@ -84,7 +84,10 @@
         <table>
             <tr>
                 <td colspan="2" style="text-align: end">
-                    <img style="position: absolute; top: 0px; right: 0px; width: 100px; height: auto" src="WebData/Anmol_Logo.png" alt="Logo" />
+                    <img style="position: absolute; top: 0px; right: 0px; width: 100px; height: auto"
+                        src="WebData/img/logo.png"
+                        alt="Logo" />
+
                 </td>
             </tr>
             <tr>
@@ -121,10 +124,10 @@
                             <tr>
                                 <td>1</td>
                                 <td>
-                                    <asp:Image ID="imgBefore_1" runat="server" Width="200px" />
+                                    <asp:Image Style="background-size:cover; bottom:0; position:center; left:0;"  ID="imgBefore_1" runat="server" Width="200px" />
                                 </td>
                                 <td>
-                                    <asp:Label ID="lblObservation_1" Text="found unused Materials stored in the work pace. " runat="server" Font-Bold="false" Font-Size="Small"></asp:Label>
+                                    <asp:Label ID="lblObservation_1" Text="found unused Materials stored in the work place. " runat="server" Font-Bold="false" Font-Size="Small"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:Label ID="lblAction_1" Text="it should be kept in designated place.  " runat="server" Font-Bold="false" Font-Size="Small"></asp:Label>
@@ -136,6 +139,8 @@
                             <%-- Second-Section--%>
                             <tr>
                                 <td>2</td>
+
+
                                 <td>
                                     <asp:Image ID="imgBefore_2" runat="server" Width="200px" />
                                 </td>
