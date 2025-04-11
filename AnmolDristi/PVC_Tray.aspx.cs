@@ -316,7 +316,7 @@ namespace AnmolDristi
                 string selectedPlantValue = DDL_Plant.SelectedValue.ToString();
                 lbl_DDL_Plant_Value.Text = selectedPlantValue;
                 //ProductBrandsBinder(selectedPlantValue);
-                BrandSKUBinder(selectedPlantValue);
+                //BrandSKUBinder(selectedPlantValue);
                 LoadApprovers(selectedPlantValue);
             }
             else
@@ -335,35 +335,37 @@ namespace AnmolDristi
             }
         }
 
-        private void BrandSKUBinder(string selectedPlantValue)
-        {
-            string query = "SELECT b.SKUId, b.SKU_name FROM MST_Brand_SKU b JOIN MST_LineCatBrands l ON b.brand_id = l.brand_id WHERE l.plant_id = @SelectedPlantValue AND b.ViewMode = 1 ORDER BY b.SKUId;";
-            string textField = "SKU_name";
-            string valueField = "SKUId";
+        //private void BrandSKUBinder(string selectedPlantValue)
+        //{
+        //    string query = "SELECT b.SKUId, b.SKU_name FROM MST_Brand_SKU b JOIN MST_LineCatBrands l ON b.brand_id = l.brand_id WHERE l.plant_id = @SelectedPlantValue AND b.ViewMode = 1 ORDER BY b.SKUId;";
+        //    string textField = "SKU_name";
+        //    string valueField = "SKUId";
 
-            bool recordsBound;
-            DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedPlantValue), out recordsBound);
+        //    bool recordsBound;
+        //    DatabaseHelper.BindDropDownList(query, DDL_BrandSKU, textField, valueField, new SqlParameter("@SelectedPlantValue", selectedPlantValue), out recordsBound);
 
-            if (!recordsBound)
-            {
-                DatabaseHelper.BindWithDefaultNoRecords(DDL_BrandSKU);
+        //    if (!recordsBound)
+        //    {
+        //        DatabaseHelper.BindWithDefaultNoRecords(DDL_BrandSKU);
 
-                string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Error',
-                                text: 'No Records Found!',
-                                type: 'warning',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-                ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
-            }
-        }
+        //        string BrandSKUBinder_Error_script = @"<script type='text/javascript'>
+        //                    new PNotify({
+        //                        title: 'Error',
+        //                        text: 'No Records Found!',
+        //                        type: 'warning',
+        //                        styling: 'bootstrap3'
+        //                    });
+        //                </script>";
+        //        ClientScript.RegisterStartupScript(this.GetType(), "ShowBrandSKUBinderErrorNotification", BrandSKUBinder_Error_script, false);
+        //    }
+        //}
 
         private void MakeInputsReadOnly()
         {
             DDL_Plant.Enabled = false;
-            DDL_BrandSKU.Enabled = false;
+            //DDL_BrandSKU.Enabled = false;
+            TB_BrandSKU.ReadOnly = true;
+            TB_ChalanNo.ReadOnly = true;
             TB_ChalanNo.ReadOnly = true;
             TB_MatVarietyName.ReadOnly = true;
             TB_Supplier.ReadOnly = true;
@@ -444,7 +446,8 @@ namespace AnmolDristi
 
             string plantName = DDL_Plant.SelectedValue;
             string productBrand = TB_MatVarietyName.Text.ToString();
-            string brandSku = DDL_BrandSKU.SelectedValue;
+            //string brandSku = DDL_BrandSKU.SelectedValue;
+            string brandSku = TB_BrandSKU.Text.ToString();
             string Supplier_Name = TB_Supplier.Text;
             decimal? sampleSize = !string.IsNullOrEmpty(TB_Size.Text) ? Convert.ToDecimal(TB_Size.Text) : (decimal?)null;
             string Challan_No = TB_ChalanNo.Text;

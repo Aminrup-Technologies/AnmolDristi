@@ -130,13 +130,24 @@
 
                             <div class="col-md-3">
                                 <div class="mb-3">
+                                    <asp:Label ID="Label2" runat="server" AssociatedControlID="TB_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                    <asp:RequiredFieldValidator ID="RFV_TB_BrandSKU" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="TB_BrandSKU" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_BrandSKU" runat="server" ControlToValidate="TB_BrandSKU" ValidationGroup="Submit" ForeColor="Red" Display="Dynamic" ErrorMessage="Enter valid decimal value" ValidationExpression="^\d+(\.\d{1,2})?$"></asp:RegularExpressionValidator>
+                                    <div class="input-group-sm">
+                                        <asp:TextBox ID="TB_BrandSKU" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="e.g. 10.25"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <%--<div class="col-md-3">
+                                <div class="mb-3">
                                     <asp:Label ID="Label2" runat="server" AssociatedControlID="DDL_BrandSKU" Text="Brand SKU Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_DDL_BrandSKU" runat="server" ErrorMessage="*" ForeColor="Red" ValidationGroup="Submit" ControlToValidate="DDL_BrandSKU" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
                                     <div class="input-group-sm">
                                         <asp:DropDownList ID="DDL_BrandSKU" runat="server" CssClass="form-control form-control-sm rounded"></asp:DropDownList>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--%>
 
                             <div class="col-md-3">
                                 <div class="mb-3">

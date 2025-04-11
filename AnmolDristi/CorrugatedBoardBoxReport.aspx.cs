@@ -359,7 +359,8 @@ namespace AnmolDristi
             string dottedLineApproverEmployeeCode = DottedLineApproverCodeLabel.Text;
 
             // added on 18-Mar-2025
-            decimal noOfPackets = Convert.ToDecimal(TB_NoOfPkt.Text);
+            //decimal noOfPackets = Convert.ToDecimal(TB_NoOfPkt.Text);
+            string noOfPackets = TB_NoOfPkt.Text.ToString();
             decimal sampleSize = Convert.ToDecimal(TB_Size.Text);
 
             try

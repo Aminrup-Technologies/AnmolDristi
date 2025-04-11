@@ -150,10 +150,9 @@
                                 <div class="mb-3">
                                     <asp:Label ID="Lbl_TB_NoOfPkt" runat="server" AssociatedControlID="TB_NoOfPkt" Text="No of Packets :" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                     <asp:RequiredFieldValidator ID="RFV_TB_NoOfPkt" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_NoOfPkt" Display="Dynamic" ForeColor="Red" InitialValue=""></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="REV_TB_NoOfPkt" runat="server" ValidationGroup="Submit" ControlToValidate="TB_NoOfPkt" ForeColor="Red" ErrorMessage="Numeric Only" ValidationExpression="\d+" Display="Dynamic"></asp:RegularExpressionValidator>
-                                    <asp:RangeValidator ID="RV_TB_NoOfPkt" runat="server" ControlToValidate="TB_NoOfPkt" ErrorMessage="[10 - 40]" ForeColor="Red" MinimumValue="10" MaximumValue="60" Type="Integer" Display="Static"></asp:RangeValidator>
+                                    <asp:RegularExpressionValidator ID="REV_TB_NoOfPkt" runat="server" ValidationGroup="Submit" ControlToValidate="TB_NoOfPkt" ForeColor="Red" ErrorMessage="Enter numbers or 'number x number'" ValidationExpression="^\d+(\s*x\s*\d+)?$" Display="Dynamic"></asp:RegularExpressionValidator>
                                     <div class="input-group-sm">
-                                        <asp:TextBox ID="TB_NoOfPkt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Number of Packets [10 - 40]" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="TB_NoOfPkt" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Number of Packets [10 x 40]" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
