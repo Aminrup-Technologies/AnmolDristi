@@ -690,8 +690,11 @@ namespace AnmolDristi
             decimal? absorption = !string.IsNullOrEmpty(TB_Absorption.Text) ? Convert.ToDecimal(TB_Absorption.Text) : (decimal?)null;
             string absorptionRemarks = string.IsNullOrEmpty(TXB_Absorption_Remarks.Text) ? null : TXB_Absorption_Remarks.Text;
 
-            int? sediment = string.IsNullOrEmpty(TB_Sedimentation.Text) ? (int?)null : Convert.ToInt32(TB_Sedimentation.Text);
+            decimal? sediment = !string.IsNullOrEmpty(TB_Sedimentation.Text) ? Convert.ToDecimal(TB_Sedimentation.Text) : (decimal?)null;
             string sedimentRemarks = string.IsNullOrEmpty(TXB_Sedimentation_Remarks.Text) ? null : TXB_Sedimentation_Remarks.Text;
+
+            //int? sediment = string.IsNullOrEmpty(TB_Sedimentation.Text) ? (int?)null : Convert.ToInt32(TB_Sedimentation.Text);
+            //string sedimentRemarks = string.IsNullOrEmpty(TXB_Sedimentation_Remarks.Text) ? null : TXB_Sedimentation_Remarks.Text;
 
             int? grittiness = string.IsNullOrEmpty(RBL_Grittiness.SelectedValue) ? (int?)null : (int?)Convert.ToInt32(RBL_Grittiness.SelectedValue);
             string grittinessRemarks = string.IsNullOrEmpty(TXB_Grittiness_Remarks.Text) ? null : TXB_Grittiness_Remarks.Text;
@@ -754,13 +757,9 @@ namespace AnmolDristi
                         //command.Parameters.AddWithValue("@ChallanDate", (object)challanDate ?? DBNull.Value);
                         //command.Parameters.AddWithValue("@Mfg", (object)mfgDate ?? DBNull.Value);
 
-                        command.Parameters.AddWithValue("@Challan_Dates", challanDates.Any()
-                            ? string.Join(",", challanDates.Where(d => d.HasValue).Select(d => d.Value.ToString("yyyy-MM-dd")))
-                            : (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@Challan_Dates", challanDates.Any() ? string.Join(",", challanDates.Where(d => d.HasValue).Select(d => d.Value.ToString("yyyy-MM-dd"))) : (object)DBNull.Value);
 
-                        command.Parameters.AddWithValue("@Mfg_Dates", mfgDates.Any()
-                            ? string.Join(",", mfgDates.Where(d => d.HasValue).Select(d => d.Value.ToString("yyyy-MM-dd")))
-                            : (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@Mfg_Dates", mfgDates.Any() ? string.Join(",", mfgDates.Where(d => d.HasValue).Select(d => d.Value.ToString("yyyy-MM-dd"))) : (object)DBNull.Value);
 
                         command.Parameters.AddWithValue("@BatchNo", (object)batchNo ?? DBNull.Value);
                         command.Parameters.AddWithValue("@LotNo", (object)lotNo ?? DBNull.Value);
