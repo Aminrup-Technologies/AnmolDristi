@@ -32,8 +32,22 @@ namespace AnmolDristi
                 {"Is colour coding used effctively for easy identification","SET IN ORDER-SEITON" },
                 {"Is there a general apperance of orderliness?","SET IN ORDER-SEITON" },
                 {"Is it easy to find any item/document without delay? ","SET IN ORDER-SEITON" },
+                {"Are cleaning schedules available and displayed?","SHINE-SEISO" },
+                {"Are floors, walls, windows, doors etc. maintained at a high level of cleanliness?","SHINE-SEISO"},
+                {"Are Items stored according to frequency of use?","SHINE-SEISO" },
+                {"Are machines, equipment, tools, furniture maintained at a high level of cleanliness and their maintenance schedules displayed?","SHINE-SEISO"},
+                {"Is there a general appearance of cleanliness all round?","SHINE-SEISO" },
+                {"Are all 5S procedures standardized?","STANDARDIZE-SEIKETSU" },
+                {"Are standard checklists used to regularly inspect 5S?","STANDARDIZE-SEIKETSU" },
+                {"Are labels, notices etc. standardized?","STANDARDIZE-SEIKETSU" },
+                {"Do aisles/gangways have a standard size and colour?","STANDARDIZE-SEIKETSU" },
+                {"Are pipes, cables etc. colour-coded?","STANDARDIZE-SEIKETSU" },
+                {"Is there a system for how and when the 5S activities will be implemented?","SUSTAIN-SHITSUKE" },
+                {"Does management provide support to the 5S programme by recognition, resources and leadership?","SUSTAIN-SHITSUKE" },
+                {"Have first 3S’s become a part of the daily work?","SUSTAIN-SHITSUKE" },
+                {"Do employees show positive interest in 5S activities?","SUSTAIN-SHITSUKE" },
+        };
 
-            };
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -43,11 +57,11 @@ namespace AnmolDristi
                      .GroupBy(x => x.Value)
                      .Select((g, groupIndex) => new
                      {
-                         GroupSerial = (groupIndex + 1).ToString(), // 1, 2, 3...
+                         GroupSerial = (groupIndex + 1).ToString(), 
                          Value = g.Key,
                          Keys = g.Select((x, itemIndex) => new
                          {
-                             Serial = $"{groupIndex + 1}.{itemIndex + 1}", // 1.1, 1.2, etc.
+                             Serial = $"{groupIndex + 1}.{itemIndex + 1}", 
                              key = x.Key
                          }).ToList()
                      }).ToList();
@@ -122,7 +136,7 @@ namespace AnmolDristi
 
         protected void home_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/qaqc_home.aspx");
+            Response.Redirect("qaqc_home.aspx");
         }
     }
 }

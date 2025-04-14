@@ -2,6 +2,20 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+    <style>
+        .collapse-toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        a.collapsed .collapse-toggle-icon {
+            transform: rotate(0deg);
+        }
+
+        a:not(.collapsed) .collapse-toggle-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+
 
     <script type="text/javascript">
         function validateChecklist() {
@@ -40,27 +54,25 @@
             const hiddenFields = wrapper.querySelector(".hidden-fields");
 
             // NOT OK
-            if (radioBtn.value === "false")
-            {  
+            if (radioBtn.value === "false") {
                 hiddenFields.style.display = "block";
             }
-                // OK
-            else
-                 {  
-                    hiddenFields.style.display = "none";
+            // OK
+            else {
+                hiddenFields.style.display = "none";
 
-                    const remarkBox = wrapper.querySelector(".remark-input");
-                    const photoInput = wrapper.querySelector(".photo-input");
+                const remarkBox = wrapper.querySelector(".remark-input");
+                const photoInput = wrapper.querySelector(".photo-input");
 
-                    if (remarkBox) remarkBox.value = "";
-                    if (photoInput) photoInput.value = "";
+                if (remarkBox) remarkBox.value = "";
+                if (photoInput) photoInput.value = "";
 
-                    wrapper.querySelectorAll(".rfv").forEach(v => v.style.display = "none");
-                }
+                wrapper.querySelectorAll(".rfv").forEach(v => v.style.display = "none");
+            }
         }
 
         window.onload = function () {
-            
+
             const radios = document.querySelectorAll('input[type="radio"]');
             radios.forEach(function (rb) {
                 rb.addEventListener("change", function () {
@@ -74,31 +86,33 @@
         };
 
         function resetFormUI() {
-            // Clear all textboxes
+           
             document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(function (input) {
                 input.value = "";
             });
 
-            // Reset all radio buttons (select "OK")
             document.querySelectorAll('.requirement-item').forEach(function (item) {
                 let okRadio = item.querySelector('input[type="radio"][value="true"]');
                 if (okRadio) okRadio.checked = true;
             });
 
-            // Clear file inputs
             document.querySelectorAll('.photo-input').forEach(function (fileInput) {
                 fileInput.value = "";
             });
 
-            // Hide remark & photo fields
             document.querySelectorAll('.hidden-fields').forEach(function (section) {
                 section.style.display = "none";
             });
 
-            // Hide validation messages (if any)
             document.querySelectorAll(".rfv").forEach(function (v) {
                 v.style.display = "none";
             });
+        }
+
+        function confirmReset() {
+            if (confirm('Are you sure you want to clear all fields?')) {
+                resetFormUI(); 
+            }
         }
 
 
@@ -118,7 +132,7 @@
 
             <div class="clearfix"></div>
 
-            <div class="row">
+            <div class="row m-0">
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
@@ -173,19 +187,29 @@
                             <asp:Repeater ID="DictionaryRepeater" runat="server">
                                 <ItemTemplate>
                                     <div class="card mb-4 shadow-sm">
-                                        <div class="card-header bg-primary text-white">
+                                        <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
                                             <h6 class="mb-0">
-                                                        <asp:Label ID="Grp_detail" runat="server" Text='<%# Bind("Value") %>' /></h6>
+                                                        <asp:Label ID="Grp_detail" runat="server" Text='<%# Bind("Value") %>' />
+
+                                            </h6>
+
+                                            <a class="text-white text-decoration-none collapsed ml-auto" data-toggle="collapse"
+                                                   href='<%# "#collapse" + Container.ItemIndex %>' role="button"
+                                                   aria-expanded="false" aria-controls='<%# "collapse" + Container.ItemIndex %>'>
+                                                    <i class="fa fa-chevron-down collapse-toggle-icon"></i>
+                                                </a>
+                                   
 
                                         </div>
-                                        <div class="card-body">
+                                        <div id='<%# "collapse" + Container.ItemIndex %>' class="collapse card-body">
+                                            <%-- <div class="card-body">--%>
                                             <asp:Repeater ID="ChildRepeater" runat="server" DataSource='<%# Eval("Keys") %>'>
                                                 
                                                 <ItemTemplate>
                                                     <div class="row requirement-item mb-4 p-3 border rounded needs-validation">
                                                         <div class="col-md-3">
-                                                            <asp:label for="labelRequirementEmail4" runat="server" class="form-label " ForeColor="Black" Font-Bold="False" Font-Size="Small">Requirement:<%# Eval("Serial") %></asp:label>
-                                                            <asp:Label ID="Requirement" class="form-label" runat="server" Text='<%# Bind("key") %>' ForeColor="Blue" Font-Bold="true" Font-Size="Small"/>
+                                                            <asp:label for="labelRequirementEmail4" runat="server" CssClass="form-label " ForeColor="Black" Font-Bold="False" Font-Size="Small">Requirement:<%# Eval("Serial") %></asp:label>
+                                                            <asp:Label ID="Requirement" CssClass="form-label" runat="server" Text='<%# Bind("key") %>' ForeColor="Blue" Font-Bold="true" Font-Size="Small"/>
                                                         </div>
 
                                                         <div class="col-md-2">
@@ -224,7 +248,8 @@
                                                 </ItemTemplate>
                                             </asp:Repeater>
                                         </div>
-                                    </div>
+                                     </div>
+                                   <%-- </div>--%>
                                 </ItemTemplate>
                             </asp:Repeater>
 
@@ -238,11 +263,11 @@
                                 <!-- Reset button-->
 
                                 <asp:Button ID="reset" runat="server" OnClick="reset_Click" Text="Reset"
-                                    CssClass="btn btn-secondary px-4 py-2" />
+                                    CssClass="btn btn-secondary px-4 py-2" OnClientClick="confirmReset(); return false;" />
 
                                 <!-- Home button-->
-                                <asp:Button runat="server" ID="home" OnClientClick="resetFormUI()" Text="Home"
-                                    CssClass="btn btn-primary px-4 py-2" />
+                                <asp:Button runat="server" ID="home"  Text="Home"
+                                    CssClass="btn btn-primary px-4 py-2" OnClick="home_Click" />
 
 
                             </div>
