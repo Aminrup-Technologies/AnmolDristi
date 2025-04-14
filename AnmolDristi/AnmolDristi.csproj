@@ -84,6 +84,7 @@
     <Content Include="csm_ppechecklist_detailed.aspx" />
     <Content Include="home.aspx" />
     <Content Include="HtmlPage1.html" />
+    <Content Include="Line_walk_report.aspx" />
     <Content Include="Line_Walk_Status.aspx" />
     <Content Include="packages.config" />
     <Content Include="ppe_report.aspx" />
@@ -171,6 +172,13 @@
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Line_walk_report.aspx.cs">
+      <DependentUpon>Line_walk_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Line_walk_report.aspx.designer.cs">
+      <DependentUpon>Line_walk_report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Line_Walk_Status.aspx.cs">
       <DependentUpon>Line_Walk_Status.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -219,7 +227,9 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

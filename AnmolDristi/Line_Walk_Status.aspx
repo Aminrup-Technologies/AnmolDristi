@@ -28,91 +28,91 @@
         $(document).ready(function () {
             // Get ASP.NET Client IDs
             var nameBtnId = '<%= btnAddName.ClientID %>';
-    var observationBtnId = '<%= btnAddObservation.ClientID %>';
-    var recommendationBtnId = '<%= btnAddRecommendation.ClientID %>';
-    var snapBtnId = '<%= btnAddSnap.ClientID %>';
-    var areaBtnId = '<%= btnAddArea.ClientID %>';
-    var responsibilityBtnId = '<%= btnAddResponsibility.ClientID %>';
-    var targetDateBtnId = '<%= btnAddTargetDate.ClientID %>';
-    var remarksBtnId = '<%= btnAddRemarks.ClientID %>';
+            var observationBtnId = '<%= btnAddObservation.ClientID %>';
+            var recommendationBtnId = '<%= btnAddRecommendation.ClientID %>';
+            var snapBtnId = '<%= btnAddSnap.ClientID %>';
+            var areaBtnId = '<%= btnAddArea.ClientID %>';
+            var responsibilityBtnId = '<%= btnAddResponsibility.ClientID %>';
+            var targetDateBtnId = '<%= btnAddTargetDate.ClientID %>';
+            var remarksBtnId = '<%= btnAddRemarks.ClientID %>';
 
-    // Team Member Input
-    $("#" + nameBtnId).click(function () {
-        let newInput = `<div class="d-flex align-items-center mb-2 name-input-group">
+            // Team Member Input
+            $("#" + nameBtnId).click(function () {
+                let newInput = `<div class="d-flex align-items-center mb-2 name-input-group">
                             <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Enter team member name" />
                             <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
                         </div>`;
-        $("#nameInputContainer").append(newInput);
-    });
+                $("#nameInputContainer").append(newInput);
+            });
 
-    // Observation Input
-    $("#" + observationBtnId).click(function () {
-        let newInput = `<div class="d-flex align-items-center mb-2 observation-input-group">
+            // Observation Input
+            $("#" + observationBtnId).click(function () {
+                let newInput = `<div class="d-flex align-items-center mb-2 observation-input-group">
                             <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Observation" />
                             <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
                         </div>`;
-        $("#observationInputContainer").append(newInput);
-    });
+                $("#observationInputContainer").append(newInput);
+            });
 
-    // Recommendation Input
-    $("#" + recommendationBtnId).click(function () {
-        let newInput = `<div class="d-flex align-items-center mb-2 recommendation-input-group">
+            // Recommendation Input
+            $("#" + recommendationBtnId).click(function () {
+                let newInput = `<div class="d-flex align-items-center mb-2 recommendation-input-group">
                             <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Recommendation" />
                             <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
                         </div>`;
-        $("#recommendationInputContainer").append(newInput);
-    });
+                $("#recommendationInputContainer").append(newInput);
+            });
 
-    // Snap Upload Input
-    $("#" + snapBtnId).click(function () {
-        let newInput = `<div class="d-flex align-items-center mb-2 snap-upload-group">
+            // Snap Upload Input
+            $("#" + snapBtnId).click(function () {
+                let newInput = `<div class="d-flex align-items-center mb-2 snap-upload-group">
                             <input type="file" class="form-control form-control-sm rounded me-2" />
                             <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
                         </div>`;
-        $("#snapUploadContainer").append(newInput);
-    });
+                $("#snapUploadContainer").append(newInput);
+            });
 
-    // Area/Location Input
-    $("#" + areaBtnId).click(function () {
-        let newInput = `<div class="d-flex align-items-center mb-2 area-input-group">
+            // Area/Location Input
+            $("#" + areaBtnId).click(function () {
+                let newInput = `<div class="d-flex align-items-center mb-2 area-input-group">
                             <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Area/Location" />
                             <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
                         </div>`;
-        $("#AreaInputContainer").append(newInput);
-    });
+                $("#AreaInputContainer").append(newInput);
+            });
 
-    // Responsibility Input
-    $("#" + responsibilityBtnId).click(function () {
-        let newInput = `<div class="d-flex align-items-center mb-2 responsibility-input-group">
+            // Responsibility Input
+            $("#" + responsibilityBtnId).click(function () {
+                let newInput = `<div class="d-flex align-items-center mb-2 responsibility-input-group">
                             <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Responsibility" />
                             <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
                         </div>`;
-        $("#responsibilityInputContainer").append(newInput);
-    });
+                $("#responsibilityInputContainer").append(newInput);
+            });
 
-    // Target Date Input
-    $("#" + targetDateBtnId).click(function () {
-        let newInput = `<div class="d-flex align-items-center mb-2 target-date-input-group">
+            // Target Date Input
+            $("#" + targetDateBtnId).click(function () {
+                let newInput = `<div class="d-flex align-items-center mb-2 target-date-input-group">
                             <input type="date" class="form-control form-control-sm rounded me-2" />
                             <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
                         </div>`;
-        $("#targetDateInputContainer").append(newInput);
-    });
+                $("#targetDateInputContainer").append(newInput);
+            });
 
-    // Remarks Input
-    $("#" + remarksBtnId).click(function () {
-        let newInput = `<div class="d-flex align-items-center mb-2 remarks-input-group">
+            // Remarks Input
+            $("#" + remarksBtnId).click(function () {
+                let newInput = `<div class="d-flex align-items-center mb-2 remarks-input-group">
                             <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Remarks" />
                             <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
                         </div>`;
-        $("#remarksInputContainer").append(newInput);
-    });
+                $("#remarksInputContainer").append(newInput);
+            });
 
-    // Common remove button logic
-    $("body").on("click", ".btn-remove", function () {
-        $(this).closest("div").remove();
-    });
-});
+            // Common remove button logic
+            $("body").on("click", ".btn-remove", function () {
+                $(this).closest("div").remove();
+            });
+        });
 
 
 
@@ -155,6 +155,8 @@
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_JD" runat="server" AssociatedControlID="TB_JD" Text="Job Description" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_JD" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_JD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_TB_JD" runat="server" ValidationGroup="Submit" ControlToValidate="TB_JD" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
+
                                         <asp:TextBox ID="TB_JD" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     </div>
                                 </div>
@@ -163,6 +165,8 @@
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_ID" runat="server" AssociatedControlID="TB_ID" Text="Job ID" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_ID" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_ID" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_TB_ID" runat="server" ValidationGroup="Submit" ControlToValidate="TB_ID" ForeColor="Red" ErrorMessage="Only letters, numbers, and spaces allowed" ValidationExpression="^[a-zA-Z0-9]+$" Display="Dynamic"></asp:RegularExpressionValidator>
+
                                         <asp:TextBox ID="TB_ID" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     </div>
                                 </div>
@@ -179,6 +183,7 @@
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_TM_Names" runat="server" AssociatedControlID="TB_TM_Names" Text="Team Members Present Names" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_TM_Names" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_TM_Names" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_TB_TM_Names" runat="server" ValidationGroup="Submit" ControlToValidate="TB_TM_Names" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
 
                                         <div id="nameInputContainer">
                                             <div class="d-flex mb-2">
@@ -217,6 +222,7 @@
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_location" runat="server" AssociatedControlID="TB_location" Text="Area/Location" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_location" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_location" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_TB_location" runat="server" ValidationGroup="Submit" ControlToValidate="TB_location" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
 
                                         <div id="AreaInputContainer">
                                             <div class="d-flex mb-2">
@@ -231,6 +237,7 @@
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_Observation_Points" runat="server" AssociatedControlID="TB_Observation_Points" Text="Observation Points" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_Observation_Points" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Observation_Points" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_TB_Observation_Points" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Observation_Points" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
 
                                         <div id="observationInputContainer">
                                             <div class="d-flex mb-2">
@@ -244,6 +251,7 @@
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_Recommendation_Points" runat="server" AssociatedControlID="TB_Recommendation_Points" Text="Recommendation Points" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_Recommendation_Points" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Recommendation_Points" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_TB_Recommendation_Points" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Recommendation_Points" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
 
                                         <div id="recommendationInputContainer">
                                             <div class="d-flex mb-2">
@@ -261,44 +269,46 @@
                             <!-- Row 4: Responsibility,Target Date,Remarks, Upload Snaps -->
                             <div class="row">
                                 <div class="col-md-4">
-    <div class="mb-4">
-        <asp:Label ID="Lbl_Responsibility" runat="server" AssociatedControlID="TB_Responsibility" Text="Responsibility" ForeColor="Blue" Font-Bold="true"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_Responsibility" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Responsibility" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <div class="mb-4">
+                                        <asp:Label ID="Lbl_Responsibility" runat="server" AssociatedControlID="TB_Responsibility" Text="Responsibility" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_Responsibility" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Responsibility" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_TB_Responsibility" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Responsibility" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
 
-        <div id="responsibilityInputContainer">
-            <div class="d-flex mb-2">
-                <asp:TextBox ID="TB_Responsibility" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Responsibility"></asp:TextBox>
-                <asp:Button ID="btnAddResponsibility" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="mb-4">
-        <asp:Label ID="Lbl_TargetDate" runat="server" AssociatedControlID="TB_TargetDate" Text="Target Date" ForeColor="Blue" Font-Bold="true"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_TargetDate" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_TargetDate" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <div id="responsibilityInputContainer">
+                                            <div class="d-flex mb-2">
+                                                <asp:TextBox ID="TB_Responsibility" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Responsibility"></asp:TextBox>
+                                                <asp:Button ID="btnAddResponsibility" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-4">
+                                        <asp:Label ID="Lbl_TargetDate" runat="server" AssociatedControlID="TB_TargetDate" Text="Target Date" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_TargetDate" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_TargetDate" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
 
-        <div id="targetDateInputContainer">
-            <div class="d-flex mb-2">
-                <asp:TextBox ID="TB_TargetDate" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="YYYY-MM-DD" TextMode="Date"></asp:TextBox>
-                <asp:Button ID="btnAddTargetDate" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="mb-4">
-        <asp:Label ID="Lbl_Remarks" runat="server" AssociatedControlID="TB_Remarks" Text="Remarks" ForeColor="Blue" Font-Bold="true"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_Remarks" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Remarks" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <div id="targetDateInputContainer">
+                                            <div class="d-flex mb-2">
+                                                <asp:TextBox ID="TB_TargetDate" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="YYYY-MM-DD" TextMode="Date"></asp:TextBox>
+                                                <asp:Button ID="btnAddTargetDate" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-4">
+                                        <asp:Label ID="Lbl_Remarks" runat="server" AssociatedControlID="TB_Remarks" Text="Remarks" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_Remarks" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Remarks" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                       <asp:RegularExpressionValidator ID="REV_TB_Remarks" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Remarks" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
 
-        <div id="remarksInputContainer">
-            <div class="d-flex mb-2">
-                <asp:TextBox ID="TB_Remarks" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Remarks"></asp:TextBox>
-                <asp:Button ID="btnAddRemarks" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
-            </div>
-        </div>
-    </div>
-</div>
+                                        <div id="remarksInputContainer">
+                                            <div class="d-flex mb-2">
+                                                <asp:TextBox ID="TB_Remarks" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Remarks"></asp:TextBox>
+                                                <asp:Button ID="btnAddRemarks" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-4">
                                     <div class="mb-4">
@@ -335,7 +345,7 @@
 
                                 <div class="d-flex justify-content-center gap-2 mt-2">
                                     <!-- Centering buttons -->
-                                    <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click"/>
+                                    <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
                                     <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                                     <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                 </div>
