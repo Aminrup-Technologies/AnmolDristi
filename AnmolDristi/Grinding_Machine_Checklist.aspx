@@ -140,34 +140,6 @@
                                 </div>
 
 
-                                <!-- Verified By -->
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblVerifiedBy" runat="server" Text="Verified By:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:TextBox ID="txtVerifiedBy" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Name of Verifier"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvVerifiedBy" runat="server"
-                                                ControlToValidate="txtVerifiedBy"
-                                                ErrorMessage="Please enter verifier's name."
-                                                ForeColor="Red" Display="Dynamic" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Remarks -->
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblRemarks" runat="server" Text="Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:TextBox ID="txtRemarks" runat="server"
-                                                CssClass="form-control form-control-sm rounded"
-                                                TextMode="MultiLine"
-                                                Rows="3"
-                                                Placeholder="Enter any remarks">
-                                            </asp:TextBox>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <table class="table table-bordered">
                                     <!-- 1. Fore handle -->
@@ -330,6 +302,22 @@
                                         </td>
                                     </tr>
                                 </table>
+
+
+                                <!-- Remarks -->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <asp:Label ID="lblRemarks" runat="server" Text="Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="txtRemarks" runat="server"
+                                                CssClass="form-control form-control-sm rounded"
+                                                TextMode="MultiLine"
+                                                Rows="3"
+                                                Placeholder="Enter any remarks">
+                                            </asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
 
 
                                 <div class="col-md-3">

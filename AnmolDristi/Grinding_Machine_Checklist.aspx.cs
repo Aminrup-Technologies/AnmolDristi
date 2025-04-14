@@ -82,7 +82,7 @@ namespace AnmolDristi
             string serialNo = txtSerialNo.Text.Trim();
             string identificationNumber = txtIdentificationNumber.Text.Trim();
             string location = txtLocation.Text.Trim();
-            string verifiedBy = txtVerifiedBy.Text.Trim();
+         
             string remarks = txtRemarks.Text.Trim();
 
 
@@ -98,7 +98,7 @@ namespace AnmolDristi
             txtSerialNo.Text = "";
             txtIdentificationNumber.Text = "";
             txtLocation.Text = "";
-            txtVerifiedBy.Text = "";
+           
             txtRemarks.Text = "";
             lblMessage.Text = "";
         }
