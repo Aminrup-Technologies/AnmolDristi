@@ -33,7 +33,7 @@
 
                             </a>
                             <a class="btn btn-app" href="#">
-                                <span class="badge bg-red">N/A
+                                <span class="badge bg-green">Ok
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Incident Records
 
@@ -91,6 +91,34 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-6" id="Div4" runat="server" visible="true">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>CSM : Grinding Machine Checklist</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <a class="btn btn-app" href="Grinding_Machine_Checklist.aspx">
+                                <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label7" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Grinding Machine Checklist
+                            </a>
+                            <a class="btn btn-app" href="Grinding_Machine_Checklist_View.aspx">
+                                <span class="badge bg-green">Ok
+                                    <asp:Label ID="Label8" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Grinding Machine Checklist
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+
 
             </div>
         </div>

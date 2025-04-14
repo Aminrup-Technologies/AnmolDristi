@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="csm_kyt.aspx" />
+    <Content Include="Grinding_Machine_Checklist.aspx" />
     <Content Include="home.aspx" />
     <Content Include="HtmlPage1.html" />
     <Content Include="incident_analysis.aspx" />
@@ -162,6 +163,13 @@
     </Compile>
     <Compile Include="Dristi.Master.designer.cs">
       <DependentUpon>Dristi.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Grinding_Machine_Checklist.aspx.cs">
+      <DependentUpon>Grinding_Machine_Checklist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Grinding_Machine_Checklist.aspx.designer.cs">
+      <DependentUpon>Grinding_Machine_Checklist.aspx</DependentUpon>
     </Compile>
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>

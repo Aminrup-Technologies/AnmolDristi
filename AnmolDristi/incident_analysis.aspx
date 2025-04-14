@@ -596,7 +596,7 @@
 
 
 
-                               <%-- <!-- Contributing Factors Section -->
+                                <%-- <!-- Contributing Factors Section -->
                                 <div class="col-md-12">
                                     <h4 class="form-label" style="color: Blue; font-weight: bold; font-size: small;">Contributing Factors</h4>
                                 </div>
@@ -716,39 +716,70 @@
 
 
 
-                                <!-- Root Cause Analysis Table -->
+
+                                <%-- Root Cause Analysis Table - Row Format --%>
                                 <div class="col-md-12">
                                     <div class="table-responsive root-cause-table">
-                                        <!-- Moved class here -->
-                                        <asp:Table ID="tblRootCauseAnalysis" runat="server" CssClass="table table-bordered text-center">
+                                        <asp:Table ID="tblRootCauseAnalysis" runat="server" CssClass="table table-bordered text-start">
+                                  
                                             <asp:TableHeaderRow CssClass="table-light">
-                                                <asp:TableCell ColumnSpan="6" CssClass="text-center fw-bold" ForeColor="Blue">
+                                                <asp:TableCell ColumnSpan="2" CssClass="text-center fw-bold" ForeColor="Blue">
                     <strong>Root Cause Analysis</strong>
                                                 </asp:TableCell>
                                             </asp:TableHeaderRow>
-                                            <asp:TableHeaderRow CssClass="text-center" ForeColor="MediumBlue">
-                                                <asp:TableCell><strong>Why 1 <br /> (Loss)</strong></asp:TableCell>
-                                                <asp:TableCell><strong>Why 2 <br /> (Incident)</strong></asp:TableCell>
-                                                <asp:TableCell><strong>Why 3 <br /> (Immediate Cause)</strong></asp:TableCell>
-                                                <asp:TableCell><strong>Why 4 <br /> (Underlying Cause)</strong></asp:TableCell>
-                                                <asp:TableCell><strong>Why 5 <br /> (Root Cause)</strong></asp:TableCell>
-                                                <asp:TableCell><strong>Why 6 <br /> (How)</strong></asp:TableCell>
-                                            </asp:TableHeaderRow>
+
                                             <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+                    Why 1 (Loss)
+                                                </asp:TableCell>
                                                 <asp:TableCell>
                                                     <asp:TextBox ID="txtWhy1" runat="server" CssClass="form-control"></asp:TextBox>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
+
+                                        
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+                    Why 2 (Incident)
                                                 </asp:TableCell>
                                                 <asp:TableCell>
                                                     <asp:TextBox ID="txtWhy2" runat="server" CssClass="form-control"></asp:TextBox>
                                                 </asp:TableCell>
+                                            </asp:TableRow>
+
+                                         
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+                    Why 3 (Immediate Cause)
+                                                </asp:TableCell>
                                                 <asp:TableCell>
                                                     <asp:TextBox ID="txtWhy3" runat="server" CssClass="form-control"></asp:TextBox>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
+
+                                         
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+                    Why 4 (Underlying Cause)
                                                 </asp:TableCell>
                                                 <asp:TableCell>
                                                     <asp:TextBox ID="txtWhy4" runat="server" CssClass="form-control"></asp:TextBox>
                                                 </asp:TableCell>
+                                            </asp:TableRow>
+
+                                          
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+                    Why 5 (Root Cause)
+                                                </asp:TableCell>
                                                 <asp:TableCell>
                                                     <asp:TextBox ID="txtWhy5" runat="server" CssClass="form-control"></asp:TextBox>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
+
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+                    Why 6 (How)
                                                 </asp:TableCell>
                                                 <asp:TableCell>
                                                     <asp:TextBox ID="txtWhy6" runat="server" CssClass="form-control"></asp:TextBox>
@@ -758,29 +789,6 @@
                                     </div>
                                 </div>
 
-
-                                <style>
-                                    @media (max-width: 720px) {
-                                        .root-cause-table {
-                                            width: 100%;
-                                            overflow-x: auto;
-                                            display: block; /* Ensures scrolling */
-                                            white-space: nowrap;
-                                        }
-
-                                            .root-cause-table .table {
-                                                width: 720px; /* Keeps table wide enough for scrolling */
-                                                min-width: 600px; /* Prevents too much shrinkage */
-                                            }
-
-                                            .root-cause-table td,
-                                            .root-cause-table th {
-                                                font-size: 14px;
-                                                padding: 5px;
-                                                white-space: nowrap; /* Prevents text from wrapping */
-                                            }
-                                    }
-                                </style>
 
                                 <%--<div class="col-md-12">
                                     <div class="table-responsive">

@@ -4,23 +4,25 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient; // Add this line
-using System.Configuration; // Add this line
-using System.Data; // Add this line
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Data;
+using Newtonsoft.Json;
+
 
 namespace AnmolDristi
 {
     public partial class KYT : System.Web.UI.Page
     {
-        protected void Page_Load_KYT(object sender, EventArgs e)  
+        protected void Page_Load_KYT(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                LoadKYTIncidentDetails(); 
+                LoadKYTIncidentDetails();
             }
         }
 
-        private void LoadKYTIncidentDetails()  
+        private void LoadKYTIncidentDetails()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
@@ -94,6 +96,7 @@ namespace AnmolDristi
 
             string kytPhotographPath = fuPhotograph.HasFile ? fuPhotograph.FileName : null;
 
+            //string kytJson = hfKYTGridData.Value;
 
 
             //DateTime? kytDate = null;
@@ -142,18 +145,37 @@ namespace AnmolDristi
                     }
 
                     // Insert into KYT_Table2 using SP
-                    using (SqlCommand cmd = new SqlCommand("usp_InsertKYTDetails", conn, transaction))
+                    string kytGridJson = hfKYTGridData.Value;
+                    List<KYTGridRow> observations = new List<KYTGridRow>();
+                    if (!string.IsNullOrWhiteSpace(kytGridJson))
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@ID", kytIncidentID);
-                        cmd.Parameters.AddWithValue("@KYTSLNo", (object)kytSlNo ?? DBNull.Value);
-                        cmd.Parameters.AddWithValue("@KYTHiddenHazards", (object)kytHiddenHazards ?? DBNull.Value);
-                        cmd.Parameters.AddWithValue("@KYTConsequence", (object)kytConsequence ?? DBNull.Value);
-                        cmd.Parameters.AddWithValue("@KYTCounterMeasures", (object)kytCounterMeasures ?? DBNull.Value);
-                        cmd.Parameters.AddWithValue("@KYTPriorityValue", (object)kytPriorityValue ?? DBNull.Value);
-                        cmd.Parameters.AddWithValue("@KYTPhotographPath", (object)kytPhotographPath ?? DBNull.Value);
+                        observations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<KYTGridRow>>(kytGridJson);
 
-                        cmd.ExecuteNonQuery();
+                        foreach (var row in observations)
+                        {
+                            if (string.IsNullOrWhiteSpace(row.HiddenHazards) &&
+                                string.IsNullOrWhiteSpace(row.Consequence) &&
+                                string.IsNullOrWhiteSpace(row.CounterMeasures) &&
+                                string.IsNullOrWhiteSpace(row.PriorityValue) &&
+                                string.IsNullOrWhiteSpace(row.PhotographPath))
+                            {
+                                continue; // to skip empty row
+                            }
+                            using (SqlCommand cmd = new SqlCommand("usp_InsertKYTDetails", conn, transaction))
+                            {
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.AddWithValue("@ID", kytIncidentID);
+                                cmd.Parameters.AddWithValue("@KYTSLNo", (object)row.SlNo ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@KYTHiddenHazards", (object)row.HiddenHazards ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@KYTConsequence", (object)row.Consequence ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@KYTCounterMeasures", (object)row.CounterMeasures ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@KYTPriorityValue", (object)row.PriorityValue ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@KYTPhotographPath", (object)row.PhotographPath ?? DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
                     }
 
                     transaction.Commit();
@@ -166,6 +188,17 @@ namespace AnmolDristi
             }
 
         }
+
+        public class KYTGridRow
+        {
+            public string SlNo { get; set; }
+            public string HiddenHazards { get; set; }
+            public string Consequence { get; set; }
+            public string CounterMeasures { get; set; }
+            public string PriorityValue { get; set; }
+            public string PhotographPath { get; set; }
+        }
+
 
         protected void BtnReset_Click(object sender, EventArgs e) // Renamed
         {

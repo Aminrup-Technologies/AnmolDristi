@@ -25,34 +25,52 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("btnAddKYT").addEventListener("click", function () {
+        let kytData = [];
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("btnAddKYT").addEventListener("click", function () {
 
-            const slNo = document.getElementById("<%= txtSlNo.ClientID %>").value.trim();
-            const hazard = document.getElementById("<%= txtHiddenHazards.ClientID %>").value.trim();
-            const consequence = document.getElementById("<%= txtConsequence.ClientID %>").value.trim();
-            const measures = document.getElementById("<%= txtCounterMeasures.ClientID %>").value.trim();
-            const priority = document.getElementById("<%= ddlPriority.ClientID %>").value;
-            const photoControl = document.getElementById("<%= fuPhotograph.ClientID %>");
-            const photoName = photoControl.files.length > 0 ? photoControl.files[0].name : "No file";
+                const slNo = document.getElementById("<%= txtSlNo.ClientID %>").value.trim();
+                const hazard = document.getElementById("<%= txtHiddenHazards.ClientID %>").value.trim();
+                const consequence = document.getElementById("<%= txtConsequence.ClientID %>").value.trim();
+                const measures = document.getElementById("<%= txtCounterMeasures.ClientID %>").value.trim();
+                const priority = document.getElementById("<%= ddlPriority.ClientID %>").value;
+                const photoControl = document.getElementById("<%= fuPhotograph.ClientID %>");
+                const photoName = photoControl.files.length > 0 ? photoControl.files[0].name : "No file";
 
-            if (!slNo || !hazard || !consequence || !measures || !priority) {
-                alert("Please fill in all fields before adding.");
-                return;
-            }
+                if (!slNo || !hazard || !consequence || !measures || !priority) {
+                    alert("Please fill in all fields before adding.");
+                    return;
+                }
 
-            let grid = document.getElementById("KYTGrid");
-            if (!grid) {
-                console.error("KYTGrid not found.");
-                return;
-            }
+                // Create observation object
+                let observation = {
+                    SlNo: parseInt(slNo),
+                    HiddenHazards: hazard,
+                    Consequence: consequence,
+                    CounterMeasures: measures,
+                    PriorityValue: priority,
+                    PhotographPath: photoName
+                };
 
-            let table = document.getElementById("KYTTable");
-            if (!table) {
-                table = document.createElement("table");
-                table.id = "KYTTable";
-                table.className = "table table-bordered small mt-3";
-                table.innerHTML = `
+                // Push to array
+                kytData.push(observation);
+
+                // Save to hidden field
+                document.getElementById("<%= hfKYTGridData.ClientID %>").value = JSON.stringify(kytData);
+
+
+                let grid = document.getElementById("KYTGrid");
+                if (!grid) {
+                    console.error("KYTGrid not found.");
+                    return;
+                }
+
+                let table = document.getElementById("KYTTable");
+                if (!table) {
+                    table = document.createElement("table");
+                    table.id = "KYTTable";
+                    table.className = "table table-bordered small mt-3";
+                    table.innerHTML = `
                     <thead class="table-light">
                         <tr>
                             <th>Sl. No.</th>
@@ -64,29 +82,29 @@
                         </tr>
                     </thead>
                     <tbody></tbody>`;
-                grid.appendChild(table);
-            }
+                    grid.appendChild(table);
+                }
 
-            const tbody = table.querySelector("tbody");
-            const newRow = document.createElement("tr");
+                const tbody = table.querySelector("tbody");
+                const newRow = document.createElement("tr");
 
-            [slNo, hazard, consequence, measures, priority, photoName].forEach(text => {
-                const td = document.createElement("td");
-                td.textContent = text;
-                newRow.appendChild(td);
+                [slNo, hazard, consequence, measures, priority, photoName].forEach(text => {
+                    const td = document.createElement("td");
+                    td.textContent = text;
+                    newRow.appendChild(td);
+                });
+
+                tbody.appendChild(newRow);
+
+                // Clear fields
+                document.getElementById("<%= txtSlNo.ClientID %>").value = "";
+                document.getElementById("<%= txtHiddenHazards.ClientID %>").value = "";
+                document.getElementById("<%= txtConsequence.ClientID %>").value = "";
+                document.getElementById("<%= txtCounterMeasures.ClientID %>").value = "";
+                document.getElementById("<%= ddlPriority.ClientID %>").selectedIndex = 0;
+                document.getElementById("<%= fuPhotograph.ClientID %>").value = "";
             });
-
-            tbody.appendChild(newRow);
-
-            // Clear fields
-            document.getElementById("<%= txtSlNo.ClientID %>").value = "";
-            document.getElementById("<%= txtHiddenHazards.ClientID %>").value = "";
-            document.getElementById("<%= txtConsequence.ClientID %>").value = "";
-            document.getElementById("<%= txtCounterMeasures.ClientID %>").value = "";
-            document.getElementById("<%= ddlPriority.ClientID %>").selectedIndex = 0;
-            document.getElementById("<%= fuPhotograph.ClientID %>").value = "";
         });
-    });
     </script>
 
     <div class="right_col" role="main">
@@ -367,7 +385,7 @@
                                             <asp:Label ID="lblPhotograph" runat="server" Text="Upload Photograph:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                             <div class="input-group-sm">
                                                 <asp:FileUpload ID="fuPhotograph" runat="server" CssClass="form-control form-control-sm rounded" />
-                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="fuPhotograph" ></asp:RequiredFieldValidator>
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="fuPhotograph"></asp:RequiredFieldValidator>
                                             </div>
                                         </div>
                                     </div>
@@ -380,6 +398,141 @@
                                     </div>
                                 </div>
 
+                                <asp:HiddenField ID="hfKYTGridData" runat="server" />
+
+
+                               <%-- <script type="text/javascript">
+                                    let kytData = [];
+
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        document.getElementById("btnAddKYT").addEventListener("click", function () {
+                                            const slNo = document.getElementById("<%= txtSlNo.ClientID %>").value.trim();
+                                            const hazard = document.getElementById("<%= txtHiddenHazards.ClientID %>").value.trim();
+                                            const consequence = document.getElementById("<%= txtConsequence.ClientID %>").value.trim();
+                                            const measures = document.getElementById("<%= txtCounterMeasures.ClientID %>").value.trim();
+                                            const priority = document.getElementById("<%= ddlPriority.ClientID %>").value;
+                                            const photoControl = document.getElementById("<%= fuPhotograph.ClientID %>");
+                                            const photoName = photoControl.files.length > 0 ? photoControl.files[0].name : "";
+
+                                            // Basic validation
+                                            if (!slNo || !hazard || !consequence || !measures || !priority || !photoName) {
+                                                alert("Please fill in all fields before adding.");
+                                                return;
+                                            }
+
+                                            // Optional: Avoid duplicate Sl. No
+                                            if (kytData.some(item => item.SlNo === slNo)) {
+                                                alert("Sl. No. already exists. Please enter a unique Sl. No.");
+                                                return;
+                                            }
+
+                                            // Create observation object
+                                            let observation = {
+                                                SlNo: parseInt(slNo),
+                                                HiddenHazards: hazard,
+                                                Consequence: consequence,
+                                                CounterMeasures: measures,
+                                                Priority: priority,
+                                                Photograph: photoName
+                                            };
+
+                                            // Push to array
+                                            kytData.push(observation);
+
+                                            // Save to hidden field
+                                            document.getElementById("<%= hfKYTGridData.ClientID %>").value = JSON.stringify(kytData);
+
+                                            // Append to table
+                                            let grid = document.getElementById("KYTGrid");
+                                            if (!grid) return;
+
+                                            let resultsTable = document.getElementById("kytResultsTable");
+                                            if (!resultsTable) {
+                                                resultsTable = document.createElement("table");
+                                                resultsTable.id = "kytResultsTable";
+                                                resultsTable.className = "table table-bordered small mt-3";
+                                                resultsTable.innerHTML = `
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sl No</th>
+                                                        <th>Hidden Hazards</th>
+                                                        <th>Consequence</th>
+                                                        <th>Counter Measures</th>
+                                                        <th>Priority</th>
+                                                        <th>Photograph</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            `;
+                                                grid.appendChild(resultsTable);
+                                            }
+
+                                            let tbody = resultsTable.querySelector("tbody");
+                                            let newRow = document.createElement("tr");
+
+                                            [
+                                                observation.SlNo,
+                                                observation.HiddenHazards,
+                                                observation.Consequence,
+                                                observation.CounterMeasures,
+                                                observation.Priority,
+                                                observation.Photograph
+                                            ].forEach(value => {
+                                                let cell = document.createElement("td");
+                                                cell.textContent = value;
+                                                newRow.appendChild(cell);
+                                            });
+
+                                            tbody.appendChild(newRow);
+
+                                            // Reset inputs
+                                            document.getElementById("<%= txtSlNo.ClientID %>").value = "";
+                                            document.getElementById("<%= txtHiddenHazards.ClientID %>").value = "";
+                                            document.getElementById("<%= txtConsequence.ClientID %>").value = "";
+                                            document.getElementById("<%= txtCounterMeasures.ClientID %>").value = "";
+                                            document.getElementById("<%= ddlPriority.ClientID %>").selectedIndex = 0;
+                                            photoControl.value = "";
+                                        });
+                                    });
+                                </script>--%>
+
+
+                                <%--                                <script type="text/javascript">
+                                    let kytData = [];
+
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        document.getElementById("btnAddKYT").addEventListener("click", function () {
+
+                                            const slNo = document.getElementById("<%= txtSlNo.ClientID %>").value.trim();
+                                            const hazard = document.getElementById("<%= txtHiddenHazards.ClientID %>").value.trim();
+                                            const consequence = document.getElementById("<%= txtConsequence.ClientID %>").value.trim();
+                                            const measures = document.getElementById("<%= txtCounterMeasures.ClientID %>").value.trim();
+                                            const priority = document.getElementById("<%= ddlPriority.ClientID %>").value;
+                                            const photoControl = document.getElementById("<%= fuPhotograph.ClientID %>");
+                                            const photoName = photoControl.files.length > 0 ? photoControl.files[0].name : "No file";
+
+                                            if (!slNo || !hazard || !consequence || !measures || !priority) {
+                                                alert("Please fill in all fields before adding.");
+                                                return;
+                                            }
+
+                                            const newRow = {
+                                                SlNo: slNo,
+                                                HiddenHazards: hazard,
+                                                Consequence: consequence,
+                                                CounterMeasures: measures,
+                                                PriorityValue: priority,
+                                                PhotographPath: photoName
+                                            };
+
+                                            kytData.push(newRow);
+
+                                            document.getElementById("<%= hfKYTGridData.ClientID %>").value = JSON.stringify(kytData);
+
+                                            // Optionally update visible table (not required for saving)
+                                        });
+                                    });
+                                </script>--%>
 
 
                                 <!-- KYT Data Table -->
@@ -395,7 +548,7 @@
                                         </div>
 
                                         <div class="mt-2">
-                                            <asp:Label ID="lblMessage" runat="server" CssClass="text-danger fw-bold" />
+                                            <asp:Label ID="lblMessage" runat="server" CssClass="fw-bold" />
                                         </div>
                                     </div>
                                 </div>
