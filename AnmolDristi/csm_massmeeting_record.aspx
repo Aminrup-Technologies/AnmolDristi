@@ -978,7 +978,7 @@
                 if (employeeCode.trim() !== "") {
                     $.ajax({
                         type: "POST",
-                        url: "commitee_meeting.aspx/GetEmployeeDetails",
+                        url: "csm_massmeeting_record.aspx/GetEmployeeDetails",
                         data: JSON.stringify({ empCode: employeeCode }),
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
