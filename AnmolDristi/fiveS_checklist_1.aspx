@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="fiveS_checklist_1.aspx.cs" Inherits="AnmolDristi.fiveS_checklist_1" Async="true" %>
+﻿<%@ Page Title="Five S Checklist" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="fiveS_checklist_1.aspx.cs" Inherits="AnmolDristi.fiveS_checklist_1" Async="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <style>
+    <style type="text/css">
         .collapse-toggle-icon {
             transition: transform 0.3s ease;
         }
@@ -57,7 +57,7 @@
             if (radioBtn.value === "false") {
                 hiddenFields.style.display = "block";
             }
-            // OK
+                // OK
             else {
                 hiddenFields.style.display = "none";
 
@@ -86,7 +86,7 @@
         };
 
         function resetFormUI() {
-           
+
             document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(function (input) {
                 input.value = "";
             });
@@ -111,22 +111,17 @@
 
         function confirmReset() {
             if (confirm('Are you sure you want to clear all fields?')) {
-                resetFormUI(); 
+                resetFormUI();
             }
         }
-
-
     </script>
-
-
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h5 style="text-align: center; font-weight: bold"; class="text-success">CHECKLIST FOR 5S</h5>
+                    <h5 style="text-align:left; padding-left:20px; font-weight: bold;" class="text-success">CHECKLIST FOR 5S</h5>
                 </div>
             </div>
 
@@ -136,7 +131,7 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <asp:label runat="server" ForeColor="Green" Font-Bold="true" >ATS/OHS/HKS-5SCL-01</asp:label>
+                            <asp:Label runat="server" ForeColor="Green" Font-Bold="true">JOB and Site Details</asp:Label>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
@@ -145,21 +140,15 @@
                         <div class="x_content">
 
                             <div class="row mb-4">
-                                <!-- Date Field -->
                                 <div class="col-md-4 col-sm-12 mb-3">
-                                    <asp:label for="txtDate" runat="server" class="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Date:</asp:label>
+                                    <asp:Label for="txtDate" runat="server" class="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Date:</asp:Label>
                                     <asp:TextBox ID="txtDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rfvDate" runat="server"
-                                        ControlToValidate="txtDate"
-                                        ErrorMessage="Date is required"
-                                        CssClass="text-danger"
-                                        Display="Dynamic"
-                                        ValidationGroup="save" />
+                                        ControlToValidate="txtDate" ErrorMessage="Date is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save" />
                                 </div>
 
-                                <!-- Department Field -->
                                 <div class="col-md-4 col-sm-12 mb-3">
-                                    <asp:label for="txtDepartment" runat="server" class="form-label" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Department:</asp:label>
+                                    <asp:Label for="txtDepartment" runat="server" class="form-label" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Department:</asp:Label>
                                     <asp:TextBox ID="txtDepartment" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rfvDepartment" runat="server"
                                         ControlToValidate="txtDepartment"
@@ -169,9 +158,8 @@
                                         ValidationGroup="save" />
                                 </div>
 
-                                <!-- Job Field -->
                                 <div class="col-md-4 col-sm-12 mb-3">
-                                    <asp:label for="txtJob" runat="server" class="form-label" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Job:</asp:label>
+                                    <asp:Label for="txtJob" runat="server" class="form-label" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Job:</asp:Label>
                                     <asp:TextBox ID="txtJob" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rfvJob" runat="server"
                                         ControlToValidate="txtJob"
@@ -189,36 +177,36 @@
                                     <div class="card mb-4 shadow-sm">
                                         <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
                                             <h6 class="mb-0">
-                                                        <asp:Label ID="Grp_detail" runat="server" Text='<%# Bind("Value") %>' />
+                                                <asp:Label ID="Grp_detail" runat="server" Text='<%# Bind("Value") %>' />
 
                                             </h6>
 
                                             <a class="text-white text-decoration-none collapsed ml-auto" data-toggle="collapse"
-                                                   href='<%# "#collapse" + Container.ItemIndex %>' role="button"
-                                                   aria-expanded="false" aria-controls='<%# "collapse" + Container.ItemIndex %>'>
-                                                    <i class="fa fa-chevron-down collapse-toggle-icon"></i>
-                                                </a>
-                                   
+                                                href='<%# "#collapse" + Container.ItemIndex %>' role="button"
+                                                aria-expanded="false" aria-controls='<%# "collapse" + Container.ItemIndex %>'>
+                                                <i class="fa fa-chevron-down collapse-toggle-icon"></i>
+                                            </a>
+
 
                                         </div>
                                         <div id='<%# "collapse" + Container.ItemIndex %>' class="collapse card-body">
                                             <%-- <div class="card-body">--%>
                                             <asp:Repeater ID="ChildRepeater" runat="server" DataSource='<%# Eval("Keys") %>'>
-                                                
+
                                                 <ItemTemplate>
                                                     <div class="row requirement-item mb-4 p-3 border rounded needs-validation">
-                                                        <div class="col-md-3">
-                                                            <asp:label for="labelRequirementEmail4" runat="server" CssClass="form-label " ForeColor="Black" Font-Bold="False" Font-Size="Small">Requirement:<%# Eval("Serial") %></asp:label>
-                                                            <asp:Label ID="Requirement" CssClass="form-label" runat="server" Text='<%# Bind("key") %>' ForeColor="Blue" Font-Bold="true" Font-Size="Small"/>
+                                                        <div class="col-md-4">
+                                                            <asp:Label for="labelRequirementEmail4" runat="server" CssClass="form-label " ForeColor="Black" Font-Bold="False" Font-Size="Small">Point:<%# Eval("Serial") %></asp:Label>
+                                                            <asp:Label ID="Requirement" CssClass="form-label" runat="server" Text='<%# Bind("key") %>' ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
                                                         </div>
 
                                                         <div class="col-md-2">
-                                                            <asp:label for="labelresult" class="form-label" runat="server"  ForeColor="Black" Font-Bold="False" Font-Size="Small">Ok/NotOk:</asp:label>
+                                                            <asp:Label for="labelresult" class="form-label" runat="server" ForeColor="Black" Font-Bold="False" Font-Size="Small">Observation</asp:Label>
 
                                                             <asp:RadioButtonList ID="result" runat="server" RepeatDirection="Horizontal"
                                                                 CssClass="" OnClientClick="toggleInputs(this)" ForeColor="Black" Font-Bold="False" Font-Size="Small">
-                                                                <asp:ListItem Text="OK" Value="true" Selected="True"  />
-                                                                <asp:ListItem Text="NOT OK" Value="false" />
+                                                                <asp:ListItem Text="OK" Value="true" Selected="True" />
+                                                                <asp:ListItem Text="Not Ok" Value="false" />
                                                             </asp:RadioButtonList>
                                                             <asp:RequiredFieldValidator ID="rfvResult" runat="server"
                                                                 ControlToValidate="result"
@@ -248,31 +236,16 @@
                                                 </ItemTemplate>
                                             </asp:Repeater>
                                         </div>
-                                     </div>
-                                   <%-- </div>--%>
+                                    </div>
+                                    <%-- </div>--%>
                                 </ItemTemplate>
                             </asp:Repeater>
 
-
-
-                            <!-- Submit Button -->
                             <div class="text-center mt-4">
-                                <asp:Button ID="submit" runat="server" OnClick="submit_Click" Text="Submit"
-                                    CssClass="btn btn-success px-4 py-2" OnClientClick="validateChecklist();" ValidationGroup="save" />
-
-                                <!-- Reset button-->
-
-                                <asp:Button ID="reset" runat="server" OnClick="reset_Click" Text="Reset"
-                                    CssClass="btn btn-secondary px-4 py-2" OnClientClick="confirmReset(); return false;" />
-
-                                <!-- Home button-->
-                                <asp:Button runat="server" ID="home"  Text="Home"
-                                    CssClass="btn btn-primary px-4 py-2" OnClick="home_Click" />
-
-
+                                <asp:Button ID="submit" runat="server" OnClick="submit_Click" Text="Submit" CssClass="btn btn-success px-4 py-2" OnClientClick="validateChecklist();" ValidationGroup="save" />
+                                <asp:Button ID="reset" runat="server" OnClick="reset_Click" Text="Reset" CssClass="btn btn-secondary px-4 py-2" OnClientClick="confirmReset(); return false;" />
+                                <asp:Button runat="server" ID="home" Text="Home" CssClass="btn btn-primary px-4 py-2" OnClick="home_Click" />
                             </div>
-
-
 
                         </div>
                     </div>

@@ -3,6 +3,7 @@ using AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -80,7 +81,11 @@ namespace AnmolDristi
                 ChecklistsTableAdapter checklisttable = new ChecklistsTableAdapter();
                 // Adapter for ChecklistInfo
                 SqlDataAdapter daChecklistInfo = new SqlDataAdapter("SELECT * FROM ChecklistInfo", sqlConnection);
-                SqlCommandBuilder cbChecklistInfo = new SqlCommandBuilder(daChecklistInfo);
+
+                //This ensures that the structure of your in-memory DataTable (like _dataSource.ChecklistInfo) accurately mirrors the database table
+                daChecklistInfo.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                SqlCommandBuilder cbChecklistInfo = new SqlCommandBuilder(daChecklistInfo);              
                 daChecklistInfo.Fill(_dataSource, "ChecklistInfo");
 
                 checklisttable.Connection = sqlConnection;
@@ -103,7 +108,18 @@ namespace AnmolDristi
                         var checklistInfoRow = _dataSource.ChecklistInfo.NewChecklistInfoRow();
                         checklistInfoRow["Checklist_ID"] = checklistId;
                         checklistInfoRow["Group_Name"] = GrpDetails.Text;
-                        checklistInfoRow["Requirements"] = Requirement.Text;
+
+                        //Wrap the Requirement.Text assignment like this to guarantee it doesn't break regardless of database column length:
+                        //This ensures you're not violating the MaxLength constraint even if the database allows larger values but the in-memory schema is outdated or limited.
+                        string reqText = Requirement.Text;
+                        int maxLength = _dataSource.ChecklistInfo.Columns["Requirements"].MaxLength;
+                        if (maxLength > 0 && reqText.Length > maxLength)
+                        {
+                            reqText = reqText.Substring(0, maxLength);
+                        }
+                        checklistInfoRow["Requirements"] = reqText;
+
+                        //checklistInfoRow["Requirements"] = Requirement.Text;
                         checklistInfoRow["Result"] = Convert.ToBoolean(rbl.SelectedValue);
                         checklistInfoRow["Remark"] = remark.Text;
 

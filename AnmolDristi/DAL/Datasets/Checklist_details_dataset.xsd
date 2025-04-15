@@ -2,16 +2,17 @@
 <xs:schema id="Checklist_details_dataset" targetNamespace="http://tempuri.org/Checklist_details_dataset.xsd" xmlns:mstns="http://tempuri.org/Checklist_details_dataset.xsd" xmlns="http://tempuri.org/Checklist_details_dataset.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="2" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="3" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CSMSConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CSMSConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CSMSConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
-          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CSMSConnectionString1" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CSMSConnectionString1 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CSMSConnectionString1.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CSMSConnectionString1" IsAppSettingsProperty="true" Modifier="Assembly" Name="CSMSConnectionString1 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CSMSConnectionString1.ConnectionString" Provider="System.Data.SqlClient" />
           <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CSMSConnectionString2" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CSMSConnectionString2 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CSMSConnectionString2.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="DbConn" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DbConn (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.DbConn.ConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ChecklistsTableAdapter" GeneratorDataComponentClassName="ChecklistsTableAdapter" Name="Checklists" UserDataComponentName="ChecklistsTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="CSMSConnectionString2 (Web.config)" DbObjectName="CSMS.dbo.Checklists" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="DbConn (Web.config)" DbObjectName="CSMS.dbo.Checklists" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [Checklists] WHERE (([ID] = @Original_ID))</CommandText>
@@ -85,7 +86,7 @@ SELECT SCOPE_IDENTITY();
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ChecklistInfoTableAdapter" GeneratorDataComponentClassName="ChecklistInfoTableAdapter" Name="ChecklistInfo" UserDataComponentName="ChecklistInfoTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="CSMSConnectionString2 (Web.config)" DbObjectName="CSMS.dbo.ChecklistInfo" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="DbConn (Web.config)" DbObjectName="CSMS.dbo.ChecklistInfo" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [ChecklistInfo] WHERE (([ID] = @Original_ID))</CommandText>
@@ -96,14 +97,15 @@ SELECT SCOPE_IDENTITY();
                 </DeleteCommand>
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>INSERT INTO [ChecklistInfo] ([Checklist_ID], [Group_Name], [Requirements], [Result], [Remark], [Before_Photo]) VALUES (@Checklist_ID, @Group_Name, @Requirements, @Result, @Remark, @Before_Photo)</CommandText>
+                    <CommandText>INSERT INTO [ChecklistInfo] ([Checklist_ID], [Group_Name], [Requirements], [Result], [Remark], [Before_Photo], [TimeStamp]) VALUES (@Checklist_ID, @Group_Name, @Requirements, @Result, @Remark, @Before_Photo, @TimeStamp)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Checklist_ID" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Checklist_ID" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Group_Name" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Group_Name" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Requirements" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Requirements" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Requirements" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Requirements" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Boolean" Direction="Input" ParameterName="@Result" Precision="0" ProviderType="Bit" Scale="0" Size="0" SourceColumn="Result" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Remark" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Remark" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Before_Photo" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Before_Photo" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@TimeStamp" Precision="0" ProviderType="SmallDateTime" Scale="0" Size="0" SourceColumn="TimeStamp" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </InsertCommand>
@@ -116,14 +118,15 @@ FROM     ChecklistInfo</CommandText>
                 </SelectCommand>
                 <UpdateCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>UPDATE [ChecklistInfo] SET [Checklist_ID] = @Checklist_ID, [Group_Name] = @Group_Name, [Requirements] = @Requirements, [Result] = @Result, [Remark] = @Remark, [Before_Photo] = @Before_Photo WHERE (([ID] = @Original_ID))</CommandText>
+                    <CommandText>UPDATE [ChecklistInfo] SET [Checklist_ID] = @Checklist_ID, [Group_Name] = @Group_Name, [Requirements] = @Requirements, [Result] = @Result, [Remark] = @Remark, [Before_Photo] = @Before_Photo, [TimeStamp] = @TimeStamp WHERE (([ID] = @Original_ID))</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Checklist_ID" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Checklist_ID" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Group_Name" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Group_Name" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Requirements" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Requirements" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Requirements" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Requirements" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Boolean" Direction="Input" ParameterName="@Result" Precision="0" ProviderType="Bit" Scale="0" Size="0" SourceColumn="Result" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Remark" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Remark" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Before_Photo" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Before_Photo" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@TimeStamp" Precision="0" ProviderType="SmallDateTime" Scale="0" Size="0" SourceColumn="TimeStamp" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_ID" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="ID" SourceColumnNullMapping="false" SourceVersion="Original" />
                     </Parameters>
                   </DbCommand>
@@ -138,6 +141,7 @@ FROM     ChecklistInfo</CommandText>
               <Mapping SourceColumn="Result" DataSetColumn="Result" />
               <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
               <Mapping SourceColumn="Before_Photo" DataSetColumn="Before_Photo" />
+              <Mapping SourceColumn="TimeStamp" DataSetColumn="TimeStamp" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -146,73 +150,74 @@ FROM     ChecklistInfo</CommandText>
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="Checklist_details_dataset" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="Checklist_details_dataset" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="Checklist_details_dataset">
+  <xs:element name="Checklist_details_dataset" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="Checklist_details_dataset" msprop:Generator_UserDSName="Checklist_details_dataset">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Checklists" msprop:Generator_RowEvHandlerName="ChecklistsRowChangeEventHandler" msprop:Generator_RowDeletedName="ChecklistsRowDeleted" msprop:Generator_RowDeletingName="ChecklistsRowDeleting" msprop:Generator_RowEvArgName="ChecklistsRowChangeEvent" msprop:Generator_TablePropName="Checklists" msprop:Generator_RowChangedName="ChecklistsRowChanged" msprop:Generator_UserTableName="Checklists" msprop:Generator_RowChangingName="ChecklistsRowChanging" msprop:Generator_RowClassName="ChecklistsRow" msprop:Generator_TableClassName="ChecklistsDataTable" msprop:Generator_TableVarName="tableChecklists">
+        <xs:element name="Checklists" msprop:Generator_UserTableName="Checklists" msprop:Generator_RowEvArgName="ChecklistsRowChangeEvent" msprop:Generator_TableVarName="tableChecklists" msprop:Generator_TablePropName="Checklists" msprop:Generator_RowDeletingName="ChecklistsRowDeleting" msprop:Generator_RowChangingName="ChecklistsRowChanging" msprop:Generator_RowDeletedName="ChecklistsRowDeleted" msprop:Generator_RowEvHandlerName="ChecklistsRowChangeEventHandler" msprop:Generator_TableClassName="ChecklistsDataTable" msprop:Generator_RowChangedName="ChecklistsRowChanged" msprop:Generator_RowClassName="ChecklistsRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_UserColumnName="ID" msprop:Generator_ColumnVarNameInTable="columnID" type="xs:int" />
-              <xs:element name="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_UserColumnName="Date" msprop:Generator_ColumnVarNameInTable="columnDate" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="Department" msprop:Generator_ColumnPropNameInTable="DepartmentColumn" msprop:Generator_ColumnPropNameInRow="Department" msprop:Generator_UserColumnName="Department" msprop:Generator_ColumnVarNameInTable="columnDepartment" minOccurs="0">
+              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="Date" msprop:Generator_ColumnVarNameInTable="columnDate" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_UserColumnName="Date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Department" msprop:Generator_ColumnVarNameInTable="columnDepartment" msprop:Generator_ColumnPropNameInRow="Department" msprop:Generator_ColumnPropNameInTable="DepartmentColumn" msprop:Generator_UserColumnName="Department" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Job" msprop:Generator_ColumnPropNameInTable="JobColumn" msprop:Generator_ColumnPropNameInRow="Job" msprop:Generator_UserColumnName="Job" msprop:Generator_ColumnVarNameInTable="columnJob" minOccurs="0">
+              <xs:element name="Job" msprop:Generator_ColumnVarNameInTable="columnJob" msprop:Generator_ColumnPropNameInRow="Job" msprop:Generator_ColumnPropNameInTable="JobColumn" msprop:Generator_UserColumnName="Job" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Created_by" msprop:Generator_ColumnPropNameInTable="Created_byColumn" msprop:Generator_ColumnPropNameInRow="Created_by" msprop:Generator_UserColumnName="Created_by" msprop:Generator_ColumnVarNameInTable="columnCreated_by" minOccurs="0">
+              <xs:element name="Created_by" msprop:Generator_ColumnVarNameInTable="columnCreated_by" msprop:Generator_ColumnPropNameInRow="Created_by" msprop:Generator_ColumnPropNameInTable="Created_byColumn" msprop:Generator_UserColumnName="Created_by" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Created_on" msprop:Generator_ColumnPropNameInTable="Created_onColumn" msprop:Generator_ColumnPropNameInRow="Created_on" msprop:Generator_UserColumnName="Created_on" msprop:Generator_ColumnVarNameInTable="columnCreated_on" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Created_on" msprop:Generator_ColumnVarNameInTable="columnCreated_on" msprop:Generator_ColumnPropNameInRow="Created_on" msprop:Generator_ColumnPropNameInTable="Created_onColumn" msprop:Generator_UserColumnName="Created_on" type="xs:dateTime" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="ChecklistInfo" msprop:Generator_RowEvHandlerName="ChecklistInfoRowChangeEventHandler" msprop:Generator_RowDeletedName="ChecklistInfoRowDeleted" msprop:Generator_RowDeletingName="ChecklistInfoRowDeleting" msprop:Generator_RowEvArgName="ChecklistInfoRowChangeEvent" msprop:Generator_TablePropName="ChecklistInfo" msprop:Generator_RowChangedName="ChecklistInfoRowChanged" msprop:Generator_UserTableName="ChecklistInfo" msprop:Generator_RowChangingName="ChecklistInfoRowChanging" msprop:Generator_RowClassName="ChecklistInfoRow" msprop:Generator_TableClassName="ChecklistInfoDataTable" msprop:Generator_TableVarName="tableChecklistInfo">
+        <xs:element name="ChecklistInfo" msprop:Generator_UserTableName="ChecklistInfo" msprop:Generator_RowEvArgName="ChecklistInfoRowChangeEvent" msprop:Generator_TableVarName="tableChecklistInfo" msprop:Generator_TablePropName="ChecklistInfo" msprop:Generator_RowDeletingName="ChecklistInfoRowDeleting" msprop:Generator_RowChangingName="ChecklistInfoRowChanging" msprop:Generator_RowDeletedName="ChecklistInfoRowDeleted" msprop:Generator_RowEvHandlerName="ChecklistInfoRowChangeEventHandler" msprop:Generator_TableClassName="ChecklistInfoDataTable" msprop:Generator_RowChangedName="ChecklistInfoRowChanged" msprop:Generator_RowClassName="ChecklistInfoRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_UserColumnName="ID" msprop:Generator_ColumnVarNameInTable="columnID" type="xs:int" />
-              <xs:element name="Checklist_ID" msprop:Generator_ColumnPropNameInTable="Checklist_IDColumn" msprop:Generator_ColumnPropNameInRow="Checklist_ID" msprop:Generator_UserColumnName="Checklist_ID" msprop:Generator_ColumnVarNameInTable="columnChecklist_ID" type="xs:int" />
-              <xs:element name="Group_Name" msprop:Generator_ColumnPropNameInTable="Group_NameColumn" msprop:Generator_ColumnPropNameInRow="Group_Name" msprop:Generator_UserColumnName="Group_Name" msprop:Generator_ColumnVarNameInTable="columnGroup_Name" minOccurs="0">
+              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="Checklist_ID" msprop:Generator_ColumnVarNameInTable="columnChecklist_ID" msprop:Generator_ColumnPropNameInRow="Checklist_ID" msprop:Generator_ColumnPropNameInTable="Checklist_IDColumn" msprop:Generator_UserColumnName="Checklist_ID" type="xs:int" />
+              <xs:element name="Group_Name" msprop:Generator_ColumnVarNameInTable="columnGroup_Name" msprop:Generator_ColumnPropNameInRow="Group_Name" msprop:Generator_ColumnPropNameInTable="Group_NameColumn" msprop:Generator_UserColumnName="Group_Name" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="20" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Requirements" msprop:Generator_ColumnPropNameInTable="RequirementsColumn" msprop:Generator_ColumnPropNameInRow="Requirements" msprop:Generator_UserColumnName="Requirements" msprop:Generator_ColumnVarNameInTable="columnRequirements" minOccurs="0">
+              <xs:element name="Requirements" msprop:Generator_ColumnVarNameInTable="columnRequirements" msprop:Generator_ColumnPropNameInRow="Requirements" msprop:Generator_ColumnPropNameInTable="RequirementsColumn" msprop:Generator_UserColumnName="Requirements" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="90" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Result" msprop:Generator_ColumnPropNameInTable="ResultColumn" msprop:Generator_ColumnPropNameInRow="Result" msprop:Generator_UserColumnName="Result" msprop:Generator_ColumnVarNameInTable="columnResult" type="xs:boolean" minOccurs="0" />
-              <xs:element name="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_UserColumnName="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" minOccurs="0">
+              <xs:element name="Result" msprop:Generator_ColumnVarNameInTable="columnResult" msprop:Generator_ColumnPropNameInRow="Result" msprop:Generator_ColumnPropNameInTable="ResultColumn" msprop:Generator_UserColumnName="Result" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="2147483647" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Before_Photo" msprop:Generator_ColumnPropNameInTable="Before_PhotoColumn" msprop:Generator_ColumnPropNameInRow="Before_Photo" msprop:Generator_UserColumnName="Before_Photo" msprop:Generator_ColumnVarNameInTable="columnBefore_Photo" minOccurs="0">
+              <xs:element name="Before_Photo" msprop:Generator_ColumnVarNameInTable="columnBefore_Photo" msprop:Generator_ColumnPropNameInRow="Before_Photo" msprop:Generator_ColumnPropNameInTable="Before_PhotoColumn" msprop:Generator_UserColumnName="Before_Photo" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="2147483647" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="TimeStamp" msprop:Generator_ColumnVarNameInTable="columnTimeStamp" msprop:Generator_ColumnPropNameInRow="TimeStamp" msprop:Generator_ColumnPropNameInTable="TimeStampColumn" msprop:Generator_UserColumnName="TimeStamp" type="xs:dateTime" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -227,4 +232,9 @@ FROM     ChecklistInfo</CommandText>
       <xs:field xpath="mstns:ID" />
     </xs:unique>
   </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FK_ChecklistInfo_Checklists" msdata:parent="Checklists" msdata:child="ChecklistInfo" msdata:parentkey="ID" msdata:childkey="Checklist_ID" msprop:Generator_UserChildTable="ChecklistInfo" msprop:Generator_ChildPropName="GetChecklistInfoRows" msprop:Generator_UserRelationName="FK_ChecklistInfo_Checklists" msprop:Generator_ParentPropName="ChecklistsRow" msprop:Generator_RelationVarName="relationFK_ChecklistInfo_Checklists" msprop:Generator_UserParentTable="Checklists" />
+    </xs:appinfo>
+  </xs:annotation>
 </xs:schema>

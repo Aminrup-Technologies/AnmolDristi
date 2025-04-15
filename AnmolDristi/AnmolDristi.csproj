@@ -48,9 +48,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit, Version=20.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
-      <HintPath>..\packages\AjaxControlToolkit.20.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -88,7 +85,6 @@
     <Content Include="home.aspx" />
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
-    <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
     <Content Include="fiveS_checklist.aspx" />
     <Content Include="uploads\programming-coding-editor-colorful-themes-abstract-program-code-computer-screen-internet-app-development-design-208361364.jpg" />
@@ -148,6 +144,9 @@
     <Content Include="WebData\Internal\view.svg" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\Datasets\Checklist_details_dataset.cs">
+      <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Datasets\Checklist_details_dataset.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -205,13 +204,6 @@
     </Compile>
     <Compile Include="qaqc_home.aspx.designer.cs">
       <DependentUpon>qaqc_home.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="qaqc_inspector_rpt.aspx.cs">
-      <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
-      <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
     </Compile>
     <Compile Include="fiveS_checklist.aspx.cs">
       <DependentUpon>fiveS_checklist.aspx</DependentUpon>
