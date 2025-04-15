@@ -123,69 +123,15 @@ namespace AnmolDristi
             txtFromDate.Text = "";
             txtToDate.Text = "";
         }
-
-
-        //protected void BtnSubmit_Click(object sender, EventArgs e)
-        //{
-        //    string fromDate = txtFromDate.Text;
-        //    string toDate = txtToDate.Text;
-
-
-        //    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        conn.Open();
-        //        string query = @"
-        //        SELECT 
-        //            MeetingID, 
-        //            MeetingNo, 
-        //            Title, 
-        //            CONVERT(VARCHAR(10), MeetingDate, 23) AS MeetingDate, 
-        //            CONVERT(VARCHAR(8), MeetingTime, 108) AS MeetingTime,
-        //            Venue, 
-        //            ChairedBy 
-        //        FROM Committee_MeetingReview";
-
-        //        if (!string.IsNullOrEmpty(toDate))
-        //        {
-        //            query = @"
-        //        SELECT 
-        //            MeetingID, 
-        //            MeetingNo, 
-        //            Title, 
-        //            CONVERT(VARCHAR(10), MeetingDate, 23) AS MeetingDate, 
-        //            CONVERT(VARCHAR(8), MeetingTime, 108) AS MeetingTime,
-        //            Venue, 
-        //            ChairedBy 
-        //        FROM Committee_MeetingReview
-        //        WHERE MeetingDate BETWEEN @FromDate AND @ToDate";
-        //        }
-
-        //        using (SqlCommand cmd = new SqlCommand(query, conn))
-        //        {
-        //            cmd.Parameters.AddWithValue("@FromDate", fromDate);
-        //            if (!string.IsNullOrEmpty(toDate))
-        //            {
-        //                cmd.Parameters.AddWithValue("@ToDate", toDate);
-        //            }
-
-        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
-        //            DataTable dt = new DataTable();
-        //            da.Fill(dt);
-        //            gvMeeting.DataSource = dt;
-        //            gvMeeting.DataBind();
-        //        }
-        //    }
-        //    txtFromDate.Text = string.Empty;
-        //    txtToDate.Text = string.Empty;
-        //}
-
-
-
-
         protected void BtnEdit_Click(object sender, EventArgs e)
         {
+            //Response.Redirect("Committee_meeting_update.aspx");
+            Button btnEdit = (Button)sender;
+            GridViewRow row = (GridViewRow)btnEdit.NamingContainer;
+            int MeetingID = Convert.ToInt32(btnEdit.CommandArgument);
 
+            // Redirect to update page with AuditID in query string
+            Response.Redirect($"Committee_meeting_update.aspx?MeetingID={MeetingID}");
         }
 
         protected void BtnDelete_Click(object sender, EventArgs e)
@@ -236,6 +182,7 @@ namespace AnmolDristi
             gvMeeting.DataSource = null;
             gvMeeting.DataBind();
         }
+
 
 
     }

@@ -188,6 +188,7 @@
                  <asp:RequiredFieldValidator ID="RFV_imgupload" runat="server" ErrorMessage="*" ControlToValidate="imgupload" ValidationGroup="add2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                  <div class="input-group-sm">
                      <asp:FileUpload ID="imgupload" runat="server" CssClass="form-control form-control-sm rounded" />
+                      <asp:Label ID="lblBeforeError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
                  </div>
              </div>
          </div>
@@ -535,6 +536,44 @@
             alert("Issues have been added successfully!");
         }
     </script>
+     <script type="text/javascript">
+     function showSuccess() {
+         alert("Data saved successfully!");
+     }
+     </script>
+     <script type="text/javascript">
+         window.onload = function () {
+             const validExtensions = [".jpg", ".jpeg", ".png"];
+
+             const beforeFile = document.getElementById('<%= imgupload.ClientID %>');
+         
+
+      const beforeError = document.getElementById('<%= lblBeforeError.ClientID %>');
+      
+             // Set accept attribute for file filtering at browser level
+             beforeFile.setAttribute("accept", ".jpg,.jpeg,.png");
+             
+
+             beforeFile.addEventListener("change", function () {
+                 validateFile(this, beforeError);
+             });
+
+             
+             function validateFile(fileInput, errorLabel) {
+                 const filePath = fileInput.value;
+                 const ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase();
+
+                 if (!validExtensions.includes(ext)) {
+                     fileInput.value = "";
+                     errorLabel.innerText = "❌ Only .jpg, .jpeg, or .png files are allowed.";
+                     errorLabel.style.display = "block";
+                 } else {
+                     errorLabel.innerText = "";
+                     errorLabel.style.display = "none";
+                 }
+             }
+         };
+     </script>
 
    
 </asp:Content>

@@ -33,8 +33,8 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Housekeeping Audit(5S)</h2>
-                        <div class="clearfix"></div>
-                    </div>
+                         <div class="clearfix"></div>
+                      </div>
 
                     <div class="x_content">
 
@@ -88,6 +88,7 @@
         <asp:RequiredFieldValidator ID="RFV_fileBeforePhoto" runat="server" ErrorMessage="*" ControlToValidate="fileBeforePhoto" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
              <asp:FileUpload ID="fileBeforePhoto" runat="server" CssClass="form-control form-control-sm rounded" />
+            <asp:Label ID="lblBeforeError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
         </div>
     </div>
 </div>
@@ -116,6 +117,7 @@
         <asp:RequiredFieldValidator ID="RFV_fileAfterPhoto" runat="server" ErrorMessage="*" ControlToValidate="fileAfterPhoto" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
              <asp:FileUpload ID="fileAfterPhoto" runat="server" CssClass="form-control form-control-sm rounded" />
+            <asp:Label ID="lblAfterError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
         </div>
     </div>
 </div>
@@ -147,7 +149,7 @@
         <asp:Label ID="lbl_txtOpeningDate" runat="server" AssociatedControlID="txtOpeningDate" Text="Opening Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtOpeningDate" runat="server" ErrorMessage="*" ControlToValidate="txtOpeningDate" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
-            <asp:TextBox ID="txtOpeningDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
+            <asp:TextBox ID="txtOpeningDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"  oninput="validateDates()"></asp:TextBox>
         </div>
     </div>
 </div>
@@ -165,10 +167,14 @@
         <asp:Label ID="lbl_txtClosingDate" runat="server" AssociatedControlID="txtClosingDate" Text="Closing Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtClosingDate" runat="server" ErrorMessage="*" ControlToValidate="txtClosingDate" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
-            <asp:TextBox ID="txtClosingDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
+            <asp:TextBox ID="txtClosingDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"  oninput="validateDates()"></asp:TextBox>
+            <asp:Label ID="lblDateValidation" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
+
         </div>
     </div>
 </div>
+                          
+
                                      <div class="col-md-3">
     <div class="mb-3">
         <asp:Label ID="lbl_txtCloseBy" runat="server" AssociatedControlID="txtCloseBy" Text="Close By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -261,9 +267,82 @@
 </div>
    
 
-    <script type="text/javascript">
+<script type="text/javascript">
         function showSuccessMessage() {
-            alert("Attendee details have been added successfully!");
+            alert("Observations have been added successfully!");
         }
+</script>
+  
+    <script>
+        function validateDates() {
+            var openingDateInput = document.getElementById('<%= txtOpeningDate.ClientID %>');
+        var closingDateInput = document.getElementById('<%= txtClosingDate.ClientID %>');
+        var validationLabel = document.getElementById('<%= lblDateValidation.ClientID %>');
+
+            var openingDate = openingDateInput.value;
+            var closingDate = closingDateInput.value;
+
+            if (openingDate && closingDate) {
+                var open = new Date(openingDate);
+                var close = new Date(closingDate);
+
+                if (close <= open) {
+                    // Show error and clear the invalid closing date
+                    validationLabel.style.display = 'block';
+                    validationLabel.innerText = 'Invalid date';
+                    closingDateInput.value = ""; // clear invalid date
+                    closingDateInput.focus();
+                } else {
+                    validationLabel.style.display = 'none';
+                }
+            }
+        }
+
+        window.onload = function () {
+            validateDates();
+        };
     </script>
+
+
+   <script type="text/javascript">
+       window.onload = function () {
+           const validExtensions = [".jpg", ".jpeg", ".png"];
+
+           const beforeFile = document.getElementById('<%= fileBeforePhoto.ClientID %>');
+        const afterFile = document.getElementById('<%= fileAfterPhoto.ClientID %>');
+
+        const beforeError = document.getElementById('<%= lblBeforeError.ClientID %>');
+        const afterError = document.getElementById('<%= lblAfterError.ClientID %>');
+
+           // Set accept attribute for file filtering at browser level
+           beforeFile.setAttribute("accept", ".jpg,.jpeg,.png");
+           afterFile.setAttribute("accept", ".jpg,.jpeg,.png");
+
+           beforeFile.addEventListener("change", function () {
+               validateFile(this, beforeError);
+           });
+
+           afterFile.addEventListener("change", function () {
+               validateFile(this, afterError);
+           });
+
+           function validateFile(fileInput, errorLabel) {
+               const filePath = fileInput.value;
+               const ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase();
+
+               if (!validExtensions.includes(ext)) {
+                   fileInput.value = "";
+                   errorLabel.innerText = "❌ Only .jpg, .jpeg, or .png files are allowed.";
+                   errorLabel.style.display = "block";
+               } else {
+                   errorLabel.innerText = "";
+                   errorLabel.style.display = "none";
+               }
+           }
+       };
+   </script>
+
+
+
+
 </asp:Content>

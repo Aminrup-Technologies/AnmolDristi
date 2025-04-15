@@ -128,8 +128,14 @@ namespace AnmolDristi
         }
         protected void BtnEdit_Click(object sender, EventArgs e)
         {
+            Button btnEdit = (Button)sender;
+            GridViewRow row = (GridViewRow)btnEdit.NamingContainer;
+            int auditID = Convert.ToInt32(btnEdit.CommandArgument);
 
+            // Redirect to update page with AuditID in query string
+            Response.Redirect($"HousekeepingUpdate.aspx?AuditID={auditID}");
         }
+
         protected void BtnDelete_Click(object sender, EventArgs e)
         {
             try

@@ -79,122 +79,17 @@
      <div class="clearfix"></div>
  </div>
                 
-                  <div class="field" id="Attendees">
-  <div class="col-md-6">
-         <div class="mb-3">
-             <asp:Label ID="lbl_rbEmployee" runat="server" AssociatedControlID="rbEmployee" Text="Employee of this company?" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-             <asp:RequiredFieldValidator ID="RFV_rbEmployee" runat="server" ErrorMessage="Select any option" ValidationGroup="add2" ControlToValidate="rbEmployee" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-             <div class="input-group-sm">
-                 <asp:RadioButtonList ID="rbEmployee" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbEmployee_SelectedIndexChanged">
-                     <asp:ListItem Text="Yes" Value="Yes"></asp:ListItem>
-                     <asp:ListItem Text="No" Value="No"></asp:ListItem>
-                 </asp:RadioButtonList>
-             </div>
-         </div>
-     </div>
-
-     <asp:Panel ID="pnlAttendeeType" runat="server" Visible="false">
-
-         <div class="col-md-6">
-             <div class="mb-3">
-                 <asp:Label ID="lbl_rbAttendeeType" runat="server" AssociatedControlID="rbAttendeeType" Text="Attendees Type" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                 <asp:RequiredFieldValidator ID="RFV_rbAttendeeType" runat="server" ErrorMessage="Select any option" ValidationGroup="add2" ControlToValidate="rbAttendeeType" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                 <div class="input-group-sm">
-                     <asp:RadioButtonList ID="rbAttendeeType" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbAttendeeType_SelectedIndexChanged">
-                         <asp:ListItem Text="Internal" Value="Internal"></asp:ListItem>
-                         <asp:ListItem Text="External" Value="External"></asp:ListItem>
-                     </asp:RadioButtonList>
-                 </div>
-             </div>
-         </div>
-     </asp:Panel>
-
-     <asp:Panel ID="pnlDetails" runat="server" Visible="false"> 
-
-         <div class="col-md-2">
-             <div class="mb-3">
-                 <asp:Label ID="lbl_txtAttendeeCode" runat="server" AssociatedControlID="txtAttendeeCode" Text="Ateendees Code" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                 <asp:RequiredFieldValidator ID="RFV_txtAttendeeCode" runat="server" ErrorMessage="*" ControlToValidate="txtAttendeeCode"  Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                 <asp:RegularExpressionValidator ID="REV_txtAttendeeCode" runat="server" ControlToValidate="txtAttendeeCode" ForeColor="Red"  ErrorMessage="AlphaNumeric Only" ValidationExpression="^[a-zA-Z0-9.@]{0,25}$" Display="Dynamic"></asp:RegularExpressionValidator>
-
-                 <div class="input-group-sm">
-                     <asp:TextBox ID="txtAttendeeCode" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                 </div>
-             </div>
-         </div>
-
-
-         <div class="col-md-2">
-             <div class="mb-3">
-                 <asp:Label ID="lbl_txtEmployeeName" runat="server" AssociatedControlID="txtEmployeeName" Text="Employee Name" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                 <asp:RequiredFieldValidator ID="RFV_txtEmployeeName" runat="server" ErrorMessage="*" ControlToValidate="txtEmployeeName" ValidationGroup="add2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                 <div class="input-group-sm">
-                     <asp:TextBox ID="txtEmployeeName" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                 </div>
-             </div>
-         </div>
-
-         <div class="col-md-2">
-             <div class="mb-3">
-                 <asp:Label ID="lbl_txtdes" runat="server" AssociatedControlID="txtdes" Text="Designation" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                 <asp:RequiredFieldValidator ID="RFV_txtdes" runat="server" ErrorMessage="*" ControlToValidate="txtdes" ValidationGroup="add2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                 <div class="input-group-sm">
-                     <asp:TextBox ID="txtdes" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                 </div>
-             </div>
-         </div>
-
-         <div class="col-md-2">
-             <div class="mb-3">
-                 <asp:Label ID="lbl_ddlAttendanceStatus" runat="server" AssociatedControlID="ddlAttendanceStatus" Text="Attendance Status" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                 <asp:RequiredFieldValidator ID="RFV_ddlAttendanceStatus" runat="server" ErrorMessage="*" ControlToValidate="ddlAttendanceStatus" ValidationGroup="add2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                 <div class="input-group-sm"> 
-                     <asp:DropDownList ID="ddlAttendanceStatus" runat="server" CssClass="form-control form-control-sm rounded">
-                        <asp:ListItem Text="Select" Value="" />
-                        <asp:ListItem Text="Attend" Value="Pending" />
-                        <asp:ListItem Text="Absent" Value="Completed" />
-                     </asp:DropDownList>
-                 </div>
-             </div>
-         </div>
-
-         <div class="col-md-2">
-             <div class="mb-3">
-                 <asp:Label ID="lbl_imgupload" runat="server" AssociatedControlID="imgupload" Text="Upload Your Image" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                 <asp:RequiredFieldValidator ID="RFV_imgupload" runat="server" ErrorMessage="*" ControlToValidate="imgupload" ValidationGroup="add2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                 <div class="input-group-sm">
-                     <asp:FileUpload ID="imgupload" runat="server" CssClass="form-control form-control-sm rounded" />
-                 </div>
-             </div>
-         </div>
-        
-
-           </asp:Panel>
-      </div>
-         <asp:Panel ID="pnlDetails1" runat="server" Visible="false"> 
-         <div class="col-md-2">
-             <div class="mb-3">
-                 <asp:Label ID="lbl_btnAddAttendees" runat="server" AssociatedControlID="btnAddAttendees" Text="Add Attendees" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                 <div class="input-group">
-                     <asp:Button ID="btnAddAttendees" Text="Add Attendees" runat="server" CssClass="btn btnStyle " ValidationGroup="add2" CausesValidation="true" OnClick="btnAddAttendees_Click" />
-                      <asp:Label ID="lblMsg1" runat="server" ></asp:Label>
-                 </div>
-             </div>
-         </div>
-       
-  </asp:Panel>
+                 
 
       
     
-     <asp:Panel ID="pnlAttendeeTable" runat="server">
+    
          <div class="table-responsive">
          <div class="col-md-12">
              <div class="mb-3">
-                 <asp:GridView ID="gvAttendees" runat="server" DataKeyNames="SNo" CssClass="table table-bordered table-hover " AutoGenerateColumns="False">
+                 <asp:GridView ID="gvAttendees" runat="server"  CssClass="table table-bordered table-hover " AutoGenerateColumns="False">
                      <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                      <Columns>
-                         <asp:BoundField DataField="SNo" HeaderText="SNo" />
-                         <asp:BoundField DataField="EmployeeOrNot" HeaderText="Employee?" />
                          <asp:BoundField DataField="AttendeeType" HeaderText="Attendee Type" />
                          <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" />
                          <asp:BoundField DataField="AttendeeCode" HeaderText="Attendee Code" />
@@ -207,7 +102,7 @@
                          </asp:TemplateField>
                                <asp:TemplateField HeaderText="Action">
                                  <ItemTemplate>
-                                     <asp:Button ID="BtnDelAttendees" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelAttendees_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
+                                    <%-- <asp:Button ID="BtnDelAttendees" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelAttendees_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />--%>
                                 </ItemTemplate>
                           </asp:TemplateField>
                      </Columns>
@@ -215,8 +110,7 @@
              </div>
          </div>
              </div>
-     </asp:Panel>
-                      
+    
 
 
   <div class="x_title">
@@ -225,105 +119,6 @@
  </div>                         
 
    
-    <div class="field" id="Issues">
- 
-                                 
-      <div class="col-md-6">
-    <div class="mb-3">
-        <asp:Label ID="lbl_txtAgendaTitle" runat="server" AssociatedControlID="txtAgendaTitle" Text="Agenda Title" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtAgendaTitle" runat="server" ErrorMessage="*" ControlToValidate="txtAgendaTitle" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtAgendaTitle" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
-        </div>
-    </div>
-</div>                          
-     <div class="col-md-6">
-    <div class="mb-3">
-        <asp:Label ID="lbl_txtIssuesDes" runat="server" AssociatedControlID="txtIssuesDes" Text="Issues Discussed" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_" runat="server" ErrorMessage="*" ValidationGroup="add1" ControlToValidate="txtIssuesDes" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div id="PointsContainer" runat="server">
-            <div class="d-flex align-items-center mb-2">
-                <asp:TextBox ID="txtIssuesDes" runat="server" CssClass="form-control form-control-sm rounded points-input"></asp:TextBox>
-                <asp:Button ID="BtnAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-sm btn-fixed-size" OnClientClick="addbutton(); return false;" />
-                <asp:Button ID="BtnRemove" runat="server" Text="Remove" CssClass="btn btn-danger btn-sm btn-fixed-size" OnClientClick="removebutton(this); return false;" />
-
-            </div>
-        </div>
-    </div>
-
-   
-
-
-</div>
-             <div class="col-md-6">
-         <div class="mb-3">
-        <asp:Label ID="lbl_txtReviewBy" runat="server" AssociatedControlID="txtReviewBy" Text="Review By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtReviewBy" runat="server" ErrorMessage="*" ControlToValidate="txtReviewBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtReviewBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
-        </div>
-    </div>
-</div>
-                 <div class="col-md-6">
-         <div class="mb-3">
-        <asp:Label ID="lbl_txtActionBy" runat="server" AssociatedControlID="txtActionBy" Text="Action By(Responsibility)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtActionBy" runat="server" ErrorMessage="*" ControlToValidate="txtActionBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtActionBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
-        </div>
-    </div>
-</div>
-                 <div class="col-md-4">
-         <div class="mb-3">
-        <asp:Label ID="lbl_txtTargetDate" runat="server" AssociatedControlID="txtTargetDate" Text="Target Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtTargetDate" runat="server" ErrorMessage="*" ControlToValidate="txtTargetDate" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtTargetDate" runat="server" CssClass="form-control form-control-sm rounded " TextMode="Date"></asp:TextBox>
-        </div>
-    </div>
-</div>
-
-         <div class="col-md-4">
-         <div class="mb-3">
-        <asp:Label ID="lbl_txtReviewDate" runat="server" AssociatedControlID="txtReviewDate" Text="Review Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtReviewDate" runat="server" ErrorMessage="*" ControlToValidate="txtReviewDate" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtReviewDate" runat="server" CssClass="form-control form-control-sm rounded " TextMode="Date"></asp:TextBox>
-        </div>
-    </div>
-</div>
-
-    
-         <div class="col-md-4">
-         <div class="mb-3">
-        <asp:Label ID="lbl_ddlStatus" runat="server" AssociatedControlID="ddlStatus" Text="Status" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_ddlStatus" runat="server" ErrorMessage="*" ControlToValidate="ddlStatus" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-             <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm rounded">
-                 <asp:ListItem Text="Select" Value="" />
-                 <asp:ListItem Text="Pending" Value="Pending" />
-                 <asp:ListItem Text="Completed" Value="Completed" />
-                 <asp:ListItem Text="In Progress" Value="In Progress" />
-                 <asp:ListItem Text="Approved" Value="Approved" />
-                 <asp:ListItem Text="Rejected" Value="Rejected" />
-                 <asp:ListItem Text="On Hold" Value="On Hold" />
-             </asp:DropDownList>
-        </div>
-    </div>
-</div>
-     
-                         
-
-
-     </div>
-
-
-<div class="col-md-2">
- <div class="mt-3">
-     <asp:Button ID="btnAddIssues" runat="server" Text="Add Issues" CssClass="btn btn-success" ValidationGroup="add1" CausesValidation="true"  OnClientClick="preparePoints();" OnClick="btnAddIssues_Click"  />
-    <%-- <asp:Label ID="lblMsg1" runat="server" ></asp:Label>--%>
- </div>
-  </div>                         
             <div class="table-responsive">
     <div class="col-md-12">
         <div class="mb-3">
@@ -340,7 +135,7 @@
         <asp:BoundField DataField="Status" HeaderText="Status" />
         <asp:TemplateField HeaderText="Action">
             <ItemTemplate>
-                 <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete ?');" />
+<%--                 <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete ?');" />--%>
             </ItemTemplate>
         </asp:TemplateField>
     </Columns>
@@ -363,7 +158,7 @@
 
 
            <%-- <%--Button--%>
-           <div class="col-md-3">
+        <%--   <div class="col-md-3">
                 <div class="mb-3">
                     <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
@@ -375,7 +170,7 @@
                         
                     </div>
                 </div>
-            </div>
+            </div>--%>
 
         </div>
     </div>

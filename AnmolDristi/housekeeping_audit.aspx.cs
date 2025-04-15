@@ -60,14 +60,15 @@ namespace AnmolDristi
                     return;
                 }
 
-                string folderPath = Server.MapPath("~/Uploads/");
+                //string folderPath = Server.MapPath("~/Uploads/");
+                string folderPath = Server.MapPath("~/images/");
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
                 }
                 
                 string uniqueFileName = Guid.NewGuid().ToString() + "_Before" + fileExtension;
-                imagePath1 = "~/Uploads/" + uniqueFileName;
+                imagePath1 = "~/images/" + uniqueFileName;
                 fileBeforePhoto.SaveAs(folderPath + uniqueFileName);
             }
             string imagePath2 = "";
@@ -81,14 +82,14 @@ namespace AnmolDristi
                     return;
                 }
 
-                string folderPath = Server.MapPath("~/Uploads/");
+                string folderPath = Server.MapPath("~/images/");
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
                 }
                 
                 string uniqueFileName = Guid.NewGuid().ToString() + "_After" + fileExtension;
-                imagePath2 = "~/Uploads/" + uniqueFileName;
+                imagePath2 = "~/images/" + uniqueFileName;
                 fileAfterPhoto.SaveAs(folderPath + uniqueFileName);
             }
 

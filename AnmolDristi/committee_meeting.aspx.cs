@@ -368,6 +368,7 @@ namespace AnmolDristi
                     transaction.Commit(); // Commit if everything is successful
                     lblMsg.Text = "Data saved successfully!";
                     lblMsg.ForeColor = System.Drawing.Color.Green;
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "showSuccess();", true);
                 }
                 catch (Exception ex)
                 {

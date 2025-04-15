@@ -117,7 +117,7 @@
                                      <asp:BoundField DataField="CloseBy" HeaderText="Close By" />
                                     <asp:TemplateField HeaderText="Actions">
                                         <ItemTemplate>
-                                            <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn btn-warning btn-sm" CommandArgument='<%# Eval("AuditID") %>' OnClick="BtnEdit_Click" />
+                                            <asp:Button ID="BtnEdit" runat="server" Text="Edit" CssClass="btn btn-warning btn-sm" CommandArgument='<%# Eval("AuditID") %>' OnClick="BtnEdit_Click" />
                                             <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm" OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete this meeting?');" />
                                         </ItemTemplate>
                                     </asp:TemplateField>

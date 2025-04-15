@@ -132,6 +132,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fileBeforePhoto;
 
         /// <summary>
+        /// lblBeforeError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBeforeError;
+
+        /// <summary>
         /// lbl_txtObservation control.
         /// </summary>
         /// <remarks>
@@ -211,6 +220,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fileAfterPhoto;
+
+        /// <summary>
+        /// lblAfterError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAfterError;
 
         /// <summary>
         /// lbl_ddlStatus control.
@@ -319,6 +337,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtClosingDate;
+
+        /// <summary>
+        /// lblDateValidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDateValidation;
 
         /// <summary>
         /// lbl_txtCloseBy control.
