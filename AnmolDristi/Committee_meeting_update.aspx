@@ -84,32 +84,71 @@
       
     
     
-         <div class="table-responsive">
+
+    <div class="table-responsive">
          <div class="col-md-12">
              <div class="mb-3">
-                 <asp:GridView ID="gvAttendees" runat="server"  CssClass="table table-bordered table-hover " AutoGenerateColumns="False">
-                     <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
-                     <Columns>
-                         <asp:BoundField DataField="AttendeeType" HeaderText="Attendee Type" />
-                         <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" />
-                         <asp:BoundField DataField="AttendeeCode" HeaderText="Attendee Code" />
-                         <asp:BoundField DataField="AttendanceStatus" HeaderText="Attendance Status" />
-                         <asp:BoundField DataField="Designation" HeaderText="Designation" />
-                         <asp:TemplateField HeaderText="Image Preview">
-                           <ItemTemplate>
-                             <asp:Image ID="imgPreview" runat="server" ImageUrl='<%# Eval("ImagePath") %>' Width="50px" Height="50px" />
-                            </ItemTemplate>                      
-                         </asp:TemplateField>
-                               <asp:TemplateField HeaderText="Action">
-                                 <ItemTemplate>
-                                    <%-- <asp:Button ID="BtnDelAttendees" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelAttendees_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />--%>
-                                </ItemTemplate>
-                          </asp:TemplateField>
-                     </Columns>
-                 </asp:GridView>
+    <asp:GridView ID="gvAttendees" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"  DataKeyNames="AttendanceID"> 
+        <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
+    <Columns>
+        <asp:BoundField DataField="AttendanceID" HeaderText="SNo" />
+         <asp:TemplateField HeaderText="Attendee Type">
+  <ItemTemplate>
+ <asp:TextBox ID="txtAttendeeType" runat="server" Text='<%# Eval("Attendee_Type") %>' CssClass="form-control" />
+  </ItemTemplate>
+  </asp:TemplateField>
+         <asp:TemplateField HeaderText="Employee Name ">
+  <ItemTemplate>
+ <asp:TextBox ID="txtEmployeeName" runat="server" Text='<%# Eval("Name") %>' CssClass="form-control" />
+  </ItemTemplate>
+  </asp:TemplateField>
+         <asp:TemplateField HeaderText="Attendee Code">
+  <ItemTemplate>
+ <asp:TextBox ID="txtAttendeeCode" runat="server" Text='<%# Eval("AttendeeCode") %>' CssClass="form-control" />
+  </ItemTemplate>
+  </asp:TemplateField>
+         <asp:TemplateField HeaderText="Attendance Status">
+   <ItemTemplate>
+    <asp:DropDownList ID="ddlAttendanceStatus" runat="server" CssClass="form-control form-control-sm rounded" SelectedValue='<%# Eval("AttendanceStatus") %>' >
+   <asp:ListItem Text="Select" Value="" />
+   <asp:ListItem Text="Attend" Value="Attend" />
+   <asp:ListItem Text="Absent" Value="Absent" />
+</asp:DropDownList>
+       </ItemTemplate>
+      </asp:TemplateField>
+         <asp:TemplateField HeaderText="Designation">
+  <ItemTemplate>
+ <asp:TextBox ID="txtDesignation" runat="server" Text='<%# Eval("Designation") %>' CssClass="form-control" />
+  </ItemTemplate>
+  </asp:TemplateField>
+         <asp:TemplateField HeaderText="Image Preview">
+          <ItemTemplate>
+    <!-- Larger Image -->
+    <asp:Image ID="imgPreview" runat="server" 
+        ImageUrl='<%# ResolveUrl(Eval("ImagePath").ToString()) %>' 
+        Width="90px" Height="90px" Style="object-fit:cover;" />
+
+    <!-- Hidden field to retain existing image path -->
+    <asp:Label ID="lblimgPreview" runat="server" 
+        Text='<%# Eval("ImagePath") %>' Visible="false" />
+
+    <!-- Upload control to select a new image -->
+    <br />
+    <asp:FileUpload ID="fuimgPreview" runat="server" />
+</ItemTemplate>
+  </asp:TemplateField>
+      <asp:TemplateField HeaderText="Action">
+        <ItemTemplate>
+           <asp:Button ID="BtnDelAttendees" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelAttendees_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
+           
+       </ItemTemplate>
+ </asp:TemplateField>
+    </Columns>
+</asp:GridView>
+                 </div>
              </div>
-         </div>
-             </div>
+        </div>
+
     
 
 
@@ -119,7 +158,7 @@
  </div>                         
 
    
-            <div class="table-responsive">
+            <%--<div class="table-responsive">
     <div class="col-md-12">
         <div class="mb-3">
     <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" DataKeyNames="SNo" CssClass="table table-bordered table-hover ">
@@ -135,16 +174,78 @@
         <asp:BoundField DataField="Status" HeaderText="Status" />
         <asp:TemplateField HeaderText="Action">
             <ItemTemplate>
-<%--                 <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete ?');" />--%>
+                <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete ?');" />
             </ItemTemplate>
         </asp:TemplateField>
     </Columns>
 </asp:GridView>
             </div>
         </div>
-        </div>
+        </div>--%>
 
              
+    <div class="table-responsive">
+         <div class="col-md-12">
+             <div class="mb-3">
+    <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"  DataKeyNames="IssueID"> 
+        <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
+    <Columns>
+        <asp:BoundField DataField="IssueID" HeaderText="SNo" />
+         <asp:TemplateField HeaderText="Agenda Title">
+  <ItemTemplate>
+ <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Eval("AgendaTitle") %>' CssClass="form-control" />
+  </ItemTemplate>
+  </asp:TemplateField>
+         <asp:TemplateField HeaderText="Issues Discussed">
+  <ItemTemplate>
+ <asp:TextBox ID="txtIssuesDiscussed" runat="server" Text='<%# Eval("IssuesDiscussed") %>' CssClass="form-control" />
+  </ItemTemplate>
+  </asp:TemplateField>
+         <asp:TemplateField HeaderText="Action By">
+  <ItemTemplate>
+ <asp:TextBox ID="txtActionBy" runat="server" Text='<%# Eval("ActionBy") %>' CssClass="form-control" />
+  </ItemTemplate>
+  </asp:TemplateField>
+         
+         <asp:TemplateField HeaderText="Target Date">
+  <ItemTemplate>
+ <asp:TextBox ID="txtTargetDate" runat="server" Text='<%# Eval("TargetDate","{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control" />
+  </ItemTemplate>
+  </asp:TemplateField>
+                <asp:TemplateField HeaderText="Review Date">
+ <ItemTemplate>
+<asp:TextBox ID="txtReviewDate" runat="server" Text='<%# Eval("ReviewDate","{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control" />
+ </ItemTemplate>
+ </asp:TemplateField>
+  <asp:TemplateField HeaderText="Review By">
+ <ItemTemplate>
+<asp:TextBox ID="txtReviewBy" runat="server" Text='<%# Eval("ReviewBy") %>'  CssClass="form-control" />
+ </ItemTemplate>
+ </asp:TemplateField>
+         <asp:TemplateField HeaderText="Status">
+     <ItemTemplate>
+         <asp:DropDownList ID="ddlStattus" runat="server" CssClass="form-control form-control-sm rounded" SelectedValue='<%# Eval("Status") %>'>
+             <asp:ListItem Text="Select" Value="" />
+             <asp:ListItem Text="Pending" Value="Pending" />
+             <asp:ListItem Text="Completed" Value="Completed" />
+             <asp:ListItem Text="In Progress" Value="In Progress" />
+             <asp:ListItem Text="Approved" Value="Approved" />
+             <asp:ListItem Text="Rejected" Value="Rejected" />
+             <asp:ListItem Text="On Hold" Value="On Hold" />
+         </asp:DropDownList>
+     </ItemTemplate>
+ </asp:TemplateField>
+      <asp:TemplateField HeaderText="Action">
+        <ItemTemplate>
+           <asp:Button ID="BtnDelIssues" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelIssues_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
+          
+      </ItemTemplate>
+ </asp:TemplateField>
+    </Columns>
+</asp:GridView>
+                 </div>
+             </div>
+        </div>
 
                          
 
@@ -158,19 +259,17 @@
 
 
            <%-- <%--Button--%>
-        <%--   <div class="col-md-3">
+           <div class="col-md-3">
                 <div class="mb-3">
-                    <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                    <asp:Label ID="lblbtnUpdate" runat="server" AssociatedControlID="btnUpdate" Text="Click to Update" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
-                        
-                        <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
-                        <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />
+                        <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm"  CausesValidation="true" OnClick="btnUpdate_Click" />   
+                        <asp:Button ID="Btnback" runat="server" Text="Back" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="Btnback_Click" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         
                     </div>
                 </div>
-            </div>--%>
+            </div>
 
         </div>
     </div>

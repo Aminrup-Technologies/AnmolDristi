@@ -125,7 +125,7 @@ namespace AnmolDristi
         }
         protected void BtnEdit_Click(object sender, EventArgs e)
         {
-            //Response.Redirect("Committee_meeting_update.aspx");
+            
             Button btnEdit = (Button)sender;
             GridViewRow row = (GridViewRow)btnEdit.NamingContainer;
             int MeetingID = Convert.ToInt32(btnEdit.CommandArgument);

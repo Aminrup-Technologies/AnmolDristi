@@ -32,7 +32,7 @@
 
                             </a>
 
-                            <a class="btn btn-app" href="csm_massmeeting_report.aspx">
+                            <a class="btn btn-app" href="MassMeeting_Report.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="lbl_csm_mm_report" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Mass Meeting Record

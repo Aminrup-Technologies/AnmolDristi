@@ -175,8 +175,8 @@
                  <div class="input-group-sm"> 
                      <asp:DropDownList ID="ddlAttendanceStatus" runat="server" CssClass="form-control form-control-sm rounded">
                         <asp:ListItem Text="Select" Value="" />
-                        <asp:ListItem Text="Attend" Value="Pending" />
-                        <asp:ListItem Text="Absent" Value="Completed" />
+                        <asp:ListItem Text="Attend" Value="Attend" />
+                        <asp:ListItem Text="Absent" Value="Absent" />
                      </asp:DropDownList>
                  </div>
              </div>

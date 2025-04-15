@@ -74,60 +74,7 @@ namespace AnmolDristi
 
 
         
-        //protected void BtnUpdate_Click(object sender, EventArgs e)
-        //{
-        //    string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-        //    using (SqlConnection con = new SqlConnection(connStr))
-        //    {
-        //        con.Open();
-
-        //        foreach (GridViewRow row in gvObservations.Rows)
-        //        {
-        //            string observerID = ((TextBox)row.FindControl("txtObserverID")).Text;
-        //            DateTime openingDate = DateTime.Parse(((TextBox)row.FindControl("txtOpeningDate")).Text);
-        //            string openBy = ((TextBox)row.FindControl("txtOpenBy")).Text;
-        //            string observation = ((TextBox)row.FindControl("txtObservation")).Text;
-        //            string correctiveAction = ((TextBox)row.FindControl("txtCorrectiveAction")).Text;
-        //            DateTime closingDate = DateTime.Parse(((TextBox)row.FindControl("txtClosingDate")).Text);
-        //            string closeBy = ((TextBox)row.FindControl("txtCloseBy")).Text;
-        //            string status = ((DropDownList)row.FindControl("ddlStatus")).SelectedValue;
-
-        //            string query = @"UPDATE AuditObservations
-        //                     SET OpeningDate = @OpeningDate,
-        //                         OpenBy = @OpenBy,
-        //                         ObservationText = @ObservationText,
-        //                         CorrectiveAction = @CorrectiveAction,
-        //                         ClosingDate = @ClosingDate,
-        //                         CloseBy = @CloseBy,
-        //                         Status = @Status
-        //                     WHERE ObserverID = @ObserverID";
-
-        //            using (SqlCommand cmd = new SqlCommand(query, con))
-        //            {
-        //                cmd.Parameters.AddWithValue("@ObserverID", observerID);
-        //                cmd.Parameters.AddWithValue("@OpeningDate", openingDate);
-        //                cmd.Parameters.AddWithValue("@OpenBy", openBy);
-        //                cmd.Parameters.AddWithValue("@ObservationText", observation);
-        //                cmd.Parameters.AddWithValue("@CorrectiveAction", correctiveAction);
-        //                cmd.Parameters.AddWithValue("@ClosingDate", closingDate);
-        //                cmd.Parameters.AddWithValue("@CloseBy", closeBy);
-        //                cmd.Parameters.AddWithValue("@Status", status);
-        //                cmd.ExecuteNonQuery();
-        //            }
-        //        }
-
-
-        //        con.Close();
-        //    }
-
-
-        //    // Optional: reload the grid after update
-        //    int auditID = Convert.ToInt32(ViewState["AuditID"]);
-        //    LoadObservations(auditID);
-        //    lblMsg.Text = "Data updated successfully!";
-        //    lblMsg.ForeColor = System.Drawing.Color.Green;
-        //}
+    
 
         protected void BtnUpdate_Click(object sender, EventArgs e)
         {
