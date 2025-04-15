@@ -855,7 +855,7 @@ namespace AnmolDristi.qaqc
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Log the exception or display an error message
             }

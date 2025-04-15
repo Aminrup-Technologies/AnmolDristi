@@ -24,11 +24,11 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                Img_CpLogo.ImageUrl = "WebData/No_Image.jpg";
+                Img_CpLogo.ImageUrl = "WebData/Internal/OH4Y_Logo.png";
                 lbl_companyname.Text = "Aminrup Technologies";
                 lbl_currentyr.Text = DateTime.Now.Year.ToString();
                 lbl_compfooter.Text = "Aminrup Technologies";
-                lbl_owner.Text = "Abhishek Sahu";
+                lbl_owner.Text = "IT Team";
                 txt_loginid.Focus();
             }
         }

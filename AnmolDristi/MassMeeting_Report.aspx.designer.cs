@@ -7,92 +7,92 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AnmolDristi.qaqc
+namespace AnmolDristi
 {
 
 
-    public partial class qaqc_home
+    public partial class MassMeeting_Report
     {
 
         /// <summary>
-        /// QC_Panel control.
+        /// lbl_FromDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl QC_Panel;
+        protected global::System.Web.UI.WebControls.Label lbl_FromDate;
 
         /// <summary>
-        /// lbl_csm_mm_form control.
+        /// RFV_TB_FromDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_mm_form;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_FromDate;
 
         /// <summary>
-        /// lbl_csm_mm_report control.
+        /// TB_FromDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_mm_report;
+        protected global::System.Web.UI.WebControls.TextBox TB_FromDate;
 
         /// <summary>
-        /// Div1 control.
+        /// Lbl_ToDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
+        protected global::System.Web.UI.WebControls.Label Lbl_ToDate;
 
         /// <summary>
-        /// lbl_csm_hkp_form control.
+        /// RFV_TB_ToDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_hkp_form;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_ToDate;
 
         /// <summary>
-        /// lbl_csm_hkp_rpt control.
+        /// TB_ToDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_hkp_rpt;
+        protected global::System.Web.UI.WebControls.TextBox TB_ToDate;
 
         /// <summary>
-        /// Div2 control.
+        /// BtnSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div2;
+        protected global::System.Web.UI.WebControls.Button BtnSubmit;
 
         /// <summary>
-        /// lbl_csm_cm_form control.
+        /// BtnReset control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_cm_form;
+        protected global::System.Web.UI.WebControls.Button BtnReset;
 
         /// <summary>
-        /// lbl_csm_cm_rpt control.
+        /// GVMeetings control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_cm_rpt;
+        protected global::System.Web.UI.WebControls.GridView GVMeetings;
     }
 }

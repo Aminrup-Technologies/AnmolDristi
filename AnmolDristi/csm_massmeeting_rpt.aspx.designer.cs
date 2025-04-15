@@ -7,92 +7,81 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AnmolDristi.qaqc
-{
-
-
-    public partial class qaqc_home
-    {
-
+namespace AnmolDristi {
+    
+    
+    public partial class csm_massmeeting_rpt {
+        
         /// <summary>
-        /// QC_Panel control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl QC_Panel;
-
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        
         /// <summary>
-        /// lbl_csm_mm_form control.
+        /// print_box control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_mm_form;
-
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_box;
+        
         /// <summary>
-        /// lbl_csm_mm_report control.
+        /// content control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_mm_report;
-
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl content;
+        
         /// <summary>
-        /// Div1 control.
+        /// lbl_mmid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
-
+        protected global::System.Web.UI.WebControls.Label lbl_mmid;
+        
         /// <summary>
-        /// lbl_csm_hkp_form control.
+        /// lbl_report_title control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_hkp_form;
-
+        protected global::System.Web.UI.WebControls.Label lbl_report_title;
+        
         /// <summary>
-        /// lbl_csm_hkp_rpt control.
+        /// lbl_mmdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_hkp_rpt;
-
+        protected global::System.Web.UI.WebControls.Label lbl_mmdate;
+        
         /// <summary>
-        /// Div2 control.
+        /// Image1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div2;
-
+        protected global::System.Web.UI.WebControls.Image Image1;
+        
         /// <summary>
-        /// lbl_csm_cm_form control.
+        /// Image2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_cm_form;
-
-        /// <summary>
-        /// lbl_csm_cm_rpt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_csm_cm_rpt;
+        protected global::System.Web.UI.WebControls.Image Image2;
     }
 }
