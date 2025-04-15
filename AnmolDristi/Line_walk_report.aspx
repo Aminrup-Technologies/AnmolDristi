@@ -183,7 +183,7 @@
                     </div>
                     <%--button start--%>
 
-                <%--    <div class="col-md-6">
+                    <%--    <div class="col-md-6">
                         <div class="mb-3">
                             <div class="input-group input-group-sm">
 
