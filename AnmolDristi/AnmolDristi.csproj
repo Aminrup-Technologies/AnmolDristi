@@ -80,23 +80,27 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="committee_meeting.aspx" />
-    <Content Include="committee_meeting_report.aspx" />
-    <Content Include="Committee_meeting_update.aspx" />
-    <Content Include="csm_massmeeting.aspx" />
-    <Content Include="csm_massmeeting_record.aspx" />
-    <Content Include="csm_massmeeting_report.aspx" />
-    <Content Include="csm_massmeeting_rpt.aspx" />
-    <Content Include="Csm_massmeeting_Update.aspx" />
+    <Content Include="fiveS_checklist_1.aspx" />
+    <Content Include="fiveS_checklist_2.aspx" />
     <Content Include="home.aspx" />
-    <Content Include="HousekeepingUpdate.aspx" />
-    <Content Include="housekeeping_audit.aspx" />
-    <Content Include="housekeeping_audit_report.aspx" />
-    <Content Include="MassMeeting_Report.aspx" />
     <Content Include="packages.config" />
-    <Content Include="practice.aspx" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="Dristi.Master" />
+    <Content Include="fiveS_checklist.aspx" />
+    <Content Include="uploads\programming-coding-editor-colorful-themes-abstract-program-code-computer-screen-internet-app-development-design-208361364.jpg" />
+    <Content Include="uploads\software-development-word-cloud-concept-grey-background-88535408.jpg" />
+    <Content Include="WebForm1.aspx" />
+    <Content Include="DAL\Datasets\Checklist_details_dataset.xsc">
+      <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
+    </Content>
+    <None Include="DAL\Datasets\Checklist_details_dataset.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Checklist_details_dataset.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DAL\Datasets\Checklist_details_dataset.xss">
+      <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -108,12 +112,11 @@
   <ItemGroup>
     <Content Include="blank.aspx" />
     <Content Include="login.aspx" />
-    <Content Include="trail.aspx" />
-    <Content Include="WebData\Internal\OH4Y_Logo.png" />
     <Content Include="WebData\No_Image.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="WebData\Anmol_Logo.png" />
     <Content Include="WebData\Internal\ats_logo.jpg" />
     <Content Include="WebData\Internal\ats_translogo.png" />
     <Content Include="WebData\Internal\ats_webheader.png" />
@@ -141,68 +144,27 @@
     <Content Include="WebData\Internal\view.svg" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\Datasets\Checklist_details_dataset.cs">
+      <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Datasets\Checklist_details_dataset.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="fiveS_checklist_1.aspx.cs">
+      <DependentUpon>fiveS_checklist_1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="fiveS_checklist_1.aspx.designer.cs">
+      <DependentUpon>fiveS_checklist_1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="blank.aspx.cs">
       <DependentUpon>blank.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="blank.aspx.designer.cs">
       <DependentUpon>blank.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="committee_meeting.aspx.cs">
-      <DependentUpon>committee_meeting.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="committee_meeting.aspx.designer.cs">
-      <DependentUpon>committee_meeting.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="committee_meeting_report.aspx.cs">
-      <DependentUpon>committee_meeting_report.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="committee_meeting_report.aspx.designer.cs">
-      <DependentUpon>committee_meeting_report.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Committee_meeting_update.aspx.cs">
-      <DependentUpon>Committee_meeting_update.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Committee_meeting_update.aspx.designer.cs">
-      <DependentUpon>Committee_meeting_update.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="csm_massmeeting.aspx.cs">
-      <DependentUpon>csm_massmeeting.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="csm_massmeeting.aspx.designer.cs">
-      <DependentUpon>csm_massmeeting.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="csm_massmeeting_record.aspx.cs">
-      <DependentUpon>csm_massmeeting_record.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="csm_massmeeting_record.aspx.designer.cs">
-      <DependentUpon>csm_massmeeting_record.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="csm_massmeeting_report.aspx.cs">
-      <DependentUpon>csm_massmeeting_report.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="csm_massmeeting_report.aspx.designer.cs">
-      <DependentUpon>csm_massmeeting_report.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="csm_massmeeting_rpt.aspx.cs">
-      <DependentUpon>csm_massmeeting_rpt.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="csm_massmeeting_rpt.aspx.designer.cs">
-      <DependentUpon>csm_massmeeting_rpt.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Csm_massmeeting_Update.aspx.cs">
-      <DependentUpon>Csm_massmeeting_Update.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Csm_massmeeting_Update.aspx.designer.cs">
-      <DependentUpon>Csm_massmeeting_Update.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\QCInspectorDataAccess.cs" />
     <Compile Include="DatabaseHelper.cs" />
@@ -214,6 +176,13 @@
     <Compile Include="Dristi.Master.designer.cs">
       <DependentUpon>Dristi.Master</DependentUpon>
     </Compile>
+    <Compile Include="fiveS_checklist_2.aspx.cs">
+      <DependentUpon>fiveS_checklist_2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="fiveS_checklist_2.aspx.designer.cs">
+      <DependentUpon>fiveS_checklist_2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -221,47 +190,12 @@
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="HousekeepingUpdate.aspx.cs">
-      <DependentUpon>HousekeepingUpdate.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="HousekeepingUpdate.aspx.designer.cs">
-      <DependentUpon>HousekeepingUpdate.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="housekeeping_audit.aspx.cs">
-      <DependentUpon>housekeeping_audit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="housekeeping_audit.aspx.designer.cs">
-      <DependentUpon>housekeeping_audit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="housekeeping_audit_report.aspx.cs">
-      <DependentUpon>housekeeping_audit_report.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="housekeeping_audit_report.aspx.designer.cs">
-      <DependentUpon>housekeeping_audit_report.aspx</DependentUpon>
-    </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="MassMeeting_Report.aspx.cs">
-      <DependentUpon>MassMeeting_Report.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MassMeeting_Report.aspx.designer.cs">
-      <DependentUpon>MassMeeting_Report.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="practice.aspx.cs">
-      <DependentUpon>practice.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="practice.aspx.designer.cs">
-      <DependentUpon>practice.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="qaqc_home.aspx.cs">
@@ -271,21 +205,26 @@
     <Compile Include="qaqc_home.aspx.designer.cs">
       <DependentUpon>qaqc_home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="trail.aspx.cs">
-      <DependentUpon>trail.aspx</DependentUpon>
+    <Compile Include="fiveS_checklist.aspx.cs">
+      <DependentUpon>fiveS_checklist.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="trail.aspx.designer.cs">
-      <DependentUpon>trail.aspx</DependentUpon>
+    <Compile Include="fiveS_checklist.aspx.designer.cs">
+      <DependentUpon>fiveS_checklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="images\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
