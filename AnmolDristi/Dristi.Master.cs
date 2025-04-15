@@ -11,21 +11,21 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack)
-            //{
-            //    if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
-            //    {
-            //        Response.Redirect("login.aspx");
-            //    }
-            //    else
-            //    {
-            //        Label lbl1 = (Label)Page.Master.FindControl("lbl_loginusername2");
-            //        lbl1.Text = Session["USERNAME"].ToString();
+            if (!IsPostBack)
+            {
+                if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
+                {
+                    Response.Redirect("login.aspx");
+                }
+                else
+                {
+                    Label lbl1 = (Label)Page.Master.FindControl("lbl_loginusername2");
+                    lbl1.Text = Session["USERNAME"].ToString();
 
-            //        Label lbl2 = (Label)Page.Master.FindControl("lbl_loginusername1");
-            //        lbl2.Text = Session["USERFNAME"].ToString();
-            //    }
-            //}
+                    Label lbl2 = (Label)Page.Master.FindControl("lbl_loginusername1");
+                    lbl2.Text = Session["USERFNAME"].ToString();
+                }
+            }
         }
 
         protected void btn_lgout_Click(object sender, EventArgs e)

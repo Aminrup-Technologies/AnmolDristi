@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Line Walk Status" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Line_Walk_Status.aspx.cs" Inherits="AnmolDristi.Line_Walk_Status" %>
+﻿<%@ Page Title="CSM : Line Walk Report" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Line_Walk_Status.aspx.cs" Inherits="AnmolDristi.Line_Walk_Status" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <!-- SweetAlert2 CDN -->
@@ -21,10 +21,9 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-
+    <script type="text/javascript">
         $(document).ready(function () {
             // Get ASP.NET Client IDs
             var nameBtnId = '<%= btnAddName.ClientID %>';
@@ -113,25 +112,51 @@
                 $(this).closest("div").remove();
             });
         });
+            var internalEmployees = [];
+            var externalMembers = [];
 
+            membersList.forEach(member => {
+                if (member.type === "Own Employee") {
+                    internalEmployees.push(member.code);
+                } else {
+                    externalMembers.push(member.name);
+                }
+            });
 
+            var dataToSend = {
+                internalEmployeesCSV: internalEmployees.join(","),
+                externalMembersCSV: externalMembers.join(",")
+            };
 
+            if (typeof PageMethods !== "undefined") {
+                PageMethods.SaveMembers(dataToSend.internalEmployeesCSV, dataToSend.externalMembersCSV, function (response) {
+                    showNotification("success", response);
+                    membersList = [];
+                    updateGridView();
+                }, function (error) {
+                    console.error("Error saving members:", error);
+                    showNotification("error", "Error saving members.");
+                });
+            } else {
+                console.error("PageMethods is not enabled.");
+                showNotification("error", "PageMethods is not enabled.");
+            }
+        }
     </script>
-
 
     <div class="right_col" role="main">
         <div class="container">
-            <div class="page-title">
+            <%--<div class="page-title">
                 <div class="title_left">
                     <h2>Automation & Technical Services</h2>
                 </div>
-            </div>
+            </div>--%>
 
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Line Walk Status of COB</h2>
+                            <h2>CSM : Line Walk Report</h2>
                             <div class="clearfix"></div>
                         </div>
 
@@ -172,10 +197,9 @@
                                 </div>
                             </div>
 
-                            <!-- Row 2: Team Members, Upload Image -->
-                            <!-- Step 2: Team Details -->
+
                             <hr>
-                            <h2 class="green-heading">Step 2: Team Details</h2>
+                            <h2 class="green-heading">Step 2[A]: Team Members</h2>
                             <hr />
                             <div class="row">
 
@@ -193,6 +217,49 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>--%>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-6">
+                                        <asp:Label ID="Lbl_EmployeeType" runat="server" Text="Select Member Type : " ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:RadioButton ID="rbOwnEmployee" runat="server" GroupName="EmployeeType" Text=" Own Employee" onclick="toggleFields()" ClientIDMode="Static" />
+                                        <asp:RadioButton ID="rbExternalMember" runat="server" GroupName="EmployeeType" Text=" External Member" onclick="toggleFields()" ClientIDMode="Static" />
+
+                                    </div>
+                                    <!-- Employee Code Input -->
+                                    <div id="employeeCodeDiv" style="display: none;">
+                                        <asp:Label ID="lblEmployeeCode" runat="server" Text="Enter Employee Code" Font-Bold="true"></asp:Label>
+                                        <asp:TextBox ID="txtEmployeeCode" runat="server" CssClass="form-control form-control-sm" ClientIDMode="Static" onkeyup="fetchEmployeeName()"></asp:TextBox>
+                                        <label id="lblEmployeeName" style="color: green; font-weight: bold;"></label>
+                                    </div>
+
+                                    <!-- External Member Name Input -->
+                                    <div id="externalMemberDiv" style="display: none;">
+                                        <asp:Label ID="lblExternalName" runat="server" Text="Enter Name" Font-Bold="true"></asp:Label>
+                                        <asp:TextBox ID="txtExternalName" runat="server" CssClass="form-control form-control-sm" ClientIDMode="Static"></asp:TextBox>
+                                    </div>
+
+                                    <!-- Add Button -->
+                                    <button type="button" class="btn btn-primary btn-sm mt-2" onclick="addMember()">Add Member</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <h4 class="mt-6">Added Members</h4>
+                                        <table id="membersGrid" class="col-lg-12 table table-bordered table-responsive">
+                                            <tr>
+                                                <th>SL</th>
+                                                <th>Type of Employee</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <button type="button" class="btn btn-success btn-sm mt-2" onclick="saveMembersToDB()">Save Members</button>
+                                </div>
+                            </div>
 
 
                                 <div class="col-md-4">
@@ -208,16 +275,18 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
+
+
 
                             <!-- Row 3: location, Observation, Recommendation,  -->
                             <!-- Step 3: Observations and Recommendations -->
                             <hr>
                             <h2 class="green-heading">Step 3: Observations & Recommendations</h2>
                             <hr />
-                            <div class="row">
+
+
+                            <div class=" row repeator">
                                 <div class="col-md-4">
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_location" runat="server" AssociatedControlID="TB_location" Text="Area/Location" ForeColor="Blue" Font-Bold="true"></asp:Label>
@@ -235,7 +304,7 @@
 
                                 <div class="col-md-4">
                                     <div class="mb-4">
-                                        <asp:Label ID="Lbl_Observation_Points" runat="server" AssociatedControlID="TB_Observation_Points" Text="Observation Points" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:Label ID="Lbl_Observation_Points" runat="server" AssociatedControlID="TB_Observation_Points" Text="Detailed Observation Point" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_Observation_Points" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Observation_Points" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_TB_Observation_Points" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Observation_Points" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
 
@@ -249,7 +318,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-4">
-                                        <asp:Label ID="Lbl_Recommendation_Points" runat="server" AssociatedControlID="TB_Recommendation_Points" Text="Recommendation Points" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:Label ID="Lbl_Recommendation_Points" runat="server" AssociatedControlID="TB_Recommendation_Points" Text="Recommendation Given" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_Recommendation_Points" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Recommendation_Points" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_TB_Recommendation_Points" runat="server" ValidationGroup="Submit" ControlToValidate="TB_Recommendation_Points" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
 
@@ -295,6 +364,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-md-4">
                                     <div class="mb-4">
                                         <asp:Label ID="Lbl_Remarks" runat="server" AssociatedControlID="TB_Remarks" Text="Remarks" ForeColor="Blue" Font-Bold="true"></asp:Label>
@@ -327,21 +397,25 @@
 
                             </div>
 
-
-
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-4">
+                                        <asp:Label ID="Label1" runat="server" Text="Click to Add More" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <button type="button" id="btnAddMore" class="btn btn-primary btn-sm mt-3 form-control form-control-sm">+ Add More</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- x_content -->
 
-                    </div>
-                    <!-- x_panel -->
-                    <!-- Submit Button -->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mb-4 text-center">
-                                <!-- Center-align content -->
-                                <asp:Label ID="lbl_msg" runat="server" AssociatedControlID="BtnSubmit"
-                                    Text="Click to SAVE!" ForeColor="Blue" Font-Bold="true" Font-Size="Small">
-                                </asp:Label>
+                        <hr>
+                        <h2 class="green-heading">Step-4 : Final Submission</h2>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-4 text-center">
+                                    <asp:Label ID="lbl_msg" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SUBMIT!" ForeColor="Blue" Font-Bold="true" Font-Size="Small">
+                                    </asp:Label>
 
                                 <div class="d-flex justify-content-center gap-2 mt-2">
                                     <!-- Centering buttons -->
@@ -355,14 +429,8 @@
 
                 </div>
             </div>
+
         </div>
     </div>
 
-
-
-
 </asp:Content>
-
-
-
-
