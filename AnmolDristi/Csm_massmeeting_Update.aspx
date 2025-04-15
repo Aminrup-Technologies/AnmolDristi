@@ -15,13 +15,13 @@
              <div class="col-md-12 col-sm-12 ">
                  <div class="x_panel">
                      <div class="x_title">
-                         <h2>Update Your Meeting Records
-                         </h2>
+                         <h2>Update Your Meeting Records</h2>
+                         
                          <div class="clearfix"></div>
                      </div>
 
                      <div class="x_content">
-                         
+                         <asp:HiddenField ID="HiddenMeetingID" runat="server" />
 
                          <div class="col-md-6">
                              <div class="mb-3">
