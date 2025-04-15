@@ -25,10 +25,18 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <a class="btn btn-app" href="fiveS_checklist_1.aspx">
+                            <a class="btn btn-app" href="fiveS_checklist_2.aspx">
                                 <span class="badge bg-red">Shift : 2
                                     <asp:Label ID="lbl_tbttodaycount" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Five S Checklist
+
+                            </a>
+                        </div>
+                        <div class="x_content">
+                            <a class="btn btn-app" href="fiveS_checklist_1.aspx">
+                                <span class="badge bg-red">Shift : 2
+            <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>Create Checklist
 
                             </a>
                         </div>
@@ -64,9 +72,10 @@
                                 <i class="fa fa-edit"></i>Leak Test
 
                             </a>--%>
-                        </div>
-                    </div>
-                </div>--%>
+            </div>
+        </div>
+    </div>
+    --%>
 
             </div>
         </div>

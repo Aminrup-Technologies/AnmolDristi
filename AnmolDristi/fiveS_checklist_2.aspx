@@ -48,12 +48,11 @@
                                         <asp:TemplateField HeaderText="Actions">
                                             <ItemTemplate>
                                                 <div class="btn-group btn-group-sm" role="group">
-                                                    <asp:LinkButton ID="btnView" runat="server" CommandName="ViewChecklist"
-                                                        CommandArgument='<%# Eval("ID") %>' CssClass="btn btn-info text-white m-2">
+                                                    <asp:HyperLink ID="btnView" runat="server" CssClass="btn btn-info text-white m-2" NavigateUrl='<%# "view_Checklists.aspx?id=" + Eval("ID") %>' >
                         <i class="fa fa-eye"></i> View
-                                                    </asp:LinkButton>
-                                                    <asp:LinkButton ID="btnEdit" runat="server" CommandName="EditChecklist"
-                                                        CommandArgument='<%# Eval("ID") %>' CssClass="btn btn-warning text-white m-2">
+                                                    </asp:HyperLink>
+                                                    <asp:LinkButton ID="btnEdit" runat="server" 
+                                                         CssClass="btn btn-warning text-white m-2" PostBackUrl='<%# "~/fiveS_checklist_1.aspx?id=" + Eval("ID") %>'>
                         <i class="fa fa-edit"></i> Edit
                                                     </asp:LinkButton>
                                                     <asp:LinkButton ID="btnDelete" runat="server" CommandName="DeleteChecklist"

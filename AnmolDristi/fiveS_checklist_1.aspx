@@ -167,6 +167,7 @@
                                         CssClass="text-danger"
                                         Display="Dynamic"
                                         ValidationGroup="save" />
+                                    <asp:HiddenField runat="server" ID="ID" />
                                 </div>
                             </div>
 
@@ -177,7 +178,7 @@
                                     <div class="card mb-4 shadow-sm">
                                         <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
                                             <h6 class="mb-0">
-                                                <asp:Label ID="Grp_detail" runat="server" Text='<%# Bind("Value") %>' />
+                                                        <asp:Label ID="Grp_detail" runat="server" Text='<%# Bind("GroupName") %>' />
 
                                             </h6>
 
@@ -194,10 +195,11 @@
                                             <asp:Repeater ID="ChildRepeater" runat="server" DataSource='<%# Eval("Keys") %>'>
 
                                                 <ItemTemplate>
+                                                    <asp:HiddenField runat="server" ID="ID" Value='<%# Eval("ID") %>'  />
                                                     <div class="row requirement-item mb-4 p-3 border rounded needs-validation">
                                                         <div class="col-md-4">
                                                             <asp:Label for="labelRequirementEmail4" runat="server" CssClass="form-label " ForeColor="Black" Font-Bold="False" Font-Size="Small">Point:<%# Eval("Serial") %></asp:Label>
-                                                            <asp:Label ID="Requirement" CssClass="form-label" runat="server" Text='<%# Bind("key") %>' ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+                                                            <asp:Label ID="Requirement" CssClass="form-label" runat="server" Text='<%# Bind("Requirement") %>' ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
                                                         </div>
 
                                                         <div class="col-md-2">

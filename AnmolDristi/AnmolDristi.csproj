@@ -89,6 +89,7 @@
     <Content Include="fiveS_checklist.aspx" />
     <Content Include="uploads\programming-coding-editor-colorful-themes-abstract-program-code-computer-screen-internet-app-development-design-208361364.jpg" />
     <Content Include="uploads\software-development-word-cloud-concept-grey-background-88535408.jpg" />
+    <Content Include="view_Checklists.aspx" />
     <Content Include="WebForm1.aspx" />
     <Content Include="DAL\Datasets\Checklist_details_dataset.xsc">
       <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
@@ -211,6 +212,13 @@
     </Compile>
     <Compile Include="fiveS_checklist.aspx.designer.cs">
       <DependentUpon>fiveS_checklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="view_Checklists.aspx.cs">
+      <DependentUpon>view_Checklists.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="view_Checklists.aspx.designer.cs">
+      <DependentUpon>view_Checklists.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>

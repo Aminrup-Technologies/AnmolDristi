@@ -58,23 +58,154 @@ namespace AnmolDristi
                      .GroupBy(x => x.Value)
                      .Select((g, groupIndex) => new
                      {
-                         GroupSerial = (groupIndex + 1).ToString(), 
-                         Value = g.Key,
+                         GroupSerial = (groupIndex + 1).ToString(),
+                         GroupName = g.Key,
                          Keys = g.Select((x, itemIndex) => new
                          {
-                             Serial = $"{groupIndex + 1}.{itemIndex + 1}", 
-                             key = x.Key
+                             Serial = $"{groupIndex + 1}.{itemIndex + 1}",
+                             Requirement = x.Key,
+                             ID = string.Empty
                          }).ToList()
                      }).ToList();
 
+
+
+                string checklistId = Request.QueryString["id"];
+                if (!string.IsNullOrEmpty(checklistId))
+                {
+                    LoadChecklistsInfo(Convert.ToInt32(checklistId));
+                }
+                else
+                {
+                    DictionaryRepeater.DataSource = grouped;
+                    DictionaryRepeater.DataBind();
+                }
+            }
+        }
+
+        private void LoadChecklistsInfo(int checklistId)
+        {
+            string CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                con.Open();
+
+                SqlCommand cmdChecklist = new SqlCommand("SELECT * FROM Checklists WHERE ID = @ChecklistID", con);
+                cmdChecklist.Parameters.AddWithValue("@ChecklistID", checklistId);
+
+                SqlDataReader reader = cmdChecklist.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtDate.Text = Convert.ToDateTime(reader["Date"]).ToString("yyyy-MM-dd");
+                    txtDepartment.Text = reader["Department"].ToString();
+                    txtJob.Text = reader["Job"].ToString();
+                    ID.Value = reader["ID"].ToString();
+                }
+                reader.Close();
+
+                SqlCommand cmd = new SqlCommand("SELECT * FROM ChecklistInfo WHERE Checklist_ID = @ChecklistID", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                cmd.Parameters.AddWithValue("@ChecklistID", checklistId);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                var grouped = dt.AsEnumerable()
+        .GroupBy(row => row.Field<string>("Group_Name"))
+        .Select((g, groupIndex) => new
+        {
+            GroupSerial = (groupIndex + 1).ToString(),
+            GroupName = g.Key,
+            Keys = g.Select((x, itemIndex) => new
+            {
+                Serial = $"{groupIndex + 1}.{itemIndex + 1}",
+                Requirement = x.Field<string>("Requirements"),
+                ID = x.Field<int>("ID"),
+                IsOk = x.Field<bool>("Result"),
+                Remarks = x.Field<string>("Remark"),
+                PhotoPath = "~/uploads/" + x.Field<string>("Before_photo")
+            }).ToList()
+        }).ToList();
 
                 DictionaryRepeater.DataSource = grouped;
                 DictionaryRepeater.DataBind();
             }
         }
 
+
+        protected void editChecklist()
+        {
+            var checklistRow = _dataSource.Checklists.NewChecklistsRow();
+            checklistRow["ID"] = ID.Value;
+            checklistRow["Date"] = txtDate.Text;
+            checklistRow["Department"] = txtDepartment.Text;
+            checklistRow["Job"] = txtJob.Text;
+
+            _dataSource.Checklists.Rows.Add(checklistRow);
+            _dataSource.Checklists.Rows[0].AcceptChanges();
+            _dataSource.Checklists.Rows[0].SetModified();
+
+            ChecklistsTableAdapter checklisttable = new ChecklistsTableAdapter();
+            checklisttable.Update(_dataSource);
+
+            foreach (RepeaterItem parentItem in DictionaryRepeater.Items)
+            {
+                Repeater childRepeater = (Repeater)parentItem.FindControl("ChildRepeater");
+                Label GrpDetails = (Label)parentItem.FindControl("Grp_detail");
+
+                foreach (RepeaterItem item in childRepeater.Items)
+                {
+                    RadioButtonList rbl = (RadioButtonList)item.FindControl("result");
+                    TextBox remark = (TextBox)item.FindControl("Remark_text");
+                    FileUpload photo = (FileUpload)item.FindControl("Before_pic");
+                    Label Requirement = (Label)item.FindControl("Requirement");
+
+                    var checklistInfoRow = _dataSource.ChecklistInfo.NewChecklistInfoRow();
+                    checklistInfoRow["Checklist_ID"] = Convert.ToInt32(ID.Value);
+                    checklistInfoRow["Group_Name"] = GrpDetails.Text;
+
+                    //Wrap the Requirement.Text assignment like this to guarantee it doesn't break regardless of database column length:
+                    //This ensures you're not violating the MaxLength constraint even if the database allows larger values but the in-memory schema is outdated or limited.
+                    string reqText = Requirement.Text;
+                    int maxLength = _dataSource.ChecklistInfo.Columns["Requirements"].MaxLength;
+                    if (maxLength > 0 && reqText.Length > maxLength)
+                    {
+                        reqText = reqText.Substring(0, maxLength);
+                    }
+                    checklistInfoRow["Requirements"] = reqText;
+
+                    //checklistInfoRow["Requirements"] = Requirement.Text;
+                    checklistInfoRow["Result"] = Convert.ToBoolean(rbl.SelectedValue);
+                    checklistInfoRow["Remark"] = remark.Text;
+
+                    if (photo.HasFile)
+                    {
+                        string filename = Path.GetFileName(photo.FileName);
+                        string folderPath = Server.MapPath("~/uploads/");
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+
+                        string filePath = Path.Combine(folderPath, filename);
+                        photo.SaveAs(filePath);
+                        checklistInfoRow["Before_photo"] = filename;
+                    }
+
+                    _dataSource.ChecklistInfo.Rows.Add(checklistInfoRow);
+                    _dataSource.ChecklistInfo.Rows[0].AcceptChanges();
+                    _dataSource.ChecklistInfo.Rows[0].SetModified();
+                }
+            }
+
+            ChecklistInfoTableAdapter checklistInfo = new ChecklistInfoTableAdapter();
+            checklistInfo.Update(_dataSource);
+        }
+
+
+    
         protected void submit_Click(object sender, EventArgs e)
         {
+            //editChecklist();
             String CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(CS))
             {
@@ -85,7 +216,7 @@ namespace AnmolDristi
                 //This ensures that the structure of your in-memory DataTable (like _dataSource.ChecklistInfo) accurately mirrors the database table
                 daChecklistInfo.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-                SqlCommandBuilder cbChecklistInfo = new SqlCommandBuilder(daChecklistInfo);              
+                SqlCommandBuilder cbChecklistInfo = new SqlCommandBuilder(daChecklistInfo);
                 daChecklistInfo.Fill(_dataSource, "ChecklistInfo");
 
                 checklisttable.Connection = sqlConnection;
