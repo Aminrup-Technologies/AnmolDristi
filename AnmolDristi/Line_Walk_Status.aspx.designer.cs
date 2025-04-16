@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AnmolDristi
-{
-
-
-    public partial class Line_Walk_Status
-    {
-
+namespace AnmolDristi {
+    
+    
+    public partial class Line_Walk_Status {
+        
         /// <summary>
         /// ScriptManager1 control.
         /// </summary>
@@ -22,7 +20,16 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
-
+        
+        /// <summary>
+        /// HF_MemberList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HF_MemberList;
+        
         /// <summary>
         /// Lbl_Date control.
         /// </summary>
@@ -31,7 +38,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_Date;
-
+        
         /// <summary>
         /// RFV_TB_Date control.
         /// </summary>
@@ -40,7 +47,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Date;
-
+        
         /// <summary>
         /// TB_Date control.
         /// </summary>
@@ -49,43 +56,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_Date;
-
-        /// <summary>
-        /// Lbl_JD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_JD;
-
-        /// <summary>
-        /// RFV_TB_JD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_JD;
-
-        /// <summary>
-        /// REV_TB_JD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_JD;
-
-        /// <summary>
-        /// TB_JD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_JD;
-
+        
         /// <summary>
         /// Lbl_ID control.
         /// </summary>
@@ -94,7 +65,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_ID;
-
+        
         /// <summary>
         /// RFV_TB_ID control.
         /// </summary>
@@ -103,7 +74,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_ID;
-
+        
         /// <summary>
         /// REV_TB_ID control.
         /// </summary>
@@ -112,7 +83,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_ID;
-
+        
         /// <summary>
         /// TB_ID control.
         /// </summary>
@@ -121,52 +92,79 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_ID;
-
+        
         /// <summary>
-        /// Lbl_TM_Names control.
+        /// Lbl_JD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_TM_Names;
-
+        protected global::System.Web.UI.WebControls.Label Lbl_JD;
+        
         /// <summary>
-        /// RFV_TB_TM_Names control.
+        /// RFV_TB_JD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_TM_Names;
-
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_JD;
+        
         /// <summary>
-        /// REV_TB_TM_Names control.
+        /// REV_TB_JD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_TM_Names;
-
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_JD;
+        
         /// <summary>
-        /// TB_TM_Names control.
+        /// TB_JD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_TM_Names;
-
+        protected global::System.Web.UI.WebControls.TextBox TB_JD;
+        
         /// <summary>
-        /// btnAddName control.
+        /// lbl_panel1_msg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddName;
-
+        protected global::System.Web.UI.WebControls.Label lbl_panel1_msg;
+        
+        /// <summary>
+        /// btn_panel1_save control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_panel1_save;
+        
+        /// <summary>
+        /// btn_panel1_rst control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_panel1_rst;
+        
+        /// <summary>
+        /// btn_panel1_cncl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_panel1_cncl;
+        
         /// <summary>
         /// Lbl_EmployeeType control.
         /// </summary>
@@ -175,88 +173,115 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_EmployeeType;
-
+        
         /// <summary>
-        /// rbOwnEmployee control.
+        /// RBL_EmpType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbOwnEmployee;
-
+        protected global::System.Web.UI.WebControls.RadioButtonList RBL_EmpType;
+        
         /// <summary>
-        /// rbExternalMember control.
+        /// divEmpCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbExternalMember;
-
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEmpCode;
+        
         /// <summary>
-        /// lblEmployeeCode control.
+        /// Lbl_EmpCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEmployeeCode;
-
+        protected global::System.Web.UI.WebControls.Label Lbl_EmpCode;
+        
         /// <summary>
-        /// txtEmployeeCode control.
+        /// TB_EmpCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmployeeCode;
-
+        protected global::System.Web.UI.WebControls.TextBox TB_EmpCode;
+        
         /// <summary>
-        /// lblExternalName control.
+        /// divEmpName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblExternalName;
-
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEmpName;
+        
         /// <summary>
-        /// txtExternalName control.
+        /// Lbl_EmpName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtExternalName;
-
+        protected global::System.Web.UI.WebControls.Label Lbl_EmpName;
+        
         /// <summary>
-        /// Lbl_TM_Images control.
+        /// TB_EmpName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_TM_Images;
-
+        protected global::System.Web.UI.WebControls.TextBox TB_EmpName;
+        
         /// <summary>
-        /// RF_File_TM_Images control.
+        /// Btn_AddMember control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RF_File_TM_Images;
-
+        protected global::System.Web.UI.WebControls.Button Btn_AddMember;
+        
         /// <summary>
-        /// File_TM_Images control.
+        /// lbl_panel2_msg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload File_TM_Images;
-
+        protected global::System.Web.UI.WebControls.Label lbl_panel2_msg;
+        
+        /// <summary>
+        /// btn_panel2_save control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_panel2_save;
+        
+        /// <summary>
+        /// btn_panel2_rst control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_panel2_rst;
+        
+        /// <summary>
+        /// btn_panel2_cncl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_panel2_cncl;
+        
         /// <summary>
         /// Lbl_location control.
         /// </summary>
@@ -265,7 +290,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_location;
-
+        
         /// <summary>
         /// RFV_TB_location control.
         /// </summary>
@@ -274,7 +299,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_location;
-
+        
         /// <summary>
         /// REV_TB_location control.
         /// </summary>
@@ -283,7 +308,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_location;
-
+        
         /// <summary>
         /// TB_location control.
         /// </summary>
@@ -292,16 +317,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_location;
-
-        /// <summary>
-        /// btnAddArea control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddArea;
-
+        
         /// <summary>
         /// Lbl_Observation_Points control.
         /// </summary>
@@ -310,7 +326,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_Observation_Points;
-
+        
         /// <summary>
         /// RFV_TB_Observation_Points control.
         /// </summary>
@@ -319,7 +335,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Observation_Points;
-
+        
         /// <summary>
         /// REV_TB_Observation_Points control.
         /// </summary>
@@ -328,7 +344,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Observation_Points;
-
+        
         /// <summary>
         /// TB_Observation_Points control.
         /// </summary>
@@ -337,16 +353,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_Observation_Points;
-
-        /// <summary>
-        /// btnAddObservation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddObservation;
-
+        
         /// <summary>
         /// Lbl_Recommendation_Points control.
         /// </summary>
@@ -355,7 +362,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_Recommendation_Points;
-
+        
         /// <summary>
         /// RFV_TB_Recommendation_Points control.
         /// </summary>
@@ -364,7 +371,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_Recommendation_Points;
-
+        
         /// <summary>
         /// REV_TB_Recommendation_Points control.
         /// </summary>
@@ -373,7 +380,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Recommendation_Points;
-
+        
         /// <summary>
         /// TB_Recommendation_Points control.
         /// </summary>
@@ -382,16 +389,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_Recommendation_Points;
-
-        /// <summary>
-        /// btnAddRecommendation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddRecommendation;
-
+        
         /// <summary>
         /// Lbl_Responsibility control.
         /// </summary>
@@ -400,7 +398,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_Responsibility;
-
+        
         /// <summary>
         /// RFV_Responsibility control.
         /// </summary>
@@ -409,7 +407,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Responsibility;
-
+        
         /// <summary>
         /// REV_TB_Responsibility control.
         /// </summary>
@@ -418,7 +416,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Responsibility;
-
+        
         /// <summary>
         /// TB_Responsibility control.
         /// </summary>
@@ -427,16 +425,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_Responsibility;
-
-        /// <summary>
-        /// btnAddResponsibility control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddResponsibility;
-
+        
         /// <summary>
         /// Lbl_TargetDate control.
         /// </summary>
@@ -445,7 +434,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_TargetDate;
-
+        
         /// <summary>
         /// RFV_TargetDate control.
         /// </summary>
@@ -454,7 +443,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TargetDate;
-
+        
         /// <summary>
         /// TB_TargetDate control.
         /// </summary>
@@ -463,16 +452,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_TargetDate;
-
-        /// <summary>
-        /// btnAddTargetDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddTargetDate;
-
+        
         /// <summary>
         /// Lbl_Remarks control.
         /// </summary>
@@ -481,7 +461,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_Remarks;
-
+        
         /// <summary>
         /// RFV_Remarks control.
         /// </summary>
@@ -490,7 +470,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_Remarks;
-
+        
         /// <summary>
         /// REV_TB_Remarks control.
         /// </summary>
@@ -499,7 +479,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_Remarks;
-
+        
         /// <summary>
         /// TB_Remarks control.
         /// </summary>
@@ -508,16 +488,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_Remarks;
-
-        /// <summary>
-        /// btnAddRemarks control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddRemarks;
-
+        
         /// <summary>
         /// Lbl_Snaps control.
         /// </summary>
@@ -526,7 +497,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_Snaps;
-
+        
         /// <summary>
         /// RFV_File_Snaps control.
         /// </summary>
@@ -535,7 +506,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_File_Snaps;
-
+        
         /// <summary>
         /// File_Snaps control.
         /// </summary>
@@ -544,25 +515,25 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload File_Snaps;
-
+        
         /// <summary>
-        /// btnAddSnap control.
+        /// btnAddToGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddSnap;
-
+        protected global::System.Web.UI.WebControls.Button btnAddToGrid;
+        
         /// <summary>
-        /// Label1 control.
+        /// GridView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-
+        protected global::System.Web.UI.WebControls.GridView GridView1;
+        
         /// <summary>
         /// lbl_msg control.
         /// </summary>
@@ -571,7 +542,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_msg;
-
+        
         /// <summary>
         /// BtnSubmit control.
         /// </summary>
@@ -580,7 +551,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnSubmit;
-
+        
         /// <summary>
         /// BtnReset control.
         /// </summary>
@@ -589,7 +560,7 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnReset;
-
+        
         /// <summary>
         /// btn_home control.
         /// </summary>

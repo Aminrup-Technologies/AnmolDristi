@@ -1,10 +1,7 @@
 ﻿<%@ Page Title="CSM : Line Walk Report" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Line_Walk_Status.aspx.cs" Inherits="AnmolDristi.Line_Walk_Status" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
     <style type="text/css">
         button, .buttons, .btn, .modal-footer .btn + .btn {
             margin-bottom: 5px;
@@ -17,141 +14,149 @@
             font-weight: 500 !important;
             font-size: 1.5rem !important;
         }
+
+        .form-check-inline input[type="radio"] {
+            margin-right: 5px;
+            margin-left: 10px;
+        }
     </style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script type="text/javascript">
-        $(document).ready(function () {
-            // Get ASP.NET Client IDs
-            var nameBtnId = '<%= btnAddName.ClientID %>';
-            var observationBtnId = '<%= btnAddObservation.ClientID %>';
-            var recommendationBtnId = '<%= btnAddRecommendation.ClientID %>';
-            var snapBtnId = '<%= btnAddSnap.ClientID %>';
-            var areaBtnId = '<%= btnAddArea.ClientID %>';
-            var responsibilityBtnId = '<%= btnAddResponsibility.ClientID %>';
-            var targetDateBtnId = '<%= btnAddTargetDate.ClientID %>';
-            var remarksBtnId = '<%= btnAddRemarks.ClientID %>';
+        let members = [];
 
-            // Team Member Input
-            $("#" + nameBtnId).click(function () {
-                let newInput = `<div class="d-flex align-items-center mb-2 name-input-group">
-                            <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Enter team member name" />
-                            <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
-                        </div>`;
-                $("#nameInputContainer").append(newInput);
-            });
-
-            // Observation Input
-            $("#" + observationBtnId).click(function () {
-                let newInput = `<div class="d-flex align-items-center mb-2 observation-input-group">
-                            <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Observation" />
-                            <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
-                        </div>`;
-                $("#observationInputContainer").append(newInput);
-            });
-
-            // Recommendation Input
-            $("#" + recommendationBtnId).click(function () {
-                let newInput = `<div class="d-flex align-items-center mb-2 recommendation-input-group">
-                            <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Recommendation" />
-                            <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
-                        </div>`;
-                $("#recommendationInputContainer").append(newInput);
-            });
-
-            // Snap Upload Input
-            $("#" + snapBtnId).click(function () {
-                let newInput = `<div class="d-flex align-items-center mb-2 snap-upload-group">
-                            <input type="file" class="form-control form-control-sm rounded me-2" />
-                            <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
-                        </div>`;
-                $("#snapUploadContainer").append(newInput);
-            });
-
-            // Area/Location Input
-            $("#" + areaBtnId).click(function () {
-                let newInput = `<div class="d-flex align-items-center mb-2 area-input-group">
-                            <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Area/Location" />
-                            <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
-                        </div>`;
-                $("#AreaInputContainer").append(newInput);
-            });
-
-            // Responsibility Input
-            $("#" + responsibilityBtnId).click(function () {
-                let newInput = `<div class="d-flex align-items-center mb-2 responsibility-input-group">
-                            <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Responsibility" />
-                            <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
-                        </div>`;
-                $("#responsibilityInputContainer").append(newInput);
-            });
-
-            // Target Date Input
-            $("#" + targetDateBtnId).click(function () {
-                let newInput = `<div class="d-flex align-items-center mb-2 target-date-input-group">
-                            <input type="date" class="form-control form-control-sm rounded me-2" />
-                            <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
-                        </div>`;
-                $("#targetDateInputContainer").append(newInput);
-            });
-
-            // Remarks Input
-            $("#" + remarksBtnId).click(function () {
-                let newInput = `<div class="d-flex align-items-center mb-2 remarks-input-group">
-                            <input type="text" class="form-control form-control-sm rounded me-2" placeholder="Remarks" />
-                            <button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button>
-                        </div>`;
-                $("#remarksInputContainer").append(newInput);
-            });
-
-            // Common remove button logic
-            $("body").on("click", ".btn-remove", function () {
-                $(this).closest("div").remove();
-            });
-        });
-        var internalEmployees = [];
-        var externalMembers = [];
-
-        membersList.forEach(member => {
-            if (member.type === "Own Employee") {
-                internalEmployees.push(member.code);
-            } else {
-                externalMembers.push(member.name);
-            }
-        });
-
-        var dataToSend = {
-            internalEmployeesCSV: internalEmployees.join(","),
-            externalMembersCSV: externalMembers.join(",")
+        window.onload = function () {
+            setupRadioChange();
+            toggleEmpFields();
         };
 
-        if (typeof PageMethods !== "undefined") {
-            PageMethods.SaveMembers(dataToSend.internalEmployeesCSV, dataToSend.externalMembersCSV, function (response) {
-                showNotification("success", response);
-                membersList = [];
-                updateGridView();
-            }, function (error) {
-                console.error("Error saving members:", error);
-                showNotification("error", "Error saving members.");
+        function setupRadioChange() {
+            const radios = document.getElementsByName('<%= RBL_EmpType.UniqueID %>');
+            radios.forEach(radio => {
+                radio.addEventListener("change", toggleEmpFields);
             });
-        } else {
-            console.error("PageMethods is not enabled.");
-            showNotification("error", "PageMethods is not enabled.");
         }
+
+        function toggleEmpFields() {
+            const selectedType = document.querySelector(`input[name="<%= RBL_EmpType.UniqueID %>"]:checked`).value;
+            const empCode = document.getElementById("<%= TB_EmpCode.ClientID %>");
+            const empName = document.getElementById("<%= TB_EmpName.ClientID %>");
+
+            if (selectedType === "Internal") {
+                empCode.disabled = false;
+                empName.readOnly = true;
+                empName.value = "";
+            } else {
+                empCode.value = "";
+                empCode.disabled = true;
+                empName.readOnly = false;
+                empName.value = "";
+            }
         }
+
+        function fetchEmpName() {
+            const empCode = document.getElementById("<%= TB_EmpCode.ClientID %>").value.trim();
+            if (empCode !== "") {
+                PageMethods.GetEmpName(empCode,
+                    function (result) {
+                        document.getElementById("<%= TB_EmpName.ClientID %>").value = result;
+                    },
+                    function () {
+                        showNotification("Error", "Failed to fetch employee name.", "error");
+                    });
+                }
+            }
+
+            function addMember() {
+                const type = document.querySelector(`input[name="<%= RBL_EmpType.UniqueID %>"]:checked`).value;
+                const code = document.getElementById("<%= TB_EmpCode.ClientID %>").value.trim();
+                const name = document.getElementById("<%= TB_EmpName.ClientID %>").value.trim();
+
+                if ((type === "Internal" && (!code || !name)) || (type === "External" && !name)) {
+                    showNotification("Validation", "Please fill all required fields.", "warning");
+                    return;
+                }
+
+                members.push({ type, code, name });
+                updateTable();
+
+                document.getElementById("<%= TB_EmpCode.ClientID %>").value = "";
+                document.getElementById("<%= TB_EmpName.ClientID %>").value = "";
+                toggleEmpFields();
+            }
+
+            function updateTable() {
+                const tbody = document.querySelector("#tblMembers tbody");
+                tbody.innerHTML = "";
+
+                members.forEach((m, i) => {
+                    const row = tbody.insertRow();
+                    row.insertCell(0).innerText = m.type;
+                    row.insertCell(1).innerText = m.code || "-";
+                    row.insertCell(2).innerText = m.name;
+                    row.insertCell(3).innerHTML = `<button class='btn btn-danger btn-sm' type='button' onclick='removeMember(${i})'>Delete</button>`;
+                });
+
+                document.getElementById("<%= HF_MemberList.ClientID %>").value = JSON.stringify(members);
+            }
+
+            function removeMember(index) {
+                members.splice(index, 1);
+                updateTable();
+            }
+
+            function validateFormBeforeSubmit() {
+                const lbl = document.getElementById("<%= lbl_panel2_msg.ClientID %>");
+                if (members.length === 0) {
+                    lbl.innerText = "❌ Please add at least one member before proceeding.";
+                    lbl.style.color = "red";
+                    showNotification("Required", "Please add at least one member to proceed.", "error");
+                    return false;
+                }
+
+                lbl.innerText = "✅ Validation passed. Proceeding...";
+                lbl.style.color = "green";
+                return true;
+            }
+
+            function showNotification(title, text, type) {
+                new PNotify({
+                    title: title,
+                    text: text,
+                    type: type,
+                    styling: 'bootstrap3',
+                    delay: 3000,
+                });
+            }
+
+            let observationRows = []; // To hold the added observation rows
+
+            function addMore() {
+                const areaLocation = document.getElementById('<%= TB_location.ClientID %>').value;
+                const observation = document.getElementById('<%= TB_Observation_Points.ClientID %>').value;
+                const recommendation = document.getElementById('<%= TB_Recommendation_Points.ClientID %>').value;
+                const responsibility = document.getElementById('<%= TB_Responsibility.ClientID %>').value;
+                const targetDate = document.getElementById('<%= TB_TargetDate.ClientID %>').value;
+                const remarks = document.getElementById('<%= TB_Remarks.ClientID %>').value;
+                const snapFile = document.getElementById('<%= File_Snaps.ClientID %>').value;
+
+                if (!areaLocation || !observation || !recommendation || !responsibility || !targetDate || !remarks || !snapFile) {
+                    alert("Please fill all fields and upload a file.");
+                    return;
+                }
+
+                __doPostBack('<%= btnAddToGrid.UniqueID %>', '');
+            }
+
     </script>
+
+    <asp:HiddenField ID="HF_MemberList" runat="server" />
 
     <div class="right_col" role="main">
         <div class="container">
-            <%--<div class="page-title">
-                <div class="title_left">
-                    <h2>Automation & Technical Services</h2>
-                </div>
-            </div>--%>
-
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="x_panel">
@@ -161,23 +166,30 @@
                         </div>
 
                         <div class="x_content">
-                            <!-- Row 1: Date, Job Description, Job ID -->
-                            <!-- Step 1: Job Details -->
-
                             <h2 class="green-heading">Step 1: Job Details</h2>
                             <hr />
 
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="mb-4">
+                                <div class="col-md-3">
+                                    <div class="mb-3">
                                         <asp:Label ID="Lbl_Date" runat="server" AssociatedControlID="TB_Date" Text="Date" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_Date" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_Date" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:TextBox ID="TB_Date" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="mb-4">
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_ID" runat="server" AssociatedControlID="TB_ID" Text="Job ID" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="RFV_TB_ID" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_ID" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="REV_TB_ID" runat="server" ValidationGroup="Submit" ControlToValidate="TB_ID" ForeColor="Red" ErrorMessage="Only letters, numbers, and spaces allowed" ValidationExpression="^[a-zA-Z0-9]+$" Display="Dynamic"></asp:RegularExpressionValidator>
+
+                                        <asp:TextBox ID="TB_ID" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-6">
                                         <asp:Label ID="Lbl_JD" runat="server" AssociatedControlID="TB_JD" Text="Job Description" ForeColor="Blue" Font-Bold="true"></asp:Label>
                                         <asp:RequiredFieldValidator ID="RFV_TB_JD" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_JD" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ID="REV_TB_JD" runat="server" ValidationGroup="Submit" ControlToValidate="TB_JD" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
@@ -186,107 +198,91 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="mb-4">
-                                        <asp:Label ID="Lbl_ID" runat="server" AssociatedControlID="TB_ID" Text="Job ID" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                                        <asp:RequiredFieldValidator ID="RFV_TB_ID" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_ID" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:RegularExpressionValidator ID="REV_TB_ID" runat="server" ValidationGroup="Submit" ControlToValidate="TB_ID" ForeColor="Red" ErrorMessage="Only letters, numbers, and spaces allowed" ValidationExpression="^[a-zA-Z0-9]+$" Display="Dynamic"></asp:RegularExpressionValidator>
 
-                                        <asp:TextBox ID="TB_ID" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-4 text-center">
+                                        <asp:Label ID="lbl_panel1_msg" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SUBMIT!" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="d-flex justify-content-center gap-2 mt-2">
+                                            <asp:Button ID="btn_panel1_save" runat="server" Text="Proceed Next" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" />
+                                            <asp:Button ID="btn_panel1_rst" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" />
+                                            <asp:Button ID="btn_panel1_cncl" runat="server" Text="HOME" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
 
                             <hr>
                             <h2 class="green-heading">Step 2[A]: Team Members</h2>
                             <hr />
+
                             <div class="row">
-
-                                <div class="col-md-4">
-                                    <div class="mb-4">
-                                        <asp:Label ID="Lbl_TM_Names" runat="server" AssociatedControlID="TB_TM_Names" Text="Team Members Present Names" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                                        <asp:RequiredFieldValidator ID="RFV_TB_TM_Names" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="TB_TM_Names" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:RegularExpressionValidator ID="REV_TB_TM_Names" runat="server" ValidationGroup="Submit" ControlToValidate="TB_TM_Names" ForeColor="Red" ErrorMessage="Only alphabets allowed" ValidationExpression="^[a-zA-Z, /]*$" Display="Dynamic"></asp:RegularExpressionValidator>
-
-                                        <div id="nameInputContainer">
-                                            <div class="d-flex mb-2">
-                                                <asp:TextBox ID="TB_TM_Names" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Enter name"></asp:TextBox>
-                                                <asp:Button ID="btnAddName" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
-                                            </div>
-                                        </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_EmployeeType" runat="server" Text="Employee Type" ForeColor="Blue" Font-Bold="true"></asp:Label><br />
+                                        <asp:RadioButtonList ID="RBL_EmpType" runat="server" RepeatDirection="Horizontal" CssClass="form-check-inline">
+                                            <asp:ListItem Text="Internal" Value="Internal" Selected="True" />
+                                            <asp:ListItem Text="External" Value="External" />
+                                        </asp:RadioButtonList>
                                     </div>
                                 </div>
+
+                                <div class="col-md-3" id="divEmpCode" runat="server">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_EmpCode" runat="server" AssociatedControlID="TB_EmpCode" Text="Employee Code" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:TextBox ID="TB_EmpCode" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="false" onblur="fetchEmpName();" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="divEmpName" runat="server">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_EmpName" runat="server" AssociatedControlID="TB_EmpName" Text="Employee Name" ForeColor="Blue" Font-Bold="true"></asp:Label>
+                                        <asp:TextBox ID="TB_EmpName" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 d-flex align-items-center">
+                                    <asp:Button ID="Btn_AddMember" runat="server" Text="Add Member" CssClass="btn btn-success btn-sm w-100" OnClientClick="addMember(); return false;" />
+                                </div>
+
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-6">
-                                        <asp:Label ID="Lbl_EmployeeType" runat="server" Text="Select Member Type : " ForeColor="Blue" Font-Bold="true"></asp:Label>
-                                        <asp:RadioButton ID="rbOwnEmployee" runat="server" GroupName="EmployeeType" Text=" Own Employee" onclick="toggleFields()" ClientIDMode="Static" />
-                                        <asp:RadioButton ID="rbExternalMember" runat="server" GroupName="EmployeeType" Text=" External Member" onclick="toggleFields()" ClientIDMode="Static" />
-
-                                    </div>
-                                    <!-- Employee Code Input -->
-                                    <div id="employeeCodeDiv" style="display: none;">
-                                        <asp:Label ID="lblEmployeeCode" runat="server" Text="Enter Employee Code" Font-Bold="true"></asp:Label>
-                                        <asp:TextBox ID="txtEmployeeCode" runat="server" CssClass="form-control form-control-sm" ClientIDMode="Static" onkeyup="fetchEmployeeName()"></asp:TextBox>
-                                        <label id="lblEmployeeName" style="color: green; font-weight: bold;"></label>
-                                    </div>
-
-                                    <!-- External Member Name Input -->
-                                    <div id="externalMemberDiv" style="display: none;">
-                                        <asp:Label ID="lblExternalName" runat="server" Text="Enter Name" Font-Bold="true"></asp:Label>
-                                        <asp:TextBox ID="txtExternalName" runat="server" CssClass="form-control form-control-sm" ClientIDMode="Static"></asp:TextBox>
-                                    </div>
-
-                                    <!-- Add Button -->
-                                    <button type="button" class="btn btn-primary btn-sm mt-2" onclick="addMember()">Add Member</button>
-                                </div>
+                                <table class="table table-bordered table-sm mt-3" id="tblMembers">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="width: 20%;">Type</th>
+                                            <th style="width: 20%;">Code</th>
+                                            <th style="width: 45%;">Name</th>
+                                            <th style="width: 15%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
+
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="mb-12">
-                                        <h4 class="mt-6">Added Members</h4>
-                                        <table id="membersGrid" class="col-lg-12 table table-bordered table-responsive">
-                                            <tr>
-                                                <th>SL</th>
-                                                <th>Type of Employee</th>
-                                                <th>Employee Code</th>
-                                                <th>Employee Name</th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <button type="button" class="btn btn-success btn-sm mt-2" onclick="saveMembersToDB()">Save Members</button>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-4">
-                                <div class="mb-4">
-                                    <asp:Label ID="Lbl_TM_Images" runat="server" AssociatedControlID="File_TM_Images" Text="Upload Team Members Image" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                                    <asp:RequiredFieldValidator ID="RF_File_TM_Images" runat="server" ErrorMessage="*" ValidationGroup="Submit" ControlToValidate="File_TM_Images" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-
-                                    <div id="imageUploadContainer">
-                                        <div class="d-flex mb-2">
-                                            <asp:FileUpload ID="File_TM_Images" runat="server" CssClass="form-control form-control-sm rounded me-2" />
-                                            <%--                                                <button type="button" id="btnAddImage" class="btn btn-success btn-sm">+Add</button>--%>
+                                    <div class="mb-4 text-center">
+                                        <asp:Label ID="lbl_panel2_msg" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SUBMIT!" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="d-flex justify-content-center gap-2 mt-2">
+                                            <asp:Button ID="btn_panel2_save" runat="server" Text="Proceed next" CssClass="btn btn-primary btn-sm" OnClientClick="return validateFormBeforeSubmit();"/>
+                                            <asp:Button ID="btn_panel2_rst" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" />
+                                            <asp:Button ID="btn_panel2_cncl" runat="server" Text="HOME" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
-
-
-                        <!-- Row 3: location, Observation, Recommendation,  -->
-                        <!-- Step 3: Observations and Recommendations -->
                         <hr>
                         <h2 class="green-heading">Step 3: Observations & Recommendations</h2>
                         <hr />
 
 
-                        <div class=" row repeator">
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="mb-4">
                                     <asp:Label ID="Lbl_location" runat="server" AssociatedControlID="TB_location" Text="Area/Location" ForeColor="Blue" Font-Bold="true"></asp:Label>
@@ -296,7 +292,6 @@
                                     <div id="AreaInputContainer">
                                         <div class="d-flex mb-2">
                                             <asp:TextBox ID="TB_location" runat="server" CssClass="form-control form-control-sm rounded me-2"></asp:TextBox>
-                                            <asp:Button ID="btnAddArea" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
                                         </div>
                                     </div>
                                 </div>
@@ -311,11 +306,11 @@
                                     <div id="observationInputContainer">
                                         <div class="d-flex mb-2">
                                             <asp:TextBox ID="TB_Observation_Points" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Observation"></asp:TextBox>
-                                            <asp:Button ID="btnAddObservation" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-4">
                                 <div class="mb-4">
                                     <asp:Label ID="Lbl_Recommendation_Points" runat="server" AssociatedControlID="TB_Recommendation_Points" Text="Recommendation Given" ForeColor="Blue" Font-Bold="true"></asp:Label>
@@ -325,18 +320,11 @@
                                     <div id="recommendationInputContainer">
                                         <div class="d-flex mb-2">
                                             <asp:TextBox ID="TB_Recommendation_Points" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Recommendation"></asp:TextBox>
-                                            <asp:Button ID="btnAddRecommendation" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-
-
-                        </div>
-
-                        <!-- Row 4: Responsibility,Target Date,Remarks, Upload Snaps -->
-                        <div class="row">
                             <div class="col-md-4">
                                 <div class="mb-4">
                                     <asp:Label ID="Lbl_Responsibility" runat="server" AssociatedControlID="TB_Responsibility" Text="Responsibility" ForeColor="Blue" Font-Bold="true"></asp:Label>
@@ -346,7 +334,6 @@
                                     <div id="responsibilityInputContainer">
                                         <div class="d-flex mb-2">
                                             <asp:TextBox ID="TB_Responsibility" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Responsibility"></asp:TextBox>
-                                            <asp:Button ID="btnAddResponsibility" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
                                         </div>
                                     </div>
                                 </div>
@@ -359,7 +346,6 @@
                                     <div id="targetDateInputContainer">
                                         <div class="d-flex mb-2">
                                             <asp:TextBox ID="TB_TargetDate" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="YYYY-MM-DD" TextMode="Date"></asp:TextBox>
-                                            <asp:Button ID="btnAddTargetDate" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
                                         </div>
                                     </div>
                                 </div>
@@ -374,7 +360,6 @@
                                     <div id="remarksInputContainer">
                                         <div class="d-flex mb-2">
                                             <asp:TextBox ID="TB_Remarks" runat="server" CssClass="form-control form-control-sm rounded me-2" Placeholder="Remarks"></asp:TextBox>
-                                            <asp:Button ID="btnAddRemarks" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
                                         </div>
                                     </div>
                                 </div>
@@ -388,22 +373,37 @@
                                     <div id="snapUploadContainer">
                                         <div class="d-flex mb-2">
                                             <asp:FileUpload ID="File_Snaps" runat="server" CssClass="form-control form-control-sm rounded me-2" />
-                                            <asp:Button ID="btnAddSnap" runat="server" Text="Add more" CssClass="btn btn-success btn-sm" UseSubmitBehavior="false" OnClientClick="return false;" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mb-4">
-                                    <asp:Label ID="Label1" runat="server" Text="Click to Add More" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                                    <button type="button" id="btnAddMore" class="btn btn-primary btn-sm mt-3 form-control form-control-sm">+ Add More</button>
+                                    <asp:Button ID="btnAddToGrid" runat="server" OnClick="btnAddToGrid_Click" Style="display: none;" />
+                                    <button type="button" class="btn btn-success" onclick="addMore()">Add More</button>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row">
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered">
+                                <Columns>
+                                    <asp:BoundField DataField="Area" HeaderText="Area" />
+                                    <asp:BoundField DataField="Observation" HeaderText="Observation" />
+                                    <asp:BoundField DataField="Recommendation" HeaderText="Recommendation" />
+                                    <asp:BoundField DataField="Responsibility" HeaderText="Responsibility" />
+                                    <asp:BoundField DataField="TargetDate" HeaderText="Target Date" />
+                                    <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
+                                    <asp:TemplateField HeaderText="Snap">
+                                        <ItemTemplate>
+                                            <a href='<%# ResolveUrl(Eval("FilePath").ToString()) %>' target="_blank">View</a>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
                         </div>
                     </div>
 
@@ -418,7 +418,6 @@
                                 </asp:Label>
 
                                 <div class="d-flex justify-content-center gap-2 mt-2">
-                                    <!-- Centering buttons -->
                                     <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
                                     <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                                     <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/home.aspx" />

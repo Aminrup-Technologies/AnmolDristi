@@ -1,145 +1,12 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Configuration;
-//using System.Data;
-//using System.Data.SqlClient;
-//using System.Web.UI;
-
-//namespace AnmolDristi
-//{
-//    public partial class Line_Walk_Status : System.Web.UI.Page
-//    {
-//        protected void Page_Load(object sender, EventArgs e)
-//        {
-//        }
-
-//        protected void BtnSubmit_Click(object sender, EventArgs e)
-
-//      {
-//            try
-//            {
-//                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-//                using (SqlConnection con = new SqlConnection(connectionString))
-//                using (SqlCommand cmd = new SqlCommand("SP_Line_Walk_Status", con))
-//                {
-//                    cmd.CommandType = CommandType.StoredProcedure;
-
-//                    DateTime walkDate = DateTime.Today; // Replace with: Convert.ToDateTime(txtDate.Text);
-//                    string jobDescription = TB_JD.Text.Trim();
-//                    string jobId = TB_ID.Text.Trim();
-
-//                    cmd.Parameters.AddWithValue("@WalkDate", walkDate);
-//                    cmd.Parameters.AddWithValue("@JobDescription", jobDescription);
-//                    cmd.Parameters.AddWithValue("@JobID", jobId);
-
-//                    // Get real user input from the form
-//                    List<TeamMember> teamMembers = GetTeamMembersFromForm();
-//                    DataTable teamMembersTable = GetTeamMembersTable(teamMembers);
-//                    SqlParameter teamParam = cmd.Parameters.AddWithValue("@TeamMembers", teamMembersTable);
-//                    teamParam.SqlDbType = SqlDbType.Structured;
-//                    teamParam.TypeName = "dbo.TeamMembersType";
-
-//                    List<WalkDetail> walkDetails = GetWalkDetailsFromForm();
-//                    DataTable detailsTable = GetWalkDetailsTable(walkDetails);
-//                    SqlParameter detailParam = cmd.Parameters.AddWithValue("@WalkDetails", detailsTable);
-//                    detailParam.SqlDbType = SqlDbType.Structured;
-//                    detailParam.TypeName = "dbo.WalkDetailsType";
-
-//                    con.Open();
-//                    cmd.ExecuteNonQuery();
-
-//                    string successScript = $"Swal.fire({{ title: 'Success!', text: 'Data saved successfully.', icon: 'success' }});";
-//                    ScriptManager.RegisterStartupScript(this, this.GetType(), "SubmitSuccess", successScript, true);
-//                }
-//            }
-//            catch (Exception ex)
-//            {
-//                string errorScript = $"Swal.fire({{ title: 'Error!', text: '{ex.Message}', icon: 'error' }});";
-//                ScriptManager.RegisterStartupScript(this, this.GetType(), "SubmitError", errorScript, true);
-//            }
-//        }
-
-//        protected void BtnReset_Click(object sender, EventArgs e)
-//        {
-//            Response.Redirect("Line_Walk_Status.aspx");
-//        }
-
-//        private DataTable GetTeamMembersTable(List<TeamMember> teamMembers)
-//        {
-//            var table = new DataTable();
-//            table.Columns.Add("TM_names", typeof(string));
-//            table.Columns.Add("TM_Image", typeof(string));
-
-//            foreach (var member in teamMembers)
-//            {
-//                table.Rows.Add(member.Name, member.Image);
-//            }
-
-//            return table;
-//        }
-
-//        private DataTable GetWalkDetailsTable(List<WalkDetail> walkDetails)
-//        {
-//            var table = new DataTable();
-//            table.Columns.Add("Location", typeof(string));
-//            table.Columns.Add("Observation_Points", typeof(string));
-//            table.Columns.Add("Recommendation_Points", typeof(string));
-//            table.Columns.Add("Responsibility", typeof(string));
-//            table.Columns.Add("Target_Date", typeof(DateTime));
-//            table.Columns.Add("Remarks", typeof(string));
-//            table.Columns.Add("Snap_File_Path", typeof(string));
-
-//            foreach (var detail in walkDetails)
-//            {
-//                table.Rows.Add(detail.Location, detail.Observation, detail.Recommendation,
-//                               detail.Responsibility, detail.TargetDate, detail.Remarks, detail.SnapPath);
-//            }
-
-//            return table;
-//        }
-
-//        // Define the data models
-//        public class TeamMember
-//        {
-//            public string Name { get; set; }
-//            public string Image { get; set; }
-//        }
-
-//        public class WalkDetail
-//        {
-//            public string Location { get; set; }
-//            public string Observation { get; set; }
-//            public string Recommendation { get; set; }
-//            public string Responsibility { get; set; }
-//            public DateTime TargetDate { get; set; }
-//            public string Remarks { get; set; }
-//            public string SnapPath { get; set; }
-//        }
-
-//        // Replace these with logic to fetch actual form values
-//        private List<TeamMember> GetTeamMembersFromForm()
-//        {
-//            return new List<TeamMember>(); // Fill this from your frontend inputs
-//        }
-
-//        private List<WalkDetail> GetWalkDetailsFromForm()
-//        {
-//            return new List<WalkDetail>(); // Fill this from your frontend inputs
-//        }
-//    }
-//}
-
-
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -150,28 +17,37 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
+                {
+                    Response.Redirect("login.aspx");
+                }
+                else
+                {
+
+                }
+            }
         }
 
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
+            DataSaver();
+        }
+
+        protected void DataSaver()
+        {
             try
             {
                 string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     con.Open();
-
                     using (SqlTransaction transaction = con.BeginTransaction())
                     {
                         try
                         {
-                            string insertWalkStatusQuery = @"
-                        INSERT INTO [dbo].[Line_walk_status] 
-                        ([WalkDate], [JobDescription], [JobID]) 
-                        VALUES (@WalkDate, @JobDescription, @JobID); 
-                        SELECT SCOPE_IDENTITY();";
-
+                            string insertWalkStatusQuery = @"INSERT INTO [Line_walk_status] ([WalkDate], [JobDescription], [JobID]) VALUES (@WalkDate, @JobDescription, @JobID); SELECT SCOPE_IDENTITY();";
                             int walkStatusId;
                             using (SqlCommand cmd = new SqlCommand(insertWalkStatusQuery, con, transaction))
                             {
@@ -186,14 +62,12 @@ namespace AnmolDristi
                                 }
                             }
 
-                            // Insert into Line_walk_status_description
+                            string json = HF_MemberList.Value;
+
                             List<TeamMember> teamMembers = GetTeamMembersFromForm();
                             foreach (var member in teamMembers)
                             {
-                                string insertTeamMemberQuery = @"
-                            INSERT INTO [dbo].[Line_walk_status_description] 
-                            ([ID], [TM_names], [TM_Image]) 
-                            VALUES (@ID, @TM_names, @TM_Image);";
+                                string insertTeamMemberQuery = @"INSERT INTO [Line_walk_status_description] ([ID], [TM_names], [TM_Image]) VALUES (@ID, @TM_names, @TM_Image);";
 
                                 using (SqlCommand cmdTeam = new SqlCommand(insertTeamMemberQuery, con, transaction))
                                 {
@@ -206,17 +80,10 @@ namespace AnmolDristi
                                 }
                             }
 
-                            // Insert into Line_walk_details
                             List<WalkDetail> walkDetails = GetWalkDetailsFromForm();
                             foreach (var detail in walkDetails)
                             {
-                                string insertWalkDetailQuery = @"
-                            INSERT INTO [dbo].[Line_walk_details] 
-                            ([ID], [Location], [Observation_Points], [Recommendation_Points], 
-                             [Responsibility], [Target_Date], [Remarks], [Snap_File_Path]) 
-                            VALUES 
-                            (@ID, @Location, @Observation_Points, @Recommendation_Points, 
-                             @Responsibility, @Target_Date, @Remarks, @Snap_File_Path);";
+                                string insertWalkDetailQuery = @"INSERT INTO [Line_walk_details] ([ID], [Location], [Observation_Points], [Recommendation_Points], [Responsibility], [Target_Date], [Remarks], [Snap_File_Path]) VALUES (@ID, @Location, @Observation_Points, @Recommendation_Points, @Responsibility, @Target_Date, @Remarks, @Snap_File_Path);";
 
                                 using (SqlCommand cmdWalkDetail = new SqlCommand(insertWalkDetailQuery, con, transaction))
                                 {
@@ -253,6 +120,7 @@ namespace AnmolDristi
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "SubmitError", errorScript, true);
             }
         }
+
 
         protected void BtnReset_Click(object sender, EventArgs e)
         {
@@ -383,23 +251,161 @@ namespace AnmolDristi
 
             return snapPath;
         }
-    }
 
-    // Define the data models for TeamMember and WalkDetail
-    public class TeamMember
-    {
-        public string Name { get; set; }
-        public string Image { get; set; }
-    }
+        // Define the data models for TeamMember and WalkDetail
+        public class TeamMember
+        {
+            public string Name { get; set; }
+            public string Image { get; set; }
+        }
 
-    public class WalkDetail
-    {
-        public string Location { get; set; }
-        public string Observation { get; set; }
-        public string Recommendation { get; set; }
-        public string Responsibility { get; set; }
-        public DateTime TargetDate { get; set; }
-        public string Remarks { get; set; }
-        public string SnapPath { get; set; }
+        public class WalkDetail
+        {
+            public string Location { get; set; }
+            public string Observation { get; set; }
+            public string Recommendation { get; set; }
+            public string Responsibility { get; set; }
+            public DateTime TargetDate { get; set; }
+            public string Remarks { get; set; }
+            public string SnapPath { get; set; }
+        }
+
+
+        //-------------------------------Added on 15-04-2025-----------KK-TL---------------//
+        [WebMethod]
+        public static string GetEmpName(string empCode)
+        {
+            string empName = "";
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT EmployeeName FROM MST_UserMaster WHERE EmployeeCode = @Code", con);
+                cmd.Parameters.AddWithValue("@Code", empCode);
+                con.Open();
+                var result = cmd.ExecuteScalar();
+                if (result != null)
+                    empName = result.ToString();
+            }
+
+            return empName;
+        }
+
+        public class MemberEntry
+        {
+            public string type { get; set; }
+            public string code { get; set; }
+            public string name { get; set; }
+        }
+
+        private void ShowNotification(string title, string message, string type = "error")
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Notify",
+                $"showNotification('{title}', '{message}', '{type}');", true);
+        }
+
+        
+
+        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            DataTable dt = Session["ObservationData"] as DataTable;
+            if (dt != null)
+            {
+                dt.Rows.RemoveAt(e.RowIndex);
+                GridView1.DataSource = dt;
+                GridView1.DataBind();
+
+                Session["ObservationData"] = dt;
+            }
+        }
+
+        protected void btn_panel1_save_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void btn_panel2_save_Click(object sender, EventArgs e)
+        {
+            string json = HF_MemberList.Value;
+            if (string.IsNullOrEmpty(json))
+                return;
+
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            List<MemberEntry> members = serializer.Deserialize<List<MemberEntry>>(json);
+
+            List<string> internalCodes = new List<string>();
+            List<string> externalNames = new List<string>();
+
+            foreach (var member in members)
+            {
+                if (member.type == "Internal" && !string.IsNullOrWhiteSpace(member.code))
+                {
+                    internalCodes.Add(member.code.Trim());
+                }
+                else if (member.type == "External" && !string.IsNullOrWhiteSpace(member.name))
+                {
+                    externalNames.Add(member.name.Trim());
+                }
+            }
+
+            string internalString = string.Join(",", internalCodes);
+            string externalString = string.Join(",", externalNames);
+
+            lbl_panel2_msg.Text = $"✅ Internal: {internalString} | ✅ External: {externalString}";
+        }
+
+        protected void btnAddToGrid_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string area = TB_location.Text.Trim();
+                string observation = TB_Observation_Points.Text.Trim();
+                string recommendation = TB_Recommendation_Points.Text.Trim();
+                string responsibility = TB_Responsibility.Text.Trim();
+                string targetDate = TB_TargetDate.Text.Trim();
+                string remarks = TB_Remarks.Text.Trim();
+                string filePath = "";
+
+                if (File_Snaps.HasFile)
+                {
+                    string folderPath = Server.MapPath("~/Uploads/");
+                    if (!Directory.Exists(folderPath))
+                        Directory.CreateDirectory(folderPath);
+
+                    string filename = Guid.NewGuid().ToString() + "_" + Path.GetFileName(File_Snaps.FileName);
+                    filePath = "~/Uploads/" + filename;
+                    File_Snaps.SaveAs(Path.Combine(folderPath, filename));
+                }
+
+                DataTable dt = Session["ObservationData"] as DataTable;
+                if (dt == null)
+                {
+                    dt = new DataTable();
+                    dt.Columns.Add("Area");
+                    dt.Columns.Add("Observation");
+                    dt.Columns.Add("Recommendation");
+                    dt.Columns.Add("Responsibility");
+                    dt.Columns.Add("TargetDate");
+                    dt.Columns.Add("Remarks");
+                    dt.Columns.Add("FilePath");
+                }
+
+                dt.Rows.Add(area, observation, recommendation, responsibility, targetDate, remarks, filePath);
+
+                Session["ObservationData"] = dt;
+                GridView1.DataSource = dt;
+                GridView1.DataBind();
+
+                TB_location.Text = "";
+                TB_Observation_Points.Text = "";
+                TB_Recommendation_Points.Text = "";
+                TB_Responsibility.Text = "";
+                TB_TargetDate.Text = "";
+                TB_Remarks.Text = "";
+            }
+            catch (Exception ex)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "Error", "alert('Error saving observation: " + ex.Message + "');", true);
+            }
+        }
+        //-------------------------------Added on 15-04-2025-----------KK-TL--------------//
     }
 }
