@@ -85,6 +85,20 @@
             });
         };
 
+
+        function onPhotoSelected(input) {
+            const wrapper = input.closest('.col-md-6');
+            const successLabel = wrapper.querySelector('.photo-success');
+
+            if (input.files && input.files.length > 0) {
+                successLabel.style.display = 'inline';
+            } else {
+                successLabel.style.display = 'none';
+            }
+        }
+
+        
+
         function resetFormUI() {
 
             document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(function (input) {
@@ -229,8 +243,10 @@
 
                                                                 <div class="col-md-6 ">
                                                                     <label for="labelphotograph" class="form-label">Before Photographs:</label>
-                                                                    <asp:FileUpload ID="Before_pic" runat="server" CssClass="form-control-file photo-input" />
+                                                                    <asp:FileUpload ID="Before_pic" runat="server" CssClass="form-control-file photo-input" onchange="onPhotoSelected(this)" Text="Upload Photo" />
                                                                     <span class="text-danger rfv photo-error" style="display: none;">Photo is required</span>
+                                                                   <span class="text-success photo-success" style="display: none;">Photo uploaded successfully</span>
+
                                                                 </div>
                                                             </div>
                                                         </div>

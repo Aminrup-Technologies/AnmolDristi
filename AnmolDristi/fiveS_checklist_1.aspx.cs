@@ -274,6 +274,18 @@ namespace AnmolDristi
 
                 daChecklistInfo.Update(_dataSource, "ChecklistInfo");
             }
+
+            string Data_SuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Sucess',
+                                text: 'Checklist Saved Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+            // RegisterStartupScript adds the JavaScript code to the page
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
         }
 
         protected void reset_Click(object sender, EventArgs e)
