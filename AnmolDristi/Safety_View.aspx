@@ -15,17 +15,15 @@
             margin-top: 20px;
         }
         .btn-actions {
-    width: 70px;       /* Same width for all buttons */
-    height: 35px;      /* Optional: fix height for visual alignment */
-    padding: 5px 10px; /* Optional: control internal spacing */
+    width: 70px;       
+    height: 35px;      
+    padding: 5px 10px; 
     text-align: center;
     display: inline-block;
 }
 
 
-       /* .btn-actions {
-            margin-right: 5px;
-        }*/
+     
     </style>
 </asp:Content>
 

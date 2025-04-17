@@ -195,22 +195,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLocation;
 
         /// <summary>
-        /// rbForeHandleYes control.
+        /// RbForeHandleYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbForeHandleYes;
+        protected global::System.Web.UI.WebControls.RadioButton RbForeHandleYes;
 
         /// <summary>
-        /// rbForeHandleNo control.
+        /// RbForeHandleNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbForeHandleNo;
+        protected global::System.Web.UI.WebControls.RadioButton RbForeHandleNo;
 
         /// <summary>
         /// pnlForeHandle control.
@@ -240,22 +240,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuForeHandle;
 
         /// <summary>
-        /// rbWheelGuardYes control.
+        /// RbWheelGuardYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbWheelGuardYes;
+        protected global::System.Web.UI.WebControls.RadioButton RbWheelGuardYes;
 
         /// <summary>
-        /// rbWheelGuardNo control.
+        /// RbWheelGuardNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbWheelGuardNo;
+        protected global::System.Web.UI.WebControls.RadioButton RbWheelGuardNo;
 
         /// <summary>
         /// pnlWheelGuard control.
@@ -285,22 +285,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuWheelGuard;
 
         /// <summary>
-        /// rbGrindWheelYes control.
+        /// RbGrindWheelYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbGrindWheelYes;
+        protected global::System.Web.UI.WebControls.RadioButton RbGrindWheelYes;
 
         /// <summary>
-        /// rbGrindWheelNo control.
+        /// RbGrindWheelNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbGrindWheelNo;
+        protected global::System.Web.UI.WebControls.RadioButton RbGrindWheelNo;
 
         /// <summary>
         /// pnlGrindWheel control.
@@ -330,22 +330,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuGrindWheel;
 
         /// <summary>
-        /// rbRearHandleYes control.
+        /// RbRearHandleYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbRearHandleYes;
+        protected global::System.Web.UI.WebControls.RadioButton RbRearHandleYes;
 
         /// <summary>
-        /// rbRearHandleNo control.
+        /// RbRearHandleNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbRearHandleNo;
+        protected global::System.Web.UI.WebControls.RadioButton RbRearHandleNo;
 
         /// <summary>
         /// pnlRearHandle control.
@@ -375,22 +375,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuRearHandle;
 
         /// <summary>
-        /// rbCordYes control.
+        /// RbCordYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbCordYes;
+        protected global::System.Web.UI.WebControls.RadioButton RbCordYes;
 
         /// <summary>
-        /// rbCordNo control.
+        /// RbCordNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbCordNo;
+        protected global::System.Web.UI.WebControls.RadioButton RbCordNo;
 
         /// <summary>
         /// pnlCord control.
@@ -420,22 +420,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuCord;
 
         /// <summary>
-        /// rbTriggerYes control.
+        /// RbTriggerYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbTriggerYes;
+        protected global::System.Web.UI.WebControls.RadioButton RbTriggerYes;
 
         /// <summary>
-        /// rbTriggerNo control.
+        /// RbTriggerNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbTriggerNo;
+        protected global::System.Web.UI.WebControls.RadioButton RbTriggerNo;
 
         /// <summary>
         /// pnlTrigger control.
@@ -465,22 +465,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuTrigger;
 
         /// <summary>
-        /// rbSwitchLockYes control.
+        /// RbSwitchLockYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbSwitchLockYes;
+        protected global::System.Web.UI.WebControls.RadioButton RbSwitchLockYes;
 
         /// <summary>
-        /// rbSwitchLockNo control.
+        /// RbSwitchLockNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbSwitchLockNo;
+        protected global::System.Web.UI.WebControls.RadioButton RbSwitchLockNo;
 
         /// <summary>
         /// pnlSwitchLock control.
@@ -510,22 +510,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuSwitchLock;
 
         /// <summary>
-        /// rbPowerCableYes control.
+        /// RbPowerCableYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbPowerCableYes;
+        protected global::System.Web.UI.WebControls.RadioButton RbPowerCableYes;
 
         /// <summary>
-        /// rbPowerCableNo control.
+        /// RbPowerCableNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbPowerCableNo;
+        protected global::System.Web.UI.WebControls.RadioButton RbPowerCableNo;
 
         /// <summary>
         /// pnlPowerCable control.

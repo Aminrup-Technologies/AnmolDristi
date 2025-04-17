@@ -45,14 +45,14 @@ namespace AnmolDristi
             DropDownList ddl = sender as DropDownList;
             if (ddl != null)
             {
-                // Use 'selectedValue' only if needed
+                
                 string selectedValue = ddl.SelectedValue;
 
                 // Perform any action based on the selected value
                 if (!string.IsNullOrEmpty(selectedValue))
                 {
                     // Example: Show or enable certain radio buttons based on selection
-                    Console.WriteLine(selectedValue);  // Remove if unnecessary
+                    Console.WriteLine(selectedValue);  
                 }
             }
         }

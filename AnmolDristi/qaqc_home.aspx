@@ -32,7 +32,7 @@
                                 <i class="fa fa-edit"></i>Incident Analysis
 
                             </a>
-                            <a class="btn btn-app" href="#">
+                            <a class="btn btn-app" href="incident_View.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Incident Records
@@ -108,10 +108,10 @@
                                     <asp:Label ID="Label7" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Grinding Machine Checklist
                             </a>
-                            <a class="btn btn-app" href="Grinding_Machine_Checklist_View.aspx">
+                            <a class="btn btn-app" href="Grinding_Machine_View.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label8" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Grinding Machine Checklist
+                                <i class="fa fa-edit"></i>Grinding Machine Report
                             </a>
                         </div>
                     </div>

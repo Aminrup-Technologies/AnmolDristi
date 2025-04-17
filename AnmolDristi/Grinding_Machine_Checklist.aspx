@@ -39,6 +39,9 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
+
+                            <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 1: Basic Details</h3>
+                            <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
                             <div class="row">
                                 <!-- Site -->
                                 <div class="col-md-3">
@@ -139,16 +142,24 @@
                                     </div>
                                 </div>
 
+                                <!-- Row for Step 2 heading -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 2: Checklist</h3>
+                                        <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
+                                    </div>
+                                </div>
 
 
                                 <table class="table table-bordered">
+
                                     <!-- 1. Fore handle -->
                                     <tr>
                                         <td>1. Fore handle without damage</td>
                                         <td>
-                                            <asp:RadioButton ID="rbForeHandleYes" GroupName="ForeHandle" runat="server" AutoPostBack="true" OnCheckedChanged="rbForeHandle_CheckedChanged" />
+                                            <asp:RadioButton ID="RbForeHandleYes" GroupName="ForeHandle" runat="server" AutoPostBack="true" OnCheckedChanged="RbForeHandle_CheckedChanged" />
                                             <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="rbForeHandleNo" GroupName="ForeHandle" runat="server" AutoPostBack="true" OnCheckedChanged="rbForeHandle_CheckedChanged" />
+                                            <asp:RadioButton ID="RbForeHandleNo" GroupName="ForeHandle" runat="server" AutoPostBack="true" OnCheckedChanged="RbForeHandle_CheckedChanged" />
                                             <span class="form-label d-inline">No</span>
                                         </td>
                                         <td>
@@ -166,9 +177,9 @@
                                     <tr>
                                         <td>2. Wheel guard (covered 3/4th area)</td>
                                         <td>
-                                            <asp:RadioButton ID="rbWheelGuardYes" GroupName="WheelGuard" runat="server" AutoPostBack="true" OnCheckedChanged="rbWheelGuard_CheckedChanged" />
+                                            <asp:RadioButton ID="RbWheelGuardYes" GroupName="WheelGuard" runat="server" AutoPostBack="true" OnCheckedChanged="RbWheelGuard_CheckedChanged" />
                                             <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="rbWheelGuardNo" GroupName="WheelGuard" runat="server" AutoPostBack="true" OnCheckedChanged="rbWheelGuard_CheckedChanged" />
+                                            <asp:RadioButton ID="RbWheelGuardNo" GroupName="WheelGuard" runat="server" AutoPostBack="true" OnCheckedChanged="RbWheelGuard_CheckedChanged" />
                                             <span class="form-label d-inline">No</span>
                                         </td>
                                         <td>
@@ -186,9 +197,9 @@
                                     <tr>
                                         <td>3. Grinding wheel without any crack and with valid expiry date</td>
                                         <td>
-                                            <asp:RadioButton ID="rbGrindWheelYes" GroupName="GrindWheel" runat="server" AutoPostBack="true" OnCheckedChanged="rbGrindWheel_CheckedChanged" />
+                                            <asp:RadioButton ID="RbGrindWheelYes" GroupName="GrindWheel" runat="server" AutoPostBack="true" OnCheckedChanged="RbGrindWheel_CheckedChanged" />
                                             <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="rbGrindWheelNo" GroupName="GrindWheel" runat="server" AutoPostBack="true" OnCheckedChanged="rbGrindWheel_CheckedChanged" />
+                                            <asp:RadioButton ID="RbGrindWheelNo" GroupName="GrindWheel" runat="server" AutoPostBack="true" OnCheckedChanged="RbGrindWheel_CheckedChanged" />
                                             <span class="form-label d-inline">No</span>
                                         </td>
                                         <td>
@@ -206,9 +217,9 @@
                                     <tr>
                                         <td>4. Rear handles without damage</td>
                                         <td>
-                                            <asp:RadioButton ID="rbRearHandleYes" GroupName="RearHandle" runat="server" AutoPostBack="true" OnCheckedChanged="rbRearHandle_CheckedChanged" />
+                                            <asp:RadioButton ID="RbRearHandleYes" GroupName="RearHandle" runat="server" AutoPostBack="true" OnCheckedChanged="RbRearHandle_CheckedChanged" />
                                             <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="rbRearHandleNo" GroupName="RearHandle" runat="server" AutoPostBack="true" OnCheckedChanged="rbRearHandle_CheckedChanged" />
+                                            <asp:RadioButton ID="RbRearHandleNo" GroupName="RearHandle" runat="server" AutoPostBack="true" OnCheckedChanged="RbRearHandle_CheckedChanged" />
                                             <span class="form-label d-inline">No</span>
                                         </td>
                                         <td>
@@ -226,9 +237,9 @@
                                     <tr>
                                         <td>5. Presence of cord strain reliever (glands)</td>
                                         <td>
-                                            <asp:RadioButton ID="rbCordYes" GroupName="Cord" runat="server" AutoPostBack="true" OnCheckedChanged="rbCord_CheckedChanged" />
+                                            <asp:RadioButton ID="RbCordYes" GroupName="Cord" runat="server" AutoPostBack="true" OnCheckedChanged="RbCord_CheckedChanged" />
                                             <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="rbCordNo" GroupName="Cord" runat="server" AutoPostBack="true" OnCheckedChanged="rbCord_CheckedChanged" />
+                                            <asp:RadioButton ID="RbCordNo" GroupName="Cord" runat="server" AutoPostBack="true" OnCheckedChanged="RbCord_CheckedChanged" />
                                             <span class="form-label d-inline">No</span>
                                         </td>
                                         <td>
@@ -246,9 +257,9 @@
                                     <tr>
                                         <td>6. Trigger switch without damage & working condition</td>
                                         <td>
-                                            <asp:RadioButton ID="rbTriggerYes" GroupName="Trigger" runat="server" AutoPostBack="true" OnCheckedChanged="rbTrigger_CheckedChanged" />
+                                            <asp:RadioButton ID="RbTriggerYes" GroupName="Trigger" runat="server" AutoPostBack="true" OnCheckedChanged="RbTrigger_CheckedChanged" />
                                             <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="rbTriggerNo" GroupName="Trigger" runat="server" AutoPostBack="true" OnCheckedChanged="rbTrigger_CheckedChanged" />
+                                            <asp:RadioButton ID="RbTriggerNo" GroupName="Trigger" runat="server" AutoPostBack="true" OnCheckedChanged="RbTrigger_CheckedChanged" />
                                             <span class="form-label d-inline">No</span>
                                         </td>
                                         <td>
@@ -266,9 +277,9 @@
                                     <tr>
                                         <td>7. Presence of switch lock</td>
                                         <td>
-                                            <asp:RadioButton ID="rbSwitchLockYes" GroupName="SwitchLock" runat="server" AutoPostBack="true" OnCheckedChanged="rbSwitchLock_CheckedChanged" />
+                                            <asp:RadioButton ID="RbSwitchLockYes" GroupName="SwitchLock" runat="server" AutoPostBack="true" OnCheckedChanged="RbSwitchLock_CheckedChanged" />
                                             <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="rbSwitchLockNo" GroupName="SwitchLock" runat="server" AutoPostBack="true" OnCheckedChanged="rbSwitchLock_CheckedChanged" />
+                                            <asp:RadioButton ID="RbSwitchLockNo" GroupName="SwitchLock" runat="server" AutoPostBack="true" OnCheckedChanged="RbSwitchLock_CheckedChanged" />
                                             <span class="form-label d-inline">No</span>
                                         </td>
                                         <td>
@@ -286,9 +297,9 @@
                                     <tr>
                                         <td>8. Power cable without cut & joined</td>
                                         <td>
-                                            <asp:RadioButton ID="rbPowerCableYes" GroupName="PowerCable" runat="server" AutoPostBack="true" OnCheckedChanged="rbPowerCable_CheckedChanged" />
+                                            <asp:RadioButton ID="RbPowerCableYes" GroupName="PowerCable" runat="server" AutoPostBack="true" OnCheckedChanged="RbPowerCable_CheckedChanged" />
                                             <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="rbPowerCableNo" GroupName="PowerCable" runat="server" AutoPostBack="true" OnCheckedChanged="rbPowerCable_CheckedChanged" />
+                                            <asp:RadioButton ID="RbPowerCableNo" GroupName="PowerCable" runat="server" AutoPostBack="true" OnCheckedChanged="RbPowerCable_CheckedChanged" />
                                             <span class="form-label d-inline">No</span>
                                         </td>
                                         <td>
