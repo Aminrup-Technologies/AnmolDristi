@@ -52,10 +52,10 @@
                                                     <asp:HyperLink ID="btnView" runat="server" CssClass="btn btn-info text-white m-2" NavigateUrl='<%# "view_Checklists.aspx?id=" + Eval("ID") %>' >
                         <i class="fa fa-eye"></i> View
                                                     </asp:HyperLink>
-                                                    <asp:LinkButton ID="btnEdit" runat="server" 
-                                                         CssClass="btn btn-warning text-white m-2" PostBackUrl='<%# "~/fiveS_checklist_1.aspx?id=" + Eval("ID") %>'>
+                                                    <asp:HyperLink ID="btnEdit" runat="server" 
+                                                         CssClass="btn btn-warning text-white m-2" NavigateUrl='<%# "~/fiveS_checklist_1.aspx?id=" + Eval("ID") %>'>
                         <i class="fa fa-edit"></i> Edit
-                                                    </asp:LinkButton>
+                                                    </asp:HyperLink>
                                                     <asp:LinkButton ID="btnDelete" runat="server" CommandName="DeleteChecklist"
                                                         CommandArgument='<%# Eval("ID") %>' CssClass="btn btn-danger text-white m-2"
                                                         OnClientClick="return confirm('Are you sure you want to delete this checklist?');">
