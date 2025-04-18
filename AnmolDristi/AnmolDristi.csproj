@@ -87,8 +87,6 @@
     <Content Include="qaqc_home.aspx" />
     <Content Include="Dristi.Master" />
     <Content Include="fiveS_checklist.aspx" />
-    <Content Include="uploads\programming-coding-editor-colorful-themes-abstract-program-code-computer-screen-internet-app-development-design-208361364.jpg" />
-    <Content Include="uploads\software-development-word-cloud-concept-grey-background-88535408.jpg" />
     <Content Include="view_Checklists.aspx" />
     <Content Include="WebForm1.aspx" />
     <Content Include="DAL\Datasets\Checklist_details_dataset.xsc">
@@ -232,7 +230,9 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="uploads\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

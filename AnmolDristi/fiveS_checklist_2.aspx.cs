@@ -26,7 +26,7 @@ namespace AnmolDristi
             string CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection con = new SqlConnection(CS))
             {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Checklists", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Checklists order by ID desc", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);

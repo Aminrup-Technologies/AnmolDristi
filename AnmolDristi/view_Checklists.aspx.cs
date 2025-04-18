@@ -33,24 +33,25 @@ namespace AnmolDristi
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 cmd.Parameters.AddWithValue("@ChecklistID", checklistId);
                 DataTable dt = new DataTable();
+                dt.Clear();
                 da.Fill(dt);
 
                 var grouped = dt.AsEnumerable()
-        .GroupBy(row => row.Field<string>("Group_Name"))
-        .Select((g, groupIndex) => new
-        {
-            GroupSerial = (groupIndex + 1).ToString(),
-            GroupName = g.Key,
-            Keys = g.Select((x, itemIndex) => new
-            {
-                Serial = $"{groupIndex + 1}.{itemIndex + 1}",
-                Requirements = x.Field<string>("Requirements"),
-                ID = x.Field<int>("ID"),
-                Result = x.Field<bool>("Result"),
-                Remark = x.Field<string>("Remark"),
-                Before_photo = x.Field<string>("Before_photo")
-            }).ToList()
-        }).ToList();
+                    .GroupBy(row => row.Field<string>("Group_Name"))
+                    .Select((g, groupIndex) => new
+                    {
+                        GroupSerial = (groupIndex + 1).ToString(),
+                        GroupName = g.Key,
+                        Keys = g.Select((x, itemIndex) => new
+                        {
+                            Serial = $"{groupIndex + 1}.{itemIndex + 1}",
+                            Requirements = x.Field<string>("Requirements"),
+                            ID = x.Field<int>("ID"),
+                            Result = x.Field<bool>("Result"),
+                            Remark = x.Field<string>("Remark"),
+                            Before_photo = x.Field<string>("Before_photo")
+                        }).ToList()
+                    }).ToList();
 
                 ParentRepeter.DataSource = grouped;
                 ParentRepeter.DataBind();
