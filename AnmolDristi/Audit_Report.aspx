@@ -16,7 +16,7 @@
         }
 
         body {
-            margin: 0px;
+            margin:20px 30px 0px;
             box-sizing: border-box;
         }
 
@@ -104,9 +104,9 @@
                 <td style="width: 60%; font-weight: bold">Location:</td>
                 <td style="width: 40%; font-weight: bold">Date:</td>
             </tr>
-            <tr>
+           <%-- <tr>
                 <td colspan="2" style="height: 15px"></td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td colspan="2">
                     <table class="section_1">

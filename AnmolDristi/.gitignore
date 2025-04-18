@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/login.aspx
+/login.aspx.cs
+/login.aspx.designer.cs
