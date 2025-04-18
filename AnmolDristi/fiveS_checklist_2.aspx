@@ -37,7 +37,8 @@
 
                                 <asp:GridView ID="GridViewChecklists" runat="server" AutoGenerateColumns="False"
                                     DataKeyNames="ID" CssClass="table table-bordered table-hover table-responsive-md"
-                                     OnRowDataBound="GridViewChecklists_RowDataBound">
+                                     OnRowDataBound="GridViewChecklists_RowDataBound" OnRowCommand="GridViewChecklists_RowCommand" 
+ >
                                     <HeaderStyle CssClass="thead-dark" />
                                     <Columns>
                                         <asp:BoundField DataField="ID" HeaderText="Checklist ID" ReadOnly="true" />

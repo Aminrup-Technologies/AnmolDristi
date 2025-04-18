@@ -43,5 +43,42 @@ namespace AnmolDristi
                 e.Row.Cells[1].Text = Convert.ToDateTime(e.Row.Cells[1].Text).ToShortDateString();
             }
         }
+
+        protected void GridViewChecklists_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "DeleteChecklist")
+            {
+                string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                int checklistId = Convert.ToInt32(e.CommandArgument);
+
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    conn.Open();
+
+                    string deleteChecklistQuery = "DELETE FROM Checklists WHERE ID = @ID";
+                    using (SqlCommand cmdChecklist = new SqlCommand(deleteChecklistQuery, conn))
+                    {
+                        cmdChecklist.Parameters.AddWithValue("@ID", checklistId);
+                        cmdChecklist.ExecuteNonQuery();
+                    }
+
+                    conn.Close();
+                }
+
+                string Data_SuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Sucess',
+                                text: 'Checklist Deleted Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+                // RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+
+                LoadChecklists();
+            }
+        }
     }
 } 

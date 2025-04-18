@@ -27,6 +27,7 @@
                 const photo = item.querySelector(".photo-input");
                 const remarkError = item.querySelector(".rfv.remark-error");
                 const photoError = item.querySelector(".rfv.photo-error");
+                const img = item.querySelector(".gmg");
 
 
                 if (remarkError) remarkError.style.display = "none";
@@ -38,7 +39,7 @@
                         isValid = false;
                     }
 
-                    if (!photo || !photo.value) {
+                    if ((!photo || !photo.value) || img == "") {
                         if (photoError) photoError.style.display = "block";
                         isValid = false;
                     }
@@ -89,12 +90,15 @@
         function onPhotoSelected(input) {
             const wrapper = input.closest('.col-md-6');
             const successLabel = wrapper.querySelector('.photo-success');
+            
 
             if (input.files && input.files.length > 0) {
                 successLabel.style.display = 'inline';
             } else {
                 successLabel.style.display = 'none';
             }
+
+            
         }
 
         
@@ -188,6 +192,9 @@
 
 
                             <asp:Repeater ID="DictionaryRepeater" runat="server">
+                                <HeaderTemplate>
+                                    <label>hghggg</label>
+                                </HeaderTemplate>
                                 <ItemTemplate>
                                     <div class="card mb-4 shadow-sm">
                                         <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
@@ -206,7 +213,7 @@
                                         </div>
                                         <div id='<%# "collapse" + Container.ItemIndex %>' class="collapse card-body">
                                             <%-- <div class="card-body">--%>
-                                            <asp:Repeater ID="ChildRepeater" runat="server" DataSource='<%# Eval("Keys") %>'>
+                                            <asp:Repeater ID="ChildRepeater" runat="server" DataSource='<%# Bind("Keys") %>' OnDataBinding="ChildRepeater_DataBinding" OnItemDataBound="ChildRepeater_ItemDataBound">
 
                                                 <ItemTemplate>
                                                     <asp:HiddenField runat="server" ID="ID" Value='<%# Eval("ID") %>'  />
@@ -220,7 +227,7 @@
                                                             <asp:Label for="labelresult" class="form-label" runat="server" ForeColor="Black" Font-Bold="False" Font-Size="Small">Observation</asp:Label>
 
                                                             <asp:RadioButtonList ID="result" runat="server" RepeatDirection="Horizontal"
-                                                                CssClass="" OnClientClick="toggleInputs(this)" ForeColor="Black" Font-Bold="False" Font-Size="Small">
+                                                                CssClass="" OnClientClick="toggleInputs(this)" ForeColor="Black" Font-Bold="False" Font-Size="Small" >
                                                                 <asp:ListItem Text="OK" Value="true" Selected="True" />
                                                                 <asp:ListItem Text="Not Ok" Value="false" />
                                                             </asp:RadioButtonList>
@@ -244,6 +251,7 @@
                                                                 <div class="col-md-6 ">
                                                                     <label for="labelphotograph" class="form-label">Before Photographs:</label>
                                                                     <asp:FileUpload ID="Before_pic" runat="server" CssClass="form-control-file photo-input" onchange="onPhotoSelected(this)" Text="Upload Photo" />
+                                                                    <asp:label ID="Img" CssClass="gmg" runat="server" Visible="false" />
                                                                     <span class="text-danger rfv photo-error" style="display: none;">Photo is required</span>
                                                                    <span class="text-success photo-success" style="display: none;">Photo uploaded successfully</span>
 

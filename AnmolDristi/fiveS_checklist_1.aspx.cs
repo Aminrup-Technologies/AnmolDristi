@@ -121,8 +121,8 @@ namespace AnmolDristi
                 Requirement = x.Field<string>("Requirements"),
                 ID = x.Field<int>("ID"),
                 IsOk = x.Field<bool>("Result"),
-                Remarks = x.Field<string>("Remark"),
-                PhotoPath = "~/uploads/" + x.Field<string>("Before_photo")
+                Remark_text = x.Field<string>("Remark"),
+                Before_pic = x.Field<string>("Before_photo")
             }).ToList()
         }).ToList();
 
@@ -135,7 +135,7 @@ namespace AnmolDristi
         protected void editChecklist()
         {
             var checklistRow = _dataSource.Checklists.NewChecklistsRow();
-            checklistRow["ID"] = ID.Value;
+            checklistRow["ID"] = ID.Value.ToString();
             checklistRow["Date"] = txtDate.Text;
             checklistRow["Department"] = txtDepartment.Text;
             checklistRow["Job"] = txtJob.Text;
@@ -146,7 +146,7 @@ namespace AnmolDristi
 
             ChecklistsTableAdapter checklisttable = new ChecklistsTableAdapter();
             checklisttable.Update(_dataSource);
-
+            int i = 0;
             foreach (RepeaterItem parentItem in DictionaryRepeater.Items)
             {
                 Repeater childRepeater = (Repeater)parentItem.FindControl("ChildRepeater");
@@ -158,8 +158,10 @@ namespace AnmolDristi
                     TextBox remark = (TextBox)item.FindControl("Remark_text");
                     FileUpload photo = (FileUpload)item.FindControl("Before_pic");
                     Label Requirement = (Label)item.FindControl("Requirement");
+                    Label ExistingImage = (Label)item.FindControl("Img");
 
                     var checklistInfoRow = _dataSource.ChecklistInfo.NewChecklistInfoRow();
+                    checklistInfoRow["ID"] = Convert.ToInt32(((HiddenField)item.FindControl("ID")).Value);
                     checklistInfoRow["Checklist_ID"] = Convert.ToInt32(ID.Value);
                     checklistInfoRow["Group_Name"] = GrpDetails.Text;
 
@@ -189,23 +191,45 @@ namespace AnmolDristi
                         string filePath = Path.Combine(folderPath, filename);
                         photo.SaveAs(filePath);
                         checklistInfoRow["Before_photo"] = filename;
+                    }else if(ExistingImage.Text != "")
+                    {
+                        checklistInfoRow["Before_photo"] = ExistingImage.Text;
                     }
 
                     _dataSource.ChecklistInfo.Rows.Add(checklistInfoRow);
-                    _dataSource.ChecklistInfo.Rows[0].AcceptChanges();
-                    _dataSource.ChecklistInfo.Rows[0].SetModified();
+                    _dataSource.ChecklistInfo.Rows[i].AcceptChanges();
+                    _dataSource.ChecklistInfo.Rows[i].SetModified();
+
+                    i++;
                 }
             }
 
             ChecklistInfoTableAdapter checklistInfo = new ChecklistInfoTableAdapter();
             checklistInfo.Update(_dataSource);
+
+            string Data_SuccessScript = @"<script type='text/javascript'>
+                            new PNotify({
+                                title: 'Sucess',
+                                text: 'Checklist Saved Successfully!!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        </script>";
+
+            // RegisterStartupScript adds the JavaScript code to the page
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
         }
 
 
     
         protected void submit_Click(object sender, EventArgs e)
         {
-            //editChecklist();
+            if (!string.IsNullOrEmpty(ID.Value))
+            {
+                editChecklist();
+            }
+            else
+            {
             String CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(CS))
             {
@@ -286,6 +310,10 @@ namespace AnmolDristi
 
             // RegisterStartupScript adds the JavaScript code to the page
             ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+            }
+
+            Response.Redirect("fiveS_checklist_2.aspx");
+            
         }
 
         protected void reset_Click(object sender, EventArgs e)
@@ -296,6 +324,38 @@ namespace AnmolDristi
         protected void home_Click(object sender, EventArgs e)
         {
             Response.Redirect("qaqc_home.aspx");
+        }
+
+        protected void ChildRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType.ToString() == "Item" || e.Item.ItemType.ToString() == "AlternatingItem")
+            {
+                var dataItem = e.Item.DataItem.GetType().GetProperties();
+
+                if (dataItem.Length > 3)
+                {
+                    if (dataItem[3].GetValue(e.Item.DataItem).ToString() == "False")
+                    {
+                        ((RadioButtonList)e.Item.Controls[9]).SelectedValue = "false";
+                    }
+
+                    if (dataItem[4].GetValue(e.Item.DataItem).ToString() != "")
+                    {
+                        ((TextBox)e.Item.Controls[13]).Text = dataItem[4].GetValue(e.Item.DataItem).ToString();
+                    }
+
+                    if (dataItem[5].GetValue(e.Item.DataItem) != null)
+                    {
+                        ((Label)e.Item.FindControl("Img")).Text = dataItem[5].GetValue(e.Item.DataItem).ToString();
+                        ((Label)e.Item.FindControl("Img")).Visible = true;
+                    }
+                }
+            }
+        }
+
+        protected void ChildRepeater_DataBinding(object sender, EventArgs e)
+        {
+            
         }
     }
 }
