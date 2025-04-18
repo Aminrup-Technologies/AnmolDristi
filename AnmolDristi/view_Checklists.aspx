@@ -1,8 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="view_Checklists.aspx.cs" Inherits="AnmolDristi.viewChecklists" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-
     <script type="text/javascript">
         function printChecklist() {
             var printContents = document.getElementById("printableTable").innerHTML;
@@ -19,9 +17,6 @@
             printWindow.close();
         }
     </script>
-
-
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
