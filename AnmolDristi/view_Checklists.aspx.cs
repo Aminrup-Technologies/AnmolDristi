@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -33,24 +34,25 @@ namespace AnmolDristi
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 cmd.Parameters.AddWithValue("@ChecklistID", checklistId);
                 DataTable dt = new DataTable();
+                dt.Clear();
                 da.Fill(dt);
 
                 var grouped = dt.AsEnumerable()
-        .GroupBy(row => row.Field<string>("Group_Name"))
-        .Select((g, groupIndex) => new
-        {
-            GroupSerial = (groupIndex + 1).ToString(),
-            GroupName = g.Key,
-            Keys = g.Select((x, itemIndex) => new
-            {
-                Serial = $"{groupIndex + 1}.{itemIndex + 1}",
-                Requirements = x.Field<string>("Requirements"),
-                ID = x.Field<int>("ID"),
-                Result = x.Field<bool>("Result"),
-                Remark = x.Field<string>("Remark"),
-                Before_photo = x.Field<string>("Before_photo")
-            }).ToList()
-        }).ToList();
+                    .GroupBy(row => row.Field<string>("Group_Name"))
+                    .Select((g, groupIndex) => new
+                    {
+                        GroupSerial = (groupIndex + 1).ToString(),
+                        GroupName = g.Key,
+                        Keys = g.Select((x, itemIndex) => new
+                        {
+                            Serial = $"{groupIndex + 1}.{itemIndex + 1}",
+                            Requirements = x.Field<string>("Requirements"),
+                            ID = x.Field<int>("ID"),
+                            Result = x.Field<bool>("Result"),
+                            Remark = x.Field<string>("Remark"),
+                            Before_photo = x.Field<string>("Before_photo")
+                        }).ToList()
+                    }).ToList();
 
                 ParentRepeter.DataSource = grouped;
                 ParentRepeter.DataBind();
@@ -59,23 +61,41 @@ namespace AnmolDristi
 
         protected void RepeaterChecklist_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if(e.Item.ItemType.ToString() == "Item" || e.Item.ItemType.ToString() == "AlternatingItem")
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                if (((Label)e.Item.Controls[1]).Text == "OK")
+                Label statusLabel = (Label)e.Item.Controls[1];
+                if (statusLabel.Text == "OK")
                 {
-                    ((Label)e.Item.Controls[1]).Text = "✅";
+                    statusLabel.Text = "✅";
                 }
                 else
                 {
-                    ((Label)e.Item.Controls[1]).Text = "❌";
+                    statusLabel.Text = "❌";
                 }
 
-                if (((Image)e.Item.Controls[3]).ImageUrl != "")
+                Image img = (Image)e.Item.Controls[3];
+                if (!string.IsNullOrEmpty(img.ImageUrl))
                 {
-                    ((Image)e.Item.Controls[3]).ImageUrl = "~/uploads/"+ ((Image)e.Item.Controls[3]).ImageUrl;
-                }
+                    string relativePath = "~/uploads/" + img.ImageUrl;
+                    string physicalPath = Server.MapPath(relativePath);
 
+                    if (File.Exists(physicalPath))
+                    {
+                        img.ImageUrl = relativePath;
+                    }
+                    else
+                    {
+                        img.ImageUrl = "~/uploads/no_image.jpg"; // fallback image
+                        img.ToolTip = "Image not found";
+                    }
+                }
+                //else
+                //{
+                //    img.ImageUrl = "~/uploads/no_image.jpg"; // for empty ImageUrl
+                //    img.ToolTip = "No image provided";
+                //}
             }
         }
+
     }
 }
