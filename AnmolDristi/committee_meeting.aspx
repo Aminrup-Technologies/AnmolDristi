@@ -215,7 +215,7 @@
          <div class="table-responsive">
          <div class="col-md-12">
              <div class="mb-3">
-                 <asp:GridView ID="gvAttendees" runat="server" DataKeyNames="SNo" CssClass="table table-bordered table-hover " AutoGenerateColumns="False">
+                 <asp:GridView ID="gvAttendees" runat="server" DataKeyNames="SNo" CssClass="table table-bordered table-hover "  AutoGenerateColumns="False">
                      <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                      <Columns>
                          <asp:BoundField DataField="SNo" HeaderText="SNo" />

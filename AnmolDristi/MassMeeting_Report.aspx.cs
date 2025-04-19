@@ -67,6 +67,11 @@ namespace AnmolDristi
         {
 
         }
+        protected void BtnView_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("dummy.aspx");
+        }
+
 
 
     }

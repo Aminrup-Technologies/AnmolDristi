@@ -111,6 +111,8 @@
           <ItemTemplate>
            <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn btn-warning btn-sm" CommandArgument='<%# Eval("Id") %>' OnClick="BtnEdit_Click" />
            <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm" OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete this meeting?');" />
+            <asp:Button ID="BtnView" runat="server" Text="View" CssClass="btn btn-primary btn-sm" CommandArgument='<%# Eval("Id") %>'  OnClick="BtnView_Click" />
+        
           </ItemTemplate>
         </asp:TemplateField>
     </Columns>

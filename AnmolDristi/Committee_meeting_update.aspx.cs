@@ -49,25 +49,7 @@ namespace AnmolDristi
                 }
             }
         }
-        //private void LoadAttendees()
-        //{
-        //    string query = "SELECT * FROM Committee_MeetingAttendance WHERE MeetingID = @MeetingID";
-        //    DataTable dt = new DataTable();
-
-        //    using (SqlConnection con = new SqlConnection(conStr))
-        //    {
-        //        using (SqlCommand cmd = new SqlCommand(query, con))
-        //        {
-        //            cmd.Parameters.AddWithValue("@MeetingID", Request.QueryString["id"]);
-        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
-        //            da.Fill(dt);
-        //        }
-        //    }
-
-        //    gvAttendees.DataSource = dt;
-        //    gvAttendees.DataBind();
-        //}
-
+       
 
         private void LoadAttendance(int meetingID)
         {
@@ -115,7 +97,7 @@ namespace AnmolDristi
             Button btn = (Button)sender;
             GridViewRow row = (GridViewRow)btn.NamingContainer;
 
-            // Get AttendanceID using DataKeys instead of a label
+            
             string attendeeId = gvAttendees.DataKeys[row.RowIndex].Value.ToString();
 
             if (!string.IsNullOrEmpty(attendeeId))
