@@ -49,6 +49,7 @@ namespace AnmolDristi
                 {"Do employees show positive interest in 5S activities?","SUSTAIN-SHITSUKE" },
         };
 
+            };
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -201,7 +202,7 @@ namespace AnmolDristi
                     _dataSource.ChecklistInfo.Rows[i].SetModified();
 
                     i++;
-                }
+        }
             }
 
             ChecklistInfoTableAdapter checklistInfo = new ChecklistInfoTableAdapter();
@@ -340,7 +341,7 @@ namespace AnmolDristi
                     }
 
                     if (dataItem[4].GetValue(e.Item.DataItem).ToString() != "")
-                    {
+                        {
                         ((TextBox)e.Item.Controls[13]).Text = dataItem[4].GetValue(e.Item.DataItem).ToString();
                     }
 
@@ -348,10 +349,10 @@ namespace AnmolDristi
                     {
                         ((Label)e.Item.FindControl("Img")).Text = dataItem[5].GetValue(e.Item.DataItem).ToString();
                         ((Label)e.Item.FindControl("Img")).Visible = true;
+                        }
                     }
                 }
             }
-        }
 
         protected void ChildRepeater_DataBinding(object sender, EventArgs e)
         {

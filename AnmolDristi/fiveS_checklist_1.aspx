@@ -44,7 +44,9 @@
                         isValid = false;
                     }
                 }
+                });
             });
+        });
 
             return isValid;
         }
@@ -135,6 +137,8 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
@@ -267,11 +271,14 @@
                                 </ItemTemplate>
                             </asp:Repeater>
 
+                            <!-- Submit Button -->
                             <div class="text-center mt-4">
                                 <asp:Button ID="submit" runat="server" OnClick="submit_Click" Text="Submit" CssClass="btn btn-success px-4 py-2" OnClientClick="validateChecklist();" ValidationGroup="save" />
                                 <asp:Button ID="reset" runat="server" OnClick="reset_Click" Text="Reset" CssClass="btn btn-secondary px-4 py-2" OnClientClick="confirmReset(); return false;" />
                                 <asp:Button runat="server" ID="home" Text="Home" CssClass="btn btn-primary px-4 py-2" OnClick="home_Click" />
                             </div>
+
+
 
                         </div>
                     </div>
@@ -279,4 +286,5 @@
             </div>
         </div>
     </div>
+
 </asp:Content>
