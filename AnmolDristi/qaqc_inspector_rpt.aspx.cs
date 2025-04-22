@@ -19,35 +19,35 @@ namespace AnmolDristi.qaqc
         public static string ImgLink2 = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
-                {
-                    Response.Redirect("login.aspx");
-                }
-                else
-                {
+            //if (!IsPostBack)
+            //{
+            //    if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
+            //    {
+            //        Response.Redirect("login.aspx");
+            //    }
+            //    else
+            //    {
 
-                    lbl_docname.Text = "QC - Inspection Report";
-                    lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/02";
+            //        lbl_docname.Text = "QC - Inspection Report";
+            //        lbl_docnumber.Text = "ANMOL/DOC/DAN/QA/02";
 
-                    PlantBinder();
-                    //SetValidatorPropertiesFromDatabase();
-                    //NoOfPcs();
-                    //GaugeValue();
-                    //GaugeLength();
-                    //SetDryWeightValidators();
-                    //SetDippedWeightValidators();
-                    //SetVartyPktValidators();
-                    //SetTextureBiteValidators();
-                    //SetMoistureValidators();
-                    //SetWeightWithOilValidators();
-                    //SetWeightWithoutOilValidators();
-                    //SetOilPercentageValidators();
-                    //SetPacketWeightValidators();
-                }
+            //        PlantBinder();
+            //        //SetValidatorPropertiesFromDatabase();
+            //        //NoOfPcs();
+            //        //GaugeValue();
+            //        //GaugeLength();
+            //        //SetDryWeightValidators();
+            //        //SetDippedWeightValidators();
+            //        //SetVartyPktValidators();
+            //        //SetTextureBiteValidators();
+            //        //SetMoistureValidators();
+            //        //SetWeightWithOilValidators();
+            //        //SetWeightWithoutOilValidators();
+            //        //SetOilPercentageValidators();
+            //        //SetPacketWeightValidators();
+            //    }
 
-            }
+            //}
         }
 
         private void PlantBinder()

@@ -44,12 +44,14 @@
                         isValid = false;
                     }
                 }
-                });
             });
-        });
+
+
 
             return isValid;
+
         }
+        
 
 
         function toggleInputs(radioBtn) {
@@ -197,7 +199,7 @@
 
                             <asp:Repeater ID="DictionaryRepeater" runat="server">
                                 <HeaderTemplate>
-                                    <label>hghggg</label>
+                                    <%--<label>hghggg</label>--%>
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <div class="card mb-4 shadow-sm">

@@ -67,11 +67,11 @@
                     function () {
                         showNotification("Error", "Failed to fetch employee name.", "error");
                     });
-                }
             }
+        }
 
-            function addMember() {
-                const type = document.querySelector(`input[name="<%= RBL_EmpType.UniqueID %>"]:checked`).value;
+        function addMember() {
+            const type = document.querySelector(`input[name="<%= RBL_EmpType.UniqueID %>"]:checked`).value;
                 const code = document.getElementById("<%= TB_EmpCode.ClientID %>").value.trim();
                 const name = document.getElementById("<%= TB_EmpName.ClientID %>").value.trim();
 
@@ -85,57 +85,57 @@
 
                 document.getElementById("<%= TB_EmpCode.ClientID %>").value = "";
                 document.getElementById("<%= TB_EmpName.ClientID %>").value = "";
-                toggleEmpFields();
+            toggleEmpFields();
+        }
+
+        function updateTable() {
+            const tbody = document.querySelector("#tblMembers tbody");
+            tbody.innerHTML = "";
+
+            members.forEach((m, i) => {
+                const row = tbody.insertRow();
+                row.insertCell(0).innerText = m.type;
+                row.insertCell(1).innerText = m.code || "-";
+                row.insertCell(2).innerText = m.name;
+                row.insertCell(3).innerHTML = `<button class='btn btn-danger btn-sm' type='button' onclick='removeMember(${i})'>Delete</button>`;
+            });
+
+            document.getElementById("<%= HF_MemberList.ClientID %>").value = JSON.stringify(members);
+        }
+
+        function removeMember(index) {
+            members.splice(index, 1);
+            updateTable();
+        }
+
+        function validateFormBeforeSubmit() {
+            const lbl = document.getElementById("<%= lbl_panel2_msg.ClientID %>");
+            if (members.length === 0) {
+                lbl.innerText = "❌ Please add at least one member before proceeding.";
+                lbl.style.color = "red";
+                showNotification("Required", "Please add at least one member to proceed.", "error");
+                return false;
             }
 
-            function updateTable() {
-                const tbody = document.querySelector("#tblMembers tbody");
-                tbody.innerHTML = "";
+            lbl.innerText = "✅ Validation passed. Proceeding...";
+            lbl.style.color = "green";
+            return true;
+        }
 
-                members.forEach((m, i) => {
-                    const row = tbody.insertRow();
-                    row.insertCell(0).innerText = m.type;
-                    row.insertCell(1).innerText = m.code || "-";
-                    row.insertCell(2).innerText = m.name;
-                    row.insertCell(3).innerHTML = `<button class='btn btn-danger btn-sm' type='button' onclick='removeMember(${i})'>Delete</button>`;
-                });
+        function showNotification(title, text, type) {
+            new PNotify({
+                title: title,
+                text: text,
+                type: type,
+                styling: 'bootstrap3',
+                delay: 3000,
+            });
+        }
 
-                document.getElementById("<%= HF_MemberList.ClientID %>").value = JSON.stringify(members);
-            }
+        let observationRows = []; // To hold the added observation rows
 
-            function removeMember(index) {
-                members.splice(index, 1);
-                updateTable();
-            }
-
-            function validateFormBeforeSubmit() {
-                const lbl = document.getElementById("<%= lbl_panel2_msg.ClientID %>");
-                if (members.length === 0) {
-                    lbl.innerText = "❌ Please add at least one member before proceeding.";
-                    lbl.style.color = "red";
-                    showNotification("Required", "Please add at least one member to proceed.", "error");
-                    return false;
-                }
-
-                lbl.innerText = "✅ Validation passed. Proceeding...";
-                lbl.style.color = "green";
-                return true;
-            }
-
-            function showNotification(title, text, type) {
-                new PNotify({
-                    title: title,
-                    text: text,
-                    type: type,
-                    styling: 'bootstrap3',
-                    delay: 3000,
-                });
-            }
-
-            let observationRows = []; // To hold the added observation rows
-
-            function addMore() {
-                const areaLocation = document.getElementById('<%= TB_location.ClientID %>').value;
+        function addMore() {
+            const areaLocation = document.getElementById('<%= TB_location.ClientID %>').value;
                 const observation = document.getElementById('<%= TB_Observation_Points.ClientID %>').value;
                 const recommendation = document.getElementById('<%= TB_Recommendation_Points.ClientID %>').value;
                 const responsibility = document.getElementById('<%= TB_Responsibility.ClientID %>').value;
@@ -149,7 +149,7 @@
                 }
 
                 __doPostBack('<%= btnAddToGrid.UniqueID %>', '');
-            }
+        }
 
     </script>
 
@@ -238,28 +238,24 @@
                                 <div class="col-md-3" id="divEmpName" runat="server">
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_EmpName" runat="server" AssociatedControlID="TB_EmpName" Text="Employee Name" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                                        <asp:TextBox ID="TB_EmpName" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true" />
+                                        <asp:TextBox ID="TB_EmpName" runat="server" CssClass="form-control form-control-sm rounded"  />
                                     </div>
                                 </div>
 
                                 <div class="col-md-2 d-flex align-items-center">
-                                    <asp:Button ID="Btn_AddMember" runat="server" Text="Add Member" CssClass="btn btn-success btn-sm w-100" OnClientClick="addMember(); return false;" />
+                                    <asp:Button ID="Btn_AddMember" runat="server" Text="Add Member" CssClass="btn btn-success btn-sm w-100" OnClick="Btn_AddMember_Click" OnClientClick="addMember(); return false;" />
                                 </div>
 
                             </div>
 
                             <div class="row">
-                                <table class="table table-bordered table-sm mt-3" id="tblMembers">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th style="width: 20%;">Type</th>
-                                            <th style="width: 20%;">Code</th>
-                                            <th style="width: 45%;">Name</th>
-                                            <th style="width: 15%;">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
+                                <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered">
+                                    <Columns>
+                                        <asp:BoundField DataField="EmpType" HeaderText="Type" />
+                                        <asp:BoundField DataField="EmpCode" HeaderText="Code" />
+                                        <asp:BoundField DataField="EmpName" HeaderText="Name" />
+                                    </Columns>
+                                </asp:GridView>
                             </div>
 
                             <div class="row">
@@ -267,7 +263,7 @@
                                     <div class="mb-4 text-center">
                                         <asp:Label ID="lbl_panel2_msg" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SUBMIT!" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="d-flex justify-content-center gap-2 mt-2">
-                                            <asp:Button ID="btn_panel2_save" runat="server" Text="Proceed next" CssClass="btn btn-primary btn-sm" OnClientClick="return validateFormBeforeSubmit();"/>
+                                            <asp:Button ID="btn_panel2_save" runat="server" Text="Proceed next" CssClass="btn btn-primary btn-sm" OnClientClick="return validateFormBeforeSubmit();" />
                                             <asp:Button ID="btn_panel2_rst" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" />
                                             <asp:Button ID="btn_panel2_cncl" runat="server" Text="HOME" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                         </div>
@@ -418,7 +414,7 @@
                                 </asp:Label>
 
                                 <div class="d-flex justify-content-center gap-2 mt-2">
-                                    <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
+                                    <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" CausesValidation="true" OnClick="BtnSubmit_Click"  />
                                     <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                                     <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                 </div>

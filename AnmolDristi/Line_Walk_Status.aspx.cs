@@ -47,6 +47,7 @@ namespace AnmolDristi
                     {
                         try
                         {
+                            // Insert the main Line Walk Status
                             string insertWalkStatusQuery = @"INSERT INTO [Line_walk_status] ([WalkDate], [JobDescription], [JobID]) VALUES (@WalkDate, @JobDescription, @JobID); SELECT SCOPE_IDENTITY();";
                             int walkStatusId;
                             using (SqlCommand cmd = new SqlCommand(insertWalkStatusQuery, con, transaction))
@@ -62,44 +63,82 @@ namespace AnmolDristi
                                 }
                             }
 
-                            string json = HF_MemberList.Value;
-
-                            List<TeamMember> teamMembers = GetTeamMembersFromForm();
-                            foreach (var member in teamMembers)
+                            // Fetch team members and save them
+                            //List<TeamMember> teamMembers = GetTeamMembersFromForm();
+                            DataTable dt = Session["EmpData"] as DataTable;
+                            if (dt != null && dt.Rows.Count > 0)
                             {
-                                string insertTeamMemberQuery = @"INSERT INTO [Line_walk_status_description] ([ID], [TM_names], [TM_Image]) VALUES (@ID, @TM_names, @TM_Image);";
-
-                                using (SqlCommand cmdTeam = new SqlCommand(insertTeamMemberQuery, con, transaction))
+                                foreach (DataRow row in dt.Rows)
                                 {
-                                    cmdTeam.Parameters.AddWithValue("@ID", walkStatusId);
-                                    cmdTeam.Parameters.AddWithValue("@TM_names", member.Name);
-                                    cmdTeam.Parameters.AddWithValue("@TM_Image", member.Image);
-
-                                    if (cmdTeam.ExecuteNonQuery() == 0)
-                                        throw new Exception("Failed to insert into Line_walk_status_description.");
+                                    string insertTeamMemberQuery = @"INSERT INTO [Line_walk_status_description] ([ID], [TM_names]) VALUES (@ID, @TM_names);";
+                                    using (SqlCommand cmdTeam = new SqlCommand(insertTeamMemberQuery, con, transaction))
+                                    {
+                                        cmdTeam.Parameters.AddWithValue("@ID", walkStatusId);
+                                        cmdTeam.Parameters.AddWithValue("@TM_names", row["EmpName"]);
+                                        if (cmdTeam.ExecuteNonQuery() == 0)
+                                            throw new Exception("Failed to insert into Line_walk_status_description.");
+                                    }
                                 }
                             }
 
-                            List<WalkDetail> walkDetails = GetWalkDetailsFromForm();
-                            foreach (var detail in walkDetails)
+
+                            // Fetch observations from the session DataTable
+                            DataTable dtObservations = Session["ObservationData"] as DataTable;
+
+                            if (dtObservations != null && dtObservations.Rows.Count > 0)
                             {
-                                string insertWalkDetailQuery = @"INSERT INTO [Line_walk_details] ([ID], [Location], [Observation_Points], [Recommendation_Points], [Responsibility], [Target_Date], [Remarks], [Snap_File_Path]) VALUES (@ID, @Location, @Observation_Points, @Recommendation_Points, @Responsibility, @Target_Date, @Remarks, @Snap_File_Path);";
-
-                                using (SqlCommand cmdWalkDetail = new SqlCommand(insertWalkDetailQuery, con, transaction))
+                                foreach (DataRow row in dtObservations.Rows)
                                 {
-                                    cmdWalkDetail.Parameters.AddWithValue("@ID", walkStatusId);
-                                    cmdWalkDetail.Parameters.AddWithValue("@Location", detail.Location ?? "");
-                                    cmdWalkDetail.Parameters.AddWithValue("@Observation_Points", detail.Observation ?? "");
-                                    cmdWalkDetail.Parameters.AddWithValue("@Recommendation_Points", detail.Recommendation ?? "");
-                                    cmdWalkDetail.Parameters.AddWithValue("@Responsibility", detail.Responsibility ?? "");
-                                    cmdWalkDetail.Parameters.AddWithValue("@Target_Date", detail.TargetDate);
-                                    cmdWalkDetail.Parameters.AddWithValue("@Remarks", detail.Remarks ?? "");
-                                    cmdWalkDetail.Parameters.AddWithValue("@Snap_File_Path", detail.SnapPath ?? "");
+                                    string insertWalkDetailQuery = @"INSERT INTO [Line_walk_details] 
+                                 ([ID], [Location], [Observation_Points], [Recommendation_Points], [Responsibility], 
+                                  [Target_Date], [Remarks], [Snap_File_Path]) 
+                                 VALUES (@ID, @Location, @Observation_Points, @Recommendation_Points, @Responsibility, 
+                                         @Target_Date, @Remarks, @Snap_File_Path);";
 
-                                    if (cmdWalkDetail.ExecuteNonQuery() == 0)
-                                        throw new Exception("Failed to insert into Line_walk_details.");
+                                    using (SqlCommand cmdWalkDetail = new SqlCommand(insertWalkDetailQuery, con, transaction))
+                                    {
+                                        cmdWalkDetail.Parameters.AddWithValue("@ID", walkStatusId); // <== this is the walk ID
+                                        cmdWalkDetail.Parameters.AddWithValue("@Location", row["Area"]);
+                                        cmdWalkDetail.Parameters.AddWithValue("@Observation_Points", row["Observation"]);
+                                        cmdWalkDetail.Parameters.AddWithValue("@Recommendation_Points", row["Recommendation"]);
+                                        cmdWalkDetail.Parameters.AddWithValue("@Responsibility", row["Responsibility"]);
+                                        cmdWalkDetail.Parameters.AddWithValue("@Target_Date", Convert.ToDateTime(row["TargetDate"]));
+                                        cmdWalkDetail.Parameters.AddWithValue("@Remarks", row["Remarks"]);
+                                        cmdWalkDetail.Parameters.AddWithValue("@Snap_File_Path", row["FilePath"]);
+
+                                        if (cmdWalkDetail.ExecuteNonQuery() == 0)
+                                            throw new Exception("Failed to insert into Line_walk_details.");
+                                    }
                                 }
                             }
+
+
+                            //if (dtObservations != null && dtObservations.Rows.Count > 0)
+                            //{
+                            //    foreach (DataRow row in dtObservations.Rows)
+                            //    {
+                            //        string insertWalkDetailQuery = @"INSERT INTO [Line_walk_details] 
+                            //                                 ([ID], [Location], [Observation_Points], [Recommendation_Points], [Responsibility], 
+                            //                                  [Target_Date], [Remarks], [Snap_File_Path]) 
+                            //                                 VALUES (@ID, @Location, @Observation_Points, @Recommendation_Points, @Responsibility, 
+                            //                                         @Target_Date, @Remarks, @Snap_File_Path);";
+
+                            //        using (SqlCommand cmdWalkDetail = new SqlCommand(insertWalkDetailQuery, con, transaction))
+                            //        {
+                            //            cmdWalkDetail.Parameters.AddWithValue("@ID", walkStatusId);
+                            //            cmdWalkDetail.Parameters.AddWithValue("@Location", row["Area"]);
+                            //            cmdWalkDetail.Parameters.AddWithValue("@Observation_Points", row["Observation"]);
+                            //            cmdWalkDetail.Parameters.AddWithValue("@Recommendation_Points", row["Recommendation"]);
+                            //            cmdWalkDetail.Parameters.AddWithValue("@Responsibility", row["Responsibility"]);
+                            //            cmdWalkDetail.Parameters.AddWithValue("@Target_Date", Convert.ToDateTime(row["TargetDate"]));
+                            //            cmdWalkDetail.Parameters.AddWithValue("@Remarks", row["Remarks"]);
+                            //            cmdWalkDetail.Parameters.AddWithValue("@Snap_File_Path", row["FilePath"]);
+
+                            //            if (cmdWalkDetail.ExecuteNonQuery() == 0)
+                            //                throw new Exception("Failed to insert into Line_walk_details.");
+                            //        }
+                            //    }
+                            //}
 
                             transaction.Commit();
                             string successScript = $"Swal.fire({{ title: 'Success!', text: 'All data saved successfully.', icon: 'success' }});";
@@ -122,31 +161,30 @@ namespace AnmolDristi
         }
 
 
+
+
         protected void BtnReset_Click(object sender, EventArgs e)
         {
             Response.Redirect("Line_Walk_Status.aspx");
         }
 
-        // Method to fetch team members data from form controls
+        //Method to fetch team members data from form controls
         private List<TeamMember> GetTeamMembersFromForm()
         {
             var teamMembers = new List<TeamMember>();
 
-            // Assuming you have multiple TextBoxes for team member names
-            // Fetching each team member's name and image upload control values
-            for (int i = 0; i < 5; i++) // Adjust the loop to handle the correct number of dynamic entries
+            // Loop through expected team member textboxes (adjust the number as needed)
+            for (int i = 0; i < 5; i++) // Change 5 to the number of team members allowed
             {
-                // Reference each control (this could be dynamic, for example, by indexing the TextBox names)
-                TextBox nameTextBox = (TextBox)FindControl("TB_TeamMemberName" + i); // Assuming the name controls are TB_TeamMemberName0, TB_TeamMemberName1, etc.
-                FileUpload imageUploadControl = (FileUpload)FindControl("File_TeamMemberImage" + i); // Similarly, for the image controls
+                TextBox nameTextBox = (TextBox)FindControl("TB_EmpName" + i); 
 
-                if (nameTextBox != null && imageUploadControl != null)
+                if (nameTextBox != null)
                 {
                     string name = nameTextBox.Text.Trim();
+
                     if (!string.IsNullOrEmpty(name))
                     {
-                        string imagePath = SaveUploadedImageForTeamMember(imageUploadControl);
-                        teamMembers.Add(new TeamMember { Name = name, Image = imagePath });
+                        teamMembers.Add(new TeamMember { Name = name });
                     }
                 }
             }
@@ -154,109 +192,116 @@ namespace AnmolDristi
             return teamMembers;
         }
 
+
         // Method to fetch walk details data from form controls
-        private List<WalkDetail> GetWalkDetailsFromForm()
-        {
-            var walkDetails = new List<WalkDetail>();
+        //private List<WalkDetail> GetWalkDetailsFromForm()
+        //{
+        //    var walkDetails = new List<WalkDetail>();
 
-            // Loop through each dynamic set of fields (Responsibility, TargetDate, Remarks, etc.)
-            for (int i = 0; i < 1; i++) // Change this based on your actual loop logic
-            {
-                // Fetch values for each input control by ID
-                TextBox responsibilityTextBox = (TextBox)FindControl("TB_Responsibility");
-                TextBox targetDateTextBox = (TextBox)FindControl("TB_TargetDate");
-                TextBox remarksTextBox = (TextBox)FindControl("TB_Remarks");
-                FileUpload snapFileUploadControl = (FileUpload)FindControl("File_Snaps");
+        //    int index = 0;
 
-                // Check if controls are found, to avoid NullReferenceException
-                if (responsibilityTextBox != null && targetDateTextBox != null && remarksTextBox != null && snapFileUploadControl != null)
-                {
-                    string responsibility = responsibilityTextBox.Text;
-                    DateTime targetDate;
+        //    while (true)
+        //    {
+        //        // Dynamically construct control IDs
+        //        TextBox responsibilityTextBox = (TextBox)FindControl("TB_Responsibility_" + index);
+        //        TextBox targetDateTextBox = (TextBox)FindControl("TB_TargetDate_" + index);
+        //        TextBox remarksTextBox = (TextBox)FindControl("TB_Remarks_" + index);
+        //        FileUpload snapFileUploadControl = (FileUpload)FindControl("File_Snaps_" + index);
 
-                    // Try parsing the target date, default to DateTime.MinValue if parsing fails
-                    DateTime.TryParse(targetDateTextBox.Text, out targetDate);
-                    string remarks = remarksTextBox.Text;
+        //        // Exit loop when no more controls are found
+        //        if (responsibilityTextBox == null || targetDateTextBox == null || remarksTextBox == null || snapFileUploadControl == null)
+        //            break;
 
-                    // Handle the snap file upload - save the image and get its path
-                    string snapPath = SaveUploadedImageForWalkDetail(snapFileUploadControl);
+        //        string responsibility = responsibilityTextBox.Text.Trim();
+        //        string remarks = remarksTextBox.Text.Trim();
+        //        DateTime targetDate;
 
-                    // Create WalkDetail object with dynamic form values
-                    walkDetails.Add(new WalkDetail
-                    {
-                        Responsibility = responsibility,
-                        TargetDate = targetDate,
-                        Remarks = remarks,
-                        SnapPath = snapPath
-                    });
-                }
-                else
-                {
-                    // Log or handle the error when controls are not found
-                    Console.WriteLine("Some controls were not found in the page.");
-                }
-            }
+        //        DateTime.TryParse(targetDateTextBox.Text, out targetDate);
 
-            return walkDetails;
-        }
+        //        // Optional: handle image upload
+        //        //string snapPath = SaveSnapToUploadsFolder(snapFileUploadControl);
+        //        string snapPath = SaveUploadedImageForWalkDetail(snapFileUploadControl);
 
-        // Method to save uploaded image for team member
-        private string SaveUploadedImageForTeamMember(FileUpload fileUploadControl)
-        {
-            string imagePath = string.Empty;
+        //        walkDetails.Add(new WalkDetail
+        //        {
+        //            Responsibility = responsibility,
+        //            TargetDate = targetDate,
+        //            Remarks = remarks,
+        //            SnapPath = snapPath
+        //        });
 
-            if (fileUploadControl.HasFile)
-            {
-                string folderPath = @"C:\path\to\your\images\";
-                string fileName = "TeamMember_" + Guid.NewGuid() + Path.GetExtension(fileUploadControl.PostedFile.FileName);
-                string fullFilePath = Path.Combine(folderPath, fileName);
+        //        index++;
+        //    }
 
-                // Save the uploaded file to the server
-                fileUploadControl.SaveAs(fullFilePath);
+        //    return walkDetails;
+        //}
 
-                // Return the relative path to save in the database (use a relative path or URL as needed)
-                imagePath = "/images/" + fileName;
-            }
 
-            return imagePath;
-        }
+        //private string SaveSnapToUploadsFolder(FileUpload fileUploadControl)
+        //{
+        //    if (fileUploadControl.HasFile)
+        //    {
+        //        try
+        //        {
+        //            string folderPath = Server.MapPath("~/Uploads/");
+        //            if (!Directory.Exists(folderPath))
+        //                Directory.CreateDirectory(folderPath);
+
+        //            string filename = Guid.NewGuid().ToString() + Path.GetExtension(fileUploadControl.FileName);
+        //            string fullPath = Path.Combine(folderPath, filename);
+        //            fileUploadControl.SaveAs(fullPath);
+
+        //            return "~/Uploads/" + filename;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine("Error uploading file: " + ex.Message);
+        //            return null;
+        //        }
+        //    }
+        //    return null;
+        //}
+
+
+
 
         // Method to save uploaded image for walk detail snap
-        private string SaveUploadedImageForWalkDetail(FileUpload fileUploadControl)
-        {
-            string snapPath = string.Empty;
+        //private string SaveUploadedImageForWalkDetail(FileUpload fileUploadControl)
+        //{
+        //    if (fileUploadControl.HasFile)
+        //    {
+        //        try
+        //        {
+        //            string fileName = Path.GetFileName(fileUploadControl.PostedFile.FileName);
+        //            string fileExtension = Path.GetExtension(fileName);
+        //            string uniqueFileName = DateTime.Now.Ticks.ToString() + fileExtension;
 
-            if (fileUploadControl.HasFile)
-            {
-                try
-                {
-                    string fileName = Path.GetFileName(fileUploadControl.PostedFile.FileName);
-                    string fileExtension = Path.GetExtension(fileName);
-                    string uniqueFileName = DateTime.Now.Ticks.ToString() + fileExtension;
+        //            string folderPath = Server.MapPath("~/images/");
+        //            if (!Directory.Exists(folderPath))
+        //            {
+        //                Directory.CreateDirectory(folderPath);
+        //            }
 
-                    // Define the path to save the uploaded image
-                    string imagePath = Server.MapPath("~/images/") + uniqueFileName;
+        //            string imagePath = Path.Combine(folderPath, uniqueFileName);
+        //            fileUploadControl.SaveAs(imagePath);
 
-                    // Save the image to the specified path
-                    fileUploadControl.SaveAs(imagePath);
+        //            return "~/images/" + uniqueFileName;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine("Error uploading file: " + ex.Message);
+        //        }
+        //    }
 
-                    snapPath = "~/images/" + uniqueFileName;
-                }
-                catch (Exception ex)
-                {
-                    // Handle errors during file upload
-                    Console.WriteLine("Error uploading file: " + ex.Message);
-                }
-            }
+        //    return null;
+        //}
 
-            return snapPath;
-        }
 
         // Define the data models for TeamMember and WalkDetail
         public class TeamMember
         {
             public string Name { get; set; }
-            public string Image { get; set; }
+            
         }
 
         public class WalkDetail
@@ -406,6 +451,57 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "Error", "alert('Error saving observation: " + ex.Message + "');", true);
             }
         }
+
+        protected void Btn_AddMember_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                string EmpType = RBL_EmpType.SelectedValue;
+                string EmpCode = TB_EmpCode.Text.Trim();
+                string EmpName = TB_EmpName.Text.Trim();
+
+                if (EmpType != "Internal")
+                {
+                    EmpCode = "-";
+                }
+
+                DataTable dt = Session["EmpData"] as DataTable;
+                if (dt == null)
+                {
+                    dt = new DataTable();
+                    dt.Columns.Add("EmpType");
+                    dt.Columns.Add("EmpCode");
+                    dt.Columns.Add("EmpName");
+
+                }
+
+                dt.Rows.Add(EmpType, EmpCode, EmpName);
+
+                Session["EmpData"] = dt;
+                GridView2.DataSource = dt;
+                GridView2.DataBind();
+
+                RBL_EmpType.SelectedValue = "";
+                TB_EmpCode.Text = "";
+                TB_EmpName.Text = "";
+            }
+            catch (Exception ex)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "Error", "alert('Error saving Team members: " + ex.Message + "');", true);
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+
         //-------------------------------Added on 15-04-2025-----------KK-TL--------------//
     }
 }

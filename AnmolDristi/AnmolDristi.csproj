@@ -83,10 +83,13 @@
     <Content Include="fiveS_checklist_1.aspx" />
     <Content Include="fiveS_checklist_2.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="Line_Walk_Data.aspx" />
+    <Content Include="Line_Walk_Status.aspx" />
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="Dristi.Master" />
     <Content Include="fiveS_checklist.aspx" />
+    <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="uploads\no_image.jpg" />
     <Content Include="view_Checklists.aspx" />
     <Content Include="WebForm1.aspx" />
@@ -190,6 +193,20 @@
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Line_Walk_Data.aspx.cs">
+      <DependentUpon>Line_Walk_Data.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Line_Walk_Data.aspx.designer.cs">
+      <DependentUpon>Line_Walk_Data.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Line_Walk_Status.aspx.cs">
+      <DependentUpon>Line_Walk_Status.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Line_Walk_Status.aspx.designer.cs">
+      <DependentUpon>Line_Walk_Status.aspx</DependentUpon>
+    </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -211,6 +228,13 @@
     </Compile>
     <Compile Include="fiveS_checklist.aspx.designer.cs">
       <DependentUpon>fiveS_checklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="qaqc_inspector_rpt.aspx.cs">
+      <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
+      <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
     </Compile>
     <Compile Include="view_Checklists.aspx.cs">
       <DependentUpon>view_Checklists.aspx</DependentUpon>
