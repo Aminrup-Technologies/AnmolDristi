@@ -80,6 +80,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="fiveS_checklist.aspx" />
     <Content Include="fiveS_checklist_1.aspx" />
     <Content Include="fiveS_checklist_2.aspx" />
     <Content Include="home.aspx" />
@@ -88,8 +89,6 @@
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="Dristi.Master" />
-    <Content Include="fiveS_checklist.aspx" />
-    <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="uploads\no_image.jpg" />
     <Content Include="view_Checklists.aspx" />
     <Content Include="WebForm1.aspx" />
@@ -154,6 +153,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="fiveS_checklist.aspx.cs">
+      <DependentUpon>fiveS_checklist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="fiveS_checklist.aspx.designer.cs">
+      <DependentUpon>fiveS_checklist.aspx</DependentUpon>
     </Compile>
     <Compile Include="fiveS_checklist_1.aspx.cs">
       <DependentUpon>fiveS_checklist_1.aspx</DependentUpon>
@@ -222,40 +228,12 @@
     <Compile Include="qaqc_home.aspx.designer.cs">
       <DependentUpon>qaqc_home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="fiveS_checklist.aspx.cs">
-      <DependentUpon>fiveS_checklist.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="fiveS_checklist.aspx.designer.cs">
-      <DependentUpon>fiveS_checklist.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="qaqc_inspector_rpt.aspx.cs">
-      <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="qaqc_inspector_rpt.aspx.designer.cs">
-      <DependentUpon>qaqc_inspector_rpt.aspx</DependentUpon>
-    </Compile>
     <Compile Include="view_Checklists.aspx.cs">
       <DependentUpon>view_Checklists.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="view_Checklists.aspx.designer.cs">
       <DependentUpon>view_Checklists.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="fiveS_checklist.aspx.cs">
-      <DependentUpon>fiveS_checklist.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="fiveS_checklist.aspx.designer.cs">
-      <DependentUpon>fiveS_checklist.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>

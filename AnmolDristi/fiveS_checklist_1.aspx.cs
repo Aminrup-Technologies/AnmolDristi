@@ -100,7 +100,7 @@ namespace AnmolDristi
                     txtDate.Text = Convert.ToDateTime(reader["Date"]).ToString("yyyy-MM-dd");
                     txtDepartment.Text = reader["Department"].ToString();
                     txtJob.Text = reader["Job"].ToString();
-                    ID.Value = reader["ID"].ToString();
+                    hdnID.Value = reader["ID"].ToString();
                 }
                 reader.Close();
 
@@ -136,7 +136,7 @@ namespace AnmolDristi
         protected void editChecklist()
         {
             var checklistRow = _dataSource.Checklists.NewChecklistsRow();
-            checklistRow["ID"] = ID.Value.ToString();
+            checklistRow["ID"] = hdnID.Value.ToString();
             checklistRow["Date"] = txtDate.Text;
             checklistRow["Department"] = txtDepartment.Text;
             checklistRow["Job"] = txtJob.Text;
@@ -163,7 +163,7 @@ namespace AnmolDristi
 
                     var checklistInfoRow = _dataSource.ChecklistInfo.NewChecklistInfoRow();
                     checklistInfoRow["ID"] = Convert.ToInt32(((HiddenField)item.FindControl("ID")).Value);
-                    checklistInfoRow["Checklist_ID"] = Convert.ToInt32(ID.Value);
+                    checklistInfoRow["Checklist_ID"] = Convert.ToInt32(hdnID.Value);
                     checklistInfoRow["Group_Name"] = GrpDetails.Text;
 
                     //Wrap the Requirement.Text assignment like this to guarantee it doesn't break regardless of database column length:
@@ -225,7 +225,7 @@ namespace AnmolDristi
     
         protected void submit_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(ID.Value))
+            if (!string.IsNullOrEmpty(hdnID.Value))
             {
                 editChecklist();
             }

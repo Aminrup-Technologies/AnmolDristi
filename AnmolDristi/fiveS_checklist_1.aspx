@@ -51,7 +51,7 @@
             return isValid;
 
         }
-        
+
 
 
         function toggleInputs(radioBtn) {
@@ -94,7 +94,7 @@
         function onPhotoSelected(input) {
             const wrapper = input.closest('.col-md-6');
             const successLabel = wrapper.querySelector('.photo-success');
-            
+
 
             if (input.files && input.files.length > 0) {
                 successLabel.style.display = 'inline';
@@ -102,10 +102,10 @@
                 successLabel.style.display = 'none';
             }
 
-            
+
         }
 
-        
+
 
         function resetFormUI() {
 
@@ -145,7 +145,7 @@
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h5 style="text-align:left; padding-left:20px; font-weight: bold;" class="text-success">CHECKLIST FOR 5S</h5>
+                    <h5 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">CHECKLIST FOR 5S</h5>
                 </div>
             </div>
 
@@ -199,13 +199,12 @@
 
                             <asp:Repeater ID="DictionaryRepeater" runat="server">
                                 <HeaderTemplate>
-                                    <%--<label>hghggg</label>--%>
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <div class="card mb-4 shadow-sm">
                                         <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
                                             <h6 class="mb-0">
-                                                        <asp:Label ID="Grp_detail" runat="server" Text='<%# Bind("GroupName") %>' />
+                                                <asp:Label ID="Grp_detail" runat="server" Text='<%# Bind("GroupName") %>' />
 
                                             </h6>
 
@@ -218,11 +217,10 @@
 
                                         </div>
                                         <div id='<%# "collapse" + Container.ItemIndex %>' class="collapse card-body">
-                                            <%-- <div class="card-body">--%>
                                             <asp:Repeater ID="ChildRepeater" runat="server" DataSource='<%# Bind("Keys") %>' OnDataBinding="ChildRepeater_DataBinding" OnItemDataBound="ChildRepeater_ItemDataBound">
 
                                                 <ItemTemplate>
-                                                    <asp:HiddenField runat="server" ID="ID" Value='<%# Eval("ID") %>'  />
+                                                    <asp:HiddenField runat="server" ID="hdnID" Value='<%# Eval("ID") %>' />
                                                     <div class="row requirement-item mb-4 p-3 border rounded needs-validation">
                                                         <div class="col-md-4">
                                                             <asp:Label for="labelRequirementEmail4" runat="server" CssClass="form-label " ForeColor="Black" Font-Bold="False" Font-Size="Small">Point:<%# Eval("Serial") %></asp:Label>
@@ -233,7 +231,7 @@
                                                             <asp:Label for="labelresult" class="form-label" runat="server" ForeColor="Black" Font-Bold="False" Font-Size="Small">Observation</asp:Label>
 
                                                             <asp:RadioButtonList ID="result" runat="server" RepeatDirection="Horizontal"
-                                                                CssClass="" OnClientClick="toggleInputs(this)" ForeColor="Black" Font-Bold="False" Font-Size="Small" >
+                                                                CssClass="" OnClientClick="toggleInputs(this)" ForeColor="Black" Font-Bold="False" Font-Size="Small">
                                                                 <asp:ListItem Text="OK" Value="true" Selected="True" />
                                                                 <asp:ListItem Text="Not Ok" Value="false" />
                                                             </asp:RadioButtonList>
@@ -257,9 +255,9 @@
                                                                 <div class="col-md-6 ">
                                                                     <label for="labelphotograph" class="form-label">Before Photographs:</label>
                                                                     <asp:FileUpload ID="Before_pic" runat="server" CssClass="form-control-file photo-input" onchange="onPhotoSelected(this)" Text="Upload Photo" />
-                                                                    <asp:label ID="Img" CssClass="gmg" runat="server" Visible="false" />
+                                                                    <asp:Label ID="Img" CssClass="gmg" runat="server" Visible="false" />
                                                                     <span class="text-danger rfv photo-error" style="display: none;">Photo is required</span>
-                                                                   <span class="text-success photo-success" style="display: none;">Photo uploaded successfully</span>
+                                                                    <span class="text-success photo-success" style="display: none;">Photo uploaded successfully</span>
 
                                                                 </div>
                                                             </div>
@@ -269,11 +267,8 @@
                                             </asp:Repeater>
                                         </div>
                                     </div>
-                                    <%-- </div>--%>
                                 </ItemTemplate>
                             </asp:Repeater>
-
-                            <!-- Submit Button -->
                             <div class="text-center mt-4">
                                 <asp:Button ID="submit" runat="server" OnClick="submit_Click" Text="Submit" CssClass="btn btn-success px-4 py-2" OnClientClick="validateChecklist();" ValidationGroup="save" />
                                 <asp:Button ID="reset" runat="server" OnClick="reset_Click" Text="Reset" CssClass="btn btn-secondary px-4 py-2" OnClientClick="confirmReset(); return false;" />
