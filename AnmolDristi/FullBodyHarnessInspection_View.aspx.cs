@@ -38,7 +38,7 @@ namespace AnmolDristi
 
                     using (SqlConnection conn = new SqlConnection(connStr))
                     {
-                        string query = @"SELECT [InspectionID], [DocumentNo], [Site], [InspectedBy], [DateOfInspection]
+                        string query = @"SELECT [InspectionID], [EmployeeName], [Site], [InspectedBy], [DateOfInspection]
                                  FROM [CSMS].[dbo].[InspectionHeader]
                                  WHERE DateOfInspection BETWEEN @FromDate AND @ToDate
                                  ORDER BY DateOfInspection DESC";
@@ -93,7 +93,7 @@ namespace AnmolDristi
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = @"SELECT TOP (5) [InspectionID], [DocumentNo], [Site], [InspectedBy], [DateOfInspection] 
+                string query = @"SELECT TOP (5) [InspectionID], [EmployeeName], [Site], [InspectedBy], [DateOfInspection] 
                          FROM [CSMS].[dbo].[InspectionHeader] 
                          ORDER BY DateOfInspection DESC";
 

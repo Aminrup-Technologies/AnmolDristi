@@ -39,7 +39,7 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>Automation And Technical Services
+                <h3>Full Body Harness Inspection
                 </h3>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         
-                        <h2>Full Body Harness Inspection</h2>
+                        <h2>DOC/ATS/TSK/FBH/013</h2>
                          <div class="clearfix"></div>
                       </div>
 
@@ -76,24 +76,32 @@
          </div>
      </div>
  </div>
-        <div class="col-md-3">
+       
+<div class="col-md-3">
     <div class="mb-3">
-        <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Document Number" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="lbl_txtInsBy" runat="server" AssociatedControlID="txtInsBy" Text="Inspection By(Emp Code)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtInsBy" runat="server" ErrorMessage="*" ControlToValidate="txtInsBy" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtInsBy" runat="server" CssClass="form-control form-control-sm rounded" 
+                         OnKeyUp="fetchEmployeeName()" 
+                         AutoPostBack="false"></asp:TextBox>
+        </div>
+        <asp:Label ID="lblEmployeeName" runat="server" Text="" ForeColor="Red" Font-Size="Small"></asp:Label> <!-- For error display -->
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Employee Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtDocNo" runat="server" ErrorMessage="*" ControlToValidate="txtDocNo" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
-            <asp:TextBox ID="txtDocNo" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+            <asp:TextBox ID="txtDocNo" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true"></asp:TextBox> <!-- ✅ Made ReadOnly initially -->
         </div>
     </div>
 </div>
-          <div class="col-md-3">
-          <div class="mb-3">
-        <asp:Label ID="lbl_txtInsBy" runat="server" AssociatedControlID="txtInsBy" Text="Inspection By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtInsBy" runat="server" ErrorMessage="*" ControlToValidate="txtInsBy" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtInsBy" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
-        </div>
-              </div>
-    </div>
+
+
+
 </div>
         
                               
@@ -358,31 +366,55 @@
         <div class="table-responsive">
 <div class="col-md-12">
     <div class="mb-3">
-   <asp:GridView ID="gvChecklist" runat="server" AutoGenerateColumns="False" DataKeyNames="IdentificationNo" CssClass="table table-bordered table-sm table-hover mt-4" >
-      <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
+   <asp:GridView ID="gvChecklist" runat="server" AutoGenerateColumns="False" DataKeyNames="IdentificationNo" CssClass="table table-bordered table-sm table-hover mt-4" OnRowCreated="gvChecklist_RowCreated" >
+<%--      <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />--%>
     <Columns>
         <asp:BoundField HeaderText="Identification No" DataField="IdentificationNo" />
         <asp:BoundField HeaderText="Location" DataField="Location" />
         
         <asp:BoundField HeaderText="Q1 Status" DataField="Q1Status" />
         <asp:BoundField HeaderText="Q1 Remarks" DataField="Q1Remarks" />
-        <asp:BoundField HeaderText="Q1 Photo" DataField="Q1Photo" />
+       
+        <asp:TemplateField HeaderText="Q1 Photo">
+      <ItemTemplate>
+            <asp:Image ID="Q1Photo" runat="server" ImageUrl='<%# Eval("Q1Photo") %>' Width="50px" Height="50px" />
+        </ItemTemplate>                      
+      </asp:TemplateField>
 
         <asp:BoundField HeaderText="Q2 Status" DataField="Q2Status" />
         <asp:BoundField HeaderText="Q2 Remarks" DataField="Q2Remarks" />
         <asp:BoundField HeaderText="Q2 Photo" DataField="Q2Photo" />
+          <asp:TemplateField HeaderText="Q2 Photo">
+<ItemTemplate>
+      <asp:Image ID="Q2Photo" runat="server" ImageUrl='<%# Eval("Q2Photo") %>' Width="50px" Height="50px" />
+  </ItemTemplate>                      
+</asp:TemplateField>
+
 
         <asp:BoundField HeaderText="Q3 Status" DataField="Q3Status" />
         <asp:BoundField HeaderText="Q3 Remarks" DataField="Q3Remarks" />
-        <asp:BoundField HeaderText="Q3 Photo" DataField="Q3Photo" />
+                 <asp:TemplateField HeaderText="Q3 Photo">
+<ItemTemplate>
+      <asp:Image ID="Q3Photo" runat="server" ImageUrl='<%# Eval("Q3Photo") %>' Width="50px" Height="50px" />
+  </ItemTemplate>                      
+</asp:TemplateField>
 
         <asp:BoundField HeaderText="Q4 Status" DataField="Q4Status" />
         <asp:BoundField HeaderText="Q4 Remarks" DataField="Q4Remarks" />
-        <asp:BoundField HeaderText="Q4 Photo" DataField="Q4Photo" />
+        
+                         <asp:TemplateField HeaderText="Q4 Photo">
+<ItemTemplate>
+      <asp:Image ID="Q4Photo" runat="server" ImageUrl='<%# Eval("Q4Photo") %>' Width="50px" Height="50px" />
+  </ItemTemplate>                      
+</asp:TemplateField>
 
         <asp:BoundField HeaderText="Q5 Status" DataField="Q5Status" />
         <asp:BoundField HeaderText="Q5 Remarks" DataField="Q5Remarks" />
-        <asp:BoundField HeaderText="Q5 Photo" DataField="Q5Photo" />
+                         <asp:TemplateField HeaderText="Q5 Photo">
+<ItemTemplate>
+      <asp:Image ID="Q5Photo" runat="server" ImageUrl='<%# Eval("Q5Photo") %>' Width="50px" Height="50px" />
+  </ItemTemplate>                      
+</asp:TemplateField>
        <asp:TemplateField HeaderText="Action">
        <ItemTemplate>
            <asp:Button ID="BtnDelIns" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelIns_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
@@ -488,7 +520,7 @@
         var date = document.getElementById('<%= txtdate.ClientID %>').value.trim();
     var site = document.getElementById('<%= txtSite.ClientID %>').value.trim();
     var docNo = document.getElementById('<%= txtDocNo.ClientID %>').value.trim();
-        var inspectedBy = document.getElementById('<%= txtInsBy.ClientID %>').value.trim();
+       
 
         if (!identity) {
             alert("Please enter Identification No.");
@@ -511,15 +543,9 @@
         }
 
         if (!docNo) {
-            alert("Please enter Document Number.");
+            alert("Please enter Employee Name.");
             return false;
         }
-
-        if (!inspectedBy) {
-            alert("Please enter Inspector's Name.");
-            return false;
-        }
-
         for (var i = 0; i < 5; i++) {
             var rdoNotOk = document.getElementById(rdoNotOkIds[i]);
             var remarks = document.getElementById(txtRemarkIds[i]);
@@ -544,6 +570,52 @@
     }
 
 </script>
+
+  <!-- Add the necessary jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    function fetchEmployeeName() {
+        var inspectionId = document.getElementById('<%= txtInsBy.ClientID %>').value;
+
+        if (inspectionId.length > 0) {
+            $.ajax({
+                type: "POST",
+                url: "FullBodyHarnessInspection.aspx/GetEmployeeName",
+                data: JSON.stringify({ inspectionId: inspectionId }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var employeeName = response.d;
+                    var empTextBox = document.getElementById('<%= txtDocNo.ClientID %>');
+                    var lblError = document.getElementById('<%= lblEmployeeName.ClientID %>');
+
+                    if (employeeName && employeeName !== "Invalid Inspection ID" && employeeName !== "Error occurred while fetching data") {
+                        empTextBox.value = employeeName;
+                        empTextBox.readOnly = true; // ✅ Make read-only after setting value
+                        lblError.innerText = '';
+                    } else {
+                        empTextBox.value = '';
+                        empTextBox.readOnly = true; // Keep read-only if invalid
+                        lblError.innerText = 'Invalid Inspection ID!';
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: " + error);
+                    document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = 'Error fetching data.';
+                    document.getElementById('<%= txtDocNo.ClientID %>').value = '';
+                    document.getElementById('<%= txtDocNo.ClientID %>').readOnly = true;
+                }
+            });
+        } else {
+            document.getElementById('<%= txtDocNo.ClientID %>').value = '';
+            document.getElementById('<%= txtDocNo.ClientID %>').readOnly = true;
+            document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = '';
+        }
+    }
+</script>
+
+
 
   
 </asp:Content>

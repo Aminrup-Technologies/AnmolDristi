@@ -69,7 +69,7 @@
                                 <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                                 <Columns>
                                     <asp:BoundField DataField="InspectionID" HeaderText="Inspection ID" />
-                                     <asp:BoundField DataField="DocumentNo" HeaderText="Document No" />
+                                     <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" />
                                     <asp:BoundField DataField="Site" HeaderText="Site" />
                                     <asp:BoundField DataField="InspectedBy" HeaderText="Inspected By"/>
                                     <asp:BoundField DataField="DateOfInspection" HeaderText="Date Of Inspection" />  

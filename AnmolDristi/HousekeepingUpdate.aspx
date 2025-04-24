@@ -101,14 +101,7 @@
             </ItemTemplate>
         </asp:TemplateField>
 
-        <%--<asp:TemplateField HeaderText="Photo (Before)">
-            <ItemTemplate>
-                <asp:Image ID="imgBeforePhoto" runat="server" ImageUrl='<%# ResolveUrl(Eval("PhotoBefore").ToString()) %>' Width="50px" Height="50px" />
-                <asp:Label ID="lblPhotoBefore" runat="server" Text='<%# Eval("PhotoBefore") %>' Visible="false" />
-                 <asp:FileUpload ID="fileBeforePhoto" runat="server" CssClass="form-control form-control-sm rounded" />
-                 <asp:Label ID="lblBeforeError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>--%>
+
 
 
 <asp:TemplateField HeaderText="Photo (Before)">
@@ -141,14 +134,6 @@
                 <asp:TextBox ID="txtCorrectiveAction" runat="server" Text='<%# Eval("CorrectiveAction") %>' CssClass="form-control" />
             </ItemTemplate>
         </asp:TemplateField>
-
-        <%--<asp:TemplateField HeaderText="Photo (After)">
-            <ItemTemplate>
-                <asp:Image ID="imgAfterPhoto" runat="server" ImageUrl='<%# ResolveUrl(Eval("PhotoAfter").ToString()) %>' Width="50px" Height="50px" />
-                <asp:Label ID="lblPhotoAfter" runat="server" Text='<%# Eval("PhotoAfter") %>' Visible="false" />
-            </ItemTemplate>
-        </asp:TemplateField>--%>
-
        <asp:TemplateField HeaderText="Photo (After)">
     <ItemTemplate>
         <!-- Larger Image -->

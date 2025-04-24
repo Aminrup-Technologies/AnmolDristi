@@ -74,24 +74,25 @@
          </div>
      </div>
  </div>
+      <div class="col-md-3">
+      <div class="mb-3">
+    <asp:Label ID="lbl_txtInsBy" runat="server" AssociatedControlID="txtInsBy" Text="Inspection By(Emp Code)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+    <asp:RequiredFieldValidator ID="RFV_txtInsBy" runat="server" ErrorMessage="*" ControlToValidate="txtInsBy" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+    <div class="input-group-sm">
+        <asp:TextBox ID="txtInsBy" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+    </div>
+          </div>
+</div>
         <div class="col-md-3">
     <div class="mb-3">
-        <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Document Number" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Employee Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtDocNo" runat="server" ErrorMessage="*" ControlToValidate="txtDocNo" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtDocNo" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
         </div>
     </div>
 </div>
-          <div class="col-md-3">
-          <div class="mb-3">
-        <asp:Label ID="lbl_txtInsBy" runat="server" AssociatedControlID="txtInsBy" Text="Inspection By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtInsBy" runat="server" ErrorMessage="*" ControlToValidate="txtInsBy" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtInsBy" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
-        </div>
-              </div>
-    </div>
+         
 </div>
         
                               
@@ -102,44 +103,198 @@
      <div class="clearfix"></div>
  </div>
                     
-        <div class="table-responsive">
-<div class="col-md-12">
-    <div class="mb-3">
-   <asp:GridView ID="gvChecklist" runat="server" AutoGenerateColumns="False" DataKeyNames="IdentificationNo" CssClass="table table-bordered table-sm table-hover mt-4" >
-      <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
-    <Columns>
-        <asp:BoundField HeaderText="Identification No" DataField="IdentificationNo" />
-        <asp:BoundField HeaderText="Location" DataField="Location" />
-        
-        <asp:BoundField HeaderText="Q1 Status" DataField="Q1Status" />
-        <asp:BoundField HeaderText="Q1 Remarks" DataField="Q1Remarks" />
-        <asp:BoundField HeaderText="Q1 Photo" DataField="Q1Photo" />
+    
 
-        <asp:BoundField HeaderText="Q2 Status" DataField="Q2Status" />
-        <asp:BoundField HeaderText="Q2 Remarks" DataField="Q2Remarks" />
-        <asp:BoundField HeaderText="Q2 Photo" DataField="Q2Photo" />
+   <div class="table-responsive">
+    <div class="col-md-12">
+        <div class="mb-3">
+            <asp:GridView ID="gvChecklist" runat="server" AutoGenerateColumns="False" DataKeyNames="IdentificationNo"
+                CssClass="table table-bordered table-sm table-hover mt-4">
+                <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
+                <Columns>
 
-        <asp:BoundField HeaderText="Q3 Status" DataField="Q3Status" />
-        <asp:BoundField HeaderText="Q3 Remarks" DataField="Q3Remarks" />
-        <asp:BoundField HeaderText="Q3 Photo" DataField="Q3Photo" />
+                    <asp:TemplateField HeaderText="Identification No">
+                        <ItemTemplate>
+                            <asp:Label ID="lblIdentificationNo" runat="server" Text='<%# Eval("IdentificationNo") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-        <asp:BoundField HeaderText="Q4 Status" DataField="Q4Status" />
-        <asp:BoundField HeaderText="Q4 Remarks" DataField="Q4Remarks" />
-        <asp:BoundField HeaderText="Q4 Photo" DataField="Q4Photo" />
+                    <asp:TemplateField HeaderText="Location">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtLocation" runat="server" Text='<%# Eval("Location") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-        <asp:BoundField HeaderText="Q5 Status" DataField="Q5Status" />
-        <asp:BoundField HeaderText="Q5 Remarks" DataField="Q5Remarks" />
-        <asp:BoundField HeaderText="Q5 Photo" DataField="Q5Photo" />
-       <asp:TemplateField HeaderText="Action">
-       <%--<ItemTemplate>
-           <asp:Button ID="BtnDelIns" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelIns_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
-      </ItemTemplate>--%>
+                    <%-- Q1 Fields --%>
+                    <asp:TemplateField HeaderText="Q1 Status">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ1Status" runat="server" Text='<%# Eval("Q1Status") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Q1 Remarks">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ1Remarks" runat="server" Text='<%# Eval("Q1Remarks") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                   <asp:TemplateField HeaderText="Q1 Photo">
+    <ItemTemplate>
+        <asp:Image ID="imgQ1Photo" runat="server" 
+                   ImageUrl='<%# Eval("Q1Photo", "{0}") %>' 
+                   Width="50px" Height="50px" 
+                   CssClass="img-thumbnail" 
+                   AlternateText="alt" />
+        <!-- Hidden field to retain existing image path -->
+<asp:Label ID="lblimgQ1Photo" runat="server" 
+    Text='<%# Eval("Q1Photo") %>' Visible="false" />
+
+<!-- Upload control to select a new image -->
+<br />
+<asp:FileUpload ID="fuimgQ1Photo" runat="server" />
+
+    </ItemTemplate>
 </asp:TemplateField>
-    </Columns>
-</asp:GridView>
+
+
+                    <%-- Q2 Fields --%>
+                    <asp:TemplateField HeaderText="Q2 Status">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ2Status" runat="server" Text='<%# Eval("Q2Status") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Q2 Remarks">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ2Remarks" runat="server" Text='<%# Eval("Q2Remarks") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <%--<asp:TemplateField HeaderText="Q2 Photo">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ2Photo" runat="server" Text='<%# Eval("Q2Photo") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>--%>
+   <asp:TemplateField HeaderText="Q2 Photo">
+    <ItemTemplate>
+        <asp:Image ID="imgQ2Photo" runat="server" 
+                   ImageUrl='<%# Eval("Q2Photo", "{0}") %>' 
+                   Width="50px" Height="50px" 
+                   CssClass="img-thumbnail" 
+                   AlternateText="alt" />
+                <!-- Hidden field to retain existing image path -->
+<asp:Label ID="lblimgQ2Photo" runat="server" 
+    Text='<%# Eval("Q2Photo") %>' Visible="false" />
+
+<!-- Upload control to select a new image -->
+<br />
+<asp:FileUpload ID="fuimgQ2Photo" runat="server" />
+    </ItemTemplate>
+</asp:TemplateField>
+                    <%-- Q3 Fields --%>
+                    <asp:TemplateField HeaderText="Q3 Status">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ3Status" runat="server" Text='<%# Eval("Q3Status") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Q3 Remarks">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ3Remarks" runat="server" Text='<%# Eval("Q3Remarks") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <%--<asp:TemplateField HeaderText="Q3 Photo">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ3Photo" runat="server" Text='<%# Eval("Q3Photo") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>--%>
+                       <asp:TemplateField HeaderText="Q3 Photo">
+    <ItemTemplate>
+        <asp:Image ID="imgQ3Photo" runat="server" 
+                   ImageUrl='<%# Eval("Q3Photo", "{0}") %>' 
+                   Width="50px" Height="50px" 
+                   CssClass="img-thumbnail" 
+                   AlternateText="alt" />
+                <!-- Hidden field to retain existing image path -->
+<asp:Label ID="lblimgQ3Photo" runat="server" 
+    Text='<%# Eval("Q3Photo") %>' Visible="false" />
+
+<!-- Upload control to select a new image -->
+<br />
+<asp:FileUpload ID="fuimgQ3Photo" runat="server" />
+    </ItemTemplate>
+</asp:TemplateField>
+
+                    <%-- Q4 Fields --%>
+                    <asp:TemplateField HeaderText="Q4 Status">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ4Status" runat="server" Text='<%# Eval("Q4Status") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Q4 Remarks">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ4Remarks" runat="server" Text='<%# Eval("Q4Remarks") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                   
+  <asp:TemplateField HeaderText="Q4 Photo">
+        <ItemTemplate>
+        <asp:Image ID="imgQ4Photo" runat="server" 
+                   ImageUrl='<%# Eval("Q4Photo", "{0}") %>' 
+                   Width="50px" Height="50px" 
+                   CssClass="img-thumbnail" 
+                   AlternateText="alt" />
+                    <!-- Hidden field to retain existing image path -->
+<asp:Label ID="lblimgQ4Photo" runat="server" 
+    Text='<%# Eval("Q4Photo") %>' Visible="false" />
+
+<!-- Upload control to select a new image -->
+<br />
+<asp:FileUpload ID="fuimgQ4Photo" runat="server" />
+    </ItemTemplate>
+</asp:TemplateField>
+
+
+                    <%-- Q5 Fields --%>
+                    <asp:TemplateField HeaderText="Q5 Status">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ5Status" runat="server" Text='<%# Eval("Q5Status") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Q5 Remarks">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ5Remarks" runat="server" Text='<%# Eval("Q5Remarks") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                   <%-- <asp:TemplateField HeaderText="Q5 Photo">
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtQ5Photo" runat="server" Text='<%# Eval("Q5Photo") %>' CssClass="form-control" />
+                        </ItemTemplate>
+                    </asp:TemplateField>--%>
+                      <asp:TemplateField HeaderText="Q5 Photo">
+                        <ItemTemplate>
+        <asp:Image ID="imgQ5Photo" runat="server" 
+                   ImageUrl='<%# Eval("Q5Photo", "{0}") %>' 
+                   Width="50px" Height="50px" 
+                   CssClass="img-thumbnail" 
+                   AlternateText="alt" />
+                            <!-- Hidden field to retain existing image path -->
+<asp:Label ID="lblimgQ5Photo" runat="server" 
+    Text='<%# Eval("Q5Photo") %>' Visible="false" />
+
+<!-- Upload control to select a new image -->
+<br />
+<asp:FileUpload ID="fuimgQ5Photo" runat="server" />
+    </ItemTemplate>
+</asp:TemplateField>
+
+                    <%-- Action Buttons --%>
+                    <asp:TemplateField HeaderText="Actions">
+                        <ItemTemplate>
+                            <asp:Button ID="btnDelInsp" runat="server" Text="Delete" CssClass="btn btn-sm btn-danger" OnClick="BtnDelInsp_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                </Columns>
+            </asp:GridView>
         </div>
     </div>
-            </div>
+</div>
 
 
                 </div>

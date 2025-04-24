@@ -69,33 +69,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtSite;
 
         /// <summary>
-        /// lbl_txtDocNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_txtDocNo;
-
-        /// <summary>
-        /// RFV_txtDocNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtDocNo;
-
-        /// <summary>
-        /// txtDocNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDocNo;
-
-        /// <summary>
         /// lbl_txtInsBy control.
         /// </summary>
         /// <remarks>
@@ -121,6 +94,33 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtInsBy;
+
+        /// <summary>
+        /// lbl_txtDocNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_txtDocNo;
+
+        /// <summary>
+        /// RFV_txtDocNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtDocNo;
+
+        /// <summary>
+        /// txtDocNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDocNo;
 
         /// <summary>
         /// gvChecklist control.
