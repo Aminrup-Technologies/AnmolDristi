@@ -49,7 +49,7 @@ namespace AnmolDristi
                 {"Do employees show positive interest in 5S activities?","SUSTAIN-SHITSUKE" },
         };
 
-            
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -65,7 +65,7 @@ namespace AnmolDristi
                          {
                              Serial = $"{groupIndex + 1}.{itemIndex + 1}",
                              Requirement = x.Key,
-                             ID = string.Empty
+                             ChecklistInfoId = string.Empty
                          }).ToList()
                      }).ToList();
 
@@ -100,7 +100,7 @@ namespace AnmolDristi
                     txtDate.Text = Convert.ToDateTime(reader["Date"]).ToString("yyyy-MM-dd");
                     txtDepartment.Text = reader["Department"].ToString();
                     txtJob.Text = reader["Job"].ToString();
-                    hdnID.Value = reader["ID"].ToString();
+                    ChecklistId.Value = reader["ID"].ToString();
                 }
                 reader.Close();
 
@@ -120,7 +120,7 @@ namespace AnmolDristi
             {
                 Serial = $"{groupIndex + 1}.{itemIndex + 1}",
                 Requirement = x.Field<string>("Requirements"),
-                ID = x.Field<int>("ID"),
+                ChecklistInfoId = x.Field<int>("ID"),
                 IsOk = x.Field<bool>("Result"),
                 Remark_text = x.Field<string>("Remark"),
                 Before_pic = x.Field<string>("Before_photo")
@@ -136,7 +136,7 @@ namespace AnmolDristi
         protected void editChecklist()
         {
             var checklistRow = _dataSource.Checklists.NewChecklistsRow();
-            checklistRow["ID"] = hdnID.Value.ToString();
+            checklistRow["ID"] = ChecklistId.Value.ToString();
             checklistRow["Date"] = txtDate.Text;
             checklistRow["Department"] = txtDepartment.Text;
             checklistRow["Job"] = txtJob.Text;
@@ -162,8 +162,8 @@ namespace AnmolDristi
                     Label ExistingImage = (Label)item.FindControl("Img");
 
                     var checklistInfoRow = _dataSource.ChecklistInfo.NewChecklistInfoRow();
-                    checklistInfoRow["ID"] = Convert.ToInt32(((HiddenField)item.FindControl("ID")).Value);
-                    checklistInfoRow["Checklist_ID"] = Convert.ToInt32(hdnID.Value);
+                    checklistInfoRow["ID"] = Convert.ToInt32(((HiddenField)item.FindControl("ChecklistInfoId")).Value);
+                    checklistInfoRow["Checklist_ID"] = Convert.ToInt32(ChecklistId.Value);
                     checklistInfoRow["Group_Name"] = GrpDetails.Text;
 
                     //Wrap the Requirement.Text assignment like this to guarantee it doesn't break regardless of database column length:
@@ -192,7 +192,8 @@ namespace AnmolDristi
                         string filePath = Path.Combine(folderPath, filename);
                         photo.SaveAs(filePath);
                         checklistInfoRow["Before_photo"] = filename;
-                    }else if(ExistingImage.Text != "")
+                    }
+                    else if (ExistingImage.Text != "")
                     {
                         checklistInfoRow["Before_photo"] = ExistingImage.Text;
                     }
@@ -202,7 +203,7 @@ namespace AnmolDristi
                     _dataSource.ChecklistInfo.Rows[i].SetModified();
 
                     i++;
-        }
+                }
             }
 
             ChecklistInfoTableAdapter checklistInfo = new ChecklistInfoTableAdapter();
@@ -222,85 +223,85 @@ namespace AnmolDristi
         }
 
 
-    
+
         protected void submit_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(hdnID.Value))
+            if (!string.IsNullOrEmpty(ChecklistId.Value))
             {
                 editChecklist();
             }
             else
             {
-            String CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            using (SqlConnection sqlConnection = new SqlConnection(CS))
-            {
-                ChecklistsTableAdapter checklisttable = new ChecklistsTableAdapter();
-                // Adapter for ChecklistInfo
-                SqlDataAdapter daChecklistInfo = new SqlDataAdapter("SELECT * FROM ChecklistInfo", sqlConnection);
-
-                //This ensures that the structure of your in-memory DataTable (like _dataSource.ChecklistInfo) accurately mirrors the database table
-                daChecklistInfo.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-
-                SqlCommandBuilder cbChecklistInfo = new SqlCommandBuilder(daChecklistInfo);
-                daChecklistInfo.Fill(_dataSource, "ChecklistInfo");
-
-                checklisttable.Connection = sqlConnection;
-
-                var checklistId = checklisttable.InsertChecklist(txtDate.Text, txtDepartment.Text, txtJob.Text, "test", DateTime.Now);
-
-                //  ChecklistInfo rows
-                foreach (RepeaterItem parentItem in DictionaryRepeater.Items)
+                String CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                using (SqlConnection sqlConnection = new SqlConnection(CS))
                 {
-                    Repeater childRepeater = (Repeater)parentItem.FindControl("ChildRepeater");
-                    Label GrpDetails = (Label)parentItem.FindControl("Grp_detail");
+                    ChecklistsTableAdapter checklisttable = new ChecklistsTableAdapter();
+                    // Adapter for ChecklistInfo
+                    SqlDataAdapter daChecklistInfo = new SqlDataAdapter("SELECT * FROM ChecklistInfo", sqlConnection);
 
-                    foreach (RepeaterItem item in childRepeater.Items)
+                    //This ensures that the structure of your in-memory DataTable (like _dataSource.ChecklistInfo) accurately mirrors the database table
+                    daChecklistInfo.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+                    SqlCommandBuilder cbChecklistInfo = new SqlCommandBuilder(daChecklistInfo);
+                    daChecklistInfo.Fill(_dataSource, "ChecklistInfo");
+
+                    checklisttable.Connection = sqlConnection;
+
+                    var checklistId = checklisttable.InsertChecklist(txtDate.Text, txtDepartment.Text, txtJob.Text, "test", DateTime.Now);
+
+                    //  ChecklistInfo rows
+                    foreach (RepeaterItem parentItem in DictionaryRepeater.Items)
                     {
-                        RadioButtonList rbl = (RadioButtonList)item.FindControl("result");
-                        TextBox remark = (TextBox)item.FindControl("Remark_text");
-                        FileUpload photo = (FileUpload)item.FindControl("Before_pic");
-                        Label Requirement = (Label)item.FindControl("Requirement");
+                        Repeater childRepeater = (Repeater)parentItem.FindControl("ChildRepeater");
+                        Label GrpDetails = (Label)parentItem.FindControl("Grp_detail");
 
-                        var checklistInfoRow = _dataSource.ChecklistInfo.NewChecklistInfoRow();
-                        checklistInfoRow["Checklist_ID"] = checklistId;
-                        checklistInfoRow["Group_Name"] = GrpDetails.Text;
-
-                        //Wrap the Requirement.Text assignment like this to guarantee it doesn't break regardless of database column length:
-                        //This ensures you're not violating the MaxLength constraint even if the database allows larger values but the in-memory schema is outdated or limited.
-                        string reqText = Requirement.Text;
-                        int maxLength = _dataSource.ChecklistInfo.Columns["Requirements"].MaxLength;
-                        if (maxLength > 0 && reqText.Length > maxLength)
+                        foreach (RepeaterItem item in childRepeater.Items)
                         {
-                            reqText = reqText.Substring(0, maxLength);
-                        }
-                        checklistInfoRow["Requirements"] = reqText;
+                            RadioButtonList rbl = (RadioButtonList)item.FindControl("result");
+                            TextBox remark = (TextBox)item.FindControl("Remark_text");
+                            FileUpload photo = (FileUpload)item.FindControl("Before_pic");
+                            Label Requirement = (Label)item.FindControl("Requirement");
 
-                        //checklistInfoRow["Requirements"] = Requirement.Text;
-                        checklistInfoRow["Result"] = Convert.ToBoolean(rbl.SelectedValue);
-                        checklistInfoRow["Remark"] = remark.Text;
+                            var checklistInfoRow = _dataSource.ChecklistInfo.NewChecklistInfoRow();
+                            checklistInfoRow["Checklist_ID"] = checklistId;
+                            checklistInfoRow["Group_Name"] = GrpDetails.Text;
 
-                        if (photo.HasFile)
-                        {
-                            string filename = Path.GetFileName(photo.FileName);
-                            string folderPath = Server.MapPath("~/uploads/");
-                            if (!Directory.Exists(folderPath))
+                            //Wrap the Requirement.Text assignment like this to guarantee it doesn't break regardless of database column length:
+                            //This ensures you're not violating the MaxLength constraint even if the database allows larger values but the in-memory schema is outdated or limited.
+                            string reqText = Requirement.Text;
+                            int maxLength = _dataSource.ChecklistInfo.Columns["Requirements"].MaxLength;
+                            if (maxLength > 0 && reqText.Length > maxLength)
                             {
-                                Directory.CreateDirectory(folderPath);
+                                reqText = reqText.Substring(0, maxLength);
+                            }
+                            checklistInfoRow["Requirements"] = reqText;
+
+                            //checklistInfoRow["Requirements"] = Requirement.Text;
+                            checklistInfoRow["Result"] = Convert.ToBoolean(rbl.SelectedValue);
+                            checklistInfoRow["Remark"] = remark.Text;
+
+                            if (photo.HasFile)
+                            {
+                                string filename = Path.GetFileName(photo.FileName);
+                                string folderPath = Server.MapPath("~/uploads/");
+                                if (!Directory.Exists(folderPath))
+                                {
+                                    Directory.CreateDirectory(folderPath);
+                                }
+
+                                string filePath = Path.Combine(folderPath, filename);
+                                photo.SaveAs(filePath);
+                                checklistInfoRow["Before_photo"] = filename;
                             }
 
-                            string filePath = Path.Combine(folderPath, filename);
-                            photo.SaveAs(filePath);
-                            checklistInfoRow["Before_photo"] = filename;
+                            _dataSource.ChecklistInfo.Rows.Add(checklistInfoRow);
                         }
-
-                        _dataSource.ChecklistInfo.Rows.Add(checklistInfoRow);
                     }
+
+                    daChecklistInfo.Update(_dataSource, "ChecklistInfo");
                 }
 
-                daChecklistInfo.Update(_dataSource, "ChecklistInfo");
-            }
-
-            string Data_SuccessScript = @"<script type='text/javascript'>
+                string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Sucess',
                                 text: 'Checklist Saved Successfully!!',
@@ -309,12 +310,12 @@ namespace AnmolDristi
                             });
                         </script>";
 
-            // RegisterStartupScript adds the JavaScript code to the page
-            ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+                // RegisterStartupScript adds the JavaScript code to the page
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
             }
 
             Response.Redirect("fiveS_checklist_2.aspx");
-            
+
         }
 
         protected void reset_Click(object sender, EventArgs e)
@@ -341,7 +342,7 @@ namespace AnmolDristi
                     }
 
                     if (dataItem[4].GetValue(e.Item.DataItem).ToString() != "")
-                        {
+                    {
                         ((TextBox)e.Item.Controls[13]).Text = dataItem[4].GetValue(e.Item.DataItem).ToString();
                     }
 
@@ -349,14 +350,14 @@ namespace AnmolDristi
                     {
                         ((Label)e.Item.FindControl("Img")).Text = dataItem[5].GetValue(e.Item.DataItem).ToString();
                         ((Label)e.Item.FindControl("Img")).Visible = true;
-                        }
                     }
                 }
             }
+        }
 
         protected void ChildRepeater_DataBinding(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

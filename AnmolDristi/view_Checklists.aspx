@@ -29,7 +29,7 @@
 
             <div class="clearfix"></div>
 
-            <div class="row">
+            <div class="row" style="margin:0">
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
@@ -40,7 +40,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <div id="printableTable">
+                            <div id="printableTable" style="overflow:auto">
                                 <table class="table table-sm table-bordered" border="1">
                                     <thead>
                                         <tr>
@@ -65,7 +65,7 @@
                                                         <tr>
 
                                                             <td><%# Eval("Requirements") %></td>
-                                                            <td>
+                                                            <td style="text-align:center">
                                                                 <asp:Label runat="server" ID="oknotok" Text='<%# Convert.ToBoolean(Eval("Result")) ? "OK" : "NOT OK" %>' /></td>
                                                             <td><%# Eval("Remark") %></td>
                                                             <td>

@@ -191,7 +191,7 @@
                                         CssClass="text-danger"
                                         Display="Dynamic"
                                         ValidationGroup="save" />
-                                    <asp:HiddenField runat="server" ID="ID" />
+                                    <asp:HiddenField runat="server" ID="ChecklistId" />
                                 </div>
                             </div>
 
@@ -220,7 +220,7 @@
                                             <asp:Repeater ID="ChildRepeater" runat="server" DataSource='<%# Bind("Keys") %>' OnDataBinding="ChildRepeater_DataBinding" OnItemDataBound="ChildRepeater_ItemDataBound">
 
                                                 <ItemTemplate>
-                                                    <asp:HiddenField runat="server" ID="hdnID" Value='<%# Eval("ID") %>' />
+                                                    <asp:HiddenField runat="server" ID="ChecklistInfoId" Value='<%# Eval("ChecklistInfoId") %>' />
                                                     <div class="row requirement-item mb-4 p-3 border rounded needs-validation">
                                                         <div class="col-md-4">
                                                             <asp:Label for="labelRequirementEmail4" runat="server" CssClass="form-label " ForeColor="Black" Font-Bold="False" Font-Size="Small">Point:<%# Eval("Serial") %></asp:Label>

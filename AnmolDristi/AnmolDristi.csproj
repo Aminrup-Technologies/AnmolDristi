@@ -161,13 +161,6 @@
     <Compile Include="fiveS_checklist.aspx.designer.cs">
       <DependentUpon>fiveS_checklist.aspx</DependentUpon>
     </Compile>
-    <Compile Include="fiveS_checklist_1.aspx.cs">
-      <DependentUpon>fiveS_checklist_1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="fiveS_checklist_1.aspx.designer.cs">
-      <DependentUpon>fiveS_checklist_1.aspx</DependentUpon>
-    </Compile>
     <Compile Include="blank.aspx.cs">
       <DependentUpon>blank.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -184,6 +177,13 @@
     </Compile>
     <Compile Include="Dristi.Master.designer.cs">
       <DependentUpon>Dristi.Master</DependentUpon>
+    </Compile>
+    <Compile Include="fiveS_checklist_1.aspx.cs">
+      <DependentUpon>fiveS_checklist_1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="fiveS_checklist_1.aspx.designer.cs">
+      <DependentUpon>fiveS_checklist_1.aspx</DependentUpon>
     </Compile>
     <Compile Include="fiveS_checklist_2.aspx.cs">
       <DependentUpon>fiveS_checklist_2.aspx</DependentUpon>
