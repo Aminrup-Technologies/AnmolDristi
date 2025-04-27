@@ -124,27 +124,7 @@
                         <div class="x_content">
                             <div class="row">
 
-                                <%--<!-- Worksite (DDL) -->
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblWorksite" runat="server" Text="Worksite:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:DropDownList ID="ddlWorksite" runat="server" CssClass="form-control form-control-sm rounded">
-                                                <asp:ListItem Text="Select Worksite" Value="" Selected="True"></asp:ListItem>
-                                            </asp:DropDownList>
-                                            <asp:RequiredFieldValidator ID="rfvWorksite" runat="server"
-                                                ControlToValidate="ddlWorksite"
-                                                InitialValue=""
-                                                ErrorMessage="Please select a Worksite."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-                                </div>--%>
-
-
-
+                          
                                 <!-- Worksite -->
                                 <div class="col-md-3">
                                     <div class="mb-3">
@@ -401,138 +381,100 @@
                                 <asp:HiddenField ID="hfKYTGridData" runat="server" />
 
 
-                               <%-- <script type="text/javascript">
-                                    let kytData = [];
 
-                                    document.addEventListener("DOMContentLoaded", function () {
-                                        document.getElementById("btnAddKYT").addEventListener("click", function () {
-                                            const slNo = document.getElementById("<%= txtSlNo.ClientID %>").value.trim();
-                                            const hazard = document.getElementById("<%= txtHiddenHazards.ClientID %>").value.trim();
-                                            const consequence = document.getElementById("<%= txtConsequence.ClientID %>").value.trim();
-                                            const measures = document.getElementById("<%= txtCounterMeasures.ClientID %>").value.trim();
-                                            const priority = document.getElementById("<%= ddlPriority.ClientID %>").value;
-                                            const photoControl = document.getElementById("<%= fuPhotograph.ClientID %>");
-                                            const photoName = photoControl.files.length > 0 ? photoControl.files[0].name : "";
 
-                                            // Basic validation
-                                            if (!slNo || !hazard || !consequence || !measures || !priority || !photoName) {
-                                                alert("Please fill in all fields before adding.");
-                                                return;
+
+                                <script type="text/javascript">
+                                    function validateFormBeforeSubmit() {
+                                        var isValid = true;
+                                        var errorMessage = "";
+
+                                        // Static fields check (Dropdowns and Textboxes)
+                                        var fieldsToCheck = [
+                                            { id: '<%= txtWorksite.ClientID %>', type: 'textbox', name: 'Worksite' },
+            { id: '<%= txtDepartment.ClientID %>', type: 'textbox', name: 'Department' },
+            { id: '<%= txtLocation.ClientID %>', type: 'textbox', name: 'Location' },
+            { id: '<%= txtDate.ClientID %>', type: 'textbox', name: 'Date (dd-mm-yyyy)' },
+            { id: '<%= txtJobID.ClientID %>', type: 'textbox', name: 'Job ID' },
+            { id: '<%= txtActivity.ClientID %>', type: 'textbox', name: 'Activity' },
+            { id: '<%= txtSOPNo.ClientID %>', type: 'textbox', name: 'SOP NO' },
+            { id: '<%= txtVender.ClientID %>', type: 'textbox', name: 'Vendor' },
+          //  { id: '<%= txtSlNo.ClientID %>', type: 'textbox', name: 'Sl. No.' },
+          //  { id: '<%= txtHiddenHazards.ClientID %>', type: 'textbox', name: 'Hidden Hazards' },
+          //  { id: '<%= txtConsequence.ClientID %>', type: 'textbox', name: 'Consequence' },
+          //  { id: '<%= txtCounterMeasures.ClientID %>', type: 'textbox', name: 'Counter Measures' },
+          //  { id: '<%= ddlPriority.ClientID %>', type: 'dropdown', name: 'Priority' },
+         //   { id: '<%= fuPhotograph.ClientID %>', type: 'file', name: 'Photograph' }
+        ];
+
+        for (var i = 0; i < fieldsToCheck.length; i++) {
+            var fieldInfo = fieldsToCheck[i];
+            var field = document.getElementById(fieldInfo.id);
+            if (field) {
+                if (fieldInfo.type === 'textbox') {
+                    if (field.value.trim() === "") {
+                        isValid = false;
+                        errorMessage += "- Please fill " + fieldInfo.name + ".\n";
+                        field.classList.add("is-invalid");
+                    } else {
+                        field.classList.remove("is-invalid");
+                    }
+                } else if (fieldInfo.type === 'dropdown') {
+                    if (field.value === "0" || field.selectedIndex === 0) {
+                        isValid = false;
+                        errorMessage += "- Please select " + fieldInfo.name + ".\n";
+                        field.classList.add("is-invalid");
+                    } else {
+                        field.classList.remove("is-invalid");
+                    }
+                } else if (fieldInfo.type === 'file') {
+                    if (field.files.length === 0) {
+                        isValid = false;
+                        errorMessage += "- Please upload a Photograph.\n";
+                        field.classList.add("is-invalid");
+                    } else {
+                        field.classList.remove("is-invalid");
+                    }
+                }
+            }
+        }
+
+        // If there are any validation errors, show the error messages
+        if (!isValid) {
+            alert("Please complete all required fields:\n\n" + errorMessage);
+            return false;
+        }
+        return true;
+    }
+
+    function getFriendlyName(id) {
+        var nameMap = {
+            '<%= txtWorksite.ClientID %>': "Worksite",
+            '<%= txtDepartment.ClientID %>': "Department",
+            '<%= txtLocation.ClientID %>': "Location",
+            '<%= txtDate.ClientID %>': "Date (dd-mm-yyyy)",
+            '<%= txtJobID.ClientID %>': "Job ID",
+            '<%= txtActivity.ClientID %>': "Activity",
+            '<%= txtSOPNo.ClientID %>': "SOP NO",
+            '<%= txtVender.ClientID %>': "Vendor",
+            '<%= txtSlNo.ClientID %>': "Sl. No.",
+         //   '<%= txtHiddenHazards.ClientID %>': "Hidden Hazards",
+         //   '<%= txtConsequence.ClientID %>': "Consequence",
+         //   '<%= txtCounterMeasures.ClientID %>': "Counter Measures",
+         //   '<%= ddlPriority.ClientID %>': "Priority",
+         //   '<%= fuPhotograph.ClientID %>': "Photograph"
+                                        };
+                                        return nameMap[id] || "this field";
+                                    }
+
+                                    window.onload = function () {
+                                        document.getElementById('<%= btnSubmit.ClientID %>').onclick = function (e) {
+                                            if (!validateFormBeforeSubmit()) {
+                                                e.preventDefault();
                                             }
-
-                                            // Optional: Avoid duplicate Sl. No
-                                            if (kytData.some(item => item.SlNo === slNo)) {
-                                                alert("Sl. No. already exists. Please enter a unique Sl. No.");
-                                                return;
-                                            }
-
-                                            // Create observation object
-                                            let observation = {
-                                                SlNo: parseInt(slNo),
-                                                HiddenHazards: hazard,
-                                                Consequence: consequence,
-                                                CounterMeasures: measures,
-                                                Priority: priority,
-                                                Photograph: photoName
-                                            };
-
-                                            // Push to array
-                                            kytData.push(observation);
-
-                                            // Save to hidden field
-                                            document.getElementById("<%= hfKYTGridData.ClientID %>").value = JSON.stringify(kytData);
-
-                                            // Append to table
-                                            let grid = document.getElementById("KYTGrid");
-                                            if (!grid) return;
-
-                                            let resultsTable = document.getElementById("kytResultsTable");
-                                            if (!resultsTable) {
-                                                resultsTable = document.createElement("table");
-                                                resultsTable.id = "kytResultsTable";
-                                                resultsTable.className = "table table-bordered small mt-3";
-                                                resultsTable.innerHTML = `
-                                                <thead>
-                                                    <tr>
-                                                        <th>Sl No</th>
-                                                        <th>Hidden Hazards</th>
-                                                        <th>Consequence</th>
-                                                        <th>Counter Measures</th>
-                                                        <th>Priority</th>
-                                                        <th>Photograph</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                            `;
-                                                grid.appendChild(resultsTable);
-                                            }
-
-                                            let tbody = resultsTable.querySelector("tbody");
-                                            let newRow = document.createElement("tr");
-
-                                            [
-                                                observation.SlNo,
-                                                observation.HiddenHazards,
-                                                observation.Consequence,
-                                                observation.CounterMeasures,
-                                                observation.Priority,
-                                                observation.Photograph
-                                            ].forEach(value => {
-                                                let cell = document.createElement("td");
-                                                cell.textContent = value;
-                                                newRow.appendChild(cell);
-                                            });
-
-                                            tbody.appendChild(newRow);
-
-                                            // Reset inputs
-                                            document.getElementById("<%= txtSlNo.ClientID %>").value = "";
-                                            document.getElementById("<%= txtHiddenHazards.ClientID %>").value = "";
-                                            document.getElementById("<%= txtConsequence.ClientID %>").value = "";
-                                            document.getElementById("<%= txtCounterMeasures.ClientID %>").value = "";
-                                            document.getElementById("<%= ddlPriority.ClientID %>").selectedIndex = 0;
-                                            photoControl.value = "";
-                                        });
-                                    });
-                                </script>--%>
-
-
-                                <%--                                <script type="text/javascript">
-                                    let kytData = [];
-
-                                    document.addEventListener("DOMContentLoaded", function () {
-                                        document.getElementById("btnAddKYT").addEventListener("click", function () {
-
-                                            const slNo = document.getElementById("<%= txtSlNo.ClientID %>").value.trim();
-                                            const hazard = document.getElementById("<%= txtHiddenHazards.ClientID %>").value.trim();
-                                            const consequence = document.getElementById("<%= txtConsequence.ClientID %>").value.trim();
-                                            const measures = document.getElementById("<%= txtCounterMeasures.ClientID %>").value.trim();
-                                            const priority = document.getElementById("<%= ddlPriority.ClientID %>").value;
-                                            const photoControl = document.getElementById("<%= fuPhotograph.ClientID %>");
-                                            const photoName = photoControl.files.length > 0 ? photoControl.files[0].name : "No file";
-
-                                            if (!slNo || !hazard || !consequence || !measures || !priority) {
-                                                alert("Please fill in all fields before adding.");
-                                                return;
-                                            }
-
-                                            const newRow = {
-                                                SlNo: slNo,
-                                                HiddenHazards: hazard,
-                                                Consequence: consequence,
-                                                CounterMeasures: measures,
-                                                PriorityValue: priority,
-                                                PhotographPath: photoName
-                                            };
-
-                                            kytData.push(newRow);
-
-                                            document.getElementById("<%= hfKYTGridData.ClientID %>").value = JSON.stringify(kytData);
-
-                                            // Optionally update visible table (not required for saving)
-                                        });
-                                    });
-                                </script>--%>
+                                        };
+                                    };
+                                </script>
 
 
                                 <!-- KYT Data Table -->

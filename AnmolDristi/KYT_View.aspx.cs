@@ -23,6 +23,35 @@ namespace AnmolDristi
             }
         }
 
+        //private void LoadKYTIncidentDetails()
+        //{
+        //    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    {
+        //        conn.Open();
+        //        string query = @"
+        //        SELECT 
+        //            kyt.ID, kyt.KYT_WorksiteName, kyt.KYT_Department, kyt.KYT_Location, kyt.KYT_Date, kyt.KYT_JobID, 
+        //            kyt.KYT_Activity, kyt.KYT_SOPNo, kyt.KYT_Vendor,
+        //            hkyt.KYT_HiddenHazards, hkyt.KYT_Consequence, hkyt.KYT_CounterMeasures, 
+        //            hkyt.KYT_PriorityValue
+        //        FROM KYT_Table1 kyt
+        //        LEFT JOIN KYT_Table2 hkyt ON kyt.ID = hkyt.ID
+        //        ORDER BY kyt.ID DESC";
+
+        //        using (SqlCommand cmd = new SqlCommand(query, conn))
+        //        {
+        //            using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+        //            {
+        //                DataTable dt = new DataTable();
+        //                da.Fill(dt);
+        //                GvKYTRecords.DataSource = dt;
+        //                GvKYTRecords.DataBind();
+        //            }
+        //        }
+        //    }
+        //}
         private void LoadKYTIncidentDetails()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -31,14 +60,25 @@ namespace AnmolDristi
             {
                 conn.Open();
                 string query = @"
-                SELECT 
-                    kyt.ID, kyt.KYT_WorksiteName, kyt.KYT_Department, kyt.KYT_Location, kyt.KYT_Date, kyt.KYT_JobID, 
-                    kyt.KYT_Activity, kyt.KYT_SOPNo, kyt.KYT_Vendor,
-                    hkyt.KYT_HiddenHazards, hkyt.KYT_Consequence, hkyt.KYT_CounterMeasures, 
-                    hkyt.KYT_PriorityValue
-                FROM KYT_Table1 kyt
-                LEFT JOIN KYT_Table2 hkyt ON kyt.ID = hkyt.ID
-                ORDER BY kyt.ID DESC";
+        SELECT 
+            kyt.ID, 
+            kyt.KYT_WorksiteName, 
+            kyt.KYT_Department, 
+            kyt.KYT_Location, 
+            kyt.KYT_Date, 
+            kyt.KYT_JobID, 
+            kyt.KYT_Activity, 
+            kyt.KYT_SOPNo, 
+            kyt.KYT_Vendor,
+            hkyt.KYT_HiddenHazards, 
+            hkyt.KYT_Consequence, 
+            hkyt.KYT_CounterMeasures, 
+            hkyt.KYT_PriorityValue,
+            hkyt.SubmissionDate,
+            hkyt.SubmissionTime
+        FROM KYT_Table1 kyt
+        LEFT JOIN KYT_Table2 hkyt ON kyt.ID = hkyt.ID
+        ORDER BY kyt.ID DESC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {

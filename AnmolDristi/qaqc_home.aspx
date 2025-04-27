@@ -61,7 +61,7 @@
                             <a class="btn btn-app" href="KYT_View.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>KYT Report
+                                <i class="fa fa-edit"></i>KYT Records
                             </a>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                             <a class="btn btn-app" href="Safety_View.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Safety Audit Report
+                                <i class="fa fa-edit"></i>Safety Audit Records
                             </a>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                             <a class="btn btn-app" href="Grinding_Machine_View.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label8" runat="server" Text="0" Visible="false"></asp:Label></span>
-                                <i class="fa fa-edit"></i>Grinding Machine Report
+                                <i class="fa fa-edit"></i>Grinding Machine Records
                             </a>
                         </div>
                     </div>
