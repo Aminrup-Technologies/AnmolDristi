@@ -42,6 +42,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content table-container">
+                    <div style="overflow-x: auto;">
                     <asp:GridView ID="GvGrindingMachineChecklist" runat="server" CssClass="table table-striped table-bordered"
                         AutoGenerateColumns="False" DataKeyNames="HeaderID" OnRowEditing="GvGrindingMachineChecklist_RowEditing"
                         OnRowUpdating="GvGrindingMachineChecklist_RowUpdating" OnRowCancelingEdit="GvGrindingMachineChecklist_RowCancelingEdit"
@@ -72,6 +73,7 @@
                         </Columns>
                     </asp:GridView>
                 </div>
+                    </div>
             </div>
         </div>
     </div>

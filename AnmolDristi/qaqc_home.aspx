@@ -134,7 +134,7 @@
                                     <asp:Label ID="Label9" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Award Distribution Form
                             </a>
-                            <a class="btn btn-app" href="Award_Distribution.aspx.cs">
+                            <a class="btn btn-app" href="Award_Distribution_View.aspx">
                                 <span class="badge bg-green">Ok
                                     <asp:Label ID="Label10" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Award Distribution Report

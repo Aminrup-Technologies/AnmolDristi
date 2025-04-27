@@ -38,7 +38,7 @@ namespace AnmolDristi
     i.IncidentID, 
     i.IncidentClassification, 
     CONVERT(VARCHAR, i.DateOfIncident, 23) AS DateOfIncident, 
-    FORMAT(i.TimeOfIncident, 'hh:mm tt') AS TimeOfIncident,  
+    i.TimeOfIncident AS TimeOfIncident,  
     i.Location, i.Section, i.Department, 
     p.VendorName, p.TotalInjuredPersons, p.NameOfPersonInvolved, 
     p.AnyWitness, p.WitnessNames, p.ReportedBy,
@@ -59,14 +59,6 @@ namespace AnmolDristi
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                // Handle NULL or incorrect TimeOfIncident values
-                foreach (DataRow row in dt.Rows)
-                {
-                    if (row["TimeOfIncident"] == DBNull.Value || string.IsNullOrEmpty(row["TimeOfIncident"].ToString()))
-                    {
-                        row["TimeOfIncident"] = "N/A"; // Set a default value if NULL
-                    }
-                }
 
                 gvIncidentData.DataSource = dt;
                 gvIncidentData.DataBind();
@@ -205,119 +197,3 @@ protected void gvIncidentData_RowDeleting(object sender, GridViewDeleteEventArgs
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-//            private void LoadIncidentData() // Fixed: removed the semicolon after the method declaration
-//            {
-//                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-//                using (SqlConnection conn = new SqlConnection(connectionString))
-//                {
-//                    conn.Open();
-//                    string query = @"
-//                SELECT 
-//                    id.IncidentClassification, id.DateOfIncident, id.TimeOfIncident, 
-//                    id.Location, id.Section, id.Department, id.VendorName, id.TotalInjuredPersons, 
-//                    id.InvestigationTeamMembers, id.TaskAndDescription, id.RootCauseAnalysis, 
-//                    id.ReviewDate, id.PreventiveActions, id.NameOfPersonInvolved, 
-//                    id.AnyWitness, id.WitnessNames, id.ReportedBy, id.CorrectiveActions,
-//                    pi.PersonName, pi.Role, ia.InvestigationAction
-//                FROM IncidentDetails id
-//                LEFT JOIN PeopleInvolved pi ON id.ID = pi.IncidentID
-//                LEFT JOIN InvestigationActions ia ON id.ID = ia.IncidentID
-//                ORDER BY id.DateOfIncident DESC";
-
-//                    using (SqlCommand cmd = new SqlCommand(query, conn))
-//                    {
-//                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-//                        {
-//                            DataTable dt = new DataTable();
-//                            da.Fill(dt);
-//                            GvIncidentDetails.DataSource = dt;
-//                            GvIncidentDetails.DataBind();
-//                        }
-//                    }
-//                }
-//            }
-
-//            protected void GvIncidentDetails_RowEditing(object sender, GridViewEditEventArgs e)
-//            {
-//                GvIncidentDetails.EditIndex = e.NewEditIndex;
-//                LoadIncidentData(); // Ensure you reload the data after entering edit mode
-//            }
-
-//            protected void GvIncidentDetails_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-//            {
-//                GvIncidentDetails.EditIndex = -1;
-//                LoadIncidentData(); // Reload the data after canceling the edit mode
-//            }
-
-//            protected void GvIncidentDetails_RowUpdating(object sender, GridViewUpdateEventArgs e)
-//            {
-//                int incidentID = Convert.ToInt32(GvIncidentDetails.DataKeys[e.RowIndex].Value);
-//                GridViewRow row = GvIncidentDetails.Rows[e.RowIndex];
-
-//                string incidentClassification = ((TextBox)row.Cells[0].Controls[0]).Text;
-//                string location = ((TextBox)row.Cells[3].Controls[0]).Text;
-//                string department = ((TextBox)row.Cells[4].Controls[0]).Text;
-//                string vendorName = ((TextBox)row.Cells[5].Controls[0]).Text;
-
-//                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-//                using (SqlConnection conn = new SqlConnection(connectionString))
-//                {
-//                    conn.Open();
-
-//                    string updateQuery = @"
-//                UPDATE IncidentDetails 
-//                SET IncidentClassification = @IncidentClassification, 
-//                    Location = @Location, 
-//                    Department = @Department, 
-//                    VendorName = @VendorName 
-//                WHERE ID = @IncidentID";
-
-//                    using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
-//                    {
-//                        cmd.Parameters.AddWithValue("@IncidentID", incidentID);
-//                        cmd.Parameters.AddWithValue("@IncidentClassification", incidentClassification);
-//                        cmd.Parameters.AddWithValue("@Location", location);
-//                        cmd.Parameters.AddWithValue("@Department", department);
-//                        cmd.Parameters.AddWithValue("@VendorName", vendorName);
-
-//                        cmd.ExecuteNonQuery();
-//                    }
-//                }
-
-//                GvIncidentDetails.EditIndex = -1;
-//                LoadIncidentData(); // Reload the data after updating
-//            }
-
-//            protected void GvIncidentDetails_RowDeleting(object sender, GridViewDeleteEventArgs e)
-//            {
-//                int incidentID = Convert.ToInt32(GvIncidentDetails.DataKeys[e.RowIndex].Value);
-//                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-//                using (SqlConnection conn = new SqlConnection(connectionString))
-//                {
-//                    conn.Open();
-//                    using (SqlCommand cmd = new SqlCommand("DELETE FROM PeopleInvolved WHERE IncidentID = @IncidentID; DELETE FROM InvestigationActions WHERE IncidentID = @IncidentID; DELETE FROM IncidentDetails WHERE ID = @IncidentID;", conn))
-//                    {
-//                        cmd.Parameters.AddWithValue("@IncidentID", incidentID);
-//                        cmd.ExecuteNonQuery();
-//                    }
-//                }
-
-//                LoadIncidentData(); // Reload the data after deleting
-//            }
-//        }
-//    }

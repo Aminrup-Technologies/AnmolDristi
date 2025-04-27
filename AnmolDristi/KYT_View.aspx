@@ -35,6 +35,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content table-container">
+                    <div style="overflow-x: auto;">
                     <asp:GridView ID="GvKYTRecords" runat="server" CssClass="table table-striped table-bordered"
                         AutoGenerateColumns="False" DataKeyNames="ID" OnRowEditing="GvKYTRecords_RowEditing"
                         OnRowUpdating="GvKYTRecords_RowUpdating" OnRowCancelingEdit="GvKYTRecords_RowCancelingEdit"
@@ -67,6 +68,7 @@
                         </Columns>
                     </asp:GridView>
                 </div>
+            </div>
             </div>
         </div>
     </div>

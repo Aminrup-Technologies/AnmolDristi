@@ -258,6 +258,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtWitness1;
 
         /// <summary>
+        /// rfvWitness1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvWitness1;
+
+        /// <summary>
         /// lblReportedBy control.
         /// </summary>
         /// <remarks>
@@ -384,6 +393,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtInvestigationMember1;
 
         /// <summary>
+        /// rfvInvestigationMember1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvInvestigationMember1;
+
+        /// <summary>
         /// lblTaskDescription control.
         /// </summary>
         /// <remarks>
@@ -438,6 +456,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtWhy1;
 
         /// <summary>
+        /// rfvWhy1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvWhy1;
+
+        /// <summary>
         /// txtWhy2 control.
         /// </summary>
         /// <remarks>
@@ -445,6 +472,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtWhy2;
+
+        /// <summary>
+        /// rfvWhy2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvWhy2;
 
         /// <summary>
         /// txtWhy3 control.
@@ -456,6 +492,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtWhy3;
 
         /// <summary>
+        /// rfvWhy3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvWhy3;
+
+        /// <summary>
         /// txtWhy4 control.
         /// </summary>
         /// <remarks>
@@ -463,6 +508,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtWhy4;
+
+        /// <summary>
+        /// rfvWhy4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvWhy4;
 
         /// <summary>
         /// txtWhy5 control.
@@ -474,6 +528,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtWhy5;
 
         /// <summary>
+        /// rfvWhy5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvWhy5;
+
+        /// <summary>
         /// txtWhy6 control.
         /// </summary>
         /// <remarks>
@@ -483,6 +546,24 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtWhy6;
 
         /// <summary>
+        /// rfvWhy6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvWhy6;
+
+        /// <summary>
+        /// lblReviewDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblReviewDate;
+
+        /// <summary>
         /// txtReviewDate control.
         /// </summary>
         /// <remarks>
@@ -490,6 +571,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtReviewDate;
+
+        /// <summary>
+        /// rfvReviewDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvReviewDate;
 
         /// <summary>
         /// lblCorrectiveActions control.

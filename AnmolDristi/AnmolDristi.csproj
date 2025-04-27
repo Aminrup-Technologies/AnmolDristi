@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Award_Distribution.aspx" />
+    <Content Include="Award_Distribution_View.aspx" />
     <Content Include="csm_kyt.aspx" />
     <Content Include="Grinding_Machine_Checklist.aspx" />
     <Content Include="Grinding_Machine_View.aspx" />
@@ -148,6 +149,13 @@
     </Compile>
     <Compile Include="Award_Distribution.aspx.designer.cs">
       <DependentUpon>Award_Distribution.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Award_Distribution_View.aspx.cs">
+      <DependentUpon>Award_Distribution_View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Award_Distribution_View.aspx.designer.cs">
+      <DependentUpon>Award_Distribution_View.aspx</DependentUpon>
     </Compile>
     <Compile Include="blank.aspx.cs">
       <DependentUpon>blank.aspx</DependentUpon>

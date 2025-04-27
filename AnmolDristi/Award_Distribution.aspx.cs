@@ -7,10 +7,6 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
-
-
-
 using System.Linq;
 using System.Web;
 
@@ -273,29 +269,15 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@Designation", designation);
 
                         cmd.Parameters.AddWithValue("@Award_ID", Convert.ToInt32(ddlAwardCategory.SelectedValue));
-
-                        // cmd.Parameters.AddWithValue("@AwardCategory", awardCategory);
-                        // cmd.Parameters.AddWithValue("@Award_ID", awardId); // This should be a regular value, not an output
-                        //SqlParameter outputIdParam = new SqlParameter("@Award_ID", SqlDbType.Int)
-                        //{
-                        //    Direction = ParameterDirection.Output
-                        //};
-                        //cmd.Parameters.Add(outputIdParam);
-
-
                         cmd.Parameters.AddWithValue("@SubmittedDate", submittedDate);
                         cmd.Parameters.AddWithValue("@SubmittedTime", submittedTime);
-                        cmd.Parameters.AddWithValue("@ADR_ID", adrId);
+                       cmd.Parameters.AddWithValue("@ADR_ID", adrId);
                         cmd.Parameters.AddWithValue("@ImagePath", imagePath);
 
-                        //SqlParameter outputIdParam = new SqlParameter("@Award_ID", SqlDbType.Int)
-                        //{
-                        //    Direction = ParameterDirection.Output
-                        //};
-                        //cmd.Parameters.Add(outputIdParam);
+                      
                         cmd.ExecuteNonQuery();
                         
-                       // int Award_ID = (int)outputIdParam.Value;
+                       
 
                     }
 
