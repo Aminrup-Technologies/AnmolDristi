@@ -137,7 +137,8 @@ namespace AnmolDristi
                          sa.ID, sa.Department, sa.Section, sa.Date, sa.Time, 
                          sa.ContractorVendorCode, sa.TotalContractorPeople, 
                          sev.AuditID, sev.InternalEmployees,sev.ExternalMembers,
-                         sdesc.Description, sdesc.GoodCitizens, sdesc.NoOfViolations, sdesc.Severity,sdesc.ViolationXSeverity, sdesc.FourAndFive, sdesc.UnsafeActConditions
+                         sdesc.Description, sdesc.GoodCitizens, sdesc.NoOfViolations, sdesc.Severity,sdesc.ViolationXSeverity, sdesc.FourAndFive, sdesc.UnsafeActConditions, sdesc.SubmittedDate,
+            sdec.SubmittedTime
                      FROM SafetyAudit_Main sa
                      LEFT JOIN SafetyAudit_Severity sev ON sa.ID = sev.AuditID
                      LEFT JOIN SafetyAudit_Description sdesc ON sa.ID = sdesc.AuditID
@@ -348,6 +349,7 @@ namespace AnmolDristi
                     {
                         foreach (var obs in observations)
                         {
+                            string formattedDate = obs.SubmittedDate.ToString("dd-MM-yyyy");
 
                             using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.usp_InsertSafetyAuditDescription", conn, transaction))
                             {
@@ -361,6 +363,14 @@ namespace AnmolDristi
                                 cmd.Parameters.Add("@ViolationSeverity", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.ViolationXSeverity) ? (object)DBNull.Value : Convert.ToInt32(obs.ViolationXSeverity);
                                 cmd.Parameters.Add("@FourAndFive", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.FourAndFive) ? (object)DBNull.Value : Convert.ToInt32(obs.FourAndFive);
                                 cmd.Parameters.Add("@UnsafeAct", SqlDbType.NVarChar, 50).Value = obs.UnsafeActs ?? (object)DBNull.Value;
+
+                                //cmd.Parameters.AddWithValue("@SubmittedDate", obs.SubmittedDate == DateTime.MinValue ? DateTime.Now : obs.SubmittedDate);
+                                //cmd.Parameters.AddWithValue("@SubmittedTime", obs.SubmittedTime == TimeSpan.Zero ? DateTime.Now.TimeOfDay : obs.SubmittedTime);
+
+                                cmd.Parameters.AddWithValue("@SubmittedDate", string.IsNullOrEmpty(formattedDate) ? DateTime.Now : DateTime.Parse(formattedDate));
+                                cmd.Parameters.AddWithValue("@SubmittedTime", obs.SubmittedTime == TimeSpan.Zero ? DateTime.Now.TimeOfDay : obs.SubmittedTime);
+
+
 
                                 //cmd.Parameters.Add("@SelectField", SqlDbType.NVarChar, 255).Value = selectField;
                                 //cmd.Parameters.Add("@Options", SqlDbType.NVarChar, 255).Value = string.IsNullOrEmpty(options) ? (object)DBNull.Value : options;
@@ -395,6 +405,8 @@ namespace AnmolDristi
             public string ViolationXSeverity { get; set; }
             public string FourAndFive { get; set; }
             public string UnsafeActs { get; set; }
+            public DateTime SubmittedDate { get; set; }     // Date
+            public TimeSpan SubmittedTime { get; set; }     // Time
         }
 
         protected void BtnReset_Click(object sender, EventArgs e)

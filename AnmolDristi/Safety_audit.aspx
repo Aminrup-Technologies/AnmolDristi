@@ -332,6 +332,10 @@
                                     <hr />
                                 </div>
 
+
+
+
+
                                 <!-- Safety Observation section -->
 
                                 <div class="row col-lg-12">
@@ -461,11 +465,11 @@
 
                                             let dropdowns = [
                                                 document.getElementById("<%= DropDownList1.ClientID %>"),
-                                        document.getElementById("<%= DropDownList2.ClientID %>"),
-                                        document.getElementById("<%= DropDownList3.ClientID %>"),
-                                        document.getElementById("<%= DropDownList4.ClientID %>"),
-                                        document.getElementById("<%= DropDownList5.ClientID %>"),
-                                        document.getElementById("<%= DropDownList6.ClientID %>")
+                                                document.getElementById("<%= DropDownList2.ClientID %>"),
+                                                document.getElementById("<%= DropDownList3.ClientID %>"),
+                                                document.getElementById("<%= DropDownList4.ClientID %>"),
+                                                document.getElementById("<%= DropDownList5.ClientID %>"),
+                                                document.getElementById("<%= DropDownList6.ClientID %>")
                                             ].filter(el => el !== null); // Ensure null elements are filtered out
 
                                             if (dropdowns.length === 0) {
@@ -548,7 +552,7 @@
                                             descriptionBox.value = "";
                                         });
                                     });
-  </script>
+                                </script>
 
 
                             </div>
@@ -558,6 +562,84 @@
                             </div>
                             <asp:HiddenField ID="hdnObservationData" runat="server" />
 
+                            <script type="text/javascript">
+                                function validateFormBeforeSubmit() {
+                                    var isValid = true;
+                                    var errorMessage = "";
+
+                                    // Define the fields to check (textbox, dropdown, etc.)
+                                    var fieldsToCheck = [
+                                        { id: '<%= txtDepartment.ClientID %>', type: 'textbox', name: 'Department' },
+                                        { id: '<%= txtSection.ClientID %>', type: 'textbox', name: 'Section' },
+                                        { id: '<%= txtDate.ClientID %>', type: 'textbox', name: 'Date (dd-mm-yyyy)' },
+                                        { id: '<%= txtTime.ClientID %>', type: 'textbox', name: 'Time (HH:MM AM/PM)' },
+                                        { id: '<%= txtContractorVendorCode.ClientID %>', type: 'textbox', name: 'Contractor Vendor Code' },
+                                        { id: '<%= txtTotalContractorPeople.ClientID %>', type: 'textbox', name: 'Total Contractor People' },
+                                        { id: '<%= rbOwnEmployee.ClientID %>', type: 'radio', name: 'Member Type (Own Employee / External Member)' },
+                                        { id: '<%= rbExternalMember.ClientID %>', type: 'radio', name: 'Member Type (Own Employee / External Member)' },
+                                       // { id: '<%= txtDescription.ClientID %>', type: 'textbox', name: 'Observation Description' },
+                                       // { id: '<%= DropDownList1.ClientID %>', type: 'dropdown', name: 'Good Citizens' },
+                                       // { id: '<%= DropDownList2.ClientID %>', type: 'dropdown', name: 'No. of Violations' },
+                                       // { id: '<%= DropDownList3.ClientID %>', type: 'dropdown', name: 'Severity' },
+                                       // { id: '<%= DropDownList4.ClientID %>', type: 'dropdown', name: 'Violation X Severity' },
+                                       // { id: '<%= DropDownList5.ClientID %>', type: 'dropdown', name: '4 & 5' },
+                                       // { id: '<%= DropDownList6.ClientID %>', type: 'dropdown', name: 'Unsafe Act Conditions' }
+                                    ];
+
+                                    // Iterate over the fields to check and validate
+                                    for (var i = 0; i < fieldsToCheck.length; i++) {
+                                        var fieldInfo = fieldsToCheck[i];
+                                        var field = document.getElementById(fieldInfo.id);
+
+                                        if (field) {
+                                            if (fieldInfo.type === 'textbox') {
+                                                // Check if the textbox is empty
+                                                if (field.value.trim() === "") {
+                                                    isValid = false;
+                                                    errorMessage += "- Please fill " + fieldInfo.name + ".\n";
+                                                    field.classList.add("is-invalid");
+                                                } else {
+                                                    field.classList.remove("is-invalid");
+                                                }
+                                            } else if (fieldInfo.type === 'dropdown') {
+                                                // Check if the dropdown has a valid selection
+                                                if (field.value === "0" || field.selectedIndex === 0) {
+                                                    isValid = false;
+                                                    errorMessage += "- Please select " + fieldInfo.name + ".\n";
+                                                    field.classList.add("is-invalid");
+                                                } else {
+                                                    field.classList.remove("is-invalid");
+                                                }
+                                            } else if (fieldInfo.type === 'radio') {
+                                                // Check if at least one radio button is selected
+                                                if (!document.querySelector(`input[name="${field.name}"]:checked`)) {
+                                                    isValid = false;
+                                                    errorMessage += "- Please select " + fieldInfo.name + ".\n";
+                                                    field.classList.add("is-invalid");
+                                                } else {
+                                                    field.classList.remove("is-invalid");
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    // If there are validation errors, display them in an alert
+                                    if (!isValid) {
+                                        alert("Please complete all required fields:\n\n" + errorMessage);
+                                        return false;
+                                    }
+                                    return true;
+                                }
+
+                                window.onload = function () {
+                                    // Attach the validation to the submit button
+                                    document.getElementById('<%= btnSubmit.ClientID %>').onclick = function (e) {
+                                        if (!validateFormBeforeSubmit()) {
+                                            e.preventDefault(); // Prevent form submission if validation fails
+                                        }
+                                    };
+                                };
+                            </script>
 
                             <div class="row justify-content-center">
                                 <div class="col-12 text-center mb-3">
