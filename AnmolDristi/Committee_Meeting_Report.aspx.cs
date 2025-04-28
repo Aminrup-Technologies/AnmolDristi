@@ -40,31 +40,59 @@ namespace AnmolDristi
             //< !--Attendance Row 1-- >
             {
                 // Set values dynamically
-                lbl_1.Text = "01";
-                lbl_Mahesh.Text = "Mahesh Chourasia";
-                lbl_Proprietor.Text = "Proprietor";
-                lbl_Attend.Text = "Present"; // or "Absent"
+                Label1AttendiID.Text = "1";
+                Label2MeetingID.Text = "M456";
+                lbl_Mahesh.Text = "Mahesh Kumar";
+                Label3AttendiCode.Text = "ATD789";
+                Label4Attenditype.Text = "Regular";
+                lbl_Attend.Text = "Present";
+
+                // Set image dynamically
+                Image5.ImageUrl = "~/images/mahesh.jpg"; // Make sure this image exists in the folder
+                Image5.AlternateText = "Mahesh Kumar Image";
             }
             {
-                // Second row values
-                lbl_2.Text = "02";
-                lbl_K.Text = "Kishor Kumar Ray";
-                lbl_L.Text = "Location Head";
-                lbl_Attend2.Text = "Present"; // or "Absent"
+                Label6AttendiID.Text = "2";
+                Label7MeetingID.Text = "M789";
+                Label8AttendiCode.Text = "ATD124";
+                Label9Attenditype.Text = "Guest";
+                lbl_Attend2.Text = "Present";
+
+                // Dynamically set image
+                Image6.ImageUrl = "~/images/.jpg";  // Make sure image exists
+                
             }
             {
-                // Third row values
-                lbl_3.Text = "03";
-                lbl_Kulamani.Text = "Kulamani Das";
-                lbl_Hr.Text = "HR";
-                lbl_Attend_3.Text = "Present"; // or "Absent"
+                // Kulamani Das - Row 3 data setup
+                Label11AttendiID.Text = "A125";
+                Label12MeetingID.Text = "M790";
+                Label13AttendiCode.Text = "ATD125";
+                Label14Attenditype.Text = "Employee";
+                lbl_Attend_3.Text = "Present";
+
+                // Optional: override name or role (already set in markup)
+                // lbl_Kulamani.Text = "Kulamani Das";
+                // lbl_Hr.Text = "HR";
+
+                // Set profile image (ensure the image exists in /images/)
+                Image7.ImageUrl = "~/images/kulamani.jpg";
+                
             }
             {
-                // Fourth row values
-                lbl_4.Text = "04";
-                lbl_Santosh.Text = "Santosh Singh";
-                lbl_Site.Text = "Site Incharge";
-                lbl_Attend_4.Text = "Present"; // or "Absent"
+                // Row 4 - Santosh Singh data
+                Label16AttendiID.Text = "A126";
+                Label17MeetingID.Text = "M791";
+                Label18AttendiCode.Text = "ATD126";
+                Label19Attenditype.Text = "Contractual";
+                lbl_Attend_4.Text = "Present";
+
+                // Optional - you can override if needed
+                // lbl_Santosh.Text = "Santosh Singh";
+                // lbl_Site.Text = "Site Incharge";
+
+                // Profile image setup
+                Image8.ImageUrl = "~/images";  // Ensure image exists
+                
             }
             {
                 // Fifth row values
@@ -74,83 +102,26 @@ namespace AnmolDristi
                 lbl_Attend_5.Text = "Present"; // or "Absent"
             }
             {
-                // Sixth row values
-                lbl_6.Text = "06";
-                lbl_Biraja.Text = "Biraja Kumar Satpathy";
-                lbl_Site2.Text = "Site Incharge";
-                lbl_Attend_6.Text = "Present"; // or "Absent"
-            }
-            {
-                // Seventh row values
-                lbl_7.Text = "07";
-                lbl_Shyam.Text = "Shyam Padhy";
-                lbl_Safety_4.Text = "Safety Officer";
-                lbl_Attend7.Text = "Present"; // or "Absent"
-            }
-            {
-                // Eighth row values
-                lbl_8.Text = "08";
-                lbl_Amaresh.Text = "Amaresh Sahoo";
-                lbl_Site3.Text = "Site Incharge";
-                lbl_Attend8.Text = "Present"; // or "Absent"
-            }
-            {
-                // Ninth row values
-                lbl_9.Text = "09";
-                lbl_Bipad.Text = "Bipad Jena";
-                lbl_Site4.Text = "Site Incharge";
-                lbl_Attend9.Text = "Present"; // or "Absent"
-            }
-            {
-                // Tenth row values
-                lbl_10.Text = "10";
-                lbl_Subhranshu.Text = "Subhranshu Swain";
-                lbl_Safety1.Text = "Safety Supervisor";
-                lbl_Attend10.Text = "Present"; // or "Absent"
-            }
-            {
-                // Eleventh row values
-                lbl_11.Text = "11";
-                lbl_Surya.Text = "Surya Adak";
-                lbl_Safety2.Text = "Safety Supervisor";
-                lbl_Attend11.Text = "Present"; // or "Absent"
-            }
-            {
-                // Twelfth row values
-                lbl_12.Text = "12";
-                lbl_Rajesh.Text = "Rajesh Jena";
-                lbl_Safety3.Text = "Safety Supervisor";
-                lbl_Attend12.Text = "Present"; // or "Absent"
-            }
-            {
-                // Thirteenth row values
-                lbl_13.Text = "13";
-                lbl_Jyotishree.Text = "Jyotishree Ojha";
-                lbl_Safety4.Text = "Safety Supervisor";
-                lbl_Attend13.Text = "Present"; // or "Absent"
-            }
-            {
-                // Fourteenth row values
-                lbl_14.Text = "14";
-                lbl_Shasikant.Text = "Shasikant Ojha";
-                lbl_site_4.Text = "Site Incharge";
-                lbl_Attend14.Text = "Present"; // or "Absent"
-            }
-            {
-                // Fifteenth row values
-                lbl_15.Text = "15";
-                lbl_Satyajit.Text = "Satyajit Mahanta";
-                lbl_Safety_5.Text = "Safety Supervisor";
-                lbl_Attend15.Text = "Present"; // or "Absent"
-            }
-            {
-                // Sixteenth row values
-                lbl_16.Text = "16";
-                lbl_Mahendra.Text = "Mahendra Jena";
-                lbl_Site6.Text = "Site Incharge";
-                lbl_Attend16.Text = "Present"; // or "Absent"
-            }
+                // Row 5 - Ajay Kumar Yadav data
+                Label21AttendiID.Text = "A127";
+                Label22MeetingID.Text = "M792";
+                Label23AttendiCode.Text = "ATD127";
+                Label24Attenditype.Text = "Employee";
+                lbl_Attend_5.Text = "Present";
+
+                // Optional - you can override if needed
+                // lbl_Ajay.Text = "Ajay Kumar Yadav";
+                // lbl_site1.Text = "Site Incharge";
+
+                // Profile image setup
+                Image9.ImageUrl = "~/images/ajay.jpg";  // Ensure image exists
+           
+           
+           
+
+           
         }
 
     }
+}
 }

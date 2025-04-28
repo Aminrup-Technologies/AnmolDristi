@@ -1630,7 +1630,7 @@ namespace AnmolDristi
                 DisconnectDb();
                 cmd.Dispose();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
             }

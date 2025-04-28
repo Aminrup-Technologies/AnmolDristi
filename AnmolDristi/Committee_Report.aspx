@@ -15,8 +15,9 @@
                 margin: 15px;
             }
         }
-        h2{
-            text-align:center;
+
+        h2 {
+            text-align: center;
         }
 
         body {
@@ -62,6 +63,39 @@
         .TABLE_1 tr:first-child td {
             width: 33.3%;
         }
+
+        .center_1 th:nth-child(1) {
+            width: 10%;
+        }
+        /* Attendance ID */
+        .center_1 th:nth-child(2) {
+            width: 10%;
+        }
+        /* Meeting ID */
+        .center_1 th:nth-child(3) {
+            width: 15%;
+        }
+        /* Name */
+        table .center_1 th:nth-child(4) {
+            width: 15%;
+        }
+        /* Designation */
+        .center_1 th:nth-child(5) {
+            width: 10%;
+        }
+        /* Attendee Code */
+        .center_1 th:nth-child(6) {
+            width: 10%;
+        }
+        /* Attendee Type */
+        .center_1 th:nth-child(7) {
+            width: 15%;
+        }
+        /* Image */
+        .center_1 th:nth-child(8) {
+            width: 15%;
+        }
+        /* Attendance Status */
     </style>
 
 </head>
@@ -69,13 +103,13 @@
     <asp:Repeater ID="RepeaterMeeting" runat="server" OnItemDataBound="RepeaterMeeting_ItemDataBound">
         <HeaderTemplate>
             <!-- Your header content -->
-            <table>
+            <table class="TABLE_1">
                 <tr>
                     <td style="text-align: left;">
                         <b>DOC/ATS/OSH/CM-04</b><br />
                         19/12/2018
                     </td>
-                    <td style="text-align: center; width: 100%; height: auto;">
+                    <td style="text-align: center; height: auto;">
                         <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/img/logo.png" CssClass="Logo" AlternateText="logo" />
                     </td>
                     <td style="text-align: right;">
@@ -97,12 +131,15 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <h3 style="padding-top: 15px;">Safety Performance Review Meeting:-</h3>
+                        <h3 style="padding-top: 2px; margin-bottom: 0px;">Safety Performance Review Meeting:-</h3>
                     </td>
                 </tr>
         </HeaderTemplate>
 
         <ItemTemplate>
+            <tr>
+                <td colspan="3" style="height: 20px;"></td>
+            </tr>
             <!-- Meeting Info -->
             <tr class="center">
                 <td>Date</td>
@@ -125,11 +162,12 @@
                 <td colspan="2"><%# Eval("ChairedBy") %></td>
             </tr>
 
+
             <!-- Attendee Section -->
             <tr>
                 <td colspan="7">
-                    <h2> Attendees</h2>
-                    <table>
+                    <h2 style="text-decoration: underline;">Attendance Sheet </h2>
+                    <table class="center_1">
                         <thead>
                             <tr class="center_1">
                                 <th>Attendance ID</th>

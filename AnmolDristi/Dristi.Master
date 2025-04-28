@@ -136,19 +136,6 @@
                                                 <li id="QualityForms" runat="server" visible="true"><a href="qaqc_home.aspx">QA/QC<span class="label label-success pull-right">Click !!</span></a></li>
                                             </ul>
                                         </li>
-
-                                        <li id="DataMastering" runat="server" visible="false"><a><i class="fa fa-database"></i>Data Mastering <span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li id="Works" runat="server" visible="false"><a>Works<span class="fa fa-chevron-down"></span></a>
-                                                    <ul class="nav child_menu">
-                                                        <li id="WorkCountry" runat="server" class="sub_menu"><a href="work_country.aspx">Work Country</a></li>
-                                                        <li id="WorkState" runat="server"><a href="work_states.aspx">Work States</a></li>
-                                                        <li id="WorkRegion" runat="server"><a href="work_region.aspx">Work Regions</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-
                                     </ul>
                                 </div>
                             </div>

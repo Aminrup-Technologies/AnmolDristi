@@ -182,6 +182,7 @@
                                         <div class="text-danger mt-1 question-error"></div>
                                     </div>
                                 </div>
+
                                 <div id="question_remarks_1" class="mt-1 d-none remarks-section">
                                     <label for="question_textarea_1">
                                         Remarks <sup

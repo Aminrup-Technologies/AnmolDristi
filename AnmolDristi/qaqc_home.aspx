@@ -25,19 +25,19 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <a class="btn btn-app" href="qaqc_inspector_rpt.aspx">
+                            <a class="btn btn-app" href="5s_form_report.aspx">
                                 <span class="badge bg-red">Shift : 2
                                     <asp:Label ID="lbl_tbttodaycount" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Inspector Report
 
                             </a>
-                            <a class="btn btn-app" href="#">
+                            <a class="btn btn-app" href="Committee_Report.aspx">
                                 <span class="badge bg-red">Batch : 1
                                     <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Wheat Flour report
 
                             </a>
-                            <a class="btn btn-app" href="#">
+                            <a class="btn btn-app" href="Committee_Meeting_Report.aspx">
                                 <span class="badge bg-orange">Consignment : 1
                                     <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>CB Box Report

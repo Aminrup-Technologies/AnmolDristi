@@ -44,7 +44,7 @@
                 vertical-align: top;
             }
 
-                .section_1 tr th:nth-child(1) {
+                .section_1 tr:nth-child(1) {
                     width: 4%;
                 }
 
