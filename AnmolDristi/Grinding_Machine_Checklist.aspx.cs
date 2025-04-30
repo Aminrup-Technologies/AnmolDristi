@@ -187,7 +187,7 @@ ORDER BY gh.HeaderID DESC";
             }
         }
 
-        // Move the SaveChecklist method outside of the SaveGrindingMachineIncidentData method
+        
         private void SaveChecklist(string question, bool isYes, TextBox remarksBox, FileUpload photoUpload, SqlConnection conn, SqlTransaction transaction, int headerId)
         {
             try
@@ -195,7 +195,7 @@ ORDER BY gh.HeaderID DESC";
                 string remarks = remarksBox != null ? remarksBox.Text.Trim() : "";
                 string photoPath = null;
 
-                // Only upload photo if 'No' is selected
+                
                 if (!isYes && photoUpload.HasFile)
                 {
                     string filename = Path.GetFileName(photoUpload.FileName);

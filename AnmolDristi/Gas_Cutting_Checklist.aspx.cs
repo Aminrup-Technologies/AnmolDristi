@@ -116,7 +116,7 @@ namespace AnmolDristi
                 conn.Open();
                 string query = @"
 SELECT 
-    gh.HeaderID, gh.SiteName, gh.InspectionDate, gh.TagNo,
+    gh.HeaderID, gh.SiteName, gh.InspectionDate, gh.TagNo, gh.SubmittedDate, gh.SubmittedTime,
     gc.Question AS ChecklistQuestion, gc.IsYes, gc.Remarks, gc.PhotoPath
 FROM GasCutting_Header gh
 LEFT JOIN GasCutting_Checklist gc ON gh.HeaderID = gc.HeaderID
