@@ -87,6 +87,7 @@
     <Content Include="Award_Distribution_View.aspx" />
     <Content Include="csm_kyt.aspx" />
     <Content Include="Gas_Cutting_Checklist.aspx" />
+    <Content Include="Gas_Cutting_View.aspx" />
     <Content Include="Grinding_Machine_Checklist.aspx" />
     <Content Include="Grinding_Machine_View.aspx" />
     <Content Include="home.aspx" />
@@ -188,6 +189,13 @@
     </Compile>
     <Compile Include="Gas_Cutting_Checklist.aspx.designer.cs">
       <DependentUpon>Gas_Cutting_Checklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Gas_Cutting_View.aspx.cs">
+      <DependentUpon>Gas_Cutting_View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Gas_Cutting_View.aspx.designer.cs">
+      <DependentUpon>Gas_Cutting_View.aspx</DependentUpon>
     </Compile>
     <Compile Include="Grinding_Machine_Checklist.aspx.cs">
       <DependentUpon>Grinding_Machine_Checklist.aspx</DependentUpon>

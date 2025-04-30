@@ -159,7 +159,7 @@
                     <asp:Label ID="Label11" runat="server" Text="0" Visible="false"></asp:Label></span>
                 <i class="fa fa-edit"></i>Gas Cutting Checklist
             </a>
-            <a class="btn btn-app" href="Gas_Cutting_Checklist.aspx.cs">
+            <a class="btn btn-app" href="Gas_Cutting_View.aspx">
                 <span class="badge bg-green">Ok
                     <asp:Label ID="Label12" runat="server" Text="0" Visible="false"></asp:Label></span>
                 <i class="fa fa-edit"></i>Gas Cutting Checklist records 
