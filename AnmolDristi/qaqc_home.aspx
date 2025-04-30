@@ -143,6 +143,33 @@
                     </div>
                 </div>
 
+                <div class="col-md-6" id="Div6" runat="server" visible="true">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>CSM : Gas Cutting Checklist</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <a class="btn btn-app" href="Gas_Cutting_Checklist.aspx">
+                <span class="badge bg-green">Ok
+                    <asp:Label ID="Label11" runat="server" Text="0" Visible="false"></asp:Label></span>
+                <i class="fa fa-edit"></i>Gas Cutting Checklist
+            </a>
+            <a class="btn btn-app" href="Gas_Cutting_Checklist.aspx.cs">
+                <span class="badge bg-green">Ok
+                    <asp:Label ID="Label12" runat="server" Text="0" Visible="false"></asp:Label></span>
+                <i class="fa fa-edit"></i>Gas Cutting Checklist records 
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
 
             </div>
         </div>

@@ -330,12 +330,79 @@
                                     </div>
                                 </div>
 
+                                <script type="text/javascript">
+    function validateGrindingChecklist() {
+        var isValid = true;
+        var errorMessage = "";
+
+        var fieldsToCheck = [
+            { id: '<%= txtSite.ClientID %>', type: 'textbox', name: 'Site' },
+            { id: '<%= txtDateOfInspection.ClientID %>', type: 'textbox', name: 'Date of Inspection' },
+            { id: '<%= txtInspectedBy.ClientID %>', type: 'textbox', name: 'Inspected By' },
+            { id: '<%= txtSerialNo.ClientID %>', type: 'textbox', name: 'SI No' },
+            { id: '<%= txtIdentificationNumber.ClientID %>', type: 'textbox', name: 'Identification Number' },
+            { id: '<%= txtLocation.ClientID %>', type: 'textbox', name: 'Location' }
+        ];
+
+        // Check TextBoxes
+        for (var i = 0; i < fieldsToCheck.length; i++) {
+            var fieldInfo = fieldsToCheck[i];
+            var field = document.getElementById(fieldInfo.id);
+            if (field) {
+                if (field.value.trim() === "") {
+                    isValid = false;
+                    errorMessage += "- Please fill " + fieldInfo.name + "\n";
+                }
+            }
+        }
+
+        // Check RadioButton groups
+        var radioGroups = [
+            { yesId: '<%= RbForeHandleYes.ClientID %>', noId: '<%= RbForeHandleNo.ClientID %>', name: 'Fore Handle' },
+            { yesId: '<%= RbWheelGuardYes.ClientID %>', noId: '<%= RbWheelGuardNo.ClientID %>', name: 'Wheel Guard' },
+            { yesId: '<%= RbGrindWheelYes.ClientID %>', noId: '<%= RbGrindWheelNo.ClientID %>', name: 'Grinding Wheel' },
+            { yesId: '<%= RbRearHandleYes.ClientID %>', noId: '<%= RbRearHandleNo.ClientID %>', name: 'Rear Handle' },
+            { yesId: '<%= RbCordYes.ClientID %>', noId: '<%= RbCordNo.ClientID %>', name: 'Cord Strain Reliever' },
+            { yesId: '<%= RbTriggerYes.ClientID %>', noId: '<%= RbTriggerNo.ClientID %>', name: 'Trigger Switch' },
+            { yesId: '<%= RbSwitchLockYes.ClientID %>', noId: '<%= RbSwitchLockNo.ClientID %>', name: 'Switch Lock' },
+            { yesId: '<%= RbPowerCableYes.ClientID %>', noId: '<%= RbPowerCableNo.ClientID %>', name: 'Power Cable' }
+        ];
+
+        for (var i = 0; i < radioGroups.length; i++) {
+            var group = radioGroups[i];
+            var yesOption = document.getElementById(group.yesId);
+            var noOption = document.getElementById(group.noId);
+
+            if (yesOption && noOption) {
+                if (!yesOption.checked && !noOption.checked) {
+                    isValid = false;
+                    errorMessage += "- Please select Yes/No for " + group.name + "\n";
+                }
+            }
+        }
+
+        if (!isValid) {
+            alert(errorMessage);
+        }
+
+        return isValid;
+    }
+                                </script>
+
+
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group input-group-sm">
-                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
+<%--                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />--%>
+
+                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save" 
+    CssClass="btn btn-primary btn-sm"
+    ValidationGroup="Submit" CausesValidation="true"
+    OnClientClick="return validateGrindingChecklist();"
+    OnClick="BtnSubmit_Click" />
+
                                             <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                                             <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                         </div>
