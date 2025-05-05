@@ -34,5 +34,26 @@ namespace AnmolDristi
                 View.DataBind();
             }
         }
+
+        protected void View_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "DeleteWalk")
+            {
+                int walkId = Convert.ToInt32(e.CommandArgument);
+
+                string cs = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(cs))
+                {
+                    conn.Open();
+
+                    SqlCommand deleteMain = new SqlCommand("DELETE FROM Line_walk_status WHERE ID = @ID", conn);
+                    deleteMain.Parameters.AddWithValue("@ID", walkId);
+                    deleteMain.ExecuteNonQuery();
+                }
+
+                LoadData();
+            }
+        }
+
     }
 }

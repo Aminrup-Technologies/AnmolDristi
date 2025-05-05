@@ -165,7 +165,10 @@ namespace AnmolDristi
 
         protected void BtnReset_Click(object sender, EventArgs e)
         {
+            Session["EmpData"] = null;
+            Session["ObservationData"] = null;
             Response.Redirect("Line_Walk_Status.aspx");
+
         }
 
         //Method to fetch team members data from form controls
@@ -394,30 +397,30 @@ namespace AnmolDristi
             string internalString = string.Join(",", internalCodes);
             string externalString = string.Join(",", externalNames);
 
-            lbl_panel2_msg.Text = $"✅ Internal: {internalString} | ✅ External: {externalString}";
+            //lbl_panel2_msg.Text = $"✅ Internal: {internalString} | ✅ External: {externalString}";
         }
 
         protected void btnAddToGrid_Click(object sender, EventArgs e)
         {
             try
             {
-                string area = TB_location.Text.Trim();
-                string observation = TB_Observation_Points.Text.Trim();
-                string recommendation = TB_Recommendation_Points.Text.Trim();
-                string responsibility = TB_Responsibility.Text.Trim();
-                string targetDate = TB_TargetDate.Text.Trim();
-                string remarks = TB_Remarks.Text.Trim();
+                string area = txtAreaLocation.Text.Trim();
+                string observation = txtObservation.Text.Trim();
+                string recommendation = txtRecommendation.Text.Trim();
+                string responsibility = txtResponsibility.Text.Trim();
+                string targetDate = txtTargetDate.Text.Trim();
+                string remarks = txtRemarks.Text.Trim();
                 string filePath = "";
 
-                if (File_Snaps.HasFile)
+                if (fileSnap.HasFile)
                 {
                     string folderPath = Server.MapPath("~/Uploads/");
                     if (!Directory.Exists(folderPath))
                         Directory.CreateDirectory(folderPath);
 
-                    string filename = Guid.NewGuid().ToString() + "_" + Path.GetFileName(File_Snaps.FileName);
+                    string filename = Guid.NewGuid().ToString() + "_" + Path.GetFileName(fileSnap.FileName);
                     filePath = "~/Uploads/" + filename;
-                    File_Snaps.SaveAs(Path.Combine(folderPath, filename));
+                    fileSnap.SaveAs(Path.Combine(folderPath, filename));
                 }
 
                 DataTable dt = Session["ObservationData"] as DataTable;
@@ -439,12 +442,12 @@ namespace AnmolDristi
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
 
-                TB_location.Text = "";
-                TB_Observation_Points.Text = "";
-                TB_Recommendation_Points.Text = "";
-                TB_Responsibility.Text = "";
-                TB_TargetDate.Text = "";
-                TB_Remarks.Text = "";
+                txtAreaLocation.Text = "";
+                txtObservation.Text = "";
+                txtRecommendation.Text = "";
+                txtResponsibility.Text = "";
+                txtTargetDate.Text = "";
+                txtRemarks.Text = "";
             }
             catch (Exception ex)
             {
@@ -452,14 +455,15 @@ namespace AnmolDristi
             }
         }
 
-        protected void Btn_AddMember_Click(object sender, EventArgs e)
+        protected void btnSave_Click(object sender, EventArgs e)
+
         {
             try
             {
 
-                string EmpType = RBL_EmpType.SelectedValue;
-                string EmpCode = TB_EmpCode.Text.Trim();
-                string EmpName = TB_EmpName.Text.Trim();
+                string EmpType = rblEmpType.SelectedValue;
+                string EmpCode = txtEmpCode.Text.Trim();
+                string EmpName = txtEmpName.Text.Trim();
 
                 if (EmpType != "Internal")
                 {
@@ -482,14 +486,59 @@ namespace AnmolDristi
                 GridView2.DataSource = dt;
                 GridView2.DataBind();
 
-                RBL_EmpType.SelectedValue = "";
-                TB_EmpCode.Text = "";
-                TB_EmpName.Text = "";
+                rblEmpType.SelectedValue = "";
+                txtEmpCode.Text = "";
+                txtEmpName.Text = "";
             }
             catch (Exception ex)
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "Error", "alert('Error saving Team members: " + ex.Message + "');", true);
             }
+            ScriptManager.RegisterStartupScript(this, GetType(), "CloseModalAndAlert", @"
+        var modal = bootstrap.Modal.getInstance(document.getElementById('employeeModal'));
+        if (modal) { modal.hide(); }
+        showSuccessAlert();", true);
+        }
+    }
+
+        //protected void Btn_AddMember_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+
+        //        string EmpType = rblEmpType.SelectedValue;
+        //        string EmpCode = txtEmpCode.Text.Trim();
+        //        string EmpName = txtEmpName.Text.Trim();
+
+        //        if (EmpType != "Internal")
+        //        {
+        //            EmpCode = "-";
+        //        }
+
+        //        DataTable dt = Session["EmpData"] as DataTable;
+        //        if (dt == null)
+        //        {
+        //            dt = new DataTable();
+        //            dt.Columns.Add("EmpType");
+        //            dt.Columns.Add("EmpCode");
+        //            dt.Columns.Add("EmpName");
+
+        //        }
+
+        //        dt.Rows.Add(EmpType, EmpCode, EmpName);
+
+        //        Session["EmpData"] = dt;
+        //        GridView2.DataSource = dt;
+        //        GridView2.DataBind();
+
+        //        rblEmpType.SelectedValue = "";
+        //        txtEmpCode.Text = "";
+        //        txtEmpName.Text = "";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ClientScript.RegisterStartupScript(this.GetType(), "Error", "alert('Error saving Team members: " + ex.Message + "');", true);
+        //    }
 
 
 
@@ -503,5 +552,5 @@ namespace AnmolDristi
 
 
         //-------------------------------Added on 15-04-2025-----------KK-TL--------------//
-    }
-}
+    
+

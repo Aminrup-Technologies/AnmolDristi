@@ -57,11 +57,18 @@
                         </div>
 
                         <div class="x_content">
-                            <a class="btn btn-app" href="Line_Walk_Status.aspx">
+                            <a class="btn btn-app" href="Line_Walk.aspx">
                                 <span class="badge bg-green">Ok
                         <asp:Label ID="Label2" runat="server" Text="0" Visible="false"></asp:Label></span>
                                 <i class="fa fa-edit"></i>Create
                             </a>
+
+                            <a class="btn btn-app" href="Line_Walk_Data.aspx">
+                                <span class="badge bg-green">Ok
+         <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                <i class="fa fa-edit"></i>View
+                            </a>
+
                         </div>
                     </div>
                 </div>
