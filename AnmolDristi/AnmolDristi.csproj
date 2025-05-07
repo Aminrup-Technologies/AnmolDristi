@@ -162,10 +162,6 @@
     <Compile Include="Edit_page.aspx.designer.cs">
       <DependentUpon>Edit_page.aspx</DependentUpon>
     </Compile>
-    <Compile Include="fiveS_checklist_1.aspx.cs">
-      <DependentUpon>fiveS_checklist_1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="fiveS_checklist.aspx.designer.cs">
       <DependentUpon>fiveS_checklist.aspx</DependentUpon>
     </Compile>
