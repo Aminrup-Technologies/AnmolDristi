@@ -104,6 +104,7 @@
     <Content Include="Safety_View.aspx" />
     <Content Include="WebData\OH4Y_Logo.png" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
+    <None Include="Properties\PublishProfiles\mahimagupta.aminruptechnologies.co.in - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
