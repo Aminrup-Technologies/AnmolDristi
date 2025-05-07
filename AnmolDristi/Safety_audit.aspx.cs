@@ -366,9 +366,19 @@ namespace AnmolDristi
 
                                 //cmd.Parameters.AddWithValue("@SubmittedDate", obs.SubmittedDate == DateTime.MinValue ? DateTime.Now : obs.SubmittedDate);
                                 //cmd.Parameters.AddWithValue("@SubmittedTime", obs.SubmittedTime == TimeSpan.Zero ? DateTime.Now.TimeOfDay : obs.SubmittedTime);
+                                DateTime safeSubmittedDate = obs.SubmittedDate < new DateTime(1753, 1, 1)
+   ? DateTime.Now
+   : obs.SubmittedDate;
 
-                                cmd.Parameters.AddWithValue("@SubmittedDate", string.IsNullOrEmpty(formattedDate) ? DateTime.Now : DateTime.Parse(formattedDate));
-                                cmd.Parameters.AddWithValue("@SubmittedTime", obs.SubmittedTime == TimeSpan.Zero ? DateTime.Now.TimeOfDay : obs.SubmittedTime);
+                                TimeSpan safeSubmittedTime = obs.SubmittedTime == TimeSpan.Zero
+                                    ? DateTime.Now.TimeOfDay
+                                    : obs.SubmittedTime;
+
+                                cmd.Parameters.AddWithValue("@SubmittedDate", safeSubmittedDate);
+                                cmd.Parameters.AddWithValue("@SubmittedTime", safeSubmittedTime);
+
+                                //cmd.Parameters.AddWithValue("@SubmittedDate", string.IsNullOrEmpty(formattedDate) ? DateTime.Now : DateTime.Parse(formattedDate));
+                                //cmd.Parameters.AddWithValue("@SubmittedTime", obs.SubmittedTime == TimeSpan.Zero ? DateTime.Now.TimeOfDay : obs.SubmittedTime);
 
 
 
