@@ -38,6 +38,8 @@
                     <h2>Stored Gas Cutting Checklist Records</h2>
                     <div class="clearfix"></div>
                 </div>
+                <div style="overflow-x: auto;">
+    
                 <asp:GridView ID="GvGasCuttingChecklist" runat="server" CssClass="table table-striped table-bordered"
     AutoGenerateColumns="False" DataKeyNames="HeaderID"
     OnRowEditing="GvGasCuttingChecklist_RowEditing"
@@ -161,6 +163,7 @@
                     </div>
                 </div>
             </div>
+    </div>
         
     
 </asp:Content>
