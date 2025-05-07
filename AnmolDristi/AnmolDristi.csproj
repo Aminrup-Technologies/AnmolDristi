@@ -104,6 +104,7 @@
     <Content Include="DAL\Datasets\Checklist_details_dataset.xss">
       <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\abhisheksahu.aminruptechnologies.co.in - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -161,10 +162,6 @@
     </Compile>
     <Compile Include="Edit_page.aspx.designer.cs">
       <DependentUpon>Edit_page.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="fiveS_checklist_1.aspx.cs">
-      <DependentUpon>fiveS_checklist_1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="fiveS_checklist.aspx.designer.cs">
       <DependentUpon>fiveS_checklist.aspx</DependentUpon>
