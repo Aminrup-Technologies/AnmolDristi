@@ -18,7 +18,7 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Sub Heading</h2>
+                            <h2 style="color:green;">Line walk Details View </h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
@@ -26,7 +26,7 @@
                         </div>
                         <div class="x_content" style="overflow:auto;">
                             <table class="table table-sm table-bordered" border="1">
-                                <tr>
+                                <tr class="thead-dark">
                                     <th>Date</th>
                                     <th>Job ID</th>
                                     <th>Job Description</th>
@@ -41,7 +41,8 @@
                                 </tr>
                             </table>
 
-                            <asp:GridView ID="TeamMemberGrid" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered">
+                            <asp:GridView ID="TeamMemberGrid" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered table-hover table-responsive-md">
+                                <HeaderStyle CssClass="thead-dark" />
                                 <Columns>
                                     <asp:BoundField HeaderText="Employee Type" DataField="TM_Type" />
                                     <asp:BoundField HeaderText="Employee Code" DataField="TM_Code" />
@@ -49,7 +50,8 @@
                                 </Columns>
                             </asp:GridView>
 
-                            <asp:GridView ID="ObservGrid" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered">
+                            <asp:GridView ID="ObservGrid" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered table-hover table-responsive-md">
+                                <HeaderStyle CssClass="thead-dark" />
                                 <Columns>
                                     <asp:BoundField HeaderText="Area" DataField="Location" />
                                     <asp:BoundField HeaderText="Observation" DataField="Observation_Points" />

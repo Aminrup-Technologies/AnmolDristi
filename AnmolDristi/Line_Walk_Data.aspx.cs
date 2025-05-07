@@ -51,6 +51,17 @@ namespace AnmolDristi
                     deleteMain.ExecuteNonQuery();
                 }
 
+                string Data_SuccessScript = @"<script type='text/javascript'>
+            new PNotify({
+                title: 'Success',
+                text: 'Walk record deleted successfully!',
+                type: 'success',
+                styling: 'bootstrap3'
+            });
+        </script>";
+
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+
                 LoadData();
             }
         }

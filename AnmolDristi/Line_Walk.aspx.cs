@@ -43,6 +43,7 @@ namespace AnmolDristi
                 Save.Text = "Update";
                 btnOpenModal.Enabled = true;
                 btnOpenObservationModal.Enabled = true;
+                TB_ID.Enabled = false;
             }
 
             
