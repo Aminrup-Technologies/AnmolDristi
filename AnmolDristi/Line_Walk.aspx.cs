@@ -723,10 +723,10 @@ namespace AnmolDristi
             }
         }
 
-
-       
-
-
+        protected void Home_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("qaqc_home.aspx");
+        }
     }
 
 

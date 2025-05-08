@@ -260,6 +260,7 @@
 
                             <div class="d-flex justify-content-center">
                                 <asp:Button ID="Save" runat="server" CssClass="btn btn-primary btn-sm ml-4" Text="Save" OnClick="Save_Click" ValidationGroup="Submit"/>
+                                <asp:Button ID="Home" runat="server" CssClass="btn btn-warning btn-sm ml-4" Text="Home" OnClick="Home_Click"/>
                             </div>
 
                             <!-- Step 2[A]: Team Members -->
