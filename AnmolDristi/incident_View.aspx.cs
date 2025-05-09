@@ -32,24 +32,23 @@ namespace AnmolDristi
     using (SqlConnection conn = new SqlConnection(connectionString))
     {
         conn.Open();
-        string query = @"
+                string query = @"
         SELECT 
-         
     i.IncidentID, 
     i.IncidentClassification, 
     CONVERT(VARCHAR, i.DateOfIncident, 23) AS DateOfIncident, 
     i.TimeOfIncident AS TimeOfIncident,  
     i.Location, i.Section, i.Department, 
+    i.SubmittedDate,                    
+    i.SubmittedTime,                     
     p.VendorName, p.TotalInjuredPersons, p.NameOfPersonInvolved, 
     p.AnyWitness, p.WitnessNames, p.ReportedBy,
     inv.InvestigationTeamMembers, inv.TaskAndDescription, inv.RootCauseAnalysis, 
     inv.ReviewDate, inv.PreventiveActions, inv.CorrectiveActions
-
-        FROM IncidentDetails i
-        LEFT JOIN PeopleInvolved p ON i.IncidentID = p.IncidentID
-        LEFT JOIN InvestigationActions inv ON i.IncidentID = inv.IncidentID
-        ORDER BY i.IncidentID DESC";
-
+FROM IncidentDetails i
+LEFT JOIN PeopleInvolved p ON i.IncidentID = p.IncidentID
+LEFT JOIN InvestigationActions inv ON i.IncidentID = inv.IncidentID
+ORDER BY i.IncidentID DESC";
 
 
         using (SqlCommand cmd = new SqlCommand(query, conn))

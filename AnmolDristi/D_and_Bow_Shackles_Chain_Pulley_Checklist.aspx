@@ -1,0 +1,414 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="D_and_Bow_Shackles_Chain_Pulley_Checklist.aspx.cs" Inherits="AnmolDristi.D_and_Bow_Shackles_Chain_Pulley_Checklist" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style type="text/css">
+        .form-label {
+            font-weight: bold;
+            color: blue;
+        }
+
+        .table-bordered td {
+            vertical-align: middle;
+        }
+
+        .d-inline {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .form-control {
+            margin-top: 5px;
+        }
+    </style>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="right_col" role="main">
+        <div class="container">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>D & bow Shackles, CHAIN PULLEY BLOCK Checklist</h3>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Document No: DOC/ATS/TSK/QMS/GC/013 | Effective Date: 01/02/2024 | Revision No: REV:00</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 1: Basic Details</h3>
+                    <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
+                    <div class="row">
+
+                        <!-- NAME OF SITE -->
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <asp:Label ID="lblSite" runat="server" Text="Site:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+                                <div class="input-group-sm">
+                                    <asp:TextBox ID="txtSite" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Site" />
+                                    <asp:RequiredFieldValidator ID="rfvSite" runat="server"
+                                        ControlToValidate="txtSite"
+                                        ErrorMessage="Please enter the site."
+                                        ForeColor="Red" Display="Dynamic" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAG NO -->
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <asp:Label ID="lblTagNo" runat="server" Text="Tag No:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+                                <div class="input-group-sm">
+                                    <asp:TextBox ID="txtTagNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Tag Number" />
+                                    <asp:RequiredFieldValidator ID="rfvTagNo" runat="server"
+                                        ControlToValidate="txtTagNo"
+                                        ErrorMessage="Please enter the Tag No."
+                                        ForeColor="Red" Display="Dynamic" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DATE -->
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <asp:Label ID="lblDate" runat="server" Text="Date:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+                                <div class="input-group-sm">
+                                    <asp:TextBox ID="txtDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date" />
+                                    <asp:RequiredFieldValidator ID="rfvDate" runat="server"
+                                        ControlToValidate="txtDate"
+                                        ErrorMessage="Please select the date."
+                                        ForeColor="Red" Display="Dynamic" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Row for Step 2 heading -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 2: Description: "D" & "bow" Shackles Checklist</h3>
+                                <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered">
+                            <%-- Repeat this row structure for each checklist item --%>
+                            <tr>
+                                <td>1. D & Bow shackle tested or not, tag fixed or not</td>
+                                <td>
+                                    <asp:RadioButton ID="rbTestedOk" GroupName="Tested" Text="Ok" runat="server" OnCheckedChanged="RbTested_CheckedChanged" AutoPostBack="true" />
+                                    <asp:RadioButton ID="rbTestedNotOk" GroupName="Tested" Text="Not Ok" runat="server" OnCheckedChanged="RbTested_CheckedChanged" AutoPostBack="true" />
+                                    <asp:RadioButton ID="rbTestedNA" GroupName="Tested" Text="NA" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:Panel ID="pnlTested" runat="server" Visible="false">
+                                        <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                                        <asp:TextBox ID="txtTestedRemarks" runat="server" CssClass="form-control" />
+                                        <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                                        <asp:FileUpload ID="fuTested" runat="server" />
+                                    </asp:Panel>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>2. Thread of the pin should not be damaged</td>
+                                <td>
+                                    <asp:RadioButton ID="rbThreadOk" GroupName="Thread" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbThread_CheckedChanged" />
+                                    <asp:RadioButton ID="rbThreadNotOk" GroupName="Thread" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbThread_CheckedChanged" />
+                                    <asp:RadioButton ID="rbThreadNA" GroupName="Thread" Text="NA" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:Panel ID="pnlThread" runat="server" Visible="false">
+                                        <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                                        <asp:TextBox ID="txtThreadRemarks" runat="server" CssClass="form-control" />
+                                        <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                                        <asp:FileUpload ID="fuThread" runat="server" />
+                                    </asp:Panel>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>3. No part should be worn more than 10% of original dimension</td>
+                                <td>
+                                    <asp:RadioButton ID="rbWornOk" GroupName="Worn" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbWorn_CheckedChanged" />
+                                    <asp:RadioButton ID="rbWornNotOk" GroupName="Worn" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbWorn_CheckedChanged" />
+                                    <asp:RadioButton ID="rbWornNA" GroupName="Worn" Text="NA" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:Panel ID="pnlWorn" runat="server" Visible="false">
+                                        <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                                        <asp:TextBox ID="txtWornRemarks" runat="server" CssClass="form-control" />
+                                        <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                                        <asp:FileUpload ID="fuWorn" runat="server" />
+                                    </asp:Panel>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>4. Strength of pin should be checked</td>
+                                <td>
+                                    <asp:RadioButton ID="rbStrengthOk" GroupName="Strength" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbStrength_CheckedChanged" />
+                                    <asp:RadioButton ID="rbStrengthNotOk" GroupName="Strength" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbStrength_CheckedChanged" />
+                                    <asp:RadioButton ID="rbStrengthNA" GroupName="Strength" Text="NA" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:Panel ID="pnlStrength" runat="server" Visible="false">
+                                        <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                                        <asp:TextBox ID="txtStrengthRemarks" runat="server" CssClass="form-control" />
+                                        <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                                        <asp:FileUpload ID="fuStrength" runat="server" />
+                                    </asp:Panel>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>5. No rusting on body or pin</td>
+                                <td>
+                                    <asp:RadioButton ID="rbRustOk" GroupName="Rust" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbRust_CheckedChanged" />
+                                    <asp:RadioButton ID="rbRustNotOk" GroupName="Rust" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbRust_CheckedChanged" />
+                                    <asp:RadioButton ID="rbRustNA" GroupName="Rust" Text="NA" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:Panel ID="pnlRust" runat="server" Visible="false">
+                                        <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                                        <asp:TextBox ID="txtRustRemarks" runat="server" CssClass="form-control" />
+                                        <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                                        <asp:FileUpload ID="fuRust" runat="server" />
+                                    </asp:Panel>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                          <!-- Row for Step 3 heading -->
+  <div class="row">
+      <div class="col-md-12">
+          <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 3: Description: CHAIN PULLEY BLOCK Checklist</h3>
+          <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
+      </div>
+  </div>
+
+ <%--              <!-- TAG NO -->
+ <div class="col-md-3">
+     <div class="mb-3">
+         <asp:Label ID="Label1" runat="server" Text="Tag No:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+         <div class="input-group-sm">
+             <asp:TextBox ID="txtChainTagNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Tag Number for Chain Pulley Block" />
+
+            <asp:RequiredFieldValidator ID="rfvChainTagNo" runat="server"
+    ControlToValidate="txtChainTagNo"
+    ErrorMessage="Please enter the Tag No for Chain Pulley Block."
+    ForeColor="Red" Display="Dynamic" />
+</div>
+     </div>
+ </div>
+              --%>          
+                        
+                        
+                        <table class="table table-bordered">
+    <tr>
+        <td>1. Chain block is tested or not, Testing & due date of testing is ok or not</td>
+        <td>
+            <asp:RadioButton ID="rbChainTestedOk" GroupName="ChainTested" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbChainTested_CheckedChanged" />
+            <asp:RadioButton ID="rbChainTestedNotOk" GroupName="ChainTested" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbChainTested_CheckedChanged" />
+            <asp:RadioButton ID="rbChainTestedNA" GroupName="ChainTested" Text="NA" runat="server" />
+        </td>
+        <td>
+            <asp:Panel ID="pnlChainTested" runat="server" Visible="false">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                <asp:TextBox ID="txtChainTestedRemarks" runat="server" CssClass="form-control" />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                <asp:FileUpload ID="fuChainTested" runat="server" />
+            </asp:Panel>
+        </td>
+    </tr>
+
+    <tr>
+        <td>2. Any damaged chain links</td>
+        <td>
+            <asp:RadioButton ID="rbChainDamageOk" GroupName="ChainDamage" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbChainDamage_CheckedChanged" />
+            <asp:RadioButton ID="rbChainDamageNotOk" GroupName="ChainDamage" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbChainDamage_CheckedChanged" />
+            <asp:RadioButton ID="rbChainDamageNA" GroupName="ChainDamage" Text="NA" runat="server" />
+        </td>
+        <td>
+            <asp:Panel ID="pnlChainDamage" runat="server" Visible="false">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                <asp:TextBox ID="txtChainDamageRemarks" runat="server" CssClass="form-control" />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                <asp:FileUpload ID="fuChainDamage" runat="server" />
+            </asp:Panel>
+        </td>
+    </tr>
+
+    <tr>
+        <td>3. Chain & hook condition for any twist, wear, bend, corrosion & cracks</td>
+        <td>
+            <asp:RadioButton ID="rbConditionOk" GroupName="Condition" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbCondition_CheckedChanged" />
+            <asp:RadioButton ID="rbConditionNotOk" GroupName="Condition" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbCondition_CheckedChanged" />
+            <asp:RadioButton ID="rbConditionNA" GroupName="Condition" Text="NA" runat="server" />
+        </td>
+        <td>
+            <asp:Panel ID="pnlCondition" runat="server" Visible="false">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                <asp:TextBox ID="txtConditionRemarks" runat="server" CssClass="form-control" />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                <asp:FileUpload ID="fuCondition" runat="server" />
+            </asp:Panel>
+        </td>
+    </tr>
+
+    <tr>
+        <td>4. Safety latch & latch spring available in hook and functioning properly</td>
+        <td>
+            <asp:RadioButton ID="rbLatchOk" GroupName="Latch" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbLatch_CheckedChanged" />
+            <asp:RadioButton ID="rbLatchNotOk" GroupName="Latch" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbLatch_CheckedChanged" />
+            <asp:RadioButton ID="rbLatchNA" GroupName="Latch" Text="NA" runat="server" />
+        </td>
+        <td>
+            <asp:Panel ID="pnlLatch" runat="server" Visible="false">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                <asp:TextBox ID="txtLatchRemarks" runat="server" CssClass="form-control" />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                <asp:FileUpload ID="fuLatch" runat="server" />
+            </asp:Panel>
+        </td>
+    </tr>
+
+    <tr>
+        <td>5. Check padeye/hook is standard & welded properly when chain block to be ganged</td>
+        <td>
+            <asp:RadioButton ID="rbPadeyeOk" GroupName="Padeye" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbPadeye_CheckedChanged" />
+            <asp:RadioButton ID="rbPadeyeNotOk" GroupName="Padeye" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbPadeye_CheckedChanged" />
+            <asp:RadioButton ID="rbPadeyeNA" GroupName="Padeye" Text="NA" runat="server" />
+        </td>
+        <td>
+            <asp:Panel ID="pnlPadeye" runat="server" Visible="false">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                <asp:TextBox ID="txtPadeyeRemarks" runat="server" CssClass="form-control" />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                <asp:FileUpload ID="fuPadeye" runat="server" />
+            </asp:Panel>
+        </td>
+    </tr>
+
+    <tr>
+        <td>6. Any part of hook should not be worn 10% of original dimension</td>
+        <td>
+            <asp:RadioButton ID="rbHookWearOk" GroupName="HookWear" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbHookWear_CheckedChanged" />
+            <asp:RadioButton ID="rbHookWearNotOk" GroupName="HookWear" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbHookWear_CheckedChanged" />
+            <asp:RadioButton ID="rbHookWearNA" GroupName="HookWear" Text="NA" runat="server" />
+        </td>
+        <td>
+            <asp:Panel ID="pnlHookWear" runat="server" Visible="false">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
+                <asp:TextBox ID="txtHookWearRemarks" runat="server" CssClass="form-control" />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
+                <asp:FileUpload ID="fuHookWear" runat="server" />
+            </asp:Panel>
+        </td>
+    </tr>
+</table>
+
+                  
+                           <!-- Remarks -->
+   <div class="col-md-6">
+       <div class="mb-3">
+           <asp:Label ID="lblRemarks" runat="server" Text="Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+           <div class="input-group-sm">
+               <asp:TextBox ID="txtRemarks" runat="server"
+                   CssClass="form-control form-control-sm rounded"
+                   TextMode="MultiLine"
+                   Rows="3"
+                   Placeholder="Enter any remarks">
+               </asp:TextBox>
+           </div>
+       </div>
+   </div>
+                        <script>
+
+          function validateDandBowChecklist() {
+    var isValid = true;
+    var errorMessage = "";
+
+    // Validate basic textboxes
+    var fieldsToCheck = [
+        { id: '<%= txtSite.ClientID %>', name: 'Site' },
+        { id: '<%= txtTagNo.ClientID %>', name: 'Tag No' },
+        { id: '<%= txtDate.ClientID %>', name: 'Date' }
+    ];
+
+    fieldsToCheck.forEach(function (field) {
+        var el = document.getElementById(field.id);
+        if (el && el.value.trim() === "") {
+            errorMessage += "- Please enter " + field.name + "\n";
+            isValid = false;
+        }
+    });
+
+    // Validate radio button groups by prefixing with control ID
+    var radioGroups = [
+        { groupName: "Tested", label: "D & Bow shackle tested" },
+        { groupName: "Thread", label: "Thread of the pin" },
+        { groupName: "Worn", label: "Wear on part" },
+        { groupName: "Strength", label: "Strength of pin" },
+        { groupName: "Rust", label: "Rusting on body or pin" },
+        { groupName: "ChainTested", label: "Chain block testing status" },
+        { groupName: "ChainDamage", label: "Damaged chain links" },
+        { groupName: "Condition", label: "Chain & hook condition" },
+        { groupName: "Latch", label: "Latch & spring condition" },
+        { groupName: "Padeye", label: "Padeye/hook weld condition" },
+        { groupName: "HookWear", label: "Hook wear status" }
+    ];
+
+    radioGroups.forEach(function (group) {
+        var radios = document.querySelectorAll("input[type='radio'][name*='" + group.groupName + "']");
+        var oneChecked = false;
+        radios.forEach(function (radio) {
+            if (radio.checked) {
+                oneChecked = true;
+            }
+        });
+
+        if (!oneChecked) {
+            errorMessage += "- Please select an option for " + group.label + "\n";
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        alert(errorMessage);
+    }
+
+    return isValid;
+}
+                        </script>
+
+                        
+                        
+                        
+                        <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group input-group-sm">
+<%--                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />--%>
+
+                                          <asp:Button ID="BtnSubmit" runat="server" Text="Save" 
+    CssClass="btn btn-primary btn-sm"
+    ValidationGroup="Submit" CausesValidation="true"
+    OnClientClick="return validateDandBowChecklist();"
+    OnClick="BtnSubmit_Click" />
+
+
+                                            <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
+                                            <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                        </div>
+                                        <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" />
+                                    </div>
+                                </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

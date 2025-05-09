@@ -169,6 +169,35 @@
 </div>
 
 
+                                <div class="col-md-6" id="Div7" runat="server" visible="true">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>CSM : D & bow Shackles, CHAIN PULLEY BLOCK Checklist</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <a class="btn btn-app" href="D_and_Bow_Shackles_Chain_Pulley_Checklist.aspx">
+                <span class="badge bg-green">Ok
+                    <asp:Label ID="Label13" runat="server" Text="0" Visible="false"></asp:Label></span>
+                <i class="fa fa-edit"></i> D & bow Shackles, CHAIN PULLEY BLOCK Checklist
+            </a>
+            <a class="btn btn-app" href="Gas_Cutting_View.aspx">
+                <span class="badge bg-green">Ok
+                    <asp:Label ID="Label14" runat="server" Text="0" Visible="false"></asp:Label></span>
+                <i class="fa fa-edit"></i> D & bow Shackles, CHAIN PULLEY BLOCK  records 
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 
 
             </div>

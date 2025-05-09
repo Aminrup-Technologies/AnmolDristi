@@ -43,27 +43,6 @@
                         OnRowCancelingEdit="gvIncidentData_RowCancelingEdit"
                         OnRowDeleting="gvIncidentData_RowDeleting">
 
-                        <%--<Columns>
-                            <asp:BoundField DataField="IncidentID" HeaderText="Incident ID" ReadOnly="True" />
-                            <asp:BoundField DataField="IncidentClassification" HeaderText="Classification" />
-                            <asp:BoundField DataField="DateOfIncident" HeaderText="Incident Date" DataFormatString="{0:yyyy-MM-dd}" />
-                            <asp:BoundField DataField="TimeOfIncident" HeaderText="Time of Incident"  />
-                            <asp:BoundField DataField="Location" HeaderText="Location" />
-                            <asp:BoundField DataField="Section" HeaderText="Section" />
-                            <asp:BoundField DataField="Department" HeaderText="Department" />
-                            <asp:BoundField DataField="VendorName" HeaderText="Vendor Name" />
-                            <asp:BoundField DataField="TotalInjuredPersons" HeaderText="Total Injured" />
-                            <asp:BoundField DataField="InvestigationTeamMembers" HeaderText="Investigation Team Members" />
-                            <asp:BoundField DataField="TaskAndDescription" HeaderText="Task & Incident Description" />
-                            <asp:BoundField DataField="RootCauseAnalysis" HeaderText="Root Cause Analysis" />
-                            <asp:BoundField DataField="ReviewDate" HeaderText="Review Date" DataFormatString="{0:yyyy-MM-dd}" />
-
-                            <asp:BoundField DataField="PreventiveActions" HeaderText="Preventive Actions" />
-                            <asp:BoundField DataField="NameOfPersonInvolved" HeaderText="Person Involved" />
-                            <asp:BoundField DataField="AnyWitness" HeaderText="Any Witness?" />
-                            <asp:BoundField DataField="WitnessNames" HeaderText="Witness Names" />
-                            <asp:BoundField DataField="ReportedBy" HeaderText="Reported By" />
-                            <asp:BoundField DataField="CorrectiveActions" HeaderText="Corrective Actions" />--%>
 
                         <Columns>
 
@@ -249,6 +228,19 @@
                 <asp:TextBox ID="txtCorrectiveActions" runat="server" Text='<%# Bind("CorrectiveActions") %>' CssClass="form-control" />
             </EditItemTemplate>
         </asp:TemplateField>
+
+<asp:TemplateField HeaderText="Submitted Date">
+    <ItemTemplate>
+        <%# Eval("SubmittedDate", "{0:yyyy-MM-dd}") %>
+    </ItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Submitted Time">
+    <ItemTemplate>
+        <%# Eval("SubmittedTime", "{0:hh\\:mm}") %>
+    </ItemTemplate>
+</asp:TemplateField>
+
 
                             <asp:TemplateField HeaderText="Actions">
                                 <ItemTemplate>

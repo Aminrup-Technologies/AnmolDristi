@@ -29,7 +29,8 @@ namespace AnmolDristi
                 conn.Open();
                 string query = @"
             SELECT 
-                i.IncidentID, i.IncidentClassification, i.DateOfIncident, i.Location, i.Department, 
+                i.IncidentID, i.IncidentClassification, i.DateOfIncident, i.Location, i.Department, i.SubmittedDate,                    
+    i.SubmittedTime,
                 p.NameOfPersonInvolved, p.AnyWitness, p.WitnessNames, p.ReportedBy, 
                  inv.CorrectiveActions
             FROM IncidentDetails i
@@ -137,6 +138,10 @@ namespace AnmolDristi
             string witnessNames = txtWitness1.Text;
             string reportedBy = txtReportedBy.Text;
             string vendorName = txtVendorName.Text;
+            DateTime submittedDateTime = DateTime.Now;
+            DateTime submittedDate = submittedDateTime.Date;
+            TimeSpan submittedTime = submittedDateTime.TimeOfDay;
+
             int totalInjuredPersons = int.Parse(txtInjuredPersons.Text);
 
             string investigationTeamMembers = txtInvestigationMember1.Text;
@@ -172,6 +177,9 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@Location", location);
                         cmd.Parameters.AddWithValue("@Department", department);
                         cmd.Parameters.AddWithValue("@Section", section);
+                        cmd.Parameters.AddWithValue("@SubmittedDate", submittedDate);
+                        cmd.Parameters.AddWithValue("@SubmittedTime", submittedTime);
+
 
                         SqlParameter outputIdParam = new SqlParameter("@IncidentID", System.Data.SqlDbType.Int)
                         {
