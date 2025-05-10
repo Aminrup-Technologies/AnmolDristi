@@ -102,6 +102,7 @@
     <Content Include="qaqc_home.aspx" />
     <Content Include="Dristi.Master" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
+    <None Include="Properties\PublishProfiles\eshabharti.aminruptechnologies.co.in - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
