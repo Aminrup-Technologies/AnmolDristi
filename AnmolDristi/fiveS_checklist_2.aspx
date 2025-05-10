@@ -46,6 +46,7 @@
                                         <asp:BoundField DataField="Date" HeaderText="Date" />
                                         <asp:BoundField DataField="Department" HeaderText="Department" />
                                         <asp:BoundField DataField="Job" HeaderText="Job" />
+                                        <asp:BoundField DataField="Location" HeaderText="Location" />
 
                                         <asp:TemplateField HeaderText="Actions">
                                             <ItemTemplate>

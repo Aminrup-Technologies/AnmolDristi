@@ -78,6 +78,24 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.HiddenField ChecklistId;
 
         /// <summary>
+        /// txtLocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtLocation;
+
+        /// <summary>
+        /// rfvLocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLocation;
+
+        /// <summary>
         /// DictionaryRepeater control.
         /// </summary>
         /// <remarks>

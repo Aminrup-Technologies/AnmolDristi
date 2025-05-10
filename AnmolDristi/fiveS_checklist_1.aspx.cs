@@ -100,6 +100,7 @@ namespace AnmolDristi
                     txtDate.Text = Convert.ToDateTime(reader["Date"]).ToString("yyyy-MM-dd");
                     txtDepartment.Text = reader["Department"].ToString();
                     txtJob.Text = reader["Job"].ToString();
+                    txtLocation.Text = reader["Location"].ToString();
                     ChecklistId.Value = reader["ID"].ToString();
                 }
                 reader.Close();
@@ -140,6 +141,7 @@ namespace AnmolDristi
             checklistRow["Date"] = txtDate.Text;
             checklistRow["Department"] = txtDepartment.Text;
             checklistRow["Job"] = txtJob.Text;
+            checklistRow["Location"] = txtLocation.Text;
 
             _dataSource.Checklists.Rows.Add(checklistRow);
             _dataSource.Checklists.Rows[0].AcceptChanges();
@@ -193,9 +195,13 @@ namespace AnmolDristi
                         photo.SaveAs(filePath);
                         checklistInfoRow["Before_photo"] = filename;
                     }
-                    else if (ExistingImage.Text != "")
+                    else if (ExistingImage.Text != "" && rbl.SelectedValue == "false")
                     {
                         checklistInfoRow["Before_photo"] = ExistingImage.Text;
+                    }
+                    else
+                    {
+                        checklistInfoRow["Before_photo"] = null;
                     }
 
                     _dataSource.ChecklistInfo.Rows.Add(checklistInfoRow);
@@ -247,7 +253,7 @@ namespace AnmolDristi
 
                     checklisttable.Connection = sqlConnection;
 
-                    var checklistId = checklisttable.InsertChecklist(txtDate.Text, txtDepartment.Text, txtJob.Text, "test", DateTime.Now);
+                    var checklistId = checklisttable.InsertChecklist(txtDate.Text, txtDepartment.Text, txtJob.Text,"test", DateTime.Now, txtLocation.Text);
 
                     //  ChecklistInfo rows
                     foreach (RepeaterItem parentItem in DictionaryRepeater.Items)

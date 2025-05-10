@@ -18,37 +18,37 @@
 
 
     <script type="text/javascript">
-        function validateChecklist() {
-            let isValid = true;
+        function validateChecklist(sender, args) {
+            var isValid = true;
 
             document.querySelectorAll(".requirement-item").forEach(function (item) {
                 const selectedResult = item.querySelector("input[type='radio']:checked");
                 const remark = item.querySelector(".remark-input");
                 const photo = item.querySelector(".photo-input");
-                const remarkError = item.querySelector(".rfv.remark-error");
-                const photoError = item.querySelector(".rfv.photo-error");
-                const img = item.querySelector(".gmg");
+                //const remarkError = item.querySelector(".rfv.remark-error");
+                //const photoError = item.querySelector(".rfv.photo-error");
+                //const img = item.querySelector(".gmg");
 
 
-                if (remarkError) remarkError.style.display = "none";
-                if (photoError) photoError.style.display = "none";
+                //if (remarkError) remarkError.style.display = "none";
+                //if (photoError) photoError.style.display = "none";
 
                 if (selectedResult && selectedResult.value === "false") {
                     if (!remark || remark.value.trim() === "") {
-                        if (remarkError) remarkError.style.display = "block";
+                       //if (remarkError) remarkError.style.display = "block";
                         isValid = false;
                     }
 
-                    if ((!photo || !photo.value) || img == "") {
-                        if (photoError) photoError.style.display = "block";
-                        isValid = false;
-                    }
+                    //if ((!photo || !photo.value) || img == "") {
+                    //    if (photoError) photoError.style.display = "block";
+                    //    isValid = false;
+                    //}
                 }
             });
 
 
-
-            return isValid;
+            console.log("Validation result:", isValid);
+            args.IsValid = isValid;
 
         }
 
@@ -62,7 +62,7 @@
             if (radioBtn.value === "false") {
                 hiddenFields.style.display = "block";
             }
-                // OK
+            // OK
             else {
                 hiddenFields.style.display = "none";
 
@@ -193,6 +193,18 @@
                                         ValidationGroup="save" />
                                     <asp:HiddenField runat="server" ID="ChecklistId" />
                                 </div>
+
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <asp:Label for="txtLocation" runat="server" class="form-label" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Location:</asp:Label>
+                                    <asp:TextBox ID="txtLocation" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="rfvLocation" runat="server"
+                                        ControlToValidate="txtLocation"
+                                        ErrorMessage="Location is required"
+                                        CssClass="text-danger"
+                                        Display="Dynamic"
+                                        ValidationGroup="save" />
+                                </div>
+
                             </div>
 
 
@@ -245,11 +257,18 @@
                                                         </div>
 
                                                         <div class="col-md-6 hidden-fields" style="">
-                                                            <div class="row">
+                                                            <div class="row ">
                                                                 <div class="col-md-6">
                                                                     <label for="labelremarks" class="form-label">Remarks:</label>
                                                                     <asp:TextBox ID="Remark_text" runat="server" CssClass="form-control remark-input" TextMode="MultiLine"></asp:TextBox>
-                                                                    <span class="text-danger rfv remark-error" style="display: none;">Remark is required</span>
+                                                                    <asp:CustomValidator ID="cvChecklist" runat="server" ControlToValidate="Remark_text"
+                                                                        ClientValidationFunction="validateChecklist"
+                                                                        ErrorMessage="Remark is required."
+                                                                        CssClass="text-danger"
+                                                                        Display="Dynamic"
+                                                                        ValidateEmptyText="true"
+                                                                        ValidationGroup="save" />
+                                                                    <%--<span class="text-danger rfv remark-error" style="display: none;">Remark is required</span>--%>
                                                                 </div>
 
                                                                 <div class="col-md-6 ">
@@ -270,7 +289,7 @@
                                 </ItemTemplate>
                             </asp:Repeater>
                             <div class="text-center mt-4">
-                                <asp:Button ID="submit" runat="server" OnClick="submit_Click" Text="Submit" CssClass="btn btn-success px-4 py-2" OnClientClick="validateChecklist();" ValidationGroup="save" />
+                                <asp:Button ID="submit" runat="server" OnClick="submit_Click" Text="Submit" CssClass="btn btn-success px-4 py-2" ValidationGroup="save" />
                                 <asp:Button ID="reset" runat="server" OnClick="reset_Click" Text="Reset" CssClass="btn btn-secondary px-4 py-2" OnClientClick="confirmReset(); return false;" />
                                 <asp:Button runat="server" ID="home" Text="Home" CssClass="btn btn-primary px-4 py-2" OnClick="home_Click" />
                             </div>

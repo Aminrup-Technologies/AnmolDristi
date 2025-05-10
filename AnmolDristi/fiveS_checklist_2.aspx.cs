@@ -38,9 +38,12 @@ namespace AnmolDristi
 
         protected void GridViewChecklists_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType.ToString() == "DataRow")
-            {
-                e.Row.Cells[1].Text = Convert.ToDateTime(e.Row.Cells[1].Text).ToShortDateString();
+            if (!string.IsNullOrEmpty(e.Row.Cells[1].Text))
+            { 
+                if (e.Row.RowType.ToString() == "DataRow")
+                {
+                    e.Row.Cells[1].Text = Convert.ToDateTime(e.Row.Cells[1].Text).ToShortDateString();
+                }
             }
         }
 
