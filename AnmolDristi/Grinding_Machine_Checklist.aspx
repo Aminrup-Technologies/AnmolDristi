@@ -40,7 +40,7 @@
                         </div>
                         <div class="x_content">
 
-                            <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 1: Basic Details</h3>
+                            <h3 style="color: teal; font-weight: bold; margin-top: 5px;">Step 1: Basic Details</h3>
                             <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
                             <div class="row">
                                 <!-- Site -->
@@ -142,10 +142,12 @@
                                     </div>
                                 </div>
 
+                            </div>
+                            <div>
                                 <!-- Row for Step 2 heading -->
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 2: Checklist</h3>
+                                        <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 2: Checklist Points</h3>
                                         <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
                                     </div>
                                 </div>
@@ -314,29 +316,29 @@
                                     </tr>
                                 </table>
 
-<!-- Final Remarks -->
-<div class="col-md-6">
-    <div class="mb-3">
-        <asp:Label ID="lblFinalRemarks" runat="server" Text="Final Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtFinalRemarks" runat="server"
-                CssClass="form-control form-control-sm rounded"
-                TextMode="MultiLine"
-                Rows="3"
-                Placeholder="Enter any final remarks">
-            </asp:TextBox>
-        </div>
-    </div>
-</div>
+                                <!-- Final Remarks -->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <asp:Label ID="lblFinalRemarks" runat="server" Text="Final Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="txtFinalRemarks" runat="server"
+                                                CssClass="form-control form-control-sm rounded"
+                                                TextMode="MultiLine"
+                                                Rows="3"
+                                                Placeholder="Enter any final remarks">
+                                            </asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
 
 
                                 <script type="text/javascript">
-    function validateGrindingChecklist() {
-        var isValid = true;
-        var errorMessage = "";
+                                    function validateGrindingChecklist() {
+                                        var isValid = true;
+                                        var errorMessage = "";
 
-        var fieldsToCheck = [
-            { id: '<%= txtSite.ClientID %>', type: 'textbox', name: 'Site' },
+                                        var fieldsToCheck = [
+                                            { id: '<%= txtSite.ClientID %>', type: 'textbox', name: 'Site' },
             { id: '<%= txtDateOfInspection.ClientID %>', type: 'textbox', name: 'Date of Inspection' },
             { id: '<%= txtInspectedBy.ClientID %>', type: 'textbox', name: 'Inspected By' },
             { id: '<%= txtSerialNo.ClientID %>', type: 'textbox', name: 'SI No' },
@@ -395,13 +397,13 @@
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group input-group-sm">
-<%--                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />--%>
+                                            <%--                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />--%>
 
-                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save" 
-    CssClass="btn btn-primary btn-sm"
-    ValidationGroup="Submit" CausesValidation="true"
-    OnClientClick="return validateGrindingChecklist();"
-    OnClick="BtnSubmit_Click" />
+                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save"
+                                                CssClass="btn btn-primary btn-sm"
+                                                ValidationGroup="Submit" CausesValidation="true"
+                                                OnClientClick="return validateGrindingChecklist();"
+                                                OnClick="BtnSubmit_Click" />
 
                                             <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                                             <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />

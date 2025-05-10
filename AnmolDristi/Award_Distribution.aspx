@@ -29,7 +29,7 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Award Distribution</h2>
+                            <h2>Award Distribution Report</h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -52,7 +52,7 @@
                                         <asp:Label ID="lblAwardDate" runat="server" Text="Award Date:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtDateOfAwardDistribution" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date" />
-                                            <asp:RequiredFieldValidator ID="rfvAwardDate" runat="server" ControlToValidate="txtDateOfAwardDistribution" ErrorMessage="Award Date is required." ForeColor="Red" Display="Dynamic" />
+                                            <asp:RequiredFieldValidator ID="rfvAwardDate" runat="server" ValidationGroup="Basic" ControlToValidate="txtDateOfAwardDistribution" ErrorMessage="Award Date is required." ForeColor="Red" Display="Dynamic" />
                                         </div>
                                     </div>
                                 </div>
@@ -64,9 +64,18 @@
                                         <asp:Label ID="lblEventName" runat="server" Text="Event Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtEventName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Event Name" />
-                                            <asp:RequiredFieldValidator ID="rfvEventName" runat="server" ControlToValidate="txtEventName" ErrorMessage="Event Name is required." ForeColor="Red" Display="Dynamic" />
+                                            <asp:RequiredFieldValidator ID="rfvEventName" runat="server" ValidationGroup="Basic" ControlToValidate="txtEventName" ErrorMessage="Event Name is required." ForeColor="Red" Display="Dynamic" />
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h4 class="text-left text-info">Awardee Additon</h4>
+                                    <hr />
                                 </div>
 
                                 <!-- Employee ID -->
@@ -75,7 +84,7 @@
                                         <asp:Label ID="lblEmployeeID" runat="server" Text="Employee ID:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtEmployeeID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Employee ID" />
-                                            <asp:RequiredFieldValidator ID="rfvEmployeeID" runat="server" ControlToValidate="txtEmployeeID" ErrorMessage="Employee ID is required." ForeColor="Red" Display="Dynamic" />
+                                            <asp:RequiredFieldValidator ID="rfvEmployeeID" runat="server" ValidationGroup="Awardee" ControlToValidate="txtEmployeeID" ErrorMessage="Employee ID is required." ForeColor="Red" Display="Dynamic" />
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +95,7 @@
                                         <asp:Label ID="lblEmployeeName" runat="server" Text="Employee Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtEmployeeName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Employee Name" />
-                                            <asp:RequiredFieldValidator ID="rfvEmployeeName" runat="server" ControlToValidate="txtEmployeeName" ErrorMessage="Employee Name is required." ForeColor="Red" Display="Dynamic" />
+                                            <asp:RequiredFieldValidator ID="rfvEmployeeName" runat="server" ValidationGroup="Awardee" ControlToValidate="txtEmployeeName" ErrorMessage="Employee Name is required." ForeColor="Red" Display="Dynamic" />
                                         </div>
                                     </div>
                                 </div>
@@ -97,22 +106,22 @@
                                         <asp:Label ID="lblDesignation" runat="server" Text="Designation:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtDesignation" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Designation" />
-                                            <asp:RequiredFieldValidator ID="rfvDesignation" runat="server" ControlToValidate="txtDesignation" ErrorMessage="Designation is required." ForeColor="Red" Display="Dynamic" />
+                                            <asp:RequiredFieldValidator ID="rfvDesignation" runat="server" ValidationGroup="Awardee" ControlToValidate="txtDesignation" ErrorMessage="Designation is required." ForeColor="Red" Display="Dynamic" />
                                         </div>
                                     </div>
                                 </div>
 
 
                                 <!-- Award Category -->
-                                <div class="col-md-6 col-sm-12">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <asp:Label ID="lbl_awardcategory" runat="server" Text="Award Category:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
                                             <asp:DropDownList ID="ddlAwardCategory" runat="server" CssClass="form-control form-control-sm rounded" AutoPostBack="true">
-    <asp:ListItem Text="--Select Award Category--" Value="-1" />
-</asp:DropDownList>
+                                                <asp:ListItem Text="--Select Award Category--" Value="-1" />
+                                            </asp:DropDownList>
 
-                                            <asp:RequiredFieldValidator ID="rfvAwardCategory" runat="server" ControlToValidate="ddlAwardCategory" InitialValue="-1" ErrorMessage="Select Award Category." ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
+                                            <asp:RequiredFieldValidator ID="rfvAwardCategory" runat="server" ValidationGroup="Awardee" ControlToValidate="ddlAwardCategory" InitialValue="-1" ErrorMessage="Select Award Category." ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +143,7 @@
 </div>--%>
 
                                 <!-- Placeholder for dynamic upload controls -->
-                                <div class="col-md-6 col-sm-12">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <asp:Label ID="lblUploadImages" runat="server" Text="Upload Images:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <asp:PlaceHolder ID="phImageUploadControls" runat="server"></asp:PlaceHolder>
@@ -153,7 +162,7 @@
 
                                     <!-- Add More / Remove Buttons -->
                                     <div class="form-group mt-3">
-                                        <asp:Button ID="BtnAddEmployee" runat="server" CssClass="btn btn-success btn-sm" Text="Add More" OnClick="BtnAddEmployee_Click" />
+                                        <asp:Button ID="BtnAddEmployee" runat="server" CssClass="btn btn-success btn-sm" ValidationGroup="Awardee" CausesValidation="true" Text="Add More" OnClick="BtnAddEmployee_Click" />
                                         &nbsp;
         <asp:Button ID="BtnRemoveEmployee" runat="server" CssClass="btn btn-danger btn-sm" Text="Remove" OnClick="BtnRemoveEmployee_Click" />
                                     </div>
@@ -195,19 +204,27 @@
 
                                     // Re-run initializer when "Add More" is clicked
                                     document.getElementById("btnAddMore")?.addEventListener('click', function () {
-                                        setTimeout(initializeFileInputs, 100); // Delay to allow new inputs to appear
+                                        setTimeout(initializeFileInputs, 100);
                                     });
                                 </script>
 
 
 
+                                <div class="col-md-12">
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h4 class="text-left text-info">Final Submission</h4>
+                                    <hr />
+                                </div>
 
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group input-group-sm">
-                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
+                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Basic" CausesValidation="true" OnClick="BtnSubmit_Click" />
                                             <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                                             <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                         </div>

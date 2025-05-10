@@ -124,7 +124,21 @@
                         <div class="x_content">
                             <div class="row">
 
-                          
+                                <!-- Date -->
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <asp:Label ID="lblDate" runat="server" Text="Date:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="txtDate" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Select Date" TextMode="Date"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="rfvDate" runat="server"
+                                                ControlToValidate="txtDate"
+                                                ErrorMessage="Please enter Date."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- Worksite -->
                                 <div class="col-md-3">
                                     <div class="mb-3">
@@ -171,21 +185,7 @@
                                 </div>
 
 
-                                <!-- Date -->
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblDate" runat="server" Text="Date:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:TextBox ID="txtDate" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Select Date" TextMode="Date"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvDate" runat="server"
-                                                ControlToValidate="txtDate"
-                                                ErrorMessage="Please enter Date."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
-                                        </div>
-                                    </div>
-                                </div>
+
 
 
                                 <!-- JOB ID -->
@@ -379,11 +379,6 @@
                                 </div>
 
                                 <asp:HiddenField ID="hfKYTGridData" runat="server" />
-
-
-
-
-
                                 <script type="text/javascript">
                                     function validateFormBeforeSubmit() {
                                         var isValid = true;
@@ -392,82 +387,82 @@
                                         // Static fields check (Dropdowns and Textboxes)
                                         var fieldsToCheck = [
                                             { id: '<%= txtWorksite.ClientID %>', type: 'textbox', name: 'Worksite' },
-            { id: '<%= txtDepartment.ClientID %>', type: 'textbox', name: 'Department' },
-            { id: '<%= txtLocation.ClientID %>', type: 'textbox', name: 'Location' },
-            { id: '<%= txtDate.ClientID %>', type: 'textbox', name: 'Date (dd-mm-yyyy)' },
-            { id: '<%= txtJobID.ClientID %>', type: 'textbox', name: 'Job ID' },
-            { id: '<%= txtActivity.ClientID %>', type: 'textbox', name: 'Activity' },
-            { id: '<%= txtSOPNo.ClientID %>', type: 'textbox', name: 'SOP NO' },
-            { id: '<%= txtVender.ClientID %>', type: 'textbox', name: 'Vendor' },
-          //  { id: '<%= txtSlNo.ClientID %>', type: 'textbox', name: 'Sl. No.' },
-          //  { id: '<%= txtHiddenHazards.ClientID %>', type: 'textbox', name: 'Hidden Hazards' },
-          //  { id: '<%= txtConsequence.ClientID %>', type: 'textbox', name: 'Consequence' },
-          //  { id: '<%= txtCounterMeasures.ClientID %>', type: 'textbox', name: 'Counter Measures' },
-          //  { id: '<%= ddlPriority.ClientID %>', type: 'dropdown', name: 'Priority' },
-         //   { id: '<%= fuPhotograph.ClientID %>', type: 'file', name: 'Photograph' }
-        ];
+                                            { id: '<%= txtDepartment.ClientID %>', type: 'textbox', name: 'Department' },
+                                            { id: '<%= txtLocation.ClientID %>', type: 'textbox', name: 'Location' },
+                                            { id: '<%= txtDate.ClientID %>', type: 'textbox', name: 'Date (dd-mm-yyyy)' },
+                                            { id: '<%= txtJobID.ClientID %>', type: 'textbox', name: 'Job ID' },
+                                            { id: '<%= txtActivity.ClientID %>', type: 'textbox', name: 'Activity' },
+                                            { id: '<%= txtSOPNo.ClientID %>', type: 'textbox', name: 'SOP NO' },
+                                            { id: '<%= txtVender.ClientID %>', type: 'textbox', name: 'Vendor' },
+                                          //  { id: '<%= txtSlNo.ClientID %>', type: 'textbox', name: 'Sl. No.' },
+                                          //  { id: '<%= txtHiddenHazards.ClientID %>', type: 'textbox', name: 'Hidden Hazards' },
+                                          //  { id: '<%= txtConsequence.ClientID %>', type: 'textbox', name: 'Consequence' },
+                                          //  { id: '<%= txtCounterMeasures.ClientID %>', type: 'textbox', name: 'Counter Measures' },
+                                          //  { id: '<%= ddlPriority.ClientID %>', type: 'dropdown', name: 'Priority' },
+                                         //   { id: '<%= fuPhotograph.ClientID %>', type: 'file', name: 'Photograph' }
+                                        ];
 
-        for (var i = 0; i < fieldsToCheck.length; i++) {
-            var fieldInfo = fieldsToCheck[i];
-            var field = document.getElementById(fieldInfo.id);
-            if (field) {
-                if (fieldInfo.type === 'textbox') {
-                    if (field.value.trim() === "") {
-                        isValid = false;
-                        errorMessage += "- Please fill " + fieldInfo.name + ".\n";
-                        field.classList.add("is-invalid");
-                    } else {
-                        field.classList.remove("is-invalid");
-                    }
-                } else if (fieldInfo.type === 'dropdown') {
-                    if (field.value === "0" || field.selectedIndex === 0) {
-                        isValid = false;
-                        errorMessage += "- Please select " + fieldInfo.name + ".\n";
-                        field.classList.add("is-invalid");
-                    } else {
-                        field.classList.remove("is-invalid");
-                    }
-                } else if (fieldInfo.type === 'file') {
-                    if (field.files.length === 0) {
-                        isValid = false;
-                        errorMessage += "- Please upload a Photograph.\n";
-                        field.classList.add("is-invalid");
-                    } else {
-                        field.classList.remove("is-invalid");
-                    }
-                }
-            }
-        }
+                                        for (var i = 0; i < fieldsToCheck.length; i++) {
+                                            var fieldInfo = fieldsToCheck[i];
+                                            var field = document.getElementById(fieldInfo.id);
+                                            if (field) {
+                                                if (fieldInfo.type === 'textbox') {
+                                                    if (field.value.trim() === "") {
+                                                        isValid = false;
+                                                        errorMessage += "- Please fill " + fieldInfo.name + ".\n";
+                                                        field.classList.add("is-invalid");
+                                                    } else {
+                                                        field.classList.remove("is-invalid");
+                                                    }
+                                                } else if (fieldInfo.type === 'dropdown') {
+                                                    if (field.value === "0" || field.selectedIndex === 0) {
+                                                        isValid = false;
+                                                        errorMessage += "- Please select " + fieldInfo.name + ".\n";
+                                                        field.classList.add("is-invalid");
+                                                    } else {
+                                                        field.classList.remove("is-invalid");
+                                                    }
+                                                } else if (fieldInfo.type === 'file') {
+                                                    if (field.files.length === 0) {
+                                                        isValid = false;
+                                                        errorMessage += "- Please upload a Photograph.\n";
+                                                        field.classList.add("is-invalid");
+                                                    } else {
+                                                        field.classList.remove("is-invalid");
+                                                    }
+                                                }
+                                            }
+                                        }
 
-        // If there are any validation errors, show the error messages
-        if (!isValid) {
-            alert("Please complete all required fields:\n\n" + errorMessage);
-            return false;
-        }
-        return true;
-    }
-
-    function getFriendlyName(id) {
-        var nameMap = {
-            '<%= txtWorksite.ClientID %>': "Worksite",
-            '<%= txtDepartment.ClientID %>': "Department",
-            '<%= txtLocation.ClientID %>': "Location",
-            '<%= txtDate.ClientID %>': "Date (dd-mm-yyyy)",
-            '<%= txtJobID.ClientID %>': "Job ID",
-            '<%= txtActivity.ClientID %>': "Activity",
-            '<%= txtSOPNo.ClientID %>': "SOP NO",
-            '<%= txtVender.ClientID %>': "Vendor",
-            '<%= txtSlNo.ClientID %>': "Sl. No.",
-         //   '<%= txtHiddenHazards.ClientID %>': "Hidden Hazards",
-         //   '<%= txtConsequence.ClientID %>': "Consequence",
-         //   '<%= txtCounterMeasures.ClientID %>': "Counter Measures",
-         //   '<%= ddlPriority.ClientID %>': "Priority",
-         //   '<%= fuPhotograph.ClientID %>': "Photograph"
-                                        };
-                                        return nameMap[id] || "this field";
+                                        // If there are any validation errors, show the error messages
+                                        if (!isValid) {
+                                            alert("Please complete all required fields:\n\n" + errorMessage);
+                                            return false;
+                                        }
+                                        return true;
                                     }
 
-                                    window.onload = function () {
+                                    function getFriendlyName(id) {
+                                        var nameMap = {
+                                            '<%= txtWorksite.ClientID %>': "Worksite",
+                                            '<%= txtDepartment.ClientID %>': "Department",
+                                            '<%= txtLocation.ClientID %>': "Location",
+                                            '<%= txtDate.ClientID %>': "Date (dd-mm-yyyy)",
+                                            '<%= txtJobID.ClientID %>': "Job ID",
+                                            '<%= txtActivity.ClientID %>': "Activity",
+                                            '<%= txtSOPNo.ClientID %>': "SOP NO",
+                                            '<%= txtVender.ClientID %>': "Vendor",
+                                            '<%= txtSlNo.ClientID %>': "Sl. No.",
+                                            //   '<%= txtHiddenHazards.ClientID %>': "Hidden Hazards",
+                                            //   '<%= txtConsequence.ClientID %>': "Consequence",
+                                            //   '<%= txtCounterMeasures.ClientID %>': "Counter Measures",
+                                            //   '<%= ddlPriority.ClientID %>': "Priority",
+                                            //   '<%= fuPhotograph.ClientID %>': "Photograph"
+                                            };
+                                            return nameMap[id] || "this field";
+                                        }
+
+                                        window.onload = function () {
                                         document.getElementById('<%= btnSubmit.ClientID %>').onclick = function (e) {
                                             if (!validateFormBeforeSubmit()) {
                                                 e.preventDefault();
