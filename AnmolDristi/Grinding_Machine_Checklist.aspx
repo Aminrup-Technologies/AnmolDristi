@@ -314,21 +314,21 @@
                                     </tr>
                                 </table>
 
+<!-- Final Remarks -->
+<div class="col-md-6">
+    <div class="mb-3">
+        <asp:Label ID="lblFinalRemarks" runat="server" Text="Final Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtFinalRemarks" runat="server"
+                CssClass="form-control form-control-sm rounded"
+                TextMode="MultiLine"
+                Rows="3"
+                Placeholder="Enter any final remarks">
+            </asp:TextBox>
+        </div>
+    </div>
+</div>
 
-                                <!-- Remarks -->
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblRemarks" runat="server" Text="Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:TextBox ID="txtRemarks" runat="server"
-                                                CssClass="form-control form-control-sm rounded"
-                                                TextMode="MultiLine"
-                                                Rows="3"
-                                                Placeholder="Enter any remarks">
-                                            </asp:TextBox>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <script type="text/javascript">
     function validateGrindingChecklist() {

@@ -59,6 +59,8 @@
                             <asp:BoundField DataField="IsYes" HeaderText="Is Yes" />
                             <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
                             <asp:BoundField DataField="PhotoPath" HeaderText="Photo Path" />
+                            <asp:BoundField DataField="Final_Remarks" HeaderText="Final Remarks" />
+
 
                             <asp:TemplateField HeaderText="Actions">
                                 <ItemTemplate>

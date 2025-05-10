@@ -555,22 +555,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuPowerCable;
 
         /// <summary>
-        /// lblRemarks control.
+        /// lblFinalRemarks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRemarks;
+        protected global::System.Web.UI.WebControls.Label lblFinalRemarks;
 
         /// <summary>
-        /// txtRemarks control.
+        /// txtFinalRemarks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRemarks;
+        protected global::System.Web.UI.WebControls.TextBox txtFinalRemarks;
 
         /// <summary>
         /// Lbl_btnSubmit control.

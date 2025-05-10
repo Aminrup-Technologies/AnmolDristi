@@ -90,8 +90,8 @@ namespace AnmolDristi
                 string query = @"
 SELECT 
     gh.HeaderID, gh.Site, gh.DateOfInspection, gh.InspectedBy, gh.SerialNo, 
-    gh.IdentificationNumber, gh.Location,
-    gc.Question AS ChecklistQuestion, gc.IsYes, gc.Remarks, gc.PhotoPath
+    gh.IdentificationNumber, gh.Location,gh.Final_Remarks,
+    gc.Question AS ChecklistQuestion, gc.IsYes, gc.Remarks, gc.PhotoPath, gc.EntryDate
 FROM GrindingMachine_Header gh
 LEFT JOIN GrindingMachine_Checklist gc ON gh.HeaderID = gc.HeaderID
 ORDER BY gh.HeaderID DESC";  
@@ -152,6 +152,8 @@ ORDER BY gh.HeaderID DESC";
                         cmdHeader.Parameters.AddWithValue("@SerialNo", txtSerialNo.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@IdentificationNumber", txtIdentificationNumber.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@Location", txtLocation.Text.Trim());
+                        cmdHeader.Parameters.AddWithValue("@Final_Remarks", txtFinalRemarks.Text.Trim());
+
 
                         // Output parameter for HeaderID
                         SqlParameter outputParam = new SqlParameter("@HeaderID", SqlDbType.Int)
@@ -280,7 +282,7 @@ ORDER BY gh.HeaderID DESC";
                 txtIdentificationNumber.Text = "";
                 txtLocation.Text = "";
 
-                txtRemarks.Text = "";
+                txtFinalRemarks.Text = "";
                 lblMessage.Text = "";
             }
         }
