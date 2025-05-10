@@ -16,22 +16,12 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack)
-            //{
-            //    if (Session["USERID"] == null || Session["USERNAME"] == null || Session["WORKMAN"] == null)
-            //    {
-            //        Response.Redirect("login.aspx");
-            //    }
-            //    else
-            //    {
-
-            //    }
-            //}
             if (!IsPostBack)
             {
                 LoadMeetingData();
             }
         }
+
         private void LoadMeetingData()
         {
             try
@@ -39,18 +29,21 @@ namespace AnmolDristi
                 string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
                 using (SqlConnection conn = new SqlConnection(connString))
                 {
-                    conn.Open(); 
-
+                    conn.Open();
                     string query = @"
-                    SELECT 
-                    MeetingID, 
-                    MeetingNo, 
-                    Title, 
-                    CONVERT(VARCHAR(10), MeetingDate, 23) AS MeetingDate, 
-                    CONVERT(VARCHAR(8), MeetingTime, 108) AS MeetingTime,
-                    Venue, 
-                    ChairedBy 
-                    FROM Committee_MeetingReview where MeetingID is not null";
+                    SELECT TOP 10
+                     MeetingID, 
+                     MeetingNo, 
+                     Title, 
+                     CONVERT(VARCHAR(10), MeetingDate, 23) AS MeetingDate, 
+                     CONVERT(VARCHAR(8), MeetingTime, 108) AS MeetingTime,
+                     Venue, 
+                     ChairedBy 
+                     FROM Committee_MeetingReview 
+                     WHERE MeetingID IS NOT NULL
+                     ORDER BY MeetingDate DESC";
+
+
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -58,17 +51,19 @@ namespace AnmolDristi
                         {
                             DataTable dt = new DataTable();
                             sda.Fill(dt);
-
                             if (dt.Rows.Count > 0)
                             {
                                 gvMeeting.DataSource = dt;
                                 gvMeeting.DataBind();
+                                //lblMsg.Text = $"{dt.Rows.Count} record(s) found.";
+                                //lblMsg.ForeColor = System.Drawing.Color.Green;
                             }
                             else
                             {
                                 gvMeeting.DataSource = null;
                                 gvMeeting.DataBind();
-                                Response.Write("<script>alert('No records found.');</script>");
+                                lblMsg.Text = "No records found for the selected date range.";
+                                lblMsg.ForeColor = System.Drawing.Color.OrangeRed;
                             }
                         }
                     }
@@ -78,6 +73,11 @@ namespace AnmolDristi
             {
                 Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
             }
+        }
+
+        protected void BtnView_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Committee_Report.aspx");
         }
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
@@ -129,8 +129,6 @@ namespace AnmolDristi
             Button btnEdit = (Button)sender;
             GridViewRow row = (GridViewRow)btnEdit.NamingContainer;
             int MeetingID = Convert.ToInt32(btnEdit.CommandArgument);
-
-            // Redirect to update page with AuditID in query string
             Response.Redirect($"Committee_meeting_update.aspx?MeetingID={MeetingID}");
         }
 
@@ -175,13 +173,16 @@ namespace AnmolDristi
         protected void BtnReset_Click(object sender, EventArgs e)
         {
             Response.Redirect("committee_meeting_report.aspx");
-            txtFromDate.Text = "";
-            txtToDate.Text = "";
-
-            // Clear GridView
-            gvMeeting.DataSource = null;
-            gvMeeting.DataBind();
+            //txtFromDate.Text = "";
+            //txtToDate.Text = "";
+            //LoadMeetingData();
         }
+        protected void BtnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("committee_meeting.aspx");
+           
+        }
+
 
 
 

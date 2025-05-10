@@ -78,13 +78,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Button BtnSearch;
 
         /// <summary>
-        /// BtnReset control.
+        /// BtnReseet control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnReset;
+        protected global::System.Web.UI.WebControls.Button BtnReseet;
+
+        /// <summary>
+        /// btn_home control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_home;
 
         /// <summary>
         /// lblMsg control.

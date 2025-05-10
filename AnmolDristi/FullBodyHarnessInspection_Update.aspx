@@ -29,6 +29,23 @@
         max-height: 300px; /* Adjust based on your UI */
     }
 }
+ /* Force equal column width */
+.equal-column-width {
+    table-layout: fixed !important;
+    width: 100% !important;
+}
+
+.equal-column-width th,
+.equal-column-width td {
+    width: 120px; /* or any fixed width you prefer */
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+
 </style>
 
 </asp:Content>
@@ -109,7 +126,7 @@
     <div class="col-md-12">
         <div class="mb-3">
             <asp:GridView ID="gvChecklist" runat="server" AutoGenerateColumns="False" DataKeyNames="IdentificationNo"
-                CssClass="table table-bordered table-sm table-hover mt-4">
+                CssClass="table table-bordered table-sm table-hover mt-4 equal-column-width">
                 <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
                 <Columns>
 
@@ -302,18 +319,17 @@
 
 
             <%--Button--%>
-<%--<div class="col-md-3">
+<div class="col-md-3">
                 <div class="mb-3">
-                    <asp:Label ID="Lbl_BtnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                    <asp:Label ID="Lbl_BtnUpdate" runat="server" AssociatedControlID="BtnUpdate" Text="Click to Update" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm"  OnClick="BtnSubmit_Click" />
-                        <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
-                        <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />
+                        <asp:Button ID="BtnUpdate" runat="server" Text="Submit" CssClass="btn btn-success btn-sm"  OnClick="BtnUpdate_Click" />
+                        <asp:Button ID="BtnBack" runat="server" Text="Back" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnBack_Click" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         
                     </div>
                 </div>
-            </div>            --%>
+            </div>            
 
         </div>
     </div>

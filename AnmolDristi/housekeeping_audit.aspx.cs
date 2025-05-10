@@ -20,7 +20,9 @@ namespace AnmolDristi
         {
             
         }
-       
+        
+
+
         protected void btnAddObservation_Click(object sender, EventArgs e)
         {
             DataTable dt;
@@ -38,7 +40,10 @@ namespace AnmolDristi
                 dt.Columns.Add("CorrectiveAction");
                 dt.Columns.Add("ClosingDate");
                 dt.Columns.Add("CloseBy");
+                dt.Columns.Add("TargetDate");
+                dt.Columns.Add("OpenByWorkman");
                 dt.Columns.Add("Status");
+                dt.Columns.Add("AssignedTo");
                 dt.Columns.Add("PhotoAfter");
                 dt.Columns.Add("PhotoBefore");
             }
@@ -107,7 +112,10 @@ namespace AnmolDristi
             dr["CorrectiveAction"] = txtCorrectiveAction.Text.Trim();
             
             dr["ClosingDate"] = txtClosingDate.Text.Trim();
+            dr["TargetDate"] = txtTargetDate.Text.Trim();
             dr["CloseBy"] = txtCloseBy.Text.Trim();
+            dr["OpenByWorkman"] = txtOpenByWorkman.Text.Trim();
+            dr["AssignedTo"] = txtAssignedTo.Text.Trim();
             dr["Status"] = ddlStatus.SelectedValue;
             dr["PhotoBefore"] = imagePath1;  // Assign Image Path
             dr["PhotoAfter"] = imagePath2;   // Assign Image Path
@@ -121,12 +129,15 @@ namespace AnmolDristi
 
             // Clear input fields after adding an observation
             txtObserverID.Text = "";
+            txtOpenByWorkman.Text = "";
             txtOpeningDate.Text = "";
+            txtTargetDate.Text = "";
             txtOpenBy.Text = "";
             txtObservation.Text = "";
             txtCorrectiveAction.Text = "";
             txtClosingDate.Text = "";
             txtCloseBy.Text = "";
+            txtAssignedTo.Text = "";
             ddlStatus.SelectedIndex = 0;
             //ScriptManager.RegisterStartupScript(this, GetType(), "clearFileInputs", "clearFileInputs();", true);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "showSuccessMessage();", true);
@@ -188,7 +199,7 @@ namespace AnmolDristi
             DataTable dt = (DataTable)ViewState["Observations"];
 
             // Remove duplicate rows before inserting
-            dt = dt.DefaultView.ToTable(true, "ObserverID", "Observation", "CorrectiveAction", "Status", "OpenBy", "CloseBy", "ClosingDate", "OpeningDate", "PhotoBefore", "PhotoAfter");
+            dt = dt.DefaultView.ToTable(true, "ObserverID", "Observation", "CorrectiveAction", "Status", "OpenByWorkman", "AssignedTo", "TargetDate", "OpenBy", "CloseBy", "ClosingDate", "OpeningDate", "PhotoBefore", "PhotoAfter");
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
@@ -241,13 +252,19 @@ namespace AnmolDristi
                             cmd.Parameters.AddWithValue("@Status",row["Status"].ToString());
                             cmd.Parameters.AddWithValue("@OpenBy",row["OpenBy"].ToString());
                             cmd.Parameters.AddWithValue("@CloseBy",row["CloseBy"].ToString());
-                            
+                            cmd.Parameters.AddWithValue("@AssignedTo", row["AssignedTo"].ToString());
+                            cmd.Parameters.AddWithValue("@OpenByWorkman", row["OpenByWorkman"].ToString());
+
 
                             cmd.Parameters.AddWithValue("@ClosingDate",
                                 string.IsNullOrEmpty(row["ClosingDate"].ToString()) ? DBNull.Value : (object)Convert.ToDateTime(row["ClosingDate"]));
 
                             cmd.Parameters.AddWithValue("@OpeningDate",
                                 string.IsNullOrEmpty(row["OpeningDate"].ToString()) ? DBNull.Value : (object)Convert.ToDateTime(row["OpeningDate"]));
+
+                            cmd.Parameters.AddWithValue("@TargetDate",
+                                string.IsNullOrEmpty(row["TargetDate"].ToString()) ? DBNull.Value : (object)Convert.ToDateTime(row["TargetDate"]));
+
 
                             cmd.Parameters.AddWithValue("@PhotoBefore",
                                 row["PhotoBefore"] == DBNull.Value || row["PhotoBefore"] == null ? (object)DBNull.Value : row["PhotoBefore"].ToString());

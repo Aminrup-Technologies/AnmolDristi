@@ -21,70 +21,83 @@ namespace AnmolDristi
                 LoadInspectionData();
             }
         }
+
         protected void BtnSearch_Click(object sender, EventArgs e)
         {
-            lblMsg.Text = ""; // Clear previous messages
+            string fromDate = txdate.Text.Trim();
+            string toDate = ttodate.Text.Trim();
 
-            string fromDateStr = txdate.Text.Trim();
-            string toDateStr = ttodate.Text.Trim();
-
-            if (!string.IsNullOrEmpty(fromDateStr) && !string.IsNullOrEmpty(toDateStr))
+            if (string.IsNullOrEmpty(fromDate) || string.IsNullOrEmpty(toDate))
             {
-                DateTime fromDate, toDate;
+                lblMsg.Text = "Please enter both From and To dates.";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
 
-                if (DateTime.TryParse(fromDateStr, out fromDate) && DateTime.TryParse(toDateStr, out toDate))
+            DateTime parsedFromDate, parsedToDate;
+            bool isFromValid = DateTime.TryParseExact(fromDate, "yyyy-MM-dd",
+                                         System.Globalization.CultureInfo.InvariantCulture,
+                                         System.Globalization.DateTimeStyles.None,
+                                         out parsedFromDate);
+
+            bool isToValid = DateTime.TryParseExact(toDate, "yyyy-MM-dd",
+                                     System.Globalization.CultureInfo.InvariantCulture,
+                                     System.Globalization.DateTimeStyles.None,
+                                     out parsedToDate);
+
+            if (!isFromValid || !isToValid)
+            {
+                lblMsg.Text = "Invalid date format.";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"
+            SELECT 
+                InspectionID, 
+                Site,
+                 EmployeeName,
+                InspectedBy, 
+                CONVERT(VARCHAR(10), DateOfInspection, 23) AS DateOfInspection 
+            FROM [CSMS].[dbo].[InspectionHeader]
+            WHERE DateOfInspection BETWEEN @FromDate AND @ToDate
+            ORDER BY DateOfInspection DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+                    cmd.Parameters.Add("@FromDate", SqlDbType.Date).Value = parsedFromDate;
+                    cmd.Parameters.Add("@ToDate", SqlDbType.Date).Value = parsedToDate;
 
-                    using (SqlConnection conn = new SqlConnection(connStr))
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count > 0)
                     {
-                        string query = @"SELECT [InspectionID], [EmployeeName], [Site], [InspectedBy], [DateOfInspection]
-                                 FROM [CSMS].[dbo].[InspectionHeader]
-                                 WHERE DateOfInspection BETWEEN @FromDate AND @ToDate
-                                 ORDER BY DateOfInspection DESC";
-
-                        using (SqlCommand cmd = new SqlCommand(query, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@FromDate", fromDate);
-                            cmd.Parameters.AddWithValue("@ToDate", toDate);
-
-                            DataTable dt = new DataTable();
-                            SqlDataAdapter da = new SqlDataAdapter(cmd);
-
-                            try
-                            {
-                                conn.Open();
-                                da.Fill(dt);
-
-                                if (dt.Rows.Count > 0)
-                                {
-                                    gvInspection.DataSource = dt;
-                                    gvInspection.DataBind();
-                                }
-                                else
-                                {
-                                    gvInspection.DataSource = null;
-                                    gvInspection.DataBind();
-                                    lblMsg.Text = "No records found for the selected date range.";
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                lblMsg.Text = "Error: " + ex.Message;
-                            }
-                        }
+                        gvInspection.DataSource = dt;
+                        gvInspection.DataBind();
+                        lblMsg.Text = $"{dt.Rows.Count} record(s) found.";
+                        lblMsg.ForeColor = System.Drawing.Color.Green;
+                    }
+                    else
+                    {
+                        gvInspection.DataSource = null;
+                        gvInspection.DataBind();
+                        lblMsg.Text = "No records found for the selected date range.";
+                        lblMsg.ForeColor = System.Drawing.Color.OrangeRed;
                     }
                 }
-                else
-                {
-                    lblMsg.Text = "Invalid date format.";
-                }
             }
-            else
-            {
-                lblMsg.Text = "Both dates are required.";
-            }
+            // Optional: Clear date inputs if needed
+            txdate.Text = "";
+            ttodate.Text = "";
         }
+
+
 
 
         private void LoadInspectionData()
@@ -166,6 +179,14 @@ namespace AnmolDristi
 
             // Redirect to update page with AuditID in query string
             Response.Redirect($"FullBodyHarnessInspection_Update.aspx?InspectionID={InspectionID}");
+        }
+
+        //Reset Button is not working
+        protected void BtnReseet_Click(object sender, EventArgs e)
+        {
+           
+           Response.Redirect("FullBodyHarnessInspection_View.aspx");
+           
         }
     }
 }

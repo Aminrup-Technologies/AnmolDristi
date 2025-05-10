@@ -96,6 +96,7 @@
     <Content Include="housekeeping_audit.aspx" />
     <Content Include="housekeeping_audit_report.aspx" />
     <Content Include="MassMeeting_Report.aspx" />
+    <Content Include="MassMeeting_Update.aspx" />
     <Content Include="packages.config" />
     <Content Include="practice.aspx" />
     <Content Include="qaqc_home.aspx" />
@@ -280,6 +281,13 @@
     <Compile Include="MassMeeting_Report.aspx.designer.cs">
       <DependentUpon>MassMeeting_Report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MassMeeting_Update.aspx.cs">
+      <DependentUpon>MassMeeting_Update.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MassMeeting_Update.aspx.designer.cs">
+      <DependentUpon>MassMeeting_Update.aspx</DependentUpon>
+    </Compile>
     <Compile Include="practice.aspx.cs">
       <DependentUpon>practice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -309,6 +317,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
+    <Folder Include="Uploads1\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

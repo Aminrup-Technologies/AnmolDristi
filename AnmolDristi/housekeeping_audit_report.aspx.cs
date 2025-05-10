@@ -115,8 +115,8 @@ namespace AnmolDristi
             }
 
             // Clear textboxes after execution
-            txtfromdate.Text = "";
-            txttodate.Text = "";
+            //txtfromdate.Text = "";
+            //txttodate.Text = "";
         }
 
 
@@ -125,6 +125,7 @@ namespace AnmolDristi
         {
             txtfromdate.Text = "";
             txttodate.Text = "";
+            Response.Redirect("housekeeping_audit_report.aspx");
         }
         protected void BtnEdit_Click(object sender, EventArgs e)
         {

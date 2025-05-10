@@ -204,14 +204,14 @@ namespace AnmolDristi
 
                         if (fu.HasFile)
                         {
-                            string folderPath = Server.MapPath("~/Uploads/");
+                            string folderPath = Server.MapPath("~/Uploads1/");
                             if (!Directory.Exists(folderPath))
                                 Directory.CreateDirectory(folderPath);
 
                             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(fu.FileName);
                             string fullPath = folderPath + fileName;
                             fu.SaveAs(fullPath);
-                            imgPath = "~/Uploads/" + fileName;
+                            imgPath = "~/Uploads1/" + fileName;
                         }
 
                         SqlCommand cmdAtt = new SqlCommand(@"UPDATE Committee_MeetingAttendance 
@@ -253,7 +253,7 @@ namespace AnmolDristi
                                    ReviewDate = @ReviewDate, 
                                    ReviewBy = @ReviewBy, 
                                    Status = @Status 
-                               WHERE IssueID = @IssueID", con, transaction);
+                               WHERE IssueID = @IssueID", con, transaction); 
 
                         cmdIssue.Parameters.AddWithValue("@Agenda", agenda);
                         cmdIssue.Parameters.AddWithValue("@IssueDesc", issues);

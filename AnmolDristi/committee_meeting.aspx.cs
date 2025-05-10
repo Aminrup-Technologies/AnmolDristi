@@ -106,13 +106,13 @@ namespace AnmolDristi
                     return;
                 }
 
-                string folderPath = Server.MapPath("~/Uploads/");
+                string folderPath = Server.MapPath("~/Uploads1/");
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
                 }
                 string fileName = Path.GetFileName(imgupload.FileName);
-                imagePath = "~/Uploads/" + fileName;
+                imagePath = "~/Uploads1/" + fileName;
                 imgupload.SaveAs(folderPath + fileName);
             }
             // Generating SNo dynamically

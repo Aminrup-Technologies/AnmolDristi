@@ -157,32 +157,6 @@
      <div class="clearfix"></div>
  </div>                         
 
-   
-            <%--<div class="table-responsive">
-    <div class="col-md-12">
-        <div class="mb-3">
-    <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" DataKeyNames="SNo" CssClass="table table-bordered table-hover ">
-    <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
-    <Columns>
-        <asp:BoundField DataField="SNo" HeaderText="SNo" />
-        <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title" />
-        <asp:BoundField DataField="IssuesDiscussed" HeaderText="Issues Discussed" />
-        <asp:BoundField DataField="ActionBy" HeaderText="Action By" />
-        <asp:BoundField DataField="TargetDate" HeaderText="Target Date" />
-        <asp:BoundField DataField="ReviewDate" HeaderText="Review Date" />
-        <asp:BoundField DataField="ReviewBy" HeaderText="Review By" />
-        <asp:BoundField DataField="Status" HeaderText="Status" />
-        <asp:TemplateField HeaderText="Action">
-            <ItemTemplate>
-                <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete ?');" />
-            </ItemTemplate>
-        </asp:TemplateField>
-    </Columns>
-</asp:GridView>
-            </div>
-        </div>
-        </div>--%>
-
              
     <div class="table-responsive">
          <div class="col-md-12">

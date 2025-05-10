@@ -100,6 +100,17 @@
                 <asp:TextBox ID="txtOpenBy" runat="server" Text='<%# Eval("OpenBy") %>' CssClass="form-control" />
             </ItemTemplate>
         </asp:TemplateField>
+        <asp:TemplateField HeaderText="Open By(Workman SL)">
+    <ItemTemplate>
+        <asp:TextBox ID="txtOpenByWorkman" runat="server" Text='<%# Eval("OpenByWorkman") %>' CssClass="form-control" />
+    </ItemTemplate>
+</asp:TemplateField>
+
+ <asp:TemplateField HeaderText="Target Date">
+     <ItemTemplate>
+         <asp:TextBox ID="txtTargetDate" runat="server" Text='<%# Eval("TargetDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control" />
+     </ItemTemplate>
+ </asp:TemplateField>
 
 
 
@@ -164,6 +175,12 @@
                 <asp:TextBox ID="txtCloseBy" runat="server" Text='<%# Eval("CloseBy") %>' CssClass="form-control" />
             </ItemTemplate>
         </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Assigned To">
+    <ItemTemplate>
+        <asp:TextBox ID="txtAssignedTo" runat="server" Text='<%# Eval("AssignedTo") %>' CssClass="form-control" />
+    </ItemTemplate>
+</asp:TemplateField>
 
         <asp:TemplateField HeaderText="Status">
             <ItemTemplate>

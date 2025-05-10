@@ -57,8 +57,7 @@ namespace AnmolDristi
             {
                 string query = @"SELECT ObserverID, OpeningDate, OpenBy, 
                                 ObservationText AS Observation, CorrectiveAction,
-                                ClosingDate, CloseBy, Status,
-                                -- Use these if you're storing images as URLs or Base64 strings:
+                                ClosingDate, CloseBy, Status,OpenByWorkman,TargetDate,AssignedTo,
                                 PhotoBefore, PhotoAfter
                          FROM AuditObservations 
                          WHERE AuditID = @AuditID";

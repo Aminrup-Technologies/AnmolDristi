@@ -35,18 +35,19 @@ namespace AnmolDristi
             {
                 conn.Open();
                 string query = @"
-            SELECT 
-                M.Meeting_ID,
-                M.Meeting_Time,
-                M.Meeting_Date,
-                M.Location,
-                A.Employee_Name,
-                A.Designation,
-                A.RFID,
-                P.Points_Discussed
-            FROM Meeting M
-            INNER JOIN Attendees A ON M.Meeting_ID = A.Meeting_ID
-            INNER JOIN Points P ON A.Attendees_ID = P.Attendees_ID";
+                SELECT TOP 10 
+                    M.Meeting_ID,
+                    M.Meeting_Time,
+                    M.Meeting_Date,
+                    M.Location,
+                    A.Employee_Name,
+                    A.Designation,
+                    A.RFID,
+                    P.Points_Discussed
+                FROM Meeting M
+                INNER JOIN Attendees A ON M.Meeting_ID = A.Meeting_ID
+                INNER JOIN Points P ON A.Attendees_ID = P.Attendees_ID";
+
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -119,7 +120,7 @@ namespace AnmolDristi
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"
+            string query = @"
             SELECT 
                 M.Meeting_ID,
                 M.Meeting_Time,
@@ -133,6 +134,7 @@ namespace AnmolDristi
             INNER JOIN Attendees A ON M.Meeting_ID = A.Meeting_ID 
             INNER JOIN Points P ON A.Attendees_ID = P.Attendees_ID
             WHERE M.Meeting_Date = @FromDate";
+
 
                 if (!string.IsNullOrEmpty(toDate))
                 {

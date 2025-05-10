@@ -18,10 +18,13 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-
+            if (IsPostBack)
+            {
+                txtDocNo.Text = hfEmployeeName.Value;
+            }
         }
 
+        //Code to fetch the details from backend 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public static string GetEmployeeName(string inspectionId)
@@ -335,6 +338,73 @@ namespace AnmolDristi
         {
             Response.Redirect("FullBodyHarnessInspection.aspx");
         }
+        //protected void BtnSubmit_Click(object sender, EventArgs e)
+        //{
+        //    string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+        //    using (SqlConnection conn = new SqlConnection(connStr))
+        //    {
+        //        conn.Open();
+
+        //        SqlTransaction transaction = conn.BeginTransaction();
+
+        //        try
+        //        {
+        //            // 1. Insert into InspectionHeader
+        //            string insertHeaderQuery = @"INSERT INTO InspectionHeader (EmployeeName, Site, InspectedBy, DateOfInspection)
+        //                                 OUTPUT INSERTED.InspectionID
+        //                                 VALUES (@EmployeeName, @Site, @InspectedBy, @DateOfInspection)";
+
+        //            SqlCommand cmdHeader = new SqlCommand(insertHeaderQuery, conn, transaction);
+        //            cmdHeader.Parameters.AddWithValue("@EmployeeName", txtDocNo.Text.Trim());
+        //            cmdHeader.Parameters.AddWithValue("@Site", txtSite.Text.Trim());
+        //            cmdHeader.Parameters.AddWithValue("@InspectedBy", txtInsBy.Text.Trim());
+        //            cmdHeader.Parameters.AddWithValue("@DateOfInspection", Convert.ToDateTime(txtdate.Text.Trim()));
+
+        //            int inspectionID = (int)cmdHeader.ExecuteScalar();
+
+        //            // 2. Insert into InspectionChecklist for each row in the grid (from ViewState)
+        //            DataTable checklistData = ViewState["ChecklistData"] as DataTable;
+
+        //            if (checklistData != null)
+        //            {
+        //                foreach (DataRow row in checklistData.Rows)
+        //                {
+        //                    for (int qNum = 1; qNum <= 5; qNum++)
+        //                    {
+        //                        string questionStatus = row[$"Q{qNum}Status"].ToString();
+        //                        string remarks = row[$"Q{qNum}Remarks"].ToString();
+        //                        string photoPath = row[$"Q{qNum}Photo"].ToString();
+
+        //                        string insertChecklistQuery = @"INSERT INTO InspectionChecklist 
+        //                        (Location, InspectionNo, InspectionID, QuestionNumber, IsOk, Remarks, PhotoPath)
+        //                        VALUES (@Location, @InspectionNo, @InspectionID, @QuestionNumber, @IsOk, @Remarks, @PhotoPath)";
+
+        //                        SqlCommand cmdChecklist = new SqlCommand(insertChecklistQuery, conn, transaction);
+        //                        cmdChecklist.Parameters.AddWithValue("@Location", row["Location"].ToString());
+        //                        cmdChecklist.Parameters.AddWithValue("@InspectionNo", row["IdentificationNo"].ToString());
+        //                        cmdChecklist.Parameters.AddWithValue("@InspectionID", inspectionID);
+        //                        cmdChecklist.Parameters.AddWithValue("@QuestionNumber", qNum);
+        //                        cmdChecklist.Parameters.AddWithValue("@IsOk", questionStatus == "OK" ? 1 : 0);
+        //                        cmdChecklist.Parameters.AddWithValue("@Remarks", remarks);
+        //                        cmdChecklist.Parameters.AddWithValue("@PhotoPath", photoPath);
+
+        //                        cmdChecklist.ExecuteNonQuery();
+        //                    }
+        //                }
+        //            }
+
+        //            transaction.Commit();
+        //            lblMsg.Text = "Inspection data saved successfully!";
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            transaction.Rollback();
+        //            lblMsg.Text = "Error: " + ex.Message;
+        //        }
+        //    }
+        //}
+
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -353,14 +423,14 @@ namespace AnmolDristi
                                          VALUES (@EmployeeName, @Site, @InspectedBy, @DateOfInspection)";
 
                     SqlCommand cmdHeader = new SqlCommand(insertHeaderQuery, conn, transaction);
-                    cmdHeader.Parameters.AddWithValue("@EmployeeName", txtDocNo.Text.Trim());
+                    cmdHeader.Parameters.AddWithValue("@EmployeeName", hfEmployeeName.Value.Trim()); // ✅ Get from hidden field
                     cmdHeader.Parameters.AddWithValue("@Site", txtSite.Text.Trim());
                     cmdHeader.Parameters.AddWithValue("@InspectedBy", txtInsBy.Text.Trim());
                     cmdHeader.Parameters.AddWithValue("@DateOfInspection", Convert.ToDateTime(txtdate.Text.Trim()));
 
                     int inspectionID = (int)cmdHeader.ExecuteScalar();
 
-                    // 2. Insert into InspectionChecklist for each row in the grid (from ViewState)
+                    // 2. Insert into InspectionChecklist
                     DataTable checklistData = ViewState["ChecklistData"] as DataTable;
 
                     if (checklistData != null)
@@ -374,8 +444,8 @@ namespace AnmolDristi
                                 string photoPath = row[$"Q{qNum}Photo"].ToString();
 
                                 string insertChecklistQuery = @"INSERT INTO InspectionChecklist 
-                                (Location, InspectionNo, InspectionID, QuestionNumber, IsOk, Remarks, PhotoPath)
-                                VALUES (@Location, @InspectionNo, @InspectionID, @QuestionNumber, @IsOk, @Remarks, @PhotoPath)";
+                            (Location, InspectionNo, InspectionID, QuestionNumber, IsOk, Remarks, PhotoPath)
+                            VALUES (@Location, @InspectionNo, @InspectionID, @QuestionNumber, @IsOk, @Remarks, @PhotoPath)";
 
                                 SqlCommand cmdChecklist = new SqlCommand(insertChecklistQuery, conn, transaction);
                                 cmdChecklist.Parameters.AddWithValue("@Location", row["Location"].ToString());
@@ -401,6 +471,7 @@ namespace AnmolDristi
                 }
             }
         }
+
 
         protected void gvChecklist_RowCreated(object sender, GridViewRowEventArgs e)
         {

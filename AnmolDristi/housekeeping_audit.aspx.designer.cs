@@ -312,6 +312,33 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtOpenBy;
 
         /// <summary>
+        /// lbl_txtOpenByWorkman control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_txtOpenByWorkman;
+
+        /// <summary>
+        /// RFV_txtOpenByWorkman control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtOpenByWorkman;
+
+        /// <summary>
+        /// txtOpenByWorkman control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOpenByWorkman;
+
+        /// <summary>
         /// lbl_txtClosingDate control.
         /// </summary>
         /// <remarks>
@@ -357,15 +384,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Label lbl_txtCloseBy;
 
         /// <summary>
-        /// RFV_txtCloseBy control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtCloseBy;
-
-        /// <summary>
         /// txtCloseBy control.
         /// </summary>
         /// <remarks>
@@ -373,6 +391,60 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCloseBy;
+
+        /// <summary>
+        /// lbl_txtTargetDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_txtTargetDate;
+
+        /// <summary>
+        /// RFV_txtTargetDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtTargetDate;
+
+        /// <summary>
+        /// txtTargetDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTargetDate;
+
+        /// <summary>
+        /// lbl_txtAssignedTo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_txtAssignedTo;
+
+        /// <summary>
+        /// RFV_txtAssignedTo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtAssignedTo;
+
+        /// <summary>
+        /// txtAssignedTo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAssignedTo;
 
         /// <summary>
         /// btnAddObservation control.

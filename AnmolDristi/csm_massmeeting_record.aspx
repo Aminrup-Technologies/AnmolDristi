@@ -120,11 +120,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
         <div class="container">
-            <%--<div class="page-title">
-                <div class="title_left">
-                    <h3>Mass Meeting Attendance Sheet</h3>
-                </div>
-            </div>--%>
             <div id="panelMeeting" class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="x_panel">

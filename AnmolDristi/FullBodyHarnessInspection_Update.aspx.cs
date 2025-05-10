@@ -129,6 +129,89 @@ namespace AnmolDristi
             }
         }
 
+        protected void BtnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("FullBodyHarnessInspection_View.aspx");
+        }
+        protected void BtnUpdate_Click(object sender, EventArgs e)
+        {
+            int inspectionID = Convert.ToInt32(Request.QueryString["InspectionID"]); // assuming InspectionID is passed via query string
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+
+                // Update InspectionHeader
+                string updateHeaderQuery = @"UPDATE InspectionHeader 
+                                     SET EmployeeName = @EmployeeName,
+                                         Site = @Site,
+                                         InspectedBy = @InspectedBy,
+                                         DateOfInspection = @DateOfInspection
+                                     WHERE InspectionID = @InspectionID";
+
+                using (SqlCommand cmdHeader = new SqlCommand(updateHeaderQuery, con))
+                {
+                    cmdHeader.Parameters.AddWithValue("@EmployeeName", txtDocNo.Text.Trim());
+                    cmdHeader.Parameters.AddWithValue("@Site", txtSite.Text.Trim());
+                    cmdHeader.Parameters.AddWithValue("@InspectedBy", txtInsBy.Text.Trim());
+                    cmdHeader.Parameters.AddWithValue("@DateOfInspection", txtdate.Text.Trim());
+                    cmdHeader.Parameters.AddWithValue("@InspectionID", inspectionID);
+                    cmdHeader.ExecuteNonQuery();
+                }
+
+                // Update each checklist row
+                foreach (GridViewRow row in gvChecklist.Rows)
+                {
+                    string identificationNo = ((Label)row.FindControl("lblIdentificationNo")).Text;
+                    string location = ((TextBox)row.FindControl("txtLocation")).Text;
+
+                    for (int q = 1; q <= 5; q++)
+                    {
+                        string status = ((TextBox)row.FindControl($"txtQ{q}Status")).Text;
+                        string remarks = ((TextBox)row.FindControl($"txtQ{q}Remarks")).Text;
+                        FileUpload fuPhoto = (FileUpload)row.FindControl($"fuimgQ{q}Photo");
+                        Label lblPhoto = (Label)row.FindControl($"lblimgQ{q}Photo");
+
+                        string photoPath = lblPhoto.Text;
+
+                        // Save new image if uploaded
+                        if (fuPhoto.HasFile)
+                        {
+                            string fileName = Path.GetFileName(fuPhoto.FileName);
+                            string savePath = Server.MapPath("~/images/") + fileName;
+                            fuPhoto.SaveAs(savePath);
+                            photoPath = "~/images/" + fileName;
+                        }
+
+                        // Update the database row
+                        string updateChecklistQuery = @"UPDATE InspectionChecklist
+                                                SET IsOk = @IsOk,
+                                                    Remarks = @Remarks,
+                                                    PhotoPath = @PhotoPath,
+                                                    Location = @Location
+                                                WHERE InspectionID = @InspectionID AND 
+                                                      InspectionNo = @InspectionNo AND 
+                                                      QuestionNumber = @QuestionNumber";
+
+                        using (SqlCommand cmdChecklist = new SqlCommand(updateChecklistQuery, con))
+                        {
+                            cmdChecklist.Parameters.AddWithValue("@IsOk", status.Equals("OK", StringComparison.OrdinalIgnoreCase));
+                            cmdChecklist.Parameters.AddWithValue("@Remarks", remarks);
+                            cmdChecklist.Parameters.AddWithValue("@PhotoPath", photoPath);
+                            cmdChecklist.Parameters.AddWithValue("@Location", location);
+                            cmdChecklist.Parameters.AddWithValue("@InspectionID", inspectionID);
+                            cmdChecklist.Parameters.AddWithValue("@InspectionNo", identificationNo);
+                            cmdChecklist.Parameters.AddWithValue("@QuestionNumber", q);
+                            cmdChecklist.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                lblMsg.Text = "Update successful!";
+            }
+        }
+
 
     }
 }

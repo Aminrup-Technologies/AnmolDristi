@@ -56,8 +56,7 @@
                     <div class="x_content">
 
                         
-                                <div class="row">  
-                                    
+                                <div class="row">             
       <div class="col-md-3">
      <div class="mb-3">
          <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Date Of Inspection" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -95,7 +94,8 @@
         <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Employee Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtDocNo" runat="server" ErrorMessage="*" ControlToValidate="txtDocNo" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
-            <asp:TextBox ID="txtDocNo" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true"></asp:TextBox> <!-- ✅ Made ReadOnly initially -->
+            <asp:TextBox ID="txtDocNo" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true"></asp:TextBox>
+            <asp:HiddenField ID="hfEmployeeName" runat="server" /> <!-- ✅ Hidden field to store actual name -->
         </div>
     </div>
 </div>
@@ -383,7 +383,7 @@
 
         <asp:BoundField HeaderText="Q2 Status" DataField="Q2Status" />
         <asp:BoundField HeaderText="Q2 Remarks" DataField="Q2Remarks" />
-        <asp:BoundField HeaderText="Q2 Photo" DataField="Q2Photo" />
+        
           <asp:TemplateField HeaderText="Q2 Photo">
 <ItemTemplate>
       <asp:Image ID="Q2Photo" runat="server" ImageUrl='<%# Eval("Q2Photo") %>' Width="50px" Height="50px" />
@@ -589,14 +589,17 @@
                     var employeeName = response.d;
                     var empTextBox = document.getElementById('<%= txtDocNo.ClientID %>');
                     var lblError = document.getElementById('<%= lblEmployeeName.ClientID %>');
+                    var hiddenField = document.getElementById('<%= hfEmployeeName.ClientID %>');
 
                     if (employeeName && employeeName !== "Invalid Inspection ID" && employeeName !== "Error occurred while fetching data") {
                         empTextBox.value = employeeName;
-                        empTextBox.readOnly = true; // ✅ Make read-only after setting value
+                        empTextBox.readOnly = true;
+                        hiddenField.value = employeeName;  // ✅ Save value to hidden field
                         lblError.innerText = '';
                     } else {
                         empTextBox.value = '';
-                        empTextBox.readOnly = true; // Keep read-only if invalid
+                        empTextBox.readOnly = true;
+                        hiddenField.value = '';
                         lblError.innerText = 'Invalid Inspection ID!';
                     }
                 },
@@ -605,12 +608,14 @@
                     document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = 'Error fetching data.';
                     document.getElementById('<%= txtDocNo.ClientID %>').value = '';
                     document.getElementById('<%= txtDocNo.ClientID %>').readOnly = true;
+                    document.getElementById('<%= hfEmployeeName.ClientID %>').value = '';
                 }
             });
         } else {
             document.getElementById('<%= txtDocNo.ClientID %>').value = '';
             document.getElementById('<%= txtDocNo.ClientID %>').readOnly = true;
             document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = '';
+            document.getElementById('<%= hfEmployeeName.ClientID %>').value = '';
         }
     }
 </script>
