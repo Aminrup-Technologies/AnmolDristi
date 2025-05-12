@@ -11,7 +11,7 @@ namespace AnmolDristi
 {
 
 
-    public partial class Line_Walk
+    public partial class LwalkCopy
     {
 
         /// <summary>
@@ -321,42 +321,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtObservation;
 
         /// <summary>
-        /// Snap_lbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Snap_lbl;
-
-        /// <summary>
-        /// fileSnap control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileSnap;
-
-        /// <summary>
-        /// lblExistingSnap control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblExistingSnap;
-
-        /// <summary>
-        /// RFV_fileSnap control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_fileSnap;
-
-        /// <summary>
         /// Rexommendation_lbl control.
         /// </summary>
         /// <remarks>
@@ -384,69 +348,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtRecommendation;
 
         /// <summary>
-        /// BtnSaveObservation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnSaveObservation;
-
-        /// <summary>
-        /// Remark_lbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Remark_lbl;
-
-        /// <summary>
-        /// txtRemarks control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRemarks;
-
-        /// <summary>
-        /// RFV_txtRemarks control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtRemarks;
-
-        /// <summary>
-        /// Attachment_lbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Attachment_lbl;
-
-        /// <summary>
-        /// IAction_Attachment control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload IAction_Attachment;
-
-        /// <summary>
-        /// BtnImmediateAction control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnImmediateAction;
-
-        /// <summary>
         /// Responsibility_lbl control.
         /// </summary>
         /// <remarks>
@@ -463,15 +364,6 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtResponsibility;
-
-        /// <summary>
-        /// txtRespoName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtRespoName;
 
         /// <summary>
         /// RFV_txtResponsibility control.
@@ -510,13 +402,76 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtTargetDate;
 
         /// <summary>
-        /// BtnFutureAction control.
+        /// Remark_lbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnFutureAction;
+        protected global::System.Web.UI.WebControls.Label Remark_lbl;
+
+        /// <summary>
+        /// txtRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRemarks;
+
+        /// <summary>
+        /// RFV_txtRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtRemarks;
+
+        /// <summary>
+        /// Snap_lbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Snap_lbl;
+
+        /// <summary>
+        /// fileSnap control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileSnap;
+
+        /// <summary>
+        /// lblExistingSnap control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExistingSnap;
+
+        /// <summary>
+        /// RFV_fileSnap control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_fileSnap;
+
+        /// <summary>
+        /// BtnSaveObservation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSaveObservation;
 
         /// <summary>
         /// GridView1 control.

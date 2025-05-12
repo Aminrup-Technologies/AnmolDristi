@@ -86,6 +86,7 @@
     <Content Include="Line_Walk.aspx" />
     <Content Include="Line_Walk_Data.aspx" />
     <Content Include="Line_Walk_Status.aspx" />
+    <Content Include="LwalkCopy.aspx" />
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="Dristi.Master" />
@@ -231,6 +232,13 @@
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LwalkCopy.aspx.cs">
+      <DependentUpon>LwalkCopy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LwalkCopy.aspx.designer.cs">
+      <DependentUpon>LwalkCopy.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="qaqc_home.aspx.cs">

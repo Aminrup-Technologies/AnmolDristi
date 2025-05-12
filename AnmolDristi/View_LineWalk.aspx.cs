@@ -69,7 +69,9 @@ TM_names,TM_Code,TM_Type
                 Responsibility, 
                 Target_Date, 
                 Remarks, 
-                Snap_File_Path 
+                Snap_File_Path,
+              ImmediateAction_Attachment,
+              Status
             FROM Line_walk_details 
             WHERE ID = @WalkID", con);
                 obsCmd.Parameters.AddWithValue("@WalkID", id);
@@ -83,6 +85,28 @@ TM_names,TM_Code,TM_Type
 
 
 
+            }
+        }
+
+        protected void ObservGrid_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Hide Snap image if Snap_File_Path is empty
+                Image imgSnap = (Image)e.Row.FindControl("imgSnap");
+                string snapPath = DataBinder.Eval(e.Row.DataItem, "Snap_File_Path") as string;
+                if (string.IsNullOrEmpty(snapPath) && imgSnap != null)
+                {
+                    imgSnap.Visible = false;
+                }
+
+                // Hide Immediate Action Attachment image if path is empty
+                Image imgAttach = (Image)e.Row.FindControl("imgImmediateAttachment");
+                string attachPath = DataBinder.Eval(e.Row.DataItem, "ImmediateAction_Attachment") as string;
+                if (string.IsNullOrEmpty(attachPath) && imgAttach != null)
+                {
+                    imgAttach.Visible = false;
+                }
             }
         }
     }

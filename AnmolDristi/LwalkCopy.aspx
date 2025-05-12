@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Line_Walk.aspx.cs" Inherits="AnmolDristi.Line_Walk" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="LwalkCopy.aspx.cs" Inherits="AnmolDristi.Line_Walk" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -92,7 +92,7 @@
                 $(this).find('input[type=text], input[type=hidden], input[type=number], textarea').val('');
                 $(this).find('input[type=radio], input[type=checkbox]').prop('checked', false);
                 $(this).find('select').prop('selectedIndex', 0);
-                $(this).find('input, select, textarea').prop('disabled', false);
+                $(this).find('input, select, textarea').prop('disabled', false); 
             });
         });
 
@@ -106,12 +106,12 @@
                 success: function (response) {
                     console.log(response);
                     const data = response.d;
-
+                    
                     $('#<%=txtEmpName.ClientID %>').val(data.TM_names);
                     $('#<%=txtEmpCode.ClientID %>').val(data.TM_Code);
                     $('#<%=rblEmpType.ClientID %>').val(data.TM_Type);
                     $('#<%=Entity_Id.ClientID %>').val(id);
-
+                    
                     $('#memberModal').modal('show');
                 },
                 error: function (xhr, status, error) {
@@ -133,30 +133,30 @@
                     var data = response.d;
                     if (data) {
                         $('#<%=Entity_Id.ClientID %>').val(detailId);
-                        $('#<%=txtAreaLocation.ClientID %>').val(data.Location);
-                        $('#<%=txtObservation.ClientID %>').val(data.Observation_Points);
-                        $('#<%=txtRecommendation.ClientID %>').val(data.Recommendation_Points);
-                        $('#<%=txtResponsibility.ClientID %>').val(data.Responsibility);
-                        $('#<%=txtTargetDate.ClientID %>').val(data.Target_Date);
-                        $('#<%=txtRemarks.ClientID %>').val(data.Remarks);
-                        $('#<%=lblExistingSnap.ClientID %>').text(data.Snap_File_Path); // if you show image
+                            $('#<%=txtAreaLocation.ClientID %>').val(data.Location);
+                            $('#<%=txtObservation.ClientID %>').val(data.Observation_Points);
+                            $('#<%=txtRecommendation.ClientID %>').val(data.Recommendation_Points);
+                            $('#<%=txtResponsibility.ClientID %>').val(data.Responsibility);
+                            $('#<%=txtTargetDate.ClientID %>').val(data.Target_Date);
+                            $('#<%=txtRemarks.ClientID %>').val(data.Remarks);
+                            $('#<%=lblExistingSnap.ClientID %>').text(data.Snap_File_Path); // if you show image
 
-                        if (data.Snap_File_Path) {
-                            ValidatorEnable(document.getElementById('<%=RFV_fileSnap.ClientID %>'), false);
+                            if (data.Snap_File_Path) {
+                                ValidatorEnable(document.getElementById('<%=RFV_fileSnap.ClientID %>'), false);
+                            } else {
+                                ValidatorEnable(document.getElementById('<%=RFV_fileSnap.ClientID %>'), true);
+                            }
+
+
+                            $('#detailModal').modal('show');
                         } else {
-                            ValidatorEnable(document.getElementById('<%=RFV_fileSnap.ClientID %>'), true);
+                            alert("No data found.");
                         }
-
-
-                        $('#detailModal').modal('show');
-                    } else {
-                        alert("No data found.");
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
-                }
-            });
+                });
         }
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -170,36 +170,6 @@
                     }
                 });
             }
-        });
-
-
-
-        $(document).ready(function () {
-            $('#<%= txtResponsibility.ClientID %>').on('change', function () {
-                var empCode = $(this).val().trim();
-                if (empCode !== "") {
-                    $.ajax({
-                        type: "POST",
-                        url: "Line_Walk.aspx/GetEmployeeName",
-                        data: JSON.stringify({ empCode: empCode }),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (response) {
-                            if (response.d) {
-                                $('#<%= txtRespoName.ClientID %>').text(response.d);
-                            } else {
-                                $('#<%= txtRespoName.ClientID %>').text("");
-                                alert("Employee code not found!");
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            alert("AJAX error: " + error);
-                        }
-                    });
-                } else {
-                    $('#<%= txtRespoName.ClientID %>').text("");
-                }
-            });
         });
 
     </script>
@@ -229,35 +199,6 @@
         input:disabled {
             background-color: #eee;
         }
-
-        /* Style for all tab links (inactive state) */
-
-        /*.nav-tabs .nav-link {
-                background-color: black;
-                color: white;
-                border: 1px solid #444;
-                margin-right: 2px;
-            }*/
-        /* Style for the active tab link */
-        /*.nav-tabs .nav-link.active {
-                background-color: #333;
-                color: #fff;
-                border-color: #555 #555 #000;
-            }*/
-
-        /* Style for the content inside the tabs */
-        /*.tab-content {
-                background-color: #f8f9fa;
-                padding: 20px;
-                border: 1px solid #dee2e6;
-                border-top: none;
-            }*/
-
-        .nav-tabs .nav-link.active {
-        color: green !important;
-        font-weight: bold;
-       text-decoration: underline;
-    }
     </style>
 
 
@@ -270,7 +211,7 @@
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h5 style="color: green;">Line Walk status</h5>
+                    <h5 style="color:green;">Line Walk status</h5>
                 </div>
             </div>
 
@@ -280,10 +221,10 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <%-- <h2>Sub Heading</h2>--%>
-                            <%--<ul class="nav navbar-right panel_toolbox">
+                           <%-- <h2>Sub Heading</h2>--%>
+                            <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                            </ul>--%>
+                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -318,8 +259,8 @@
                             </div>
 
                             <div class="d-flex justify-content-center">
-                                <asp:Button ID="Save" runat="server" CssClass="btn btn-primary btn-sm ml-4" Text="Save" OnClick="Save_Click" ValidationGroup="Submit" />
-                                <asp:Button ID="Home" runat="server" CssClass="btn btn-warning btn-sm ml-4" Text="Home" OnClick="Home_Click" />
+                                <asp:Button ID="Save" runat="server" CssClass="btn btn-primary btn-sm ml-4" Text="Save" OnClick="Save_Click" ValidationGroup="Submit"/>
+                                <asp:Button ID="Home" runat="server" CssClass="btn btn-warning btn-sm ml-4" Text="Home" OnClick="Home_Click"/>
                             </div>
 
                             <!-- Step 2[A]: Team Members -->
@@ -337,7 +278,7 @@
                                     <div class="modal-content">
 
                                         <div class="modal-header">
-                                            <h5 class="modal-title" style="color: #198754; font-weight: bold;">Employee Details</h5>
+                                            <h5 class="modal-title">Employee Details</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -346,32 +287,14 @@
                                         <div class="modal-body">
                                             <asp:HiddenField ID="Entity_Id" runat="server" />
                                             <!-- Employee Type -->
-                                            <%--<div class="form-group">
+                                            <div class="form-group">
                                                 <asp:Label ID="Emp_type_lbl" runat="server" Text="Employee Type" ForeColor="Blue" Font-Bold="true" />
                                                 <asp:RadioButtonList ID="rblEmpType" runat="server" CssClass="form-check form-check-inline" ClientIDMode="Static" RepeatDirection="Horizontal" ValidationGroup="SaveEmployee">
                                                     <asp:ListItem Text="Internal" Value="Internal" Selected="True" />
                                                     <asp:ListItem Text="External" Value="External" />
                                                 </asp:RadioButtonList>
                                                 <asp:RequiredFieldValidator ID="RFV_rblEmpType" runat="server" ControlToValidate="rblEmpType" InitialValue="" ErrorMessage="* Select Type" ForeColor="Red" Display="Dynamic" ValidationGroup="SaveEmployee" />
-                                            </div>--%>
-
-
-                                            <div class="form-group d-flex align-items-center">
-                                                <asp:Label ID="Emp_type_lbl" runat="server" Text="Employee Type" ForeColor="Blue" Font-Bold="true"
-                                                    CssClass="me-3" />
-
-                                                <asp:RadioButtonList ID="rblEmpType" runat="server" RepeatDirection="Horizontal" ClientIDMode="Static"
-                                                    CssClass="form-check form-check-inline d-flex gap-3" ValidationGroup="SaveEmployee">
-                                                    <asp:ListItem Text="Internal" Value="Internal" Selected="True" />
-                                                    <asp:ListItem Text="External" Value="External" />
-                                                </asp:RadioButtonList>
-
-                                                <asp:RequiredFieldValidator ID="RFV_rblEmpType" runat="server" ControlToValidate="rblEmpType"
-                                                    InitialValue="" ErrorMessage="* Select Employee Type" ForeColor="Red" Display="Dynamic"
-                                                    ValidationGroup="SaveEmployee" CssClass="ms-3" />
                                             </div>
-
-
 
                                             <!-- Employee Code -->
                                             <div class="form-group">
@@ -436,7 +359,7 @@
                                     <div class="modal-content">
 
                                         <div class="modal-header">
-                                            <h5 class="modal-title" style="color: #198754; font-weight: bold;">Add Observation Details</h5>
+                                            <h5 class="modal-title">Add Observation Details</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -444,124 +367,78 @@
 
                                         <div class="modal-body">
 
-                                            <!-- Observation Nav Tabs -->
-                                            <ul class="nav nav-tabs" id="observationTabs" role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" id="opening-tab" data-toggle="tab" href="#opening" role="tab">Opening Points</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="immediate-tab" data-toggle="tab" href="#immediate" role="tab">Immediate Action</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="future-tab" data-toggle="tab" href="#future" role="tab">Future Action</a>
-                                                </li>
-                                            </ul>
-
-                                            <!-- Tab Content -->
-                                            <div class="tab-content mt-3" id="observationTabsContent">
-                                                <!-- Opening Points Tab -->
-                                                <div class="tab-pane fade show active" id="opening" role="tabpanel" aria-labelledby="opening-tab">
-                                                    <div class="form-group">
-                                                        <asp:Label ID="Area_lbl" runat="server" Text="Area/Location" ForeColor="Blue" Font-Bold="true" />
-                                                        <asp:TextBox ID="txtAreaLocation" runat="server" CssClass="form-control form-control-sm rounded" />
-                                                        <asp:RequiredFieldValidator ID="RFV_txtAreaLocation" runat="server" ControlToValidate="txtAreaLocation" ErrorMessage="* Area required" ForeColor="Red" ValidationGroup="SaveObservation" Display="Dynamic" />
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <asp:Label ID="Observatio_lbl" runat="server" Text="Detailed Observation" ForeColor="Blue" Font-Bold="true" />
-                                                        <asp:TextBox ID="txtObservation" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Rows="3" />
-                                                        <asp:RequiredFieldValidator ID="RFV_txtObservation" runat="server" ControlToValidate="txtObservation" ErrorMessage="* Observation required" ForeColor="Red" ValidationGroup="SaveObservation" Display="Dynamic" />
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <asp:Label ID="Snap_lbl" runat="server" Text="Attachment" ForeColor="Blue" Font-Bold="true" />
-                                                        <asp:FileUpload ID="fileSnap" runat="server" CssClass="form-control-file" />
-                                                        <asp:Label ID="lblExistingSnap" runat="server" CssClass="text-muted" ClientIDMode="Static" />
-                                                        <asp:RequiredFieldValidator ID="RFV_fileSnap" runat="server" ControlToValidate="fileSnap" ErrorMessage="* Snaps required" ForeColor="Red" Display="Dynamic" Visible="false" />
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <asp:Label ID="Rexommendation_lbl" runat="server" Text="Recommendation" ForeColor="Blue" Font-Bold="true" />
-                                                        <asp:TextBox ID="txtRecommendation" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Rows="2" />
-                                                        <asp:RequiredFieldValidator ID="RFV_txtRecommendation" runat="server" ControlToValidate="txtRecommendation" ErrorMessage="* Recommendation required" ForeColor="Red" Display="Dynamic" />
-                                                    </div>
-
-
-                                                    <asp:Button ID="BtnSaveObservation" runat="server" Text="Save" CssClass="btn btn-success" ValidationGroup="SaveObservation" OnClick="BtnSaveObservation_Click" />
-
-
-
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <asp:Label ID="Area_lbl" runat="server" Text="Area/Location" ForeColor="Blue" Font-Bold="true" />
+                                                    <asp:TextBox ID="txtAreaLocation" runat="server" CssClass="form-control form-control-sm rounded" />
+                                                    <asp:RequiredFieldValidator ID="RFV_txtAreaLocation" runat="server" ControlToValidate="txtAreaLocation" ErrorMessage="* Area required" ForeColor="Red" ValidationGroup="SaveObservation" Display="Dynamic" />
                                                 </div>
-                                                <!-- First Tab Content End-->
-
-                                                <!-- Immediate Action Tab -->
-                                                <div class="tab-pane fade" id="immediate" role="tabpanel" aria-labelledby="immediate-tab">
-                                                    <div class="form-group">
-                                                        <asp:Label ID="Remark_lbl" runat="server" Text="Remarks" ForeColor="Blue" Font-Bold="true" />
-                                                        <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Rows="2" />
-                                                        <asp:RequiredFieldValidator ID="RFV_txtRemarks" runat="server" ControlToValidate="txtRemarks" ErrorMessage="* Remarks required" ForeColor="Red" Display="Dynamic" ValidationGroup="SaveImmediate Action" />
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <asp:Label ID="Attachment_lbl" runat="server" Text="Attachment" ForeColor="Blue" Font-Bold="true" />
-                                                        <asp:FileUpload ID="IAction_Attachment" runat="server" CssClass="form-control-file" />
-                                                    </div>
-
-                                                    <asp:Button ID="BtnImmediateAction" runat="server" Text="Save" CssClass="btn btn-success" ValidationGroup="SaveImmediate Action" OnClick="BtnImmediateAction_Click" />
-                                                </div>
-
-                                                <!-- Immediate Action Tab End-->
-
-                                                <!-- Future Action Tab -->
-                                                <div class="tab-pane fade" id="future" role="tabpanel" aria-labelledby="future-tab">
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-6">
-                                                            <asp:Label ID="Responsibility_lbl" runat="server" Text="Responsibility" ForeColor="Blue" Font-Bold="true" />
-                                                            <asp:TextBox ID="txtResponsibility" runat="server" CssClass="form-control form-control-sm rounded" />
-                                                            <asp:Label ID="txtRespoName" runat="server" />
-                                                            <asp:RequiredFieldValidator ID="RFV_txtResponsibility" runat="server" ControlToValidate="txtResponsibility" ErrorMessage="* Responsibility required" ForeColor="Red" ValidationGroup="SaveFutureAction" Display="Dynamic" />
-                                                        </div>
-
-                                                        <div class="form-group col-md-6">
-                                                            <asp:Label ID="Targetdt_lbl" runat="server" Text="Target Date" ForeColor="Blue" Font-Bold="true" />
-                                                            <asp:TextBox ID="txtTargetDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date" />
-                                                            <asp:RequiredFieldValidator ID="RFV_txtTargetDate" runat="server" ControlToValidate="txtTargetDate" ErrorMessage="* Target Date required" ForeColor="Red" ValidationGroup="SaveFutureAction" Display="Dynamic" />
-                                                        </div>
-
-                                                        <asp:Button ID="BtnFutureAction" runat="server" Text="Save" CssClass="btn btn-success" ValidationGroup="SaveFutureAction" OnClick="BtnFutureAction_Click" />
-
-                                                    </div>
-                                                </div>
-                                                <!-- Future Action Tab End-->
                                             </div>
+
+                                            <div class="form-group">
+                                                <asp:Label ID="Observatio_lbl" runat="server" Text="Detailed Observation" ForeColor="Blue" Font-Bold="true" />
+                                                <asp:TextBox ID="txtObservation" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Rows="3" />
+                                                <asp:RequiredFieldValidator ID="RFV_txtObservation" runat="server" ControlToValidate="txtObservation" ErrorMessage="* Observation required" ForeColor="Red" ValidationGroup="SaveObservation" Display="Dynamic" />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <asp:Label ID="Rexommendation_lbl" runat="server" Text="Recommendation" ForeColor="Blue" Font-Bold="true" />
+                                                <asp:TextBox ID="txtRecommendation" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Rows="2" />
+                                                <asp:RequiredFieldValidator ID="RFV_txtRecommendation" runat="server" ControlToValidate="txtRecommendation" ErrorMessage="* Recommendation required" ForeColor="Red" ValidationGroup="SaveObservation" Display="Dynamic" />
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <asp:Label ID="Responsibility_lbl" runat="server" Text="Responsibility" ForeColor="Blue" Font-Bold="true" />
+                                                    <asp:TextBox ID="txtResponsibility" runat="server" CssClass="form-control form-control-sm rounded" />
+                                                    <asp:RequiredFieldValidator ID="RFV_txtResponsibility" runat="server" ControlToValidate="txtResponsibility" ErrorMessage="* Responsibility required" ForeColor="Red" ValidationGroup="SaveObservation" Display="Dynamic" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <asp:Label ID="Targetdt_lbl" runat="server" Text="Target Date" ForeColor="Blue" Font-Bold="true" />
+                                                    <asp:TextBox ID="txtTargetDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date" />
+                                                    <asp:RequiredFieldValidator ID="RFV_txtTargetDate" runat="server" ControlToValidate="txtTargetDate" ErrorMessage="* Target Date required" ForeColor="Red" ValidationGroup="SaveObservation" Display="Dynamic" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <asp:Label ID="Remark_lbl" runat="server" Text="Remarks" ForeColor="Blue" Font-Bold="true" />
+                                                <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control form-control-sm rounded" TextMode="MultiLine" Rows="2" />
+                                                <asp:RequiredFieldValidator ID="RFV_txtRemarks" runat="server" ControlToValidate="txtRemarks" ErrorMessage="* Remarks required" ForeColor="Red" ValidationGroup="SaveObservation" Display="Dynamic" />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <asp:Label ID="Snap_lbl" runat="server" Text="Upload Snap" ForeColor="Blue" Font-Bold="true" />
+                                                <asp:FileUpload ID="fileSnap" runat="server" CssClass="form-control-file" />
+                                                <asp:Label ID="lblExistingSnap" runat="server" CssClass="text-muted" ClientIDMode="Static" />
+                                                <asp:RequiredFieldValidator ID="RFV_fileSnap" runat="server" ControlToValidate="fileSnap" ErrorMessage="* Snaps required" ForeColor="Red" ValidationGroup="SaveObservation" Display="Dynamic" />
+                                            </div>
+
                                         </div>
+
+                                        <div class="modal-footer">
+                                            <asp:Button ID="BtnSaveObservation" runat="server" Text="Save" CssClass="btn btn-success" ValidationGroup="SaveObservation" OnClick="BtnSaveObservation_Click" />
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Observation Grid -->
-                            <div class="row" style="overflow: auto;">
-                                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered table-hover table-striped" OnRowCommand="gvObservations_RowCommand" OnRowDataBound="GridView1_RowDataBound">
+                            <div class="row" style="overflow:auto;">
+                                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered table-hover table-striped" OnRowCommand="gvObservations_RowCommand">
                                     <Columns>
                                         <asp:BoundField DataField="Location" HeaderText="Area" />
                                         <asp:BoundField DataField="Observation_Points" HeaderText="Observation" />
+                                        <asp:BoundField DataField="Recommendation_Points" HeaderText="Recommendation" />
+                                        <asp:BoundField DataField="Responsibility" HeaderText="Responsibility" />
+                                        <asp:BoundField DataField="Target_Date" HeaderText="Target Date" />
+                                        <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
                                         <asp:TemplateField HeaderText="Snap">
                                             <ItemTemplate>
-                                                <%-- //<a href='<%# ResolveUrl("~/Uploads/" + Eval("Snap_File_Path")) %>' target="_blank">View</a>--%>
-                                                <asp:HyperLink ID="lnkSnap" runat="server" Text="View" Target="_blank" />
+                                                <a href='<%# ResolveUrl("~/Uploads/" + Eval("Snap_File_Path")) %>' target="_blank">View</a>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField DataField="Recommendation_Points" HeaderText="Recommendation" />
-                                        <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
-                                        <asp:TemplateField HeaderText="Immediate Action Attachment">
-                                            <ItemTemplate>
-                                                <%--<a href='<%# ResolveUrl("~/Uploads/" + Eval("ImmediateAction_Attachment")) %>' target="_blank">View</a>--%>
-                                                <asp:HyperLink ID="lnkImmediate" runat="server" Text="View" Target="_blank" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:BoundField DataField="Responsibility" HeaderText="Responsibility" />
-                                        <asp:BoundField DataField="Target_Date" HeaderText="Target Date" DataFormatString="{0:yyyy-MM-dd}" />
-                                        <asp:BoundField DataField="Status" HeaderText="Status" />
                                         <asp:TemplateField HeaderText="Actions">
                                             <ItemTemplate>
                                                 <asp:Button ID="Edit_obsrv" runat="server" Text="Edit" CssClass="btn btn-sm btn-primary" OnClientClick='<%# "showObservationModal(" + Eval("Detail_ID") + "); return false;" %>' />
@@ -581,10 +458,12 @@
                                 <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-danger btn-sm" CausesValidation="false" PostBackUrl="~/home.aspx" />
                             </div>--%>
                         </div>
-
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+
+
 </asp:Content>
