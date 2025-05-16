@@ -14,6 +14,14 @@
         max-height: 300px; /* Adjust based on your UI */
     }
 }
+    .gv-input {
+    width: 160px; /* consistent fixed width for all textboxes */
+    height: 38px; /* standard Bootstrap input height */
+    font-size: 14px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+  }
+
 
     </style>
 </asp:Content>
@@ -66,16 +74,6 @@
      <div class="clearfix"></div>
  </div>
                              
-
-   
-
-
-
-
-
-
-
-
 <div class="table-responsive">
     <div class="col-md-12">
         <div class="mb-3">
@@ -83,32 +81,28 @@
 <asp:GridView ID="gvObservations" runat="server" DataKeyNames="ObserverID" AutoGenerateColumns="False" CssClass="table table-bordered table-hover">
     <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
     <Columns>
-        <asp:TemplateField HeaderText="Observer ID">
-            <ItemTemplate>
-                <asp:TextBox ID="txtObserverID" runat="server" Text='<%# Eval("ObserverID") %>' CssClass="form-control" />
-            </ItemTemplate>
-        </asp:TemplateField>
+        <asp:BoundField DataField="ObserverID" HeaderText="Oberver ID" />
 
         <asp:TemplateField HeaderText="Opening Date">
             <ItemTemplate>
-                <asp:TextBox ID="txtOpeningDate" runat="server" Text='<%# Eval("OpeningDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control" />
+                <asp:TextBox ID="txtOpeningDate" runat="server" Text='<%# Eval("OpeningDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control gv-input" />
             </ItemTemplate>
         </asp:TemplateField>
 
         <asp:TemplateField HeaderText="Open By">
             <ItemTemplate>
-                <asp:TextBox ID="txtOpenBy" runat="server" Text='<%# Eval("OpenBy") %>' CssClass="form-control" />
+                <asp:TextBox ID="txtOpenBy" runat="server" Text='<%# Eval("OpenBy") %>' CssClass="form-control gv-input" />
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Open By(Workman SL)">
     <ItemTemplate>
-        <asp:TextBox ID="txtOpenByWorkman" runat="server" Text='<%# Eval("OpenByWorkman") %>' CssClass="form-control" />
+        <asp:TextBox ID="txtOpenByWorkman" runat="server" Text='<%# Eval("OpenByWorkman") %>' CssClass="form-control gv-input" />
     </ItemTemplate>
 </asp:TemplateField>
 
  <asp:TemplateField HeaderText="Target Date">
      <ItemTemplate>
-         <asp:TextBox ID="txtTargetDate" runat="server" Text='<%# Eval("TargetDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control" />
+         <asp:TextBox ID="txtTargetDate" runat="server" Text='<%# Eval("TargetDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control gv-input" />
      </ItemTemplate>
  </asp:TemplateField>
 
@@ -136,13 +130,13 @@
 
         <asp:TemplateField HeaderText="Observation">
             <ItemTemplate>
-                <asp:TextBox ID="txtObservation" runat="server" Text='<%# Eval("Observation") %>' CssClass="form-control" />
+                <asp:TextBox ID="txtObservation" runat="server" Text='<%# Eval("Observation") %>' CssClass="form-control gv-input" />
             </ItemTemplate>
         </asp:TemplateField>
 
         <asp:TemplateField HeaderText="Corrective Action">
             <ItemTemplate>
-                <asp:TextBox ID="txtCorrectiveAction" runat="server" Text='<%# Eval("CorrectiveAction") %>' CssClass="form-control" />
+                <asp:TextBox ID="txtCorrectiveAction" runat="server" Text='<%# Eval("CorrectiveAction") %>' CssClass="form-control gv-input" />
             </ItemTemplate>
         </asp:TemplateField>
        <asp:TemplateField HeaderText="Photo (After)">
@@ -166,25 +160,25 @@
 
         <asp:TemplateField HeaderText="Closing Date">
             <ItemTemplate>
-                <asp:TextBox ID="txtClosingDate" runat="server" Text='<%# Eval("ClosingDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control" />
+                <asp:TextBox ID="txtClosingDate" runat="server" Text='<%# Eval("ClosingDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control gv-input" />
             </ItemTemplate>
         </asp:TemplateField>
 
         <asp:TemplateField HeaderText="Close By">
             <ItemTemplate>
-                <asp:TextBox ID="txtCloseBy" runat="server" Text='<%# Eval("CloseBy") %>' CssClass="form-control" />
+                <asp:TextBox ID="txtCloseBy" runat="server" Text='<%# Eval("CloseBy") %>' CssClass="form-control gv-input" />
             </ItemTemplate>
         </asp:TemplateField>
 
         <asp:TemplateField HeaderText="Assigned To">
     <ItemTemplate>
-        <asp:TextBox ID="txtAssignedTo" runat="server" Text='<%# Eval("AssignedTo") %>' CssClass="form-control" />
+        <asp:TextBox ID="txtAssignedTo" runat="server" Text='<%# Eval("AssignedTo") %>' CssClass="form-control gv-input" />
     </ItemTemplate>
 </asp:TemplateField>
 
         <asp:TemplateField HeaderText="Status">
             <ItemTemplate>
-                <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm rounded" SelectedValue='<%# Eval("Status") %>'>
+                <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm rounded gv-input" SelectedValue='<%# Eval("Status") %>'>
                     <asp:ListItem Text="Select" Value="" />
                     <asp:ListItem Text="Pending" Value="Pending" />
                     <asp:ListItem Text="Completed" Value="Completed" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -158,6 +159,8 @@ namespace AnmolDristi
         {
             Response.Redirect("committee_meeting_report.aspx");
         }
+
+
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
             int meetingID = Convert.ToInt32(Request.QueryString["MeetingID"]);
@@ -240,8 +243,19 @@ namespace AnmolDristi
                         string agenda = ((TextBox)row.FindControl("txtAgendaTitle")).Text;
                         string issues = ((TextBox)row.FindControl("txtIssuesDiscussed")).Text;
                         string actionBy = ((TextBox)row.FindControl("txtActionBy")).Text;
-                        DateTime targetDate = Convert.ToDateTime(((TextBox)row.FindControl("txtTargetDate")).Text);
-                        DateTime reviewDate = Convert.ToDateTime(((TextBox)row.FindControl("txtReviewDate")).Text);
+                        //DateTime targetDate = Convert.ToDateTime(((TextBox)row.FindControl("txtTargetDate")).Text);
+                        //DateTime reviewDate = Convert.ToDateTime(((TextBox)row.FindControl("txtReviewDate")).Text);
+                        string targetDateText = ((TextBox)row.FindControl("txtTargetDate")).Text.Trim();
+                        string reviewDateText = ((TextBox)row.FindControl("txtReviewDate")).Text.Trim();
+
+                        DateTime targetDate;
+                        DateTime reviewDate;
+
+                        bool isTargetDateValid = DateTime.TryParseExact(targetDateText, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out targetDate);
+                        bool isReviewDateValid = DateTime.TryParseExact(reviewDateText, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out reviewDate);
+
+                        
+
                         string reviewBy = ((TextBox)row.FindControl("txtReviewBy")).Text;
                         string status = ((DropDownList)row.FindControl("ddlStattus")).SelectedValue;
 

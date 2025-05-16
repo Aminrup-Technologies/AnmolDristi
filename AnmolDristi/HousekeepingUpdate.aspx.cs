@@ -72,54 +72,101 @@ namespace AnmolDristi
         }
 
 
-        
-    
 
         protected void BtnUpdate_Click(object sender, EventArgs e)
         {
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            int auditID = Convert.ToInt32(ViewState["AuditID"]);
 
             using (SqlConnection con = new SqlConnection(connStr))
             {
                 con.Open();
 
+                // Update AuditInfo (Date and Location)
+                string updateAuditInfo = "UPDATE AuditInfo SET AuditDate = @AuditDate, Location = @Location WHERE AuditID = @AuditID";
+                using (SqlCommand cmd = new SqlCommand(updateAuditInfo, con))
+                {
+                    cmd.Parameters.AddWithValue("@AuditDate", DateTime.Parse(txtdate.Text));
+                    cmd.Parameters.AddWithValue("@Location", txtLocation.Text.Trim());
+                    cmd.Parameters.AddWithValue("@AuditID", auditID);
+                    cmd.ExecuteNonQuery();
+                }
+
                 foreach (GridViewRow row in gvObservations.Rows)
                 {
                     if (row.RowType == DataControlRowType.DataRow)
                     {
-                        // Get ObserverID from DataKeys instead of the TextBox
                         string observerID = gvObservations.DataKeys[row.RowIndex].Value.ToString();
 
-                        // Fetch all updated field values from controls
                         DateTime openingDate = DateTime.Parse(((TextBox)row.FindControl("txtOpeningDate")).Text);
                         string openBy = ((TextBox)row.FindControl("txtOpenBy")).Text;
+                        string openByWorkman = ((TextBox)row.FindControl("txtOpenByWorkman")).Text;
                         string observation = ((TextBox)row.FindControl("txtObservation")).Text;
                         string correctiveAction = ((TextBox)row.FindControl("txtCorrectiveAction")).Text;
                         DateTime closingDate = DateTime.Parse(((TextBox)row.FindControl("txtClosingDate")).Text);
                         string closeBy = ((TextBox)row.FindControl("txtCloseBy")).Text;
                         string status = ((DropDownList)row.FindControl("ddlStatus")).SelectedValue;
+                        string assignedTo = ((TextBox)row.FindControl("txtAssignedTo")).Text;
+                        DateTime targetDate = DateTime.Parse(((TextBox)row.FindControl("txtTargetDate")).Text);
 
-                        // Update command
-                        string query = @"UPDATE AuditObservations
-                                 SET OpeningDate = @OpeningDate,
-                                     OpenBy = @OpenBy,
-                                     ObservationText = @ObservationText,
-                                     CorrectiveAction = @CorrectiveAction,
-                                     ClosingDate = @ClosingDate,
-                                     CloseBy = @CloseBy,
-                                     Status = @Status
-                                 WHERE ObserverID = @ObserverID";
+                        // Handle PhotoBefore
+                        FileUpload fuBefore = (FileUpload)row.FindControl("fuBeforePhoto");
+                        Label lblBefore = (Label)row.FindControl("lblPhotoBefore");
+                        string beforePhotoPath = lblBefore.Text;
 
-                        using (SqlCommand cmd = new SqlCommand(query, con))
+                        if (fuBefore.HasFile)
+                        {
+                            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(fuBefore.FileName);
+                            string savePath = Server.MapPath("~/images/") + fileName;
+                            fuBefore.SaveAs(savePath);
+                            beforePhotoPath = "~/images/" + fileName;
+                        }
+
+                        // Handle PhotoAfter
+                        FileUpload fuAfter = (FileUpload)row.FindControl("fuAfterPhoto");
+                        Label lblAfter = (Label)row.FindControl("lblPhotoAfter");
+                        string afterPhotoPath = lblAfter.Text;
+
+                        if (fuAfter.HasFile)
+                        {
+                            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(fuAfter.FileName);
+                            string savePath = Server.MapPath("~/images/") + fileName;
+                            fuAfter.SaveAs(savePath);
+                            afterPhotoPath = "~/images/" + fileName;
+                        }
+
+                        // Update AuditObservations
+                        string updateObservation = @"
+                        UPDATE AuditObservations SET 
+                        OpeningDate = @OpeningDate,
+                        OpenBy = @OpenBy,
+                        OpenByWorkman = @OpenByWorkman,
+                        ObservationText = @ObservationText,
+                        CorrectiveAction = @CorrectiveAction,
+                        ClosingDate = @ClosingDate,
+                        CloseBy = @CloseBy,
+                        Status = @Status,
+                        TargetDate = @TargetDate,
+                        AssignedTo = @AssignedTo,
+                        PhotoBefore = @PhotoBefore,
+                        PhotoAfter = @PhotoAfter
+                        WHERE ObserverID = @ObserverID";
+
+                        using (SqlCommand cmd = new SqlCommand(updateObservation, con))
                         {
                             cmd.Parameters.AddWithValue("@ObserverID", observerID);
                             cmd.Parameters.AddWithValue("@OpeningDate", openingDate);
                             cmd.Parameters.AddWithValue("@OpenBy", openBy);
+                            cmd.Parameters.AddWithValue("@OpenByWorkman", openByWorkman);
                             cmd.Parameters.AddWithValue("@ObservationText", observation);
                             cmd.Parameters.AddWithValue("@CorrectiveAction", correctiveAction);
                             cmd.Parameters.AddWithValue("@ClosingDate", closingDate);
                             cmd.Parameters.AddWithValue("@CloseBy", closeBy);
                             cmd.Parameters.AddWithValue("@Status", status);
+                            cmd.Parameters.AddWithValue("@TargetDate", targetDate);
+                            cmd.Parameters.AddWithValue("@AssignedTo", assignedTo);
+                            cmd.Parameters.AddWithValue("@PhotoBefore", beforePhotoPath);
+                            cmd.Parameters.AddWithValue("@PhotoAfter", afterPhotoPath);
                             cmd.ExecuteNonQuery();
                         }
                     }
@@ -128,13 +175,12 @@ namespace AnmolDristi
                 con.Close();
             }
 
-            // Rebind updated data
-            int auditID = Convert.ToInt32(ViewState["AuditID"]);
             LoadObservations(auditID);
 
             lblMsg.Text = "Data updated successfully!";
             lblMsg.ForeColor = System.Drawing.Color.Green;
         }
+
 
 
         protected void BtnBack_Click(object sender, EventArgs e)

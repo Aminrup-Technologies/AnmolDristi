@@ -1,6 +1,29 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="Committee_meeting_update.aspx.cs" Inherits="AnmolDristi.Committee_meeting_update" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+            <style>
+        .table-responsive {
+    width: 100%;
+    max-height: 400px; /* Adjust based on need */
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
 
+@media (max-width: 768px) {
+    .table-responsive {
+        max-height: 300px; /* Adjust based on your UI */
+    }
+}
+    .gv-input {
+    width: 160px; /* consistent fixed width for all textboxes */
+    height: 38px; /* standard Bootstrap input height */
+    font-size: 14px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+  }
+
+
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
             <div class="right_col" role="main">
@@ -94,22 +117,22 @@
         <asp:BoundField DataField="AttendanceID" HeaderText="SNo" />
          <asp:TemplateField HeaderText="Attendee Type">
   <ItemTemplate>
- <asp:TextBox ID="txtAttendeeType" runat="server" Text='<%# Eval("Attendee_Type") %>' CssClass="form-control" />
+ <asp:TextBox ID="txtAttendeeType" runat="server" Text='<%# Eval("Attendee_Type") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Employee Name ">
   <ItemTemplate>
- <asp:TextBox ID="txtEmployeeName" runat="server" Text='<%# Eval("Name") %>' CssClass="form-control" />
+ <asp:TextBox ID="txtEmployeeName" runat="server" Text='<%# Eval("Name") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Attendee Code">
   <ItemTemplate>
- <asp:TextBox ID="txtAttendeeCode" runat="server" Text='<%# Eval("AttendeeCode") %>' CssClass="form-control" />
+ <asp:TextBox ID="txtAttendeeCode" runat="server" Text='<%# Eval("AttendeeCode") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Attendance Status">
    <ItemTemplate>
-    <asp:DropDownList ID="ddlAttendanceStatus" runat="server" CssClass="form-control form-control-sm rounded" SelectedValue='<%# Eval("AttendanceStatus") %>' >
+    <asp:DropDownList ID="ddlAttendanceStatus" runat="server" CssClass="form-control form-control-sm rounded gv-input" SelectedValue='<%# Eval("AttendanceStatus") %>' >
    <asp:ListItem Text="Select" Value="" />
    <asp:ListItem Text="Attend" Value="Attend" />
    <asp:ListItem Text="Absent" Value="Absent" />
@@ -118,7 +141,7 @@
       </asp:TemplateField>
          <asp:TemplateField HeaderText="Designation">
   <ItemTemplate>
- <asp:TextBox ID="txtDesignation" runat="server" Text='<%# Eval("Designation") %>' CssClass="form-control" />
+ <asp:TextBox ID="txtDesignation" runat="server" Text='<%# Eval("Designation") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Image Preview">
@@ -167,38 +190,38 @@
         <asp:BoundField DataField="IssueID" HeaderText="SNo" />
          <asp:TemplateField HeaderText="Agenda Title">
   <ItemTemplate>
- <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Eval("AgendaTitle") %>' CssClass="form-control" />
+ <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Eval("AgendaTitle") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Issues Discussed">
   <ItemTemplate>
- <asp:TextBox ID="txtIssuesDiscussed" runat="server" Text='<%# Eval("IssuesDiscussed") %>' CssClass="form-control" />
+ <asp:TextBox ID="txtIssuesDiscussed" runat="server" Text='<%# Eval("IssuesDiscussed") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Action By">
   <ItemTemplate>
- <asp:TextBox ID="txtActionBy" runat="server" Text='<%# Eval("ActionBy") %>' CssClass="form-control" />
+ <asp:TextBox ID="txtActionBy" runat="server" Text='<%# Eval("ActionBy") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
          
          <asp:TemplateField HeaderText="Target Date">
   <ItemTemplate>
- <asp:TextBox ID="txtTargetDate" runat="server" Text='<%# Eval("TargetDate","{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control" />
+ <asp:TextBox ID="txtTargetDate" runat="server" Text='<%# Eval("TargetDate","{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
                 <asp:TemplateField HeaderText="Review Date">
  <ItemTemplate>
-<asp:TextBox ID="txtReviewDate" runat="server" Text='<%# Eval("ReviewDate","{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control" />
+<asp:TextBox ID="txtReviewDate" runat="server" Text='<%# Eval("ReviewDate","{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control gv-input" />
  </ItemTemplate>
  </asp:TemplateField>
   <asp:TemplateField HeaderText="Review By">
  <ItemTemplate>
-<asp:TextBox ID="txtReviewBy" runat="server" Text='<%# Eval("ReviewBy") %>'  CssClass="form-control" />
+<asp:TextBox ID="txtReviewBy" runat="server" Text='<%# Eval("ReviewBy") %>'  CssClass="form-control gv-input" />
  </ItemTemplate>
  </asp:TemplateField>
          <asp:TemplateField HeaderText="Status">
      <ItemTemplate>
-         <asp:DropDownList ID="ddlStattus" runat="server" CssClass="form-control form-control-sm rounded" SelectedValue='<%# Eval("Status") %>'>
+         <asp:DropDownList ID="ddlStattus" runat="server" CssClass="form-control form-control-sm rounded gv-input" SelectedValue='<%# Eval("Status") %>'>
              <asp:ListItem Text="Select" Value="" />
              <asp:ListItem Text="Pending" Value="Pending" />
              <asp:ListItem Text="Completed" Value="Completed" />

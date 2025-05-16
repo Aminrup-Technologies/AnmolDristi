@@ -405,7 +405,6 @@
 <div class="col-md-2">
  <div class="mt-3">
      <asp:Button ID="btnAddIssues" runat="server" Text="Add Issues" CssClass="btn btn-success" ValidationGroup="add1" CausesValidation="true"  OnClientClick="preparePoints();" OnClick="btnAddIssues_Click"  />
-    <%-- <asp:Label ID="lblMsg1" runat="server" ></asp:Label>--%>
  </div>
   </div>                         
             <div class="table-responsive">
@@ -541,14 +540,74 @@
          alert("Data saved successfully!");
      }
      </script>
-     <script type="text/javascript">
+  <%-- <script type="text/javascript">
+       window.onload = function () {
+           const validExtensions = [".jpg", ".jpeg", ".png"];
+           const maxSizeMB = 20;
+           const minAcceptableWidth = 200;
+           const minAcceptableHeight = 200;
+           const recommendedWidth = 800;
+           const recommendedHeight = 600;
+
+           const beforeFile = document.getElementById('<%= imgupload.ClientID %>');
+        const beforeError = document.getElementById('<%= lblBeforeError.ClientID %>');
+
+           beforeFile.setAttribute("accept", ".jpg,.jpeg,.png");
+
+           beforeFile.addEventListener("change", function () {
+               validateFile(this, beforeError);
+           });
+
+           function validateFile(fileInput, errorLabel) {
+               const file = fileInput.files[0];
+               const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+
+               if (!validExtensions.includes(ext)) {
+                   fileInput.value = "";
+                   errorLabel.innerText = "❌ Only .jpg, .jpeg, or .png files are allowed.";
+                   errorLabel.style.display = "block";
+                   return;
+               }
+
+               if (file.size > maxSizeMB * 1024 * 1024) {
+                   fileInput.value = "";
+                   errorLabel.innerText = `❌ File too large. Max ${maxSizeMB}MB allowed.`;
+                   errorLabel.style.display = "block";
+                   return;
+               }
+
+               const img = new Image();
+               const objectUrl = URL.createObjectURL(file);
+
+               img.onload = function () {
+                   if (this.width < minAcceptableWidth || this.height < minAcceptableHeight) {
+                       fileInput.value = "";
+                       errorLabel.innerText = `❌ Image too small. Minimum size is ${minAcceptableWidth}x${minAcceptableHeight}px.`;
+                       errorLabel.style.display = "block";
+                   } else if (this.width < recommendedWidth || this.height < recommendedHeight) {
+                       errorLabel.innerText = `⚠️ Image uploaded, but it's below recommended resolution (${recommendedWidth}x${recommendedHeight}px).`;
+                       errorLabel.style.display = "block";
+                   } else {
+                       errorLabel.innerText = "";
+                       errorLabel.style.display = "none";
+                   }
+
+                   URL.revokeObjectURL(objectUrl);
+               };
+
+               img.src = objectUrl;
+           }
+       };
+   </script>--%>
+
+ <script type="text/javascript">
          window.onload = function () {
              const validExtensions = [".jpg", ".jpeg", ".png"];
 
              const beforeFile = document.getElementById('<%= imgupload.ClientID %>');
          
 
-      const beforeError = document.getElementById('<%= lblBeforeError.ClientID %>');
+             const beforeError = document.getElementById('<%= lblBeforeError.ClientID %>');
       
              // Set accept attribute for file filtering at browser level
              beforeFile.setAttribute("accept", ".jpg,.jpeg,.png");

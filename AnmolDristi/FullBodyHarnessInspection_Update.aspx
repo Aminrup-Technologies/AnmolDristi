@@ -1,12 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="FullBodyHarnessInspection_Update.aspx.cs" Inherits="AnmolDristi.FullBodyHarnessInspection_Update" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-        <style type="text/css">
-    
-    .question-section {
+      <%--  <style type="text/css">
+            {
+    .question-section 
+        {
     padding: 20px;
     background-color: #f7f7f7;
     border-radius: 8px;
-}
+        }
 
 .question-block {
     margin-bottom: 20px;
@@ -45,8 +46,32 @@
     vertical-align: middle;
 }
 
+}
+</style>--%>
+                <style>
+        .table-responsive {
+    width: 100%;
+    max-height: 400px; /* Adjust based on need */
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
 
-</style>
+@media (max-width: 768px) {
+    .table-responsive {
+        max-height: 300px; /* Adjust based on your UI */
+    }
+}
+    .gv-input {
+    width: 160px; /* consistent fixed width for all textboxes */
+    height: 38px; /* standard Bootstrap input height */
+    font-size: 14px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+  }
+
+
+    </style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -138,28 +163,25 @@
 
                     <asp:TemplateField HeaderText="Location">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtLocation" runat="server" Text='<%# Eval("Location") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtLocation" runat="server" Text='<%# Eval("Location") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <%-- Q1 Fields --%>
                     <asp:TemplateField HeaderText="Q1 Status">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtQ1Status" runat="server" Text='<%# Eval("Q1Status") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtQ1Status" runat="server" Text='<%# Eval("Q1Status") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Q1 Remarks">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtQ1Remarks" runat="server" Text='<%# Eval("Q1Remarks") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtQ1Remarks" runat="server" Text='<%# Eval("Q1Remarks") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
                    <asp:TemplateField HeaderText="Q1 Photo">
     <ItemTemplate>
         <asp:Image ID="imgQ1Photo" runat="server" 
-                   ImageUrl='<%# Eval("Q1Photo", "{0}") %>' 
-                   Width="50px" Height="50px" 
-                   CssClass="img-thumbnail" 
-                   AlternateText="alt" />
+                   ImageUrl='<%# Eval("Q1Photo", "{0}") %>' Width="90px" Height="90px" Style="object-fit:cover;"/>
         <!-- Hidden field to retain existing image path -->
 <asp:Label ID="lblimgQ1Photo" runat="server" 
     Text='<%# Eval("Q1Photo") %>' Visible="false" />
@@ -175,26 +197,18 @@
                     <%-- Q2 Fields --%>
                     <asp:TemplateField HeaderText="Q2 Status">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtQ2Status" runat="server" Text='<%# Eval("Q2Status") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtQ2Status" runat="server" Text='<%# Eval("Q2Status") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Q2 Remarks">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtQ2Remarks" runat="server" Text='<%# Eval("Q2Remarks") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtQ2Remarks" runat="server" Text='<%# Eval("Q2Remarks") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <%--<asp:TemplateField HeaderText="Q2 Photo">
-                        <ItemTemplate>
-                            <asp:TextBox ID="txtQ2Photo" runat="server" Text='<%# Eval("Q2Photo") %>' CssClass="form-control" />
-                        </ItemTemplate>
-                    </asp:TemplateField>--%>
    <asp:TemplateField HeaderText="Q2 Photo">
     <ItemTemplate>
         <asp:Image ID="imgQ2Photo" runat="server" 
-                   ImageUrl='<%# Eval("Q2Photo", "{0}") %>' 
-                   Width="50px" Height="50px" 
-                   CssClass="img-thumbnail" 
-                   AlternateText="alt" />
+                   ImageUrl='<%# Eval("Q2Photo", "{0}") %>' Width="90px" Height="90px" Style="object-fit:cover;"/>
                 <!-- Hidden field to retain existing image path -->
 <asp:Label ID="lblimgQ2Photo" runat="server" 
     Text='<%# Eval("Q2Photo") %>' Visible="false" />
@@ -207,27 +221,19 @@
                     <%-- Q3 Fields --%>
                     <asp:TemplateField HeaderText="Q3 Status">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtQ3Status" runat="server" Text='<%# Eval("Q3Status") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtQ3Status" runat="server" Text='<%# Eval("Q3Status") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Q3 Remarks">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtQ3Remarks" runat="server" Text='<%# Eval("Q3Remarks") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtQ3Remarks" runat="server" Text='<%# Eval("Q3Remarks") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <%--<asp:TemplateField HeaderText="Q3 Photo">
-                        <ItemTemplate>
-                            <asp:TextBox ID="txtQ3Photo" runat="server" Text='<%# Eval("Q3Photo") %>' CssClass="form-control" />
-                        </ItemTemplate>
-                    </asp:TemplateField>--%>
                        <asp:TemplateField HeaderText="Q3 Photo">
     <ItemTemplate>
         <asp:Image ID="imgQ3Photo" runat="server" 
-                   ImageUrl='<%# Eval("Q3Photo", "{0}") %>' 
-                   Width="50px" Height="50px" 
-                   CssClass="img-thumbnail" 
-                   AlternateText="alt" />
-                <!-- Hidden field to retain existing image path -->
+                   ImageUrl='<%# Eval("Q3Photo", "{0}") %>' Width="90px" Height="90px" Style="object-fit:cover;" />
+                
 <asp:Label ID="lblimgQ3Photo" runat="server" 
     Text='<%# Eval("Q3Photo") %>' Visible="false" />
 
@@ -240,22 +246,19 @@
                     <%-- Q4 Fields --%>
                     <asp:TemplateField HeaderText="Q4 Status">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtQ4Status" runat="server" Text='<%# Eval("Q4Status") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtQ4Status" runat="server" Text='<%# Eval("Q4Status") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Q4 Remarks">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtQ4Remarks" runat="server" Text='<%# Eval("Q4Remarks") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtQ4Remarks" runat="server" Text='<%# Eval("Q4Remarks") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
                    
   <asp:TemplateField HeaderText="Q4 Photo">
         <ItemTemplate>
         <asp:Image ID="imgQ4Photo" runat="server" 
-                   ImageUrl='<%# Eval("Q4Photo", "{0}") %>' 
-                   Width="50px" Height="50px" 
-                   CssClass="img-thumbnail" 
-                   AlternateText="alt" />
+                   ImageUrl='<%# Eval("Q4Photo", "{0}") %>' Width="90px" Height="90px" Style="object-fit:cover;"/>
                     <!-- Hidden field to retain existing image path -->
 <asp:Label ID="lblimgQ4Photo" runat="server" 
     Text='<%# Eval("Q4Photo") %>' Visible="false" />
@@ -270,27 +273,20 @@
                     <%-- Q5 Fields --%>
                     <asp:TemplateField HeaderText="Q5 Status">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtQ5Status" runat="server" Text='<%# Eval("Q5Status") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtQ5Status" runat="server" Text='<%# Eval("Q5Status") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Q5 Remarks">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtQ5Remarks" runat="server" Text='<%# Eval("Q5Remarks") %>' CssClass="form-control" />
+                            <asp:TextBox ID="txtQ5Remarks" runat="server" Text='<%# Eval("Q5Remarks") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                   <%-- <asp:TemplateField HeaderText="Q5 Photo">
-                        <ItemTemplate>
-                            <asp:TextBox ID="txtQ5Photo" runat="server" Text='<%# Eval("Q5Photo") %>' CssClass="form-control" />
-                        </ItemTemplate>
-                    </asp:TemplateField>--%>
+                  
                       <asp:TemplateField HeaderText="Q5 Photo">
                         <ItemTemplate>
         <asp:Image ID="imgQ5Photo" runat="server" 
-                   ImageUrl='<%# Eval("Q5Photo", "{0}") %>' 
-                   Width="50px" Height="50px" 
-                   CssClass="img-thumbnail" 
-                   AlternateText="alt" />
-                            <!-- Hidden field to retain existing image path -->
+                   ImageUrl='<%# Eval("Q5Photo", "{0}") %>' Width="90px" Height="90px" Style="object-fit:cover;"/>
+                            
 <asp:Label ID="lblimgQ5Photo" runat="server" 
     Text='<%# Eval("Q5Photo") %>' Visible="false" />
 

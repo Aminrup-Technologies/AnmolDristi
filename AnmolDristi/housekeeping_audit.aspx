@@ -76,6 +76,7 @@
     <div class="mb-3">
         <asp:Label ID="lbl_txtObserverID" runat="server" AssociatedControlID="txtObserverID" Text="Observer ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtObserverID" runat="server" ErrorMessage="*" ControlToValidate="txtObserverID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="REV_txtObserverID" runat="server" ControlToValidate="txtObserverID" ForeColor="Red" ValidationGroup="add" ErrorMessage="Numeric Only" ValidationExpression="^\d{1,25}$" Display="Dynamic"></asp:RegularExpressionValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtObserverID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
         </div>
@@ -215,7 +216,7 @@
 
 
                              </div>
-   <%-- </div>--%>
+   </div>
                                 <!-- Button -->
                                 <div class="mt-3">
                                     <asp:Button ID="btnAddObservation" runat="server" Text="Add Observation" CssClass="btn btn-primary" ValidationGroup="add" CausesValidation="true" OnClick="btnAddObservation_Click" OnClientClick="return validateObservationFields();"/>
@@ -393,7 +394,7 @@
         });
     });
    </script>
-<script type="text/javascript">
+<%--<script type="text/javascript">
     function validateObservationFields() {
         var fields = [
             { id: '<%= txtObserverID.ClientID %>', name: 'Observer ID' },
@@ -428,7 +429,49 @@
 
         return true;
     }
+</script>--%>
+<script type="text/javascript">
+    function validateObservationFields() {
+        var fields = [
+            { id: '<%= txtObserverID.ClientID %>', name: 'Observer ID' },
+            { id: '<%= fileBeforePhoto.ClientID %>', name: 'Before Photo' },
+            { id: '<%= txtObservation.ClientID %>', name: 'Observation' },
+            { id: '<%= txtCorrectiveAction.ClientID %>', name: 'Corrective Action' },
+            { id: '<%= fileAfterPhoto.ClientID %>', name: 'After Photo' },
+            { id: '<%= ddlStatus.ClientID %>', name: 'Status' },
+            { id: '<%= txtOpeningDate.ClientID %>', name: 'Opening Date' },
+            { id: '<%= txtOpenByWorkman.ClientID %>', name: 'Open By (Workman SL)' },
+            { id: '<%= txtClosingDate.ClientID %>', name: 'Closing Date' },
+            { id: '<%= txtTargetDate.ClientID %>', name: 'Target Date' },
+            { id: '<%= txtAssignedTo.ClientID %>', name: 'Assigned To' }
+        ];
+
+        for (var i = 0; i < fields.length; i++) {
+            var elem = document.getElementById(fields[i].id);
+            if (elem) {
+                var isEmpty = false;
+                if (elem.type === "file" && !elem.value) {
+                    isEmpty = true;
+                } else if (
+                    (elem.type === "text" ||
+                        elem.tagName === "TEXTAREA" ||
+                        elem.tagName === "SELECT") &&
+                    elem.value.trim() === "") {
+                    isEmpty = true;
+                }
+
+                if (isEmpty) {
+                    alert(fields[i].name + " is required.");
+                    elem.focus();
+                    return false;
+                }
+            }
+        }
+
+        return true; // all fields valid, allow form submission
+    }
 </script>
+
 
 
 
