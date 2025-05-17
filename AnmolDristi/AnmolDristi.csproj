@@ -83,6 +83,8 @@
     <Content Include="fiveS_checklist_1.aspx" />
     <Content Include="fiveS_checklist_2.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="Lifting_Belt.aspx" />
+    <Content Include="Lifting_BeltData.aspx" />
     <Content Include="Line_Walk.aspx" />
     <Content Include="Line_Walk_Data.aspx" />
     <Content Include="Line_Walk_Status.aspx" />
@@ -92,6 +94,7 @@
     <Content Include="Dristi.Master" />
     <Content Include="uploads\no_image.jpg" />
     <Content Include="view_Checklists.aspx" />
+    <Content Include="View_LiftingBelt.aspx" />
     <Content Include="View_LineWalk.aspx" />
     <Content Include="WebForm1.aspx" />
     <Content Include="DAL\Datasets\Checklist_details_dataset.xsc">
@@ -224,6 +227,20 @@
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Lifting_Belt.aspx.cs">
+      <DependentUpon>Lifting_Belt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lifting_Belt.aspx.designer.cs">
+      <DependentUpon>Lifting_Belt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lifting_BeltData.aspx.cs">
+      <DependentUpon>Lifting_BeltData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lifting_BeltData.aspx.designer.cs">
+      <DependentUpon>Lifting_BeltData.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Line_Walk.aspx.cs">
       <DependentUpon>Line_Walk.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -273,6 +290,13 @@
     </Compile>
     <Compile Include="view_Checklists.aspx.designer.cs">
       <DependentUpon>view_Checklists.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View_LiftingBelt.aspx.cs">
+      <DependentUpon>View_LiftingBelt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View_LiftingBelt.aspx.designer.cs">
+      <DependentUpon>View_LiftingBelt.aspx</DependentUpon>
     </Compile>
     <Compile Include="View_LineWalk.aspx.cs">
       <DependentUpon>View_LineWalk.aspx</DependentUpon>
