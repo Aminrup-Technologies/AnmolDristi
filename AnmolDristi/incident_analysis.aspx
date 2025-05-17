@@ -112,33 +112,6 @@
                                     
                                 </asp:CustomValidator>
 
-
-
-
-
-                                <!-- Name of Person Involved -->
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <asp:Label ID="lblPersonInvolved" runat="server" Text="Name of Person Involved:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group-sm">
-                                            <asp:TextBox ID="txtPersonInvolved" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Name"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvPersonInvolved" runat="server"
-                                                ControlToValidate="txtPersonInvolved"
-                                                ErrorMessage="Please enter the name of the person involved."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                                            </asp:RequiredFieldValidator>
-                                            <asp:RegularExpressionValidator ID="revPersonInvolved" runat="server"
-                                                ControlToValidate="txtPersonInvolved"
-                                                ValidationExpression="^[a-zA-Z\s]+$"
-                                                ErrorMessage="Name should contain only letters and spaces."
-                                                ForeColor="Red"
-                                                Display="Dynamic">
-                                            </asp:RegularExpressionValidator>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <!-- Location -->
                                 <div class="col-md-3">
                                     <div class="mb-3">
@@ -226,6 +199,15 @@
                                     }
                                 </script>--%>
 
+                                <div class="col-md-12">
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h4 class="text-left text-info">Witness Details</h4>
+                                    <hr />
+                                </div>
+
 
                                 <!-- Witness Checkbox -->
                                 <div class="col-md-3">
@@ -251,13 +233,13 @@
                                                 <asp:Button ID="btnAddWitness" runat="server" Text="Add Witness" OnClick="BtnAddWitness_Click" />--%>
 
                                                 <asp:TextBox ID="txtWitness1" runat="server" CssClass="form-control form-control-sm witness-input"></asp:TextBox>
-                                                 <!-- RequiredFieldValidator for Witness -->
-                    <asp:RequiredFieldValidator ID="rfvWitness1" runat="server"
-                        ControlToValidate="txtWitness1"
-                        ErrorMessage="Witness Name is required."
-                        ForeColor="Red"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
+                                                <!-- RequiredFieldValidator for Witness -->
+                                                <asp:RequiredFieldValidator ID="rfvWitness1" runat="server"
+                                                    ControlToValidate="txtWitness1"
+                                                    ErrorMessage="Witness Name is required."
+                                                    ForeColor="Red"
+                                                    Display="Dynamic">
+                                                </asp:RequiredFieldValidator>
                                                 <button type="button" class="btn btn-primary btn-sm btn-fixed-size" onclick="addWitness()">Add</button>
                                                 <button type="button" class="btn btn-danger btn-sm btn-fixed-size" onclick="removeWitness(this)">Remove</button>
                                             </div>
@@ -359,20 +341,29 @@
                                     </div>
                                 </div>
 
-                                <!-- Vendor Name (Required & Only Letters/Spaces) -->
+                                <div class="col-md-12">
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h4 class="text-left text-info">Injured Person Details</h4>
+                                    <hr />
+                                </div>
+
+                                <!-- Name of Person Involved -->
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <asp:Label ID="lblVendorName" runat="server" Text="Vendor Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:Label ID="lblPersonInvolved" runat="server" Text="Name of Person Involved:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
-                                            <asp:TextBox ID="txtVendorName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Vendor Name"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="rfvVendorName" runat="server"
-                                                ControlToValidate="txtVendorName"
-                                                ErrorMessage="This field is required."
+                                            <asp:TextBox ID="txtPersonInvolved" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Name"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="rfvPersonInvolved" runat="server"
+                                                ControlToValidate="txtPersonInvolved"
+                                                ErrorMessage="Please enter the name of the person involved."
                                                 ForeColor="Red"
                                                 Display="Dynamic">
                                             </asp:RequiredFieldValidator>
-                                            <asp:RegularExpressionValidator ID="revVendorName" runat="server"
-                                                ControlToValidate="txtVendorName"
+                                            <asp:RegularExpressionValidator ID="revPersonInvolved" runat="server"
+                                                ControlToValidate="txtPersonInvolved"
                                                 ValidationExpression="^[a-zA-Z\s]+$"
                                                 ErrorMessage="Name should contain only letters and spaces."
                                                 ForeColor="Red"
@@ -410,7 +401,37 @@
                                     </div>
                                 </div>
 
+                                <!-- Vendor Name (Required & Only Letters/Spaces) -->
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <asp:Label ID="lblVendorName" runat="server" Text="Vendor Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="txtVendorName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Vendor Name"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="rfvVendorName" runat="server"
+                                                ControlToValidate="txtVendorName"
+                                                ErrorMessage="This field is required."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+                                            <asp:RegularExpressionValidator ID="revVendorName" runat="server"
+                                                ControlToValidate="txtVendorName"
+                                                ValidationExpression="^[a-zA-Z\s]+$"
+                                                ErrorMessage="Name should contain only letters and spaces."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RegularExpressionValidator>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="col-md-12">
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h4 class="text-left text-info">Investigation Team</h4>
+                                    <hr />
+                                </div>
 
 
                                 <!-- Investigation Team Members -->
@@ -424,15 +445,15 @@
 
 
                                                 <asp:TextBox ID="txtInvestigationMember1" runat="server" CssClass="form-control form-control-sm investigation-input"></asp:TextBox>
-                                                  <!-- RequiredFieldValidator for Investigation Member -->
-                    <asp:RequiredFieldValidator ID="rfvInvestigationMember1" runat="server"
-                        ControlToValidate="txtInvestigationMember1"
-                        ErrorMessage="Team Member Name is required."
-                        ForeColor="Red"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
+                                                <!-- RequiredFieldValidator for Investigation Member -->
+                                                <asp:RequiredFieldValidator ID="rfvInvestigationMember1" runat="server"
+                                                    ControlToValidate="txtInvestigationMember1"
+                                                    ErrorMessage="Team Member Name is required."
+                                                    ForeColor="Red"
+                                                    Display="Dynamic">
+                                                </asp:RequiredFieldValidator>
                                                 <button type="button" class="btn btn-primary btn-sm btn-fixed-size" onclick="addInvestigationMember()">Add</button>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -495,11 +516,19 @@
                                 </script>
 
 
+                                <div class="col-md-12">
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h4 class="text-left text-info">Incident Details</h4>
+                                    <hr />
+                                </div>
 
                                 <!-- Merged Field: Task & Description -->
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <asp:Label ID="lblTaskDescription" runat="server" Text="Task & Incident Description:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:Label ID="lblTaskDescription" runat="server" Text="Incident Description:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtTaskDescription" runat="server" CssClass="form-control form-control-sm rounded"
                                                 TextMode="MultiLine" Rows="4" MaxLength="500"></asp:TextBox>
@@ -524,17 +553,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
 
                                 <%--       <!-- Task Being Performed -->
                                 <div class="col-md-4">
@@ -727,118 +745,125 @@
                                     });
                                 </script>--%>
 
+                                <div class="col-md-12">
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h4 class="text-left text-info">Root Cause Analysis</h4>
+                                    <hr />
+                                </div>
 
 
+                                <%-- Root Cause Analysis Table - Row Format --%>
+                                <div class="col-md-12">
+                                    <div class="table-responsive root-cause-table">
+                                        <asp:Table ID="tblRootCauseAnalysis" runat="server" CssClass="table table-bordered text-start">
 
-                             <%-- Root Cause Analysis Table - Row Format --%>
-<div class="col-md-12">
-    <div class="table-responsive root-cause-table">
-        <asp:Table ID="tblRootCauseAnalysis" runat="server" CssClass="table table-bordered text-start">
-
-            <asp:TableHeaderRow CssClass="table-light">
-                <asp:TableCell ColumnSpan="2" CssClass="text-center fw-bold" ForeColor="Blue">
+                                            <asp:TableHeaderRow CssClass="table-light">
+                                                <asp:TableCell ColumnSpan="2" CssClass="text-center fw-bold" ForeColor="Blue">
                     <strong>Root Cause Analysis</strong>
-                </asp:TableCell>
-            </asp:TableHeaderRow>
+                                                </asp:TableCell>
+                                            </asp:TableHeaderRow>
 
-           <%--  Row for Why 1 --%>
-            <asp:TableRow>
-                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+                                            <%--  Row for Why 1 --%>
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
                     Why 1 (Loss)
-                </asp:TableCell>
-                <asp:TableCell>
-                    <asp:TextBox ID="txtWhy1" runat="server" CssClass="form-control"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="rfvWhy1" runat="server"
-                        ControlToValidate="txtWhy1"
-                        ErrorMessage="This field is required."
-                        ForeColor="Red"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-                </asp:TableCell>
-            </asp:TableRow>
+                                                </asp:TableCell>
+                                                <asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy1" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:RequiredFieldValidator ID="rfvWhy1" runat="server"
+                                                        ControlToValidate="txtWhy1"
+                                                        ErrorMessage="This field is required."
+                                                        ForeColor="Red"
+                                                        Display="Dynamic">
+                                                    </asp:RequiredFieldValidator>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
 
-         
-            <asp:TableRow>
-                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
                     Why 2 (Incident)
-                </asp:TableCell>
-                <asp:TableCell>
-                    <asp:TextBox ID="txtWhy2" runat="server" CssClass="form-control"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="rfvWhy2" runat="server"
-                        ControlToValidate="txtWhy2"
-                        ErrorMessage="This field is required."
-                        ForeColor="Red"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-                </asp:TableCell>
-            </asp:TableRow>
+                                                </asp:TableCell>
+                                                <asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy2" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:RequiredFieldValidator ID="rfvWhy2" runat="server"
+                                                        ControlToValidate="txtWhy2"
+                                                        ErrorMessage="This field is required."
+                                                        ForeColor="Red"
+                                                        Display="Dynamic">
+                                                    </asp:RequiredFieldValidator>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
 
-            
-            <asp:TableRow>
-                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
                     Why 3 (Immediate Cause)
-                </asp:TableCell>
-                <asp:TableCell>
-                    <asp:TextBox ID="txtWhy3" runat="server" CssClass="form-control"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="rfvWhy3" runat="server"
-                        ControlToValidate="txtWhy3"
-                        ErrorMessage="This field is required."
-                        ForeColor="Red"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-                </asp:TableCell>
-            </asp:TableRow>
+                                                </asp:TableCell>
+                                                <asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy3" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:RequiredFieldValidator ID="rfvWhy3" runat="server"
+                                                        ControlToValidate="txtWhy3"
+                                                        ErrorMessage="This field is required."
+                                                        ForeColor="Red"
+                                                        Display="Dynamic">
+                                                    </asp:RequiredFieldValidator>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
 
-          
-            <asp:TableRow>
-                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
                     Why 4 (Underlying Cause)
-                </asp:TableCell>
-                <asp:TableCell>
-                    <asp:TextBox ID="txtWhy4" runat="server" CssClass="form-control"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="rfvWhy4" runat="server"
-                        ControlToValidate="txtWhy4"
-                        ErrorMessage="This field is required."
-                        ForeColor="Red"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-                </asp:TableCell>
-            </asp:TableRow>
+                                                </asp:TableCell>
+                                                <asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy4" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:RequiredFieldValidator ID="rfvWhy4" runat="server"
+                                                        ControlToValidate="txtWhy4"
+                                                        ErrorMessage="This field is required."
+                                                        ForeColor="Red"
+                                                        Display="Dynamic">
+                                                    </asp:RequiredFieldValidator>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
 
-           
-            <asp:TableRow>
-                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
                     Why 5 (Root Cause)
-                </asp:TableCell>
-                <asp:TableCell>
-                    <asp:TextBox ID="txtWhy5" runat="server" CssClass="form-control"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="rfvWhy5" runat="server"
-                        ControlToValidate="txtWhy5"
-                        ErrorMessage="This field is required."
-                        ForeColor="Red"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-                </asp:TableCell>
-            </asp:TableRow>
+                                                </asp:TableCell>
+                                                <asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy5" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:RequiredFieldValidator ID="rfvWhy5" runat="server"
+                                                        ControlToValidate="txtWhy5"
+                                                        ErrorMessage="This field is required."
+                                                        ForeColor="Red"
+                                                        Display="Dynamic">
+                                                    </asp:RequiredFieldValidator>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
 
-            
-            <asp:TableRow>
-                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
+
+                                            <asp:TableRow>
+                                                <asp:TableCell CssClass="fw-bold" ForeColor="MediumBlue">
                     Why 6 (How)
-                </asp:TableCell>
-                <asp:TableCell>
-                    <asp:TextBox ID="txtWhy6" runat="server" CssClass="form-control"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="rfvWhy6" runat="server"
-                        ControlToValidate="txtWhy6"
-                        ErrorMessage="This field is required."
-                        ForeColor="Red"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-                </asp:TableCell>
-            </asp:TableRow>
-        </asp:Table>
-    </div>
-</div>
+                                                </asp:TableCell>
+                                                <asp:TableCell>
+                                                    <asp:TextBox ID="txtWhy6" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:RequiredFieldValidator ID="rfvWhy6" runat="server"
+                                                        ControlToValidate="txtWhy6"
+                                                        ErrorMessage="This field is required."
+                                                        ForeColor="Red"
+                                                        Display="Dynamic">
+                                                    </asp:RequiredFieldValidator>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
+                                        </asp:Table>
+                                    </div>
+                                </div>
 
 
 
@@ -908,239 +933,245 @@
                                 </style>--%>
 
 
+                                <div class="col-md-12">
+                                    <hr />
+                                </div>
 
-      
-    <!-- Review Date -->
-    <div class="col-md-3">
-        <div class="mb-3">
-            <asp:Label ID="lblReviewDate" runat="server" Text="Review Date:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-            <div class="input-group-sm">
-                <asp:TextBox ID="txtReviewDate" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Select Review Date" TextMode="Date"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="rfvReviewDate" runat="server"
-                    ControlToValidate="txtReviewDate"
-                    ErrorMessage="Please select a review date."
-                    ForeColor="Red"
-                    Display="Dynamic">
-                </asp:RequiredFieldValidator>
-            </div>
-        </div>
-    </div>
+                                <div class="col-md-12">
+                                    <h4 class="text-left text-info">Actionables</h4>
+                                    <hr />
+                                </div>
 
-    <!-- Corrective Actions -->
-    <div class="col-md-4 offset-md-1">
-        <div class="mb-3">
-            <asp:Label ID="lblCorrectiveActions" runat="server" Text="Corrective Actions:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-            <div class="input-group-sm">
-                <asp:TextBox ID="txtCorrectiveActions" runat="server" CssClass="form-control form-control-sm rounded w-100"></asp:TextBox>
+                                <!-- Corrective Actions -->
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <asp:Label ID="lblCorrectiveActions" runat="server" Text="Corrective Actions:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="txtCorrectiveActions" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control form-control-sm rounded w-100"></asp:TextBox>
 
-                <!-- Validators -->
-                <asp:RequiredFieldValidator ID="rfvCorrectiveActions" runat="server"
-                    ControlToValidate="txtCorrectiveActions"
-                    ErrorMessage="This field is required."
-                    ForeColor="Red"
-                    Display="Dynamic">
-                </asp:RequiredFieldValidator>
+                                            <!-- Validators -->
+                                            <asp:RequiredFieldValidator ID="rfvCorrectiveActions" runat="server"
+                                                ControlToValidate="txtCorrectiveActions"
+                                                ErrorMessage="This field is required."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
 
-                <asp:RegularExpressionValidator ID="revCorrectiveActions" runat="server"
-                    ControlToValidate="txtCorrectiveActions"
-                    ValidationExpression="^[A-Za-z\s]+$"
-                    ErrorMessage="Only letters and spaces are allowed."
-                    ForeColor="Red"
-                    Display="Dynamic">
-                </asp:RegularExpressionValidator>
+                                            <asp:RegularExpressionValidator ID="revCorrectiveActions" runat="server"
+                                                ControlToValidate="txtCorrectiveActions"
+                                                ValidationExpression="^[A-Za-z\s]+$"
+                                                ErrorMessage="Only letters and spaces are allowed."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RegularExpressionValidator>
 
-            </div>
-        </div>
-    </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-    <!-- Preventive Actions (Same Row) -->
-    <div class="col-md-3">
-        <div class="mb-3">
-            <asp:Label ID="lblPreventiveActions" runat="server" Text="Preventive Actions:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-            <div class="input-group-sm">
-                <asp:TextBox ID="txtPreventiveActions" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                <!-- Preventive Actions (Same Row) -->
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <asp:Label ID="lblPreventiveActions" runat="server" Text="Preventive Actions:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="txtPreventiveActions" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control form-control-sm rounded"></asp:TextBox>
 
-                <!-- Validators -->
-                <asp:RequiredFieldValidator ID="rfvPreventiveActions" runat="server"
-                    ControlToValidate="txtPreventiveActions"
-                    ErrorMessage="This field is required."
-                    ForeColor="Red"
-                    Display="Dynamic">
-                </asp:RequiredFieldValidator>
+                                            <!-- Validators -->
+                                            <asp:RequiredFieldValidator ID="rfvPreventiveActions" runat="server"
+                                                ControlToValidate="txtPreventiveActions"
+                                                ErrorMessage="This field is required."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
 
-                <asp:RegularExpressionValidator ID="revPreventiveActions" runat="server"
-                    ControlToValidate="txtPreventiveActions"
-                    ValidationExpression="^[A-Za-z\s]+$"
-                    ErrorMessage="Only letters and spaces are allowed."
-                    ForeColor="Red"
-                    Display="Dynamic">
-                </asp:RegularExpressionValidator>
+                                            <asp:RegularExpressionValidator ID="revPreventiveActions" runat="server"
+                                                ControlToValidate="txtPreventiveActions"
+                                                ValidationExpression="^[A-Za-z\s]+$"
+                                                ErrorMessage="Only letters and spaces are allowed."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RegularExpressionValidator>
 
-            </div>
-        </div>
-    </div>
-</div>  
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <script type="text/javascript">
-                        function validateFormBeforeSubmit() {
-                            var isValid = true;
-                            var errorMessage = "";
-
-                            // Static fields check (Dropdowns and Textboxes)
-                            var fieldsToCheck = [
-                                { id: '<%= ddlIncidentClassification.ClientID %>', type: 'dropdown' },
-            { id: '<%= txtDateOfIncident.ClientID %>', type: 'textbox' },
-            { id: '<%= txtTimeOfIncident.ClientID %>', type: 'textbox' },
-            { id: '<%= txtPersonInvolved.ClientID %>', type: 'textbox' },
-            { id: '<%= txtLocation.ClientID %>', type: 'textbox' },
-            { id: '<%= txtDepartment.ClientID %>', type: 'textbox' },
-            { id: '<%= txtSection.ClientID %>', type: 'textbox' },
-            { id: '<%= txtTaskDescription.ClientID %>', type: 'textbox' }, // New - Task & Incident Description
-            { id: '<%= txtReportedBy.ClientID %>', type: 'textbox' },      // New - Reported By
-            { id: '<%= txtVendorName.ClientID %>', type: 'textbox' },       // New - Vendor Name
-            { id: '<%= txtInjuredPersons.ClientID %>', type: 'textbox' }    // New - Total No. of Injured Persons
-        ];
-
-        for (var i = 0; i < fieldsToCheck.length; i++) {
-            var fieldInfo = fieldsToCheck[i];
-            var field = document.getElementById(fieldInfo.id);
-            if (field) {
-                if (fieldInfo.type === 'textbox') {
-                    if (field.value.trim() === "") {
-                        isValid = false;
-                        errorMessage += "- Please fill " + getFriendlyName(field.id) + ".\n";
-                        field.classList.add("is-invalid");
-                    } else {
-                        field.classList.remove("is-invalid");
-                    }
-                } else if (fieldInfo.type === 'dropdown') {
-                    if (field.value === "0" || field.selectedIndex === 0) {
-                        isValid = false;
-                        errorMessage += "- Please select " + getFriendlyName(field.id) + ".\n";
-                        field.classList.add("is-invalid");
-                    } else {
-                        field.classList.remove("is-invalid");
-                    }
-                }
-            }
-        }
-
-        // Witness section validation (if visible)
-        var witnessSection = document.getElementById("witnessSection");
-        if (witnessSection && witnessSection.style.display !== "none") {
-            var witnessInputs = witnessSection.querySelectorAll("input[type='text']");
-            witnessInputs.forEach(function (input, index) {
-                if (input.value.trim() === "") {
-                    isValid = false;
-                    errorMessage += "- Please enter Witness Name #" + (index + 1) + ".\n";
-                    input.classList.add("is-invalid");
-                } else {
-                    input.classList.remove("is-invalid");
-                }
-            });
-        }
-
-        // Investigation Team Members validation
-        var investigationContainer = document.getElementById("investigationTeamContainer");
-        if (investigationContainer) {
-            var investigationInputs = investigationContainer.querySelectorAll("input[type='text']");
-            investigationInputs.forEach(function (input, index) {
-                if (input.value.trim() === "") {
-                    isValid = false;
-                    errorMessage += "- Please enter Investigation Team Member #" + (index + 1) + ".\n";
-                    input.classList.add("is-invalid");
-                } else {
-                    input.classList.remove("is-invalid");
-                }
-            });
-        }
-
-        // Root Cause Analysis fields (Why1 to Why6)
-        var whyFields = [
-            '<%= txtWhy1.ClientID %>',
-            '<%= txtWhy2.ClientID %>',
-            '<%= txtWhy3.ClientID %>',
-            '<%= txtWhy4.ClientID %>',
-            '<%= txtWhy5.ClientID %>',
-            '<%= txtWhy6.ClientID %>'
-        ];
-        for (var j = 0; j < whyFields.length; j++) {
-            var whyInput = document.getElementById(whyFields[j]);
-            if (whyInput && whyInput.value.trim() === "") {
-                isValid = false;
-                errorMessage += "- Please fill Why " + (j + 1) + ".\n";
-                whyInput.classList.add("is-invalid");
-            } else if (whyInput) {
-                whyInput.classList.remove("is-invalid");
-            }
-        }
-
-        // Review Date
-        var reviewDate = document.getElementById('<%= txtReviewDate.ClientID %>');
-        if (reviewDate && reviewDate.value.trim() === "") {
-            isValid = false;
-            errorMessage += "- Please select Review Date.\n";
-            reviewDate.classList.add("is-invalid");
-        } else if (reviewDate) {
-            reviewDate.classList.remove("is-invalid");
-        }
-
-        // Corrective Actions
-        var correctiveActions = document.getElementById('<%= txtCorrectiveActions.ClientID %>');
-        if (correctiveActions && correctiveActions.value.trim() === "") {
-            isValid = false;
-            errorMessage += "- Please fill Corrective Actions.\n";
-            correctiveActions.classList.add("is-invalid");
-        } else if (correctiveActions) {
-            correctiveActions.classList.remove("is-invalid");
-        }
-
-        // Preventive Actions
-        var preventiveActions = document.getElementById('<%= txtPreventiveActions.ClientID %>');
-        if (preventiveActions && preventiveActions.value.trim() === "") {
-            isValid = false;
-            errorMessage += "- Please fill Preventive Actions.\n";
-            preventiveActions.classList.add("is-invalid");
-        } else if (preventiveActions) {
-            preventiveActions.classList.remove("is-invalid");
-        }
-
-        if (!isValid) {
-            alert("Please complete all required fields:\n\n" + errorMessage);
-            return false;
-        }
-        return true;
-    }
-
-    function getFriendlyName(id) {
-        var nameMap = {
-            '<%= ddlIncidentClassification.ClientID %>': "Incident Classification",
-            '<%= txtDateOfIncident.ClientID %>': "Date of Incident",
-            '<%= txtTimeOfIncident.ClientID %>': "Time of Incident",
-            '<%= txtPersonInvolved.ClientID %>': "Name of Person Involved",
-            '<%= txtLocation.ClientID %>': "Location",
-            '<%= txtDepartment.ClientID %>': "Department",
-            '<%= txtSection.ClientID %>': "Section",
-            '<%= txtTaskDescription.ClientID %>': "Task & Incident Description",
-            '<%= txtReportedBy.ClientID %>': "Reported By",
-            '<%= txtVendorName.ClientID %>': "Vendor Name",
-            '<%= txtInjuredPersons.ClientID %>': "Total No. of Injured Persons"
-        };
-        return nameMap[id] || "this field";
-    }
-
-    window.onload = function () {
-        document.getElementById('<%= BtnSubmit.ClientID %>').onclick = function (e) {
-                                if (!validateFormBeforeSubmit()) {
-                                    e.preventDefault();
-                                }
-                            };
-                        };
-                    </script>
+                                <!-- Review Date -->
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <asp:Label ID="lblReviewDate" runat="server" Text="Review Date:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="txtReviewDate" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Select Review Date" TextMode="Date"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="rfvReviewDate" runat="server"
+                                                ControlToValidate="txtReviewDate"
+                                                ErrorMessage="Please select a review date."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
-                         
 
+
+                            <script type="text/javascript">
+                                function validateFormBeforeSubmit() {
+                                    var isValid = true;
+                                    var errorMessage = "";
+
+                                    // Static fields check (Dropdowns and Textboxes)
+                                    var fieldsToCheck = [
+                                        { id: '<%= ddlIncidentClassification.ClientID %>', type: 'dropdown' },
+                                        { id: '<%= txtDateOfIncident.ClientID %>', type: 'textbox' },
+                                        { id: '<%= txtTimeOfIncident.ClientID %>', type: 'textbox' },
+                                        { id: '<%= txtPersonInvolved.ClientID %>', type: 'textbox' },
+                                        { id: '<%= txtLocation.ClientID %>', type: 'textbox' },
+                                        { id: '<%= txtDepartment.ClientID %>', type: 'textbox' },
+                                        { id: '<%= txtSection.ClientID %>', type: 'textbox' },
+                                        { id: '<%= txtTaskDescription.ClientID %>', type: 'textbox' }, // New - Task & Incident Description
+                                        { id: '<%= txtReportedBy.ClientID %>', type: 'textbox' },      // New - Reported By
+                                        { id: '<%= txtVendorName.ClientID %>', type: 'textbox' },       // New - Vendor Name
+                                        { id: '<%= txtInjuredPersons.ClientID %>', type: 'textbox' }    // New - Total No. of Injured Persons
+                                    ];
+
+                                    for (var i = 0; i < fieldsToCheck.length; i++) {
+                                        var fieldInfo = fieldsToCheck[i];
+                                        var field = document.getElementById(fieldInfo.id);
+                                        if (field) {
+                                            if (fieldInfo.type === 'textbox') {
+                                                if (field.value.trim() === "") {
+                                                    isValid = false;
+                                                    errorMessage += "- Please fill " + getFriendlyName(field.id) + ".\n";
+                                                    field.classList.add("is-invalid");
+                                                } else {
+                                                    field.classList.remove("is-invalid");
+                                                }
+                                            } else if (fieldInfo.type === 'dropdown') {
+                                                if (field.value === "0" || field.selectedIndex === 0) {
+                                                    isValid = false;
+                                                    errorMessage += "- Please select " + getFriendlyName(field.id) + ".\n";
+                                                    field.classList.add("is-invalid");
+                                                } else {
+                                                    field.classList.remove("is-invalid");
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    // Witness section validation (if visible)
+                                    var witnessSection = document.getElementById("witnessSection");
+                                    if (witnessSection && witnessSection.style.display !== "none") {
+                                        var witnessInputs = witnessSection.querySelectorAll("input[type='text']");
+                                        witnessInputs.forEach(function (input, index) {
+                                            if (input.value.trim() === "") {
+                                                isValid = false;
+                                                errorMessage += "- Please enter Witness Name #" + (index + 1) + ".\n";
+                                                input.classList.add("is-invalid");
+                                            } else {
+                                                input.classList.remove("is-invalid");
+                                            }
+                                        });
+                                    }
+
+                                    // Investigation Team Members validation
+                                    var investigationContainer = document.getElementById("investigationTeamContainer");
+                                    if (investigationContainer) {
+                                        var investigationInputs = investigationContainer.querySelectorAll("input[type='text']");
+                                        investigationInputs.forEach(function (input, index) {
+                                            if (input.value.trim() === "") {
+                                                isValid = false;
+                                                errorMessage += "- Please enter Investigation Team Member #" + (index + 1) + ".\n";
+                                                input.classList.add("is-invalid");
+                                            } else {
+                                                input.classList.remove("is-invalid");
+                                            }
+                                        });
+                                    }
+
+                                    // Root Cause Analysis fields (Why1 to Why6)
+                                    var whyFields = [
+                                        '<%= txtWhy1.ClientID %>',
+                                        '<%= txtWhy2.ClientID %>',
+                                        '<%= txtWhy3.ClientID %>',
+                                        '<%= txtWhy4.ClientID %>',
+                                        '<%= txtWhy5.ClientID %>',
+                                        '<%= txtWhy6.ClientID %>'
+                                    ];
+                                    for (var j = 0; j < whyFields.length; j++) {
+                                        var whyInput = document.getElementById(whyFields[j]);
+                                        if (whyInput && whyInput.value.trim() === "") {
+                                            isValid = false;
+                                            errorMessage += "- Please fill Why " + (j + 1) + ".\n";
+                                            whyInput.classList.add("is-invalid");
+                                        } else if (whyInput) {
+                                            whyInput.classList.remove("is-invalid");
+                                        }
+                                    }
+
+                                    // Review Date
+                                    var reviewDate = document.getElementById('<%= txtReviewDate.ClientID %>');
+                                    if (reviewDate && reviewDate.value.trim() === "") {
+                                        isValid = false;
+                                        errorMessage += "- Please select Review Date.\n";
+                                        reviewDate.classList.add("is-invalid");
+                                    } else if (reviewDate) {
+                                        reviewDate.classList.remove("is-invalid");
+                                    }
+
+                                    // Corrective Actions
+                                    var correctiveActions = document.getElementById('<%= txtCorrectiveActions.ClientID %>');
+                                    if (correctiveActions && correctiveActions.value.trim() === "") {
+                                        isValid = false;
+                                        errorMessage += "- Please fill Corrective Actions.\n";
+                                        correctiveActions.classList.add("is-invalid");
+                                    } else if (correctiveActions) {
+                                        correctiveActions.classList.remove("is-invalid");
+                                    }
+
+                                    // Preventive Actions
+                                    var preventiveActions = document.getElementById('<%= txtPreventiveActions.ClientID %>');
+                            if (preventiveActions && preventiveActions.value.trim() === "") {
+                                isValid = false;
+                                errorMessage += "- Please fill Preventive Actions.\n";
+                                preventiveActions.classList.add("is-invalid");
+                            } else if (preventiveActions) {
+                                preventiveActions.classList.remove("is-invalid");
+                            }
+
+                            if (!isValid) {
+                                alert("Please complete all required fields:\n\n" + errorMessage);
+                                return false;
+                            }
+                            return true;
+                        }
+
+                        function getFriendlyName(id) {
+                            var nameMap = {
+                                '<%= ddlIncidentClassification.ClientID %>': "Incident Classification",
+                                    '<%= txtDateOfIncident.ClientID %>': "Date of Incident",
+                                    '<%= txtTimeOfIncident.ClientID %>': "Time of Incident",
+                                    '<%= txtPersonInvolved.ClientID %>': "Name of Person Involved",
+                                    '<%= txtLocation.ClientID %>': "Location",
+                                    '<%= txtDepartment.ClientID %>': "Department",
+                                    '<%= txtSection.ClientID %>': "Section",
+                                    '<%= txtTaskDescription.ClientID %>': "Task & Incident Description",
+                                    '<%= txtReportedBy.ClientID %>': "Reported By",
+                                    '<%= txtVendorName.ClientID %>': "Vendor Name",
+                                    '<%= txtInjuredPersons.ClientID %>': "Total No. of Injured Persons"
+                                };
+                                return nameMap[id] || "this field";
+                            }
+
+                            window.onload = function () {
+                                document.getElementById('<%= BtnSubmit.ClientID %>').onclick = function (e) {
+                                        if (!validateFormBeforeSubmit()) {
+                                            e.preventDefault();
+                                        }
+                                    };
+                                };
+                            </script>
 
                             <div class="col-md-12">
                                 <asp:GridView ID="gvIncidentData" runat="server" CssClass="table table-bordered table-striped"
@@ -1162,7 +1193,13 @@
                                 </asp:GridView>
                             </div>
 
+                            <div class="col-md-12">
+                                <hr />
+                            </div>
 
+                            <div class="col-md-12">
+                                <h4 class="text-left text-info">Final Submission</h4>
+                            </div>
 
 
                             <div class="col-md-3">
@@ -1177,16 +1214,10 @@
                                 </div>
                             </div>
 
-
-
-                            <!-- End row -->
                         </div>
-                        <!-- End x_content -->
                     </div>
-                    <!-- End x_panel -->
                 </div>
             </div>
         </div>
     </div>
-    
 </asp:Content>
