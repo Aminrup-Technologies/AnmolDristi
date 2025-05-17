@@ -27,6 +27,66 @@
     <link href="Resources/loader/loader.css" rel="stylesheet" />
     <link href="Resources/custom/custom.css" rel="stylesheet" />
 
+     <style>
+    @media print {
+       /*.container, .main_container, #ContentPlaceHolder1 {
+    width: 80% !important;*/ /* Reduce width to make it more centered */
+    /*margin: 0 auto !important;*/ /* Center horizontally */
+    /*display: block !important;*/ /* Adjust display for print */
+    /*text-align: center !important;
+  }*/
+
+
+      @page {
+    margin: 0 !important; /* Removes ALL default print margins */
+  }
+
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+        .top_nav, .main_container, .navbar {
+        border-top: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Hide top border line (if it's an <hr> or container border) */
+  hr,
+  .top_nav,
+  .main_container {
+    border: none !important;
+  }
+
+  /* Remove any margin or padding pushing the line down */
+  body, .main_container {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+    
+    /* Hide left bottom three-dot menu (sidebar footer) */
+    .sidebar-footer,
+    
+    /* Hide top left toggle button */
+    .nav.toggle,
+    
+    /* Hide right footer info (time/date/logout) */
+    footer.footer_fixed,
+    .pull-right,
+    #lblTime,
+    #lblTime1,
+    #Label1 {
+      display: none !important;
+    }
+
+      .user-profile, 
+      .dropdown-usermenu {
+        display: none !important;
+      }
+    }
+  </style>
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 

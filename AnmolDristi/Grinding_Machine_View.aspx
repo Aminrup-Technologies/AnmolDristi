@@ -62,16 +62,23 @@
                             <asp:BoundField DataField="Final_Remarks" HeaderText="Final Remarks" />
 
 
-                            <asp:TemplateField HeaderText="Actions">
-                                <ItemTemplate>
-                                    <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>
-                                    <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions" CommandName="Delete" OnClientClick="return confirm('Are you sure?');">Delete</asp:LinkButton>
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success btn-actions" CommandName="Update">Update</asp:LinkButton>
-                                    <asp:LinkButton ID="btnCancel" runat="server" CssClass="btn btn-secondary btn-actions" CommandName="Cancel">Cancel</asp:LinkButton>
-                                </EditItemTemplate>
-                            </asp:TemplateField>
+                                                       <asp:TemplateField HeaderText="Actions">
+    <ItemTemplate>
+   <%--  <asp:HyperLink ID="btnView" runat="server" CssClass="btn btn-info btn-actions"
+    NavigateUrl='<%# Eval("HeaderID", "Grinding_Report.aspx?id={0}") %>'>
+    View
+</asp:HyperLink>--%>
+
+
+        <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>
+        <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions" CommandName="Delete"
+            OnClientClick="return confirm('Are you sure?');">Delete</asp:LinkButton>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success btn-actions" CommandName="Update">Update</asp:LinkButton>
+        <asp:LinkButton ID="btnCancel" runat="server" CssClass="btn btn-secondary btn-actions" CommandName="Cancel">Cancel</asp:LinkButton>
+    </EditItemTemplate>
+</asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                 </div>

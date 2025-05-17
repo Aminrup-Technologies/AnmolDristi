@@ -185,7 +185,7 @@
                     <asp:Label ID="Label13" runat="server" Text="0" Visible="false"></asp:Label></span>
                 <i class="fa fa-edit"></i> D & bow Shackles, CHAIN PULLEY BLOCK Checklist
             </a>
-            <a class="btn btn-app" href="Gas_Cutting_View.aspx">
+            <a class="btn btn-app" href="D_and_Bow_View.aspx">
                 <span class="badge bg-green">Ok
                     <asp:Label ID="Label14" runat="server" Text="0" Visible="false"></asp:Label></span>
                 <i class="fa fa-edit"></i> D & bow Shackles, CHAIN PULLEY BLOCK  records 

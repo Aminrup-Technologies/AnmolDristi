@@ -29,7 +29,7 @@ namespace AnmolDristi
                 pnlCondition.Visible = false;
                 pnlLatch.Visible = false;
                 pnlHookWear.Visible = false;
-
+                LoadCombinedChecklistDetails();
 
             }
         }
@@ -209,7 +209,8 @@ ORDER BY h.Id DESC";
             string remarks = remarksBox.Text.Trim();
             string photoPath = null;
 
-            if (!isYes && uploadControl.HasFile)
+        if (uploadControl.HasFile)
+
             {
                 string filename = Path.GetFileName(uploadControl.FileName);
                 string folderPath = Server.MapPath("~/Uploads/");

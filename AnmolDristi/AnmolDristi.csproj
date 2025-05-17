@@ -85,12 +85,15 @@
   <ItemGroup>
     <Content Include="Award_Distribution.aspx" />
     <Content Include="Award_Distribution_View.aspx" />
+    <Content Include="Award_report.aspx" />
     <Content Include="csm_kyt.aspx" />
     <Content Include="D_and_Bow_Shackles_Chain_Pulley_Checklist.aspx" />
+    <Content Include="D_and_Bow_View.aspx" />
     <Content Include="Gas_Cutting_Checklist.aspx" />
     <Content Include="Gas_Cutting_View.aspx" />
     <Content Include="Grinding_Machine_Checklist.aspx" />
     <Content Include="Grinding_Machine_View.aspx" />
+    <Content Include="Grinding_Report.aspx" />
     <Content Include="home.aspx" />
     <Content Include="HtmlPage1.html" />
     <Content Include="incident_analysis.aspx" />
@@ -161,6 +164,13 @@
     <Compile Include="Award_Distribution_View.aspx.designer.cs">
       <DependentUpon>Award_Distribution_View.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Award_report.aspx.cs">
+      <DependentUpon>Award_report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Award_report.aspx.designer.cs">
+      <DependentUpon>Award_report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="blank.aspx.cs">
       <DependentUpon>blank.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -192,6 +202,13 @@
     <Compile Include="D_and_Bow_Shackles_Chain_Pulley_Checklist.aspx.designer.cs">
       <DependentUpon>D_and_Bow_Shackles_Chain_Pulley_Checklist.aspx</DependentUpon>
     </Compile>
+    <Compile Include="D_and_Bow_View.aspx.cs">
+      <DependentUpon>D_and_Bow_View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="D_and_Bow_View.aspx.designer.cs">
+      <DependentUpon>D_and_Bow_View.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Gas_Cutting_Checklist.aspx.cs">
       <DependentUpon>Gas_Cutting_Checklist.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -219,6 +236,13 @@
     </Compile>
     <Compile Include="Grinding_Machine_View.aspx.designer.cs">
       <DependentUpon>Grinding_Machine_View.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Grinding_Report.aspx.cs">
+      <DependentUpon>Grinding_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Grinding_Report.aspx.designer.cs">
+      <DependentUpon>Grinding_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
