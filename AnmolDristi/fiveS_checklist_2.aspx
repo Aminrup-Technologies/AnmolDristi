@@ -18,7 +18,7 @@
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h5 style="text-align: center; font-weight: bold;" class="text-success">CHECKLIST FOR 5S</h5>
+                    <h5 style="text-align: center; font-weight: bold;" class="text-success">FIVE S SCHECKLIST ALL DATA</h5>
                 </div>
             </div>
 

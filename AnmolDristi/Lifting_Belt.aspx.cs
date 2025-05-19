@@ -313,12 +313,12 @@ namespace AnmolDristi
                 {
                     if (dataItem[3].GetValue(e.Item.DataItem).ToString() != "")
                     {
-                        ((RadioButtonList)e.Item.Controls[10]).SelectedValue = dataItem[3].GetValue(e.Item.DataItem).ToString();
+                        ((RadioButtonList)e.Item.Controls[9]).SelectedValue = dataItem[3].GetValue(e.Item.DataItem).ToString();
                     }
 
                     if (dataItem[4].GetValue(e.Item.DataItem).ToString() != "")
                     {
-                        ((TextBox)e.Item.Controls[12]).Text = dataItem[4].GetValue(e.Item.DataItem).ToString();
+                        ((TextBox)e.Item.Controls[11]).Text = dataItem[4].GetValue(e.Item.DataItem).ToString();
                     }
 
                     if (dataItem[5].GetValue(e.Item.DataItem) != null)
@@ -328,7 +328,7 @@ namespace AnmolDristi
                     }
                     if (dataItem.Length > 6 && dataItem[6].GetValue(e.Item.DataItem) != null)
                     {
-                        ((TextBox)e.Item.Controls[22]).Text = dataItem[6].GetValue(e.Item.DataItem).ToString();
+                        ((TextBox)e.Item.Controls[19]).Text = dataItem[6].GetValue(e.Item.DataItem).ToString();
                     }
                 }
             }

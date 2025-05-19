@@ -30,6 +30,23 @@ namespace AnmolDristi
             string CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection con = new SqlConnection(CS))
             {
+                con.Open();
+                SqlCommand cmdChecklist = new SqlCommand("SELECT * FROM Checklists WHERE ID = @ChecklistID", con);
+                cmdChecklist.Parameters.AddWithValue("@ChecklistID", checklistId);
+
+                SqlDataReader reader = cmdChecklist.ExecuteReader();
+                if (reader.Read())
+                {
+                    Datelbl.Text = Convert.ToDateTime(reader["Date"]).ToString("yyyy-MM-dd");
+                    Deptlbl.Text = reader["Department"].ToString();
+                    Joblbl.Text = reader["Job"].ToString();
+                    Loclbl.Text = reader["Location"].ToString();
+                    //ChecklistId.Value = reader["ID"].ToString();
+                }
+                reader.Close();
+
+
+
                 SqlCommand cmd = new SqlCommand("SELECT * FROM ChecklistInfo WHERE Checklist_ID = @ChecklistID", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 cmd.Parameters.AddWithValue("@ChecklistID", checklistId);

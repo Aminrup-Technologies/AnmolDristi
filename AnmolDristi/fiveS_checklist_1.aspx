@@ -68,9 +68,11 @@
 
                 const remarkBox = wrapper.querySelector(".remark-input");
                 const photoInput = wrapper.querySelector(".photo-input");
+                const lblInput = wrapper.querySelector(".gmg");
 
                 if (remarkBox) remarkBox.value = "";
                 if (photoInput) photoInput.value = "";
+                if (lblInput) lblInput.innerText = "";
 
                 wrapper.querySelectorAll(".rfv").forEach(v => v.style.display = "none");
             }
@@ -149,8 +151,8 @@
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
-                <div class="title_left">
-                    <h5 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">CHECKLIST FOR 5S</h5>
+                <div class="title_left" style="text-align: center;">
+                    <asp:Label id="heading" runat="server" CssClass="h5 text-center font-weight-bold text-success"  Text="FIVE S CHECKLIST"></asp:Label>
                 </div>
             </div>
 

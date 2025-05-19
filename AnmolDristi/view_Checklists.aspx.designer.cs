@@ -15,6 +15,42 @@ namespace AnmolDristi
     {
 
         /// <summary>
+        /// Datelbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Datelbl;
+
+        /// <summary>
+        /// Deptlbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Deptlbl;
+
+        /// <summary>
+        /// Joblbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Joblbl;
+
+        /// <summary>
+        /// Loclbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Loclbl;
+
+        /// <summary>
         /// ParentRepeter control.
         /// </summary>
         /// <remarks>
