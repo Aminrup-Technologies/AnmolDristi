@@ -5,7 +5,7 @@
       <DataSource DefaultConnectionIndex="4" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CSMSConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CSMSConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CSMSConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
-          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CSMSConnectionString1" IsAppSettingsProperty="true" Modifier="Assembly" Name="CSMSConnectionString1 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CSMSConnectionString1.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CSMSConnectionString1" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CSMSConnectionString1 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CSMSConnectionString1.ConnectionString" Provider="System.Data.SqlClient" />
           <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CSMSConnectionString2" IsAppSettingsProperty="true" Modifier="Assembly" Name="CSMSConnectionString2 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CSMSConnectionString2.ConnectionString" Provider="System.Data.SqlClient" />
           <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="DbConn" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DbConn (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.DbConn.ConnectionString" Provider="System.Data.SqlClient" />
           <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CSMSConnectionString3" IsAppSettingsProperty="true" Modifier="Assembly" Name="CSMSConnectionString3 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CSMSConnectionString3.ConnectionString" Provider="System.Data.SqlClient" />
@@ -92,7 +92,7 @@ FROM     ChecklistInfo</CommandText>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ChecklistsTableAdapter" GeneratorDataComponentClassName="ChecklistsTableAdapter" Name="Checklists" UserDataComponentName="ChecklistsTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="CSMSConnectionString (Web.config)" DbObjectName="CSMS.dbo.Checklists" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="DbConn (Web.config)" DbObjectName="CSMS.dbo.Checklists" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [Checklists] WHERE (([ID] = @Original_ID))</CommandText>
@@ -103,7 +103,7 @@ FROM     ChecklistInfo</CommandText>
                 </DeleteCommand>
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>INSERT INTO [Checklists] ([Date], [Department], [Job], [Created_by], [Created_on], [Location]) VALUES (@Date, @Department, @Job, @Created_by, @Created_on, @Location)</CommandText>
+                    <CommandText>INSERT INTO [Checklists] ([Date], [Department], [Job], [Created_by], [Created_on], [Location], [Audit_By]) VALUES (@Date, @Department, @Job, @Created_by, @Created_on, @Location, @Audit_By)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Date" Direction="Input" ParameterName="@Date" Precision="0" ProviderType="Date" Scale="0" Size="0" SourceColumn="Date" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Department" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Department" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -111,6 +111,7 @@ FROM     ChecklistInfo</CommandText>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Created_by" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Created_by" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@Created_on" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="Created_on" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Location" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Location" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Audit_By" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Audit_By" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </InsertCommand>
@@ -123,7 +124,7 @@ FROM     Checklists</CommandText>
                 </SelectCommand>
                 <UpdateCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>UPDATE [Checklists] SET [Date] = @Date, [Department] = @Department, [Job] = @Job, [Created_by] = @Created_by, [Created_on] = @Created_on, [Location] = @Location WHERE (([ID] = @Original_ID))</CommandText>
+                    <CommandText>UPDATE [Checklists] SET [Date] = @Date, [Department] = @Department, [Job] = @Job, [Created_by] = @Created_by, [Created_on] = @Created_on, [Location] = @Location, [Audit_By] = @Audit_By WHERE (([ID] = @Original_ID))</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Date" Direction="Input" ParameterName="@Date" Precision="0" ProviderType="Date" Scale="0" Size="0" SourceColumn="Date" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Department" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Department" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -131,6 +132,7 @@ FROM     Checklists</CommandText>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Created_by" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Created_by" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@Created_on" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="Created_on" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Location" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Location" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Audit_By" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Audit_By" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_ID" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="ID" SourceColumnNullMapping="false" SourceVersion="Original" />
                     </Parameters>
                   </DbCommand>
@@ -145,12 +147,13 @@ FROM     Checklists</CommandText>
               <Mapping SourceColumn="Created_by" DataSetColumn="Created_by" />
               <Mapping SourceColumn="Created_on" DataSetColumn="Created_on" />
               <Mapping SourceColumn="Location" DataSetColumn="Location" />
+              <Mapping SourceColumn="Audit_By" DataSetColumn="Audit_By" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="CSMSConnectionString (Web.config)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="InsertChecklist" Modifier="Public" Name="InsertChecklist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="InsertChecklist">
+              <DbSource ConnectionRef="DbConn (Web.config)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="InsertChecklist" Modifier="Public" Name="InsertChecklist" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="InsertChecklist">
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>INSERT INTO [Checklists] ([Date], [Department], [Job], [Created_by], [Created_on], [Location]) VALUES (@Date, @Department, @Job, @Created_by, @Created_on, @Location);
+                    <CommandText>INSERT INTO [Checklists] ([Date], [Department], [Job], [Created_by], [Created_on], [Location], [Audit_By]) VALUES (@Date, @Department, @Job, @Created_by, @Created_on, @Location, @Audit_By);
 SELECT SCOPE_IDENTITY();</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="Date" ColumnName="Date" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="date" DbType="AnsiString" Direction="Input" ParameterName="@Date" Precision="0" ProviderType="Date" Scale="0" Size="3" SourceColumn="Date" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -159,14 +162,15 @@ SELECT SCOPE_IDENTITY();</CommandText>
                       <Parameter AllowDbNull="true" AutogeneratedName="Created_by" ColumnName="Created_by" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="varchar(50)" DbType="AnsiString" Direction="Input" ParameterName="@Created_by" Precision="0" ProviderType="VarChar" Scale="0" Size="50" SourceColumn="Created_by" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="Created_on" ColumnName="Created_on" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@Created_on" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="Created_on" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="Location" ColumnName="Location" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="varchar(100)" DbType="AnsiString" Direction="Input" ParameterName="@Location" Precision="0" ProviderType="VarChar" Scale="0" Size="100" SourceColumn="Location" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="Audit_By" ColumnName="Audit_By" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="varchar(30)" DbType="AnsiString" Direction="Input" ParameterName="@Audit_By" Precision="0" ProviderType="VarChar" Scale="0" Size="30" SourceColumn="Audit_By" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </InsertCommand>
               </DbSource>
-              <DbSource ConnectionRef="CSMSConnectionString (Web.config)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateChecklist" Modifier="Public" Name="UpdateChecklist" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="UpdateChecklist">
+              <DbSource ConnectionRef="DbConn (Web.config)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateChecklist" Modifier="Public" Name="UpdateChecklist" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="UpdateChecklist">
                 <UpdateCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>UPDATE [Checklists] SET [Date] = @Date, [Department] = @Department, [Job] = @Job, [Created_by] = @Created_by, [Created_on] = @Created_on, [Location] = @Location WHERE (([ID] = @Original_ID))</CommandText>
+                    <CommandText>UPDATE [Checklists] SET [Date] = @Date, [Department] = @Department, [Job] = @Job, [Created_by] = @Created_by, [Created_on] = @Created_on, [Location] = @Location, [Audit_By] = @Audit_By WHERE (([ID] = @Original_ID))</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="Date" ColumnName="Date" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="date" DbType="AnsiString" Direction="Input" ParameterName="@Date" Precision="0" ProviderType="Date" Scale="0" Size="3" SourceColumn="Date" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="Department" ColumnName="Department" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="varchar(50)" DbType="AnsiString" Direction="Input" ParameterName="@Department" Precision="0" ProviderType="VarChar" Scale="0" Size="50" SourceColumn="Department" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -174,6 +178,7 @@ SELECT SCOPE_IDENTITY();</CommandText>
                       <Parameter AllowDbNull="true" AutogeneratedName="Created_by" ColumnName="Created_by" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="varchar(50)" DbType="AnsiString" Direction="Input" ParameterName="@Created_by" Precision="0" ProviderType="VarChar" Scale="0" Size="50" SourceColumn="Created_by" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="Created_on" ColumnName="Created_on" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@Created_on" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="Created_on" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="Location" ColumnName="Location" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="varchar(100)" DbType="AnsiString" Direction="Input" ParameterName="@Location" Precision="0" ProviderType="VarChar" Scale="0" Size="100" SourceColumn="Location" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="Audit_By" ColumnName="Audit_By" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="varchar(30)" DbType="AnsiString" Direction="Input" ParameterName="@Audit_By" Precision="0" ProviderType="VarChar" Scale="0" Size="30" SourceColumn="Audit_By" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="Original_ID" ColumnName="ID" DataSourceName="CSMS.dbo.Checklists" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Original_ID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="ID" SourceColumnNullMapping="false" SourceVersion="Original" />
                     </Parameters>
                   </DbCommand>
@@ -227,37 +232,44 @@ SELECT SCOPE_IDENTITY();</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Checklists" msprop:Generator_RowClassName="ChecklistsRow" msprop:Generator_RowEvHandlerName="ChecklistsRowChangeEventHandler" msprop:Generator_RowDeletedName="ChecklistsRowDeleted" msprop:Generator_RowDeletingName="ChecklistsRowDeleting" msprop:Generator_RowEvArgName="ChecklistsRowChangeEvent" msprop:Generator_TablePropName="Checklists" msprop:Generator_RowChangedName="ChecklistsRowChanged" msprop:Generator_UserTableName="Checklists" msprop:Generator_RowChangingName="ChecklistsRowChanging" msprop:Generator_TableClassName="ChecklistsDataTable" msprop:Generator_TableVarName="tableChecklists">
+        <xs:element name="Checklists" msprop:Generator_RowEvHandlerName="ChecklistsRowChangeEventHandler" msprop:Generator_RowDeletedName="ChecklistsRowDeleted" msprop:Generator_RowDeletingName="ChecklistsRowDeleting" msprop:Generator_RowEvArgName="ChecklistsRowChangeEvent" msprop:Generator_TablePropName="Checklists" msprop:Generator_RowChangedName="ChecklistsRowChanged" msprop:Generator_RowChangingName="ChecklistsRowChanging" msprop:Generator_TableClassName="ChecklistsDataTable" msprop:Generator_RowClassName="ChecklistsRow" msprop:Generator_TableVarName="tableChecklists" msprop:Generator_UserTableName="Checklists">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_UserColumnName="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnVarNameInTable="columnID" type="xs:int" />
-              <xs:element name="Date" msprop:Generator_UserColumnName="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnVarNameInTable="columnDate" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="Department" msprop:Generator_UserColumnName="Department" msprop:Generator_ColumnPropNameInTable="DepartmentColumn" msprop:Generator_ColumnPropNameInRow="Department" msprop:Generator_ColumnVarNameInTable="columnDepartment" minOccurs="0">
+              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="Date" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_ColumnVarNameInTable="columnDate" msprop:Generator_UserColumnName="Date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Department" msprop:Generator_ColumnPropNameInRow="Department" msprop:Generator_ColumnPropNameInTable="DepartmentColumn" msprop:Generator_ColumnVarNameInTable="columnDepartment" msprop:Generator_UserColumnName="Department" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Job" msprop:Generator_UserColumnName="Job" msprop:Generator_ColumnPropNameInTable="JobColumn" msprop:Generator_ColumnPropNameInRow="Job" msprop:Generator_ColumnVarNameInTable="columnJob" minOccurs="0">
+              <xs:element name="Job" msprop:Generator_ColumnPropNameInRow="Job" msprop:Generator_ColumnPropNameInTable="JobColumn" msprop:Generator_ColumnVarNameInTable="columnJob" msprop:Generator_UserColumnName="Job" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Created_by" msprop:Generator_UserColumnName="Created_by" msprop:Generator_ColumnPropNameInTable="Created_byColumn" msprop:Generator_ColumnPropNameInRow="Created_by" msprop:Generator_ColumnVarNameInTable="columnCreated_by" minOccurs="0">
+              <xs:element name="Created_by" msprop:Generator_ColumnPropNameInRow="Created_by" msprop:Generator_ColumnPropNameInTable="Created_byColumn" msprop:Generator_ColumnVarNameInTable="columnCreated_by" msprop:Generator_UserColumnName="Created_by" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Created_on" msprop:Generator_UserColumnName="Created_on" msprop:Generator_ColumnPropNameInTable="Created_onColumn" msprop:Generator_ColumnPropNameInRow="Created_on" msprop:Generator_ColumnVarNameInTable="columnCreated_on" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="Location" msprop:Generator_UserColumnName="Location" msprop:Generator_ColumnPropNameInTable="LocationColumn" msprop:Generator_ColumnPropNameInRow="Location" msprop:Generator_ColumnVarNameInTable="columnLocation" minOccurs="0">
+              <xs:element name="Created_on" msprop:Generator_ColumnPropNameInRow="Created_on" msprop:Generator_ColumnPropNameInTable="Created_onColumn" msprop:Generator_ColumnVarNameInTable="columnCreated_on" msprop:Generator_UserColumnName="Created_on" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Location" msprop:Generator_ColumnPropNameInRow="Location" msprop:Generator_ColumnPropNameInTable="LocationColumn" msprop:Generator_ColumnVarNameInTable="columnLocation" msprop:Generator_UserColumnName="Location" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Audit_By" msprop:Generator_ColumnPropNameInRow="Audit_By" msprop:Generator_ColumnPropNameInTable="Audit_ByColumn" msprop:Generator_ColumnVarNameInTable="columnAudit_By" msprop:Generator_UserColumnName="Audit_By" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -275,4 +287,9 @@ SELECT SCOPE_IDENTITY();</CommandText>
       <xs:field xpath="mstns:ID" />
     </xs:unique>
   </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FK_ChecklistInfo_Checklists" msdata:parent="Checklists" msdata:child="ChecklistInfo" msdata:parentkey="ID" msdata:childkey="Checklist_ID" msprop:Generator_UserParentTable="Checklists" msprop:Generator_UserChildTable="ChecklistInfo" msprop:Generator_RelationVarName="relationFK_ChecklistInfo_Checklists" msprop:Generator_UserRelationName="FK_ChecklistInfo_Checklists" msprop:Generator_ChildPropName="GetChecklistInfoRows" msprop:Generator_ParentPropName="ChecklistsRow" />
+    </xs:appinfo>
+  </xs:annotation>
 </xs:schema>

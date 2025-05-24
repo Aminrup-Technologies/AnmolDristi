@@ -254,10 +254,10 @@
             }*/
 
         .nav-tabs .nav-link.active {
-        color: green !important;
-        font-weight: bold;
-       text-decoration: underline;
-    }
+            color: green !important;
+            font-weight: bold;
+            text-decoration: underline;
+        }
     </style>
 
 
@@ -269,8 +269,8 @@
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
-                <div class="title_left">
-                    <h5 style="color: green;">Line Walk status</h5>
+                <div class="title_left" style="text-align: center;">
+                   <asp:Label ID="heading" runat="server" CssClass="h5 text-center font-weight-bold text-success"  Text="LINE WALK STATUS"></asp:Label>
                 </div>
             </div>
 
@@ -314,8 +314,29 @@
                                     <asp:RequiredFieldValidator ID="RFV_TB_JD" runat="server" ControlToValidate="TB_JD" ErrorMessage="* Description required" ForeColor="Red" Display="Dynamic" ValidationGroup="Submit" />
                                     <asp:RegularExpressionValidator ID="REV_TB_JD" runat="server" ControlToValidate="TB_JD" ErrorMessage="* Only alphabets allowed" ForeColor="Red" ValidationExpression="^[a-zA-Z\s,\/]+$" Display="Dynamic" ValidationGroup="Submit" />
                                 </div>
-
                             </div>
+
+
+                            <div class="row">
+                                <!-- Photo Upload -->
+                                <div class="col-md-3 mb-3">
+                                    <asp:Label ID="Lbl_Photo" runat="server" Text="Photo Upload" AssociatedControlID="grp_Photo" ForeColor="Blue" Font-Bold="true" />
+                                    <asp:FileUpload ID="grp_Photo" runat="server" CssClass="form-control form-control-sm rounded" />
+                                    <asp:Label ID="Lbl_SavedPhoto" runat="server" Visible="false" EnableViewState="true"></asp:Label>
+                                </div>
+
+                                <!-- Audit By -->
+                                <div class="col-md-3 mb-3">
+                                    <asp:Label ID="Lbl_AuditBy" runat="server" Text="Audit By" AssociatedControlID="TB_AuditBy" ForeColor="Blue" Font-Bold="true" />
+                                    <asp:TextBox ID="TB_AuditBy" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RFV_AuditBy" runat="server" ControlToValidate="TB_AuditBy"
+                                        ErrorMessage="* Auditor name required" ForeColor="Red" Display="Dynamic" ValidationGroup="Submit" />
+                                    <asp:RegularExpressionValidator ID="REV_AuditBy" runat="server" ControlToValidate="TB_AuditBy"
+                                        ErrorMessage="* Only letters allowed" ForeColor="Red" ValidationExpression="^[a-zA-Z\s]+$" Display="Dynamic" ValidationGroup="Submit" />
+                                </div>
+                            </div>
+
+
 
                             <div class="d-flex justify-content-center">
                                 <asp:Button ID="Save" runat="server" CssClass="btn btn-primary btn-sm ml-4" Text="Save" OnClick="Save_Click" ValidationGroup="Submit" />

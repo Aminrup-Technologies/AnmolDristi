@@ -116,6 +116,7 @@
                                             <th>Department</th>
                                             <th>Job</th>
                                             <th>Location</th>
+                                            <th>Audit By</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -124,6 +125,7 @@
                                             <td><asp:Label ID="Deptlbl" runat="server"></asp:Label></td>
                                            <td> <asp:Label ID="Joblbl" runat="server"></asp:Label></td>
                                             <td><asp:Label ID="Loclbl" runat="server"></asp:Label></td>
+                                            <td><asp:Label ID="Audlbl" runat="server"></asp:Label></td>
                                         </tr>
                                     </tbody>
                                 </table>

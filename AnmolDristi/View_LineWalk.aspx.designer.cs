@@ -15,6 +15,15 @@ namespace AnmolDristi
     {
 
         /// <summary>
+        /// heading control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label heading;
+
+        /// <summary>
         /// date control.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,24 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label jobdesc;
+
+        /// <summary>
+        /// jobimg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image jobimg;
+
+        /// <summary>
+        /// Auditby control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Auditby;
 
         /// <summary>
         /// TeamMemberGrid control.

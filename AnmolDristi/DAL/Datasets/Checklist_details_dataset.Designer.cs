@@ -28,6 +28,8 @@ namespace AnmolDristi.DAL.Datasets {
         
         private ChecklistsDataTable tableChecklists;
         
+        private global::System.Data.DataRelation relationFK_ChecklistInfo_Checklists;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -218,6 +220,7 @@ namespace AnmolDristi.DAL.Datasets {
                     this.tableChecklists.InitVars();
                 }
             }
+            this.relationFK_ChecklistInfo_Checklists = this.Relations["FK_ChecklistInfo_Checklists"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -232,6 +235,10 @@ namespace AnmolDristi.DAL.Datasets {
             base.Tables.Add(this.tableChecklistInfo);
             this.tableChecklists = new ChecklistsDataTable();
             base.Tables.Add(this.tableChecklists);
+            this.relationFK_ChecklistInfo_Checklists = new global::System.Data.DataRelation("FK_ChecklistInfo_Checklists", new global::System.Data.DataColumn[] {
+                        this.tableChecklists.IDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableChecklistInfo.Checklist_IDColumn}, false);
+            this.Relations.Add(this.relationFK_ChecklistInfo_Checklists);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -464,17 +471,20 @@ namespace AnmolDristi.DAL.Datasets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public ChecklistInfoRow AddChecklistInfoRow(int Checklist_ID, string Group_Name, string Requirements, bool Result, string Remark, string Before_Photo, System.DateTime TimeStamp) {
+            public ChecklistInfoRow AddChecklistInfoRow(ChecklistsRow parentChecklistsRowByFK_ChecklistInfo_Checklists, string Group_Name, string Requirements, bool Result, string Remark, string Before_Photo, System.DateTime TimeStamp) {
                 ChecklistInfoRow rowChecklistInfoRow = ((ChecklistInfoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
-                        Checklist_ID,
+                        null,
                         Group_Name,
                         Requirements,
                         Result,
                         Remark,
                         Before_Photo,
                         TimeStamp};
+                if ((parentChecklistsRowByFK_ChecklistInfo_Checklists != null)) {
+                    columnValuesArray[1] = parentChecklistsRowByFK_ChecklistInfo_Checklists[0];
+                }
                 rowChecklistInfoRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowChecklistInfoRow);
                 return rowChecklistInfoRow;
@@ -693,6 +703,8 @@ namespace AnmolDristi.DAL.Datasets {
             
             private global::System.Data.DataColumn columnLocation;
             
+            private global::System.Data.DataColumn columnAudit_By;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public ChecklistsDataTable() {
@@ -784,6 +796,14 @@ namespace AnmolDristi.DAL.Datasets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn Audit_ByColumn {
+                get {
+                    return this.columnAudit_By;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -819,7 +839,7 @@ namespace AnmolDristi.DAL.Datasets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public ChecklistsRow AddChecklistsRow(System.DateTime Date, string Department, string Job, string Created_by, System.DateTime Created_on, string Location) {
+            public ChecklistsRow AddChecklistsRow(System.DateTime Date, string Department, string Job, string Created_by, System.DateTime Created_on, string Location, string Audit_By) {
                 ChecklistsRow rowChecklistsRow = ((ChecklistsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -828,7 +848,8 @@ namespace AnmolDristi.DAL.Datasets {
                         Job,
                         Created_by,
                         Created_on,
-                        Location};
+                        Location,
+                        Audit_By};
                 rowChecklistsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowChecklistsRow);
                 return rowChecklistsRow;
@@ -865,6 +886,7 @@ namespace AnmolDristi.DAL.Datasets {
                 this.columnCreated_by = base.Columns["Created_by"];
                 this.columnCreated_on = base.Columns["Created_on"];
                 this.columnLocation = base.Columns["Location"];
+                this.columnAudit_By = base.Columns["Audit_By"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -884,6 +906,8 @@ namespace AnmolDristi.DAL.Datasets {
                 base.Columns.Add(this.columnCreated_on);
                 this.columnLocation = new global::System.Data.DataColumn("Location", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLocation);
+                this.columnAudit_By = new global::System.Data.DataColumn("Audit_By", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAudit_By);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnID}, true));
                 this.columnID.AutoIncrement = true;
@@ -896,6 +920,7 @@ namespace AnmolDristi.DAL.Datasets {
                 this.columnJob.MaxLength = 50;
                 this.columnCreated_by.MaxLength = 50;
                 this.columnLocation.MaxLength = 100;
+                this.columnAudit_By.MaxLength = 30;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1156,6 +1181,17 @@ namespace AnmolDristi.DAL.Datasets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ChecklistsRow ChecklistsRow {
+                get {
+                    return ((ChecklistsRow)(this.GetParentRow(this.Table.ParentRelations["FK_ChecklistInfo_Checklists"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_ChecklistInfo_Checklists"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsGroup_NameNull() {
                 return this.IsNull(this.tableChecklistInfo.Group_NameColumn);
             }
@@ -1350,6 +1386,22 @@ namespace AnmolDristi.DAL.Datasets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Audit_By {
+                get {
+                    try {
+                        return ((string)(this[this.tableChecklists.Audit_ByColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Audit_By\' in table \'Checklists\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableChecklists.Audit_ByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsDateNull() {
                 return this.IsNull(this.tableChecklists.DateColumn);
             }
@@ -1418,6 +1470,29 @@ namespace AnmolDristi.DAL.Datasets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetLocationNull() {
                 this[this.tableChecklists.LocationColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsAudit_ByNull() {
+                return this.IsNull(this.tableChecklists.Audit_ByColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetAudit_ByNull() {
+                this[this.tableChecklists.Audit_ByColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ChecklistInfoRow[] GetChecklistInfoRows() {
+                if ((this.Table.ChildRelations["FK_ChecklistInfo_Checklists"] == null)) {
+                    return new ChecklistInfoRow[0];
+                }
+                else {
+                    return ((ChecklistInfoRow[])(base.GetChildRows(this.Table.ChildRelations["FK_ChecklistInfo_Checklists"])));
+                }
             }
         }
         
@@ -2072,6 +2147,7 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             tableMapping.ColumnMappings.Add("Created_by", "Created_by");
             tableMapping.ColumnMappings.Add("Created_on", "Created_on");
             tableMapping.ColumnMappings.Add("Location", "Location");
+            tableMapping.ColumnMappings.Add("Audit_By", "Audit_By");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -2081,8 +2157,8 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [Checklists] ([Date], [Department], [Job], [Created_by], [Created_on]" +
-                ", [Location]) VALUES (@Date, @Department, @Job, @Created_by, @Created_on, @Locat" +
-                "ion)";
+                ", [Location], [Audit_By]) VALUES (@Date, @Department, @Job, @Created_by, @Create" +
+                "d_on, @Location, @Audit_By)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Department", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Department", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -2090,11 +2166,12 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Created_by", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Created_by", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Created_on", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Created_on", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Location", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Location", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Audit_By", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Audit_By", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [Checklists] SET [Date] = @Date, [Department] = @Department, [Job] = @Job," +
-                " [Created_by] = @Created_by, [Created_on] = @Created_on, [Location] = @Location " +
-                "WHERE (([ID] = @Original_ID))";
+                " [Created_by] = @Created_by, [Created_on] = @Created_on, [Location] = @Location," +
+                " [Audit_By] = @Audit_By WHERE (([ID] = @Original_ID))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Department", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Department", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -2102,6 +2179,7 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Created_by", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Created_by", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Created_on", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Created_on", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Location", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Location", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Audit_By", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Audit_By", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
@@ -2109,7 +2187,7 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["CSMSConnectionString"].ConnectionString;
+            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2123,8 +2201,8 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
             this._commandCollection[1].CommandText = "INSERT INTO [Checklists] ([Date], [Department], [Job], [Created_by], [Created_on]" +
-                ", [Location]) VALUES (@Date, @Department, @Job, @Created_by, @Created_on, @Locat" +
-                "ion);\r\nSELECT SCOPE_IDENTITY();";
+                ", [Location], [Audit_By]) VALUES (@Date, @Department, @Job, @Created_by, @Create" +
+                "d_on, @Location, @Audit_By);\r\nSELECT SCOPE_IDENTITY();";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date", global::System.Data.SqlDbType.Date, 3, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Department", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Department", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -2132,11 +2210,12 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Created_by", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Created_by", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Created_on", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 0, 0, "Created_on", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Location", global::System.Data.SqlDbType.VarChar, 100, global::System.Data.ParameterDirection.Input, 0, 0, "Location", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Audit_By", global::System.Data.SqlDbType.VarChar, 30, global::System.Data.ParameterDirection.Input, 0, 0, "Audit_By", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
             this._commandCollection[2].CommandText = "UPDATE [Checklists] SET [Date] = @Date, [Department] = @Department, [Job] = @Job," +
-                " [Created_by] = @Created_by, [Created_on] = @Created_on, [Location] = @Location " +
-                "WHERE (([ID] = @Original_ID))";
+                " [Created_by] = @Created_by, [Created_on] = @Created_on, [Location] = @Location," +
+                " [Audit_By] = @Audit_By WHERE (([ID] = @Original_ID))";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date", global::System.Data.SqlDbType.Date, 3, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Department", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Department", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -2144,6 +2223,7 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Created_by", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Created_by", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Created_on", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 0, 0, "Created_on", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Location", global::System.Data.SqlDbType.VarChar, 100, global::System.Data.ParameterDirection.Input, 0, 0, "Location", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Audit_By", global::System.Data.SqlDbType.VarChar, 30, global::System.Data.ParameterDirection.Input, 0, 0, "Audit_By", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "ID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
@@ -2226,7 +2306,7 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(global::System.Nullable<global::System.DateTime> Date, string Department, string Job, string Created_by, global::System.Nullable<global::System.DateTime> Created_on, string Location) {
+        public virtual int Insert(global::System.Nullable<global::System.DateTime> Date, string Department, string Job, string Created_by, global::System.Nullable<global::System.DateTime> Created_on, string Location, string Audit_By) {
             if ((Date.HasValue == true)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = ((System.DateTime)(Date.Value));
             }
@@ -2263,6 +2343,12 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[5].Value = ((string)(Location));
             }
+            if ((Audit_By == null)) {
+                this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[6].Value = ((string)(Audit_By));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2283,7 +2369,7 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(global::System.Nullable<global::System.DateTime> Date, string Department, string Job, string Created_by, global::System.Nullable<global::System.DateTime> Created_on, string Location, int Original_ID) {
+        public virtual int Update(global::System.Nullable<global::System.DateTime> Date, string Department, string Job, string Created_by, global::System.Nullable<global::System.DateTime> Created_on, string Location, string Audit_By, int Original_ID) {
             if ((Date.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = ((System.DateTime)(Date.Value));
             }
@@ -2320,7 +2406,13 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Location));
             }
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_ID));
+            if ((Audit_By == null)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Audit_By));
+            }
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_ID));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2341,7 +2433,7 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
-        public virtual object InsertChecklist(string Date, string Department, string Job, string Created_by, global::System.Nullable<global::System.DateTime> Created_on, string Location) {
+        public virtual object InsertChecklist(string Date, string Department, string Job, string Created_by, global::System.Nullable<global::System.DateTime> Created_on, string Location, string Audit_By) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
             if ((Date == null)) {
                 command.Parameters[0].Value = global::System.DBNull.Value;
@@ -2379,6 +2471,12 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             else {
                 command.Parameters[5].Value = ((string)(Location));
             }
+            if ((Audit_By == null)) {
+                command.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[6].Value = ((string)(Audit_By));
+            }
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2406,7 +2504,7 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
-        public virtual int UpdateChecklist(string Date, string Department, string Job, string Created_by, global::System.Nullable<global::System.DateTime> Created_on, string Location, int Original_ID) {
+        public virtual int UpdateChecklist(string Date, string Department, string Job, string Created_by, global::System.Nullable<global::System.DateTime> Created_on, string Location, string Audit_By, int Original_ID) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
             if ((Date == null)) {
                 command.Parameters[0].Value = global::System.DBNull.Value;
@@ -2444,7 +2542,13 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
             else {
                 command.Parameters[5].Value = ((string)(Location));
             }
-            command.Parameters[6].Value = ((int)(Original_ID));
+            if ((Audit_By == null)) {
+                command.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[6].Value = ((string)(Audit_By));
+            }
+            command.Parameters[7].Value = ((int)(Original_ID));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2579,21 +2683,21 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateUpdatedRows(Checklist_details_dataset dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._checklistInfoTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.ChecklistInfo.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._checklistInfoTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._checklistsTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Checklists.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._checklistsTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._checklistInfoTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.ChecklistInfo.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._checklistInfoTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -2607,19 +2711,19 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateInsertedRows(Checklist_details_dataset dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._checklistInfoTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.ChecklistInfo.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._checklistInfoTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._checklistsTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Checklists.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._checklistsTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._checklistInfoTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.ChecklistInfo.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._checklistInfoTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -2633,19 +2737,19 @@ namespace AnmolDristi.DAL.Datasets.Checklist_details_datasetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateDeletedRows(Checklist_details_dataset dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._checklistsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Checklists.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._checklistsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._checklistInfoTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.ChecklistInfo.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._checklistInfoTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._checklistsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Checklists.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._checklistsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

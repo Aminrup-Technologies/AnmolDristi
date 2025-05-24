@@ -24,6 +24,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
+        /// heading control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label heading;
+
+        /// <summary>
         /// Lbl_Date control.
         /// </summary>
         /// <remarks>
@@ -121,6 +130,69 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_JD;
+
+        /// <summary>
+        /// Lbl_Photo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Photo;
+
+        /// <summary>
+        /// grp_Photo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload grp_Photo;
+
+        /// <summary>
+        /// Lbl_SavedPhoto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_SavedPhoto;
+
+        /// <summary>
+        /// Lbl_AuditBy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_AuditBy;
+
+        /// <summary>
+        /// TB_AuditBy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TB_AuditBy;
+
+        /// <summary>
+        /// RFV_AuditBy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_AuditBy;
+
+        /// <summary>
+        /// REV_AuditBy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_AuditBy;
 
         /// <summary>
         /// Save control.

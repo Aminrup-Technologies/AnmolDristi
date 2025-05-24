@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Configuration;
 using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace AnmolDristi
 {
@@ -31,6 +32,28 @@ namespace AnmolDristi
             string CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection con = new SqlConnection(CS))
             {
+                con.Open();
+
+                SqlCommand cmdCheck = new SqlCommand("SELECT * FROM LiftingBeltChecklist WHERE ID = @ChecklistID", con);
+                cmdCheck.Parameters.AddWithValue("@ChecklistID", checklistId);
+
+                SqlDataReader reader = cmdCheck.ExecuteReader();
+                if (reader.Read())
+                {
+                    lblDte.Text = Convert.ToDateTime(reader["Date"]).ToString("yyyy-MM-dd");
+                    lbljbsite.Text = reader["JobSite"].ToString();
+                    lbljbID.Text = reader["JobID"].ToString();
+                    lbljbdesc.Text = reader["JobDescription"].ToString();
+                    lblaudit.Text = reader["Audit_By"].ToString();
+                    lblID.Text = reader["ID"].ToString();
+
+                }
+                reader.Close();
+
+
+
+
+
                 SqlCommand cmd = new SqlCommand("SELECT * FROM LiftingBeltChecklistInfo WHERE Checklist_ID = @ChecklistID", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 cmd.Parameters.AddWithValue("@ChecklistID", checklistId);
@@ -45,10 +68,10 @@ namespace AnmolDristi
     {
         GroupName = g.Key,
         Keys = g
-            .OrderBy(x => x.Field<string>("CheckPoints"))  
+            .OrderBy(x => x.Field<string>("CheckPoints"))
             .Select((x, itemIndex) => new
             {
-                Serial = (itemIndex + 1).ToString(), 
+                Serial = (itemIndex + 1).ToString(),
                 Requirement = x.Field<string>("CheckPoints"),
                 ChecklistInfoId = x.Field<int>("ID"),
                 IsOk = x.Field<string>("Result"),
@@ -64,38 +87,39 @@ namespace AnmolDristi
             }
         }
 
-        protected void ParentRepeter_ItemDataBound(object sender, RepeaterItemEventArgs e)
+
+        protected void RepeaterChecklist_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                
-                Repeater childRepeater = (Repeater)e.Item.FindControl("RepeaterChecklist");
 
-                if (childRepeater != null)
+
+                Image img = (Image)(((PlaceHolder)e.Item.Controls[5]).Controls[2]);
+                Label rmrk = (Label)(((PlaceHolder)e.Item.Controls[5]).Controls[1]);
+                if (!string.IsNullOrEmpty(img.ImageUrl))
                 {
-                    
-                    childRepeater.ItemDataBound += (s, ev) =>
+                    string relativePath = "~/uploads/" + img.ImageUrl;
+                    string physicalPath = Server.MapPath(relativePath);
+
+                    if (File.Exists(physicalPath))
                     {
-                        if (ev.Item.ItemType == ListItemType.Item || ev.Item.ItemType == ListItemType.AlternatingItem)
-                        {
-                            Image img = (Image)ev.Item.FindControl("imgPhoto");
-                            if (img != null && !string.IsNullOrEmpty(img.ImageUrl))
-                            {
-                                string relativePath = img.ImageUrl;
-
-                                
-                                string physicalPath = Server.MapPath(relativePath);
-
-                                if (!File.Exists(physicalPath))
-                                {
-                                    img.ImageUrl = "~/uploads/no_image.jpg"; 
-                                    img.ToolTip = "Image not found";
-                                }
-                            }
-                        }
-                    };
+                        img.ImageUrl = relativePath;
+                    }
                 }
+                else
+                {
+                    //img.ImageUrl = "~/uploads/no_image.jpg"; 
+                    //img.ToolTip = "Image not found";
+                    img.Visible = false;
+                    rmrk.Visible = false;
+                }
+
+
+
+
             }
         }
-        }
+    
     }
+
+}

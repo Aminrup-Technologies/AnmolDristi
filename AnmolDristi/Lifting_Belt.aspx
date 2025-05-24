@@ -3,12 +3,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <style>
-        
         .custom-radio input[type="radio"] {
             display: none;
         }
 
-        
+
         .custom-radio label {
             display: inline-block;
             padding: 8px 16px;
@@ -24,12 +23,12 @@
             color: #333;
         }
 
-        
+
         .custom-radio input[type="radio"]:checked + label {
             color: #fff;
         }
 
-        
+
         .custom-radio input[type="radio"]:checked[value="OK"] + label {
             background-color: #28a745; /* Green */
             border-color: #28a745;
@@ -50,7 +49,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-        
+
         .file-name-wrap {
             white-space: normal !important;
             word-break: break-word !important;
@@ -106,13 +105,13 @@
                 }
             }
 
-            
+
             document.querySelectorAll('.result-selector input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function () {
                     updateVisibility(this);
                 });
 
-                
+
                 if (radio.checked) {
                     updateVisibility(radio);
                 }
@@ -122,12 +121,12 @@
 
 
         function ResetChecklistForm() {
-            
+
             document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(input => {
                 input.value = '';
             });
 
-            
+
             document.querySelectorAll('input[type="radio"]').forEach(radio => {
                 if (radio.value === "OK") {
                     radio.checked = true;
@@ -153,12 +152,12 @@
                 msg.style.display = 'none';
             });
 
-            
+
             document.querySelectorAll('textarea[id*="Note_text"]').forEach(note => {
                 note.value = '';
             });
 
-           
+
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                 cb.checked = false;
             });
@@ -208,8 +207,8 @@
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
-                <div class="title_left">
-                    <h5>LIFTING BELTS & WIRE ROPE SLING CHECKLIST</h5>
+                <div class="title_left" style="text-align:center;">
+                    <asp:Label runat="server" ID="headng" CssClass="h5 text-center font-weight-bold text-success" Text="LIFTING BELTS & WIRE ROPE SLING CHECKLIST"></asp:Label>
                 </div>
             </div>
 
@@ -219,7 +218,7 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>DOC/ATS/TSK/QMS/GC/013</h2>
+                            <h2 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">DOC/ATS/TSK/QMS/GC/013</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
@@ -253,6 +252,12 @@
                                     <asp:TextBox ID="txtJobDescription" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rfvJobdesc" runat="server" ControlToValidate="txtJobDescription" ErrorMessage="JobDescription is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save" />
                                 </div>
+
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <asp:Label for="txtAuditby" runat="server" class="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Audit By:</asp:Label>
+                                    <asp:TextBox ID="txtAuditby" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtAuditby" ErrorMessage="Audit By is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save" />
+                                </div>
                             </div>
 
 
@@ -277,7 +282,7 @@
                                             <asp:Repeater ID="ChildRepeater" runat="server" DataSource='<%# Bind("Keys") %>' OnItemDataBound="ChildRepeater_ItemDataBound1">
                                                 <ItemTemplate>
                                                     <asp:HiddenField runat="server" ID="ChecklistInfoId" Value='<%# Eval("ChecklistInfoId") %>' />
-                                                   
+
 
                                                     <div class="row requirement-item mb-4 p-3 border rounded bg-light">
                                                         <!-- First Row: Serial + Requirement -->
@@ -308,7 +313,7 @@
                                                                 <div class="col-md-4 remarks-photo-group">
                                                                     <label class="form-label text-dark">Remarks:</label>
                                                                     <asp:TextBox ID="Remark_text" runat="server" CssClass="form-control remark-input" TextMode="MultiLine" Rows="2" />
-                                                                    <asp:CustomValidator ID="cvChecklist" runat="server" ControlToValidate="Remark_text" 
+                                                                    <asp:CustomValidator ID="cvChecklist" runat="server" ControlToValidate="Remark_text"
                                                                         ClientValidationFunction="validateChecklist"
                                                                         ErrorMessage="Remark is required."
                                                                         CssClass="text-danger"
@@ -347,7 +352,7 @@
                             </asp:Repeater>
 
 
-                            <div class="row mb-4">
+                           <%-- <div class="row mb-4">
 
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <asp:Label for="txtCheckedBy" runat="server" class="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Checked By:</asp:Label>
@@ -360,7 +365,7 @@
                                     <asp:TextBox ID="txtApprovedBy" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rfvApprovedBy" runat="server" ControlToValidate="txtApprovedBy" ErrorMessage="Approved By is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save" />
                                 </div>
-                            </div>
+                            </div>--%>
 
 
                             <div class="text-center mt-4">

@@ -43,6 +43,20 @@ namespace AnmolDristi
                     date.Text = Convert.ToDateTime(dr["WalkDate"]).ToString("yyyy-MM-dd");
                     jobid.Text = dr["JobID"].ToString();
                     jobdesc.Text = dr["JobDescription"].ToString() ;
+
+                    string photoFileName = dr["Photo"] != DBNull.Value ? dr["Photo"].ToString() : null;
+
+                    if (!string.IsNullOrEmpty(photoFileName))
+                    {
+                        jobimg.ImageUrl = "~/Uploads/" + photoFileName;
+                        jobimg.Visible = true;
+                    }
+                    else
+                    {
+                        jobimg.Visible = false;
+                    }
+
+                    Auditby.Text = dr["Audit_By"].ToString();
                 }
                 dr.Close();
                 con.Close();
@@ -106,6 +120,29 @@ TM_names,TM_Code,TM_Type
                 if (string.IsNullOrEmpty(attachPath) && imgAttach != null)
                 {
                     imgAttach.Visible = false;
+                }
+
+
+                //  for coloring the status label as advised in meeting
+                Label lblStatus = (Label)e.Row.FindControl("lblStatus");
+                if (lblStatus != null)
+                {
+                    string status = lblStatus.Text.Trim().ToLower();
+                    switch (status)
+                    {
+                        case "open":
+                            lblStatus.ForeColor = System.Drawing.Color.Green;
+                            break;
+                        case "pending":
+                            lblStatus.ForeColor = System.Drawing.Color.Red;
+                            break;
+                        case "in Progress":
+                            lblStatus.ForeColor = System.Drawing.Color.Orange;
+                            break;
+                        default:
+                            lblStatus.ForeColor = System.Drawing.Color.Gray;
+                            break;
+                    }
                 }
             }
         }

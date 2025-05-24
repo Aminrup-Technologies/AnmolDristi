@@ -15,6 +15,15 @@ namespace AnmolDristi
     {
 
         /// <summary>
+        /// headng control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label headng;
+
+        /// <summary>
         /// txtDate control.
         /// </summary>
         /// <remarks>
@@ -96,6 +105,24 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvJobdesc;
 
         /// <summary>
+        /// txtAuditby control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAuditby;
+
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+
+        /// <summary>
         /// DictionaryRepeater control.
         /// </summary>
         /// <remarks>
@@ -103,42 +130,6 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater DictionaryRepeater;
-
-        /// <summary>
-        /// txtCheckedBy control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCheckedBy;
-
-        /// <summary>
-        /// rfvCheckedBy control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCheckedBy;
-
-        /// <summary>
-        /// txtApprovedBy control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtApprovedBy;
-
-        /// <summary>
-        /// rfvApprovedBy control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvApprovedBy;
 
         /// <summary>
         /// submit control.

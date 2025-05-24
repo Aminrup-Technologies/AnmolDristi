@@ -44,6 +44,7 @@ namespace AnmolDristi
                 btnOpenModal.Enabled = true;
                 btnOpenObservationModal.Enabled = true;
                 TB_ID.Enabled = false;
+                heading.Text = "UPDATE LINE WALK STATUS DATA";
             }
 
             
@@ -155,73 +156,155 @@ namespace AnmolDristi
         protected void Save_Click(object sender, EventArgs e)
         {
 
-                string Date = TB_Date.Text.ToString();
-                string JobID = TB_ID.Text.Trim();
-                string JobDesc = TB_JD.Text.Trim();
+            string Date = TB_Date.Text.Trim();
+            string JobID = TB_ID.Text.Trim();
+            string JobDesc = TB_JD.Text.Trim();
+            string AuditBy = TB_AuditBy.Text.Trim();
 
+            string Photo = null;
+
+            if (grp_Photo.HasFile)
+            {
+                string ext = Path.GetExtension(grp_Photo.FileName).ToLower();
+                if (ext == ".jpg" || ext == ".jpeg" || ext == ".png")
+                {
+                    string folderPath = Server.MapPath("~/Uploads/");
+                    if (!Directory.Exists(folderPath))
+                        Directory.CreateDirectory(folderPath);
+
+                    string filename = Guid.NewGuid().ToString() + "_" + Path.GetFileName(grp_Photo.FileName);
+                    grp_Photo.SaveAs(Path.Combine(folderPath, filename));
+                    Photo = filename;
+
+                    Lbl_SavedPhoto.Text = "Current Photo: " + Photo;
+                    Lbl_SavedPhoto.Visible = true;
+                }
+                else
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "FileError", @"
+                <script type='text/javascript'>
+                    alert('Only JPG, JPEG, PNG files are allowed.');
+                </script>", false);
+                    return;
+                }
+            }
 
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
             {
-
                 conn.Open();
+
                 if (ViewState["WalkStatusId"] == null)
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO [Line_walk_status] ([WalkDate], [JobDescription], [JobID]) VALUES (@WalkDate, @JobDescription, @JobID);SELECT SCOPE_IDENTITY();", conn);
-                    cmd.Parameters.AddWithValue("@WalkDate", Date);
-                    cmd.Parameters.AddWithValue("@JobID", JobID);
-                    cmd.Parameters.AddWithValue("@JobDescription", JobDesc);
-                    int walkStatusId = Convert.ToInt32(cmd.ExecuteScalar());
+                    // INSERT
+                    SqlCommand cmdIn = new SqlCommand(@"
+                INSERT INTO [Line_walk_status] 
+                ([WalkDate], [JobDescription], [JobID], [Photo], [Audit_By]) 
+                VALUES 
+                (@WalkDate, @JobDescription, @JobID, @Photo, @Audit_By); 
+                SELECT SCOPE_IDENTITY();", conn);
+
+                    cmdIn.Parameters.AddWithValue("@WalkDate", Date);
+                    cmdIn.Parameters.AddWithValue("@JobID", JobID);
+                    cmdIn.Parameters.AddWithValue("@JobDescription", JobDesc);
+                    cmdIn.Parameters.AddWithValue("@Audit_By", AuditBy);
+                    cmdIn.Parameters.AddWithValue("@Photo", string.IsNullOrEmpty(Photo) ? (object)DBNull.Value : Photo);
+
+                    int walkStatusId = Convert.ToInt32(cmdIn.ExecuteScalar());
                     ViewState["WalkStatusId"] = walkStatusId;
 
+                    if (!string.IsNullOrEmpty(Photo))
+                    {
+                        Lbl_SavedPhoto.Text = "Current Photo: " + Photo;
+                        Lbl_SavedPhoto.Visible = true;
+                    }
+                    else
+                    {
+                        Lbl_SavedPhoto.Visible = false;
+                    }
 
                     Save.Text = "Update";
                     btnOpenModal.Enabled = true;
                     btnOpenObservationModal.Enabled = true;
 
-
-                    string Data_SuccessScript = @"<script type='text/javascript'>
-                new PNotify({
-                    title: 'Success',
-                    text: 'Job Details Saved Successfully!!',
-                    type: 'success',
-                    styling: 'bootstrap3'
-                });
-            </script>";
-
-                    ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
-                
-
-            }
+                    ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", @"
+                <script type='text/javascript'>
+                    new PNotify({
+                        title: 'Success',
+                        text: 'Job Details Saved Successfully!!',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+                </script>", false);
+                }
                 else
                 {
+                    // UPDATE
                     int walkStatusId = Convert.ToInt32(ViewState["WalkStatusId"]);
+
+                    if (string.IsNullOrEmpty(Photo))
+                    {
+                        SqlCommand getCmd = new SqlCommand("SELECT Photo FROM Line_walk_status WHERE ID = @ID", conn);
+                        getCmd.Parameters.AddWithValue("@ID", walkStatusId);
+                        object result = getCmd.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            Photo = result.ToString();
+                        }
+
+                        if (!string.IsNullOrEmpty(Photo))
+                        {
+                            Lbl_SavedPhoto.Text = Photo;
+                            Lbl_SavedPhoto.Visible = true;
+                        }
+                        else
+                        {
+                            Lbl_SavedPhoto.Text = "";
+                            Lbl_SavedPhoto.Visible = false;
+                        }
+                    }
+                    else
+                    {
+                        Lbl_SavedPhoto.Text = Photo;
+                        Lbl_SavedPhoto.Visible = true;
+                    }
+
                     SqlCommand cmd = new SqlCommand(@"
                 UPDATE [Line_walk_status] 
                 SET WalkDate = @WalkDate, 
                     JobDescription = @JobDescription, 
-                    JobID = @JobID 
+                    JobID = @JobID, 
+                    Photo = @Photo,
+                    Audit_By = @Audit_By
                 WHERE ID = @ID", conn);
 
-                    cmd.Parameters.AddWithValue("@WalkDate", Date);
-                    cmd.Parameters.AddWithValue("@JobID", JobID);
-                    cmd.Parameters.AddWithValue("@JobDescription", JobDesc);
-                    cmd.Parameters.AddWithValue("@ID", walkStatusId);
+                        cmd.Parameters.AddWithValue("@WalkDate", Date);
+                        cmd.Parameters.AddWithValue("@JobID", JobID);
+                        cmd.Parameters.AddWithValue("@JobDescription", JobDesc);
+                        cmd.Parameters.AddWithValue("@Audit_By", AuditBy);
+                        cmd.Parameters.AddWithValue("@Photo", string.IsNullOrEmpty(Photo) ? (object)DBNull.Value : Photo);
+                        cmd.Parameters.AddWithValue("@ID", walkStatusId);
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
 
-                    string Data_SuccessScript = @"<script type='text/javascript'>
-                new PNotify({
-                    title: 'Success',
-                    text: 'Job Details Updated Successfully!!',
-                    type: 'success',
-                    styling: 'bootstrap3'
-                });
-            </script>";
+                        
 
-                    ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
+
+                        ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", @"
+                <script type='text/javascript'>
+                    new PNotify({
+                        title: 'Success',
+                        text: 'Job Details Updated Successfully!!',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+                </script>", false);
+                    }
                 }
             }
-        }
+        
+
+
+        
 
 
             
@@ -436,6 +519,20 @@ namespace AnmolDristi
                     TB_Date.Text = Convert.ToDateTime(reader["WalkDate"]).ToString("yyyy-MM-dd");
                     TB_ID.Text = reader["JobID"].ToString();
                     TB_JD.Text = reader["JobDescription"].ToString();
+                    TB_AuditBy.Text = reader["Audit_By"].ToString();
+
+                    string photo = reader["Photo"].ToString();
+                    if (!string.IsNullOrEmpty(photo))
+                    {
+                        Lbl_SavedPhoto.Text = photo;
+                        Lbl_SavedPhoto.Visible = true;
+                    }
+                    else
+                    {
+                        Lbl_SavedPhoto.Text = "";
+                        Lbl_SavedPhoto.Visible = false;
+                    }
+
                     ViewState["WalkStatusId"] = reader["ID"].ToString(); 
                 }
                 reader.Close();
@@ -574,7 +671,7 @@ namespace AnmolDristi
                 SqlCommand cmd = new SqlCommand(@"UPDATE Line_walk_details 
                                           SET Responsibility = @Responsibility, 
                                               Target_Date = @TargetDate, 
-                                              Status = 'Closed'
+                                              Status = 'In Progress'
                                           WHERE Detail_ID = @DetailID", con);
 
                 cmd.Parameters.AddWithValue("@Responsibility", responsibility);

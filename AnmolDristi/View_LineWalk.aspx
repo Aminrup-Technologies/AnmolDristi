@@ -87,8 +87,8 @@
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
-                <div class="title_left">
-                    <h5 style="color: green;">Line Walk</h5>
+                <div class="title_left" style="text-align: center;">
+                    <asp:Label ID="heading" runat="server" CssClass="h5 text-center font-weight-bold text-success"  Text="Detailed View Page"></asp:Label>
                 </div>
             </div>
 
@@ -98,10 +98,10 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2 style="color: green;">Line walk Details View </h2>
+                           <%-- <h2 style="color: green;">Line walk Details View </h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                            </ul>
+                            </ul>--%>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content" style="overflow: auto;">
@@ -111,6 +111,8 @@
                                         <th>Date</th>
                                         <th>Job ID</th>
                                         <th>Job Description</th>
+                                        <th>Photo</th>
+                                        <th>Audit By</th>
                                     </tr>
                                     <tr>
                                         <td>
@@ -119,6 +121,10 @@
                                             <asp:Label runat="server" ID="jobid" /></td>
                                         <td>
                                             <asp:Label runat="server" ID="jobdesc" /></td>
+                                        <td>
+                                            <asp:Image ID="jobimg" runat="server" Width="200px" Visible="false"/></td>
+                                        <td>
+                                            <asp:Label ID="Auditby" runat="server" /></td>
                                     </tr>
                                 </table>
 
@@ -157,7 +163,12 @@
                                         </asp:TemplateField>
                                         <asp:BoundField HeaderText="Responsibility" DataField="Responsibility" />
                                         <asp:BoundField HeaderText="TargetDate" DataField="Target_Date" DataFormatString="{0:yyyy-MM-dd}" />
-                                        <asp:BoundField HeaderText="Status" DataField="Status" />
+                                        <%--<asp:BoundField HeaderText="Status" DataField="Status" />--%>
+                                        <asp:TemplateField HeaderText="Status">
+    <ItemTemplate>
+        <asp:Label ID="lblStatus" runat="server" Text='<%# Eval("Status") %>'></asp:Label>
+    </ItemTemplate>
+</asp:TemplateField>
 
                                     </Columns>
                                 </asp:GridView>

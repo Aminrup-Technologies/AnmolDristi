@@ -105,6 +105,24 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLocation;
 
         /// <summary>
+        /// txtAuditby control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAuditby;
+
+        /// <summary>
+        /// rfvAudit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAudit;
+
+        /// <summary>
         /// DictionaryRepeater control.
         /// </summary>
         /// <remarks>

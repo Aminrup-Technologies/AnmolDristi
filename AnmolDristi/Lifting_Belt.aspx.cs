@@ -55,6 +55,7 @@ namespace AnmolDristi
                 if (!string.IsNullOrEmpty(checklistId))
                 {
                     LoadInfo(Convert.ToInt32(checklistId));
+                    headng.Text = "UPDATE LIFTING BELTS & WIRE ROPE SLING CHECKLIST DATA";
                 }
                 else
                 {
@@ -81,8 +82,7 @@ namespace AnmolDristi
                     txtJobsite.Text = reader["JobSite"].ToString();
                     txtJobID.Text = reader["JobID"].ToString();
                     txtJobDescription.Text = reader["JobDescription"].ToString();
-                    txtCheckedBy.Text = reader["CheckedBy"].ToString();
-                    txtApprovedBy.Text = reader["ApprovedBy"].ToString();
+                    txtAuditby.Text = reader["Audit_By"].ToString() ;
                     ChecklistId.Value = reader["ID"].ToString();
 
                 }
@@ -153,7 +153,7 @@ namespace AnmolDristi
 
                     tableAdapter.Connection = sqlConnection;
 
-                    var ChecklistId = tableAdapter.InsertLiftingBeltData(txtDate.Text, txtJobsite.Text, txtJobID.Text, txtJobDescription.Text, "test", DateTime.Now, txtCheckedBy.Text, txtApprovedBy.Text);
+                    var ChecklistId = tableAdapter.InsertLiftingBeltChecklist(txtDate.Text, txtJobsite.Text, txtJobID.Text, txtJobDescription.Text, DateTime.Now,txtAuditby.Text);
 
                     foreach (RepeaterItem parentItem in DictionaryRepeater.Items)
                     {
@@ -220,8 +220,7 @@ namespace AnmolDristi
             ChecklistRow["JobSite"] = txtJobsite.Text;
             ChecklistRow["JobID"] = txtJobID.Text;
             ChecklistRow["JobDescription"] = txtJobDescription.Text;
-            ChecklistRow["CheckedBy"] = txtCheckedBy.Text;
-            ChecklistRow["ApprovedBy"] = txtApprovedBy.Text;
+            ChecklistRow["Audit_By"] = txtAuditby.Text;
 
             _dataset.LiftingBeltChecklist.Rows.Add(ChecklistRow);
             _dataset.LiftingBeltChecklist.Rows[0].AcceptChanges();

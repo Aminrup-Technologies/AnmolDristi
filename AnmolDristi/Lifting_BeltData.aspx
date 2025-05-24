@@ -7,7 +7,7 @@
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h5>LIFTING BELTS & WIRE ROPE SLING CHECKLIST</h5>
+                    <h5 style="text-align: center; font-weight: bold;" class="text-success">LIFTING BELTS & WIRE ROPE SLING CHECKLIST ALL DATA</h5>
                 </div>
             </div>
 
@@ -17,7 +17,7 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>DOC/ATS/TSK/QMS/GC/013</h2>
+                            <h2 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">DOC/ATS/TSK/QMS/GC/013</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>

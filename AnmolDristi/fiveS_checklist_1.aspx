@@ -35,7 +35,7 @@
 
                 if (selectedResult && selectedResult.value === "false") {
                     if (!remark || remark.value.trim() === "") {
-                       //if (remarkError) remarkError.style.display = "block";
+                        //if (remarkError) remarkError.style.display = "block";
                         isValid = false;
                     }
 
@@ -139,7 +139,7 @@
             }
         }
 
-       
+
 
 
 
@@ -152,7 +152,7 @@
         <div class="container">
             <div class="page-title">
                 <div class="title_left" style="text-align: center;">
-                    <asp:Label id="heading" runat="server" CssClass="h5 text-center font-weight-bold text-success"  Text="FIVE S CHECKLIST"></asp:Label>
+                    <asp:Label ID="heading" runat="server" CssClass="h5 text-center font-weight-bold text-success" Text="FIVE S CHECKLIST"></asp:Label>
                 </div>
             </div>
 
@@ -207,6 +207,17 @@
                                     <asp:RequiredFieldValidator ID="rfvLocation" runat="server"
                                         ControlToValidate="txtLocation"
                                         ErrorMessage="Location is required"
+                                        CssClass="text-danger"
+                                        Display="Dynamic"
+                                        ValidationGroup="save" />
+                                </div>
+
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <asp:Label for="txtAuditby" runat="server" class="form-label" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Audit By:</asp:Label>
+                                    <asp:TextBox ID="txtAuditby" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="rfvAudit" runat="server"
+                                        ControlToValidate="txtLocation"
+                                        ErrorMessage="Audit By is required"
                                         CssClass="text-danger"
                                         Display="Dynamic"
                                         ValidationGroup="save" />

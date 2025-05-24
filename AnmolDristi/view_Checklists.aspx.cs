@@ -41,6 +41,7 @@ namespace AnmolDristi
                     Deptlbl.Text = reader["Department"].ToString();
                     Joblbl.Text = reader["Job"].ToString();
                     Loclbl.Text = reader["Location"].ToString();
+                    Audlbl.Text = reader["Audit_By"].ToString();
                     //ChecklistId.Value = reader["ID"].ToString();
                 }
                 reader.Close();

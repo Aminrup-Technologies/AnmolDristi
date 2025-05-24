@@ -102,6 +102,7 @@ namespace AnmolDristi
                     txtDepartment.Text = reader["Department"].ToString();
                     txtJob.Text = reader["Job"].ToString();
                     txtLocation.Text = reader["Location"].ToString();
+                    txtAuditby.Text = reader["Audit_By"].ToString();
                     ChecklistId.Value = reader["ID"].ToString();
                 }
                 reader.Close();
@@ -143,6 +144,7 @@ namespace AnmolDristi
             checklistRow["Department"] = txtDepartment.Text;
             checklistRow["Job"] = txtJob.Text;
             checklistRow["Location"] = txtLocation.Text;
+            checklistRow["Audit_By"] = txtAuditby.Text;
 
             _dataSource.Checklists.Rows.Add(checklistRow);
             _dataSource.Checklists.Rows[0].AcceptChanges();
@@ -254,7 +256,7 @@ namespace AnmolDristi
 
                     checklisttable.Connection = sqlConnection;
 
-                    var checklistId = checklisttable.InsertChecklist(txtDate.Text, txtDepartment.Text, txtJob.Text,"test", DateTime.Now, txtLocation.Text);
+                    var checklistId = checklisttable.InsertChecklist(txtDate.Text, txtDepartment.Text, txtJob.Text,"test", DateTime.Now, txtLocation.Text, txtAuditby.Text);
 
                     //  ChecklistInfo rows
                     foreach (RepeaterItem parentItem in DictionaryRepeater.Items)
