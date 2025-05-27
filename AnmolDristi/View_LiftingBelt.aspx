@@ -147,8 +147,8 @@
                 height: auto !important;
             }
 
-            label {
-                display: flex;
+            .photo-container span{
+                display: flex !important;
             }
         }
     </style>
@@ -224,7 +224,9 @@
                           border:2px solid black;
                           padding:5px
                         }
-       
+                        .photo-container span{
+                            margin-right:70px;
+                        }
                         }
                             </style>
                         `);
@@ -410,7 +412,7 @@
                                                     <asp:PlaceHolder ID="phImageColumn" runat="server" Visible='<%# Eval("IsOk").ToString() == "NotOK" %>'>
                                                         <div class="col-md-3 d-flex align-items-start justify-content-end">
                                                             <div class="photo-container text-right">
-                                                                <asp:label runat="server">Photo:</asp:label>
+                                                                <asp:label ID="lblphimg" runat="server">Photo:</asp:label>
                                                                 <asp:Image ID="imgPhoto" runat="server"
                                                                     ImageUrl='<%#  Eval("Before_pic") %>'
                                                                     CssClass="img-thumbnail"
