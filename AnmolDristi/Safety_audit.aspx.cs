@@ -167,29 +167,80 @@ namespace AnmolDristi
 
         protected void BtnAddSection_Click(object sender, EventArgs e)
         {
-            // Create a new section (table) programmatically
-            Table newSection = new Table();
-            newSection.CssClass = "table table-bordered";
+            // Get current section count (you may want to store this in ViewState)
+            int sectionIndex = (int)(ViewState["SectionCount"] ?? 0);
+            sectionIndex++;
+            ViewState["SectionCount"] = sectionIndex;
 
-            // Create rows and columns for Description, DropDownLists, and Validators
+            AddSection(sectionIndex);
+        }
+
+        private void AddSection(int index)
+        {
+            // Create a new table
+            Table newSection = new Table();
+            newSection.CssClass = "table table-bordered mb-3";
+
+            // ===== Row 1: Description =====
             TableRow row1 = new TableRow();
             row1.Cells.Add(new TableCell { Text = "<b>Description:</b>" });
-            row1.Cells.Add(new TableCell
+
+            TextBox txtDescription = new TextBox
             {
-                Controls = { new TextBox { ID = "txtDescription", CssClass = "form-control", TextMode = TextBoxMode.MultiLine } }
-            });
+                ID = $"txtDescription_{index}",
+                CssClass = "form-control",
+                TextMode = TextBoxMode.MultiLine,
+                Rows = 3
+            };
+
+            RequiredFieldValidator rfvDescription = new RequiredFieldValidator
+            {
+                ControlToValidate = txtDescription.ID,
+                ErrorMessage = "Description is required.",
+                ForeColor = System.Drawing.Color.Red,
+                Display = ValidatorDisplay.Dynamic,
+                ID = $"rfvDescription_{index}"
+            };
+
+            TableCell cell1 = new TableCell();
+            cell1.Controls.Add(txtDescription);
+            cell1.Controls.Add(rfvDescription);
+            row1.Cells.Add(cell1);
             newSection.Rows.Add(row1);
 
-            // Repeat similar steps for all other fields like DropDownLists, RequiredFieldValidators
+            // ===== Row 2: Dropdown for Good Citizens =====
             TableRow row2 = new TableRow();
-            row2.Cells.Add(new TableCell { Text = "<b>Good Citizens</b>" });
-            row2.Cells.Add(new TableCell
+            row2.Cells.Add(new TableCell { Text = "<b>Good Citizens:</b>" });
+
+            DropDownList ddl = new DropDownList
             {
-                Controls = { new DropDownList { ID = "DropDownList1", CssClass = "form-control form-control-sm rounded" } }
-            });
+                ID = $"ddlGoodCitizens_{index}",
+                CssClass = "form-control form-control-sm rounded"
+            };
+            ddl.Items.Add(new ListItem("-- Select --", ""));
+            ddl.Items.Add(new ListItem("Yes", "Yes"));
+            ddl.Items.Add(new ListItem("No", "No"));
+
+            RequiredFieldValidator rfvDdl = new RequiredFieldValidator
+            {
+                ControlToValidate = ddl.ID,
+                ErrorMessage = "Selection is required.",
+                ForeColor = System.Drawing.Color.Red,
+                Display = ValidatorDisplay.Dynamic,
+                InitialValue = "",
+                ID = $"rfvDdl_{index}"
+            };
+
+            TableCell cell2 = new TableCell();
+            cell2.Controls.Add(ddl);
+            cell2.Controls.Add(rfvDdl);
+            row2.Cells.Add(cell2);
             newSection.Rows.Add(row2);
 
+            // Add section to a PlaceHolder or Panel on your page
+         //   SectionPlaceHolder.Controls.Add(newSection);
         }
+
 
 
 

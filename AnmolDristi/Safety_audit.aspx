@@ -335,111 +335,60 @@
 
 
 
+    <!-- Safety Observation section -->
+<div class="row col-lg-12">
+    <div class="col-lg-12">
+        <table class="table table-bordered small" style="width: 100%;" id="observationTable">
+            <tr>
+                <td><b>Observation Description:</b></td>
+                <td>
+                    <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Good Citizens</b></td>
+                <td>
+                    <asp:TextBox ID="txtGoodCitizens" runat="server" CssClass="form-control form-control-sm rounded" />
+                </td>
+            </tr>
+            <tr>
+                <td><b>No. of Violations</b></td>
+                <td>
+                    <asp:TextBox ID="txtViolations" runat="server" CssClass="form-control form-control-sm rounded" />
+                </td>
+            </tr>
+            <tr>
+                <td><b>Severity</b></td>
+                <td>
+                    <asp:TextBox ID="txtSeverity" runat="server" CssClass="form-control form-control-sm rounded" />
+                </td>
+            </tr>
+            <tr>
+                <td><b>Violation X Severity</b></td>
+                <td>
+                    <asp:TextBox ID="txtViolationXSeverity" runat="server" CssClass="form-control form-control-sm rounded" />
+                </td>
+            </tr>
+            <tr>
+                <td><b>4 & 5</b></td>
+                <td>
+                    <asp:TextBox ID="txtFourAndFive" runat="server" CssClass="form-control form-control-sm rounded" />
+                </td>
+            </tr>
+            <tr>
+                <td><b>Unsafe Act Conditions</b></td>
+                <td>
+                    <asp:DropDownList ID="DropDownList6" runat="server" CssClass="form-control form-control-sm rounded">
+                        <asp:ListItem Text="Select Type" Value="0" Selected="True" />
+                        <asp:ListItem Text="Unsafe Act" Value="Unsafe Act" />
+                        <asp:ListItem Text="Unsafe Condition" Value="Unsafe Condition" />
+                    </asp:DropDownList>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
 
-                                <!-- Safety Observation section -->
-
-                                <div class="row col-lg-12">
-                                    <div class="col-lg-12">
-                                        <table class="table table-bordered small" style="width: 100%;" id="observationTable">
-                                            <tr>
-                                                <td><b>Observation Description:</b></td>
-                                                <td>
-                                                    <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Good Citizens</b></td>
-                                                <td>
-                                                    <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control form-control-sm rounded">
-                                                        <asp:ListItem Text="Select Severity Level" Value="0" Selected="True"></asp:ListItem>
-                                                        <asp:ListItem Text="Untidy area minor issues sets poor example" Value="1"></asp:ListItem>
-                                                        <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="2"></asp:ListItem>
-                                                        <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="3"></asp:ListItem>
-                                                        <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="4"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="5"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediately and correct" Value="6"></asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>No. of Violations</b></td>
-                                                <td>
-                                                    <asp:DropDownList ID="DropDownList2" runat="server" CssClass="form-control form-control-sm rounded">
-                                                        <asp:ListItem Text="Select Severity Level" Value="0" Selected="True"></asp:ListItem>
-                                                        <asp:ListItem Text="Untidy area minor issues sets poor example" Value="1"></asp:ListItem>
-                                                        <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="2"></asp:ListItem>
-                                                        <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="3"></asp:ListItem>
-                                                        <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="4"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="5"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediately and correct" Value="6"></asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Severity</b></td>
-                                                <td>
-                                                    <asp:DropDownList ID="DropDownList3" runat="server" CssClass="form-control form-control-sm rounded">
-                                                        <asp:ListItem Text="Select Severity Level" Value="0" Selected="True"></asp:ListItem>
-                                                        <asp:ListItem Text="Untidy area minor issues sets poor example" Value="1"></asp:ListItem>
-                                                        <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="2"></asp:ListItem>
-                                                        <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="3"></asp:ListItem>
-                                                        <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="4"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="5"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediately and correct" Value="6"></asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><b>Violation X Severity</b></td>
-                                                <td>
-                                                    <asp:DropDownList ID="DropDownList4" runat="server" CssClass="form-control form-control-sm rounded">
-                                                        <asp:ListItem Text="Select Severity Level" Value="0" Selected="True"></asp:ListItem>
-                                                        <asp:ListItem Text="Untidy area minor issues sets poor example" Value="1"></asp:ListItem>
-                                                        <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="2"></asp:ListItem>
-                                                        <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="3"></asp:ListItem>
-                                                        <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="4"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="5"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediately and correct" Value="6"></asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><b>4 &5 </b></td>
-                                                <td>
-                                                    <asp:DropDownList ID="DropDownList5" runat="server" CssClass="form-control form-control-sm rounded">
-                                                        <asp:ListItem Text="Select Severity Level" Value="0" Selected="True"></asp:ListItem>
-                                                        <asp:ListItem Text="Untidy area minor issues sets poor example" Value="1"></asp:ListItem>
-                                                        <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="2"></asp:ListItem>
-                                                        <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="3"></asp:ListItem>
-                                                        <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="4"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="5"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediately and correct" Value="6"></asp:ListItem>
-                                                    </asp:DropDownList>
-
-                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="DropDownList2" InitialValue="" ErrorMessage="Please select a Severity Level." ForeColor="Red" Display="Dynamic">
-                                                    </asp:RequiredFieldValidator>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><b>Unsafe Act Conditions</b></td>
-                                                <td>
-                                                    <asp:DropDownList ID="DropDownList6" runat="server" CssClass="form-control form-control-sm rounded">
-                                                        <asp:ListItem Text="Select Severity Level" Value="0" Selected="True"></asp:ListItem>
-                                                        <asp:ListItem Text="Untidy area minor issues sets poor example" Value="1"></asp:ListItem>
-                                                        <asp:ListItem Text="Restricted access, Unacceptable trash, Disorderly" Value="2"></asp:ListItem>
-                                                        <asp:ListItem Text="Rule or procedure Violation, Potential injury" Value="3"></asp:ListItem>
-                                                        <asp:ListItem Text="Unsafe condition, Serious injury potential" Value="4"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediate serious injury potential, Stop activity" Value="5"></asp:ListItem>
-                                                        <asp:ListItem Text="Immediately and correct" Value="6"></asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
 
                                 <div class="row col-lg-12">
                                     <div class="col-12 text-center">
@@ -455,103 +404,87 @@
                                     document.addEventListener("DOMContentLoaded", function () {
                                         document.getElementById("btnAddObservation").addEventListener("click", function () {
                                             let descriptionBox = document.getElementById("<%= txtDescription.ClientID %>");
-                                            let observationDescription = descriptionBox ? descriptionBox.value.trim() : "";
+        let observationDescription = descriptionBox ? descriptionBox.value.trim() : "";
 
+        if (observationDescription === "") {
+            alert("Please enter an Observation Description before adding.");
+            return;
+        }
 
-                                            if (observationDescription === "") {
-                                                alert("Please enter an Observation Description before adding.");
-                                                return;
-                                            }
+        // Get TextBox values
+        let goodCitizens = document.getElementById("<%= txtGoodCitizens.ClientID %>")?.value || "";
+        let violations = document.getElementById("<%= txtViolations.ClientID %>")?.value || "";
+        let severity = document.getElementById("<%= txtSeverity.ClientID %>")?.value || "";
+        let violationXSeverity = document.getElementById("<%= txtViolationXSeverity.ClientID %>")?.value || "";
+        let fourAndFive = document.getElementById("<%= txtFourAndFive.ClientID %>")?.value || "";
+        let unsafeActs = document.getElementById("<%= DropDownList6.ClientID %>")?.value || "";
 
-                                            let dropdowns = [
-                                                document.getElementById("<%= DropDownList1.ClientID %>"),
-                                                document.getElementById("<%= DropDownList2.ClientID %>"),
-                                                document.getElementById("<%= DropDownList3.ClientID %>"),
-                                                document.getElementById("<%= DropDownList4.ClientID %>"),
-                                                document.getElementById("<%= DropDownList5.ClientID %>"),
-                                                document.getElementById("<%= DropDownList6.ClientID %>")
-                                            ].filter(el => el !== null); // Ensure null elements are filtered out
+        let observation = {
+            Description: observationDescription,
+            GoodCitizens: goodCitizens,
+            Violations: violations,
+            Severity: severity,
+            ViolationXSeverity: violationXSeverity,
+            FourAndFive: fourAndFive,
+            UnsafeActs: unsafeActs
+        };
 
-                                            if (dropdowns.length === 0) {
-                                                console.error("Dropdowns not found. Check your IDs.");
-                                                return;
-                                            }
+        observations.push(observation);
 
-                                            //added 
+        document.getElementById("<%= hdnObservationData.ClientID %>").value = JSON.stringify(observations);
 
-                                            let observation = {
-                                                Description: observationDescription,
-                                                GoodCitizens: dropdowns[0].value,
-                                                Violations: dropdowns[1].value,
-                                                Severity: dropdowns[2].value,
-                                                ViolationXSeverity: dropdowns[3].value,
-                                                FourAndFive: dropdowns[4].value,
-                                                UnsafeActs: dropdowns[5].value
-                                            };
+        let observationGrid = document.getElementById("ObservationGrid");
+        if (!observationGrid) return;
 
-                                            observations.push(observation);
+        let resultsTable = document.getElementById("resultsTable");
+        if (!resultsTable) {
+            let tableContainer = document.createElement("table");
+            tableContainer.id = "resultsTable";
+            tableContainer.className = "table table-bordered small mt-3";
+            tableContainer.innerHTML = `<thead>
+              <tr>
+                  <th>Sl</th>
+                  <th>Observation Description</th>
+                  <th>Good Citizens</th>
+                  <th>No. of Violations</th>
+                  <th>Severity</th>
+                  <th>Violation X Severity</th>
+                  <th>4 & 5</th>
+                  <th>Unsafe Act Conditions</th>
+              </tr>
+          </thead>
+          <tbody></tbody>`;
+            observationGrid.appendChild(tableContainer);
+            resultsTable = tableContainer;
+        }
 
-                                            // update the hidden field
-                                            document.getElementById("<%= hdnObservationData.ClientID %>").value = JSON.stringify(observations);
+        let tbody = resultsTable.querySelector("tbody");
+        let newRow = document.createElement("tr");
 
+        newRow.innerHTML = `
+            <td>${tbody.children.length + 1}</td>
+            <td>${observationDescription}</td>
+            <td>${goodCitizens}</td>
+            <td>${violations}</td>
+            <td>${severity}</td>
+            <td>${violationXSeverity}</td>
+            <td>${fourAndFive}</td>
+            <td>${unsafeActs}</td>
+        `;
 
+        tbody.appendChild(newRow);
 
-                                            let observationGrid = document.getElementById("ObservationGrid");
-                                            if (!observationGrid) {
-                                                console.error("ObservationGrid div not found.");
-                                                return;
-                                            }
+        // Reset fields
+        descriptionBox.value = "";
+        document.getElementById("<%= txtGoodCitizens.ClientID %>").value = "";
+        document.getElementById("<%= txtViolations.ClientID %>").value = "";
+        document.getElementById("<%= txtSeverity.ClientID %>").value = "";
+        document.getElementById("<%= txtViolationXSeverity.ClientID %>").value = "";
+        document.getElementById("<%= txtFourAndFive.ClientID %>").value = "";
+        document.getElementById("<%= DropDownList6.ClientID %>").selectedIndex = 0;
+    });
+});
 
-                                            let resultsTable = document.getElementById("resultsTable");
-                                            if (!resultsTable) {
-                                                let tableContainer = document.createElement("table");
-                                                tableContainer.id = "resultsTable";
-                                                tableContainer.className = "table table-bordered small mt-3";
-
-                                                tableContainer.innerHTML = `<thead>
-                                                  <tr>
-                                                      <th>Sl</th>
-                                                      <th>Observation Description</th>
-                                                      <th>Good Citizens</th>
-                                                      <th>No. of Violations</th>
-                                                      <th>Severity</th>
-                                                      <th>Violation X Severity</th>
-                                                      <th>4 & 5</th>
-                                                      <th>Unsafe Act Conditions</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody></tbody>`;
-                                                observationGrid.appendChild(tableContainer);
-                                                resultsTable = tableContainer;
-                                            }
-
-                                            let tbody = resultsTable.querySelector("tbody");
-                                            let newRow = document.createElement("tr");
-
-                                            let rowNum = tbody.children.length + 1;
-                                            let numCell = document.createElement("td");
-                                            numCell.textContent = rowNum;
-                                            newRow.appendChild(numCell);
-
-                                            let descCell = document.createElement("td");
-                                            descCell.textContent = observationDescription;
-                                            newRow.appendChild(descCell);
-
-                                            dropdowns.forEach(dropdown => {
-                                                let selectedValue = dropdown.value || "0";
-                                                let cell = document.createElement("td");
-                                                cell.textContent = selectedValue;
-                                                newRow.appendChild(cell);
-                                            });
-
-                                            tbody.appendChild(newRow);
-
-                                            dropdowns.forEach(dropdown => {
-                                                dropdown.selectedIndex = 0;
-                                            });
-                                            descriptionBox.value = "";
-                                        });
-                                    });
                                 </script>
 
 
@@ -577,13 +510,13 @@
                                         { id: '<%= txtTotalContractorPeople.ClientID %>', type: 'textbox', name: 'Total Contractor People' },
                                         { id: '<%= rbOwnEmployee.ClientID %>', type: 'radio', name: 'Member Type (Own Employee / External Member)' },
                                         { id: '<%= rbExternalMember.ClientID %>', type: 'radio', name: 'Member Type (Own Employee / External Member)' },
-                                       // { id: '<%= txtDescription.ClientID %>', type: 'textbox', name: 'Observation Description' },
-                                       // { id: '<%= DropDownList1.ClientID %>', type: 'dropdown', name: 'Good Citizens' },
-                                       // { id: '<%= DropDownList2.ClientID %>', type: 'dropdown', name: 'No. of Violations' },
-                                       // { id: '<%= DropDownList3.ClientID %>', type: 'dropdown', name: 'Severity' },
-                                       // { id: '<%= DropDownList4.ClientID %>', type: 'dropdown', name: 'Violation X Severity' },
-                                       // { id: '<%= DropDownList5.ClientID %>', type: 'dropdown', name: '4 & 5' },
-                                       // { id: '<%= DropDownList6.ClientID %>', type: 'dropdown', name: 'Unsafe Act Conditions' }
+                                       <%-- { id: '<%= txtDescription.ClientID %>', type: 'textbox', name: 'Observation Description' },
+                                        { id: '<%= txtGoodCitizens.ClientID %>', type: 'textbox', name: 'Good Citizens' },
+                                        { id: '<%= txtViolations.ClientID %>', type: 'textbox', name: 'No. of Violations' },
+                                        { id: '<%= txtSeverity.ClientID %>', type: 'textbox', name: 'Severity' },
+            { id: '<%= txtViolationXSeverity.ClientID %>', type: 'textbox', name: 'Violation X Severity' },
+            { id: '<%= txtFourAndFive.ClientID %>', type: 'textbox', name: '4 & 5' },
+                                        { id: '<%= DropDownList6.ClientID %>', type: 'dropdown', name: 'Unsafe Act Conditions' }--%>
                                     ];
 
                                     // Iterate over the fields to check and validate
