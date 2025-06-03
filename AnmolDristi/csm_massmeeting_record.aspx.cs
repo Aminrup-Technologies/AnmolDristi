@@ -786,7 +786,7 @@ namespace AnmolDristi
             public string EmployeeName { get; set; }
             public string Designation { get; set; }
             public string GatePassNo { get; set; }
-            //public string ImagePath { get; set; }  //ye sir ne kyu comment kia...?unke paas uploads wla folder hoga nhi toh filepath nhi milra hoga isiliye
+            public string ImagePath { get; set; }  
         }
 
 
@@ -820,13 +820,13 @@ namespace AnmolDristi
                     return;
                 }
 
-                string folderPath = Server.MapPath("~/Uploads/");
+                string folderPath = Server.MapPath("~/Uploads1/");
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
                 }
                 string fileName = Path.GetFileName(imgupload.FileName);
-                imagePath = "~/Uploads/" + fileName;
+                imagePath = "~/Uploads1/" + fileName;
                 imgupload.SaveAs(folderPath + fileName);
             }
 

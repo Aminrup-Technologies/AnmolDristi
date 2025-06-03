@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="housekeeping_audit.aspx.cs" Inherits="AnmolDristi.housekeeping_audit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
+  <%--  <style>
         .table-responsive {
     width: 100%;
     max-height: 400px; /* Adjust based on need */
@@ -16,6 +16,8 @@
 }
 
     </style>
+--%>
+
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -23,7 +25,7 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>Automation And Technical Services
+                <h3>Housekeeping Audit(5S) | DOC/ATS/OSH/CM-04 
                 </h3>
             </div>
         </div>
@@ -32,7 +34,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Housekeeping Audit(5S)</h2>
+                        <h2 class="text-info h4">Basic Details</h2>
                          <div class="clearfix"></div>
                       </div>
 
@@ -41,7 +43,7 @@
                          <asp:Panel ID="pnlAuditForm" runat="server">
                                 <div class="row">  
                                     
-      <div class="col-md-6">
+      <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
          <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -50,7 +52,7 @@
          </div>
      </div>
  </div>
-     <div class="col-md-6">
+     <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtLocation" runat="server" AssociatedControlID="txtLocation" Text="Location" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
          <asp:RequiredFieldValidator ID="RFV_txtLocation" runat="server" ErrorMessage="*" ControlToValidate="txtLocation" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -59,20 +61,36 @@
          </div>
      </div>
  </div>
+        <div class="col-md-4">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
+
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtjobID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+        </div>
+    </div>
+</div>
                                   <%--  <asp:HiddenField ID="hdnAuditID" runat="server" />
    --%>
                                     </div>
 
  <div class="x_title">
-     <h2>Observation Table</h2>
+     <h2 class="text-info h4">Observation Table</h2>
      <div class="clearfix"></div>
  </div>
                              
 
 <div class="field" id="Observation">
- <div class="row d-flex justify-content-between">
-                                 
-      <div class="col-md-2">
+<div class="row bg-light border rounded p-3 mb-3">
+    <div class="col-12 border-bottom pb-2 mb-3">
+        <h6 class="text-dark fw-bold mb-0">
+            <i class="bi bi-person-circle me-2"></i>Step 1: Observer Details
+        </h6>
+    </div>
+                          
+      <div class="col-md-3">
     <div class="mb-3">
         <asp:Label ID="lbl_txtObserverID" runat="server" AssociatedControlID="txtObserverID" Text="Observer ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtObserverID" runat="server" ErrorMessage="*" ControlToValidate="txtObserverID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -81,11 +99,48 @@
             <asp:TextBox ID="txtObserverID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
         </div>
     </div>
-</div>                          
+</div>    
+                                     <div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtOpenBy" runat="server" AssociatedControlID="txtOpenBy" Text="Open By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtOpenBy" runat="server" ErrorMessage="*" ControlToValidate="txtOpenBy" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtOpenBy" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+        </div>
+    </div>
+</div>
+                                  <div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtOpenByWorkman" runat="server" AssociatedControlID="txtOpenByWorkman" Text="Open By(Workman SL)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtOpenByWorkman" runat="server" ErrorMessage="*" ControlToValidate="txtOpenByWorkman" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtOpenByWorkman" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+        </div>
+    </div>
+</div>
+    <div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtCloseBy" runat="server" AssociatedControlID="txtCloseBy" Text="Close By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtCloseBy" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+        </div>
+    </div>
+</div>
 
-    <div class="col-md-2">
+
+</div>
+
+
+<div class="row bg-light border rounded p-3 mb-3">
+    <div class="col-12 border-bottom pb-2 mb-3">
+        <h6 class="text-dark fw-bold mb-0">
+            <i class="bi bi-person-circle me-2"></i>Step 2: Action Details
+        </h6>
+    </div>
+            
+    <div class="col-md-3">
          <div class="mb-3">
-        <asp:Label ID="lbl_fileBeforePhoto" runat="server" AssociatedControlID="fileBeforePhoto" Text="Photo" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="lbl_fileBeforePhoto" runat="server" AssociatedControlID="fileBeforePhoto" Text="Photo(Before)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_fileBeforePhoto" runat="server" ErrorMessage="*" ControlToValidate="fileBeforePhoto" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
              <asp:FileUpload ID="fileBeforePhoto" runat="server" CssClass="form-control form-control-sm rounded" />
@@ -93,26 +148,26 @@
         </div>
     </div>
 </div>
-              <div class="col-md-2">
+              <div class="col-md-3">
          <div class="mb-3">
         <asp:Label ID="lbl_txtObservation" runat="server" AssociatedControlID="txtObservation" Text="Observation" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtObservation" runat="server" ErrorMessage="*" ControlToValidate="txtObservation" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
-            <asp:TextBox ID="txtObservation" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
+            <asp:TextBox ID="txtObservation" runat="server" CssClass="form-control form-control-sm rounded " TextMode="MultiLine"></asp:TextBox>
         </div>
     </div>
 </div>
-                  <div class="col-md-2">
+                  <div class="col-md-3">
          <div class="mb-3">
-        <asp:Label ID="lbl_txtCorrectiveAction" runat="server" AssociatedControlID="txtCorrectiveAction" Text="Corrective Action" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="lbl_txtCorrectiveAction" runat="server" AssociatedControlID="txtCorrectiveAction" Text="Action Taken" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtCorrectiveAction" runat="server" ErrorMessage="*" ControlToValidate="txtCorrectiveAction" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
-            <asp:TextBox ID="txtCorrectiveAction" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
+            <asp:TextBox ID="txtCorrectiveAction" runat="server" CssClass="form-control form-control-sm rounded " TextMode="MultiLine"></asp:TextBox>
         </div>
     </div>
 </div>
     
-    <div class="col-md-2">
+    <div class="col-md-3">
          <div class="mb-3">
         <asp:Label ID="lbl_fileAfterPhoto" runat="server" AssociatedControlID="fileAfterPhoto" Text="Photo (After)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_fileAfterPhoto" runat="server" ErrorMessage="*" ControlToValidate="fileAfterPhoto" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -122,29 +177,18 @@
         </div>
     </div>
 </div>
-         <div class="col-md-2 ">
-         <div class="mb-3">
-        <asp:Label ID="lbl_ddlStatus" runat="server" AssociatedControlID="ddlStatus" Text="Status" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_ddlStatus" runat="server" ErrorMessage="*" ControlToValidate="ddlStatus" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-             <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm rounded">
-                 <asp:ListItem Text="Select" Value="" />
-                 <asp:ListItem Text="Pending" Value="Pending" />
-                 <asp:ListItem Text="Completed" Value="Completed" />
-                 <asp:ListItem Text="In Progress" Value="In Progress" />
-                 <asp:ListItem Text="Approved" Value="Approved" />
-                 <asp:ListItem Text="Rejected" Value="Rejected" />
-                 <asp:ListItem Text="On Hold" Value="On Hold" />
-             </asp:DropDownList>
-        </div>
-    </div>
-</div>
-     
+        
                          
      </div>
 
 
-                             <div class="row" >
+<div class="row bg-light border rounded p-3 mb-3">
+    <div class="col-12 border-bottom pb-2 mb-3">
+        <h6 class="text-dark fw-bold mb-0">
+            <i class="bi bi-person-circle me-2"></i>Step 3: Status
+        </h6>
+    </div>
+            
                                       <div class="col-md-2">
     <div class="mb-3">
         <asp:Label ID="lbl_txtOpeningDate" runat="server" AssociatedControlID="txtOpeningDate" Text="Opening Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -154,25 +198,7 @@
         </div>
     </div>
 </div>
-                                     <div class="col-md-2">
-    <div class="mb-3">
-        <asp:Label ID="lbl_txtOpenBy" runat="server" AssociatedControlID="txtOpenBy" Text="Open By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtOpenBy" runat="server" ErrorMessage="*" ControlToValidate="txtOpenBy" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtOpenBy" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
-        </div>
-    </div>
-</div>
-                                  <div class="col-md-2">
-    <div class="mb-3">
-        <asp:Label ID="lbl_txtOpenByWorkman" runat="server" AssociatedControlID="txtOpenByWorkman" Text="Open By(Workman SL)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtOpenByWorkman" runat="server" ErrorMessage="*" ControlToValidate="txtOpenByWorkman" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtOpenByWorkman" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
-        </div>
-    </div>
-</div>
-
+                                 
                                       <div class="col-md-2">
     <div class="mb-3">
         <asp:Label ID="lbl_txtClosingDate" runat="server" AssociatedControlID="txtClosingDate" Text="Closing Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -185,14 +211,7 @@
     </div>
       </div>
                                  
-    <div class="col-md-2">
-    <div class="mb-3">
-        <asp:Label ID="lbl_txtCloseBy" runat="server" AssociatedControlID="txtCloseBy" Text="Close By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtCloseBy" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
-        </div>
-    </div>
-</div>
+    
                                   <div class="col-md-2">
     <div class="mb-3">
         <asp:Label ID="lbl_txtTargetDate" runat="server" AssociatedControlID="txtTargetDate" Text="Target Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -212,7 +231,24 @@
     </div>
 </div>
 
-
+         <div class="col">
+         <div class="mb-3">
+        <asp:Label ID="lbl_ddlStatus" runat="server" AssociatedControlID="ddlStatus" Text="Status" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_ddlStatus" runat="server" ErrorMessage="*" ControlToValidate="ddlStatus" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+             <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm rounded">
+                 <asp:ListItem Text="Select" Value="" />
+                 <asp:ListItem Text="Pending" Value="Pending" />
+                 <asp:ListItem Text="Completed" Value="Completed" />
+                 <asp:ListItem Text="In Progress" Value="In Progress" />
+                 <asp:ListItem Text="Approved" Value="Approved" />
+                 <asp:ListItem Text="Rejected" Value="Rejected" />
+                 <asp:ListItem Text="On Hold" Value="On Hold" />
+             </asp:DropDownList>
+        </div>
+    </div>
+</div>
+     
 
 
                              </div>
@@ -226,15 +262,15 @@
 
                             <hr>
     <div class="table-responsive">
-    <div class="col-md-12">
+    <div class="col-md-4">
         <div class="mb-3">
-    <asp:GridView ID="gvObservations" runat="server"  DataKeyNames="SNo" AutoGenerateColumns="False" CssClass="table table-bordered table-hover ">
+    <asp:GridView ID="gvObservations" runat="server"  DataKeyNames="SNo" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
     <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
     <Columns>
-        <asp:BoundField DataField="SNo" HeaderText="SNo" />
+        <asp:BoundField DataField="SNo" HeaderText="SNo" Visible="false" />
         <asp:BoundField DataField="ObserverID" HeaderText="Oberver ID" />
         <asp:BoundField DataField="OpeningDate" HeaderText="Opening Date" />
-        <asp:BoundField DataField="OpenBy" HeaderText="Open By" />
+        <asp:BoundField DataField="OpenBy" HeaderText="Open By" Visible="false" />
          <asp:BoundField DataField="OpenByWorkman" HeaderText="Open By(Workman SL)" />
         <asp:TemplateField HeaderText="Photo (Before)">
             <ItemTemplate>
@@ -243,18 +279,18 @@
         </asp:TemplateField>
        
         <asp:BoundField DataField="Observation" HeaderText="Observation" />
-        <asp:BoundField DataField="CorrectiveAction" HeaderText="Corrective Action" />
+        <asp:BoundField DataField="CorrectiveAction" HeaderText="Corrective Action"  />
       
         <asp:TemplateField HeaderText="Photo (After)">
             <ItemTemplate>
                 <asp:Image ID="imgAfterPhoto" runat="server" ImageUrl='<%# Eval("PhotoAfter") %>' Width="50px" Height="50px" />
             </ItemTemplate>
         </asp:TemplateField>
-        <asp:BoundField DataField="ClosingDate" HeaderText="Closing Date" />
-        <asp:BoundField DataField="CloseBy" HeaderText="Close By" />
-        <asp:BoundField DataField="TargetDate" HeaderText="Target Date" />
-         <asp:BoundField DataField="AssignedTo" HeaderText="Assigned To" />
-        <asp:BoundField DataField="Status" HeaderText="Status" />
+        <asp:BoundField DataField="ClosingDate" HeaderText="Closing Date" Visible="false" />
+        <asp:BoundField DataField="CloseBy" HeaderText="Close By" Visible="false" />
+        <asp:BoundField DataField="TargetDate" HeaderText="Target Date" Visible="false" />
+         <asp:BoundField DataField="AssignedTo" HeaderText="Assigned To" Visible="false" />
+        <asp:BoundField DataField="Status" HeaderText="Status" Visible="false" />
       <asp:TemplateField HeaderText="Action">
         <ItemTemplate>
             <asp:Button ID="BtnDelObservation" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelObservation_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
@@ -394,6 +430,31 @@
         });
     });
    </script>
+
+  <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+          var tbObserverID = document.getElementById('<%= txtObserverID.ClientID %>');
+       var btnAdd = document.getElementById('<%= btnAddObservation.ClientID %>');
+
+          const validNames = ["6767", "8789", "6786", "678","678"];
+
+          btnAdd.addEventListener("click", function (e) {
+              var inputName = tbObserverID.value.trim();
+
+              var isValid = validNames.some(function (name) {
+                  return name.toLowerCase() === inputName.toLowerCase();
+              });
+
+              if (!isValid) {
+                  e.preventDefault(); // Prevent postback
+                  alert("Enter a valid OberverID In the Observer ID Field.");
+                  tbObserverID.focus();
+              }
+          });
+      });
+  </script>
+
+
 <%--<script type="text/javascript">
     function validateObservationFields() {
         var fields = [

@@ -1,28 +1,25 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="FullBodyHarnessInspection_View.aspx.cs" Inherits="AnmolDristi.FullBodyHarnessInspection_View" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <<div class="right_col" role="main">
+    <div class="right_col" role="main">
         <div class="container">
-            <div class="page-title">
+           <%-- <div class="page-title">
                 <div class="title_left">
-                    <h3>Automation And Technical services
+                    <h3>Full Body Harness Inspection 
                     </h3>
                 </div>
-            </div>
-
+            </div>--%>
             <div class="row">
                 <div class="col-md-12 col-sm-12 ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Search Filter For Full Body Harness Inspection 
+                            <h2>Full Body Harness Inspection Search Filter
                             </h2>
                             <div class="clearfix"></div>
                         </div>
 
                         <div class="x_content">
-
 
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -56,6 +53,29 @@
                                 </div>
                             </div>
 
+ <div class="table-responsive">
+         <div class="col-md-4">
+             <div class="mb-3">
+                 <asp:GridView ID="gvInspection" runat="server" AutoGenerateColumns="False" DataKeyNames="InspectionID" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
+                     <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
+                     <Columns>
+                         <asp:BoundField DataField="InspectionID" HeaderText="Inspection ID" Visible="false" />
+                         <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" />
+                         <asp:BoundField DataField="Site" HeaderText="Site" />
+                         <asp:BoundField DataField="InspectedBy" HeaderText="Inspected By" />
+                         <asp:BoundField DataField="DateOfInspection" HeaderText="Date Of Inspection" />
+                         <asp:TemplateField HeaderText="Actions">
+                             <ItemTemplate>
+                                 <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn btn-warning btn-sm" CommandArgument='<%# Eval("InspectionID") %>' OnClick="BtnEdit_Click" />
+                                 <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm" OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete this meeting?');" />
+                             </ItemTemplate>
+                         </asp:TemplateField>
+                     </Columns>
+                 </asp:GridView>
+             </div>
+         </div>
+     </div>
+ 
                         </div>
                     </div>
 
@@ -63,32 +83,8 @@
             </div>
 
 
-            <div class="table-responsive">
-                <div class="x_content">
-                    <div class="col-md-12">
-                        <div class="mb-3">
-                            <asp:GridView ID="gvInspection" runat="server" AutoGenerateColumns="False" DataKeyNames="InspectionID" CssClass="table table-striped table-bordered table-hover ">
-                                <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
-                                <Columns>
-                                    <asp:BoundField DataField="InspectionID" HeaderText="Inspection ID" />
-                                    <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" />
-                                    <asp:BoundField DataField="Site" HeaderText="Site" />
-                                    <asp:BoundField DataField="InspectedBy" HeaderText="Inspected By" />
-                                    <asp:BoundField DataField="DateOfInspection" HeaderText="Date Of Inspection" />
-                                    <asp:TemplateField HeaderText="Actions">
-                                        <ItemTemplate>
-                                            <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn btn-warning btn-sm" CommandArgument='<%# Eval("InspectionID") %>' OnClick="BtnEdit_Click" />
-                                            <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm" OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete this meeting?');" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                            </asp:GridView>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
         </div>
-
     </div>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {

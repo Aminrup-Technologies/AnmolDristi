@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="committee_meeting_report.aspx.cs" Inherits="AnmolDristi.committee_meeting_report" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
+  <%--  <style type="text/css">
         .btn-fixed-size {
             width: 100px;
             text-align: center;
@@ -39,14 +39,14 @@
                 max-height: 300px; /* Adjust based on your UI */
             }
         }
-    </style>
+    </style>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Automation And Technical services
+                    <h3>Safety Committee Meeting | DOC/ATS/OSH/CM-04 |  Eff. Date:19/12/2018
                     </h3>
                 </div>
             </div>
@@ -97,19 +97,19 @@
                             </div>
                             <div class="table-responsive">
                                 <div class="x_content">
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="mb-3">
                                             <asp:GridView ID="gvMeeting" runat="server" AutoGenerateColumns="False" DataKeyNames="MeetingID" 
-                                                CssClass="table table-striped table-bordered table-hover " ShowHeaderWhenEmpty="true" EmptyDataText="No records for selected filter">
+                                                CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None"  ShowHeaderWhenEmpty="true" EmptyDataText="No records for selected filter">
 
                                                 <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                                                 <Columns>
-                                                    <asp:BoundField DataField="MeetingID" HeaderText="Meeting ID" />
+                                                    <asp:BoundField DataField="MeetingID" HeaderText="Meeting ID" Visible="false" />
                                                     <asp:BoundField DataField="MeetingDate" HeaderText="Date" />
                                                     <asp:BoundField DataField="MeetingTime" HeaderText="Time" />
                                                     <asp:BoundField DataField="MeetingNo" HeaderText="Meeting No" />
                                                     <asp:BoundField DataField="Venue" HeaderText="Venue" />
-                                                    <asp:BoundField DataField="Title" HeaderText="Title" />
+                                                    <asp:BoundField DataField="Title" HeaderText="Title" Visible="false" />
                                                     <asp:BoundField DataField="ChairedBy" HeaderText="Chaired By" />
                                                     <asp:TemplateField HeaderText="Actions">
                                                         <ItemTemplate>

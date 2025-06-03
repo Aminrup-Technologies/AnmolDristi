@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="housekeeping_audit_report.aspx.cs" Inherits="AnmolDristi.housekeeping_audit_report" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
+   <%-- <style type="text/css">
         .btn-fixed-size {
             width: 100px;
             text-align: center;
@@ -37,7 +37,7 @@
                 max-height: 300px;
             }
         }
-    </style>
+    </style>--%>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -45,7 +45,7 @@
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Automation And Technical services
+                    <h3>Housekeeping Audit(5S) | DOC/ATS/OSH/CM-04 
                     </h3>
                 </div>
             </div>
@@ -94,16 +94,17 @@
                                     <asp:Button ID="btn_home" runat="server" Text="Back" CssClass="btn btn-sm btn-primary" CausesValidation="false" PostBackUrl="~/Home.aspx" />
                                 </div>
                             </div>
+             
 
                             <div class="table-responsive">
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <div class="mb-3">
-                                        <asp:GridView ID="gvAudit" runat="server" AutoGenerateColumns="False" DataKeyNames="AuditID" CssClass="table table-striped table-bordered table-hover ">
+                                        <asp:GridView ID="gvAudit" runat="server" AutoGenerateColumns="False" DataKeyNames="AuditID" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
 
                                             <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                                             <Columns>
-                                                <asp:BoundField DataField="AuditID" HeaderText="Audit ID" />
-                                                <asp:BoundField DataField="Title" HeaderText="Title" />
+                                                <asp:BoundField DataField="AuditID" HeaderText="Audit ID" Visible="false" />
+                                                <asp:BoundField DataField="Title" HeaderText="Title"  Visible="false" />
                                                 <asp:BoundField DataField="AuditDate" HeaderText="Date" />
                                                 <asp:BoundField DataField="Location" HeaderText="Location" />
                                                 <asp:BoundField DataField="ObserverID" HeaderText="Observer ID" />
@@ -113,6 +114,8 @@
                                                     <ItemTemplate>
                                                         <asp:Button ID="BtnEdit" runat="server" Text="Edit" CssClass="btn btn-warning btn-sm" CommandArgument='<%# Eval("AuditID") %>' OnClick="BtnEdit_Click" />
                                                         <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm" OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete this meeting?');" />
+                                                         <asp:Button ID="BtnView" runat="server" Text="View" CssClass="btn btn-primary btn-sm" CommandArgument='<%# Eval("AuditID") %>' OnClick="BtnView_Click" />
+
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

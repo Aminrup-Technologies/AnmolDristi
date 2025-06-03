@@ -75,7 +75,7 @@ namespace AnmolDristi
                 dt.Columns.Add("AttendanceStatus");
                 dt.Columns.Add("AttendeeType");
                 dt.Columns.Add("Designation");
-                dt.Columns.Add("ImagePath"); // Ensure ImagePath exists
+               // dt.Columns.Add("ImagePath"); // Ensure ImagePath exists
 
                 ViewState["Attendance"] = dt;
             }
@@ -95,26 +95,26 @@ namespace AnmolDristi
             }
 
 
-            string imagePath = "";
-            if (imgupload.HasFile)
-            {
-                string fileExtension = Path.GetExtension(imgupload.FileName).ToLower();
-                if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
-                {
-                    lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
-                    lblMsg1.ForeColor = System.Drawing.Color.Red;
-                    return;
-                }
+            //string imagePath = "";
+            //if (imgupload.HasFile)
+            //{
+            //    string fileExtension = Path.GetExtension(imgupload.FileName).ToLower();
+            //    if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
+            //    {
+            //        lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
+            //        lblMsg1.ForeColor = System.Drawing.Color.Red;
+            //        return;
+            //    }
 
-                string folderPath = Server.MapPath("~/Uploads1/");
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-                string fileName = Path.GetFileName(imgupload.FileName);
-                imagePath = "~/Uploads1/" + fileName;
-                imgupload.SaveAs(folderPath + fileName);
-            }
+            //    string folderPath = Server.MapPath("~/Uploads1/");
+            //    if (!Directory.Exists(folderPath))
+            //    {
+            //        Directory.CreateDirectory(folderPath);
+            //    }
+            //    string fileName = Path.GetFileName(imgupload.FileName);
+            //    imagePath = "~/Uploads1/" + fileName;
+            //    imgupload.SaveAs(folderPath + fileName);
+            //}
             // Generating SNo dynamically
             int serialNo = dt.Rows.Count + 1;
 
@@ -126,7 +126,7 @@ namespace AnmolDristi
             dr["AttendeeCode"] = txtAttendeeCode.Text.Trim();
             dr["AttendanceStatus"] = ddlAttendanceStatus.SelectedValue;
             dr["Designation"] = txtdes.Text.Trim();
-            dr["ImagePath"] = imagePath; // Store image path
+            //dr["ImagePath"] = imagePath; // Store image path
             dt.Rows.Add(dr);
 
             ViewState["Attendance"] = dt;
@@ -298,10 +298,90 @@ namespace AnmolDristi
 
                 try
                 {
+                    string imagePath = null;
+
+                    if (imgupload.HasFile)
+                    {
+                        // Validate file extension (optional but recommended)
+                        string extension = Path.GetExtension(imgupload.FileName).ToLower();
+                        if (extension != ".jpg" && extension != ".jpeg" && extension != ".png")
+                        {
+                            lblBeforeError.Text = "Only JPG, JPEG, and PNG files are allowed.";
+                            lblBeforeError.Style["display"] = "block";
+                            return;
+                        }
+
+                        try
+                        {
+                            string fileName = Path.GetFileName(imgupload.FileName);
+                            string uploadFolder = Server.MapPath("~/Uploads1/");
+                            Directory.CreateDirectory(uploadFolder); // Create folder if not exists
+
+                            string filePath = Path.Combine(uploadFolder, fileName);
+                            imgupload.SaveAs(filePath);
+
+                            // Save relative path to DB
+                            imagePath = "~/Uploads1/" + fileName;
+
+                            // Optional session store
+                            Session["UploadedFilePath"] = filePath;
+                        }
+                        catch (Exception ex)
+                        {
+                            lblBeforeError.Text = "File upload failed: " + ex.Message;
+                            lblBeforeError.Style["display"] = "block";
+                            return;
+                        }
+                    }
+
+
+                    //string imagePath = null;
+
+                    //// === File Upload Handling ===
+                    //if (imgupload.HasFile)
+                    //{
+                    //    string extension = Path.GetExtension(imgupload.FileName).ToLower();
+                    //    if (extension != ".jpg" && extension != ".jpeg" && extension != ".png")
+                    //    {
+                    //        lblBeforeError.Text = "Only JPG, JPEG, and PNG files are allowed.";
+                    //        lblBeforeError.Style["display"] = "block";
+                    //        return;
+                    //    }
+
+                    //    try
+                    //    {
+                    //        string fileName = Path.GetFileNameWithoutExtension(imgupload.FileName);
+                    //        string uniqueName = $"{fileName}_{Guid.NewGuid():N}{extension}";
+                    //        string uploadFolder = Server.MapPath("~/Uploads1/");
+                    //        Directory.CreateDirectory(uploadFolder);
+
+                    //        string filePath = Path.Combine(uploadFolder, uniqueName);
+                    //        imgupload.SaveAs(filePath);
+
+                    //        // Save relative path for DB
+                    //        imagePath = "~/Uploads1/" + uniqueName;
+
+                    //        // Store in HiddenField to restore on postbacks
+                    //        hfImagePath.Value = imagePath;
+                    //    }
+                    //    catch (Exception ex)
+                    //    {
+                    //        lblBeforeError.Text = "File upload failed: " + ex.Message;
+                    //        lblBeforeError.Style["display"] = "block";
+                    //        return;
+                    //    }
+                    //}
+                    //else if (!string.IsNullOrEmpty(hfImagePath.Value))
+                    //{
+                    //    // User didn’t reupload but we already have saved path
+                    //    imagePath = hfImagePath.Value;
+                    //}
+
+
                     // 1. Insert into Committee_MeetingReview (Parent Table)
-                    string insertMeetingQuery = @"INSERT INTO Committee_MeetingReview (MeetingNo, Title, MeetingDate, MeetingTime, Venue, ChairedBy) 
+                    string insertMeetingQuery = @"INSERT INTO Committee_MeetingReview (MeetingNo,Title,JobID,MeetingDate, MeetingTime, Venue, ChairedBy,Image_upload) 
                                           OUTPUT INSERTED.MeetingID 
-                                          VALUES (@MeetingNo, @Title, @MeetingDate, @MeetingTime, @Venue, @ChairedBy)";
+                                          VALUES (@MeetingNo, @Title,@JobID, @MeetingDate, @MeetingTime, @Venue, @ChairedBy,@Image_upload)";
 
                     int meetingID;
                     using (SqlCommand cmd = new SqlCommand(insertMeetingQuery, conn, transaction))
@@ -312,6 +392,14 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@MeetingTime", TimeSpan.Parse(txtTime.Text.Trim()));
                         cmd.Parameters.AddWithValue("@Venue", txtVenue.Text.Trim());
                         cmd.Parameters.AddWithValue("@ChairedBy", txtChairedBy.Text.Trim());
+                        cmd.Parameters.AddWithValue("@JobID", txtjobID.Text.Trim());
+                        //cmd.Parameters.AddWithValue("@Image_upload", (object)imagePath ?? DBNull.Value);
+
+                        if (!string.IsNullOrEmpty(imagePath))
+                            cmd.Parameters.AddWithValue("@Image_upload", imagePath);
+                        else
+                            cmd.Parameters.AddWithValue("@Image_upload", DBNull.Value);
+
 
                         meetingID = (int)cmd.ExecuteScalar(); // Get newly inserted MeetingID
                     }
@@ -322,8 +410,8 @@ namespace AnmolDristi
                         DataTable dtAttendees = (DataTable)ViewState["Attendance"];
                         foreach (DataRow row in dtAttendees.Rows)
                         {
-                            string insertAttendeeQuery = @"INSERT INTO Committee_MeetingAttendance (MeetingID, Name, Designation, AttendeeCode, Attendee_Type, Image_upload, AttendanceStatus)
-                                                   VALUES (@MeetingID, @Name, @Designation, @AttendeeCode, @Attendee_Type, @Image_upload, @AttendanceStatus)";
+                            string insertAttendeeQuery = @"INSERT INTO Committee_MeetingAttendance (MeetingID, Name, Designation, AttendeeCode, Attendee_Type, AttendanceStatus)
+                                                   VALUES (@MeetingID, @Name, @Designation, @AttendeeCode, @Attendee_Type, @AttendanceStatus)";
 
                             using (SqlCommand cmd = new SqlCommand(insertAttendeeQuery, conn, transaction))
                             {
@@ -332,8 +420,9 @@ namespace AnmolDristi
                                 cmd.Parameters.AddWithValue("@Designation", row["Designation"].ToString());
                                 cmd.Parameters.AddWithValue("@AttendeeCode", row["AttendeeCode"].ToString());
                                 cmd.Parameters.AddWithValue("@Attendee_Type", row["AttendeeType"].ToString());
-                                cmd.Parameters.AddWithValue("@Image_upload", row["ImagePath"].ToString());
+                               // cmd.Parameters.AddWithValue("@Image_upload", row["ImagePath"].ToString());
                                 cmd.Parameters.AddWithValue("@AttendanceStatus", row["AttendanceStatus"].ToString());
+
 
                                 cmd.ExecuteNonQuery();
                             }

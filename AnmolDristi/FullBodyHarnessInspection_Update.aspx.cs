@@ -34,7 +34,7 @@ namespace AnmolDristi
                 conn.Open();
 
                 // 1. Load header details
-                string headerQuery = @"SELECT EmployeeName, Site, InspectedBy, DateOfInspection
+                string headerQuery = @"SELECT EmployeeName,Remarks,JobID, Site, InspectedBy, DateOfInspection
                                FROM InspectionHeader
                                WHERE InspectionID = @InspectionID";
 
@@ -47,6 +47,8 @@ namespace AnmolDristi
                     txtDocNo.Text = reader["EmployeeName"].ToString();
                     txtSite.Text = reader["Site"].ToString();
                     txtInsBy.Text = reader["InspectedBy"].ToString();
+                    txtjobID.Text = reader["JobID"].ToString();
+                    txtnote.Text = reader["Remarks"].ToString();
 
                     DateTime inspectionDate;
                     if (DateTime.TryParse(reader["DateOfInspection"].ToString(), out inspectionDate))
@@ -147,6 +149,8 @@ namespace AnmolDristi
                                      SET EmployeeName = @EmployeeName,
                                          Site = @Site,
                                          InspectedBy = @InspectedBy,
+                                         Remarks=@Remarks,
+                                          JobID=@JobID,
                                          DateOfInspection = @DateOfInspection
                                      WHERE InspectionID = @InspectionID";
 
@@ -155,6 +159,8 @@ namespace AnmolDristi
                     cmdHeader.Parameters.AddWithValue("@EmployeeName", txtDocNo.Text.Trim());
                     cmdHeader.Parameters.AddWithValue("@Site", txtSite.Text.Trim());
                     cmdHeader.Parameters.AddWithValue("@InspectedBy", txtInsBy.Text.Trim());
+                    cmdHeader.Parameters.AddWithValue("@Remarks", txtnote.Text.Trim());
+                    cmdHeader.Parameters.AddWithValue("@JobID", txtjobID.Text.Trim());
                     cmdHeader.Parameters.AddWithValue("@DateOfInspection", txtdate.Text.Trim());
                     cmdHeader.Parameters.AddWithValue("@InspectionID", inspectionID);
                     cmdHeader.ExecuteNonQuery();

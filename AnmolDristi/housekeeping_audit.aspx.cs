@@ -15,13 +15,12 @@ namespace AnmolDristi
 {
     public partial class housekeeping_audit : System.Web.UI.Page
     {
-        //private int slNo = 1;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             
         }
         
-
 
         protected void btnAddObservation_Click(object sender, EventArgs e)
         {
@@ -223,6 +222,7 @@ namespace AnmolDristi
                         cmd.Parameters.Add(outputAuditID);
                         cmd.Parameters.AddWithValue("@Location", txtLocation.Text.Trim());
                         cmd.Parameters.AddWithValue("@AuditDate", Convert.ToDateTime(txtdate.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@JobID", txtjobID.Text.Trim());
 
                         cmd.ExecuteNonQuery();
                         auditID = Convert.ToInt32(outputAuditID.Value);

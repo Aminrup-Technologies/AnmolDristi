@@ -1,0 +1,220 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="housekeeping_Rpt.aspx.cs" Inherits="AnmolDristi.housekeeping_Rpt" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Housekeeping Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+       <style>
+        @media print {
+            @page {
+                size: A4;
+                margin: 5px;
+            }
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        body {
+            margin: 35px 55px;
+            box-sizing: border-box;
+            font-family: "Roboto", sans-serif;
+            font-size: 14px;
+            color: #000;
+        }
+
+        table {
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            border-collapse: collapse;
+            font-family: "Roboto", sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            color: #000;
+            border: none;
+        }
+
+
+         .center td,
+         .center th,
+         .center_1 td,
+         .center_1 th {
+           padding: 10px;
+           vertical-align: top;
+            text-align: center;
+           border: 2px solid #2c3e50;
+           line-height: 1.4;
+        } 
+
+    /* Styling headers with a cool tone */
+    .center_1 th {
+        background-color: #34495e;
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Alternating row colors */
+    .center_1 tr:nth-child(even) {
+        background-color: #ecf0f1;
+    }
+
+    .center_1 tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .center tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    .center th {
+        background-color: #2c3e50;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    /* Bold outline for entire table */
+    .center,
+    .center_1 {
+        border: 2px solid #2c3e50;
+    }
+
+    .TABLE_1 {
+        margin-bottom: 30px;
+    }
+
+    .TABLE_1 td {
+        padding: 6px 8px;
+        font-size: 13px;
+        vertical-align: top;
+    }
+    .TABLE_1 tr:first-child td {
+        width: 33.3%;
+    }
+
+    .center_1 th:nth-child(1) { width: 25%; }
+    .center_1 th:nth-child(2) { width: 20%; }
+    .center_1 th:nth-child(3) { width: 20%; }
+    .center_1 th:nth-child(4) { width: 20%; }
+    .center_1 th:nth-child(5) { width: 15%; }
+    
+
+       
+    </style>
+</head>
+<body>
+      <asp:Repeater ID="RepeaterMeeting" runat="server" OnItemDataBound="RepeaterMeeting_ItemDataBound">
+       <HeaderTemplate>
+           <!-- Your header content -->
+           <table class="TABLE_1">
+               <tr>
+                  <%-- <td style="text-align: left;">
+                       <b>Document Number</b></br>
+                       DOC/ATS/OSH/CM-04
+                   </td>--%>
+                  <%-- <td style="text-align: center; height: auto;">
+                       <asp:Image ID="Image1" runat="server"  ImageUrl="~/WebData/img/logo.png" CssClass="Logo" AlternateText="logo" />
+                   </td>--%>
+                   <td style="text-align: left;">
+                       <b>EFF.DATE:</b><br />
+                       23/02/2023
+                   </td>
+               </tr>
+               <tr>
+                   <td colspan="3" style="height: 30px"></td>
+               </tr>
+
+               <!-- Title Section -->
+               <tr>
+                   <td colspan="3" style="text-align: center; font-size: 18px; font-weight: bold; text-decoration: underline;">AUTOMATION & TECHNICAL SERVICE
+                   </td>
+               </tr>
+               <tr>
+                   <td colspan="3" style="text-align: center; padding: 10px 0 30px; font-size: 16px; font-weight: bold; text-decoration: underline;">Housekeeping Audit(5S)
+                   </td>
+               </tr>
+       </HeaderTemplate>
+
+       <ItemTemplate>
+           <tr>
+               <td colspan="3" style="height: 20px;"><h2 style="text-decoration: underline;">Audit Informations</h2></td>
+           </tr>
+           <!-- Meeting Info -->
+           <tr class="center">
+               <td>Audit ID</td>
+               <td colspan="3"><%# Eval("AuditID") %></td>
+           </tr>
+           <tr class="center">
+               <td>Audit Date</td>
+               <td colspan="3"><%# Eval("AuditDate") %></td>
+           </tr>
+           <tr class="center">
+               <td>Job ID</td>
+               <td colspan="2"><%# Eval("JobID") %></td>
+           </tr>
+           <tr class="center">
+               <td>Location</td>
+               <td colspan="2"><%# Eval("Location") %></td>
+           </tr>
+          
+
+
+           <!-- Attendee Section -->
+           <tr>
+               <td colspan="7">
+                   <h2 style="text-decoration: underline;">Audit Observations</h2>
+                   <table class="center_1">
+                       <thead>
+                           <tr class="center_1">
+                               <th>Observer ID</th>
+                               <th>Open By</th>
+                               <th>Close By</th>
+                               <th>OpenBy Workman</th>
+                               <th>Photo Before</th>
+                               <th>Observation Text</th>
+                               <th>Action Taken</th>
+                               <th>PhotoAfter</th>
+                               <th>Status</th>
+                               <th>Opening Date</th>
+                               <th>Closing Date</th>
+                               <th>Target Date</th>
+                               
+                           </tr>
+                       </thead>
+                       <tbody>
+                           <asp:Repeater ID="RepeaterObservations" runat="server">
+                               <ItemTemplate>
+                                   <tr class="center_1">
+                                       <td><%# Eval("ObserverID") %></td>
+                                       <td><%# Eval("OpenBy") %></td>
+                                       <td><%# Eval("CloseBy") %></td>
+                                       <td><%# Eval("OpenByWorkman") %></td>
+                                      <%-- <td><%# Eval("PhotoBefore") %></td>--%>
+                                       <td><asp:Image ID="imgUpload" runat="server" ImageUrl='<%# Eval("PhotoBefore") %>' Width="100" Height="100" AlternateText="Image not found" /></td>
+                                       <td><%# Eval("ObservationText") %></td>
+                                       <td><%# Eval("CorrectiveAction") %></td>
+                                        <td><asp:Image ID="imgUpload1" runat="server" ImageUrl='<%# Eval("PhotoAfter") %>' Width="100" Height="100" AlternateText="Image not found" /></td>              
+                                      <%-- <td><%# Eval("PhotoAfter") %></td>--%>
+                                       <td><%# Eval("Status") %></td>
+                                       <td><%# Eval("OpeningDate") %></td>
+                                       <td><%# Eval("ClosingDate") %></td>
+                                       <td><%# Eval("TargetDate") %></td>
+                                   </tr>
+                               </ItemTemplate>
+                           </asp:Repeater>
+                       </tbody>
+                   </table>
+               </td>
+           </tr>
+
+          
+       </ItemTemplate>
+   </asp:Repeater>
+
+</body>
+</html>

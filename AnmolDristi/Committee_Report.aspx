@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Committee_Meeting_Report</title>
+    <title>Committee Meeting Report</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
@@ -23,6 +23,9 @@
         body {
             margin: 35px 55px;
             box-sizing: border-box;
+            font-family: "Roboto", sans-serif;
+            font-size: 14px;
+            color: #000;
         }
 
         table {
@@ -36,67 +39,66 @@
             color: #000;
             border: none;
         }
-
-        #Image1 {
-            width: 60px;
-            height: auto;
-        }
-
         .center td,
-        .center th {
-            padding: 5px 10px;
-            vertical-align: top;
-            text-align: center;
-            border: 1px solid #000;
-            line-height: 1;
-        }
+    .center th,
+    .center_1 td,
+    .center_1 th {
+        padding: 10px;
+        vertical-align: top;
+        text-align: center;
+        border: 2px solid #2c3e50;
+        line-height: 1.4;
+    } 
 
-        .center_1 td,
-        .center_1 th {
-            padding: 10px 10px;
-            vertical-align: top;
-            text-align: center;
-            border: 1px solid #000;
-            line-height: 1;
-        }
+        
+        
+         /* Styling headers with a cool tone */
+    .center_1 th {
+        background-color: #34495e;
+        color: white;
+        font-weight: bold;
+    }
 
-        .TABLE_1 tr:first-child td {
-            width: 33.3%;
-        }
+    /* Alternating row colors */
+    .center_1 tr:nth-child(even) {
+        background-color: #ecf0f1;
+    }
 
-        .center_1 th:nth-child(1) {
-            width: 10%;
-        }
-        /* Attendance ID */
-        .center_1 th:nth-child(2) {
-            width: 10%;
-        }
-        /* Meeting ID */
-        .center_1 th:nth-child(3) {
-            width: 15%;
-        }
-        /* Name */
-        table .center_1 th:nth-child(4) {
-            width: 15%;
-        }
-        /* Designation */
-        .center_1 th:nth-child(5) {
-            width: 10%;
-        }
-        /* Attendee Code */
-        .center_1 th:nth-child(6) {
-            width: 10%;
-        }
-        /* Attendee Type */
-        .center_1 th:nth-child(7) {
-            width: 15%;
-        }
-        /* Image */
-        .center_1 th:nth-child(8) {
-            width: 15%;
-        }
+    .center_1 tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .center tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    .center th {
+        background-color: #2c3e50;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    /* Bold outline for entire table */
+    .center,
+    .center_1 {
+        border: 2px solid #2c3e50;
+    }
+
+    /* Column widths */
+    .TABLE_1 tr:first-child td {
+        width: 33.3%;
+    }
+
+    .center_1 th:nth-child(1) { width: 25%; }
+    .center_1 th:nth-child(2) { width: 20%; }
+    .center_1 th:nth-child(3) { width: 20%; }
+    .center_1 th:nth-child(4) { width: 20%; }
+    .center_1 th:nth-child(5) { width: 15%; }
+    
+
         /* Attendance Status */
     </style>
+ 
 
 </head>
 <body>
@@ -106,14 +108,15 @@
             <table class="TABLE_1">
                 <tr>
                     <td style="text-align: left;">
-                        <b>DOC/ATS/OSH/CM-04</b><br />
-                        19/12/2018
+                        <b>Document Number</b></br>
+                        DOC/ATS/OSH/CM-04
                     </td>
-                    <td style="text-align: center; height: auto;">
-                        <asp:Image ID="Image1" runat="server" ImageUrl="~/WebData/img/logo.png" CssClass="Logo" AlternateText="logo" />
-                    </td>
+                   <%-- <td style="text-align: center; height: auto;">
+                        <asp:Image ID="Image1" runat="server"  ImageUrl="~/WebData/img/logo.png" CssClass="Logo" AlternateText="logo" />
+                    </td>--%>
                     <td style="text-align: right;">
-                        <b>EFF. DATE:</b>
+                        <b>EFF.DATE:</b><br />
+                        19/12/2018
                     </td>
                 </tr>
                 <tr>
@@ -131,23 +134,27 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <h3 style="padding-top: 2px; margin-bottom: 0px;">Safety Performance Review Meeting:-</h3>
+                        <h3 style="padding-top: 2px; margin-bottom: 0px; text-align: center; ">Safety Performance Review Meeting:-</h3>
                     </td>
                 </tr>
         </HeaderTemplate>
 
         <ItemTemplate>
             <tr>
-                <td colspan="3" style="height: 20px;"></td>
+                <td colspan="3" style="height: 20px;"><h2 style="text-decoration: underline;">Meeting Sheet </h2></td>
             </tr>
             <!-- Meeting Info -->
             <tr class="center">
+                <td>Meeting ID</td>
+                <td colspan="3"><%# Eval("MeetingID") %></td>
+            </tr>
+            <tr class="center">
                 <td>Date</td>
-                <td colspan="3"><%# Eval("Date") %></td>
+                <td colspan="3"><%# Eval("MeetingDate") %></td>
             </tr>
             <tr class="center">
                 <td>Time</td>
-                <td colspan="2"><%# Eval("Time") %></td>
+                <td colspan="2"><%# Eval("MeetingTime") %></td>
             </tr>
             <tr class="center">
                 <td>Venue</td>
@@ -161,6 +168,14 @@
                 <td>Chaired By</td>
                 <td colspan="2"><%# Eval("ChairedBy") %></td>
             </tr>
+             <tr class="center">
+                    <td>Meeting Image</td>
+                 <td colspan="2">
+  <asp:Image ID="imgUpload" runat="server"
+    ImageUrl='<%# Eval("Image_upload") %>'
+    Width="100" Height="100" AlternateText="Image not found" />
+                  
+            </tr>
 
 
             <!-- Attendee Section -->
@@ -170,13 +185,13 @@
                     <table class="center_1">
                         <thead>
                             <tr class="center_1">
-                                <th>Attendance ID</th>
-                                <th>Meeting ID</th>
+                               <%-- <th>Attendance ID</th>
+                                <th>Meeting ID</th>--%>
                                 <th>Name</th>
                                 <th>Designation</th>
-                                <th>Attendee Code</th>
+                              <%--  <th>Attendee Code</th>--%>
                                 <th>Attendee Type</th>
-                                <th>Image</th>
+                                <%--<th>Image</th>--%>
                                 <th>Attendance Status</th>
                             </tr>
                         </thead>
@@ -184,15 +199,10 @@
                             <asp:Repeater ID="RepeaterAttendees" runat="server">
                                 <ItemTemplate>
                                     <tr class="center_1">
-                                        <td><%# Eval("AttendanceID") %></td>
-                                        <td><%# Eval("MeetingID") %></td>
                                         <td><%# Eval("Name") %></td>
                                         <td><%# Eval("Designation") %></td>
-                                        <td><%# Eval("AttendeeCode") %></td>
+                                       <%-- <td><%# Eval("AttendeeCode") %></td>--%>
                                         <td><%# Eval("Attendee_Type") %></td>
-                                        <td>
-                                            <asp:Image ID="imgUpload" runat="server" ImageUrl='<%# "~/WebData/uploads/" + Eval("Image_upload") %>' Width="60" Height="60" AlternateText="N/A" />
-                                        </td>
                                         <td><%# Eval("AttendanceStatus") %></td>
                                     </tr>
                                 </ItemTemplate>
@@ -201,6 +211,43 @@
                     </table>
                 </td>
             </tr>
+
+             <!-- Issues Section -->
+ <tr>
+     <td colspan="8">
+         <h2 style="text-decoration: underline;">Issues Sheet </h2>
+         <table class="center_1">
+             <thead>
+                 <tr class="center_1">
+                    
+                     <th>Issue Description</th>
+                     <th>Responsible Person</th>
+                     <th>Target Date</th>
+                     <th>Status</th>
+                     <th>Agenda Title</th>
+                     <th>Review Date</th>
+                     <th>close By</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <asp:Repeater ID="RepeaterIssues" runat="server">
+                     <ItemTemplate>
+                         <tr class="center_1">
+                            
+                             <td><%# Eval("IssueDescription") %></td>
+                             <td><%# Eval("ResponsiblePerson") %></td>
+                             <td><%# Eval("TargetDate") %></td>
+                             <td><%# Eval("Status") %></td>
+                             <td><%# Eval("AgendaTitle") %></td>
+                             <td><%# Eval("ReviewDate") %></td>
+                             <td><%# Eval("ReviewBy") %></td>
+                         </tr>
+                     </ItemTemplate>
+                 </asp:Repeater>
+             </tbody>
+         </table>
+     </td>
+ </tr>
         </ItemTemplate>
     </asp:Repeater>
 

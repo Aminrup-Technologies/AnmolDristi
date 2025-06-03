@@ -30,7 +30,7 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>Automation And Technical Services
+                <h3>Housekeeping Audit(5S) | DOC/ATS/OSH/CM-04 
                 </h3>
             </div>
         </div>
@@ -39,7 +39,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Housekeeping Audit(5S)</h2>
+                        <h2>Basic Details</h2>
                          <div class="clearfix"></div>
                       </div>
 
@@ -48,7 +48,7 @@
                          <%--<asp:Panel ID="pnlAuditForm" runat="server">--%>
                                 <div class="row">  
                                     
-      <div class="col-md-6">
+      <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
          <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate"  Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -57,7 +57,7 @@
          </div>
      </div>
  </div>
-     <div class="col-md-6">
+     <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtLocation" runat="server" AssociatedControlID="txtLocation" Text="Location" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
          <asp:RequiredFieldValidator ID="RFV_txtLocation" runat="server" ErrorMessage="*" ControlToValidate="txtLocation"  Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -66,6 +66,15 @@
          </div>
      </div>
  </div>
+                                            <div class="col-md-4">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtjobID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+        </div>
+    </div>
+</div>
                                   
                                     </div>
 
@@ -78,10 +87,10 @@
     <div class="col-md-12">
         <div class="mb-3">
 
-<asp:GridView ID="gvObservations" runat="server" DataKeyNames="ObserverID" AutoGenerateColumns="False" CssClass="table table-bordered table-hover">
+<asp:GridView ID="gvObservations" runat="server" DataKeyNames="ObserverID" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
     <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
     <Columns>
-        <asp:BoundField DataField="ObserverID" HeaderText="Oberver ID" />
+        <asp:BoundField DataField="ObserverID" HeaderText="Oberver ID" Visible="false" />
 
         <asp:TemplateField HeaderText="Opening Date">
             <ItemTemplate>

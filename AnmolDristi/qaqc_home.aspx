@@ -14,7 +14,7 @@
             <div class="clearfix"></div>
 
             <div class="row">
-                <div class="col-md-6" id="QC_Panel" runat="server" visible="true">
+                <div class="col-md-6" id="QC_Panel" runat="server" visible="false">
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Mass Meeting</h2>
@@ -113,16 +113,73 @@
 
                            </a>
                            <a class="btn btn-app" href="FullBodyHarnessInspection_View.aspx">
-    <span class="badge bg-green">Ok
-        <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
-    <i class="fa fa-edit"></i>FullBodyHarnessInspection View Form
+                                     <span class="badge bg-green">Ok
+                                          <asp:Label ID="Label1" runat="server" Text="0" Visible="false"></asp:Label></span>
+                                           <i class="fa fa-edit"></i>FullBodyHarnessInspection View Form
 
-</a>
+                           </a>
                           
                        </div>
                         
                    </div>
                </div>
+
+                                <div class="col-md-6" id="Div4" runat="server" visible="true">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Competency Assessment</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <a class="btn btn-app" href="WorkerCompetencyAssessment.aspx">
+                <span class="badge bg-green">Ok
+                    <asp:Label ID="Label3" runat="server" Text="0" Visible="false"></asp:Label></span>
+                <i class="fa fa-edit"></i>Competency Assessment
+
+            </a>
+            <a class="btn btn-app" href="WorkerCompetencyView.aspx">
+                      <span class="badge bg-green">Ok
+                           <asp:Label ID="Label4" runat="server" Text="0" Visible="false"></asp:Label></span>
+                            <i class="fa fa-edit"></i>Competency Assessment View
+
+            </a>
+           
+        </div>
+         
+    </div>
+</div>
+
+    <div class="col-md-6" id="Div5" runat="server" visible="true">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Welding Machine Checklist</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <a class="btn btn-app" href="WeldingMachineChecklist.aspx">
+                <span class="badge bg-green">Ok
+                    <asp:Label ID="Label5" runat="server" Text="0" Visible="false"></asp:Label></span>
+                <i class="fa fa-edit"></i>Welding Machine Checklist
+
+            </a>   
+            <a class="btn btn-app" href="WeldingChecklistView.aspx">
+    <span class="badge bg-green">Ok
+        <asp:Label ID="Label6" runat="server" Text="0" Visible="false"></asp:Label></span>
+    <i class="fa fa-edit"></i>Welding Machine Checklist View
+
+</a>   
+        </div>
+         
+    </div>
+</div>
             </div>
         </div>
     </div>

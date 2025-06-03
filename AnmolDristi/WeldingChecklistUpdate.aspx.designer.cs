@@ -11,7 +11,7 @@ namespace AnmolDristi
 {
 
 
-    public partial class Committee_meeting_update
+    public partial class WeldingChecklistUpdate
     {
 
         /// <summary>
@@ -42,211 +42,202 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtdate;
 
         /// <summary>
-        /// lbl_txtTime control.
+        /// lbl_txtloc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_txtTime;
+        protected global::System.Web.UI.WebControls.Label lbl_txtloc;
 
         /// <summary>
-        /// RFV_txtTime control.
+        /// RFV_txtloc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtTime;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtloc;
 
         /// <summary>
-        /// txtTime control.
+        /// txtloc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTime;
+        protected global::System.Web.UI.WebControls.TextBox txtloc;
 
         /// <summary>
-        /// lbl_txtVenue control.
+        /// lbl_txtjobId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_txtVenue;
+        protected global::System.Web.UI.WebControls.Label lbl_txtjobId;
 
         /// <summary>
-        /// RFV_txtVenue control.
+        /// RFV_txtjobId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtVenue;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtjobId;
 
         /// <summary>
-        /// txtVenue control.
+        /// txtjobId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtVenue;
+        protected global::System.Web.UI.WebControls.TextBox txtjobId;
 
         /// <summary>
-        /// lbl_txtMeetingNo control.
+        /// lbl_txtInsBy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_txtMeetingNo;
+        protected global::System.Web.UI.WebControls.Label lbl_txtInsBy;
 
         /// <summary>
-        /// RFV_txtMeetingNo control.
+        /// RFV_txtInsBy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtMeetingNo;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtInsBy;
 
         /// <summary>
-        /// txtMeetingNo control.
+        /// txtInsBy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMeetingNo;
+        protected global::System.Web.UI.WebControls.TextBox txtInsBy;
 
         /// <summary>
-        /// lbl_txtChairedBy control.
+        /// lblEmployeeName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_txtChairedBy;
+        protected global::System.Web.UI.WebControls.Label lblEmployeeName;
 
         /// <summary>
-        /// RFV_txtChairedBy control.
+        /// lbl_txtDocNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtChairedBy;
+        protected global::System.Web.UI.WebControls.Label lbl_txtDocNo;
 
         /// <summary>
-        /// txtChairedBy control.
+        /// RFV_txtDocNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtChairedBy;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtDocNo;
 
         /// <summary>
-        /// lbl_txtjobID control.
+        /// txtDocNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_txtjobID;
+        protected global::System.Web.UI.WebControls.TextBox txtDocNo;
 
         /// <summary>
-        /// RFV_txtjobID control.
+        /// rptChecklist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtjobID;
+        protected global::System.Web.UI.WebControls.Repeater rptChecklist;
 
         /// <summary>
-        /// txtjobID control.
+        /// rptTerminals control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtjobID;
+        protected global::System.Web.UI.WebControls.Repeater rptTerminals;
 
         /// <summary>
-        /// lbl_imgupload control.
+        /// rptCables control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_imgupload;
+        protected global::System.Web.UI.WebControls.Repeater rptCables;
 
         /// <summary>
-        /// RFV_imgupload control.
+        /// rptElectrodeHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_imgupload;
+        protected global::System.Web.UI.WebControls.Repeater rptElectrodeHolder;
 
         /// <summary>
-        /// imgupload control.
+        /// rptWorkArea control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload imgupload;
+        protected global::System.Web.UI.WebControls.Repeater rptWorkArea;
 
         /// <summary>
-        /// lblBeforeError control.
+        /// Lbl_txtnote control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBeforeError;
+        protected global::System.Web.UI.WebControls.Label Lbl_txtnote;
 
         /// <summary>
-        /// imgPreview control.
+        /// RFV_txtnote control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgPreview;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtnote;
 
         /// <summary>
-        /// gvAttendees control.
+        /// txtnote control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvAttendees;
+        protected global::System.Web.UI.WebControls.TextBox txtnote;
 
         /// <summary>
-        /// gvIssues control.
+        /// Lbl_btnUpdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvIssues;
-
-        /// <summary>
-        /// lblbtnUpdate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblbtnUpdate;
+        protected global::System.Web.UI.WebControls.Label Lbl_btnUpdate;
 
         /// <summary>
         /// btnUpdate control.
@@ -258,13 +249,13 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Button btnUpdate;
 
         /// <summary>
-        /// Btnback control.
+        /// BtnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btnback;
+        protected global::System.Web.UI.WebControls.Button BtnBack;
 
         /// <summary>
         /// lblMsg control.

@@ -36,7 +36,7 @@ namespace AnmolDristi
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connStr))
             {
-                string query = "SELECT AuditDate, Location FROM AuditInfo WHERE AuditID = @AuditID";
+                string query = "SELECT AuditDate,JobID, Location FROM AuditInfo WHERE AuditID = @AuditID";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@AuditID", auditID);
                 con.Open();
@@ -45,6 +45,7 @@ namespace AnmolDristi
                 {
                     txtdate.Text = Convert.ToDateTime(reader["AuditDate"]).ToString("yyyy-MM-dd");
                     txtLocation.Text = reader["Location"].ToString();
+                    txtjobID.Text = reader["JobID"].ToString();
                 }
             }
         }
@@ -83,11 +84,12 @@ namespace AnmolDristi
                 con.Open();
 
                 // Update AuditInfo (Date and Location)
-                string updateAuditInfo = "UPDATE AuditInfo SET AuditDate = @AuditDate, Location = @Location WHERE AuditID = @AuditID";
+                string updateAuditInfo = "UPDATE AuditInfo SET AuditDate = @AuditDate, Location = @Location , JobID=@JobID WHERE AuditID = @AuditID";
                 using (SqlCommand cmd = new SqlCommand(updateAuditInfo, con))
                 {
                     cmd.Parameters.AddWithValue("@AuditDate", DateTime.Parse(txtdate.Text));
                     cmd.Parameters.AddWithValue("@Location", txtLocation.Text.Trim());
+                    cmd.Parameters.AddWithValue("@JobID", txtjobID.Text.Trim());
                     cmd.Parameters.AddWithValue("@AuditID", auditID);
                     cmd.ExecuteNonQuery();
                 }

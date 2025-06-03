@@ -79,7 +79,7 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>Automation And Technical Services
+                <h3>Full Body Harness Inspection
                 </h3>
             </div>
         </div>
@@ -89,7 +89,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         
-                        <h2>Full Body Harness Inspection</h2>
+                        <h2>DOC/ATS/TSK/FBH/013 | Eff.Date: 01.02.2024</h2>
                          <div class="clearfix"></div>
                       </div>
 
@@ -134,6 +134,24 @@
         </div>
     </div>
 </div>
+     <div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtjobID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+        </div>
+    </div>
+</div>
+     <div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="Lbl_txtnote" runat="server" AssociatedControlID="txtnote" Text="Remarks"  CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtnote" runat="server" ErrorMessage="*" ControlToValidate="txtnote" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtnote" runat="server" CssClass="form-control form-control-sm rounded "  TextMode="MultiLine"></asp:TextBox>
+        </div>
+    </div>
+</div>
          
 </div>
         
@@ -151,7 +169,7 @@
     <div class="col-md-12">
         <div class="mb-3">
             <asp:GridView ID="gvChecklist" runat="server" AutoGenerateColumns="False" DataKeyNames="IdentificationNo"
-                CssClass="table table-bordered table-sm table-hover mt-4 equal-column-width">
+                CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
                 <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
                 <Columns>
 

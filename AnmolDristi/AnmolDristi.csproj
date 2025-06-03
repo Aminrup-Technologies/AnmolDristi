@@ -83,6 +83,7 @@
     <Content Include="committee_meeting.aspx" />
     <Content Include="committee_meeting_report.aspx" />
     <Content Include="Committee_meeting_update.aspx" />
+    <Content Include="Committee_Report.aspx" />
     <Content Include="csm_massmeeting.aspx" />
     <Content Include="csm_massmeeting_record.aspx" />
     <Content Include="csm_massmeeting_report.aspx" />
@@ -95,12 +96,21 @@
     <Content Include="HousekeepingUpdate.aspx" />
     <Content Include="housekeeping_audit.aspx" />
     <Content Include="housekeeping_audit_report.aspx" />
+    <Content Include="housekeeping_Rpt.aspx" />
     <Content Include="MassMeeting_Report.aspx" />
     <Content Include="MassMeeting_Update.aspx" />
     <Content Include="packages.config" />
     <Content Include="practice.aspx" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="Dristi.Master" />
+    <Content Include="WeldingChecklistRpt.aspx" />
+    <Content Include="WeldingChecklistUpdate.aspx" />
+    <Content Include="WeldingChecklistView.aspx" />
+    <Content Include="WeldingMachineChecklist.aspx" />
+    <Content Include="WorkerCompetencyAssessment.aspx" />
+    <Content Include="WorkerCompetencyRpt.aspx" />
+    <Content Include="WorkerCompetencyUpdate.aspx" />
+    <Content Include="WorkerCompetencyView.aspx" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Properties\PublishProfiles\eshabharti.aminruptechnologies.co.in - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
@@ -173,6 +183,13 @@
     </Compile>
     <Compile Include="Committee_meeting_update.aspx.designer.cs">
       <DependentUpon>Committee_meeting_update.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Committee_Report.aspx.cs">
+      <DependentUpon>Committee_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Committee_Report.aspx.designer.cs">
+      <DependentUpon>Committee_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="csm_massmeeting.aspx.cs">
       <DependentUpon>csm_massmeeting.aspx</DependentUpon>
@@ -268,6 +285,13 @@
     <Compile Include="housekeeping_audit_report.aspx.designer.cs">
       <DependentUpon>housekeeping_audit_report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="housekeeping_Rpt.aspx.cs">
+      <DependentUpon>housekeeping_Rpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="housekeeping_Rpt.aspx.designer.cs">
+      <DependentUpon>housekeeping_Rpt.aspx</DependentUpon>
+    </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -310,6 +334,62 @@
     </Compile>
     <Compile Include="trail.aspx.designer.cs">
       <DependentUpon>trail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeldingChecklistRpt.aspx.cs">
+      <DependentUpon>WeldingChecklistRpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeldingChecklistRpt.aspx.designer.cs">
+      <DependentUpon>WeldingChecklistRpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeldingChecklistUpdate.aspx.cs">
+      <DependentUpon>WeldingChecklistUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeldingChecklistUpdate.aspx.designer.cs">
+      <DependentUpon>WeldingChecklistUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeldingChecklistView.aspx.cs">
+      <DependentUpon>WeldingChecklistView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeldingChecklistView.aspx.designer.cs">
+      <DependentUpon>WeldingChecklistView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeldingMachineChecklist.aspx.cs">
+      <DependentUpon>WeldingMachineChecklist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeldingMachineChecklist.aspx.designer.cs">
+      <DependentUpon>WeldingMachineChecklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WorkerCompetencyAssessment.aspx.cs">
+      <DependentUpon>WorkerCompetencyAssessment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WorkerCompetencyAssessment.aspx.designer.cs">
+      <DependentUpon>WorkerCompetencyAssessment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WorkerCompetencyRpt.aspx.cs">
+      <DependentUpon>WorkerCompetencyRpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WorkerCompetencyRpt.aspx.designer.cs">
+      <DependentUpon>WorkerCompetencyRpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WorkerCompetencyUpdate.aspx.cs">
+      <DependentUpon>WorkerCompetencyUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WorkerCompetencyUpdate.aspx.designer.cs">
+      <DependentUpon>WorkerCompetencyUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WorkerCompetencyView.aspx.cs">
+      <DependentUpon>WorkerCompetencyView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WorkerCompetencyView.aspx.designer.cs">
+      <DependentUpon>WorkerCompetencyView.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

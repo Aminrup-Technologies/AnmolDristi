@@ -30,7 +30,7 @@ namespace AnmolDristi
 
         private void LoadMeetingDetails(int meetingID)
         {
-            string query = @"SELECT MeetingNo, Title, MeetingDate, MeetingTime, Venue, ChairedBy 
+            string query = @"SELECT MeetingNo, Title, MeetingDate, MeetingTime, Venue, ChairedBy , JobID, Image_upload
                      FROM Committee_MeetingReview 
                      WHERE MeetingID = @MeetingID";
 
@@ -47,6 +47,16 @@ namespace AnmolDristi
                     txtTime.Text = TimeSpan.Parse(reader["MeetingTime"].ToString()).ToString(@"hh\:mm");
                     txtVenue.Text = reader["Venue"].ToString();
                     txtChairedBy.Text = reader["ChairedBy"].ToString();
+                    txtjobID.Text = reader["JobID"].ToString();
+                    if (reader["Image_upload"] != DBNull.Value)
+                    {
+                        string imgPath = reader["Image_upload"].ToString();
+                        imgPreview.ImageUrl = ResolveUrl(imgPath);
+                        imgPreview.Visible = true;
+
+                        // Save path in ViewState for use during update
+                        ViewState["ExistingImagePath"] = imgPath;
+                    }
                 }
             }
         }
@@ -55,7 +65,7 @@ namespace AnmolDristi
         private void LoadAttendance(int meetingID)
         {
             string query = @"SELECT Name , Designation, AttendeeCode, Attendee_Type , 
-                            Image_upload AS ImagePath, AttendanceStatus , AttendanceID
+                             AttendanceStatus , AttendanceID
                      FROM Committee_MeetingAttendance 
                      WHERE MeetingID = @MeetingID";
 
@@ -175,12 +185,54 @@ namespace AnmolDristi
 
                 try
                 {
+                    string imagePath = null;
+
+                    if (imgupload.HasFile)
+                    {
+                        string extension = Path.GetExtension(imgupload.FileName).ToLower();
+                        if (extension != ".jpg" && extension != ".jpeg" && extension != ".png")
+                        {
+                            lblBeforeError.Text = "Only JPG, JPEG, and PNG files are allowed.";
+                            lblBeforeError.Style["display"] = "block";
+                            return;
+                        }
+
+                        try
+                        {
+                            string fileName = Path.GetFileName(imgupload.FileName);
+                            string uploadFolder = Server.MapPath("~/Uploads1/");
+                            Directory.CreateDirectory(uploadFolder);
+
+                            string filePath = Path.Combine(uploadFolder, fileName);
+                            imgupload.SaveAs(filePath);
+
+                            imagePath = "~/Uploads1/" + fileName;
+                            Session["UploadedFilePath"] = filePath;
+                        }
+                        catch (Exception ex)
+                        {
+                            lblBeforeError.Text = "File upload failed: " + ex.Message;
+                            lblBeforeError.Style["display"] = "block";
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        // Keep existing image path from session or DB
+                        imagePath = ViewState["ExistingImagePath"]?.ToString() ?? DBNull.Value.ToString();
+                    }
+
+
+
+
                     // 1. Update Committee_MeetingReview
                     SqlCommand cmdReview = new SqlCommand(@"UPDATE Committee_MeetingReview 
                                                      SET MeetingNo = @MeetingNo, 
                                                          MeetingDate = @MeetingDate, 
                                                          MeetingTime = @MeetingTime, 
-                                                         Venue = @Venue, 
+                                                         Venue = @Venue,
+                                                         JobID=@JobID,
+                                                         Image_upload = @Image_upload,
                                                          ChairedBy = @ChairedBy 
                                                      WHERE MeetingID = @MeetingID", con, transaction);
                     cmdReview.Parameters.AddWithValue("@MeetingNo", txtMeetingNo.Text);
@@ -188,6 +240,13 @@ namespace AnmolDristi
                     cmdReview.Parameters.AddWithValue("@MeetingTime", txtTime.Text);
                     cmdReview.Parameters.AddWithValue("@Venue", txtVenue.Text);
                     cmdReview.Parameters.AddWithValue("@ChairedBy", txtChairedBy.Text);
+                    cmdReview.Parameters.AddWithValue("@JobID", txtjobID.Text);
+                    //cmdReview.Parameters.AddWithValue("@Image_upload", imgupload);
+                    if (!string.IsNullOrEmpty(imagePath))
+                        cmdReview.Parameters.AddWithValue("@Image_upload", imagePath);
+                    else
+                        cmdReview.Parameters.AddWithValue("@Image_upload", DBNull.Value);
+
                     cmdReview.Parameters.AddWithValue("@MeetingID", meetingID);
                     cmdReview.ExecuteNonQuery();
 
@@ -202,35 +261,34 @@ namespace AnmolDristi
                         string type = ((TextBox)row.FindControl("txtAttendeeType")).Text;
                         string status = ((DropDownList)row.FindControl("ddlAttendanceStatus")).SelectedValue;
 
-                        FileUpload fu = (FileUpload)row.FindControl("fuimgPreview");
-                        string imgPath = ((Label)row.FindControl("lblimgPreview")).Text;
+                        //FileUpload fu = (FileUpload)row.FindControl("fuimgPreview");
+                        //string imgPath = ((Label)row.FindControl("lblimgPreview")).Text;
 
-                        if (fu.HasFile)
-                        {
-                            string folderPath = Server.MapPath("~/Uploads1/");
-                            if (!Directory.Exists(folderPath))
-                                Directory.CreateDirectory(folderPath);
+                        //if (fu.HasFile)
+                        //{
+                        //    string folderPath = Server.MapPath("~/Uploads1/");
+                        //    if (!Directory.Exists(folderPath))
+                        //        Directory.CreateDirectory(folderPath);
 
-                            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(fu.FileName);
-                            string fullPath = folderPath + fileName;
-                            fu.SaveAs(fullPath);
-                            imgPath = "~/Uploads1/" + fileName;
-                        }
+                        //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(fu.FileName);
+                        //    string fullPath = folderPath + fileName;
+                        //    fu.SaveAs(fullPath);
+                        //    imgPath = "~/Uploads1/" + fileName;
+                        //}
 
                         SqlCommand cmdAtt = new SqlCommand(@"UPDATE Committee_MeetingAttendance 
                                                      SET Name = @Name, 
                                                          Designation = @Designation, 
                                                          AttendeeCode = @Code, 
                                                          Attendee_Type = @Type, 
-                                                         AttendanceStatus = @Status, 
-                                                         Image_upload = @Image 
+                                                         AttendanceStatus = @Status 
                                                      WHERE AttendanceID = @ID", con, transaction);
                         cmdAtt.Parameters.AddWithValue("@Name", name);
                         cmdAtt.Parameters.AddWithValue("@Designation", designation);
                         cmdAtt.Parameters.AddWithValue("@Code", code);
                         cmdAtt.Parameters.AddWithValue("@Type", type);
                         cmdAtt.Parameters.AddWithValue("@Status", status);
-                        cmdAtt.Parameters.AddWithValue("@Image", imgPath);
+                       // cmdAtt.Parameters.AddWithValue("@Image", imgPath);
                         cmdAtt.Parameters.AddWithValue("@ID", attendanceID);
                         cmdAtt.ExecuteNonQuery();
                     }

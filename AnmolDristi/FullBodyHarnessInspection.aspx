@@ -49,7 +49,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         
-                        <h2>DOC/ATS/TSK/FBH/013</h2>
+                        <h2>DOC/ATS/TSK/FBH/013 | Eff.Date: 01.02.2024</h2>
                          <div class="clearfix"></div>
                       </div>
 
@@ -75,6 +75,18 @@
          </div>
      </div>
  </div>
+                                            <div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
+
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtjobID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+        </div>
+    </div>
+</div>
+
        
 <div class="col-md-3">
     <div class="mb-3">
@@ -99,7 +111,7 @@
         </div>
     </div>
 </div>
-
+      
 
 
 </div>
@@ -364,27 +376,26 @@
 </div>
 
         <div class="table-responsive">
-<div class="col-md-12">
+<div class="col-md-4">
     <div class="mb-3">
-   <asp:GridView ID="gvChecklist" runat="server" AutoGenerateColumns="False" DataKeyNames="IdentificationNo" CssClass="table table-bordered table-sm table-hover mt-4" OnRowCreated="gvChecklist_RowCreated" >
-<%--      <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />--%>
+   <asp:GridView ID="gvChecklist" runat="server" AutoGenerateColumns="False" DataKeyNames="IdentificationNo" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None" OnRowCreated="gvChecklist_RowCreated" >
     <Columns>
-        <asp:BoundField HeaderText="Identification No" DataField="IdentificationNo" />
+        <asp:BoundField HeaderText="Identification No" DataField="IdentificationNo" Visible="false" />
         <asp:BoundField HeaderText="Location" DataField="Location" />
         
         <asp:BoundField HeaderText="Q1 Status" DataField="Q1Status" />
-        <asp:BoundField HeaderText="Q1 Remarks" DataField="Q1Remarks" />
+        <asp:BoundField HeaderText="Q1 Remarks" DataField="Q1Remarks" Visible="false" />
        
-        <asp:TemplateField HeaderText="Q1 Photo">
+        <asp:TemplateField HeaderText="Q1 Photo" Visible="false" >
       <ItemTemplate>
             <asp:Image ID="Q1Photo" runat="server" ImageUrl='<%# Eval("Q1Photo") %>' Width="50px" Height="50px" />
         </ItemTemplate>                      
       </asp:TemplateField>
 
         <asp:BoundField HeaderText="Q2 Status" DataField="Q2Status" />
-        <asp:BoundField HeaderText="Q2 Remarks" DataField="Q2Remarks" />
+        <asp:BoundField HeaderText="Q2 Remarks" DataField="Q2Remarks" Visible="false" />
         
-          <asp:TemplateField HeaderText="Q2 Photo">
+          <asp:TemplateField HeaderText="Q2 Photo" Visible="false" >
 <ItemTemplate>
       <asp:Image ID="Q2Photo" runat="server" ImageUrl='<%# Eval("Q2Photo") %>' Width="50px" Height="50px" />
   </ItemTemplate>                      
@@ -392,25 +403,25 @@
 
 
         <asp:BoundField HeaderText="Q3 Status" DataField="Q3Status" />
-        <asp:BoundField HeaderText="Q3 Remarks" DataField="Q3Remarks" />
-                 <asp:TemplateField HeaderText="Q3 Photo">
+        <asp:BoundField HeaderText="Q3 Remarks" DataField="Q3Remarks" Visible="false" />
+                 <asp:TemplateField HeaderText="Q3 Photo" Visible="false" >
 <ItemTemplate>
       <asp:Image ID="Q3Photo" runat="server" ImageUrl='<%# Eval("Q3Photo") %>' Width="50px" Height="50px" />
   </ItemTemplate>                      
 </asp:TemplateField>
 
         <asp:BoundField HeaderText="Q4 Status" DataField="Q4Status" />
-        <asp:BoundField HeaderText="Q4 Remarks" DataField="Q4Remarks" />
+        <asp:BoundField HeaderText="Q4 Remarks" DataField="Q4Remarks" Visible="false" />
         
-                         <asp:TemplateField HeaderText="Q4 Photo">
+                         <asp:TemplateField HeaderText="Q4 Photo" Visible="false" >
 <ItemTemplate>
       <asp:Image ID="Q4Photo" runat="server" ImageUrl='<%# Eval("Q4Photo") %>' Width="50px" Height="50px" />
   </ItemTemplate>                      
 </asp:TemplateField>
 
         <asp:BoundField HeaderText="Q5 Status" DataField="Q5Status" />
-        <asp:BoundField HeaderText="Q5 Remarks" DataField="Q5Remarks" />
-                         <asp:TemplateField HeaderText="Q5 Photo">
+        <asp:BoundField HeaderText="Q5 Remarks" DataField="Q5Remarks" Visible="false" />
+                         <asp:TemplateField HeaderText="Q5 Photo" Visible="false" >
 <ItemTemplate>
       <asp:Image ID="Q5Photo" runat="server" ImageUrl='<%# Eval("Q5Photo") %>' Width="50px" Height="50px" />
   </ItemTemplate>                      
@@ -427,6 +438,15 @@
             </div>
 
 
+    <div class="col-md-4">
+    <div class="mb-3">
+        <asp:Label ID="Lbl_txtnote" runat="server" AssociatedControlID="txtnote" Text="Remarks"  CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtnote" runat="server" ErrorMessage="*" ControlToValidate="txtnote" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtnote" runat="server" CssClass="form-control form-control-sm rounded "  TextMode="MultiLine"></asp:TextBox>
+        </div>
+    </div>
+</div>
                 </div>
             </div>
 
@@ -473,6 +493,7 @@
         '<%= fuQ5.ClientID %>'
     ];
 </script>
+
 <script type="text/javascript">
     function validateChecklist() {
         var identity = document.getElementById('<%= txtIdentity.ClientID %>').value.trim();

@@ -77,7 +77,12 @@ namespace AnmolDristi
 
         protected void BtnView_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Committee_Report.aspx");
+            // Response.Redirect("Committee_Report.aspx");
+            Button btnView = (Button)sender;
+            GridViewRow row = (GridViewRow)btnView.NamingContainer;
+            int MeetingID = Convert.ToInt32(btnView.CommandArgument);
+            Response.Redirect($"Committee_Report.aspx?MeetingID={MeetingID}");
+
         }
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
@@ -173,9 +178,6 @@ namespace AnmolDristi
         protected void BtnReset_Click(object sender, EventArgs e)
         {
             Response.Redirect("committee_meeting_report.aspx");
-            //txtFromDate.Text = "";
-            //txtToDate.Text = "";
-            //LoadMeetingData();
         }
         protected void BtnBack_Click(object sender, EventArgs e)
         {

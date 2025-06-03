@@ -30,7 +30,7 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>Internal Safety Committee meeting 
+                <h3>Safety Committee Meeting 
                 </h3>
             </div>
         </div>
@@ -39,7 +39,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>DOC/ATS/OSH/CM-04</h2>
+                        <h2>DOC/ATS/OSH/CM-04 | Eff.Date: 19/12/2018</h2>
                         <div class="clearfix"></div>
                     </div>
 
@@ -48,7 +48,7 @@
                         
       <div class="row">  
                                     
-      <div class="col-md-3">
+      <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Meeting Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
          <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -57,7 +57,7 @@
          </div>
      </div>
  </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtTime" runat="server" AssociatedControlID="txtTime" Text="Meeting Time" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtTime" runat="server" ErrorMessage="*" ControlToValidate="txtTime" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -66,7 +66,7 @@
         </div>
     </div>
 </div>
-     <div class="col-md-3">
+     <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtVenue" runat="server" AssociatedControlID="txtVenue" Text="Venue" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
          <asp:RequiredFieldValidator ID="RFV_txtVenue" runat="server" ErrorMessage="*" ControlToValidate="txtVenue" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -75,7 +75,7 @@
          </div>
      </div>
  </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtMeetingNo" runat="server" AssociatedControlID="txtMeetingNo" Text="Meeting Number" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtMeetingNo" runat="server" ErrorMessage="*" ControlToValidate="txtMeetingNo" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -84,12 +84,21 @@
         </div>
     </div>
 </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtChairedBy" runat="server" AssociatedControlID="txtChairedBy" Text="Chaired By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtChairedBy" runat="server" ErrorMessage="*" ControlToValidate="txtChairedBy" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtChairedBy" runat="server" CssClass="form-control form-control-sm rounded" ></asp:TextBox>
+        </div>
+    </div>
+</div>
+        <div class="col-md-4">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtjobID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
         </div>
     </div>
 </div>
@@ -103,18 +112,31 @@
  </div>
                 
                  
-
+<div class="col-md-2">
+       <div class="mb-3">
+           <asp:Label ID="lbl_imgupload" runat="server" AssociatedControlID="imgupload" Text="Upload Photo" ForeColor="Blue" Font-Bold="true"></asp:Label>
+           <asp:RequiredFieldValidator ID="RFV_imgupload" runat="server" ErrorMessage="*" ControlToValidate="imgupload" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+           <div class="input-group-sm">
+               <asp:FileUpload ID="imgupload" runat="server" CssClass="form-control form-control-sm rounded" />
+                <asp:Label ID="lblBeforeError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
+           </div>
+            <asp:Image ID="imgPreview" runat="server" 
+               Width="150px" Height="150px" 
+               AlternateText="No photo uploaded" 
+               Visible="false" CssClass="mt-2 img-thumbnail" />
+       </div>
+   </div>
       
     
     
 
     <div class="table-responsive">
-         <div class="col-md-12">
+         <div class="col-md-6">
              <div class="mb-3">
-    <asp:GridView ID="gvAttendees" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"  DataKeyNames="AttendanceID"> 
+    <asp:GridView ID="gvAttendees" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None"   DataKeyNames="AttendanceID"> 
         <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
     <Columns>
-        <asp:BoundField DataField="AttendanceID" HeaderText="SNo" />
+        <asp:BoundField DataField="AttendanceID" HeaderText="SNo" Visible="false" />
          <asp:TemplateField HeaderText="Attendee Type">
   <ItemTemplate>
  <asp:TextBox ID="txtAttendeeType" runat="server" Text='<%# Eval("Attendee_Type") %>' CssClass="form-control gv-input" />
@@ -144,7 +166,7 @@
  <asp:TextBox ID="txtDesignation" runat="server" Text='<%# Eval("Designation") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
-         <asp:TemplateField HeaderText="Image Preview">
+       <%--  <asp:TemplateField HeaderText="Image Preview">
           <ItemTemplate>
     <!-- Larger Image -->
     <asp:Image ID="imgPreview" runat="server" 
@@ -159,7 +181,7 @@
     <br />
     <asp:FileUpload ID="fuimgPreview" runat="server" />
 </ItemTemplate>
-  </asp:TemplateField>
+  </asp:TemplateField>--%>
       <asp:TemplateField HeaderText="Action">
         <ItemTemplate>
            <asp:Button ID="BtnDelAttendees" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelAttendees_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
@@ -182,12 +204,12 @@
 
              
     <div class="table-responsive">
-         <div class="col-md-12">
+         <div class="col-md-6">
              <div class="mb-3">
-    <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"  DataKeyNames="IssueID"> 
+    <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None"   DataKeyNames="IssueID"> 
         <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
     <Columns>
-        <asp:BoundField DataField="IssueID" HeaderText="SNo" />
+        <asp:BoundField DataField="IssueID" HeaderText="SNo" Visible="false" />
          <asp:TemplateField HeaderText="Agenda Title">
   <ItemTemplate>
  <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Eval("AgendaTitle") %>' CssClass="form-control gv-input" />

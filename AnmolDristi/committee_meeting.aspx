@@ -13,26 +13,16 @@
 }
    .table-responsive {
     width: 100%;
-    max-height: 400px; /* Adjust based on need */
+    max-height: 400px;
     overflow-x: auto;
     overflow-y: auto;
     
    }
-
-@media (max-width: 768px) {
-    .table-responsive {
-        max-height: 300px; /* Adjust based on your UI */
-    }
-}
 .btn-fixed-size {
     width: 100px;
     text-align: center;
     font-size: 14px;
     padding: 5px 0;
-}
-
-.points-input {
-    margin-right: 10px;
 }
     </style>
 </asp:Content>
@@ -42,7 +32,7 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>Internal Safety Committee meeting 
+                <h3>Safety Committee Meeting | DOC/ATS/OSH/CM-04 |  Eff. Date:19/12/2018
                 </h3>
             </div>
         </div>
@@ -51,7 +41,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>DOC/ATS/OSH/CM-04</h2>
+                        <h2 class="text-info h4">Meeting Details</h2>
                         <div class="clearfix"></div>
                     </div>
 
@@ -60,7 +50,7 @@
                         
       <div class="row">  
                                     
-      <div class="col-md-3">
+      <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Meeting Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
          <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -69,7 +59,7 @@
          </div>
      </div>
  </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtTime" runat="server" AssociatedControlID="txtTime" Text="Meeting Time" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtTime" runat="server" ErrorMessage="*" ControlToValidate="txtTime" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -78,7 +68,7 @@
         </div>
     </div>
 </div>
-     <div class="col-md-3">
+     <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtVenue" runat="server" AssociatedControlID="txtVenue" Text="Venue" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
          <asp:RequiredFieldValidator ID="RFV_txtVenue" runat="server" ErrorMessage="*" ControlToValidate="txtVenue" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -87,7 +77,7 @@
          </div>
      </div>
  </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtMeetingNo" runat="server" AssociatedControlID="txtMeetingNo" Text="Meeting Number" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtMeetingNo" runat="server" ErrorMessage="*" ControlToValidate="txtMeetingNo" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -96,7 +86,7 @@
         </div>
     </div>
 </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtChairedBy" runat="server" AssociatedControlID="txtChairedBy" Text="Chaired By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtChairedBy" runat="server" ErrorMessage="*" ControlToValidate="txtChairedBy" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -105,12 +95,23 @@
         </div>
     </div>
 </div>
+        <div class="col-md-4">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+       <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
+
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtjobID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+        </div>
+    </div>
+</div>
                                   <%--  <asp:HiddenField ID="hdnMeetingID" runat="server" />
    --%>
                                     </div>
 
  <div class="x_title">
-     <h2>Attendance Table</h2>
+     <h2 class="text-info h4">Attendance Table</h2>
      <div class="clearfix"></div>
  </div>
                 
@@ -182,17 +183,7 @@
              </div>
          </div>
 
-         <div class="col-md-2">
-             <div class="mb-3">
-                 <asp:Label ID="lbl_imgupload" runat="server" AssociatedControlID="imgupload" Text="Upload Your Image" ForeColor="Blue" Font-Bold="true"></asp:Label>
-                 <asp:RequiredFieldValidator ID="RFV_imgupload" runat="server" ErrorMessage="*" ControlToValidate="imgupload" ValidationGroup="add2" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-                 <div class="input-group-sm">
-                     <asp:FileUpload ID="imgupload" runat="server" CssClass="form-control form-control-sm rounded" />
-                      <asp:Label ID="lblBeforeError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
-                 </div>
-             </div>
-         </div>
-        
+       
 
            </asp:Panel>
       </div>
@@ -209,26 +200,52 @@
        
   </asp:Panel>
 
-      
-    
+<%--<div class="col-md-4">
+    <div class="mb-3">
+        <asp:Label ID="lbl_imgupload" runat="server" AssociatedControlID="imgupload" Text="Upload Photo" ForeColor="Blue" Font-Bold="true"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_imgupload" runat="server" ErrorMessage="*" ControlToValidate="imgupload" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:FileUpload ID="imgupload" runat="server" CssClass="form-control form-control-sm rounded" onchange="previewImage(this)" />
+            <asp:Label ID="lblBeforeError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
+            <!-- This is your persistent preview -->
+            <asp:HiddenField ID="hfImagePath" runat="server" />
+            <Image id="imgPreview" src="" alt="" style="display:none; margin-top:10px; max-height:150px;" />
+        </div>
+    </div>
+</div>--%>
+
+  <div class="col-md-4">
+         <div class="mb-3">
+             <asp:Label ID="lbl_imgupload" runat="server" AssociatedControlID="imgupload" Text="Upload Photo" ForeColor="Blue" Font-Bold="true"></asp:Label>
+             <asp:RequiredFieldValidator ID="RFV_imgupload" runat="server" ErrorMessage="*" ControlToValidate="imgupload" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+             <div class="input-group-sm">
+                 <asp:FileUpload ID="imgupload" runat="server" CssClass="form-control form-control-sm rounded" />
+                  <asp:Label ID="lblBeforeError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
+             </div>
+         </div>
+     </div>
+           
+
+ 
+     
      <asp:Panel ID="pnlAttendeeTable" runat="server">
          <div class="table-responsive">
-         <div class="col-md-12">
+         <div class="col-md-4">
              <div class="mb-3">
-                 <asp:GridView ID="gvAttendees" runat="server" DataKeyNames="SNo" CssClass="table table-bordered table-hover "  AutoGenerateColumns="False">
+                 <asp:GridView ID="gvAttendees" runat="server" DataKeyNames="SNo" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None"  AutoGenerateColumns="False">
                      <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                      <Columns>
-                         <asp:BoundField DataField="SNo" HeaderText="SNo" />
+                         <asp:BoundField DataField="SNo" HeaderText="SNo" Visible="false" />
                          <asp:BoundField DataField="AttendeeType" HeaderText="Attendee Type" />
                          <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" />
                          <asp:BoundField DataField="AttendeeCode" HeaderText="Attendee Code" />
                          <asp:BoundField DataField="AttendanceStatus" HeaderText="Attendance Status" />
                          <asp:BoundField DataField="Designation" HeaderText="Designation" />
-                         <asp:TemplateField HeaderText="Image Preview">
+                        <%-- <asp:TemplateField HeaderText="Image Preview">
                            <ItemTemplate>
                              <asp:Image ID="imgPreview" runat="server" ImageUrl='<%# Eval("ImagePath") %>' Width="50px" Height="50px" />
                             </ItemTemplate>                      
-                         </asp:TemplateField>
+                         </asp:TemplateField>--%>
                                <asp:TemplateField HeaderText="Action">
                                  <ItemTemplate>
                                      <asp:Button ID="BtnDelAttendees" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelAttendees_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
@@ -240,11 +257,11 @@
          </div>
              </div>
      </asp:Panel>
-                      
 
+   
 
   <div class="x_title">
-     <h2>Meeting Issue Table</h2>
+     <h2 class="text-info h4">Meeting Issue Details</h2>
      <div class="clearfix"></div>
  </div>                         
 
@@ -341,7 +358,7 @@
 </div>
              <div class="col-md-6">
          <div class="mb-3">
-        <asp:Label ID="lbl_txtReviewBy" runat="server" AssociatedControlID="txtReviewBy" Text="Review By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="lbl_txtReviewBy" runat="server" AssociatedControlID="txtReviewBy" Text="Point Raised By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtReviewBy" runat="server" ErrorMessage="*" ControlToValidate="txtReviewBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtReviewBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
@@ -350,7 +367,7 @@
 </div>
                  <div class="col-md-6">
          <div class="mb-3">
-        <asp:Label ID="lbl_txtActionBy" runat="server" AssociatedControlID="txtActionBy" Text="Action By(Responsibility)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="lbl_txtActionBy" runat="server" AssociatedControlID="txtActionBy" Text="Close By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtActionBy" runat="server" ErrorMessage="*" ControlToValidate="txtActionBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtActionBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
@@ -404,22 +421,22 @@
 
 <div class="col-md-2">
  <div class="mt-3">
-     <asp:Button ID="btnAddIssues" runat="server" Text="Add Issues" CssClass="btn btn-success" ValidationGroup="add1" CausesValidation="true"  OnClientClick="preparePoints();" OnClick="btnAddIssues_Click"  />
+     <asp:Button ID="btnAddIssues" runat="server" Text="Add Issues" CssClass="btn btn-primary" ValidationGroup="add1" CausesValidation="true"  OnClientClick="preparePoints();" OnClick="btnAddIssues_Click"  />
  </div>
   </div>                         
             <div class="table-responsive">
-    <div class="col-md-12">
+    <div class="col-md-4">
         <div class="mb-3">
-    <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" DataKeyNames="SNo" CssClass="table table-bordered table-hover ">
+    <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" DataKeyNames="SNo"  CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None" >
     <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
     <Columns>
-        <asp:BoundField DataField="SNo" HeaderText="SNo" />
-        <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title" />
+        <asp:BoundField DataField="SNo" HeaderText="SNo" Visible="false" />
+        <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title" Visible="false" />
         <asp:BoundField DataField="IssuesDiscussed" HeaderText="Issues Discussed" />
-        <asp:BoundField DataField="ActionBy" HeaderText="Action By" />
-        <asp:BoundField DataField="TargetDate" HeaderText="Target Date" />
+        <asp:BoundField DataField="ActionBy" HeaderText="Close By" />
+        <asp:BoundField DataField="TargetDate" HeaderText="Target Date" Visible="false" />
         <asp:BoundField DataField="ReviewDate" HeaderText="Review Date" />
-        <asp:BoundField DataField="ReviewBy" HeaderText="Review By" />
+        <asp:BoundField DataField="ReviewBy" HeaderText="Point Raised By" />
         <asp:BoundField DataField="Status" HeaderText="Status" />
         <asp:TemplateField HeaderText="Action">
             <ItemTemplate>
@@ -434,7 +451,7 @@
 
              
 
-                         
+                   
 
 
    
@@ -540,66 +557,7 @@
          alert("Data saved successfully!");
      }
      </script>
-  <%-- <script type="text/javascript">
-       window.onload = function () {
-           const validExtensions = [".jpg", ".jpeg", ".png"];
-           const maxSizeMB = 20;
-           const minAcceptableWidth = 200;
-           const minAcceptableHeight = 200;
-           const recommendedWidth = 800;
-           const recommendedHeight = 600;
-
-           const beforeFile = document.getElementById('<%= imgupload.ClientID %>');
-        const beforeError = document.getElementById('<%= lblBeforeError.ClientID %>');
-
-           beforeFile.setAttribute("accept", ".jpg,.jpeg,.png");
-
-           beforeFile.addEventListener("change", function () {
-               validateFile(this, beforeError);
-           });
-
-           function validateFile(fileInput, errorLabel) {
-               const file = fileInput.files[0];
-               const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-
-               if (!validExtensions.includes(ext)) {
-                   fileInput.value = "";
-                   errorLabel.innerText = "❌ Only .jpg, .jpeg, or .png files are allowed.";
-                   errorLabel.style.display = "block";
-                   return;
-               }
-
-               if (file.size > maxSizeMB * 1024 * 1024) {
-                   fileInput.value = "";
-                   errorLabel.innerText = `❌ File too large. Max ${maxSizeMB}MB allowed.`;
-                   errorLabel.style.display = "block";
-                   return;
-               }
-
-               const img = new Image();
-               const objectUrl = URL.createObjectURL(file);
-
-               img.onload = function () {
-                   if (this.width < minAcceptableWidth || this.height < minAcceptableHeight) {
-                       fileInput.value = "";
-                       errorLabel.innerText = `❌ Image too small. Minimum size is ${minAcceptableWidth}x${minAcceptableHeight}px.`;
-                       errorLabel.style.display = "block";
-                   } else if (this.width < recommendedWidth || this.height < recommendedHeight) {
-                       errorLabel.innerText = `⚠️ Image uploaded, but it's below recommended resolution (${recommendedWidth}x${recommendedHeight}px).`;
-                       errorLabel.style.display = "block";
-                   } else {
-                       errorLabel.innerText = "";
-                       errorLabel.style.display = "none";
-                   }
-
-                   URL.revokeObjectURL(objectUrl);
-               };
-
-               img.src = objectUrl;
-           }
-       };
-   </script>--%>
-
+ 
  <script type="text/javascript">
          window.onload = function () {
              const validExtensions = [".jpg", ".jpeg", ".png"];
@@ -633,6 +591,16 @@
              }
          };
      </script>
+<%--<script type="text/javascript">
+    window.onload = function () {
+        var imagePath = document.getElementById("<%= hfImagePath.ClientID %>").value;
+        var img = document.getElementById("imgPreview");
+        if (imagePath) {
+            img.src = imagePath;
+            img.style.display = "block";
+        }
+    };
+</script>--%>
 
    
 </asp:Content>
