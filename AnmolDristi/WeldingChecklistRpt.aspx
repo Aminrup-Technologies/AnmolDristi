@@ -5,216 +5,213 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Welding Checklist Report</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
+     <link rel="preconnect" href="https://fonts.googleapis.com" />
+     <link rel="preconnect" href="https://fonts.gstatic.com" />
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+       <style>
+    @media print {
+        @page {
+            size: A4;
+            margin: 5px;
         }
-        .header {
-            font-size: 24px;
-            font-weight: bold;
-            color: green;
-            margin-bottom: 20px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 30px;
-        }
-        th, td {
-            border: 1px solid #aaa;
-            padding: 10px;
-            text-align: left;
-            vertical-align: top;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .check-icon {
-            font-size: 18px;
-            color: green;
-        }
-        .cross-icon {
-            font-size: 18px;
-            color: red;
-        }
-        .photo-thumb {
-            height: 60px;
-        }
-    </style>
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    body {
+        margin: 35px 55px;
+        box-sizing: border-box;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: #000;
+    }
+
+    table {
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        border-collapse: collapse;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        color: #000;
+        border: none;
+    }
+
+
+     .center td,
+     .center th,
+     .center_1 td,
+     .center_1 th {
+       padding: 10px;
+       vertical-align: top;
+        text-align: center;
+       border: 2px solid #2c3e50;
+       line-height: 1.4;
+    } 
+
+/* Styling headers with a cool tone */
+.center_1 th {
+    background-color: #34495e;
+    color: white;
+    font-weight: bold;
+}
+
+/* Alternating row colors */
+.center_1 tr:nth-child(even) {
+    background-color: #ecf0f1;
+}
+
+.center_1 tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.center tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.center th {
+    background-color: #2c3e50;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Bold outline for entire table */
+.center,
+.center_1 {
+    border: 2px solid #2c3e50;
+}
+
+.TABLE_1 {
+    margin-bottom: 30px;
+}
+
+.TABLE_1 td {
+    padding: 6px 8px;
+    font-size: 13px;
+    vertical-align: top;
+}
+.TABLE_1 tr:first-child td {
+    width: 33.3%;
+}
+
+.center_1 th:nth-child(1) { width: 25%; }
+.center_1 th:nth-child(2) { width: 20%; }
+.center_1 th:nth-child(3) { width: 20%; }
+.center_1 th:nth-child(4) { width: 20%; }
+.center_1 th:nth-child(5) { width: 15%; }
+
+
+   
+</style>
 </head>
 <body>
-   <form id="form1" runat="server">
-        <div>
-            <div class="header">Welding Checklist Report</div>
+       <asp:Repeater ID="RepeaterMeeting" runat="server" OnItemDataBound="RepeaterMeeting_ItemDataBound">
+    <HeaderTemplate>
+        <!-- Your header content -->
+        <table class="TABLE_1">
+            <tr>
+                <td style="text-align: left;">
+                    <b>Document Number</b></br>
+                   ATS/WMC/22/00
+                </td>
+               <%-- <td style="text-align: center; height: auto;">
+                    <asp:Image ID="Image1" runat="server"  ImageUrl="~/WebData/img/logo.png" CssClass="Logo" AlternateText="logo" />
+                </td>--%>
+               <%-- <td style="text-align: left;">
+                    <b>EFF.DATE:</b><br />
+                    23/02/2023
+                </td>--%>
+            </tr>
+            <tr>
+                <td colspan="3" style="height: 30px"></td>
+            </tr>
 
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <td><asp:Label ID="lblDate" runat="server" /></td>
-                    <th>Job ID</th>
-                    <td><asp:Label ID="lblJobID" runat="server" /></td>
-                </tr>
-                <tr>
-                    <th>Location</th>
-                    <td><asp:Label ID="lblLocation" runat="server" /></td>
-                    <th>Inspected By</th>
-                    <td><asp:Label ID="lblInspectedBy" runat="server" /></td>
-                </tr>
-                <tr>
-                    <th>Employee Name</th>
-                    <td><asp:Label ID="lblEmployeeName" runat="server" /></td>
-                    <th>Remarks</th>
-                    <td><asp:Label ID="lblRemarks" runat="server" /></td>
-                </tr>
-            </table>
+            <!-- Title Section -->
+            <tr>
+                <td colspan="3" style="text-align: center; font-size: 18px; font-weight: bold; text-decoration: underline;">AUTOMATION & TECHNICAL SERVICE
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center; padding: 10px 0 30px; font-size: 16px; font-weight: bold; text-decoration: underline;">Welding Machine Check list
+                </td>
+            </tr>
+    </HeaderTemplate>
 
-            <asp:Repeater ID="rptChecklist" runat="server">
-                <HeaderTemplate>
-                    <table>
-                        <tr>
+    <ItemTemplate>
+        <tr>
+            <td colspan="3" style="height: 20px;"><h2 style="text-decoration: underline;">Checklist Basic Details</h2></td>
+        </tr>
+        <!-- Meeting Info -->
+        <tr class="center">
+            <td>Header ID</td>
+            <td colspan="3"><%# Eval("HeaderID") %></td>
+        </tr>
+        <tr class="center">
+            <td>Date</td>
+            <td colspan="3"><%# Eval("ChecklistDate") %></td>
+        </tr>
+        <tr class="center">
+            <td>Job ID</td>
+            <td colspan="2"><%# Eval("JobID") %></td>
+        </tr>
+        <tr class="center">
+            <td>EmployeeName</td>
+            <td colspan="2"><%# Eval("EmployeeName") %></td>
+        </tr>
+         <tr class="center">
+     <td>Inspected By</td>
+     <td colspan="2"><%# Eval("InspectedBy") %></td>
+ </tr>
+         <tr class="center">
+     <td>Remarks</td>
+     <td colspan="2"><%# Eval("Remarks") %></td>
+ </tr>
+       
+
+
+        <!-- Attendee Section -->
+        <tr>
+            <td colspan="7">
+                <h2 style="text-decoration: underline;">Checklist</h2>
+                <table class="center_1">
+                    <thead>
+                        <tr class="center_1">
                             <th>SNo</th>
-                            <th>Points</th>
+                             <th>Description</th>
+                            <th>IsOk</th>
                             <th>Remarks</th>
-                            <th>Photo</th>
+                            <th>Image</th>
+                            <th>NA</th>
                         </tr>
-                </HeaderTemplate>
-                <ItemTemplate>
-                        <tr>
-                            <td><%# Eval("Description") %></td>
-                            <td>
-                                <%# Convert.ToBoolean(Eval("IsOk")) ? "✔️" :
-                                    Convert.ToBoolean(Eval("NA")) ? "N/A" : "❌" %>
-                            </td>
-                            <td><%# Eval("Remarks") %></td>
-                            <td>
-                                <%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) ?
-                                    $"<img src='{Eval("PhotoPath")}' class='photo-thumb' />" : "" %>
-                            </td>
-                        </tr>
-                </ItemTemplate>
-                <FooterTemplate>
-                    </table>
-                </FooterTemplate>
-            </asp:Repeater>
+                    </thead>
+                    <tbody>
+                        <asp:Repeater ID="RepeaterChecklist" runat="server">
+                            <ItemTemplate>
+                                <tr class="center_1">
+                                    <td><%# Eval("QuestionNumber") %></td>
+                                     <td><%# Eval("description") %></td>
+                                    <td><%# Convert.ToBoolean(Eval("IsOk")) ? "✔️" : "❌" %></td>
+                                    <td><%# Eval("Remarks") %></td>
+                                    <td><asp:Image ID="imgUpload"  runat="server"  ImageUrl='<%# Eval("PhotoPath") %>'  Width="100"  Height="100"  Visible='<%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>'  /></td>
+                                   
+                                    <td><%# Convert.ToBoolean(Eval("NA")) ? "✔️" : "" %></td>
 
-              <asp:Repeater ID="rptTerminals" runat="server">
-      <HeaderTemplate>
-          <table>
-              <tr>
-                  <th>SNo</th>
-                  <th>Points</th>
-                  <th>Remarks</th>
-                  <th>Photo</th>
-              </tr>
-      </HeaderTemplate>
-      <ItemTemplate>
-              <tr>
-                  <td><%# Eval("Description") %></td>
-                  <td>
-                      <%# Convert.ToBoolean(Eval("IsOk")) ? "✔️" :
-                          Convert.ToBoolean(Eval("NA")) ? "N/A" : "❌" %>
-                  </td>
-                  <td><%# Eval("Remarks") %></td>
-                  <td>
-                      <%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) ?
-                          $"<img src='{Eval("PhotoPath")}' class='photo-thumb' />" : "" %>
-                  </td>
-              </tr>
-      </ItemTemplate>
-      <FooterTemplate>
-          </table>
-      </FooterTemplate>
-  </asp:Repeater>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
 
-              <asp:Repeater ID="rptCables" runat="server">
-      <HeaderTemplate>
-          <table>
-              <tr>
-                  <th>SNo</th>
-                  <th>Points</th>
-                  <th>Remarks</th>
-                  <th>Photo</th>
-              </tr>
-      </HeaderTemplate>
-      <ItemTemplate>
-              <tr>
-                  <td><%# Eval("Description") %></td>
-                  <td>
-                      <%# Convert.ToBoolean(Eval("IsOk")) ? "✔️" :
-                          Convert.ToBoolean(Eval("NA")) ? "N/A" : "❌" %>
-                  </td>
-                  <td><%# Eval("Remarks") %></td>
-                  <td>
-                      <%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) ?
-                          $"<img src='{Eval("PhotoPath")}' class='photo-thumb' />" : "" %>
-                  </td>
-              </tr>
-      </ItemTemplate>
-      <FooterTemplate>
-          </table>
-      </FooterTemplate>
-  </asp:Repeater>
+       
+    </ItemTemplate>
+</asp:Repeater>
 
-              <asp:Repeater ID="rptElectrodeHolder" runat="server">
-      <HeaderTemplate>
-          <table>
-              <tr>
-                  <th>SNo</th>
-                  <th>Points</th>
-                  <th>Remarks</th>
-                  <th>Photo</th>
-              </tr>
-      </HeaderTemplate>
-      <ItemTemplate>
-              <tr>
-                  <td><%# Eval("Description") %></td>
-                  <td>
-                      <%# Convert.ToBoolean(Eval("IsOk")) ? "✔️" :
-                          Convert.ToBoolean(Eval("NA")) ? "N/A" : "❌" %>
-                  </td>
-                  <td><%# Eval("Remarks") %></td>
-                  <td>
-                      <%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) ?
-                          $"<img src='{Eval("PhotoPath")}' class='photo-thumb' />" : "" %>
-                  </td>
-              </tr>
-      </ItemTemplate>
-      <FooterTemplate>
-          </table>
-      </FooterTemplate>
-  </asp:Repeater>
+  
 
-              <asp:Repeater ID="rptWorkArea" runat="server">
-      <HeaderTemplate>
-          <table>
-              <tr>
-                  <th>SNo</th>
-                  <th>Points</th>
-                  <th>Remarks</th>
-                  <th>Photo</th>
-              </tr>
-      </HeaderTemplate>
-      <ItemTemplate>
-              <tr>
-                  <td><%# Eval("Description") %></td>
-                  <td>
-                      <%# Convert.ToBoolean(Eval("IsOk")) ? "✔️" :
-                          Convert.ToBoolean(Eval("NA")) ? "N/A" : "❌" %>
-                  </td>
-                  <td><%# Eval("Remarks") %></td>
-                  <td>
-                      <%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) ?
-                          $"<img src='{Eval("PhotoPath")}' class='photo-thumb' />" : "" %>
-                  </td>
-              </tr>
-      </ItemTemplate>
-      <FooterTemplate>
-          </table>
-      </FooterTemplate>
-  </asp:Repeater>
-
-        </div>
-    </form>
 </body>
 </html>

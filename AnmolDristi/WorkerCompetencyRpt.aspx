@@ -83,7 +83,6 @@
 <body>
    <asp:Repeater ID="RepeaterMeeting" runat="server" >
     <HeaderTemplate>
-        <!-- Your header content -->
         <table class="TABLE_1">
             <tr>
                 <td style="text-align: left;">
@@ -123,31 +122,35 @@
      </tr>
 
         <tr class="center">
-            <td>NameOfWorkman</td>
+            <td>Name Of Workman</td>
             <td colspan="2"><%# Eval("NameOfWorkman") %></td>
         </tr>
         <tr class="center">
             <td>Designation</td>
             <td colspan="2"><%# Eval("Designation") %></td>
         </tr>
+         <tr>
+     <td colspan="3" style="height: 20px;"><h2 style="text-decoration: underline;">Score field</h2></td>
+ </tr>
+
         <tr class="center">
-            <td>Technical Knowledge</td>
+            <td>Technical Knowledge(0-5)</td>
             <td colspan="2"><%# Eval("TechnicalKnowledge") %></td>
         </tr>
         <tr class="center">
-    <td>Technical Skills</td>
+    <td>Technical Skills(0-5)</td>
     <td colspan="2"><%# Eval("TechnicalSkills") %></td>
 </tr>
         <tr class="center">
-    <td>Consistency In Job</td>
+    <td>Consistency In Job(0-5)</td>
     <td colspan="2"><%# Eval("ConsistencyInJob") %></td>
 </tr>
         <tr class="center">
-    <td>Job Quality</td>
+    <td>Job Quality(0-5)</td>
     <td colspan="2"><%# Eval("JobQuality") %></td>
 </tr>
         <tr class="center">
-    <td>Safety Awareness</td>
+    <td>Safety Awareness(0-5)</td>
     <td colspan="2"><%# Eval("SafetyAwareness") %></td>
 </tr>
                 <tr class="center">
@@ -155,7 +158,7 @@
     <td colspan="2"><%# Eval("TotalMark") %></td>
 </tr>
                 <tr class="center">
-    <td>Score</td>
+    <td>Total Score(Out of 25)</td>
     <td colspan="2"><%# Eval("Score") %></td>
 </tr>
                 <tr class="center">
@@ -169,7 +172,9 @@
       
        
     </ItemTemplate>
-</asp:Repeater>
 
+      
+
+</asp:Repeater>
 </body>
 </html>

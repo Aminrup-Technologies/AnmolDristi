@@ -151,7 +151,7 @@
            </tr>
            <tr class="center">
                <td>Audit Date</td>
-               <td colspan="3"><%# Eval("AuditDate") %></td>
+               <td colspan="3"><%# Eval("AuditDate", "{0:yyyy-MM-dd}") %></td>
            </tr>
            <tr class="center">
                <td>Job ID</td>

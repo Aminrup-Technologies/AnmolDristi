@@ -12,6 +12,7 @@ using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.Script.Services;
 using System.Diagnostics;
+using System.Runtime.Remoting.Messaging;
 
 namespace AnmolDristi
 {
@@ -139,19 +140,17 @@ namespace AnmolDristi
         {
             Button btnEdit = (Button)sender;
             GridViewRow row = (GridViewRow)btnEdit.NamingContainer;
-            int headerID = Convert.ToInt32(btnEdit.CommandArgument);
-
-            // Redirect to update page with AuditID in query string
-            Response.Redirect($"WeldingChecklistUpdate.aspx?HeaderID={headerID}");
+            int HeaderID = Convert.ToInt32(btnEdit.CommandArgument);
+            Response.Redirect($"WeldingChecklistUpdate.aspx?HeaderID={HeaderID}");
         }
         protected void btnView_Click(object sender, EventArgs e)
         {
             Button btnView = (Button)sender;
             GridViewRow row = (GridViewRow)btnView.NamingContainer;
-            int headerID = Convert.ToInt32(btnView.CommandArgument);
+            int HeaderID = Convert.ToInt32(btnView.CommandArgument);
 
             // Redirect to update page with AuditID in query string
-            Response.Redirect($"WeldingChecklistRpt.aspx?id={headerID}");
+            Response.Redirect($"WeldingChecklistRpt.aspx?HeaderID={HeaderID}");
         }
 
     }

@@ -219,28 +219,32 @@
          <table class="center_1">
              <thead>
                  <tr class="center_1">
-                    
-                     <th>Issue Description</th>
-                     <th>Responsible Person</th>
-                     <th>Target Date</th>
-                     <th>Status</th>
                      <th>Agenda Title</th>
-                     <th>Review Date</th>
-                     <th>close By</th>
+                     <th>Issue Description</th>
+                      <th>Point Raised By</th>
+                     <th>Close By</th>
+                     <th>Target Date</th>
+                      <th>Review Date</th>
+                     <th>Status</th>
+                     
+                    
+                    
                  </tr>
              </thead>
              <tbody>
                  <asp:Repeater ID="RepeaterIssues" runat="server">
                      <ItemTemplate>
                          <tr class="center_1">
-                            
-                             <td><%# Eval("IssueDescription") %></td>
-                             <td><%# Eval("ResponsiblePerson") %></td>
-                             <td><%# Eval("TargetDate") %></td>
-                             <td><%# Eval("Status") %></td>
                              <td><%# Eval("AgendaTitle") %></td>
-                             <td><%# Eval("ReviewDate") %></td>
-                             <td><%# Eval("ReviewBy") %></td>
+                             <td><%# Eval("IssueDescription") %></td>
+                              <td><%# Eval("ReviewBy") %></td>
+                             <td><%# Eval("ResponsiblePerson") %></td>
+                             <td><%# Eval("TargetDate", "{0:yyyy-MM-dd}") %></td>
+                             <td><%# Eval("ReviewDate", "{0:yyyy-MM-dd}") %></td>
+                             <td><%# Eval("Status") %></td>
+                            
+                             
+                            
                          </tr>
                      </ItemTemplate>
                  </asp:Repeater>
