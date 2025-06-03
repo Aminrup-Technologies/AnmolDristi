@@ -37,9 +37,10 @@ namespace AnmolDristi
             kyt.KYT_Location, 
             kyt.KYT_Date, 
             kyt.KYT_JobID, 
-            kyt.KYT_Activity, 
+            
             kyt.KYT_SOPNo, 
             kyt.KYT_Vendor,
+hkyt.KYT_Activity, 
             hkyt.KYT_HiddenHazards, 
             hkyt.KYT_Consequence, 
             hkyt.KYT_CounterMeasures, 
@@ -99,7 +100,7 @@ namespace AnmolDristi
             string kytSOPNo = txtSOPNo.Text;
             string kytVendor = txtVender.Text;
 
-            string kytSlNo = txtSlNo.Text;
+            //string kytSlNo = txtSlNo.Text;
             string kytHiddenHazards = txtHiddenHazards.Text;
             string kytConsequence = txtConsequence.Text;
             string kytCounterMeasures = txtCounterMeasures.Text;
@@ -141,7 +142,7 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@KYTLocation", (object)kytLocation ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@KYTDate", (object)kytDate ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@KYTJobID", (object)kytJobID ?? DBNull.Value);
-                        cmd.Parameters.AddWithValue("@KYTActivity", (object)kytActivity ?? DBNull.Value);
+                        
                         cmd.Parameters.AddWithValue("@KYTSOPNo", (object)kytSOPNo ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@KYTVendor", (object)kytVendor ?? DBNull.Value);
 
@@ -176,7 +177,8 @@ namespace AnmolDristi
                             {
                                 cmd.CommandType = CommandType.StoredProcedure;
                                 cmd.Parameters.AddWithValue("@ID", kytIncidentID);
-                                cmd.Parameters.AddWithValue("@KYTSLNo", (object)row.SlNo ?? DBNull.Value);
+                                //  cmd.Parameters.AddWithValue("@KYTSLNo", (object)row.SlNo ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@KYTActivity", (object)row.Activity ?? DBNull.Value);
                                 cmd.Parameters.AddWithValue("@KYTHiddenHazards", (object)row.HiddenHazards ?? DBNull.Value);
                                 cmd.Parameters.AddWithValue("@KYTConsequence", (object)row.Consequence ?? DBNull.Value);
                                 cmd.Parameters.AddWithValue("@KYTCounterMeasures", (object)row.CounterMeasures ?? DBNull.Value);
@@ -204,7 +206,7 @@ namespace AnmolDristi
 
         public class KYTGridRow
         {
-            public string SlNo { get; set; }
+            public string Activity { get; set; }
             public string HiddenHazards { get; set; }
             public string Consequence { get; set; }
             public string CounterMeasures { get; set; }
@@ -224,7 +226,7 @@ namespace AnmolDristi
             txtActivity.Text = "";
             txtSOPNo.Text = "";
             txtVender.Text = "";
-            txtSlNo.Text = "";
+            //txtSlNo.Text = "";
             txtHiddenHazards.Text = "";
             txtConsequence.Text = "";
             txtCounterMeasures.Text = "";

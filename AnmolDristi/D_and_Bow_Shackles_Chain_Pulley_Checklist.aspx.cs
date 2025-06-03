@@ -44,7 +44,8 @@ namespace AnmolDristi
                 string query = @"
 
 SELECT
-    h.Id AS BasicID, h.Site, h.TagNo, h.InspectionDate,
+    h.Id AS BasicID, h.Site, h.TagNo, h.InspectionDate, h.JobID,
+    h.JobName,
 
     sd.Question AS ShacklesChecklistQuestion, 
     sd.IsYes AS ShacklesIsYes, 
@@ -168,6 +169,8 @@ ORDER BY h.Id DESC";
                         cmd.Parameters.AddWithValue("@TagNo", txtTagNo.Text.Trim());
                         cmd.Parameters.AddWithValue("@InspectionDate", txtDate.Text.Trim());
                         cmd.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
+                        cmd.Parameters.AddWithValue("@JobID", txtJobID.Text.Trim()); 
+                        cmd.Parameters.AddWithValue("@JobName", txtJobName.Text.Trim());
 
                         SqlParameter outParam = new SqlParameter("@BasicID", SqlDbType.Int)
                         {
@@ -262,6 +265,9 @@ ORDER BY h.Id DESC";
             txtSite.Text = "";
             txtTagNo.Text = "";
             txtDate.Text = "";
+            txtJobName.Text = "";
+            txtJobID.Text = "";
+
 
             pnlTested.Visible = false;
             txtTestedRemarks.Text = "";

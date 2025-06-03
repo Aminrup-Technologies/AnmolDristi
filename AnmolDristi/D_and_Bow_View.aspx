@@ -47,6 +47,9 @@
         <asp:BoundField DataField="Site" HeaderText="Site" />
         <asp:BoundField DataField="TagNo" HeaderText="Tag No" />
         <asp:BoundField DataField="InspectionDate" HeaderText="Inspection Date" DataFormatString="{0:yyyy-MM-dd}" />
+        
+    <asp:BoundField DataField="JobID" HeaderText="Job ID" />
+    <asp:BoundField DataField="JobName" HeaderText="Job Name" />
 
         <asp:BoundField DataField="ShacklesChecklistQuestion" HeaderText="Shackles Question" />
         <asp:BoundField DataField="ShacklesIsYes" HeaderText="Shackles Is Yes" />

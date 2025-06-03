@@ -142,6 +142,35 @@
                                     </div>
                                 </div>
 
+                                <!-- Job ID -->
+<div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lblJobID" runat="server" Text="Job ID:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtJobID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Job ID"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="rfvJobID" runat="server"
+                ControlToValidate="txtJobID"
+                ErrorMessage="Please enter Job ID."
+                ForeColor="Red" Display="Dynamic" />
+        </div>
+    </div>
+</div>
+
+<!-- Job Name -->
+<div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lblJobName" runat="server" Text="Job Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtJobName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Job Name"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="rfvJobName" runat="server"
+                ControlToValidate="txtJobName"
+                ErrorMessage="Please enter Job Name."
+                ForeColor="Red" Display="Dynamic" />
+        </div>
+    </div>
+</div>
+
+
                             </div>
                             <div>
                                 <!-- Row for Step 2 heading -->
@@ -331,19 +360,20 @@
                                     </div>
                                 </div>
 
+<script type="text/javascript">
+    function validateGrindingChecklist() {
+        var isValid = true;
+        var errorMessage = "";
 
-                                <script type="text/javascript">
-                                    function validateGrindingChecklist() {
-                                        var isValid = true;
-                                        var errorMessage = "";
-
-                                        var fieldsToCheck = [
-                                            { id: '<%= txtSite.ClientID %>', type: 'textbox', name: 'Site' },
+        var fieldsToCheck = [
+            { id: '<%= txtSite.ClientID %>', type: 'textbox', name: 'Site' },
             { id: '<%= txtDateOfInspection.ClientID %>', type: 'textbox', name: 'Date of Inspection' },
             { id: '<%= txtInspectedBy.ClientID %>', type: 'textbox', name: 'Inspected By' },
             { id: '<%= txtSerialNo.ClientID %>', type: 'textbox', name: 'SI No' },
             { id: '<%= txtIdentificationNumber.ClientID %>', type: 'textbox', name: 'Identification Number' },
-            { id: '<%= txtLocation.ClientID %>', type: 'textbox', name: 'Location' }
+            { id: '<%= txtLocation.ClientID %>', type: 'textbox', name: 'Location' },
+            { id: '<%= txtJobID.ClientID %>', type: 'textbox', name: 'Job ID' },
+            { id: '<%= txtJobName.ClientID %>', type: 'textbox', name: 'Job Name' }
         ];
 
         // Check TextBoxes
@@ -389,7 +419,8 @@
 
         return isValid;
     }
-                                </script>
+</script>
+
 
 
 

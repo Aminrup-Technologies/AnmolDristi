@@ -29,9 +29,10 @@ namespace AnmolDristi
             {
                 conn.Open();
                 string query = @"
-               SELECT 
-    gh.HeaderID, gh.SiteName, gh.InspectionDate, gh.TagNo, gh.SubmittedDate, gh.SubmittedTime,
-    gc.Question AS ChecklistQuestion, gc.IsYes, gc.Remarks, gc.PhotoPath
+SELECT 
+    gh.HeaderID, gh.SiteName, gh.InspectionDate, gh.TagNo,gh.JobID,
+    gh.GasCutterName,gh.SubmittedDate, gh.SubmittedTime,
+    gc.Question AS ChecklistQuestion, gc.IsYes, gc.Remarks, gc.PhotoPath,  gc.FinalRemarks    
 FROM GasCutting_Header gh
 LEFT JOIN GasCutting_Checklist gc ON gh.HeaderID = gc.HeaderID
 ORDER BY gh.HeaderID DESC";
@@ -70,10 +71,13 @@ ORDER BY gh.HeaderID DESC";
             string siteName = ((TextBox)row.FindControl("txtSiteName")).Text;
             string inspectionDate = ((TextBox)row.FindControl("txtInspectionDate")).Text;
             string tagNo = ((TextBox)row.FindControl("txtTagNo")).Text;
+            string gasCutterName = ((TextBox)row.FindControl("txtGasCutterName")).Text;
+            string jobId = ((TextBox)row.FindControl("txtJobID")).Text;
             string checklistQuestion = ((TextBox)row.FindControl("txtChecklistQuestion")).Text;
             string isYes = ((TextBox)row.FindControl("txtIsYes")).Text;
             string remarks = ((TextBox)row.FindControl("txtRemarks")).Text;
             string photoPath = ((TextBox)row.FindControl("txtPhotoPath")).Text;
+            string finalRemarks = ((TextBox)row.FindControl("txtFinalRemarks")).Text;
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
@@ -83,11 +87,13 @@ ORDER BY gh.HeaderID DESC";
 
                 string updateQuery = @"
             UPDATE GasCutting_Header 
-            SET SiteName = @SiteName, InspectionDate = @InspectionDate, TagNo = @TagNo
+            SET SiteName = @SiteName, InspectionDate = @InspectionDate, TagNo = @TagNo,
+                GasCutterName = @GasCutterName, JobID = @JobID
             WHERE HeaderID = @HeaderID;
 
             UPDATE GasCutting_Checklist
-            SET Question = @ChecklistQuestion, IsYes = @IsYes, Remarks = @Remarks, PhotoPath = @PhotoPath
+            SET Question = @ChecklistQuestion, IsYes = @IsYes, Remarks = @Remarks, 
+                PhotoPath = @PhotoPath, FinalRemarks = @FinalRemarks
             WHERE HeaderID = @HeaderID";
 
                 using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
@@ -96,10 +102,13 @@ ORDER BY gh.HeaderID DESC";
                     cmd.Parameters.AddWithValue("@SiteName", siteName);
                     cmd.Parameters.AddWithValue("@InspectionDate", inspectionDate);
                     cmd.Parameters.AddWithValue("@TagNo", tagNo);
+                    cmd.Parameters.AddWithValue("@GasCutterName", gasCutterName);
+                    cmd.Parameters.AddWithValue("@JobID", jobId);
                     cmd.Parameters.AddWithValue("@ChecklistQuestion", checklistQuestion);
                     cmd.Parameters.AddWithValue("@IsYes", isYes);
                     cmd.Parameters.AddWithValue("@Remarks", remarks);
                     cmd.Parameters.AddWithValue("@PhotoPath", photoPath);
+                    cmd.Parameters.AddWithValue("@FinalRemarks", finalRemarks);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -108,6 +117,7 @@ ORDER BY gh.HeaderID DESC";
             GvGasCuttingChecklist.EditIndex = -1;
             LoadGasCuttingIncidentDetails();
         }
+
 
         protected void GvGasCuttingChecklist_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {

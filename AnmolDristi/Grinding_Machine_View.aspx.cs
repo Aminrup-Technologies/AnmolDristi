@@ -177,7 +177,7 @@ namespace AnmolDristi
                 string query = @"
                 SELECT 
                     gh.HeaderID, gh.Site, gh.DateOfInspection, gh.InspectedBy, gh.SerialNo, 
-                    gh.IdentificationNumber, gh.Location, gh.Final_Remarks,
+                    gh.IdentificationNumber, gh.Location, gh.Final_Remarks,gh.JobID, gh.JobName,
                     gc.Question AS ChecklistQuestion, gc.IsYes, gc.Remarks, gc.PhotoPath, gc.EntryDate
                 FROM GrindingMachine_Header gh
                 LEFT JOIN GrindingMachine_Checklist gc ON gh.HeaderID = gc.HeaderID
@@ -234,6 +234,9 @@ namespace AnmolDristi
             string serialNo = ((TextBox)row.Cells[3].Controls[0]).Text;
             string identificationNo = ((TextBox)row.Cells[4].Controls[0]).Text;
             string location = ((TextBox)row.Cells[5].Controls[0]).Text;
+            string jobId = ((TextBox)row.Cells[7].Controls[0]).Text;
+            string jobName = ((TextBox)row.Cells[8].Controls[0]).Text;
+
 
             // Safely parse the EntryDate
             DateTime entryDate;
@@ -252,7 +255,8 @@ namespace AnmolDristi
                 string updateQuery = @"
         UPDATE GrindingMachine_Header 
         SET Site = @Site, DateOfInspection = @DateOfInspection, InspectedBy = @InspectedBy, 
-            SerialNo = @SerialNo, IdentificationNumber = @IdentificationNumber, Location = @Location
+            SerialNo = @SerialNo, IdentificationNumber = @IdentificationNumber, Location = @Location, JobID = @JobID,
+            JobName = @JobName
         WHERE HeaderID = @HeaderID";
 
                 using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
@@ -265,6 +269,8 @@ namespace AnmolDristi
                     cmd.Parameters.AddWithValue("@IdentificationNumber", identificationNo);
                     cmd.Parameters.AddWithValue("@Location", location);
                     cmd.Parameters.AddWithValue("@EntryDate", entryDate);
+                    cmd.Parameters.AddWithValue("@JobID", jobId);    
+                    cmd.Parameters.AddWithValue("@JobName", jobName);
 
                     cmd.ExecuteNonQuery();
                 }

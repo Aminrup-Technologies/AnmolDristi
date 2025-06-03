@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 
 
 
@@ -33,22 +34,39 @@ namespace AnmolDristi
     {
         conn.Open();
                 string query = @"
-        SELECT 
+       SELECT 
     i.IncidentID, 
     i.IncidentClassification, 
-    CONVERT(VARCHAR, i.DateOfIncident, 23) AS DateOfIncident, 
-    i.TimeOfIncident AS TimeOfIncident,  
-    i.Location, i.Section, i.Department, 
+    i.DateOfIncident, 
+    i.Location, 
+    i.Department, 
+i.TimeOfIncident,     
+ i.Section,  
     i.SubmittedDate,                    
-    i.SubmittedTime,                     
-    p.VendorName, p.TotalInjuredPersons, p.NameOfPersonInvolved, 
-    p.AnyWitness, p.WitnessNames, p.ReportedBy,
-    inv.InvestigationTeamMembers, inv.TaskAndDescription, inv.RootCauseAnalysis, 
-    inv.ReviewDate, inv.PreventiveActions, inv.CorrectiveActions
+    i.SubmittedTime,
+    p.NameOfPersonInvolved, 
+    p.AnyWitness, 
+    p.WitnessNames, 
+    p.ReportedBy, 
+ p.VendorName,   
+p.TotalInjuredPersons, 
+    inv.CorrectiveActions,
+    inv.PreventiveActions,
+    inv.InvestigationTeamMembers,
+    inv.TaskAndDescription,
+    inv.FinalRootCause,
+    inv.Why1_Loss,
+    inv.Why2_Incident,
+    inv.Why3_ImmediateCause,
+    inv.Why4_UnderlyingCause,
+    inv.Why5_RootCause,
+    inv.Why6_How, 
+inv.FinalRootCauseImagePath
 FROM IncidentDetails i
 LEFT JOIN PeopleInvolved p ON i.IncidentID = p.IncidentID
 LEFT JOIN InvestigationActions inv ON i.IncidentID = inv.IncidentID
-ORDER BY i.IncidentID DESC";
+ORDER BY i.IncidentID DESC;
+";
 
 
         using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -96,43 +114,73 @@ protected void gvIncidentData_RowUpdating(object sender, GridViewUpdateEventArgs
     string nameOfPersonInvolved = ((TextBox)row.FindControl("txtNameOfPersonInvolved")).Text;
     string InvestigationTeamMembers = ((TextBox)row.FindControl("txtInvestigationTeamMembers")).Text;
     string TaskAndDescription = ((TextBox)row.FindControl("txtTaskAndDescription")).Text;
-    string rootCauseAnalysis = ((TextBox)row.FindControl("txtRootCauseAnalysis")).Text;
-    string reviewDate = ((TextBox)row.FindControl("txtReviewDate")).Text;
-    string preventiveActions = ((TextBox)row.FindControl("txtPreventiveActions")).Text;
-    string correctiveActions = ((TextBox)row.FindControl("txtCorrectiveActions")).Text;
+            string why1_Loss = ((TextBox)row.FindControl("txtWhy1Loss")).Text;
+            string why2_Incident = ((TextBox)row.FindControl("txtWhy2_Incident")).Text;
+            string why3_ImmediateCause = ((TextBox)row.FindControl("txtWhy3_ImmediateCause")).Text;
+            string why4_UnderlyingCause = ((TextBox)row.FindControl("txtWhy4_UnderlyingCause")).Text;
+            string why5_RootCause = ((TextBox)row.FindControl("txtWhy5_RootCause")).Text;
+            string why6_How = ((TextBox)row.FindControl("txtWhy6_How")).Text;
 
-    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            //FileUpload fuImage = (FileUpload)row.FindControl("fuSupportingImage");
+            //string fileName = null;
+
+            //if (fuImage != null && fuImage.HasFile)
+            //{
+            //    fileName = Path.GetFileName(fuImage.FileName);
+            //    string savePath = Server.MapPath("~/Uploads/") + fileName;
+            //    fuImage.SaveAs(savePath);
+            //}
+
+
+
+            //string reviewDate = ((TextBox)row.FindControl("txtReviewDate")).Text;
+            string preventiveActions = ((TextBox)row.FindControl("txtPreventiveActions")).Text;
+    string correctiveActions = ((TextBox)row.FindControl("txtCorrectiveActions")).Text;
+     string finalRootCause = ((TextBox)row.FindControl("txtFinalRootCause")).Text;
+
+
+            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
     using (SqlConnection conn = new SqlConnection(connectionString))
     {
         conn.Open();
         string updateQuery = @"
-                UPDATE IncidentDetails 
-                SET IncidentClassification = @IncidentClassification, 
-                    DateOfIncident = @DateOfIncident, 
-                    TimeOfIncident = @TimeOfIncident, 
-                    Location = @Location, 
-                    Section = @Section, 
-                    Department = @Department
-                WHERE IncidentID = @IncidentID;
+ UPDATE IncidentDetails 
+SET IncidentClassification = @IncidentClassification,
+    DateOfIncident = @DateOfIncident,
+    TimeOfIncident = @TimeOfIncident,
+    Location = @Location,
+    Section = @Section,
+    Department = @Department
+WHERE IncidentID = @IncidentID;
 
-                UPDATE PeopleInvolved 
-                SET NameOfPersonInvolved = @NameOfPersonInvolved,
-                    VendorName = @VendorName, 
-                    TotalInjuredPersons = @TotalInjuredPersons
-                WHERE IncidentID = @IncidentID;
+UPDATE PeopleInvolved
+SET NameOfPersonInvolved = @NameOfPersonInvolved,
+    VendorName = @VendorName,
+    TotalInjuredPersons = @TotalInjuredPersons
+WHERE IncidentID = @IncidentID;
 
-                UPDATE InvestigationActions 
-                SET InvestigationTeamMembers = @InvestigationTeamMembers,
-                    TaskAndDescription = @TaskAndDescription,
-                    RootCauseAnalysis = @RootCauseAnalysis,
-                    ReviewDate = @ReviewDate,
-                    PreventiveActions = @PreventiveActions,
-                    CorrectiveActions = @CorrectiveActions
-                WHERE IncidentID = @IncidentID;
-            ";
+-- Your existing InvestigationActions update
+UPDATE InvestigationActions 
+SET InvestigationTeamMembers = @InvestigationTeamMembers,
+    TaskAndDescription = @TaskAndDescription,
+    Why1_Loss = @Why1_Loss,
+    Why2_Incident = @Why2_Incident,
+    Why3_ImmediateCause = @Why3_ImmediateCause,
+    Why4_UnderlyingCause = @Why4_UnderlyingCause,
+    Why5_RootCause = @Why5_RootCause,
+    Why6_How = @Why6_How,
+    PreventiveActions = @PreventiveActions,
+    CorrectiveActions = @CorrectiveActions, 
+    FinalRootCause = @FinalRootCause,
+    FinalRootCauseImagePath = @FinalRootCauseImagePath
+WHERE IncidentID = @IncidentID;
 
-        using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+";
+
+                
+
+                using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
         {
             cmd.Parameters.AddWithValue("@IncidentID", incidentID);
             cmd.Parameters.AddWithValue("@IncidentClassification", incidentClassification);
@@ -146,12 +194,38 @@ protected void gvIncidentData_RowUpdating(object sender, GridViewUpdateEventArgs
             cmd.Parameters.AddWithValue("@NameOfPersonInvolved", nameOfPersonInvolved);
             cmd.Parameters.AddWithValue("@InvestigationTeamMembers", InvestigationTeamMembers);
             cmd.Parameters.AddWithValue("@TaskAndDescription", TaskAndDescription);
-            cmd.Parameters.AddWithValue("@RootCauseAnalysis", rootCauseAnalysis);
-            cmd.Parameters.AddWithValue("@ReviewDate", reviewDate);
-            cmd.Parameters.AddWithValue("@PreventiveActions", preventiveActions);
-            cmd.Parameters.AddWithValue("@CorrectiveActions", correctiveActions);
+                    cmd.Parameters.AddWithValue("@Why1_Loss", why1_Loss);
+                    cmd.Parameters.AddWithValue("@Why2_Incident", why2_Incident);
+                    cmd.Parameters.AddWithValue("@Why3_ImmediateCause", why3_ImmediateCause);
+                    cmd.Parameters.AddWithValue("@Why4_UnderlyingCause", why4_UnderlyingCause);
+                    cmd.Parameters.AddWithValue("@Why5_RootCause", why5_RootCause);
+                    cmd.Parameters.AddWithValue("@Why6_How", why6_How);
+                    string imagePath = null;
+                    FileUpload fuRootCauseImage = (FileUpload)gvIncidentData.Rows[e.RowIndex].FindControl("fuRootCauseImage");
 
-            cmd.ExecuteNonQuery();
+
+                    string fileName = null;
+                   
+
+                    if (fuRootCauseImage != null && fuRootCauseImage.HasFile)
+                    {
+                        fileName = Path.GetFileName(fuRootCauseImage.FileName);
+                        imagePath = "~/Uploads/" + fileName;
+                        string filePath = Server.MapPath(imagePath);
+                        fuRootCauseImage.SaveAs(filePath);
+                    }
+
+                    cmd.Parameters.AddWithValue("@FinalRootCauseImagePath", (object)imagePath ?? DBNull.Value);
+
+
+
+                    //cmd.Parameters.AddWithValue("@ReviewDate", reviewDate);
+                    cmd.Parameters.AddWithValue("@PreventiveActions", preventiveActions);
+            cmd.Parameters.AddWithValue("@CorrectiveActions", correctiveActions);
+                    cmd.Parameters.AddWithValue("@FinalRootCause", finalRootCause);
+                   // cmd.Parameters.AddWithValue("@SupportingImage", DBNull.Value); // Or set actual path/value if needed
+
+                    cmd.ExecuteNonQuery();
         }
     }
 

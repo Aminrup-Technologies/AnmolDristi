@@ -67,9 +67,10 @@ namespace AnmolDristi
             kyt.KYT_Location, 
             kyt.KYT_Date, 
             kyt.KYT_JobID, 
-            kyt.KYT_Activity, 
+            
             kyt.KYT_SOPNo, 
             kyt.KYT_Vendor,
+            hkyt.KYT_Activity,
             hkyt.KYT_HiddenHazards, 
             hkyt.KYT_Consequence, 
             hkyt.KYT_CounterMeasures, 

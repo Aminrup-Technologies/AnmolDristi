@@ -9,7 +9,7 @@
             display: block;
             margin-bottom: 5px;
         }
-        
+
         .table-container {
             margin-top: 20px;
         }
@@ -35,131 +35,175 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content table-container">
-                     <div style="overflow-x: auto;">
-                    <asp:GridView ID="gvIncidentData" runat="server" CssClass="table table-striped table-bordered"
-                        AutoGenerateColumns="False" DataKeyNames="IncidentID" 
-                        OnRowEditing="gvIncidentData_RowEditing"
-                        OnRowUpdating="gvIncidentData_RowUpdating" 
-                        OnRowCancelingEdit="gvIncidentData_RowCancelingEdit"
-                        OnRowDeleting="gvIncidentData_RowDeleting">
+                    <div style="overflow-x: auto;">
+                        <asp:GridView ID="gvIncidentData" runat="server" CssClass="table table-striped table-bordered"
+                            AutoGenerateColumns="False" DataKeyNames="IncidentID"
+                            OnRowEditing="gvIncidentData_RowEditing"
+                            OnRowUpdating="gvIncidentData_RowUpdating"
+                            OnRowCancelingEdit="gvIncidentData_RowCancelingEdit"
+                            OnRowDeleting="gvIncidentData_RowDeleting">
 
 
-                        <Columns>
+                            <Columns>
 
-       
-        <asp:BoundField DataField="IncidentID" HeaderText="Incident ID" ReadOnly="True" />
 
-      
-        <asp:TemplateField HeaderText="Classification">
-            <ItemTemplate>
-                <%# Eval("IncidentClassification") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtIncidentClassification" runat="server" Text='<%# Bind("IncidentClassification") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
+                                <asp:BoundField DataField="IncidentID" HeaderText="Incident ID" ReadOnly="True" />
 
-       
-        <asp:TemplateField HeaderText="Incident Date">
-            <ItemTemplate>
-                <%# Eval("DateOfIncident") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtDateOfIncident" runat="server" Text='<%# Bind("DateOfIncident") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
 
-       
-        <asp:TemplateField HeaderText="Time of Incident">
-            <ItemTemplate>
-                <%# Eval("TimeOfIncident") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtTimeOfIncident" runat="server" Text='<%# Bind("TimeOfIncident") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Classification">
+                                    <ItemTemplate>
+                                        <%# Eval("IncidentClassification") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtIncidentClassification" runat="server" Text='<%# Bind("IncidentClassification") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
 
-        
-        <asp:TemplateField HeaderText="Location">
-            <ItemTemplate>
-                <%# Eval("Location") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtLocation" runat="server" Text='<%# Bind("Location") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
 
-       
-        <asp:TemplateField HeaderText="Section">
-            <ItemTemplate>
-                <%# Eval("Section") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtSection" runat="server" Text='<%# Bind("Section") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Incident Date">
+                                    <ItemTemplate>
+                                        <%# Eval("DateOfIncident") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtDateOfIncident" runat="server" Text='<%# Bind("DateOfIncident") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
 
-        
-        <asp:TemplateField HeaderText="Department">
-            <ItemTemplate>
-                <%# Eval("Department") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtDepartment" runat="server" Text='<%# Bind("Department") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
 
-        
-        <asp:TemplateField HeaderText="Vendor Name">
-            <ItemTemplate>
-                <%# Eval("VendorName") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtVendorName" runat="server" Text='<%# Bind("VendorName") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Time of Incident">
+                                    <ItemTemplate>
+                                        <%# Eval("TimeOfIncident") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtTimeOfIncident" runat="server" Text='<%# Bind("TimeOfIncident") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
 
-        
-        <asp:TemplateField HeaderText="Total Injured">
-            <ItemTemplate>
-                <%# Eval("TotalInjuredPersons") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtTotalInjuredPersons" runat="server" Text='<%# Bind("TotalInjuredPersons") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
 
-       
-        <asp:TemplateField HeaderText="Investigation Team Members">
-            <ItemTemplate>
-                <%# Eval("InvestigationTeamMembers") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtInvestigationTeamMembers" runat="server" Text='<%# Bind("InvestigationTeamMembers") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Location">
+                                    <ItemTemplate>
+                                        <%# Eval("Location") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtLocation" runat="server" Text='<%# Bind("Location") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
 
-        
-        <asp:TemplateField HeaderText="Task & Incident Description">
-            <ItemTemplate>
-                <%# Eval("TaskAndDescription") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtTaskAndDescription" runat="server" Text='<%# Bind("TaskAndDescription") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
 
-        
-        <asp:TemplateField HeaderText="Root Cause Analysis">
-            <ItemTemplate>
-                <%# Eval("RootCauseAnalysis") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtRootCauseAnalysis" runat="server" Text='<%# Bind("RootCauseAnalysis") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Section">
+                                    <ItemTemplate>
+                                        <%# Eval("Section") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtSection" runat="server" Text='<%# Bind("Section") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
 
-        
+
+                                <asp:TemplateField HeaderText="Department">
+                                    <ItemTemplate>
+                                        <%# Eval("Department") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtDepartment" runat="server" Text='<%# Bind("Department") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Vendor Name">
+                                    <ItemTemplate>
+                                        <%# Eval("VendorName") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtVendorName" runat="server" Text='<%# Bind("VendorName") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Total Injured">
+                                    <ItemTemplate>
+                                        <%# Eval("TotalInjuredPersons") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtTotalInjuredPersons" runat="server" Text='<%# Bind("TotalInjuredPersons") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Investigation Team Members">
+                                    <ItemTemplate>
+                                        <%# Eval("InvestigationTeamMembers") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtInvestigationTeamMembers" runat="server" Text='<%# Bind("InvestigationTeamMembers") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Task & Incident Description">
+                                    <ItemTemplate>
+                                        <%# Eval("TaskAndDescription") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtTaskAndDescription" runat="server" Text='<%# Bind("TaskAndDescription") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+<asp:TemplateField HeaderText="Why1_Loss">
+    <ItemTemplate>
+        <%# Eval("Why1_Loss") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtWhy1Loss" runat="server" Text='<%# Bind("Why1_Loss") %>' CssClass="form-control" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Why2_Incident">
+                                    <ItemTemplate>
+                                        <%# Eval("Why2_Incident") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWhy2_Incident" runat="server" Text='<%# Bind("Why2_Incident") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Why3_ImmediateCause">
+                                    <ItemTemplate>
+                                        <%# Eval("Why3_ImmediateCause") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWhy3_ImmediateCause" runat="server" Text='<%# Bind("Why3_ImmediateCause") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Why4_UnderlyingCause">
+                                    <ItemTemplate>
+                                        <%# Eval("Why4_UnderlyingCause") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWhy4_UnderlyingCause" runat="server" Text='<%# Bind("Why4_UnderlyingCause") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Why5_RootCause">
+                                    <ItemTemplate>
+                                        <%# Eval("Why5_RootCause") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWhy5_RootCause" runat="server" Text='<%# Bind("Why5_RootCause") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Why6_How">
+                                    <ItemTemplate>
+                                        <%# Eval("Why6_How") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWhy6_How" runat="server" Text='<%# Bind("Why6_How") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+                                <%--    
         <asp:TemplateField HeaderText="Review Date">
             <ItemTemplate>
                 <%# Eval("ReviewDate") %>
@@ -167,95 +211,115 @@
             <EditItemTemplate>
                 <asp:TextBox ID="txtReviewDate" runat="server" Text='<%# Bind("ReviewDate") %>' CssClass="form-control" />
             </EditItemTemplate>
-        </asp:TemplateField>
+        </asp:TemplateField>--%>
 
-       
-        <asp:TemplateField HeaderText="Preventive Actions">
-            <ItemTemplate>
-                <%# Eval("PreventiveActions") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtPreventiveActions" runat="server" Text='<%# Bind("PreventiveActions") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
-
-        
-        <asp:TemplateField HeaderText="Person Involved">
-            <ItemTemplate>
-                <%# Eval("NameOfPersonInvolved") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtNameOfPersonInvolved" runat="server" Text='<%# Bind("NameOfPersonInvolved") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
-
-       
-        <asp:TemplateField HeaderText="Any Witness?">
-            <ItemTemplate>
-                <%# Eval("AnyWitness") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtAnyWitness" runat="server" Text='<%# Bind("AnyWitness") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
-
-       
-        <asp:TemplateField HeaderText="Witness Names">
-            <ItemTemplate>
-                <%# Eval("WitnessNames") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtWitnessNames" runat="server" Text='<%# Bind("WitnessNames") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
-
-       
-        <asp:TemplateField HeaderText="Reported By">
-            <ItemTemplate>
-                <%# Eval("ReportedBy") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtReportedBy" runat="server" Text='<%# Bind("ReportedBy") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
-
-       
-        <asp:TemplateField HeaderText="Corrective Actions">
-            <ItemTemplate>
-                <%# Eval("CorrectiveActions") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtCorrectiveActions" runat="server" Text='<%# Bind("CorrectiveActions") %>' CssClass="form-control" />
-            </EditItemTemplate>
-        </asp:TemplateField>
-
-<asp:TemplateField HeaderText="Submitted Date">
+         <asp:TemplateField HeaderText="Supporting Image">
     <ItemTemplate>
-        <%# Eval("SubmittedDate", "{0:yyyy-MM-dd}") %>
+        <%# Eval("FinalRootCauseImagePath") %>
     </ItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Submitted Time">
-    <ItemTemplate>
-        <%# Eval("SubmittedTime", "{0:hh\\:mm}") %>
-    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:FileUpload ID="fuRootCauseImage" runat="server" CssClass="form-control form-control-sm mb-1" />
+    </EditItemTemplate>
 </asp:TemplateField>
 
 
-                            <asp:TemplateField HeaderText="Actions">
-                                <ItemTemplate>
-                                    <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>
-                                    <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions" CommandName="Delete" OnClientClick="return confirm('Are you sure?');">Delete</asp:LinkButton>
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success btn-actions" CommandName="Update">Update</asp:LinkButton>
-                                    <asp:LinkButton ID="btnCancel" runat="server" CssClass="btn btn-secondary btn-actions" CommandName="Cancel">Cancel</asp:LinkButton>
-                                </EditItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
+                                <asp:TemplateField HeaderText="Final Root Cause">
+                                    <ItemTemplate>
+                                        <%# Eval("FinalRootCause") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtFinalRootCause" runat="server" Text='<%# Bind("FinalRootCause") %>' />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+
+
+                                <asp:TemplateField HeaderText="Preventive Actions">
+                                    <ItemTemplate>
+                                        <%# Eval("PreventiveActions") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtPreventiveActions" runat="server" Text='<%# Bind("PreventiveActions") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Person Involved">
+                                    <ItemTemplate>
+                                        <%# Eval("NameOfPersonInvolved") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtNameOfPersonInvolved" runat="server" Text='<%# Bind("NameOfPersonInvolved") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Any Witness?">
+                                    <ItemTemplate>
+                                        <%# Eval("AnyWitness") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtAnyWitness" runat="server" Text='<%# Bind("AnyWitness") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Witness Names">
+                                    <ItemTemplate>
+                                        <%# Eval("WitnessNames") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWitnessNames" runat="server" Text='<%# Bind("WitnessNames") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Reported By">
+                                    <ItemTemplate>
+                                        <%# Eval("ReportedBy") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtReportedBy" runat="server" Text='<%# Bind("ReportedBy") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Immediate  Actions">
+                                    <ItemTemplate>
+                                        <%# Eval("CorrectiveActions") %>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtCorrectiveActions" runat="server" Text='<%# Bind("CorrectiveActions") %>' CssClass="form-control" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Submitted Date">
+                                    <ItemTemplate>
+                                        <%# Eval("SubmittedDate", "{0:yyyy-MM-dd}") %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Submitted Time">
+                                    <ItemTemplate>
+                                        <%# Eval("SubmittedTime", "{0:hh\\:mm}") %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Actions">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>
+                                        <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions" CommandName="Delete" OnClientClick="return confirm('Are you sure?');">Delete</asp:LinkButton>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success btn-actions" CommandName="Update">Update</asp:LinkButton>
+                                        <asp:LinkButton ID="btnCancel" runat="server" CssClass="btn btn-secondary btn-actions" CommandName="Cancel">Cancel</asp:LinkButton>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>

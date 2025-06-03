@@ -59,6 +59,8 @@
                             <asp:BoundField DataField="IsYes" HeaderText="Is Yes" />
                             <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
                             <asp:BoundField DataField="PhotoPath" HeaderText="Photo Path" />
+                            <asp:BoundField DataField="JobID" HeaderText="Job ID" /> 
+    <asp:BoundField DataField="JobName" HeaderText="Job Name" />
                             <asp:BoundField DataField="Final_Remarks" HeaderText="Final Remarks" />
 
 

@@ -149,7 +149,7 @@
                                     <div class="mb-6">
                                         <!-- Employee Code Input -->
                                         <div id="employeeCodeDiv" class="mb-3" style="display: none;">
-                                            <asp:Label ID="lblEmployeeCode" runat="server" Text="Enter Vendor Code" Font-Bold="true"></asp:Label>
+                                            <asp:Label ID="lblEmployeeCode" runat="server" Text="Enter Employee Code" Font-Bold="true"></asp:Label>
                                             <asp:TextBox ID="txtEmployeeCode" runat="server" CssClass="form-control form-control-sm" ClientIDMode="Static" onkeyup="fetchEmployeeName()"></asp:TextBox>
                                             <label id="lblEmployeeName" style="color: green; font-weight: bold;"></label>
                                         </div>

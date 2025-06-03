@@ -20,6 +20,12 @@
         .form-control {
             margin-top: 5px; /* Adds space between label and input */
         }
+
+        .final-root-cause-row {
+    position: relative;
+    top: 40px; /* Adjust this value as needed */
+}
+
     </style>
 </asp:Content>
 
@@ -745,6 +751,11 @@
                                     });
                                 </script>--%>
 
+                               
+
+
+                                <%-- Root Cause Analysis Table - Row Format --%>
+                                
                                 <div class="col-md-12">
                                     <hr />
                                 </div>
@@ -765,6 +776,18 @@
                     <strong>Root Cause Analysis</strong>
                                                 </asp:TableCell>
                                             </asp:TableHeaderRow>
+
+
+
+
+
+
+
+
+
+
+
+
 
                                             <%--  Row for Why 1 --%>
                                             <asp:TableRow>
@@ -865,6 +888,32 @@
                                     </div>
                                 </div>
 
+                  <!-- Upload Supporting Image and Final Root Cause Section -->
+<div class="col-md-6">
+    <asp:Label runat="server" Text="Upload Supporting Image:" CssClass="fw-bold" ForeColor="MediumBlue" />
+    <asp:FileUpload ID="fuRootCauseImage" runat="server" CssClass="form-control form-control-sm mb-1" />
+</div>
+
+
+                                
+           <!-- Root Cause -->
+<div class="col-md-12">
+    <div class="mb-12">
+        <asp:Label ID="lblRootCause" runat="server" Text=" Final Root Cause:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtFinalRootCause" runat="server" CssClass="form-control form-control-sm rounded w-100" TextMode="MultiLine" Rows="3"></asp:TextBox>
+
+            <!-- Validator -->
+            <asp:RequiredFieldValidator ID="rfvFinalRootCause" runat="server"
+                ControlToValidate="txtFinalRootCause"
+                ErrorMessage="Please enter the final root cause."
+                ForeColor="Red"
+                Display="Dynamic">
+            </asp:RequiredFieldValidator>
+        </div>
+    </div>
+</div>
+
 
 
                                 <%--<div class="col-md-12">
@@ -945,7 +994,7 @@
                                 <!-- Corrective Actions -->
                                 <div class="col-md-12">
                                     <div class="mb-12">
-                                        <asp:Label ID="lblCorrectiveActions" runat="server" Text="Corrective Actions:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <asp:Label ID="lblCorrectiveActions" runat="server" Text="Immediate Actions:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
                                             <asp:TextBox ID="txtCorrectiveActions" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control form-control-sm rounded w-100"></asp:TextBox>
 
@@ -997,7 +1046,7 @@
                                 </div>
 
                                 <!-- Review Date -->
-                                <div class="col-md-3">
+                               <%-- <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="lblReviewDate" runat="server" Text="Review Date:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div class="input-group-sm">
@@ -1011,7 +1060,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--%>
 
 
 
@@ -1111,14 +1160,14 @@
                                     }
 
                                     // Review Date
-                                    var reviewDate = document.getElementById('<%= txtReviewDate.ClientID %>');
+                                   <%-- var reviewDate = document.getElementById('<%= txtReviewDate.ClientID %>');
                                     if (reviewDate && reviewDate.value.trim() === "") {
                                         isValid = false;
                                         errorMessage += "- Please select Review Date.\n";
                                         reviewDate.classList.add("is-invalid");
                                     } else if (reviewDate) {
                                         reviewDate.classList.remove("is-invalid");
-                                    }
+                                    }--%>
 
                                     // Corrective Actions
                                     var correctiveActions = document.getElementById('<%= txtCorrectiveActions.ClientID %>');

@@ -32,7 +32,8 @@ namespace AnmolDristi
                 conn.Open();
                 string query = @"
                     SELECT
-                        h.Id AS BasicID, h.Site, h.TagNo, h.InspectionDate,
+                        h.Id AS BasicID, h.Site, h.TagNo, h.InspectionDate,h.JobID,
+    h.JobName,
 
                         sd.Question AS ShacklesChecklistQuestion, 
                         sd.IsYes AS ShacklesIsYes, 
@@ -83,6 +84,8 @@ namespace AnmolDristi
             string site = ((TextBox)row.Cells[0].Controls[0]).Text;
             string dateString = ((TextBox)row.Cells[1].Controls[0]).Text;
             string tagNo = ((TextBox)row.Cells[2].Controls[0]).Text;
+            string jobId = ((TextBox)row.Cells[3].Controls[0]).Text;
+            string jobName = ((TextBox)row.Cells[4].Controls[0]).Text;
 
             DateTime date;
             bool validDate = DateTime.TryParse(dateString, out date) &&
@@ -104,7 +107,8 @@ namespace AnmolDristi
                 conn.Open();
                 string updateQuery = @"
             UPDATE DandBow_Header
-            SET Site = @Site, InspectionDate = @InspectionDate, TagNo = @TagNo
+            SET Site = @Site, InspectionDate = @InspectionDate, TagNo = @TagNo, JobID = @JobID,
+            JobName = @JobName
             WHERE Id = @BasicID";
 
                 using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
@@ -113,7 +117,8 @@ namespace AnmolDristi
                     cmd.Parameters.AddWithValue("@Site", site);
                     cmd.Parameters.AddWithValue("@InspectionDate", date);
                     cmd.Parameters.AddWithValue("@TagNo", tagNo);
-
+                    cmd.Parameters.AddWithValue("@JobID", jobId);
+                    cmd.Parameters.AddWithValue("@JobName", jobName);
                     cmd.ExecuteNonQuery();
                 }
             }

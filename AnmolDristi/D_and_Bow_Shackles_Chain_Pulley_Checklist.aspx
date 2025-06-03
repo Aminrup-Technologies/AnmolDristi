@@ -81,6 +81,34 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- JOB ID -->
+<div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lblJobID" runat="server" Text="Job ID:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtJobID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Job ID" />
+            <asp:RequiredFieldValidator ID="rfvJobID" runat="server"
+                ControlToValidate="txtJobID"
+                ErrorMessage="Please enter the Job ID."
+                ForeColor="Red" Display="Dynamic" />
+        </div>
+    </div>
+</div>
+
+<!-- JOB NAME -->
+<div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lblJobName" runat="server" Text="Job Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtJobName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Job Name" />
+            <asp:RequiredFieldValidator ID="rfvJobName" runat="server"
+                ControlToValidate="txtJobName"
+                ErrorMessage="Please enter the Job Name."
+                ForeColor="Red" Display="Dynamic" />
+        </div>
+    </div>
+</div>
+
 
 
                         <!-- Row for Step 2 heading -->
@@ -334,7 +362,9 @@
     var fieldsToCheck = [
         { id: '<%= txtSite.ClientID %>', name: 'Site' },
         { id: '<%= txtTagNo.ClientID %>', name: 'Tag No' },
-        { id: '<%= txtDate.ClientID %>', name: 'Date' }
+        { id: '<%= txtDate.ClientID %>', name: 'Date' },
+        { id: '<%= txtJobID.ClientID %>', name: 'Job ID' },       
+        { id: '<%= txtJobName.ClientID %>', name: 'Job Name' }
     ];
 
     fieldsToCheck.forEach(function (field) {

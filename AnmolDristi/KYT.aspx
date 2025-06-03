@@ -29,7 +29,9 @@
         document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("btnAddKYT").addEventListener("click", function () {
 
-                const slNo = document.getElementById("<%= txtSlNo.ClientID %>").value.trim();
+                
+                const activity = document.getElementById("<%= txtActivity.ClientID %>").value.trim();
+
                 const hazard = document.getElementById("<%= txtHiddenHazards.ClientID %>").value.trim();
                 const consequence = document.getElementById("<%= txtConsequence.ClientID %>").value.trim();
                 const measures = document.getElementById("<%= txtCounterMeasures.ClientID %>").value.trim();
@@ -37,14 +39,15 @@
                 const photoControl = document.getElementById("<%= fuPhotograph.ClientID %>");
                 const photoName = photoControl.files.length > 0 ? photoControl.files[0].name : "No file";
 
-                if (!slNo || !hazard || !consequence || !measures || !priority) {
+                if (!activity || !hazard || !consequence || !measures || !priority) {
                     alert("Please fill in all fields before adding.");
                     return;
                 }
 
                 // Create observation object
                 let observation = {
-                    SlNo: parseInt(slNo),
+                    //SlNo: parseInt(slNo),
+                    Activity: activity,
                     HiddenHazards: hazard,
                     Consequence: consequence,
                     CounterMeasures: measures,
@@ -73,7 +76,9 @@
                     table.innerHTML = `
                     <thead class="table-light">
                         <tr>
-                            <th>Sl. No.</th>
+
+                         <th>Activity</th>
+
                             <th>Hidden Hazards</th>
                             <th>Consequence</th>
                             <th>Counter Measures</th>
@@ -88,7 +93,8 @@
                 const tbody = table.querySelector("tbody");
                 const newRow = document.createElement("tr");
 
-                [slNo, hazard, consequence, measures, priority, photoName].forEach(text => {
+                [activity, hazard, consequence, measures, priority, photoName].forEach(text => {
+
                     const td = document.createElement("td");
                     td.textContent = text;
                     newRow.appendChild(td);
@@ -97,7 +103,9 @@
                 tbody.appendChild(newRow);
 
                 // Clear fields
-                document.getElementById("<%= txtSlNo.ClientID %>").value = "";
+                document.getElementById("<%= txtActivity.ClientID %>").value = "";
+
+               
                 document.getElementById("<%= txtHiddenHazards.ClientID %>").value = "";
                 document.getElementById("<%= txtConsequence.ClientID %>").value = "";
                 document.getElementById("<%= txtCounterMeasures.ClientID %>").value = "";
@@ -206,7 +214,7 @@
 
 
 
-                                <!-- Activity -->
+<%--                                <!-- Activity -->
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="lblActivity" runat="server" Text="Activity:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -220,7 +228,7 @@
                                             </asp:RequiredFieldValidator>
                                         </div>
                                     </div>
-                                </div>
+                                </div>--%>
 
 
 
@@ -294,7 +302,23 @@
                                 </div>
 
                                 <div class="col-lg-12 small">
-                                    <div class="col-md-3">
+                                    
+                                <!-- Activity -->
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <asp:Label ID="lblActivity" runat="server" Text="Activity:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                        <div class="input-group-sm">
+                                            <asp:TextBox ID="txtActivity" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Activity"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="rfvActivity" runat="server"
+                                                ControlToValidate="txtActivity"
+                                                ErrorMessage="Please enter Activity."
+                                                ForeColor="Red"
+                                                Display="Dynamic">
+                                            </asp:RequiredFieldValidator>
+                                        </div>
+                                    </div>
+                                </div>
+                                   <%-- <div class="col-md-3">
                                         <div class="mb-3">
                                             <asp:Label ID="lblSlNo" runat="server" Text="Sl. No.:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                             <div class="input-group-sm">
@@ -307,7 +331,7 @@
                                                 </asp:RequiredFieldValidator>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>--%>
 
                                     <div class="col-md-3">
                                         <div class="mb-3">
@@ -391,10 +415,10 @@
                                             { id: '<%= txtLocation.ClientID %>', type: 'textbox', name: 'Location' },
                                             { id: '<%= txtDate.ClientID %>', type: 'textbox', name: 'Date (dd-mm-yyyy)' },
                                             { id: '<%= txtJobID.ClientID %>', type: 'textbox', name: 'Job ID' },
-                                            { id: '<%= txtActivity.ClientID %>', type: 'textbox', name: 'Activity' },
+                                    
                                             { id: '<%= txtSOPNo.ClientID %>', type: 'textbox', name: 'SOP NO' },
                                             { id: '<%= txtVender.ClientID %>', type: 'textbox', name: 'Vendor' },
-                                          //  { id: '<%= txtSlNo.ClientID %>', type: 'textbox', name: 'Sl. No.' },
+                                          
                                           //  { id: '<%= txtHiddenHazards.ClientID %>', type: 'textbox', name: 'Hidden Hazards' },
                                           //  { id: '<%= txtConsequence.ClientID %>', type: 'textbox', name: 'Consequence' },
                                           //  { id: '<%= txtCounterMeasures.ClientID %>', type: 'textbox', name: 'Counter Measures' },
@@ -449,10 +473,10 @@
                                             '<%= txtLocation.ClientID %>': "Location",
                                             '<%= txtDate.ClientID %>': "Date (dd-mm-yyyy)",
                                             '<%= txtJobID.ClientID %>': "Job ID",
-                                            '<%= txtActivity.ClientID %>': "Activity",
+                                            
                                             '<%= txtSOPNo.ClientID %>': "SOP NO",
                                             '<%= txtVender.ClientID %>': "Vendor",
-                                            '<%= txtSlNo.ClientID %>': "Sl. No.",
+                                           
                                             //   '<%= txtHiddenHazards.ClientID %>': "Hidden Hazards",
                                             //   '<%= txtConsequence.ClientID %>': "Consequence",
                                             //   '<%= txtCounterMeasures.ClientID %>': "Counter Measures",

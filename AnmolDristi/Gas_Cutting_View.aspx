@@ -111,6 +111,32 @@
                 <asp:TextBox ID="txtPhotoPath" runat="server" Text='<%# Bind("PhotoPath") %>' />
             </EditItemTemplate>
         </asp:TemplateField>
+        <asp:TemplateField HeaderText="Final Remarks">
+    <ItemTemplate>
+        <%# Eval("FinalRemarks") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtFinalRemarks" runat="server" Text='<%# Bind("FinalRemarks") %>' />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Job ID">
+    <ItemTemplate>
+        <%# Eval("JobId") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtJobId" runat="server" Text='<%# Bind("JobId") %>' />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Gas Cutter Name">
+    <ItemTemplate>
+        <%# Eval("GasCutterName") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtGasCutterName" runat="server" Text='<%# Bind("GasCutterName") %>' />
+    </EditItemTemplate>
+</asp:TemplateField>
 
        
 

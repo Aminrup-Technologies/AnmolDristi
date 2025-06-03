@@ -3,6 +3,8 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -28,15 +30,39 @@ namespace AnmolDristi
             {
                 conn.Open();
                 string query = @"
-            SELECT 
-                i.IncidentID, i.IncidentClassification, i.DateOfIncident, i.Location, i.Department, i.SubmittedDate,                    
+SELECT 
+    i.IncidentID, 
+    i.IncidentClassification, 
+    i.DateOfIncident, 
+    i.Location, 
+    i.Department, 
+i.TimeOfIncident,   
+ i.Section,  
+    i.SubmittedDate,                    
     i.SubmittedTime,
-                p.NameOfPersonInvolved, p.AnyWitness, p.WitnessNames, p.ReportedBy, 
-                 inv.CorrectiveActions
-            FROM IncidentDetails i
-            LEFT JOIN PeopleInvolved p ON i.IncidentID = p.IncidentID
-            LEFT JOIN InvestigationActions inv ON i.IncidentID = inv.IncidentID
-            ORDER BY i.IncidentID DESC";
+    p.NameOfPersonInvolved, 
+    p.AnyWitness, 
+    p.WitnessNames, 
+    p.ReportedBy, 
+ p.VendorName,   
+p.TotalInjuredPersons, 
+    inv.CorrectiveActions,
+    inv.PreventiveActions,
+    inv.InvestigationTeamMembers,
+    inv.TaskAndDescription,
+    inv.FinalRootCause,
+    inv.Why1_Loss,
+    inv.Why2_Incident,
+    inv.Why3_ImmediateCause,
+    inv.Why4_UnderlyingCause,
+    inv.Why5_RootCause,
+    inv.Why6_How,
+inv.FinalRootCauseImagePath
+FROM IncidentDetails i
+LEFT JOIN PeopleInvolved p ON i.IncidentID = p.IncidentID
+LEFT JOIN InvestigationActions inv ON i.IncidentID = inv.IncidentID
+ORDER BY i.IncidentID DESC;
+";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -114,9 +140,16 @@ namespace AnmolDristi
             txtInjuredPersons.Text = "";
             txtTaskDescription.Text = ""; // Merged field
             txtWhy1.Text = "";
+            txtWhy2.Text = "";
+            txtWhy3.Text = "";
+            txtWhy4.Text = "";
+            txtWhy5.Text = "";
+            txtWhy6.Text = "";
             txtCorrectiveActions.Text = "";
             txtPreventiveActions.Text = "";
-            txtReviewDate.Text = "";
+            // txtReviewDate.Text = "";
+            txtFinalRootCause.Text = "";
+
 
             lblMessage.Text = "Form reset successfully!";
             lblMessage.ForeColor = System.Drawing.Color.Blue;
@@ -155,10 +188,17 @@ namespace AnmolDristi
             //  string contributingFactorsEquipmentMaterials = chkEquipment.Text;
             //   string contributingFactorsWorkSystems = chkWorkSystem.Text;
             //   string contributingFactorsPeople = chkPeople.Text;
-            string rootCauseAnalysis = txtWhy1.Text;
+            string why1_Loss = txtWhy1.Text.Trim();
+            string why2_Incident = txtWhy2.Text.Trim();
+            string why3_ImmediateCause = txtWhy3.Text.Trim();
+            string why4_UnderlyingCause = txtWhy4.Text.Trim();
+            string why5_RootCause = txtWhy5.Text.Trim();
+            string why6_How = txtWhy6.Text.Trim();
+
+            string finalRootCause = txtFinalRootCause.Text;
             string correctiveActions = txtCorrectiveActions.Text;
             string preventiveActions = txtPreventiveActions.Text;
-            DateTime reviewDate = DateTime.Parse(txtReviewDate.Text);
+            //DateTime reviewDate = DateTime.Parse(txtReviewDate.Text);
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -212,7 +252,7 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@IncidentID", incidentID);
                         cmd.Parameters.AddWithValue("@InvestigationTeamMembers", investigationTeamMembers);
                         cmd.Parameters.AddWithValue("@TaskAndDescription", taskAndDescription);
-                       
+
 
                         //cmd.Parameters.AddWithValue("@TaskBeingPerformed", taskBeingPerformed);
                         //cmd.Parameters.AddWithValue("@DescriptionOfIncident", descriptionOfIncident);
@@ -220,15 +260,42 @@ namespace AnmolDristi
                         //   cmd.Parameters.AddWithValue("@ContributingFactors_Equipment_Materials", contributingFactorsEquipmentMaterials);
                         //   cmd.Parameters.AddWithValue("@ContributingFactors_WorkSystems", contributingFactorsWorkSystems);
                         //   cmd.Parameters.AddWithValue("@ContributingFactors_People", contributingFactorsPeople);
-                        cmd.Parameters.AddWithValue("@RootCauseAnalysis", rootCauseAnalysis);
-                        cmd.Parameters.AddWithValue("@CorrectiveActions", correctiveActions);
-                        cmd.Parameters.AddWithValue("@PreventiveActions", preventiveActions);
-                        cmd.Parameters.AddWithValue("@ReviewDate", reviewDate);
-                        cmd.ExecuteNonQuery();
-                    }
 
-                    transaction.Commit();
-                }
+                        //cmd.Parameters.AddWithValue("@RootCauseAnalysis", rootCauseAnalysis);
+                        
+                            cmd.Parameters.AddWithValue("@Why1_Loss", txtWhy1.Text.Trim());
+                            cmd.Parameters.AddWithValue("@Why2_Incident", txtWhy2.Text.Trim());
+                            cmd.Parameters.AddWithValue("@Why3_ImmediateCause", txtWhy3.Text.Trim());
+                            cmd.Parameters.AddWithValue("@Why4_UnderlyingCause", txtWhy4.Text.Trim());
+                            cmd.Parameters.AddWithValue("@Why5_RootCause", txtWhy5.Text.Trim());
+                            cmd.Parameters.AddWithValue("@Why6_How", txtWhy6.Text.Trim());
+
+                            cmd.Parameters.AddWithValue("@CorrectiveActions", correctiveActions);
+                            cmd.Parameters.AddWithValue("@PreventiveActions", preventiveActions);
+                            cmd.Parameters.AddWithValue("@FinalRootCause", txtFinalRootCause.Text.Trim());
+
+
+                        string imagePath = null;
+                        if (fuRootCauseImage.HasFile)
+                        {
+                            string fileName = Path.GetFileName(fuRootCauseImage.FileName);
+                            imagePath = "~/Uploads/" + fileName;  // virtual path for storing in DB
+                            string physicalPath = Server.MapPath(imagePath);
+                            fuRootCauseImage.SaveAs(physicalPath);
+                        }
+
+                        cmd.Parameters.AddWithValue("@FinalRootCauseImagePath", (object)imagePath ?? DBNull.Value);
+
+           
+
+                        cmd.ExecuteNonQuery();
+                        }
+
+
+
+                        transaction.Commit();
+                    }
+                
                 catch (Exception ex)
                 {
                     transaction.Rollback();

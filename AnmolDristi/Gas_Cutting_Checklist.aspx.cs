@@ -116,8 +116,9 @@ namespace AnmolDristi
                 conn.Open();
                 string query = @"
 SELECT 
-    gh.HeaderID, gh.SiteName, gh.InspectionDate, gh.TagNo, gh.SubmittedDate, gh.SubmittedTime,
-    gc.Question AS ChecklistQuestion, gc.IsYes, gc.Remarks, gc.PhotoPath
+    gh.HeaderID, gh.SiteName, gh.InspectionDate, gh.TagNo,gh.JobID,
+    gh.GasCutterName,gh.SubmittedDate, gh.SubmittedTime,
+    gc.Question AS ChecklistQuestion, gc.IsYes, gc.Remarks, gc.PhotoPath,  gc.FinalRemarks    
 FROM GasCutting_Header gh
 LEFT JOIN GasCutting_Checklist gc ON gh.HeaderID = gc.HeaderID
 ORDER BY gh.HeaderID DESC";
@@ -174,7 +175,8 @@ ORDER BY gh.HeaderID DESC";
                         cmdHeader.Parameters.AddWithValue("@SiteName", txtNameOfSite.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@InspectionDate", Convert.ToDateTime(txtDate.Text.Trim()));
                         cmdHeader.Parameters.AddWithValue("@TagNo", txtTagNo.Text.Trim());
-
+                        cmdHeader.Parameters.AddWithValue("@JobID", txtJobID.Text.Trim());                 
+                        cmdHeader.Parameters.AddWithValue("@GasCutterName", txtGasCutterName.Text.Trim());
                         SqlParameter outputParam = new SqlParameter("@HeaderID", SqlDbType.Int)
                         {
                             Direction = ParameterDirection.Output
@@ -240,6 +242,7 @@ ORDER BY gh.HeaderID DESC";
                     cmd.Parameters.AddWithValue("@IsYes", isYes);
                     cmd.Parameters.AddWithValue("@Remarks", remarks);
                     cmd.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@FinalRemarks", txtFinalRemarks.Text.Trim());
 
                     cmd.ExecuteNonQuery();
                 }

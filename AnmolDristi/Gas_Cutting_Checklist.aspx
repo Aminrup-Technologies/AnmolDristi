@@ -88,6 +88,35 @@
             </div>
         </div>
     </div>
+<!-- Gas Cutter Name -->
+<div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lblGasCutterName" runat="server" Text="Gas Cutter Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtGasCutterName" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Gas Cutter Name"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="rfvGasCutterName" runat="server"
+                ControlToValidate="txtGasCutterName"
+                ErrorMessage="Please enter gas cutter name."
+                ForeColor="Red" Display="Dynamic" />
+        </div>
+    </div>
+</div>
+
+<!-- Job ID -->
+<div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lblJobID" runat="server" Text="Job ID:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtJobID" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Job ID"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="rfvJobID" runat="server"
+                ControlToValidate="txtJobID"
+                ErrorMessage="Please enter job ID."
+                ForeColor="Red" Display="Dynamic" />
+        </div>
+    </div>
+</div>
+
+
 
 
     <!-- Row for Step 2 heading -->
@@ -360,6 +389,16 @@
       </tr>
   </table>
 
+                                <!-- Final Remarks -->
+<div class="col-md-6">
+    <div class="mb-3">
+        <asp:Label ID="lblFinalRemarks" runat="server" Text="Final Remarks:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtFinalRemarks" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control form-control-sm rounded" Placeholder="Enter final remarks..."></asp:TextBox>
+        </div>
+    </div>
+</div>
+
       <script type="text/javascript">
     function validateGasCuttingChecklist() {
         var isValid = true;
@@ -369,6 +408,9 @@
             { id: '<%= txtNameOfSite.ClientID %>', type: 'textbox', name: 'Name of Site' },
             { id: '<%= txtDate.ClientID %>', type: 'textbox', name: 'Date' },
             { id: '<%= txtTagNo.ClientID %>', type: 'textbox', name: 'Tag No' },
+            { id: '<%= txtGasCutterName.ClientID %>', type: 'textbox', name: 'Gas Cutter Name' },
+            { id: '<%= txtJobID.ClientID %>', type: 'textbox', name: 'Job ID' },
+            { id: '<%= txtFinalRemarks.ClientID %>', type: 'textbox', name: 'Final Remarks' }
           
         ];
 
