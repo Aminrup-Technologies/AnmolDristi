@@ -102,6 +102,7 @@ namespace AnmolDristi
 
         protected void btnAddChecklist_Click(object sender, EventArgs e)
         {
+            lblMsg1.Text = "";
             DataTable dt;
             if (ViewState["ChecklistData"] == null)
             {
@@ -341,6 +342,16 @@ namespace AnmolDristi
       
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
+            lblMsg.Text = "";
+            if (ViewState["ChecklistData"] == null)
+            {
+                lblMsg1.Text = "No Checklist to save.Please Add Checklist";
+                lblMsg.Text = "No Checklist to save.Please Add Checklist";
+                lblMsg1.ForeColor = System.Drawing.Color.Red;
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+                BtnSubmit.Enabled = true; 
+                return;
+            }
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connStr))
@@ -351,10 +362,6 @@ namespace AnmolDristi
 
                 try
                 {
-                    // 1. Insert into InspectionHeader
-                    //string insertHeaderQuery = @"INSERT INTO InspectionHeader (EmployeeName, Site,Remarks,JobID, InspectedBy, DateOfInspection)
-                    //                     OUTPUT INSERTED.InspectionID
-                    //                     VALUES (@EmployeeName, @Site,@Remarks,@JobID ,@InspectedBy, @DateOfInspection)";
                     string insertHeaderQuery = @"
                                               INSERT INTO InspectionHeader 
                                               (EmployeeName, Site, Remarks, JobID, InspectedBy, DateOfInspection)

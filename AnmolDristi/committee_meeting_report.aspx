@@ -97,7 +97,7 @@
                             </div>
                             <div class="table-responsive">
                                 <div class="x_content">
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="mb-3">
                                             <asp:GridView ID="gvMeeting" runat="server" AutoGenerateColumns="False" DataKeyNames="MeetingID" 
                                                 CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None"  ShowHeaderWhenEmpty="true" EmptyDataText="No records for selected filter">

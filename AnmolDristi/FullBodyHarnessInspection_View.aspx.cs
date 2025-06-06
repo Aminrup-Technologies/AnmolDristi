@@ -188,5 +188,14 @@ namespace AnmolDristi
            Response.Redirect("FullBodyHarnessInspection_View.aspx");
            
         }
+        protected void btnView_Click(object sender, EventArgs e)
+        {
+            Button btnView = (Button)sender;
+            GridViewRow row = (GridViewRow)btnView.NamingContainer;
+            int InspectionID = Convert.ToInt32(btnView.CommandArgument);
+
+            // Redirect to update page with AuditID in query string
+            Response.Redirect($"FullBodyHarnessRpt.aspx?InspectionID={InspectionID}");
+        }
     }
 }

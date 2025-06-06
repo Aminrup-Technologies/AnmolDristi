@@ -16,7 +16,10 @@
                         <div class="x_title">
                             <h2>Full Body Harness Inspection Search Filter
                             </h2>
-                            <div class="clearfix"></div>
+
+                            <div class="clearfix">
+
+                            </div>
                         </div>
 
                         <div class="x_content">
@@ -54,7 +57,7 @@
                             </div>
 
  <div class="table-responsive">
-         <div class="col-md-4">
+         <div class="col-md-12">
              <div class="mb-3">
                  <asp:GridView ID="gvInspection" runat="server" AutoGenerateColumns="False" DataKeyNames="InspectionID" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
                      <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
@@ -68,6 +71,8 @@
                              <ItemTemplate>
                                  <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn btn-warning btn-sm" CommandArgument='<%# Eval("InspectionID") %>' OnClick="BtnEdit_Click" />
                                  <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm" OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete this meeting?');" />
+                             <asp:Button ID="btnView" runat="server" Text="View" CssClass="btn btn-primary btn-sm" CommandArgument='<%# Eval("InspectionID") %>' OnClick="btnView_Click" />
+                            
                              </ItemTemplate>
                          </asp:TemplateField>
                      </Columns>

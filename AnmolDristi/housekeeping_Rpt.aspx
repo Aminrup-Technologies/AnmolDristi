@@ -173,13 +173,14 @@
                            <tr class="center_1">
                                <th>Observer ID</th>
                                <th>Open By</th>
-                               <th>Close By</th>
+                               
                                <th>OpenBy Workman</th>
                                <th>Photo Before</th>
                                <th>Observation Text</th>
                                <th>Action Taken</th>
                                <th>PhotoAfter</th>
                                <th>Status</th>
+                               <th>Close By</th>
                                <th>Opening Date</th>
                                <th>Closing Date</th>
                                <th>Target Date</th>
@@ -192,7 +193,7 @@
                                    <tr class="center_1">
                                        <td><%# Eval("ObserverID") %></td>
                                        <td><%# Eval("OpenBy") %></td>
-                                       <td><%# Eval("CloseBy") %></td>
+                                       
                                        <td><%# Eval("OpenByWorkman") %></td>
                                       <%-- <td><%# Eval("PhotoBefore") %></td>--%>
                                        <td><asp:Image ID="imgUpload" runat="server" ImageUrl='<%# Eval("PhotoBefore") %>' Width="100" Height="100" AlternateText="Image not found" /></td>
@@ -201,6 +202,7 @@
                                         <td><asp:Image ID="imgUpload1" runat="server" ImageUrl='<%# Eval("PhotoAfter") %>' Width="100" Height="100" AlternateText="Image not found" /></td>              
                                       <%-- <td><%# Eval("PhotoAfter") %></td>--%>
                                        <td><%# Eval("Status") %></td>
+                                       <td><%# Eval("CloseBy") %></td>
                                        <td><%# Eval("OpeningDate") %></td>
                                        <td><%# Eval("ClosingDate") %></td>
                                        <td><%# Eval("TargetDate") %></td>

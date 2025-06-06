@@ -92,6 +92,7 @@
     <Content Include="FullBodyHarnessInspection.aspx" />
     <Content Include="FullBodyHarnessInspection_Update.aspx" />
     <Content Include="FullBodyHarnessInspection_View.aspx" />
+    <Content Include="FullBodyHarnessRpt.aspx" />
     <Content Include="home.aspx" />
     <Content Include="HousekeepingUpdate.aspx" />
     <Content Include="housekeeping_audit.aspx" />
@@ -256,6 +257,13 @@
     </Compile>
     <Compile Include="FullBodyHarnessInspection_View.aspx.designer.cs">
       <DependentUpon>FullBodyHarnessInspection_View.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FullBodyHarnessRpt.aspx.cs">
+      <DependentUpon>FullBodyHarnessRpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FullBodyHarnessRpt.aspx.designer.cs">
+      <DependentUpon>FullBodyHarnessRpt.aspx</DependentUpon>
     </Compile>
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>

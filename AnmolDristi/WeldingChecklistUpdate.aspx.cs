@@ -276,7 +276,6 @@ namespace AnmolDristi
         }
 
 
-
         private void SaveChecklistItems(Repeater repeater, int headerID, SqlConnection con)
         {
             foreach (RepeaterItem item in repeater.Items)
@@ -288,27 +287,39 @@ namespace AnmolDristi
                 TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
                 FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
                 HiddenField hfImagePath = (HiddenField)item.FindControl("hfImagePath");
+                Label lblDescription = (Label)item.FindControl("lblDescription");
 
                 int questionNumber = Convert.ToInt32(hfQuestionNumber.Value);
                 bool isOk = rdoYes.Checked;
                 bool na = rdoNA.Checked;
-                string remarks = txtRemarks.Text.Trim();
-                var lblDescription = (Label)item.FindControl("lblDescription");
-                string description = lblDescription?.Text?.Trim() ?? ""; 
+                string description = lblDescription?.Text?.Trim() ?? "";
 
+                string remarks = "";
+                string photoPath = "";
 
-                string photoPath = hfImagePath.Value; // default to existing image
-                if (fileUpload.HasFile)
+                // Only allow remarks and photo if "No" is selected
+                if (rdoNo.Checked)
                 {
-                    string fileName = Path.GetFileName(fileUpload.FileName);
-                    string savePath = Server.MapPath("~/Uploads/" + fileName);
-                    fileUpload.SaveAs(savePath);
-                    photoPath = "~/Uploads/" + fileName;
+                    remarks = txtRemarks.Text.Trim();
+
+                    if (fileUpload.HasFile)
+                    {
+                        string fileName = Path.GetFileName(fileUpload.FileName);
+                        string savePath = Server.MapPath("~/Uploads/" + fileName);
+                        fileUpload.SaveAs(savePath);
+                        photoPath = "~/Uploads/" + fileName;
+                    }
+                    else
+                    {
+                        photoPath = hfImagePath?.Value ?? "";
+                    }
                 }
 
                 SqlCommand cmdInsert = new SqlCommand(@"
-            INSERT INTO WeldingChecklist (HeaderID, QuestionNumber, IsOk, NA, Remarks, PhotoPath,description)
-            VALUES (@HeaderID, @QuestionNumber, @IsOk, @NA, @Remarks, @PhotoPath,@description)", con);
+            INSERT INTO WeldingChecklist 
+            (HeaderID, QuestionNumber, IsOk, NA, Remarks, PhotoPath, Description)
+            VALUES 
+            (@HeaderID, @QuestionNumber, @IsOk, @NA, @Remarks, @PhotoPath, @Description)", con);
 
                 cmdInsert.Parameters.AddWithValue("@HeaderID", headerID);
                 cmdInsert.Parameters.AddWithValue("@QuestionNumber", questionNumber);
@@ -316,8 +327,7 @@ namespace AnmolDristi
                 cmdInsert.Parameters.AddWithValue("@NA", na);
                 cmdInsert.Parameters.AddWithValue("@Remarks", remarks);
                 cmdInsert.Parameters.AddWithValue("@PhotoPath", photoPath);
-                cmdInsert.Parameters.AddWithValue("@description", description);
-
+                cmdInsert.Parameters.AddWithValue("@Description", description);
 
                 cmdInsert.ExecuteNonQuery();
             }

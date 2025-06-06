@@ -62,6 +62,7 @@ namespace AnmolDristi
         }
         protected void btnAddAttendees_Click(object sender, EventArgs e)
         {
+            lblMsg1.Text = "";
             DataTable dt;
 
             // Ensure ViewState["Attendees"] is initialized
@@ -147,6 +148,7 @@ namespace AnmolDristi
 
         protected void btnAddIssues_Click(object sender, EventArgs e)
         {
+            lblMsg2.Text = "";
             DataTable dts;
             if (ViewState["Issues"] == null)
             {
@@ -290,6 +292,33 @@ namespace AnmolDristi
         }
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
+            lblMsg.Text = "";
+            bool hasError = false;
+            if (ViewState["Issues"] == null)
+            {
+                lblMsg.Text = "No Meeting Issues to save.Please Add Issues";
+                lblMsg2.Text = "Please Add Issues";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+                lblMsg2.ForeColor = System.Drawing.Color.Red;
+                hasError = true;
+            }
+            if (ViewState["Attendance"] == null)
+            {
+                lblMsg.Text = "No Meeting Attendance to save.Please Add Attendees";
+                lblMsg1.Text = "Please Add Attendees";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+                lblMsg1.ForeColor = System.Drawing.Color.Red;
+                hasError = true;
+            }
+
+            if (hasError)
+            {
+                BtnSubmit.Enabled = true; // Re-enable button
+                return;
+            }
+
+
+
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connStr))
             {
@@ -335,48 +364,7 @@ namespace AnmolDristi
                     }
 
 
-                    //string imagePath = null;
-
-                    //// === File Upload Handling ===
-                    //if (imgupload.HasFile)
-                    //{
-                    //    string extension = Path.GetExtension(imgupload.FileName).ToLower();
-                    //    if (extension != ".jpg" && extension != ".jpeg" && extension != ".png")
-                    //    {
-                    //        lblBeforeError.Text = "Only JPG, JPEG, and PNG files are allowed.";
-                    //        lblBeforeError.Style["display"] = "block";
-                    //        return;
-                    //    }
-
-                    //    try
-                    //    {
-                    //        string fileName = Path.GetFileNameWithoutExtension(imgupload.FileName);
-                    //        string uniqueName = $"{fileName}_{Guid.NewGuid():N}{extension}";
-                    //        string uploadFolder = Server.MapPath("~/Uploads1/");
-                    //        Directory.CreateDirectory(uploadFolder);
-
-                    //        string filePath = Path.Combine(uploadFolder, uniqueName);
-                    //        imgupload.SaveAs(filePath);
-
-                    //        // Save relative path for DB
-                    //        imagePath = "~/Uploads1/" + uniqueName;
-
-                    //        // Store in HiddenField to restore on postbacks
-                    //        hfImagePath.Value = imagePath;
-                    //    }
-                    //    catch (Exception ex)
-                    //    {
-                    //        lblBeforeError.Text = "File upload failed: " + ex.Message;
-                    //        lblBeforeError.Style["display"] = "block";
-                    //        return;
-                    //    }
-                    //}
-                    //else if (!string.IsNullOrEmpty(hfImagePath.Value))
-                    //{
-                    //    // User didn’t reupload but we already have saved path
-                    //    imagePath = hfImagePath.Value;
-                    //}
-
+                    
 
                     // 1. Insert into Committee_MeetingReview (Parent Table)
                     string insertMeetingQuery = @"INSERT INTO Committee_MeetingReview (MeetingNo,Title,JobID,MeetingDate, MeetingTime, Venue, ChairedBy,Image_upload) 

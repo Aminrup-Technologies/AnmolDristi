@@ -150,7 +150,7 @@
             </tr>
             <tr class="center">
                 <td>Date</td>
-                <td colspan="3"><%# Eval("MeetingDate") %></td>
+                <td colspan="3"><%# Eval("MeetingDate", "{0:yyyy-MM-dd}") %></td>
             </tr>
             <tr class="center">
                 <td>Time</td>

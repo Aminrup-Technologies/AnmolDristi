@@ -97,7 +97,7 @@
              
 
                             <div class="table-responsive">
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <asp:GridView ID="gvAudit" runat="server" AutoGenerateColumns="False" DataKeyNames="AuditID" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
 

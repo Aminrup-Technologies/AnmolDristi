@@ -102,17 +102,16 @@
         </div>
     </div>
 </div>
-                                  <%--  <asp:HiddenField ID="hdnMeetingID" runat="server" />
-   --%>
+                                 
                                     </div>
 
  <div class="x_title">
-     <h2>Attendance Table</h2>
+     <h2 class="text-info h4">Attendance Table</h2>
      <div class="clearfix"></div>
  </div>
                 
                  
-<div class="col-md-2">
+<%--<div class="col-md-2">
        <div class="mb-3">
            <asp:Label ID="lbl_imgupload" runat="server" AssociatedControlID="imgupload" Text="Upload Photo" ForeColor="Blue" Font-Bold="true"></asp:Label>
            <asp:RequiredFieldValidator ID="RFV_imgupload" runat="server" ErrorMessage="*" ControlToValidate="imgupload" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -125,7 +124,10 @@
                AlternateText="No photo uploaded" 
                Visible="false" CssClass="mt-2 img-thumbnail" />
        </div>
-   </div>
+   </div>--%>
+                        
+    <%--</div>
+    --%>
       
     
     
@@ -198,7 +200,7 @@
 
 
   <div class="x_title">
-     <h2>Meeting Issue Table</h2>
+     <h2 class="text-info h4">Meeting Issue Table</h2>
      <div class="clearfix"></div>
  </div>                         
 
@@ -267,7 +269,24 @@
         </div>
 
                          
-
+                         <div class="x_title">
+    <h2 class="text-info h4">Meeting Image</h2>
+    <div class="clearfix"></div>
+</div>                         
+ <div class="col-md-4">
+        <div class="mb-3">
+            <asp:Label ID="lbl_imgupload" runat="server" AssociatedControlID="imgupload" Text="Upload Photo" ForeColor="Blue" Font-Bold="true"></asp:Label>
+            <asp:RequiredFieldValidator ID="RFV_imgupload" runat="server" ErrorMessage="*" ControlToValidate="imgupload" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+            <div class="input-group-sm">
+                <asp:FileUpload ID="imgupload" runat="server" CssClass="form-control form-control-sm rounded" />
+                 <asp:Label ID="lblBeforeError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
+            </div>
+                 <asp:Image ID="imgPreview" runat="server" 
+        Width="150px" Height="150px" 
+        AlternateText="No photo uploaded" 
+        Visible="false" CssClass="mt-2 img-thumbnail" />
+</div>
+        </div>
 
    
 

@@ -93,9 +93,7 @@
         <asp:Label ID="lbl_txtInsBy" runat="server" AssociatedControlID="txtInsBy" Text="Inspection By(Emp Code)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtInsBy" runat="server" ErrorMessage="*" ControlToValidate="txtInsBy" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
-            <asp:TextBox ID="txtInsBy" runat="server" CssClass="form-control form-control-sm rounded" 
-                         OnKeyUp="fetchEmployeeName()" 
-                         AutoPostBack="false"></asp:TextBox>
+            <asp:TextBox ID="txtInsBy" runat="server" CssClass="form-control form-control-sm rounded" OnKeyUp="fetchEmployeeName()"  AutoPostBack="false"></asp:TextBox>
         </div>
         <asp:Label ID="lblEmployeeName" runat="server" Text="" ForeColor="Red" Font-Size="Small"></asp:Label> <!-- For error display -->
     </div>
@@ -456,7 +454,7 @@
                 <div class="mb-3">
                     <asp:Label ID="Lbl_BtnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm"  OnClick="BtnSubmit_Click" />
+                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" OnClientClick="return validatesChecklist();"   OnClick="BtnSubmit_Click" />
                         <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
@@ -535,23 +533,25 @@
 
 </script>
 <script type="text/javascript">
-    function validateChecklist() {
-        var identity = document.getElementById('<%= txtIdentity.ClientID %>').value.trim();
-        var location = document.getElementById('<%= txtLoc.ClientID %>').value.trim();
+    function validatesChecklist() {
+       <%-- var identity = document.getElementById('<%= txtIdentity.ClientID %>').value.trim();
+        var location = document.getElementById('<%= txtLoc.ClientID %>').value.trim();--%>
         var date = document.getElementById('<%= txtdate.ClientID %>').value.trim();
-    var site = document.getElementById('<%= txtSite.ClientID %>').value.trim();
-    var docNo = document.getElementById('<%= txtDocNo.ClientID %>').value.trim();
-       
+        var site = document.getElementById('<%= txtSite.ClientID %>').value.trim(); 
+        <%--var docNo = document.getElementById('<%= txtDocNo.ClientID %>').value.trim();--%>
+        var jobId = document.getElementById('<%= txtjobID.ClientID %>').value.trim();
+        var insp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
+        var remark = document.getElementById('<%= txtnote.ClientID %>').value.trim();
 
-        if (!identity) {
-            alert("Please enter Identification No.");
-            return false;
-        }
+        //if (!identity) {
+        //    alert("Please enter Identification No.");
+        //    return false;
+        //}
 
-        if (!location) {
-            alert("Please enter Location.");
-            return false;
-        }
+        //if (!location) {
+        //    alert("Please enter Location.");
+        //    return false;
+        //}
 
         if (!date) {
             alert("Please select Date of Inspection.");
@@ -562,9 +562,16 @@
             alert("Please enter Site.");
             return false;
         }
-
-        if (!docNo) {
-            alert("Please enter Employee Name.");
+        if (!jobId) {
+            alert("Please enter JobID.");
+            return false;
+        }
+        if (!insp) {
+            alert("Please enter Inspected by.");
+            return false;
+        }
+        if (!remark) {
+            alert("Please give Remarks.");
             return false;
         }
         for (var i = 0; i < 5; i++) {

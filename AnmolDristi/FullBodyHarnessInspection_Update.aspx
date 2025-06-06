@@ -143,9 +143,9 @@
         </div>
     </div>
 </div>
-     <div class="col-md-3">
+     <div class="col-md-4">
     <div class="mb-3">
-        <asp:Label ID="Lbl_txtnote" runat="server" AssociatedControlID="txtnote" Text="Remarks"  CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="Lbl_txtnote" runat="server" AssociatedControlID="txtnote" Text="Remarks" ForeColor="Blue"  Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtnote" runat="server" ErrorMessage="*" ControlToValidate="txtnote" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtnote" runat="server" CssClass="form-control form-control-sm rounded "  TextMode="MultiLine"></asp:TextBox>
@@ -337,7 +337,7 @@
                 <div class="mb-3">
                     <asp:Label ID="Lbl_BtnUpdate" runat="server" AssociatedControlID="BtnUpdate" Text="Click to Update" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnUpdate" runat="server" Text="Submit" CssClass="btn btn-success btn-sm"  OnClick="BtnUpdate_Click" />
+                        <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm"  OnClick="BtnUpdate_Click" />
                         <asp:Button ID="BtnBack" runat="server" Text="Back" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnBack_Click" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         

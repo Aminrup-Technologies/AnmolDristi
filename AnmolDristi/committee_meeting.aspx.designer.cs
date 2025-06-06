@@ -393,42 +393,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Label lblMsg1;
 
         /// <summary>
-        /// lbl_imgupload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_imgupload;
-
-        /// <summary>
-        /// RFV_imgupload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_imgupload;
-
-        /// <summary>
-        /// imgupload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload imgupload;
-
-        /// <summary>
-        /// lblBeforeError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBeforeError;
-
-        /// <summary>
         /// pnlAttendeeTable control.
         /// </summary>
         /// <remarks>
@@ -672,6 +636,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Button btnAddIssues;
 
         /// <summary>
+        /// lblMsg2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMsg2;
+
+        /// <summary>
         /// gvIssues control.
         /// </summary>
         /// <remarks>
@@ -679,6 +652,42 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvIssues;
+
+        /// <summary>
+        /// lbl_imgupload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_imgupload;
+
+        /// <summary>
+        /// RFV_imgupload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_imgupload;
+
+        /// <summary>
+        /// imgupload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload imgupload;
+
+        /// <summary>
+        /// lblBeforeError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBeforeError;
 
         /// <summary>
         /// Lbl_btnSubmit control.

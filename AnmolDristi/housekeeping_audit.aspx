@@ -1,24 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="housekeeping_audit.aspx.cs" Inherits="AnmolDristi.housekeeping_audit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-  <%--  <style>
-        .table-responsive {
-    width: 100%;
-    max-height: 400px; /* Adjust based on need */
-    overflow-x: auto;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-@media (max-width: 768px) {
-    .table-responsive {
-        max-height: 300px; /* Adjust based on your UI */
-    }
-}
-
-    </style>
---%>
-
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">
@@ -46,7 +27,7 @@
       <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-         <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+         <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
          <div class="input-group-sm">
              <asp:TextBox ID="txtdate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
          </div>
@@ -55,7 +36,7 @@
      <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtLocation" runat="server" AssociatedControlID="txtLocation" Text="Location" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-         <asp:RequiredFieldValidator ID="RFV_txtLocation" runat="server" ErrorMessage="*" ControlToValidate="txtLocation" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+         <asp:RequiredFieldValidator ID="RFV_txtLocation" runat="server" ErrorMessage="*" ControlToValidate="txtLocation" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
          <div class="input-group-sm">
              <asp:TextBox ID="txtLocation" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
          </div>
@@ -64,7 +45,7 @@
         <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
 
         <div class="input-group-sm">
@@ -89,8 +70,55 @@
             <i class="bi bi-person-circle me-2"></i>Step 1: Observer Details
         </h6>
     </div>
-                          
-      <div class="col-md-3">
+     
+<!-- Observer ID input -->
+<div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtObserverID" runat="server" AssociatedControlID="txtObserverID" 
+            Text="Observer ID (Emp Code)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+        <asp:RequiredFieldValidator ID="RFV_txtObserverID" runat="server" 
+            ErrorMessage="*" ControlToValidate="txtObserverID" 
+            ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+        <asp:RegularExpressionValidator ID="REV_txtObserverID" runat="server" 
+            ControlToValidate="txtObserverID" ForeColor="Red" ValidationGroup="add" 
+            ErrorMessage="Numeric Only" ValidationExpression="^\d{1,25}$" Display="Dynamic"></asp:RegularExpressionValidator> 
+
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtObserverID" runat="server" 
+                CssClass="form-control form-control-sm rounded" 
+                onkeyup="fetchEmployeeName()" AutoPostBack="false"></asp:TextBox>
+        </div>
+
+        <asp:Label ID="lblEmployeeName" runat="server" Text="" ForeColor="Red" Font-Size="Small"></asp:Label>
+    </div>
+</div>
+
+<!-- Open By (Employee Name Output) -->
+<div class="col-md-3">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtOpenBy" runat="server" AssociatedControlID="txtOpenBy" 
+            Text="Open By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+        <asp:RequiredFieldValidator ID="RFV_txtOpenBy" runat="server" 
+            ErrorMessage="*" ControlToValidate="txtOpenBy" 
+            ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtOpenBy" runat="server" 
+                CssClass="form-control form-control-sm rounded" ReadOnly="true"></asp:TextBox>
+
+            <asp:HiddenField ID="hfEmployeeName" runat="server" />
+        </div>
+    </div>
+</div>
+
+
+
+
+
+      <%--<div class="col-md-3">
     <div class="mb-3">
         <asp:Label ID="lbl_txtObserverID" runat="server" AssociatedControlID="txtObserverID" Text="Observer ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtObserverID" runat="server" ErrorMessage="*" ControlToValidate="txtObserverID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -109,6 +137,9 @@
         </div>
     </div>
 </div>
+--%>
+
+
                                   <div class="col-md-3">
     <div class="mb-3">
         <asp:Label ID="lbl_txtOpenByWorkman" runat="server" AssociatedControlID="txtOpenByWorkman" Text="Open By(Workman SL)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -318,7 +349,7 @@
                 <div class="mb-3">
                     <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
+                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" OnClientClick="return validatesFields();" />
                         <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
@@ -332,7 +363,62 @@
 </div>
     
 </div>
-   
+ 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- JavaScript to fetch employee name -->
+<script type="text/javascript">
+    function fetchEmployeeName() {
+        var observerId = document.getElementById('<%= txtObserverID.ClientID %>').value.trim();
+
+        if (observerId.length > 0) {
+            // Check if only digits are entered
+            if (!/^\d+$/.test(observerId)) {
+                alert("Observer ID must be numeric.");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "housekeeping_audit.aspx/GetEmployeeName",
+                data: JSON.stringify({ inspectionId: observerId }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var employeeName = response.d;
+                    var openByTextBox = document.getElementById('<%= txtOpenBy.ClientID %>');
+                    var errorLabel = document.getElementById('<%= lblEmployeeName.ClientID %>');
+                    var hiddenField = document.getElementById('<%= hfEmployeeName.ClientID %>');
+
+                    if (employeeName && employeeName !== "Invalid Observer ID" && employeeName !== "Error occurred while fetching data") {
+                        openByTextBox.value = employeeName;
+                        hiddenField.value = employeeName;
+                        errorLabel.innerText = '';
+                    } else {
+                        openByTextBox.value = '';
+                        hiddenField.value = '';
+                        errorLabel.innerText = 'Observer ID not found!';
+                    }
+                },
+                error: function () {
+                    document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = 'Error fetching data.';
+                    document.getElementById('<%= txtOpenBy.ClientID %>').value = '';
+                    document.getElementById('<%= hfEmployeeName.ClientID %>').value = '';
+                }
+            });
+        } else {
+            document.getElementById('<%= txtOpenBy.ClientID %>').value = '';
+            document.getElementById('<%= hfEmployeeName.ClientID %>').value = '';
+            document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = '';
+        }
+    }
+</script>
+
+
+
+
 
 <script type="text/javascript">
         function showSuccessMessage() {
@@ -343,8 +429,8 @@
     <script>
         function validateDates() {
             var openingDateInput = document.getElementById('<%= txtOpeningDate.ClientID %>');
-        var closingDateInput = document.getElementById('<%= txtClosingDate.ClientID %>');
-        var validationLabel = document.getElementById('<%= lblDateValidation.ClientID %>');
+            var closingDateInput = document.getElementById('<%= txtClosingDate.ClientID %>');
+            var validationLabel = document.getElementById('<%= lblDateValidation.ClientID %>');
 
             var openingDate = openingDateInput.value;
             var closingDate = closingDateInput.value;
@@ -408,7 +494,9 @@
            }
        };
    </script>
-   <script type="text/javascript">
+
+
+   <%--<script type="text/javascript">
        document.addEventListener("DOMContentLoaded", function () {
            var txtOpenBy = document.getElementById('<%= txtOpenBy.ClientID %>');
         var btnAdd = document.getElementById('<%= btnAddObservation.ClientID %>');
@@ -429,9 +517,9 @@
             }
         });
     });
-   </script>
+   </script>--%>
 
-  <script type="text/javascript">
+ <%-- <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", function () {
           var tbObserverID = document.getElementById('<%= txtObserverID.ClientID %>');
        var btnAdd = document.getElementById('<%= btnAddObservation.ClientID %>');
@@ -452,88 +540,118 @@
               }
           });
       });
-  </script>
+  </script>--%>
 
 
-<%--<script type="text/javascript">
+<script type="text/javascript">
     function validateObservationFields() {
-        var fields = [
-            { id: '<%= txtObserverID.ClientID %>', name: 'Observer ID' },
-            { id: '<%= fileBeforePhoto.ClientID %>', name: 'Before Photo' },
-            { id: '<%= txtObservation.ClientID %>', name: 'Observation' },
-            { id: '<%= txtCorrectiveAction.ClientID %>', name: 'Corrective Action' },
-            { id: '<%= fileAfterPhoto.ClientID %>', name: 'After Photo' },
-            { id: '<%= ddlStatus.ClientID %>', name: 'Status' },
-            { id: '<%= txtOpeningDate.ClientID %>', name: 'Opening Date' },
-            { id: '<%= txtOpenBy.ClientID %>', name: 'Open By' },
-            { id: '<%= txtOpenByWorkman.ClientID %>', name: 'Open By (Workman SL)' },
-            { id: '<%= txtClosingDate.ClientID %>', name: 'Closing Date' },
-            { id: '<%= txtTargetDate.ClientID %>', name: 'Target Date' },
-            { id: '<%= txtAssignedTo.ClientID %>', name: 'Assigned To' }
-        ];
+        var obsID = document.getElementById('<%= txtObserverID.ClientID %>').value.trim();
+        var openby = document.getElementById('<%= txtOpenBy.ClientID %>').value.trim();
+        var openwork = document.getElementById('<%= txtOpenByWorkman.ClientID %>').value.trim();
+        <%--var closeby = document.getElementById('<%= txtCloseBy.ClientID %>').value.trim();--%>
+        var phbef = document.getElementById('<%= fileBeforePhoto.ClientID %>').value.trim();
+        var obs = document.getElementById('<%= txtObservation.ClientID %>').value.trim();
+        var insp = document.getElementById('<%= txtCorrectiveAction.ClientID %>').value.trim(); 
+        var phaft = document.getElementById('<%= fileAfterPhoto.ClientID %>').value.trim();
+        var opdate = document.getElementById('<%= txtOpeningDate.ClientID %>').value.trim();
+        var cldate = document.getElementById('<%= txtClosingDate.ClientID %>').value.trim();
+        var tgdate = document.getElementById('<%= txtTargetDate.ClientID %>').value.trim();
+        var assign = document.getElementById('<%= txtAssignedTo.ClientID %>').value.trim();
+        var status = document.getElementById('<%= ddlStatus.ClientID %>').value.trim();
 
-        for (var i = 0; i < fields.length; i++) {
-            var elem = document.getElementById(fields[i].id);
-            if (elem) {
-                if ((elem.type === "text" || elem.tagName === "TEXTAREA" || elem.tagName === "SELECT") && elem.value.trim() === "") {
-                    alert(fields[i].name + " is required.");
-                    elem.focus();
-                    return false;
-                }
+        var digitsOnly = /^\d+$/;
 
-                if (elem.type === "file" && elem.value.trim() === "") {
-                    alert(fields[i].name + " is required.");
-                    return false;
-                }
-            }
+        if (!obsID) {
+            alert("Please enter Observer ID");
+            return false;
+        }
+        if (!digitsOnly.test(obsID)) {
+            alert("Observer ID must contain digits only.");
+            return false;
+        }
+
+
+        if (!openby) {
+            alert("Please enter Open By.");
+            return false;
+        }
+
+        if (!openwork) {
+            alert("Please enter Open by Workman SL.");
+            return false;
+        }
+        if (!phbef) {
+            alert("Please upload photo Before");
+            return false;
+        }
+        if (!phaft) {
+            alert("Please upload photo After");
+            return false;
+        }
+        if (!obs) {
+            alert("Please enter Observation");
+            return false;
+        }
+        if (!insp) {
+            alert("Please enter Action Taken");
+            return false;
+        }
+        if (!opdate) {
+            alert("Please enter Opening Date");
+            return false;
+        }
+        if (!cldate) {
+            alert("Please enter Closing Date");
+            return false;
+        }
+        if (!tgdate) {
+            alert("Please enter Target Date");
+            return false;
+        }
+        if (!assign) {
+            alert("Please enter Assigned To");
+            return false;
+        }
+        if (!status) {
+            alert("Please select status");
+            return false;
+        }
+        return true;
+    }
+
+</script>
+
+<script type="text/javascript">
+    function validatesFields() {
+        var obsID = document.getElementById('<%= txtdate.ClientID %>').value.trim();
+        var openby = document.getElementById('<%= txtLocation.ClientID %>').value.trim();
+        var openwork = document.getElementById('<%= txtjobID.ClientID %>').value.trim();
+
+        
+        var digitsOnly = /^\d+$/;
+
+        if (!obsID) {
+            alert("Please select Date");
+            return false;
+        }
+
+        if (!openby) {
+            alert("Please enter Location.");
+            return false;
+        }
+
+        if (!openwork) {
+            alert("Please enter Job ID.");
+            return false;
+        }
+        if (!digitsOnly.test(openwork)) {
+            alert("Job ID must contain digits only.");
+            return false;
         }
 
         return true;
     }
-</script>--%>
-<script type="text/javascript">
-    function validateObservationFields() {
-        var fields = [
-            { id: '<%= txtObserverID.ClientID %>', name: 'Observer ID' },
-            { id: '<%= fileBeforePhoto.ClientID %>', name: 'Before Photo' },
-            { id: '<%= txtObservation.ClientID %>', name: 'Observation' },
-            { id: '<%= txtCorrectiveAction.ClientID %>', name: 'Corrective Action' },
-            { id: '<%= fileAfterPhoto.ClientID %>', name: 'After Photo' },
-            { id: '<%= ddlStatus.ClientID %>', name: 'Status' },
-            { id: '<%= txtOpeningDate.ClientID %>', name: 'Opening Date' },
-            { id: '<%= txtOpenByWorkman.ClientID %>', name: 'Open By (Workman SL)' },
-            { id: '<%= txtClosingDate.ClientID %>', name: 'Closing Date' },
-            { id: '<%= txtTargetDate.ClientID %>', name: 'Target Date' },
-            { id: '<%= txtAssignedTo.ClientID %>', name: 'Assigned To' }
-        ];
-
-        for (var i = 0; i < fields.length; i++) {
-            var elem = document.getElementById(fields[i].id);
-            if (elem) {
-                var isEmpty = false;
-                if (elem.type === "file" && !elem.value) {
-                    isEmpty = true;
-                } else if (
-                    (elem.type === "text" ||
-                        elem.tagName === "TEXTAREA" ||
-                        elem.tagName === "SELECT") &&
-                    elem.value.trim() === "") {
-                    isEmpty = true;
-                }
-
-                if (isEmpty) {
-                    alert(fields[i].name + " is required.");
-                    elem.focus();
-                    return false;
-                }
-            }
-        }
-
-        return true; // all fields valid, allow form submission
-    }
 </script>
-
-
 
 
 

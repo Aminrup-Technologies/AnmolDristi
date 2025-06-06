@@ -150,6 +150,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtObserverID;
 
         /// <summary>
+        /// lblEmployeeName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmployeeName;
+
+        /// <summary>
         /// lbl_txtOpenBy control.
         /// </summary>
         /// <remarks>
@@ -175,6 +184,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtOpenBy;
+
+        /// <summary>
+        /// hfEmployeeName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfEmployeeName;
 
         /// <summary>
         /// lbl_txtOpenByWorkman control.

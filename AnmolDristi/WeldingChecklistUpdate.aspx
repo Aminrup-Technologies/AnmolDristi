@@ -373,7 +373,7 @@
      <div class="mb-3">
          <asp:Label ID="Lbl_btnUpdate" runat="server" AssociatedControlID="btnUpdate" Text="CLICK TO Update" ForeColor="Green" Font-Bold="true" Font-Size="Small"></asp:Label>
          <div class="input-group input-group-sm">
-             <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="btn btn-success mt-3" ValidationGroup="submit" CausesValidation="true" OnClick="btnUpdate_Click" />
+             <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="btn btn-success mt-3" ValidationGroup="submit" CausesValidation="true" OnClientClick="return validatesChecklist();" OnClick="btnUpdate_Click" />
              <asp:Button ID="BtnBack" runat="server" Text="Back" CssClass="btn btn-warning  mt-3" CausesValidation="false" OnClick="BtnBack_Click" />
              <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
          </div>
@@ -396,18 +396,88 @@
                 const value = this.nextSibling.textContent.trim(); // Yes / No / NA
 
                 const txtRemarks = row.querySelector('input[type="text"], textarea, .form-control.remarks');
-                const fileUpload = row.querySelector('input[type="file"], .fileUpload');
+                const hfImagePath = row.querySelector('input[type="file"], .hfImagePath');
 
                 if (value === "No") {
                     if (txtRemarks) txtRemarks.style.display = "block";
-                    if (fileUpload) fileUpload.style.display = "block";
+                    if (hfImagePath) hfImagePath.style.display = "block";
                 } else {
                     if (txtRemarks) txtRemarks.style.display = "none";
-                    if (fileUpload) fileUpload.style.display = "none";
+                    if (hfImagePath) hfImagePath.style.display = "none";
                 }
             });
         });
     };
+</script>
+<script type="text/javascript">
+    function validateRemarksAndPhotos() {
+        const rows = document.querySelectorAll("table tr"); // Adjust selector if needed
+
+        for (let row of rows) {
+            const selectedRadio = row.querySelector('.status-option input[type="radio"]:checked');
+
+            if (selectedRadio) {
+                const labelText = selectedRadio.nextSibling.textContent.trim();
+
+                if (labelText === "No") {
+                    const txtRemarks = row.querySelector('input[type="text"], textarea, .form-control.remarks');
+                    
+
+                    if (!txtRemarks || txtRemarks.style.display !== "none" && txtRemarks.value.trim() === "") {
+                        alert("Please enter remarks for an item marked as 'No'.");
+                        return false;
+                    }
+
+                    
+                }
+            }
+        }
+
+        return true;
+    }
+</script>
+
+
+<script type="text/javascript">
+    function validatesChecklist() {
+        var date = document.getElementById('<%= txtdate.ClientID %>').value.trim();
+        var site = document.getElementById('<%= txtloc.ClientID %>').value.trim();
+        var jobId = document.getElementById('<%= txtjobId.ClientID %>').value.trim();
+    var insp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
+        var re = document.getElementById('<%= txtnote.ClientID %>').value.trim();
+
+        const digitsOnly = /^\d+$/;
+
+        if (!date) {
+            alert("Please select Date of Inspection.");
+            return false;
+        }
+        if (!site) {
+            alert("Please enter Location.");
+            return false;
+        }
+        if (!jobId) {
+            alert("Please enter JobID.");
+            return false;
+        }
+        if (!digitsOnly.test(jobId)) {
+            alert("Job ID must contain digits only.");
+            return false;
+        }
+        if (!insp) {
+            alert("Please enter Inspected by.");
+            return false;
+        }
+        if (!re) {
+            alert("Please give Remarks.");
+            return false;
+        }
+        if (!validateRemarksAndPhotos()) {
+            return false;
+        }
+
+        return true;
+    }
 </script>
 
 

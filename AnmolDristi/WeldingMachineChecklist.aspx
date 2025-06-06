@@ -138,7 +138,7 @@
                 <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarks" Style="display:none;" />
             </td>
             <td>
-                <asp:FileUpload ID="fileUpload" runat="server" CssClass="fileUpload"   Style="display:none;" />
+                <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
             </td>
         </tr>
     </ItemTemplate>
@@ -190,7 +190,7 @@
               <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarks" Style="display:none;" />
           </td>
           <td>
-              <asp:FileUpload ID="fileUpload" runat="server" CssClass="fileUpload"   Style="display:none;" />
+              <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"  Style="display:none;" />
           </td>
       </tr>
   </ItemTemplate>
@@ -241,7 +241,7 @@
               <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarks" Style="display:none;" />
           </td>
           <td>
-              <asp:FileUpload ID="fileUpload" runat="server" CssClass="fileUpload"   Style="display:none;" />
+              <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
           </td>
       </tr>
   </ItemTemplate>
@@ -290,7 +290,7 @@
               <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarks" Style="display:none;" />
           </td>
           <td>
-              <asp:FileUpload ID="fileUpload" runat="server" CssClass="fileUpload"   Style="display:none;" />
+              <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
           </td>
       </tr>
   </ItemTemplate>
@@ -340,7 +340,7 @@
               <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarks" Style="display:none;" />
           </td>
           <td>
-              <asp:FileUpload ID="fileUpload" runat="server" CssClass="fileUpload"   Style="display:none;" />
+              <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
           </td>
       </tr>
   </ItemTemplate>
@@ -371,7 +371,7 @@
      <div class="mb-3">
          <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="CLICK TO SAVE" ForeColor="Green" Font-Bold="true" Font-Size="Small"></asp:Label>
          <div class="input-group input-group-sm">
-             <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success mt-3" ValidationGroup="submit" CausesValidation="true" OnClientClick="return validateChecklist();" OnClick="btnSubmit_Click" />
+             <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success mt-3" ValidationGroup="submit" CausesValidation="true" OnClientClick="return validatesChecklist();"  OnClick="btnSubmit_Click" />
              <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning  mt-3" CausesValidation="false" OnClick="BtnReset_Click" />
              <asp:Button ID="btn_home" runat="server" Text="Home" CssClass="btn btn-danger  mt-3" CausesValidation="false" PostBackUrl="~/Home.aspx" />
              <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
@@ -410,8 +410,8 @@
 </script>
 
 
-  <!-- Add the necessary jQuery library -->
-<!-- jQuery (Include at top of page if not already) -->
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- JavaScript to fetch employee name -->
@@ -459,40 +459,124 @@
     }
 </script>
 
-
 <script type="text/javascript">
-    function validateChecklist() {
-        // 1) Validate all remarks
-        var remarksInputs = document.querySelectorAll("input[id*='txtRemarks']");
-        for (var i = 0; i < remarksInputs.length; i++) {
-            var remarks = remarksInputs[i];
-            var row = remarks.closest("tr");
-            var rdoNo = row.querySelector("input[type='radio'][id*='rdoNo']");
+    function validateRemarksAndPhotos() {
+        const rows = document.querySelectorAll("table tr"); // Adjust selector if needed
 
-            if (rdoNo && rdoNo.checked && remarks.value.trim() === "") {
-                alert("Please enter remarks for row " + (i + 1));
-                remarks.focus();
-                return false;
-            }
-        }
+        for (let row of rows) {
+            const selectedRadio = row.querySelector('.status-option input[type="radio"]:checked');
 
-        // 2) Validate all file uploads
-        var fileInputs = document.querySelectorAll("input[id*='fileUpload']");
-        for (var j = 0; j < fileInputs.length; j++) {
-            var fileUpload = fileInputs[j];
-            var row = fileUpload.closest("tr");
-            var rdoNo = row.querySelector("input[type='radio'][id*='rdoNo']");
+            if (selectedRadio) {
+                const labelText = selectedRadio.nextSibling.textContent.trim();
 
-            if (rdoNo && rdoNo.checked && fileUpload.value.trim() === "") {
-                alert("Please upload a photo for Step " + (j + 1));
-                fileUpload.focus();
-                return false;
+                if (labelText === "No") {
+                    const txtRemarks = row.querySelector('input[type="text"], textarea, .form-control.remarks');
+                    const fileUpload = row.querySelector('input[type="file"], .fileUpload');
+
+                    if (!txtRemarks || txtRemarks.style.display !== "none" && txtRemarks.value.trim() === "") {
+                        alert("Please enter remarks for an item marked as 'No'.");
+                        return false;
+                    }
+
+                    if (!fileUpload || fileUpload.style.display !== "none" && fileUpload.value === "") {
+                        alert("Please upload a photo for an item marked as 'No'.");
+                        return false;
+                    }
+                }
             }
         }
 
         return true;
     }
 </script>
+
+
+<script type="text/javascript">
+    function validatesChecklist() {
+        var date = document.getElementById('<%= txtdate.ClientID %>').value.trim();
+    var site = document.getElementById('<%= txtloc.ClientID %>').value.trim();
+    var jobId = document.getElementById('<%= txtjobId.ClientID %>').value.trim();
+    var insp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
+        var re = document.getElementById('<%= txtnote.ClientID %>').value.trim();
+
+        const digitsOnly = /^\d+$/;
+
+        if (!date) {
+            alert("Please select Date of Inspection.");
+            return false;
+        }
+        if (!site) {
+            alert("Please enter Location.");
+            return false;
+        }
+        if (!jobId) {
+            alert("Please enter JobID.");
+            return false;
+        }
+        if (!digitsOnly.test(jobId)) {
+            alert("Job ID must contain digits only.");
+            return false;
+        }
+        if (!insp) {
+            alert("Please enter Inspected by.");
+            return false;
+        }
+        if (!re) {
+            alert("Please give Remarks.");
+            return false;
+        }
+        if (!validateRemarksAndPhotos()) {
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+
+
+
+<%--<script type="text/javascript">
+function validatesChecklist() {
+    var date = document.getElementById('<%= txtdate.ClientID %>').value.trim();
+    var site = document.getElementById('<%= txtloc.ClientID %>').value.trim();
+    var jobId = document.getElementById('<%= txtjobId.ClientID %>').value.trim();
+    var insp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
+    var remark = document.getElementById('<%= txtnote.ClientID %>').value.trim();
+
+    const digitsOnly = /^\d+$/;
+
+    if (!date) {
+        alert("Please select Date of Inspection.");
+        return false;
+    }
+    if (!site) {
+        alert("Please enter Location.");
+        return false;
+    }
+    if (!jobId) {
+        alert("Please enter JobID.");
+        return false;
+    }
+    if (!digitsOnly.test(jobId)) {
+        alert("Job ID must contain digits only.");
+        return false;
+    }
+    if (!insp) {
+        alert("Please enter Inspected by.");
+        return false;
+    }
+    if (!remark) {
+        alert("Please give Remarks.");
+        return false;
+    }
+
+    
+
+    return true;
+}
+</script>--%>
+
 
 
 

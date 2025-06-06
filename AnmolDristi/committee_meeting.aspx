@@ -4,8 +4,8 @@
         .btnStyle {
     width: 120px;
     height: 35px;
-    color: black;
-    background-color: coral;
+    color: white;
+    background-color: #0094ff;
     font-size: 16px;
     text-align: center;
     border: none;
@@ -53,7 +53,7 @@
       <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Meeting Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-         <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+         <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
          <div class="input-group-sm">
              <asp:TextBox ID="txtdate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
          </div>
@@ -62,7 +62,7 @@
     <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtTime" runat="server" AssociatedControlID="txtTime" Text="Meeting Time" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtTime" runat="server" ErrorMessage="*" ControlToValidate="txtTime" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtTime" runat="server" ErrorMessage="*" ControlToValidate="txtTime" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtTime" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Time"></asp:TextBox>
         </div>
@@ -71,7 +71,7 @@
      <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtVenue" runat="server" AssociatedControlID="txtVenue" Text="Venue" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-         <asp:RequiredFieldValidator ID="RFV_txtVenue" runat="server" ErrorMessage="*" ControlToValidate="txtVenue" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+         <asp:RequiredFieldValidator ID="RFV_txtVenue" runat="server" ErrorMessage="*" ControlToValidate="txtVenue" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
          <div class="input-group-sm">
              <asp:TextBox ID="txtVenue" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
          </div>
@@ -80,7 +80,7 @@
     <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtMeetingNo" runat="server" AssociatedControlID="txtMeetingNo" Text="Meeting Number" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtMeetingNo" runat="server" ErrorMessage="*" ControlToValidate="txtMeetingNo" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtMeetingNo" runat="server" ErrorMessage="*" ControlToValidate="txtMeetingNo" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtMeetingNo" runat="server" CssClass="form-control form-control-sm rounded" ></asp:TextBox>
         </div>
@@ -89,7 +89,7 @@
     <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtChairedBy" runat="server" AssociatedControlID="txtChairedBy" Text="Chaired By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtChairedBy" runat="server" ErrorMessage="*" ControlToValidate="txtChairedBy" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtChairedBy" runat="server" ErrorMessage="*" ControlToValidate="txtChairedBy" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtChairedBy" runat="server" CssClass="form-control form-control-sm rounded" ></asp:TextBox>
         </div>
@@ -98,7 +98,7 @@
         <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
        <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
 
         <div class="input-group-sm">
@@ -214,17 +214,7 @@
     </div>
 </div>--%>
 
-  <div class="col-md-4">
-         <div class="mb-3">
-             <asp:Label ID="lbl_imgupload" runat="server" AssociatedControlID="imgupload" Text="Upload Photo" ForeColor="Blue" Font-Bold="true"></asp:Label>
-             <asp:RequiredFieldValidator ID="RFV_imgupload" runat="server" ErrorMessage="*" ControlToValidate="imgupload" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-             <div class="input-group-sm">
-                 <asp:FileUpload ID="imgupload" runat="server" CssClass="form-control form-control-sm rounded" />
-                  <asp:Label ID="lblBeforeError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
-             </div>
-         </div>
-     </div>
-           
+        
 
  
      
@@ -422,6 +412,7 @@
 <div class="col-md-2">
  <div class="mt-3">
      <asp:Button ID="btnAddIssues" runat="server" Text="Add Issues" CssClass="btn btn-primary" ValidationGroup="add1" CausesValidation="true"  OnClientClick="preparePoints();" OnClick="btnAddIssues_Click"  />
+ <asp:Label ID="lblMsg2" runat="server" ></asp:Label>
  </div>
   </div>                         
             <div class="table-responsive">
@@ -450,7 +441,21 @@
         </div>
 
              
-
+ <div class="x_title">
+    <h2 class="text-info h4">Upload Your Meeting Image</h2>
+    <div class="clearfix"></div>
+</div>                         
+ <div class="col-md-4">
+        <div class="mb-3">
+            <asp:Label ID="lbl_imgupload" runat="server" AssociatedControlID="imgupload" Text="Upload Photo" ForeColor="Blue" Font-Bold="true"></asp:Label>
+            <asp:RequiredFieldValidator ID="RFV_imgupload" runat="server" ErrorMessage="*" ControlToValidate="imgupload" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+            <div class="input-group-sm">
+                <asp:FileUpload ID="imgupload" runat="server" CssClass="form-control form-control-sm rounded" />
+                 <asp:Label ID="lblBeforeError" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
+            </div>
+        </div>
+    </div>
+    
                    
 
 
@@ -467,7 +472,7 @@
                 <div class="mb-3">
                     <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />
+                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" OnClientClick="return validatesFields();" />
                         
                         <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />
@@ -591,16 +596,58 @@
              }
          };
      </script>
-<%--<script type="text/javascript">
-    window.onload = function () {
-        var imagePath = document.getElementById("<%= hfImagePath.ClientID %>").value;
-        var img = document.getElementById("imgPreview");
-        if (imagePath) {
-            img.src = imagePath;
-            img.style.display = "block";
+
+<script type="text/javascript">
+    function validatesFields() {
+        var obsID = document.getElementById('<%= txtdate.ClientID %>').value.trim();
+        var openby = document.getElementById('<%= txtTime.ClientID %>').value.trim();
+        var openwork = document.getElementById('<%= txtjobID.ClientID %>').value.trim(); 
+        var venue = document.getElementById('<%= txtVenue.ClientID %>').value.trim();
+        var meetingno = document.getElementById('<%= txtMeetingNo.ClientID %>').value.trim();
+        var chairedby = document.getElementById('<%= txtChairedBy.ClientID %>').value.trim(); 
+        var img = document.getElementById('<%= imgupload.ClientID %>').value.trim();
+
+        var digitsOnly = /^\d+$/;
+
+        if (!obsID) {
+            alert("Please select Date");
+            return false;
         }
-    };
-</script>--%>
+
+        if (!openby) {
+            alert("Please select Time.");
+            return false;
+        }
+        if (!venue) {
+            alert("Please wnter venue.");
+            return false;
+        }
+        if (!meetingno) {
+            alert("Please enter meeting no.");
+            return false;
+        }
+        if (!chairedby) {
+            alert("Please enter chaired by.");
+            return false;
+        }
+        if (!openwork) {
+            alert("Please enter Job ID.");
+            return false;
+        }
+        if (!digitsOnly.test(openwork)) {
+            alert("Job ID must contain digits only.");
+            return false;
+        }
+        if (!img) {
+            alert("Please Upload Meeting Image.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+
 
    
 </asp:Content>

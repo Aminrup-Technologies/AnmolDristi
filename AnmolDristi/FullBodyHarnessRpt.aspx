@@ -1,14 +1,14 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WeldingChecklistRpt.aspx.cs" Inherits="AnmolDristi.WeldingChecklistRpt" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FullBodyHarnessRpt.aspx.cs" Inherits="AnmolDristi.FullBodyHarnessRpt" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Welding Checklist Report</title>
+    <title>Full Boady Harness Report</title>
      <link rel="preconnect" href="https://fonts.googleapis.com" />
-     <link rel="preconnect" href="https://fonts.gstatic.com" />
-     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
-       <style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+           <style>
     @media print {
         @page {
             size: A4;
@@ -108,22 +108,24 @@
 </style>
 </head>
 <body>
-       <asp:Repeater ID="RepeaterMeeting" runat="server" OnItemDataBound="RepeaterMeeting_ItemDataBound">
+  <asp:Repeater ID="RepeaterMeeting" runat="server" OnItemDataBound="RepeaterMeeting_ItemDataBound">
     <HeaderTemplate>
         <!-- Your header content -->
         <table class="TABLE_1">
             <tr>
                 <td style="text-align: left;">
-                    <b>Document Number</b></br>
-                   ATS/WMC/22/00
+
+                    <b>Document Number</b>
+                  </br>
+                   DOC/ATS/TSK/FBH/013
                 </td>
                <%-- <td style="text-align: center; height: auto;">
                     <asp:Image ID="Image1" runat="server"  ImageUrl="~/WebData/img/logo.png" CssClass="Logo" AlternateText="logo" />
                 </td>--%>
-               <%-- <td style="text-align: left;">
+                <td style="text-align: right;">
                     <b>EFF.DATE:</b><br />
-                    23/02/2023
-                </td>--%>
+                    01/02/2024
+                </td>
             </tr>
             <tr>
                 <td colspan="3" style="height: 30px"></td>
@@ -135,7 +137,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="text-align: center; padding: 10px 0 30px; font-size: 16px; font-weight: bold; text-decoration: underline;">Welding Machine Check list
+                <td colspan="3" style="text-align: center; padding: 10px 0 30px; font-size: 16px; font-weight: bold; text-decoration: underline;">Full Body Harness Inspection
                 </td>
             </tr>
     </HeaderTemplate>
@@ -147,18 +149,22 @@
         <!-- Meeting Info -->
         <tr class="center">
             <td>Checklist ID</td>
-            <td colspan="3"><%# Eval("HeaderID") %></td>
+            <td colspan="3"><%# Eval("InspectionID") %></td>
         </tr>
         <tr class="center">
             <td>Date</td>
-            <td colspan="3"><%# Eval("ChecklistDate", "{0:yyyy-MM-dd}") %></td>
+            <td colspan="3"><%# Eval("DateOfInspection", "{0:yyyy-MM-dd}") %></td>
         </tr>
+         <tr class="center">
+     <td>Site</td>
+     <td colspan="2"><%# Eval("Site") %></td>
+ </tr>
         <tr class="center">
             <td>Job ID</td>
             <td colspan="2"><%# Eval("JobID") %></td>
         </tr>
         <tr class="center">
-            <td>EmployeeName</td>
+            <td>Employee Name</td>
             <td colspan="2"><%# Eval("EmployeeName") %></td>
         </tr>
          <tr class="center">
@@ -177,14 +183,15 @@
             <td colspan="8">
                 <h2 style="text-decoration: underline;">Checklist</h2>
                 <table class="center_1">
-                    <thead>
                         <tr class="center_1">
-                            <th>SNo</th>
+                             
+                            <th>Point No</th>
                              <th>Description</th>
                             <th>IsOk</th>
                             <th>Remarks</th>
                             <th>Image</th>
-                            <th>NA</th>
+                             <th>Location</th>
+                             <th>Inspection No</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -192,13 +199,12 @@
                             <ItemTemplate>
                                 <tr class="center_1">
                                     <td><%# Eval("QuestionNumber") %></td>
-                                     <td><%# Eval("description") %></td>
+                                     <td><asp:Label ID="lblDescription" runat="server" /></td>
                                     <td><%# Convert.ToBoolean(Eval("IsOk")) ? "✔️" : "❌" %></td>
                                     <td><%# Eval("Remarks") %></td>
                                     <td><asp:Image ID="imgUpload"  runat="server"  ImageUrl='<%# Eval("PhotoPath") %>'  Width="100"  Height="100"  Visible='<%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>'  /></td>
-                                   
-                                    <td><%# Convert.ToBoolean(Eval("NA")) ? "✔️" : "" %></td>
-
+                                   <td><%# Eval("Location") %></td>
+                                   <td><%# Eval("InspectionNo") %></td>                                
                                 </tr>
                             </ItemTemplate>
                         </asp:Repeater>
@@ -206,12 +212,7 @@
                 </table>
             </td>
         </tr>
-
-       
     </ItemTemplate>
 </asp:Repeater>
-
-  
-
 </body>
 </html>

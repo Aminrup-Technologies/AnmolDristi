@@ -9,6 +9,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
 using System.Web.Script.Serialization;
+using System.Web.Script.Services;
+using System.Web.Services;
 
 
 namespace AnmolDristi
@@ -20,10 +22,86 @@ namespace AnmolDristi
         {
             
         }
-        
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public static string GetEmployeeName(string inspectionId)
+        {
+            string employeeName = string.Empty;
+            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            string query = "SELECT TOP 1 OpenBy FROM [CSMS].[dbo].[AuditObservations] WHERE ObserverID = @ObserverID";
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@ObserverID", inspectionId);
+
+                try
+                {
+                    conn.Open();
+                    var result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        employeeName = result.ToString();
+                    }
+                    else
+                    {
+                        employeeName = "Invalid Observer ID";
+                    }
+                }
+                catch
+                {
+                    employeeName = "Error occurred while fetching data";
+                }
+            }
+
+            return employeeName;
+        }
+
+
+
+        //[WebMethod]
+        //[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        //public static string GetEmployeeName(string observerId)
+        //{
+        //    string employeeName = string.Empty;
+
+        //    string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+        //    string query = "SELECT OpenBy FROM [CSMS].[dbo].[AuditObservations] WHERE ObserverID = @ObserverID";
+
+        //    using (SqlConnection conn = new SqlConnection(connStr))
+        //    {
+        //        SqlCommand cmd = new SqlCommand(query, conn);
+        //        cmd.Parameters.AddWithValue("@ObserverID", observerId);
+
+        //        try
+        //        {
+        //            conn.Open();
+        //            var result = cmd.ExecuteScalar();
+        //            if (result != null)
+        //            {
+        //                employeeName = result.ToString();
+        //            }
+        //            else
+        //            {
+        //                employeeName = "No record found for the given Observer ID";
+        //            }
+        //        }
+        //        catch
+        //        {
+        //            employeeName = "Error occurred while fetching data";
+        //        }
+        //    }
+
+        //    return employeeName;
+        //}
+
+
+
 
         protected void btnAddObservation_Click(object sender, EventArgs e)
         {
+            lblMsg1.Text = "";
             DataTable dt;
             
 
@@ -105,8 +183,9 @@ namespace AnmolDristi
             dr["SNo"] = serialNo;
             dr["ObserverID"]=txtObserverID.Text.Trim();
             dr["OpeningDate"] = txtOpeningDate.Text.Trim();
-            dr["OpenBy"] = txtOpenBy.Text.Trim();
-            
+            dr["OpenBy"] = hfEmployeeName.Value.Trim();
+
+
             dr["Observation"] = txtObservation.Text.Trim();
             dr["CorrectiveAction"] = txtCorrectiveAction.Text.Trim();
             
@@ -187,9 +266,12 @@ namespace AnmolDristi
 
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
+            lblMsg.Text = "";
             if (ViewState["Observations"] == null)
             {
-                lblMsg1.Text = "No observations to save.";
+                lblMsg.Text = "No observations to save.Please Add Observations";
+                lblMsg1.Text= "Please Add Observations";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
                 lblMsg1.ForeColor = System.Drawing.Color.Red;
                 BtnSubmit.Enabled = true; // Re-enable button
                 return;
