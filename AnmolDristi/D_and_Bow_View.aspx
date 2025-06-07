@@ -61,11 +61,22 @@
         <asp:BoundField DataField="ChainPulleyRemarks" HeaderText="Chain Pulley Remarks" />
         <asp:BoundField DataField="ChainPulleyPhotoPath" HeaderText="Chain Pulley Photo" />
 
+
+
         <asp:TemplateField HeaderText="Actions">
-            <ItemTemplate>
-                <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>
-                <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions" CommandName="Delete" OnClientClick="return confirm('Are you sure?');">Delete</asp:LinkButton>
-            </ItemTemplate>
+    <ItemTemplate>
+        <asp:LinkButton ID="btnView" runat="server" CssClass="btn btn-info btn-actions" 
+            CommandArgument='<%# Eval("BasicID") %>'
+
+            OnClick="btnView_Click">View</asp:LinkButton>
+
+        <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" 
+            CommandName="Edit">Edit</asp:LinkButton>
+
+        <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions" 
+            CommandName="Delete" 
+            OnClientClick="return confirm('Are you sure?');">Delete</asp:LinkButton>
+    </ItemTemplate>
             <EditItemTemplate>
                 <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success btn-actions" CommandName="Update">Update</asp:LinkButton>
                 <asp:LinkButton ID="btnCancel" runat="server" CssClass="btn btn-secondary btn-actions" CommandName="Cancel">Cancel</asp:LinkButton>

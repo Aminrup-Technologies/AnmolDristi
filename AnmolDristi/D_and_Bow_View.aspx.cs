@@ -23,6 +23,16 @@ namespace AnmolDristi
             }
         }
 
+        protected void btnView_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            string id = btn.CommandArgument;
+
+            // Redirect to detailed view page with ID in query string
+            Response.Redirect("DandBowDetailedView.aspx?id=" + id);
+        }
+
+
         private void LoadDandBowChecklistDetails()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;

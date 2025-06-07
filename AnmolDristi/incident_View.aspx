@@ -304,7 +304,15 @@
                                         <%# Eval("SubmittedTime", "{0:hh\\:mm}") %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-
+                                <asp:TemplateField HeaderText="View">
+    <ItemTemplate>
+        <asp:HyperLink ID="lnkView" runat="server" 
+            NavigateUrl='<%# Eval("IncidentID", "~/incident_DetailedView.aspx?IncidentId={0}") %>' 
+            Text="View" 
+            CssClass="btn btn-info btn-actions" 
+            Target="_blank" />
+    </ItemTemplate>
+</asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Actions">
                                     <ItemTemplate>

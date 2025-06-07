@@ -20,6 +20,14 @@ namespace AnmolDristi
                 LoadGasCuttingIncidentDetails();
             }
         }
+        protected void btnView_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            string id = btn.CommandArgument;
+            Response.Redirect("GasDetailedView.aspx?HeaderID=" + id);
+        }
+
+
 
         private void LoadGasCuttingIncidentDetails()
         {

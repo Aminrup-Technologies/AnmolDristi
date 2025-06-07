@@ -83,28 +83,35 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Award_DetailedView.aspx" />
     <Content Include="Award_Distribution.aspx" />
     <Content Include="Award_Distribution_View.aspx" />
     <Content Include="Award_report.aspx" />
     <Content Include="csm_kyt.aspx" />
+    <Content Include="DandBowDetailedView.aspx" />
     <Content Include="D_and_Bow_Shackles_Chain_Pulley_Checklist.aspx" />
     <Content Include="D_and_Bow_View.aspx" />
+    <Content Include="GasDetailedView.aspx" />
     <Content Include="Gas_Cutting_Checklist.aspx" />
     <Content Include="Gas_Cutting_View.aspx" />
+    <Content Include="GrindingDetailedView.aspx" />
     <Content Include="Grinding_Machine_Checklist.aspx" />
     <Content Include="Grinding_Machine_View.aspx" />
     <Content Include="Grinding_Report.aspx" />
     <Content Include="home.aspx" />
     <Content Include="HtmlPage1.html" />
     <Content Include="incident_analysis.aspx" />
+    <Content Include="incident_DetailedView.aspx" />
     <Content Include="incident_View.aspx" />
     <Content Include="KYT.aspx" />
+    <Content Include="KYT_DetailedView.aspx" />
     <Content Include="KYT_View.aspx" />
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="qaqc_inspector_rpt.aspx" />
     <Content Include="Dristi.Master" />
     <Content Include="Safety_audit.aspx" />
+    <Content Include="Safety_DetailedView.aspx" />
     <Content Include="Safety_View.aspx" />
     <Content Include="WebData\OH4Y_Logo.png" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
@@ -150,6 +157,13 @@
     <Content Include="WebData\Internal\view.svg" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Award_DetailedView.aspx.cs">
+      <DependentUpon>Award_DetailedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Award_DetailedView.aspx.designer.cs">
+      <DependentUpon>Award_DetailedView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Award_Distribution.aspx.cs">
       <DependentUpon>Award_Distribution.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -186,6 +200,13 @@
       <DependentUpon>csm_kyt.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\QCInspectorDataAccess.cs" />
+    <Compile Include="DandBowDetailedView.aspx.cs">
+      <DependentUpon>DandBowDetailedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DandBowDetailedView.aspx.designer.cs">
+      <DependentUpon>DandBowDetailedView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="DB_Utility_OH4Y.cs" />
     <Compile Include="Dristi.Master.cs">
@@ -209,6 +230,13 @@
     <Compile Include="D_and_Bow_View.aspx.designer.cs">
       <DependentUpon>D_and_Bow_View.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GasDetailedView.aspx.cs">
+      <DependentUpon>GasDetailedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GasDetailedView.aspx.designer.cs">
+      <DependentUpon>GasDetailedView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Gas_Cutting_Checklist.aspx.cs">
       <DependentUpon>Gas_Cutting_Checklist.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -222,6 +250,13 @@
     </Compile>
     <Compile Include="Gas_Cutting_View.aspx.designer.cs">
       <DependentUpon>Gas_Cutting_View.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GrindingDetailedView.aspx.cs">
+      <DependentUpon>GrindingDetailedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GrindingDetailedView.aspx.designer.cs">
+      <DependentUpon>GrindingDetailedView.aspx</DependentUpon>
     </Compile>
     <Compile Include="Grinding_Machine_Checklist.aspx.cs">
       <DependentUpon>Grinding_Machine_Checklist.aspx</DependentUpon>
@@ -258,6 +293,13 @@
     <Compile Include="incident_analysis.aspx.designer.cs">
       <DependentUpon>incident_analysis.aspx</DependentUpon>
     </Compile>
+    <Compile Include="incident_DetailedView.aspx.cs">
+      <DependentUpon>incident_DetailedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="incident_DetailedView.aspx.designer.cs">
+      <DependentUpon>incident_DetailedView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="incident_View.aspx.cs">
       <DependentUpon>incident_View.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -271,6 +313,13 @@
     </Compile>
     <Compile Include="KYT.aspx.designer.cs">
       <DependentUpon>KYT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="KYT_DetailedView.aspx.cs">
+      <DependentUpon>KYT_DetailedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="KYT_DetailedView.aspx.designer.cs">
+      <DependentUpon>KYT_DetailedView.aspx</DependentUpon>
     </Compile>
     <Compile Include="KYT_View.aspx.cs">
       <DependentUpon>KYT_View.aspx</DependentUpon>
@@ -307,6 +356,13 @@
     </Compile>
     <Compile Include="Safety_audit.aspx.designer.cs">
       <DependentUpon>Safety_audit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety_DetailedView.aspx.cs">
+      <DependentUpon>Safety_DetailedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety_DetailedView.aspx.designer.cs">
+      <DependentUpon>Safety_DetailedView.aspx</DependentUpon>
     </Compile>
     <Compile Include="Safety_View.aspx.cs">
       <DependentUpon>Safety_View.aspx</DependentUpon>

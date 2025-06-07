@@ -56,6 +56,15 @@
                                 <asp:BoundField DataField="SubmissionDate" HeaderText="Submission Date" />
                                 <asp:BoundField DataField="SubmissionTime" HeaderText="Submission Time" />
 
+ <asp:TemplateField HeaderText="View">
+    <ItemTemplate>
+        <asp:HyperLink ID="lnkView" runat="server"
+            NavigateUrl='<%# Eval("KYT_JobID", "~/KYT_DetailedView.aspx?JobId={0}") %>'
+            Text="View"
+            CssClass="btn btn-info btn-actions"
+            Target="_blank" />
+    </ItemTemplate>
+</asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Actions">
                                     <ItemTemplate>

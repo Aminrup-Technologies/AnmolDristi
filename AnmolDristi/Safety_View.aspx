@@ -65,6 +65,18 @@
                                 <asp:BoundField DataField="SubmittedDate" HeaderText="Submission Date" />
                                 <asp:BoundField DataField="SubmittedTime" HeaderText="Submission Time" />
 
+ <asp:TemplateField HeaderText="View">
+    <ItemTemplate>
+        <asp:HyperLink ID="lnkView" runat="server"
+            NavigateUrl='<%# Eval("AuditID", "~/Safety_DetailedView.aspx?AuditID={0}") %>'
+            Text="View"
+            CssClass="btn btn-info btn-actions"
+            Target="_blank" />
+    </ItemTemplate>
+</asp:TemplateField>
+
+
+
                                 <asp:TemplateField HeaderText="Actions">
                                     <ItemTemplate>
                                         <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>

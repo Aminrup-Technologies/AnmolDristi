@@ -167,6 +167,14 @@ namespace AnmolDristi
             }
         }
 
+        protected void btnView_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            string id = btn.CommandArgument;
+            Response.Redirect("GrindingDetailedView.aspx?HeaderID=" + id);
+        }
+
+
         private void LoadGrindingMachineIncidentDetails()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;

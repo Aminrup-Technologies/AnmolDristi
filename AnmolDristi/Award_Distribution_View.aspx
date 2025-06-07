@@ -95,6 +95,18 @@
                                 </EditItemTemplate>
                             </asp:TemplateField>
 
+         <asp:TemplateField HeaderText="View">
+    <ItemTemplate>
+        <asp:HyperLink ID="lnkViewAward" runat="server"
+            NavigateUrl='<%# Eval("ADR_ID", "~/Award_DetailedView.aspx?id={0}") %>'
+            Text="View"
+            CssClass="btn btn-info btn-actions"
+            Target="_blank" />
+    </ItemTemplate>
+</asp:TemplateField>
+
+
+
                            <asp:TemplateField HeaderText="Actions">
     <ItemTemplate>
        <asp:HyperLink ID="btnView" runat="server" CssClass="btn btn-info btn-actions"

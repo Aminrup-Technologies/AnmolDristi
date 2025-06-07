@@ -142,6 +142,7 @@
 
         <asp:TemplateField HeaderText="Actions">
             <ItemTemplate>
+                <asp:LinkButton ID="btnView" runat="server" Text="View" CssClass="btn btn-info btn-actions" CommandArgument='<%# Eval("HeaderID") %>' OnClick="btnView_Click"></asp:LinkButton>
                 <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>
                 <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions" CommandName="Delete" OnClientClick="return confirm('Are you sure?');">Delete</asp:LinkButton>
             </ItemTemplate>
