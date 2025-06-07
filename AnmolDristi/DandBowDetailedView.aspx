@@ -38,8 +38,9 @@
                 <div class="x_content table-container">
                     <div style="overflow-x: auto;">
     <div class="container mt-4">
-        <asp:Label ID="lblTitle1" runat="server" Text="Chain Pulley Checklist" CssClass="title-label"></asp:Label>
-       <asp:GridView ID="gvChainPulley" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
+
+<asp:Label ID="lblTitle2" runat="server" Text="D-Bow Checklist" CssClass="title-label"></asp:Label>
+<asp:GridView ID="gvDBow" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
     HeaderStyle-CssClass="grid-header">
     <Columns>
         <asp:BoundField DataField="Question" HeaderText="Question" />
@@ -51,8 +52,6 @@
             </ItemTemplate>
         </asp:TemplateField>
         <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
-        
-       
         <asp:TemplateField HeaderText="Photo">
             <ItemTemplate>
                 <asp:Image ID="imgPhoto" runat="server" Width="60" Height="60"
@@ -62,15 +61,12 @@
                     Visible='<%# string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>' ForeColor="Gray" />
             </ItemTemplate>
         </asp:TemplateField>
-
         <asp:BoundField DataField="CreatedDate" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />
     </Columns>
 </asp:GridView>
 
-
-
-        <asp:Label ID="lblTitle2" runat="server" Text="D-Bow Checklist" CssClass="title-label"></asp:Label>
-      <asp:GridView ID="gvDBow" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
+<asp:Label ID="lblTitle1" runat="server" Text="Chain Pulley Checklist" CssClass="title-label"></asp:Label>
+<asp:GridView ID="gvChainPulley" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
     HeaderStyle-CssClass="grid-header">
     <Columns>
         <asp:BoundField DataField="Question" HeaderText="Question" />
@@ -82,8 +78,6 @@
             </ItemTemplate>
         </asp:TemplateField>
         <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
-
-       
         <asp:TemplateField HeaderText="Photo">
             <ItemTemplate>
                 <asp:Image ID="imgPhoto" runat="server" Width="60" Height="60"
@@ -93,12 +87,9 @@
                     Visible='<%# string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>' ForeColor="Gray" />
             </ItemTemplate>
         </asp:TemplateField>
-
         <asp:BoundField DataField="CreatedDate" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />
     </Columns>
 </asp:GridView>
-
-
 
 
         <asp:Label ID="lblTitle3" runat="server" Text="Basic Details Checklist" CssClass="title-label"></asp:Label>

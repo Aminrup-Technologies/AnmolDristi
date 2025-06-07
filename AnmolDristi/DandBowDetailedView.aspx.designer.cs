@@ -15,24 +15,6 @@ namespace AnmolDristi
     {
 
         /// <summary>
-        /// lblTitle1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTitle1;
-
-        /// <summary>
-        /// gvChainPulley control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvChainPulley;
-
-        /// <summary>
         /// lblTitle2 control.
         /// </summary>
         /// <remarks>
@@ -49,6 +31,24 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvDBow;
+
+        /// <summary>
+        /// lblTitle1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTitle1;
+
+        /// <summary>
+        /// gvChainPulley control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvChainPulley;
 
         /// <summary>
         /// lblTitle3 control.
