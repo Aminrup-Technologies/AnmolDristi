@@ -51,7 +51,7 @@
       <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-         <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate"  Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+         <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="add"  Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
          <div class="input-group-sm">
              <asp:TextBox ID="txtdate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
          </div>
@@ -60,7 +60,7 @@
      <div class="col-md-4">
      <div class="mb-3">
          <asp:Label ID="lbl_txtLocation" runat="server" AssociatedControlID="txtLocation" Text="Location" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-         <asp:RequiredFieldValidator ID="RFV_txtLocation" runat="server" ErrorMessage="*" ControlToValidate="txtLocation"  Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+         <asp:RequiredFieldValidator ID="RFV_txtLocation" runat="server" ErrorMessage="*" ControlToValidate="txtLocation" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
          <div class="input-group-sm">
              <asp:TextBox ID="txtLocation" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
          </div>
@@ -229,7 +229,7 @@
                 <div class="mb-3">
                     <asp:Label ID="Lbl_BtnUpdate" runat="server" AssociatedControlID="BtnUpdate" Text="CLICK TO UPDATE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm"  CausesValidation="true" OnClick="BtnUpdate_Click" />
+                        <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm"  ValidationGroup="add" CausesValidation="true" OnClientClick="return validateObservations();" OnClick="BtnUpdate_Click" />
                         <asp:Button ID="BtnBack" runat="server" Text="Back" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="BtnBack_Click" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         
@@ -242,4 +242,45 @@
 </div>
     
 </div>
+<script type="text/javascript">
+    function validateObservations() {
+        let isValid = true;
+
+        const grid = document.getElementById("<%= gvObservations.ClientID %>");
+        if (grid) {
+            const rows = grid.getElementsByTagName("tr");
+            for (let i = 1; i < rows.length; i++) { // skip header
+                const row = rows[i];
+
+                const fields = [
+                    row.querySelector("input[id*='txtOpeningDate']"),
+                    row.querySelector("input[id*='txtOpenBy']"),
+                    row.querySelector("input[id*='txtOpenByWorkman']"),
+                    row.querySelector("input[id*='txtTargetDate']"),
+                    row.querySelector("input[id*='txtObservation']"),
+                    row.querySelector("input[id*='txtCorrectiveAction']"),
+                    row.querySelector("input[id*='txtClosingDate']"),
+                    //row.querySelector("input[id*='txtCloseBy']"),
+                    row.querySelector("input[id*='txtAssignedTo']"),
+                    row.querySelector("select[id*='ddlStatus']")
+                ];
+
+                fields.forEach(function (field) {
+                    if (field && !field.value.trim()) {
+                        field.classList.add("is-invalid");
+                        isValid = false;
+                    } else if (field) {
+                        field.classList.remove("is-invalid");
+                    }
+                });
+            }
+        }
+
+        if (!isValid) {
+            alert("Please fill all required fields in Observations grid.");
+        }
+
+        return isValid;
+    }
+</script>
 </asp:Content>

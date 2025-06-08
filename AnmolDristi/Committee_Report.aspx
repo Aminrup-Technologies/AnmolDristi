@@ -15,6 +15,13 @@
                 margin: 15px;
             }
         }
+       
+    @media print {
+        #printButton {
+            display: none;
+        }
+    }
+
 
         h2 {
             text-align: center;
@@ -252,8 +259,36 @@
          </table>
      </td>
  </tr>
+          
+            
         </ItemTemplate>
+       
     </asp:Repeater>
+   <div>
+    <button id="printButton" onclick="printMeetingSheet()" 
+            style="margin: 5px; padding: 15px 16px; font-size: 14px; background-color: lightgreen;">
+        Print Sheet
+    </button>
+</div>
 
+
+
+<script type="text/javascript">
+    function printMeetingSheet() {
+        window.print();
+    }
+</script>
+
+               
 </body>
+<script type="text/javascript">
+    function printMeetingSheet() {
+        var originalContents = document.body.innerHTML;
+        var printContents = originalContents;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        location.reload(); 
+    }
+</script>
 </html>

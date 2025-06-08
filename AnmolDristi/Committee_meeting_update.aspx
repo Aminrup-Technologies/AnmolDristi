@@ -168,22 +168,6 @@
  <asp:TextBox ID="txtDesignation" runat="server" Text='<%# Eval("Designation") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
-       <%--  <asp:TemplateField HeaderText="Image Preview">
-          <ItemTemplate>
-    <!-- Larger Image -->
-    <asp:Image ID="imgPreview" runat="server" 
-        ImageUrl='<%# ResolveUrl(Eval("ImagePath").ToString()) %>' 
-        Width="90px" Height="90px" Style="object-fit:cover;" />
-
-    <!-- Hidden field to retain existing image path -->
-    <asp:Label ID="lblimgPreview" runat="server" 
-        Text='<%# Eval("ImagePath") %>' Visible="false" />
-
-    <!-- Upload control to select a new image -->
-    <br />
-    <asp:FileUpload ID="fuimgPreview" runat="server" />
-</ItemTemplate>
-  </asp:TemplateField>--%>
       <asp:TemplateField HeaderText="Action">
         <ItemTemplate>
            <asp:Button ID="BtnDelAttendees" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelAttendees_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
@@ -301,7 +285,7 @@
                 <div class="mb-3">
                     <asp:Label ID="lblbtnUpdate" runat="server" AssociatedControlID="btnUpdate" Text="Click to Update" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm"  CausesValidation="true" OnClick="btnUpdate_Click" />   
+                        <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm"  ValidationGroup="add" CausesValidation="true" OnClientClick="return validateAttendeesAndIssues();" OnClick="btnUpdate_Click" />   
                         <asp:Button ID="Btnback" runat="server" Text="Back" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="Btnback_Click" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         
@@ -314,4 +298,70 @@
 </div>
     
 </div>
+<script type="text/javascript">
+    function validateAttendeesAndIssues() {
+        let isValid = true;
+
+        // Validate Attendees Grid
+        const attendeesGrid = document.getElementById("<%= gvAttendees.ClientID %>");
+        if (attendeesGrid) {
+            const rows = attendeesGrid.getElementsByTagName("tr");
+            for (let i = 1; i < rows.length; i++) { // skip header row
+                const row = rows[i];
+
+                const fields = [
+                    row.querySelector("input[id*='txtAttendeeType']"),
+                    row.querySelector("input[id*='txtEmployeeName']"),
+                    row.querySelector("input[id*='txtAttendeeCode']"),
+                    row.querySelector("select[id*='ddlAttendanceStatus']"),
+                    row.querySelector("input[id*='txtDesignation']")
+                ];
+
+                fields.forEach(function (field) {
+                    if (field && !field.value.trim()) {
+                        field.classList.add("is-invalid");
+                        isValid = false;
+                    } else if (field) {
+                        field.classList.remove("is-invalid");
+                    }
+                });
+            }
+        }
+
+        // Validate Issues Grid
+        const issuesGrid = document.getElementById("<%= gvIssues.ClientID %>");
+        if (issuesGrid) {
+            const rows = issuesGrid.getElementsByTagName("tr");
+            for (let i = 1; i < rows.length; i++) { // skip header row
+                const row = rows[i];
+
+                const fields = [
+                    row.querySelector("input[id*='txtAgendaTitle']"),
+                    row.querySelector("input[id*='txtIssuesDiscussed']"),
+                    row.querySelector("input[id*='txtActionBy']"),
+                    row.querySelector("input[id*='txtTargetDate']"),
+                    row.querySelector("input[id*='txtReviewDate']"),
+                    row.querySelector("input[id*='txtReviewBy']"),
+                    row.querySelector("select[id*='ddlStattus']")
+                ];
+
+                fields.forEach(function (field) {
+                    if (field && !field.value.trim()) {
+                        field.classList.add("is-invalid");
+                        isValid = false;
+                    } else if (field) {
+                        field.classList.remove("is-invalid");
+                    }
+                });
+            }
+        }
+
+        if (!isValid) {
+            alert("Please fill all required fields in Attendees and Issues.");
+        }
+
+        return isValid;
+    }
+</script>
+
 </asp:Content>

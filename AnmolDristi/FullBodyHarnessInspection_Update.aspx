@@ -137,7 +137,7 @@
      <div class="col-md-3">
     <div class="mb-3">
         <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtjobID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
         </div>
@@ -169,7 +169,7 @@
     <div class="col-md-12">
         <div class="mb-3">
             <asp:GridView ID="gvChecklist" runat="server" AutoGenerateColumns="False" DataKeyNames="IdentificationNo"
-                CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
+                CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None"  >
                 <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
                 <Columns>
 
@@ -186,11 +186,21 @@
                     </asp:TemplateField>
 
                     <%-- Q1 Fields --%>
-                    <asp:TemplateField HeaderText="Q1 Status">
+                   <%-- <asp:TemplateField HeaderText="Q1 Status">
                         <ItemTemplate>
                             <asp:TextBox ID="txtQ1Status" runat="server" Text='<%# Eval("Q1Status") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
+                    </asp:TemplateField>--%>
+                    <asp:TemplateField HeaderText="Q1 Status">
+                      <ItemTemplate>
+                      <asp:DropDownList ID="ddlQ1Status" runat="server" CssClass="form-control gv-input" SelectedValue='<%# Eval("Q1Status") %>'>
+    <asp:ListItem Text="Select" Value="" />
+    <asp:ListItem Text="OK" Value="OK" />
+    <asp:ListItem Text="Not OK" Value="Not OK" />
+</asp:DropDownList>
+                     </ItemTemplate>
                     </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Q1 Remarks">
                         <ItemTemplate>
                             <asp:TextBox ID="txtQ1Remarks" runat="server" Text='<%# Eval("Q1Remarks") %>' CssClass="form-control gv-input" />
@@ -213,11 +223,21 @@
 
 
                     <%-- Q2 Fields --%>
-                    <asp:TemplateField HeaderText="Q2 Status">
+                   <%-- <asp:TemplateField HeaderText="Q2 Status">
                         <ItemTemplate>
                             <asp:TextBox ID="txtQ2Status" runat="server" Text='<%# Eval("Q2Status") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
-                    </asp:TemplateField>
+                    </asp:TemplateField>--%>
+                    <asp:TemplateField HeaderText="Q2 Status">
+                       <ItemTemplate>
+                                                 <asp:DropDownList ID="ddlQ2Status" runat="server" CssClass="form-control gv-input" SelectedValue='<%# Eval("Q2Status") %>'>
+    <asp:ListItem Text="Select" Value="" />
+    <asp:ListItem Text="OK" Value="OK" />
+    <asp:ListItem Text="Not OK" Value="Not OK" />
+</asp:DropDownList>
+                      
+                     </ItemTemplate>
+                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Q2 Remarks">
                         <ItemTemplate>
                             <asp:TextBox ID="txtQ2Remarks" runat="server" Text='<%# Eval("Q2Remarks") %>' CssClass="form-control gv-input" />
@@ -237,11 +257,22 @@
     </ItemTemplate>
 </asp:TemplateField>
                     <%-- Q3 Fields --%>
-                    <asp:TemplateField HeaderText="Q3 Status">
+                   <%-- <asp:TemplateField HeaderText="Q3 Status">
                         <ItemTemplate>
                             <asp:TextBox ID="txtQ3Status" runat="server" Text='<%# Eval("Q3Status") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
-                    </asp:TemplateField>
+                    </asp:TemplateField>--%>
+                    <asp:TemplateField HeaderText="Q3 Status">
+    <ItemTemplate>
+                                                         <asp:DropDownList ID="ddlQ3Status" runat="server" CssClass="form-control gv-input" SelectedValue='<%# Eval("Q3Status") %>'>
+    <asp:ListItem Text="Select" Value="" />
+    <asp:ListItem Text="OK" Value="OK" />
+    <asp:ListItem Text="Not OK" Value="Not OK" />
+</asp:DropDownList>
+                      
+    </ItemTemplate>
+</asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Q3 Remarks">
                         <ItemTemplate>
                             <asp:TextBox ID="txtQ3Remarks" runat="server" Text='<%# Eval("Q3Remarks") %>' CssClass="form-control gv-input" />
@@ -262,11 +293,21 @@
 </asp:TemplateField>
 
                     <%-- Q4 Fields --%>
-                    <asp:TemplateField HeaderText="Q4 Status">
+                  <%--  <asp:TemplateField HeaderText="Q4 Status">
                         <ItemTemplate>
                             <asp:TextBox ID="txtQ4Status" runat="server" Text='<%# Eval("Q4Status") %>' CssClass="form-control gv-input" />
                         </ItemTemplate>
-                    </asp:TemplateField>
+                    </asp:TemplateField>--%>
+                    <asp:TemplateField HeaderText="Q4 Status">
+    <ItemTemplate>
+                                                         <asp:DropDownList ID="ddlQ4Status" runat="server" CssClass="form-control gv-input" SelectedValue='<%# Eval("Q4Status") %>'>
+    <asp:ListItem Text="Select" Value="" />
+    <asp:ListItem Text="OK" Value="OK" />
+    <asp:ListItem Text="Not OK" Value="Not OK" />
+</asp:DropDownList>
+                      
+    </ItemTemplate>
+</asp:TemplateField>
                     <asp:TemplateField HeaderText="Q4 Remarks">
                         <ItemTemplate>
                             <asp:TextBox ID="txtQ4Remarks" runat="server" Text='<%# Eval("Q4Remarks") %>' CssClass="form-control gv-input" />
@@ -290,10 +331,15 @@
 
                     <%-- Q5 Fields --%>
                     <asp:TemplateField HeaderText="Q5 Status">
-                        <ItemTemplate>
-                            <asp:TextBox ID="txtQ5Status" runat="server" Text='<%# Eval("Q5Status") %>' CssClass="form-control gv-input" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
+    <ItemTemplate>
+                                                        <asp:DropDownList ID="ddlQ5Status" runat="server" CssClass="form-control gv-input" SelectedValue='<%# Eval("Q5Status") %>'>
+    <asp:ListItem Text="Select" Value="" />
+    <asp:ListItem Text="OK" Value="OK" />
+    <asp:ListItem Text="Not OK" Value="Not OK" />
+</asp:DropDownList>
+                      
+    </ItemTemplate>
+</asp:TemplateField>
                     <asp:TemplateField HeaderText="Q5 Remarks">
                         <ItemTemplate>
                             <asp:TextBox ID="txtQ5Remarks" runat="server" Text='<%# Eval("Q5Remarks") %>' CssClass="form-control gv-input" />
@@ -337,7 +383,7 @@
                 <div class="mb-3">
                     <asp:Label ID="Lbl_BtnUpdate" runat="server" AssociatedControlID="BtnUpdate" Text="Click to Update" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm"  OnClick="BtnUpdate_Click" />
+                        <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm" ValidationGroup="submit" CausesValidation="true" OnClientClick="return validateAllQStatus();"  OnClick="BtnUpdate_Click" />
                         <asp:Button ID="BtnBack" runat="server" Text="Back" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnBack_Click" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         
@@ -348,4 +394,51 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function validateAllQStatus() {
+        let isValid = true;
+        const grid = document.getElementById("<%= gvChecklist.ClientID %>");
+        if (!grid) return true;
+
+        const rows = grid.getElementsByTagName("tr");
+
+        for (let i = 0; i < rows.length; i++) {
+            for (let q = 1; q <= 5; q++) {
+                const ddl = rows[i].querySelector(`select[id*='ddlQ${q}Status']`);
+                const remarks = rows[i].querySelector(`input[id*='txtQ${q}Remarks']`);
+                const fileUpload = rows[i].querySelector(`input[id*='fuimgQ${q}Photo']`);
+                const imgPreview = rows[i].querySelector(`img[id*='imgQ${q}Photo']`);
+
+                if (ddl && ddl.value === "Not OK") {
+                    const remarkValue = remarks ? remarks.value.trim() : "";
+                    const fileValue = fileUpload ? fileUpload.value.trim() : "";
+                    const previewSrc = imgPreview ? imgPreview.src.trim() : "";
+
+                    const hasImage = fileValue !== "" || (previewSrc && !previewSrc.toLowerCase().includes("blank") && !previewSrc.toLowerCase().includes("noimage"));
+
+                    if (!remarkValue || !hasImage) {
+                        if (remarks && !remarkValue) remarks.classList.add("is-invalid");
+                        if (!hasImage && fileUpload) fileUpload.classList.add("is-invalid");
+
+                        isValid = false;
+                    } else {
+                        if (remarks) remarks.classList.remove("is-invalid");
+                        if (fileUpload) fileUpload.classList.remove("is-invalid");
+                    }
+                } else {
+                    if (remarks) remarks.classList.remove("is-invalid");
+                    if (fileUpload) fileUpload.classList.remove("is-invalid");
+                }
+            }
+        }
+
+        if (!isValid) {
+            alert("For any 'Not OK' , Remarks and Photo (or existing preview) are required.");
+        }
+
+        return isValid;
+    }
+</script>
+
+
 </asp:Content>

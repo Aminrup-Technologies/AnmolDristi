@@ -135,6 +135,8 @@ namespace AnmolDristi
         {
             Response.Redirect("FullBodyHarnessInspection_View.aspx");
         }
+
+       
         protected void BtnUpdate_Click(object sender, EventArgs e)
         {
             int inspectionID = Convert.ToInt32(Request.QueryString["InspectionID"]); // assuming InspectionID is passed via query string
@@ -174,21 +176,46 @@ namespace AnmolDristi
 
                     for (int q = 1; q <= 5; q++)
                     {
-                        string status = ((TextBox)row.FindControl($"txtQ{q}Status")).Text;
-                        string remarks = ((TextBox)row.FindControl($"txtQ{q}Remarks")).Text;
-                        FileUpload fuPhoto = (FileUpload)row.FindControl($"fuimgQ{q}Photo");
-                        Label lblPhoto = (Label)row.FindControl($"lblimgQ{q}Photo");
-
-                        string photoPath = lblPhoto.Text;
-
-                        // Save new image if uploaded
-                        if (fuPhoto.HasFile)
+                        
+                        string remarks = "";
+                        string photoPath = "";
+                        //string status = ((TextBox)row.FindControl($"txtQ{q}Status")).Text.Trim();
+                        string status = ((DropDownList)row.FindControl($"ddlQ{q}Status")).SelectedValue.Trim();
+                        if (!status.Equals("OK", StringComparison.OrdinalIgnoreCase))
                         {
-                            string fileName = Path.GetFileName(fuPhoto.FileName);
-                            string savePath = Server.MapPath("~/images/") + fileName;
-                            fuPhoto.SaveAs(savePath);
-                            photoPath = "~/images/" + fileName;
+                            // Save remarks only if not OK
+                            remarks = ((TextBox)row.FindControl($"txtQ{q}Remarks")).Text;
+                            // Save photo only if uploaded
+                            FileUpload fuPhoto = (FileUpload)row.FindControl($"fuimgQ{q}Photo");
+                            if (fuPhoto.HasFile)
+                            {
+                                string fileName = Path.GetFileName(fuPhoto.FileName);
+                                string savePath = Server.MapPath("~/images/") + fileName;
+                                fuPhoto.SaveAs(savePath);
+                                photoPath = "~/images/" + fileName;
+                            }
+                            else
+                            {
+                                // Preserve existing photo if already present
+                                Label lblPhoto = (Label)row.FindControl($"lblimgQ{q}Photo");
+                                photoPath = lblPhoto.Text;
+                            }
                         }
+                        //string status = ((TextBox)row.FindControl($"txtQ{q}Status")).Text;
+                        //string remarks = ((TextBox)row.FindControl($"txtQ{q}Remarks")).Text;
+                        //FileUpload fuPhoto = (FileUpload)row.FindControl($"fuimgQ{q}Photo");
+                        //Label lblPhoto = (Label)row.FindControl($"lblimgQ{q}Photo");
+
+                        //string photoPath = lblPhoto.Text;
+
+                        //// Save new image if uploaded
+                        //if (fuPhoto.HasFile)
+                        //{
+                        //    string fileName = Path.GetFileName(fuPhoto.FileName);
+                        //    string savePath = Server.MapPath("~/images/") + fileName;
+                        //    fuPhoto.SaveAs(savePath);
+                        //    photoPath = "~/images/" + fileName;
+                        //}
 
                         // Update the database row
                         string updateChecklistQuery = @"UPDATE InspectionChecklist
