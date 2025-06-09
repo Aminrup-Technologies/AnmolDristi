@@ -98,10 +98,10 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                           <%-- <h2 style="color: green;">Line walk Details View </h2>
+                           <h2 style="color: green;">DOC: DOC/ATS/TSK/QMS/GC/013 REV : 00 ,EFT DATE : 01/02/2024</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                            </ul>--%>
+                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content" style="overflow: auto;">
@@ -165,10 +165,10 @@
                                         <asp:BoundField HeaderText="TargetDate" DataField="Target_Date" DataFormatString="{0:yyyy-MM-dd}" />
                                         <%--<asp:BoundField HeaderText="Status" DataField="Status" />--%>
                                         <asp:TemplateField HeaderText="Status">
-    <ItemTemplate>
-        <asp:Label ID="lblStatus" runat="server" Text='<%# Eval("Status") %>'></asp:Label>
-    </ItemTemplate>
-</asp:TemplateField>
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblStatus" runat="server" Text='<%# Eval("Status") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
 
                                     </Columns>
                                 </asp:GridView>

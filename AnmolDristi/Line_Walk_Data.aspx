@@ -18,10 +18,10 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title" >
-                            <%--<asp:Label ID="heading" runat="server" CssClass="h5 text-center font-weight-bold text-success" Text="LINE WALK ALL RECORDS"></asp:Label>
+                            <asp:Label ID="heading" runat="server" CssClass="h5 text-center font-weight-bold text-success" Text="DOC: DOC/ATS/TSK/QMS/GC/013 REV : 00 ,EFT DATE : 01/02/2024"></asp:Label>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                            </ul>--%>
+                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">

@@ -136,7 +136,7 @@ TM_names,TM_Code,TM_Type
                         case "pending":
                             lblStatus.ForeColor = System.Drawing.Color.Red;
                             break;
-                        case "in Progress":
+                        case "in progress":
                             lblStatus.ForeColor = System.Drawing.Color.Orange;
                             break;
                         default:

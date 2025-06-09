@@ -142,7 +142,7 @@
                 padding-right: 0;
             }
 
-            img {
+            .photo-container img {
                 width: 100% !important;
                 height: auto !important;
             }

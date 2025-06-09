@@ -162,7 +162,7 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <asp:Label runat="server" ForeColor="Green" Font-Bold="true">JOB and Site Details</asp:Label>
+                            <asp:Label runat="server" ForeColor="Green" Font-Bold="true">ATS/OHS/HKS-5SCL-01</asp:Label>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>

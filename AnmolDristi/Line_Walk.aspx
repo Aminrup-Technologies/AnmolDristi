@@ -280,10 +280,10 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <%-- <h2>Sub Heading</h2>--%>
-                            <%--<ul class="nav navbar-right panel_toolbox">
+                            <h2 style="color:green">DOC: DOC/ATS/TSK/QMS/GC/013 REV : 00 ,EFT DATE : 01/02/2024</h2>
+                            <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                            </ul>--%>
+                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
