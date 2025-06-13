@@ -35,7 +35,7 @@
       <div class="col-md-6">
      <div class="mb-3">
          <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Date" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-         <asp:RequiredFieldValidator ID="RFV_txtdate"  runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+         <asp:RequiredFieldValidator ID="RFV_txtdate"  runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
          <div class="input-group-sm">
              <asp:TextBox ID="txtdate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
          </div>
@@ -44,7 +44,7 @@
      <div class="col-md-6">
      <div class="mb-3">
          <asp:Label ID="lbl_txtloc" runat="server" AssociatedControlID="txtloc" Text="Location" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-         <asp:RequiredFieldValidator ID="RFV_txtloc" runat="server" ErrorMessage="*" ControlToValidate="txtloc" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+         <asp:RequiredFieldValidator ID="RFV_txtloc" runat="server" ErrorMessage="*" ControlToValidate="txtloc" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
          <div class="input-group-sm">
              <asp:TextBox ID="txtloc" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
          </div>
@@ -53,7 +53,7 @@
      <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtjobId" runat="server" AssociatedControlID="txtjobId" Text="Job ID" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtjobId" runat="server" ErrorMessage="*" ControlToValidate="txtjobId" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtjobId" runat="server" ErrorMessage="*" ControlToValidate="txtjobId" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
         <div class="input-group-sm">
             <asp:TextBox ID="txtjobId" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
@@ -64,7 +64,7 @@
 <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtInsBy" runat="server" AssociatedControlID="txtInsBy" Text="Inspection By(Emp Code)" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtInsBy" runat="server" ErrorMessage="*" ControlToValidate="txtInsBy" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtInsBy" runat="server" ErrorMessage="*" ControlToValidate="txtInsBy" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtInsBy" runat="server" CssClass="form-control form-control-sm rounded" 
               OnKeyUp="fetchEmployeeName()" 
@@ -78,7 +78,7 @@
 <div class="col-md-3">
     <div class="mb-3">
         <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Employee Name" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtDocNo" runat="server" ErrorMessage="*" ControlToValidate="txtDocNo" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtDocNo" runat="server" ErrorMessage="*" ControlToValidate="txtDocNo" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtDocNo" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
             <asp:HiddenField ID="hfEmployeeName" runat="server" /> <!-- ✅ Hidden field to store actual name -->
@@ -102,7 +102,7 @@
     <div class="col-md-6">
     <div class="mb-3">
         <asp:Label ID="lbl_ddlType" runat="server" AssociatedControlID="ddlType" Text="Fire Extinguisher Type" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_ddlType" runat="server" ErrorMessage="*" ControlToValidate="ddlType" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_ddlType" runat="server" ErrorMessage="*" ControlToValidate="ddlType" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:DropDownList ID="ddlType" runat="server" CssClass="form-control form-control-sm rounded">
                  <asp:ListItem Text="Select" Value="" />
@@ -117,7 +117,7 @@
 <div class="col-md-6">
     <div class="mb-3">
         <asp:Label ID="lbl_txtsno" runat="server" AssociatedControlID="txtsno" Text="FE SerialNo" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtsno" runat="server" ErrorMessage="*" ControlToValidate="txtsno" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtsno" runat="server" ErrorMessage="*" ControlToValidate="txtsno" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtsno" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
         </div>
@@ -126,7 +126,7 @@
      <div class="col-md-6">
     <div class="mb-3">
         <asp:Label ID="lbl_txtCalibrationDate" runat="server" AssociatedControlID="txtCalibrationDate" Text="Calibration Date" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtCalibrationDate"  runat="server" ErrorMessage="*" ControlToValidate="txtCalibrationDate" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtCalibrationDate"  runat="server" ErrorMessage="*" ControlToValidate="txtCalibrationDate" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtCalibrationDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
         </div>
@@ -135,7 +135,7 @@
   <div class="col-md-6">
     <div class="mb-3">
         <asp:Label ID="lbl_txtDueDate" runat="server" AssociatedControlID="txtDueDate" Text="Due Date" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtDueDate"  runat="server" ErrorMessage="*" ControlToValidate="txtDueDate" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtDueDate"  runat="server" ErrorMessage="*" ControlToValidate="txtDueDate" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtDueDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
         </div>
@@ -191,7 +191,7 @@
     <div class="col-md-6">
     <div class="mb-3">
         <asp:Label ID="Lbl_txtnote" runat="server" AssociatedControlID="txtnote" Text="Remarks"  CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtnote" runat="server" ErrorMessage="*" ControlToValidate="txtnote" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RFV_txtnote" runat="server" ErrorMessage="*" ControlToValidate="txtnote" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtnote" runat="server" CssClass="form-control form-control-sm rounded "  TextMode="MultiLine"></asp:TextBox>
         </div>
@@ -206,12 +206,13 @@
      <div class="mb-3">
          <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="CLICK TO SAVE" ForeColor="Green" Font-Bold="true" Font-Size="Small"></asp:Label>
          <div class="input-group input-group-sm">
-             <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success mt-3" ValidationGroup="submit" CausesValidation="true" OnClientClick="return validatessChecklist();"  OnClick="btnSubmit_Click" />
+             <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success mt-3" OnClientClick="return Checklistvalidate();"  ValidationGroup="submi" CausesValidation="true" OnClick="btnSubmit_Click" />
              <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning  mt-3" CausesValidation="false" OnClick="BtnReset_Click" />
              <asp:Button ID="btn_home" runat="server" Text="Home" CssClass="btn btn-danger  mt-3" CausesValidation="false" PostBackUrl="~/Home.aspx" />
              <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
          </div>
      </div>
+
         </div>
     </div>
 </div>
@@ -287,6 +288,8 @@
         });
     };
 </script>
+
+
 <script type="text/javascript">
     function validateeRemarkssAndPhotos() {
         const rows = document.querySelectorAll("table tr"); // Adjust selector if needed
@@ -320,39 +323,39 @@
 
 
 <script type="text/javascript">
-    function validatessChecklist() {
-        var date = document.getElementById('<%= txtdate.ClientID %>').value.trim();
-        var site = document.getElementById('<%= txtloc.ClientID %>').value.trim();
-        var jobId = document.getElementById('<%= txtjobId.ClientID %>').value.trim();
-        var insp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
-        var re = document.getElementById('<%= txtnote.ClientID %>').value.trim();
+    function Checklistvalidate() {
+        var datee = document.getElementById('<%= txtdate.ClientID %>').value.trim();
+        var sitee = document.getElementById('<%= txtloc.ClientID %>').value.trim();
+        var jobIdd = document.getElementById('<%= txtjobId.ClientID %>').value.trim();
+        var inspp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
+        var rem = document.getElementById('<%= txtnote.ClientID %>').value.trim();
         var type = document.getElementById('<%= ddlType.ClientID %>').value.trim();
         var fe = document.getElementById('<%= txtsno.ClientID %>').value.trim();
         var Caldate = document.getElementById('<%= lbl_txtCalibrationDate.ClientID %>').value.trim();
         var Duedate = document.getElementById('<%= txtDueDate.ClientID %>').value.trim();
         const digitsOnly = /^\d+$/;
 
-        if (!date) {
+        if (!datee) {
             alert("Please select Date.");
             return false;
         }
-        if (!site) {
+        if (!sitee) {
             alert("Please enter Location.");
             return false;
         }
-        if (!jobId) {
+        if (!jobIdd) {
             alert("Please enter JobID.");
             return false;
         }
-        if (!digitsOnly.test(jobId)) {
+        if (!digitsOnly.test(jobIdd)) {
             alert("Job ID must contain digits only.");
             return false;
         }
-        if (!insp) {
+        if (!inspp) {
             alert("Please enter Inspected by.");
             return false;
         }
-        if (!re) {
+        if (!rem) {
             alert("Please give Remarks.");
             return false;
         }

@@ -81,6 +81,62 @@ namespace AnmolDristi
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            lblMsg.Text = "";
+            if (string.IsNullOrWhiteSpace(txtdate.Text))
+            {
+                lblMsg.Text = "Please select Date.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtjobId.Text))
+            {
+                lblMsg.Text = "Please enter Job ID.";
+                return;
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(txtjobId.Text.Trim(), @"^\d+$"))
+            {
+                lblMsg.Text = "Job ID must contain digits only.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtloc.Text))
+            {
+                lblMsg.Text = "Please enter Location.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(hfEmployeeName.Value))
+            {
+                lblMsg.Text = "Employee name is missing.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtInsBy.Text))
+            {
+                lblMsg.Text = "Please enter Inspected By.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtnote.Text))
+            {
+                lblMsg.Text = "Please enter Remarks.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtCalibrationDate.Text))
+            {
+                lblMsg.Text = "Please enter Calibration Date.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtsno.Text))
+            {
+                lblMsg.Text = "Please enter FE Serial Number.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(ddlType.Text))
+            {
+                lblMsg.Text = "Please enter  Extinguisher Type.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtDueDate.Text))
+            {
+                lblMsg.Text = "Please enter Due Date.";
+                return;
+            }
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connStr))
