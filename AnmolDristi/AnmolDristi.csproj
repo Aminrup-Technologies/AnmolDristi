@@ -89,6 +89,10 @@
     <Content Include="csm_massmeeting_report.aspx" />
     <Content Include="csm_massmeeting_rpt.aspx" />
     <Content Include="Csm_massmeeting_Update.aspx" />
+    <Content Include="FireExtinguisherChecklist.aspx" />
+    <Content Include="FireExtinguisherChecklistRpt.aspx" />
+    <Content Include="FireExtinguisherChecklistUpdate.aspx" />
+    <Content Include="FireExtinguisherChecklistView.aspx" />
     <Content Include="FullBodyHarnessInspection.aspx" />
     <Content Include="FullBodyHarnessInspection_Update.aspx" />
     <Content Include="FullBodyHarnessInspection_View.aspx" />
@@ -236,6 +240,34 @@
     </Compile>
     <Compile Include="Dristi.Master.designer.cs">
       <DependentUpon>Dristi.Master</DependentUpon>
+    </Compile>
+    <Compile Include="FireExtinguisherChecklist.aspx.cs">
+      <DependentUpon>FireExtinguisherChecklist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FireExtinguisherChecklist.aspx.designer.cs">
+      <DependentUpon>FireExtinguisherChecklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FireExtinguisherChecklistRpt.aspx.cs">
+      <DependentUpon>FireExtinguisherChecklistRpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FireExtinguisherChecklistRpt.aspx.designer.cs">
+      <DependentUpon>FireExtinguisherChecklistRpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FireExtinguisherChecklistUpdate.aspx.cs">
+      <DependentUpon>FireExtinguisherChecklistUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FireExtinguisherChecklistUpdate.aspx.designer.cs">
+      <DependentUpon>FireExtinguisherChecklistUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FireExtinguisherChecklistView.aspx.cs">
+      <DependentUpon>FireExtinguisherChecklistView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FireExtinguisherChecklistView.aspx.designer.cs">
+      <DependentUpon>FireExtinguisherChecklistView.aspx</DependentUpon>
     </Compile>
     <Compile Include="FullBodyHarnessInspection.aspx.cs">
       <DependentUpon>FullBodyHarnessInspection.aspx</DependentUpon>
