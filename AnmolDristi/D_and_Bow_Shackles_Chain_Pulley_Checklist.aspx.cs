@@ -14,25 +14,26 @@ namespace AnmolDristi
 {
     public partial class D_and_Bow_Shackles_Chain_Pulley_Checklist : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                pnlTested.Visible = false;
-                pnlThread.Visible = false;
-                pnlRust.Visible = false;
-                pnlWorn.Visible = false;
-                pnlStrength.Visible = false;
+protected void Page_Load(object sender, EventArgs e)
+{
+    if (!IsPostBack)
+    {
+        pnlTested.Visible = true;
+        pnlThread.Visible = true;
+        pnlRust.Visible = true;
+        pnlWorn.Visible = true;
+        pnlStrength.Visible = true;
 
-                pnlChainTested.Visible = false;
-                pnlChainDamage.Visible = false;
-                pnlCondition.Visible = false;
-                pnlLatch.Visible = false;
-                pnlHookWear.Visible = false;
-                LoadCombinedChecklistDetails();
+        pnlChainTested.Visible = true;
+        pnlChainDamage.Visible = true;
+        pnlCondition.Visible = true;
+        pnlLatch.Visible = true;
+        pnlHookWear.Visible = true;
 
-            }
-        }
+        LoadCombinedChecklistDetails();
+    }
+}
+
 
         private void LoadCombinedChecklistDetails()
         {
@@ -141,10 +142,41 @@ ORDER BY h.Id DESC";
 
 
 
+        //private int _lastCAPANumber = -1; // Initialized only once per request
+        //private string GenerateNewCAPAID(SqlConnection con, SqlTransaction transaction)
+        //{
+        //    if (_lastCAPANumber == -1)
+        //    {
+        //        string query = @"
+        //    SELECT MAX(CAPA_ID)
+        //    FROM (
+        //        SELECT CAPA_ID FROM MahimaGupta_CSMS.ShacklesChecklist_DBow WHERE CAPA_ID IS NOT NULL
+        //        UNION
+        //        SELECT CAPA_ID FROM MahimaGupta_CSMS.ShacklesChecklist_ChainPulley WHERE CAPA_ID IS NOT NULL
+        //    ) AS CombinedCAPA";
+
+        //        using (SqlCommand cmd = new SqlCommand(query, con, transaction))
+        //        {
+        //            object result = cmd.ExecuteScalar();
+        //            if (result != DBNull.Value && result != null)
+        //            {
+        //                string lastID = result.ToString(); // e.g., "CAPA0005"
+        //                _lastCAPANumber = int.Parse(lastID.Substring(4));
+        //            }
+        //            else
+        //            {
+        //                _lastCAPANumber = 0;
+        //            }
+        //        }
+        //    }
+
+        //    _lastCAPANumber++;
+        //    return "CAPA" + _lastCAPANumber.ToString("D4"); // CAPA0006, CAPA0007, etc.
+        //}
 
 
 
-      
+
 
 
 
@@ -183,19 +215,19 @@ ORDER BY h.Id DESC";
                     }
 
                     // Insert Shackles Checklist Details (Table 2)
-                    SaveChecklistDetail("D & Bow shackle tested or not, tag fixed or not", rbTestedOk.Checked, txtTestedRemarks, fuTested, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow");
-                    SaveChecklistDetail("Thread of the pin should not be damaged", rbThreadOk.Checked, txtThreadRemarks, fuThread, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow");
-                    SaveChecklistDetail("No part should be worn more than 10% of original dimension", rbWornOk.Checked, txtWornRemarks, fuWorn, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow");
-                    SaveChecklistDetail("Strength of pin should be checked", rbStrengthOk.Checked, txtStrengthRemarks, fuStrength, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow");
-                    SaveChecklistDetail("No rusting on body or pin", rbRustOk.Checked, txtRustRemarks, fuRust, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow");
+                    SaveChecklistDetail("D & Bow shackle tested or not, tag fixed or not", rbTestedOk.Checked, txtTestedRemarks, fuTested, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow", chkTestedCAPA);
+                    SaveChecklistDetail("Thread of the pin should not be damaged", rbThreadOk.Checked, txtThreadRemarks, fuThread, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow", chkThreadCAPA);
+                    SaveChecklistDetail("No part should be worn more than 10% of original dimension", rbWornOk.Checked, txtWornRemarks, fuWorn, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow", chkWornCAPA);
+                    SaveChecklistDetail("Strength of pin should be checked", rbStrengthOk.Checked, txtStrengthRemarks, fuStrength, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow", chkStrengthCAPA);
+                    SaveChecklistDetail("No rusting on body or pin", rbRustOk.Checked, txtRustRemarks, fuRust, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow", chkRustCAPA);
 
                     // Insert Chain Pulley Block Checklist (Table 3)
-                    SaveChecklistDetail("Chain block is tested or not, testing & due date of testing is ok or not", rbChainTestedOk.Checked, txtChainTestedRemarks, fuChainTested, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley");
-                    SaveChecklistDetail("Any damaged chain links", rbChainDamageOk.Checked, txtChainDamageRemarks, fuChainDamage, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley");
-                    SaveChecklistDetail("Chain & hook condition for any twist, wear, bend, corrosion & cracks", rbConditionOk.Checked, txtConditionRemarks, fuCondition, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley");
-                    SaveChecklistDetail("Safety latch & latch spring available and functioning properly", rbLatchOk.Checked, txtLatchRemarks, fuLatch, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley");
-                    SaveChecklistDetail("Check padeye/hook is standard & welded properly", rbPadeyeOk.Checked, txtPadeyeRemarks, fuPadeye, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley");
-                    SaveChecklistDetail("Any part of hook should not be worn 10% of original dimension", rbHookWearOk.Checked, txtHookWearRemarks, fuHookWear, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley");
+                    SaveChecklistDetail("Chain block is tested or not, testing & due date of testing is ok or not", rbChainTestedOk.Checked, txtChainTestedRemarks, fuChainTested, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley", chkChainTestedCAPA);
+                    SaveChecklistDetail("Any damaged chain links", rbChainDamageOk.Checked, txtChainDamageRemarks, fuChainDamage, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley", chkChainDamageCAPA);
+                    SaveChecklistDetail("Chain & hook condition for any twist, wear, bend, corrosion & cracks", rbConditionOk.Checked, txtConditionRemarks, fuCondition, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley", chkConditionCAPA);
+                    SaveChecklistDetail("Safety latch & latch spring available and functioning properly", rbLatchOk.Checked, txtLatchRemarks, fuLatch, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley", chkLatchCAPA);
+                    SaveChecklistDetail("Check padeye/hook is standard & welded properly", rbPadeyeOk.Checked, txtPadeyeRemarks, fuPadeye, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley", chkPadeyeCAPA);
+                    SaveChecklistDetail("Any part of hook should not be worn 10% of original dimension", rbHookWearOk.Checked, txtHookWearRemarks, fuHookWear, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley", chkHookWearCAPA);
 
                     tran.Commit();
                 }
@@ -207,36 +239,67 @@ ORDER BY h.Id DESC";
             }
         }
 
-        private void SaveChecklistDetail(string question, bool isYes, TextBox remarksBox, FileUpload uploadControl, SqlConnection conn, SqlTransaction tran, int headerId, string spName)
+        private void SaveChecklistDetail(string question, bool isYes, TextBox remarksBox, FileUpload uploadControl,
+                                   SqlConnection conn, SqlTransaction tran, int headerId, string spName,
+                                   CheckBox chkCAPA = null)
         {
-            string remarks = remarksBox.Text.Trim();
+            string remarks = remarksBox?.Text.Trim();
             string photoPath = null;
+            object capaId = DBNull.Value;
 
-        if (uploadControl.HasFile)
-
+            try
             {
-                string filename = Path.GetFileName(uploadControl.FileName);
-                string folderPath = Server.MapPath("~/Uploads/");
-                Directory.CreateDirectory(folderPath);
-                string fullPath = Path.Combine(folderPath, filename);
-                uploadControl.SaveAs(fullPath);
-                photoPath = "~/Uploads/" + filename;
+                // Upload Photo
+                if (uploadControl != null && uploadControl.HasFile)
+                {
+                    string filename = Path.GetFileName(uploadControl.FileName);
+                    string folderPath = Server.MapPath("~/Uploads/");
+                    Directory.CreateDirectory(folderPath);
+                    string fullPath = Path.Combine(folderPath, filename);
+                    uploadControl.SaveAs(fullPath);
+                    photoPath = "~/Uploads/" + filename;
+                }
+
+                // Insert into CAPA master if required
+                if (!isYes && chkCAPA != null && chkCAPA.Checked)
+                {
+                    using (SqlCommand cmdCAPA = new SqlCommand(@"
+                INSERT INTO tbl_CAPAMaster 
+                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                OUTPUT INSERTED.CAPAID
+                VALUES 
+                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, tran))
+                    {
+                        cmdCAPA.Parameters.AddWithValue("@HeaderID", headerId);
+                        cmdCAPA.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
+                        cmdCAPA.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
+                        cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtSite.Text.Trim()); // ensure this control is available
+                        cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                        capaId = cmdCAPA.ExecuteScalar(); // Get CAPA ID
+                    }
+                }
+
+                // Insert into checklist table using passed SP
+                using (SqlCommand cmd = new SqlCommand(spName, conn, tran))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@BasicId", headerId);
+                    cmd.Parameters.AddWithValue("@Question", question);
+                    cmd.Parameters.AddWithValue("@IsYes", isYes);
+                    cmd.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@CAPA_ID", capaId);
+
+                    cmd.ExecuteNonQuery();
+                }
             }
-
-            using (SqlCommand cmd = new SqlCommand(spName, conn, tran))
+            catch (Exception ex)
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@BasicId", headerId);
-
-                cmd.Parameters.AddWithValue("@Question", question);
-                cmd.Parameters.AddWithValue("@IsYes", isYes);
-                cmd.Parameters.AddWithValue("@Remarks", remarks);
-                cmd.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
-
-                cmd.ExecuteNonQuery();
+                lblMessage.Text += $"<br/>Checklist Insert Error for: {question} → {ex.Message}";
+                throw;
             }
         }
-
 
 
         protected void BtnSubmit_Click(object sender, EventArgs e)

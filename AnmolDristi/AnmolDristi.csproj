@@ -103,6 +103,9 @@
     <Content Include="incident_analysis.aspx" />
     <Content Include="incident_DetailedView.aspx" />
     <Content Include="incident_View.aspx" />
+    <Content Include="JobSite_DetailedView.aspx" />
+    <Content Include="JobSite_View.aspx" />
+    <Content Include="Job_site_Checklist.aspx" />
     <Content Include="KYT.aspx" />
     <Content Include="KYT_DetailedView.aspx" />
     <Content Include="KYT_View.aspx" />
@@ -306,6 +309,27 @@
     </Compile>
     <Compile Include="incident_View.aspx.designer.cs">
       <DependentUpon>incident_View.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="JobSite_DetailedView.aspx.cs">
+      <DependentUpon>JobSite_DetailedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="JobSite_DetailedView.aspx.designer.cs">
+      <DependentUpon>JobSite_DetailedView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="JobSite_View.aspx.cs">
+      <DependentUpon>JobSite_View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="JobSite_View.aspx.designer.cs">
+      <DependentUpon>JobSite_View.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_site_Checklist.aspx.cs">
+      <DependentUpon>Job_site_Checklist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Job_site_Checklist.aspx.designer.cs">
+      <DependentUpon>Job_site_Checklist.aspx</DependentUpon>
     </Compile>
     <Compile Include="KYT.aspx.cs">
       <DependentUpon>KYT.aspx</DependentUpon>

@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Web.UI.WebControls;
+using System.IO;
 
 
 
@@ -91,23 +92,43 @@ namespace AnmolDristi
             int id = Convert.ToInt32(GvDandBowChecklist.DataKeys[e.RowIndex].Value);
             GridViewRow row = GvDandBowChecklist.Rows[e.RowIndex];
 
-            string site = ((TextBox)row.Cells[0].Controls[0]).Text;
-            string dateString = ((TextBox)row.Cells[1].Controls[0]).Text;
-            string tagNo = ((TextBox)row.Cells[2].Controls[0]).Text;
-            string jobId = ((TextBox)row.Cells[3].Controls[0]).Text;
-            string jobName = ((TextBox)row.Cells[4].Controls[0]).Text;
+            string jobName = ((TextBox)row.Cells[0].Controls[0]).Text;
+            string shacklesQuestion = ((TextBox)row.Cells[1].Controls[0]).Text;
+            DropDownList ddlShacklesIsYes = (DropDownList)row.FindControl("ddlShacklesIsYes");
+            string shacklesIsYes = ddlShacklesIsYes.SelectedValue;
 
-            DateTime date;
-            bool validDate = DateTime.TryParse(dateString, out date) &&
-                             date >= (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue &&
-                             date <= (DateTime)System.Data.SqlTypes.SqlDateTime.MaxValue;
+            TextBox txtShacklesRemarks = (TextBox)row.FindControl("txtShacklesRemarks");
+            FileUpload fileShacklesPhoto = (FileUpload)row.FindControl("fileShacklesPhoto");
+            Label lblExistingShacklesPhoto = (Label)row.FindControl("lblExistingShacklesPhoto");
 
-            if (!validDate)
+            string shacklesRemarks = txtShacklesRemarks.Text;
+            string shacklesPhotoPath = lblExistingShacklesPhoto.Text;
+
+            if (fileShacklesPhoto.HasFile)
             {
-                // Optional: Show error to user or assign a default
-                // For now, we stop execution
-                // You can use a label or script alert to show message
-                return;
+                string fileName = Path.GetFileName(fileShacklesPhoto.FileName);
+                string filePath = Server.MapPath("~/Uploads/") + fileName;
+                fileShacklesPhoto.SaveAs(filePath);
+                shacklesPhotoPath = "~/Uploads/" + fileName;
+            }
+
+            string chainPulleyQuestion = ((TextBox)row.Cells[5].Controls[0]).Text;
+            DropDownList ddlChainPulleyIsYes = (DropDownList)row.FindControl("ddlChainPulleyIsYes");
+            string chainPulleyIsYes = ddlChainPulleyIsYes.SelectedValue;
+
+            TextBox txtChainPulleyRemarks = (TextBox)row.FindControl("txtChainPulleyRemarks");
+            FileUpload fileChainPulleyPhoto = (FileUpload)row.FindControl("fileChainPulleyPhoto");
+            Label lblExistingChainPulleyPhoto = (Label)row.FindControl("lblExistingChainPulleyPhoto");
+
+            string chainPulleyRemarks = txtChainPulleyRemarks.Text;
+            string chainPulleyPhotoPath = lblExistingChainPulleyPhoto.Text;
+
+            if (fileChainPulleyPhoto.HasFile)
+            {
+                string fileName = Path.GetFileName(fileChainPulleyPhoto.FileName);
+                string filePath = Server.MapPath("~/Uploads/") + fileName;
+                fileChainPulleyPhoto.SaveAs(filePath);
+                chainPulleyPhotoPath = "~/Uploads/" + fileName;
             }
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -116,19 +137,35 @@ namespace AnmolDristi
             {
                 conn.Open();
                 string updateQuery = @"
-            UPDATE DandBow_Header
-            SET Site = @Site, InspectionDate = @InspectionDate, TagNo = @TagNo, JobID = @JobID,
-            JobName = @JobName
-            WHERE Id = @BasicID";
+    UPDATE MahimaGupta_CSMS.ShacklesChecklist_BasicDetails
+    SET JobName = @JobName
+    WHERE Id = @ID;
+
+    UPDATE MahimaGupta_CSMS.ShacklesChecklist_DBow
+    SET IsYes = @ShacklesIsYes, Remarks = @ShacklesRemarks, PhotoPath = @ShacklesPhotoPath
+    WHERE HeaderID = @ID AND Question = @ShacklesQuestion;
+
+    UPDATE MahimaGupta_CSMS.ShacklesChecklist_ChainPulley
+    SET IsYes = @ChainPulleyIsYes, Remarks = @ChainPulleyRemarks, PhotoPath = @ChainPulleyPhotoPath
+    WHERE HeaderID = @ID AND Question = @ChainPulleyQuestion;";
+
 
                 using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
                 {
-                    cmd.Parameters.AddWithValue("@BasicID", id);
-                    cmd.Parameters.AddWithValue("@Site", site);
-                    cmd.Parameters.AddWithValue("@InspectionDate", date);
-                    cmd.Parameters.AddWithValue("@TagNo", tagNo);
-                    cmd.Parameters.AddWithValue("@JobID", jobId);
+                    cmd.Parameters.AddWithValue("@ID", id);
                     cmd.Parameters.AddWithValue("@JobName", jobName);
+
+                    cmd.Parameters.AddWithValue("@ShacklesQuestion", shacklesQuestion);
+                    cmd.Parameters.AddWithValue("@ShacklesIsYes", shacklesIsYes);
+                    cmd.Parameters.AddWithValue("@ShacklesRemarks", shacklesRemarks);
+                    cmd.Parameters.AddWithValue("@ShacklesPhotoPath", shacklesPhotoPath);
+
+                    cmd.Parameters.AddWithValue("@ChainPulleyQuestion", chainPulleyQuestion);
+                    cmd.Parameters.AddWithValue("@ChainPulleyIsYes", chainPulleyIsYes);
+                    cmd.Parameters.AddWithValue("@ChainPulleyRemarks", chainPulleyRemarks);
+                    cmd.Parameters.AddWithValue("@ChainPulleyPhotoPath", chainPulleyPhotoPath);
+
+
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -136,6 +173,26 @@ namespace AnmolDristi
             GvDandBowChecklist.EditIndex = -1;
             LoadDandBowChecklistDetails();
         }
+
+        protected void GvDandBowChecklist_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow &&
+                (GvDandBowChecklist.EditIndex == e.Row.RowIndex))
+            {
+                DropDownList ddl = (DropDownList)e.Row.FindControl("ddlShacklesIsYes");
+                Panel pnl = (Panel)e.Row.FindControl("pnlShacklesDetails");
+
+                if (ddl != null && pnl != null && ddl.SelectedValue == "False")
+                    pnl.Style["display"] = "block";
+
+                DropDownList ddl2 = (DropDownList)e.Row.FindControl("ddlChainPulleyIsYes");
+                Panel pnl2 = (Panel)e.Row.FindControl("pnlChainPulleyDetails");
+
+                if (ddl2 != null && pnl2 != null && ddl2.SelectedValue == "False")
+                    pnl2.Style["display"] = "block";
+            }
+        }
+
 
         protected void GvDandBowChecklist_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {

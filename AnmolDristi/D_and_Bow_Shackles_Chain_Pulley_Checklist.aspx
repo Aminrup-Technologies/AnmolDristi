@@ -38,6 +38,7 @@
                 <div class="x_content">
                     <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 1: Basic Details</h3>
                     <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
+
                     <div class="row">
 
                         <!-- NAME OF SITE -->
@@ -120,92 +121,116 @@
                         </div>
 
                         <table class="table table-bordered">
-                            <%-- Repeat this row structure for each checklist item --%>
-                            <tr>
-                                <td>1. D & Bow shackle tested or not, tag fixed or not</td>
-                                <td>
-                                    <asp:RadioButton ID="rbTestedOk" GroupName="Tested" Text="Ok" runat="server" OnCheckedChanged="RbTested_CheckedChanged" AutoPostBack="true" />
-                                    <asp:RadioButton ID="rbTestedNotOk" GroupName="Tested" Text="Not Ok" runat="server" OnCheckedChanged="RbTested_CheckedChanged" AutoPostBack="true" />
-                                    <asp:RadioButton ID="rbTestedNA" GroupName="Tested" Text="NA" runat="server" />
-                                </td>
-                                <td>
-                                    <asp:Panel ID="pnlTested" runat="server" Visible="false">
-                                        <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                                        <asp:TextBox ID="txtTestedRemarks" runat="server" CssClass="form-control" />
-                                        <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                                        <asp:FileUpload ID="fuTested" runat="server" />
-                                    </asp:Panel>
-                                </td>
-                            </tr>
+                          <tr>
+    <td>1. D & Bow shackle tested or not, tag fixed or not</td>
+    <td>
+        <asp:RadioButton ID="rbTestedOk" GroupName="Tested" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleTestedPanel()" />
+        <asp:RadioButton ID="rbTestedNotOk" GroupName="Tested" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleTestedPanel()" />
+        <asp:RadioButton ID="rbTestedNA" GroupName="Tested" Text="NA" runat="server" />
+    </td>
+    <td>
+        <asp:Panel ID="pnlTested" runat="server">
+            <div id="divTestedPanel" style="display:none;">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                <asp:TextBox ID="txtTestedRemarks" runat="server" CssClass="form-control" /><br />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                <asp:FileUpload ID="fuTested" runat="server" /><br />
+                <asp:CheckBox ID="chkTestedCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                            <tr>
-                                <td>2. Thread of the pin should not be damaged</td>
-                                <td>
-                                    <asp:RadioButton ID="rbThreadOk" GroupName="Thread" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbThread_CheckedChanged" />
-                                    <asp:RadioButton ID="rbThreadNotOk" GroupName="Thread" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbThread_CheckedChanged" />
-                                    <asp:RadioButton ID="rbThreadNA" GroupName="Thread" Text="NA" runat="server" />
-                                </td>
-                                <td>
-                                    <asp:Panel ID="pnlThread" runat="server" Visible="false">
-                                        <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                                        <asp:TextBox ID="txtThreadRemarks" runat="server" CssClass="form-control" />
-                                        <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                                        <asp:FileUpload ID="fuThread" runat="server" />
-                                    </asp:Panel>
-                                </td>
-                            </tr>
+<tr>
+    <td>2. Thread of the pin should not be damaged</td>
+    <td>
+        <asp:RadioButton ID="rbThreadOk" GroupName="Thread" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleThreadPanel()" />
+        <asp:RadioButton ID="rbThreadNotOk" GroupName="Thread" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleThreadPanel()" />
+        <asp:RadioButton ID="rbThreadNA" GroupName="Thread" Text="NA" runat="server" />
+    </td>
+    <td>
+        <asp:Panel ID="pnlThread" runat="server">
+            <div id="divThreadPanel" style="display:none;">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                <asp:TextBox ID="txtThreadRemarks" runat="server" CssClass="form-control" /><br />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                <asp:FileUpload ID="fuThread" runat="server" /><br />
+                <asp:CheckBox ID="chkThreadCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                            <tr>
-                                <td>3. No part should be worn more than 10% of original dimension</td>
-                                <td>
-                                    <asp:RadioButton ID="rbWornOk" GroupName="Worn" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbWorn_CheckedChanged" />
-                                    <asp:RadioButton ID="rbWornNotOk" GroupName="Worn" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbWorn_CheckedChanged" />
-                                    <asp:RadioButton ID="rbWornNA" GroupName="Worn" Text="NA" runat="server" />
-                                </td>
-                                <td>
-                                    <asp:Panel ID="pnlWorn" runat="server" Visible="false">
-                                        <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                                        <asp:TextBox ID="txtWornRemarks" runat="server" CssClass="form-control" />
-                                        <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                                        <asp:FileUpload ID="fuWorn" runat="server" />
-                                    </asp:Panel>
-                                </td>
-                            </tr>
+<tr>
+    <td>3. No part should be worn more than 10% of original dimension</td>
+    <td>
+        <asp:RadioButton ID="rbWornOk" GroupName="Worn" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleWornPanel()" />
+        <asp:RadioButton ID="rbWornNotOk" GroupName="Worn" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleWornPanel()" />
+        <asp:RadioButton ID="rbWornNA" GroupName="Worn" Text="NA" runat="server" />
+    </td>
+    <td>
+        <asp:Panel ID="pnlWorn" runat="server">
+            <div id="divWornPanel" style="display:none;">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                <asp:TextBox ID="txtWornRemarks" runat="server" CssClass="form-control" /><br />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                <asp:FileUpload ID="fuWorn" runat="server" /><br />
+                <asp:CheckBox ID="chkWornCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                            <tr>
-                                <td>4. Strength of pin should be checked</td>
-                                <td>
-                                    <asp:RadioButton ID="rbStrengthOk" GroupName="Strength" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbStrength_CheckedChanged" />
-                                    <asp:RadioButton ID="rbStrengthNotOk" GroupName="Strength" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbStrength_CheckedChanged" />
-                                    <asp:RadioButton ID="rbStrengthNA" GroupName="Strength" Text="NA" runat="server" />
-                                </td>
-                                <td>
-                                    <asp:Panel ID="pnlStrength" runat="server" Visible="false">
-                                        <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                                        <asp:TextBox ID="txtStrengthRemarks" runat="server" CssClass="form-control" />
-                                        <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                                        <asp:FileUpload ID="fuStrength" runat="server" />
-                                    </asp:Panel>
-                                </td>
-                            </tr>
+<tr>
+    <td>4. Strength of pin should be checked</td>
+    <td>
+        <asp:RadioButton ID="rbStrengthOk" GroupName="Strength" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleStrengthPanel()" />
+        <asp:RadioButton ID="rbStrengthNotOk" GroupName="Strength" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleStrengthPanel()" />
+        <asp:RadioButton ID="rbStrengthNA" GroupName="Strength" Text="NA" runat="server" />
+    </td>
+    <td>
+        <asp:Panel ID="pnlStrength" runat="server">
+            <div id="divStrengthPanel" style="display:none;">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                <asp:TextBox ID="txtStrengthRemarks" runat="server" CssClass="form-control" /><br />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                <asp:FileUpload ID="fuStrength" runat="server" /><br />
+                <asp:CheckBox ID="chkStrengthCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                            <tr>
-                                <td>5. No rusting on body or pin</td>
-                                <td>
-                                    <asp:RadioButton ID="rbRustOk" GroupName="Rust" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbRust_CheckedChanged" />
-                                    <asp:RadioButton ID="rbRustNotOk" GroupName="Rust" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbRust_CheckedChanged" />
-                                    <asp:RadioButton ID="rbRustNA" GroupName="Rust" Text="NA" runat="server" />
-                                </td>
-                                <td>
-                                    <asp:Panel ID="pnlRust" runat="server" Visible="false">
-                                        <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                                        <asp:TextBox ID="txtRustRemarks" runat="server" CssClass="form-control" />
-                                        <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                                        <asp:FileUpload ID="fuRust" runat="server" />
-                                    </asp:Panel>
-                                </td>
-                            </tr>
-                        </table>
+<tr>
+    <td>5. No rusting on body or pin</td>
+    <td>
+        <asp:RadioButton ID="rbRustOk" GroupName="Rust" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleRustPanel()" />
+        <asp:RadioButton ID="rbRustNotOk" GroupName="Rust" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleRustPanel()" />
+        <asp:RadioButton ID="rbRustNA" GroupName="Rust" Text="NA" runat="server" />
+    </td>
+    <td>
+        <asp:Panel ID="pnlRust" runat="server">
+            <div id="divRustPanel" style="display:none;">
+                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                <asp:TextBox ID="txtRustRemarks" runat="server" CssClass="form-control" /><br />
+                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                <asp:FileUpload ID="fuRust" runat="server" /><br />
+                <asp:CheckBox ID="chkRustCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
+</table>
+
+
+
+ 
+
 
 
                           <!-- Row for Step 3 heading -->
@@ -215,38 +240,27 @@
           <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
       </div>
   </div>
-
- <%--              <!-- TAG NO -->
- <div class="col-md-3">
-     <div class="mb-3">
-         <asp:Label ID="Label1" runat="server" Text="Tag No:" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
-         <div class="input-group-sm">
-             <asp:TextBox ID="txtChainTagNo" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Tag Number for Chain Pulley Block" />
-
-            <asp:RequiredFieldValidator ID="rfvChainTagNo" runat="server"
-    ControlToValidate="txtChainTagNo"
-    ErrorMessage="Please enter the Tag No for Chain Pulley Block."
-    ForeColor="Red" Display="Dynamic" />
-</div>
-     </div>
- </div>
-              --%>          
                         
                         
-                        <table class="table table-bordered">
+         
+     <table class="table table-bordered">
     <tr>
         <td>1. Chain block is tested or not, Testing & due date of testing is ok or not</td>
         <td>
-            <asp:RadioButton ID="rbChainTestedOk" GroupName="ChainTested" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbChainTested_CheckedChanged" />
-            <asp:RadioButton ID="rbChainTestedNotOk" GroupName="ChainTested" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbChainTested_CheckedChanged" />
+            <asp:RadioButton ID="rbChainTestedOk" GroupName="ChainTested" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleChainTestedPanel()" />
+            <asp:RadioButton ID="rbChainTestedNotOk" GroupName="ChainTested" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleChainTestedPanel()" />
             <asp:RadioButton ID="rbChainTestedNA" GroupName="ChainTested" Text="NA" runat="server" />
         </td>
         <td>
-            <asp:Panel ID="pnlChainTested" runat="server" Visible="false">
-                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                <asp:TextBox ID="txtChainTestedRemarks" runat="server" CssClass="form-control" />
-                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                <asp:FileUpload ID="fuChainTested" runat="server" />
+            <asp:Panel ID="pnlChainTested" runat="server">
+                <div id="divChainTestedPanel" style="display:none;">
+                    <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                    <asp:TextBox ID="txtChainTestedRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                    <asp:FileUpload ID="fuChainTested" runat="server" /><br />
+                    <asp:CheckBox ID="chkChainTestedCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                    <span class="form-label">CAPA Required</span>
+                </div>
             </asp:Panel>
         </td>
     </tr>
@@ -254,16 +268,20 @@
     <tr>
         <td>2. Any damaged chain links</td>
         <td>
-            <asp:RadioButton ID="rbChainDamageOk" GroupName="ChainDamage" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbChainDamage_CheckedChanged" />
-            <asp:RadioButton ID="rbChainDamageNotOk" GroupName="ChainDamage" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbChainDamage_CheckedChanged" />
+            <asp:RadioButton ID="rbChainDamageOk" GroupName="ChainDamage" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleChainDamagePanel()" />
+            <asp:RadioButton ID="rbChainDamageNotOk" GroupName="ChainDamage" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleChainDamagePanel()" />
             <asp:RadioButton ID="rbChainDamageNA" GroupName="ChainDamage" Text="NA" runat="server" />
         </td>
         <td>
-            <asp:Panel ID="pnlChainDamage" runat="server" Visible="false">
-                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                <asp:TextBox ID="txtChainDamageRemarks" runat="server" CssClass="form-control" />
-                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                <asp:FileUpload ID="fuChainDamage" runat="server" />
+            <asp:Panel ID="pnlChainDamage" runat="server">
+                <div id="divChainDamagePanel" style="display:none;">
+                    <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                    <asp:TextBox ID="txtChainDamageRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                    <asp:FileUpload ID="fuChainDamage" runat="server" /><br />
+                    <asp:CheckBox ID="chkChainDamageCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                    <span class="form-label">CAPA Required</span>
+                </div>
             </asp:Panel>
         </td>
     </tr>
@@ -271,16 +289,20 @@
     <tr>
         <td>3. Chain & hook condition for any twist, wear, bend, corrosion & cracks</td>
         <td>
-            <asp:RadioButton ID="rbConditionOk" GroupName="Condition" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbCondition_CheckedChanged" />
-            <asp:RadioButton ID="rbConditionNotOk" GroupName="Condition" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbCondition_CheckedChanged" />
+            <asp:RadioButton ID="rbConditionOk" GroupName="Condition" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleConditionPanel()" />
+            <asp:RadioButton ID="rbConditionNotOk" GroupName="Condition" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleConditionPanel()" />
             <asp:RadioButton ID="rbConditionNA" GroupName="Condition" Text="NA" runat="server" />
         </td>
         <td>
-            <asp:Panel ID="pnlCondition" runat="server" Visible="false">
-                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                <asp:TextBox ID="txtConditionRemarks" runat="server" CssClass="form-control" />
-                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                <asp:FileUpload ID="fuCondition" runat="server" />
+            <asp:Panel ID="pnlCondition" runat="server">
+                <div id="divConditionPanel" style="display:none;">
+                    <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                    <asp:TextBox ID="txtConditionRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                    <asp:FileUpload ID="fuCondition" runat="server" /><br />
+                    <asp:CheckBox ID="chkConditionCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                    <span class="form-label">CAPA Required</span>
+                </div>
             </asp:Panel>
         </td>
     </tr>
@@ -288,16 +310,20 @@
     <tr>
         <td>4. Safety latch & latch spring available in hook and functioning properly</td>
         <td>
-            <asp:RadioButton ID="rbLatchOk" GroupName="Latch" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbLatch_CheckedChanged" />
-            <asp:RadioButton ID="rbLatchNotOk" GroupName="Latch" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbLatch_CheckedChanged" />
+            <asp:RadioButton ID="rbLatchOk" GroupName="Latch" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleLatchPanel()" />
+            <asp:RadioButton ID="rbLatchNotOk" GroupName="Latch" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleLatchPanel()" />
             <asp:RadioButton ID="rbLatchNA" GroupName="Latch" Text="NA" runat="server" />
         </td>
         <td>
-            <asp:Panel ID="pnlLatch" runat="server" Visible="false">
-                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                <asp:TextBox ID="txtLatchRemarks" runat="server" CssClass="form-control" />
-                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                <asp:FileUpload ID="fuLatch" runat="server" />
+            <asp:Panel ID="pnlLatch" runat="server">
+                <div id="divLatchPanel" style="display:none;">
+                    <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                    <asp:TextBox ID="txtLatchRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                    <asp:FileUpload ID="fuLatch" runat="server" /><br />
+                    <asp:CheckBox ID="chkLatchCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                    <span class="form-label">CAPA Required</span>
+                </div>
             </asp:Panel>
         </td>
     </tr>
@@ -305,16 +331,20 @@
     <tr>
         <td>5. Check padeye/hook is standard & welded properly when chain block to be ganged</td>
         <td>
-            <asp:RadioButton ID="rbPadeyeOk" GroupName="Padeye" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbPadeye_CheckedChanged" />
-            <asp:RadioButton ID="rbPadeyeNotOk" GroupName="Padeye" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbPadeye_CheckedChanged" />
+            <asp:RadioButton ID="rbPadeyeOk" GroupName="Padeye" Text="Ok" runat="server" AutoPostBack="false" onclick="togglePadeyePanel()" />
+            <asp:RadioButton ID="rbPadeyeNotOk" GroupName="Padeye" Text="Not Ok" runat="server" AutoPostBack="false" onclick="togglePadeyePanel()" />
             <asp:RadioButton ID="rbPadeyeNA" GroupName="Padeye" Text="NA" runat="server" />
         </td>
         <td>
-            <asp:Panel ID="pnlPadeye" runat="server" Visible="false">
-                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                <asp:TextBox ID="txtPadeyeRemarks" runat="server" CssClass="form-control" />
-                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                <asp:FileUpload ID="fuPadeye" runat="server" />
+            <asp:Panel ID="pnlPadeye" runat="server">
+                <div id="divPadeyePanel" style="display:none;">
+                    <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                    <asp:TextBox ID="txtPadeyeRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                    <asp:FileUpload ID="fuPadeye" runat="server" /><br />
+                    <asp:CheckBox ID="chkPadeyeCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                    <span class="form-label">CAPA Required</span>
+                </div>
             </asp:Panel>
         </td>
     </tr>
@@ -322,20 +352,88 @@
     <tr>
         <td>6. Any part of hook should not be worn 10% of original dimension</td>
         <td>
-            <asp:RadioButton ID="rbHookWearOk" GroupName="HookWear" Text="Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbHookWear_CheckedChanged" />
-            <asp:RadioButton ID="rbHookWearNotOk" GroupName="HookWear" Text="Not Ok" runat="server" AutoPostBack="true" OnCheckedChanged="RbHookWear_CheckedChanged" />
+            <asp:RadioButton ID="rbHookWearOk" GroupName="HookWear" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleHookWearPanel()" />
+            <asp:RadioButton ID="rbHookWearNotOk" GroupName="HookWear" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleHookWearPanel()" />
             <asp:RadioButton ID="rbHookWearNA" GroupName="HookWear" Text="NA" runat="server" />
         </td>
         <td>
-            <asp:Panel ID="pnlHookWear" runat="server" Visible="false">
-                <asp:Label runat="server" Text="Remarks:" CssClass="form-label" />
-                <asp:TextBox ID="txtHookWearRemarks" runat="server" CssClass="form-control" />
-                <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" />
-                <asp:FileUpload ID="fuHookWear" runat="server" />
+            <asp:Panel ID="pnlHookWear" runat="server">
+                <div id="divHookWearPanel" style="display:none;">
+                    <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
+                    <asp:TextBox ID="txtHookWearRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
+                    <asp:FileUpload ID="fuHookWear" runat="server" /><br />
+                    <asp:CheckBox ID="chkHookWearCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                    <span class="form-label">CAPA Required</span>
+                </div>
             </asp:Panel>
         </td>
     </tr>
 </table>
+                        <script type="text/javascript">
+                            function togglePanel(yesId, noId, panelDivId) {
+                                var yes = document.getElementById(yesId);
+                                var no = document.getElementById(noId);
+                                var panelDiv = document.getElementById(panelDivId);
+                                if (yes && no && panelDiv) {
+                                    panelDiv.style.display = (no.checked) ? 'block' : 'none';
+                                }
+                            }
+
+                            // D & Bow Shackles Checklist
+                            function toggleTestedPanel() {
+                                togglePanel('<%= rbTestedOk.ClientID %>', '<%= rbTestedNotOk.ClientID %>', 'divTestedPanel');
+                            }
+
+                            function toggleThreadPanel() {
+                                togglePanel('<%= rbThreadOk.ClientID %>', '<%= rbThreadNotOk.ClientID %>', 'divThreadPanel');
+                            }
+
+                            function toggleWornPanel() {
+                                togglePanel('<%= rbWornOk.ClientID %>', '<%= rbWornNotOk.ClientID %>', 'divWornPanel');
+                            }
+
+                            function toggleStrengthPanel() {
+                                togglePanel('<%= rbStrengthOk.ClientID %>', '<%= rbStrengthNotOk.ClientID %>', 'divStrengthPanel');
+                            }
+
+                            function toggleRustPanel() {
+                                togglePanel('<%= rbRustOk.ClientID %>', '<%= rbRustNotOk.ClientID %>', 'divRustPanel');
+                            }
+
+                            // Chain Pulley Block Checklist
+                            function toggleChainTestedPanel() {
+                                togglePanel('<%= rbChainTestedOk.ClientID %>', '<%= rbChainTestedNotOk.ClientID %>', 'divChainTestedPanel');
+    }
+
+    function toggleChainDamagePanel() {
+        togglePanel('<%= rbChainDamageOk.ClientID %>', '<%= rbChainDamageNotOk.ClientID %>', 'divChainDamagePanel');
+    }
+
+    function toggleConditionPanel() {
+        togglePanel('<%= rbConditionOk.ClientID %>', '<%= rbConditionNotOk.ClientID %>', 'divConditionPanel');
+    }
+
+    function toggleLatchPanel() {
+        togglePanel('<%= rbLatchOk.ClientID %>', '<%= rbLatchNotOk.ClientID %>', 'divLatchPanel');
+    }
+
+    function togglePadeyePanel() {
+        togglePanel('<%= rbPadeyeOk.ClientID %>', '<%= rbPadeyeNotOk.ClientID %>', 'divPadeyePanel');
+    }
+
+    function toggleHookWearPanel() {
+        togglePanel('<%= rbHookWearOk.ClientID %>', '<%= rbHookWearNotOk.ClientID %>', 'divHookWearPanel');
+                            }
+
+                            // CAPA Warning
+                            function confirmCAPA(checkbox) {
+                                if (!checkbox.checked) {
+                                    alert("CAPA is required. Proceeding without it is at your own risk.");
+                                }
+                            }
+                        </script>
+
 
                   
                            <!-- Remarks -->

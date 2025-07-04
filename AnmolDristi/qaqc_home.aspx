@@ -195,12 +195,36 @@
 </div>
 
 
-
-
-
-
-
-            </div>
+                                                <div class="col-md-6" id="Div8" runat="server" visible="true">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>CSM : Job Site Checklist</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <a class="btn btn-app" href="Job_site_Checklist.aspx">
+                <span class="badge bg-green">Ok
+                    <asp:Label ID="Label15" runat="server" Text="0" Visible="false"></asp:Label></span>
+                <i class="fa fa-edit"></i> Job Site Checklist
+            </a>
+            <a class="btn btn-app" href="JobSite_View.aspx">
+                <span class="badge bg-green">Ok
+                    <asp:Label ID="Label16" runat="server" Text="0" Visible="false"></asp:Label></span>
+                <i class="fa fa-edit"></i> Job Site Records 
+            </a>
         </div>
     </div>
+</div>
 </asp:Content>
+
+
+
+
+
+
+
+        

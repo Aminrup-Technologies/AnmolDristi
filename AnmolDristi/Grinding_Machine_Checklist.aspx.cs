@@ -14,25 +14,27 @@ namespace AnmolDristi
     public partial class Grinding_Machine_Checklist : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
+       
         {
             if (!IsPostBack)
             {
-                // Set all Panels to invisible initially
-                pnlForeHandle.Visible = false;
-                pnlWheelGuard.Visible = false;
-                pnlGrindWheel.Visible = false;
-                pnlRearHandle.Visible = false;
-                pnlCord.Visible = false;
-                pnlTrigger.Visible = false;
-                pnlSwitchLock.Visible = false;
-                pnlPowerCable.Visible = false;
+                // Set all Panels to visible so JavaScript toggle works properly
+                pnlForeHandle.Visible = true;
+                pnlWheelGuard.Visible = true;
+                pnlGrindWheel.Visible = true;
+                pnlRearHandle.Visible = true;
+                pnlCord.Visible = true;
+                pnlTrigger.Visible = true;
+                pnlSwitchLock.Visible = true;
+                pnlPowerCable.Visible = true;
             }
         }
 
- 
 
-            // 1. Fore Handle
-            protected void RbForeHandle_CheckedChanged(object sender, EventArgs e)
+
+
+        // 1. Fore Handle
+        protected void RbForeHandle_CheckedChanged(object sender, EventArgs e)
             {
                 pnlForeHandle.Visible = RbForeHandleNo.Checked;
             }
@@ -108,6 +110,25 @@ ORDER BY gh.HeaderID DESC";
                 }
             }
         }
+        //private string GenerateCAPAID(SqlConnection conn, SqlTransaction transaction)
+        //{
+        //    string newID = "CAPA0001";
+        //    string query = "SELECT MAX(CAPA_ID) FROM GrindingMachine_Checklist WHERE CAPA_ID IS NOT NULL";
+
+        //    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+        //    {
+        //        object result = cmd.ExecuteScalar();
+
+        //        if (result != DBNull.Value && result != null)
+        //        {
+        //            string lastID = result.ToString(); // e.g., "CAPA0012"
+        //            int num = int.Parse(lastID.Substring(4));
+        //            newID = "CAPA" + (num + 1).ToString("D4");
+        //        }
+        //    }
+
+        //    return newID;
+        //}
 
 
         protected void SubmitGrindingMachineIncidentData_Click(object sender, EventArgs e)
@@ -169,15 +190,14 @@ ORDER BY gh.HeaderID DESC";
                         headerId = (int)outputParam.Value;  // Get the generated HeaderID
                     }
 
-                    // Save each checklist row
-                    SaveChecklist("1. Fore handle without damage", RbForeHandleYes.Checked, txtForeHandleRemarks, fuForeHandle, conn, transaction, headerId);
-                    SaveChecklist("2. Wheel guard (covered 3/4th area)", RbWheelGuardYes.Checked, txtWheelGuardRemarks, fuWheelGuard, conn, transaction, headerId);
-                    SaveChecklist("3. Grinding wheel without any crack", RbGrindWheelYes.Checked, txtGrindWheelRemarks, fuGrindWheel, conn, transaction, headerId);
-                    SaveChecklist("4. Rear handles without damage", RbRearHandleYes.Checked, txtRearHandleRemarks, fuRearHandle, conn, transaction, headerId);
-                    SaveChecklist("5. Presence of cord strain reliever", RbCordYes.Checked, txtCordRemarks, fuCord, conn, transaction, headerId);
-                    SaveChecklist("6. Trigger switch in working condition", RbTriggerYes.Checked, txtTriggerRemarks, fuTrigger, conn, transaction, headerId);
-                    SaveChecklist("7. Presence of switch lock", RbSwitchLockYes.Checked, txtSwitchLockRemarks, fuSwitchLock, conn, transaction, headerId);
-                    SaveChecklist("8. Power cable without cut", RbPowerCableYes.Checked, txtPowerCableRemarks, fuPowerCable, conn, transaction, headerId);
+                    SaveChecklist("1. Fore handle without damage", RbForeHandleYes.Checked, txtForeHandleRemarks, fuForeHandle, conn, transaction, headerId, chkForeHandleCAPA);
+                    SaveChecklist("2. Wheel guard (covered 3/4th area)", RbWheelGuardYes.Checked, txtWheelGuardRemarks, fuWheelGuard, conn, transaction, headerId, chkWheelGuardCAPA);
+                    SaveChecklist("3. Grinding wheel without any crack", RbGrindWheelYes.Checked, txtGrindWheelRemarks, fuGrindWheel, conn, transaction, headerId, chkGrindWheelCAPA);
+                    SaveChecklist("4. Rear handles without damage", RbRearHandleYes.Checked, txtRearHandleRemarks, fuRearHandle, conn, transaction, headerId, chkRearHandleCAPA);
+                    SaveChecklist("5. Presence of cord strain reliever", RbCordYes.Checked, txtCordRemarks, fuCord, conn, transaction, headerId, chkCordCAPA);
+                    SaveChecklist("6. Trigger switch in working condition", RbTriggerYes.Checked, txtTriggerRemarks, fuTrigger, conn, transaction, headerId, chkTriggerCAPA);
+                    SaveChecklist("7. Presence of switch lock", RbSwitchLockYes.Checked, txtSwitchLockRemarks, fuSwitchLock, conn, transaction, headerId, chkSwitchLockCAPA);
+                    SaveChecklist("8. Power cable without cut", RbPowerCableYes.Checked, txtPowerCableRemarks, fuPowerCable, conn, transaction, headerId, chkPowerCableCAPA);
 
                     transaction.Commit();
                     lblMessage.Text = "Grinding machine checklist submitted successfully!";
@@ -192,43 +212,115 @@ ORDER BY gh.HeaderID DESC";
             }
         }
 
-        
-        private void SaveChecklist(string question, bool isYes, TextBox remarksBox, FileUpload photoUpload, SqlConnection conn, SqlTransaction transaction, int headerId)
+
+        //private void SaveChecklist(string question, bool isYes, TextBox remarksBox, FileUpload photoUpload,
+        //   SqlConnection conn, SqlTransaction transaction, int headerId, CheckBox capaCheck)
+        //{
+        //    string remarks = remarksBox?.Text.Trim();
+        //    string photoPath = null;
+        //    string capaId = null;
+
+        //    try
+        //    {
+        //        if (!isYes && photoUpload.HasFile)
+        //        {
+        //            string filename = Path.GetFileName(photoUpload.FileName);
+        //            string folderPath = Server.MapPath("~/Uploads/");
+        //            Directory.CreateDirectory(folderPath);
+        //            string fullPath = Path.Combine(folderPath, filename);
+        //            photoUpload.SaveAs(fullPath);
+        //            photoPath = "~/Uploads/" + filename;
+        //        }
+
+        //        // If CAPA required, pass null to let SP generate it internally
+        //        if (!isYes && capaCheck.Checked)
+        //        {
+        //            capaId = null; // Optional: can skip assigning, or pass DBNull
+        //        }
+
+        //        using (SqlCommand cmdDetail = new SqlCommand("sp_InsertGrindingMachineChecklist", conn, transaction))
+        //        {
+        //            cmdDetail.CommandType = CommandType.StoredProcedure;
+        //            cmdDetail.Parameters.AddWithValue("@HeaderID", headerId);
+        //            cmdDetail.Parameters.AddWithValue("@Question", question);
+        //            cmdDetail.Parameters.AddWithValue("@IsYes", isYes);
+        //            cmdDetail.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
+        //            cmdDetail.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
+        //            if (!isYes && capaCheck.Checked)
+        //            {
+        //                capaId = GenerateCAPAID(conn, transaction);
+        //            }
+        //            cmdDetail.Parameters.AddWithValue("@CAPA_ID", (object)capaId ?? DBNull.Value);
+
+
+        //            cmdDetail.ExecuteNonQuery();
+        //        }
+        //    }
+        //    catch (Exception exDetail)
+        //    {
+        //        lblMessage.Text += $"<br/>Checklist Insert Error for: {question} → {exDetail.Message}";
+        //        throw;
+        //    }
+        //}
+
+        private void SaveChecklist(string question, bool isYes, TextBox remarksBox, FileUpload photoUpload,
+   SqlConnection conn, SqlTransaction transaction, int headerId, CheckBox capaCheck)
         {
+            string remarks = remarksBox?.Text.Trim();
+            string photoPath = null;
+            object capaId = DBNull.Value;
+
             try
             {
-                string remarks = remarksBox != null ? remarksBox.Text.Trim() : "";
-                string photoPath = null;
-
-                
-                if (!isYes && photoUpload.HasFile)
+                // Upload photo only if needed
+                if (photoUpload.HasFile)
                 {
                     string filename = Path.GetFileName(photoUpload.FileName);
                     string folderPath = Server.MapPath("~/Uploads/");
                     Directory.CreateDirectory(folderPath);
                     string fullPath = Path.Combine(folderPath, filename);
                     photoUpload.SaveAs(fullPath);
-                    photoPath = "~/Uploads/" + filename; // Path stored in DB
+                    photoPath = "~/Uploads/" + filename;
                 }
 
+                // If Not OK and CAPA is required, insert into tbl_CAPAMaster
+                if (!isYes && capaCheck != null && capaCheck.Checked)
+                {
+                    SqlCommand cmdCAPA = new SqlCommand(@"
+                INSERT INTO tbl_CAPAMaster 
+                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                OUTPUT INSERTED.CAPAID
+                VALUES 
+                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, transaction);
+
+                    cmdCAPA.Parameters.AddWithValue("@HeaderID", headerId);
+                    cmdCAPA.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
+                    cmdCAPA.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
+                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInspectedBy.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                    capaId = cmdCAPA.ExecuteScalar(); // Capture new CAPAID
+                }
+ 
                 using (SqlCommand cmdDetail = new SqlCommand("sp_InsertGrindingMachineChecklist", conn, transaction))
                 {
                     cmdDetail.CommandType = CommandType.StoredProcedure;
-                    cmdDetail.Parameters.AddWithValue("@HeaderID", headerId);  // Referencing HeaderID from table1
-                    cmdDetail.Parameters.AddWithValue("@Question", question);  // Question text
-                    cmdDetail.Parameters.AddWithValue("@IsYes", isYes);  // Yes/No checkbox result
-                    cmdDetail.Parameters.AddWithValue("@Remarks", remarks);  // Remarks
-                    cmdDetail.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);  // Photo path (nullable)
+                    cmdDetail.Parameters.AddWithValue("@HeaderID", headerId);
+                    cmdDetail.Parameters.AddWithValue("@Question", question);
+                    cmdDetail.Parameters.AddWithValue("@IsYes", isYes);
+                    cmdDetail.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
+                    cmdDetail.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
+                    cmdDetail.Parameters.AddWithValue("@CAPA_ID", capaId);
 
-                    cmdDetail.ExecuteNonQuery();  // Execute stored procedure
+                    cmdDetail.ExecuteNonQuery();
                 }
             }
-            catch (Exception)
+            catch (Exception exDetail)
             {
-                // Handle exception (optional)
+                lblMessage.Text += $"<br/>Checklist Insert Error for: {question} → {exDetail.Message}";
+                throw;
             }
         }
-
 
 
 

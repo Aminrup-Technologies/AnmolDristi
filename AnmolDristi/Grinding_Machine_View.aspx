@@ -2,6 +2,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
     <style>
         .form-label {
             font-weight: bold;
@@ -25,6 +26,33 @@
 }
         
     </style>
+    <script type="text/javascript">
+    function toggleRemarksAndPhoto(ddl) {
+        var row = ddl.closest('tr');
+        var remarks = row.querySelector('.remarksField');
+        var photo = row.querySelector('.photoField');
+
+        if (ddl.value === "False") {
+            if (remarks) remarks.style.display = "inline-block";
+            if (photo) photo.style.display = "inline-block";
+        } else {
+            if (remarks) remarks.style.display = "none";
+            if (photo) photo.style.display = "none";
+        }
+    }
+
+    // Automatically apply when row enters edit mode
+    function applyInitialToggle() {
+        var allDropdowns = document.querySelectorAll('select[id*="ddlIsYes"]');
+        allDropdowns.forEach(toggleRemarksAndPhoto);
+    }
+
+    // Hook into page lifecycle
+    window.onload = function () {
+        setTimeout(applyInitialToggle, 100);
+    };
+    </script>
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -56,9 +84,41 @@
                             <asp:BoundField DataField="IdentificationNumber" HeaderText="Identification No" />
                             <asp:BoundField DataField="Location" HeaderText="Location" />
                             <asp:BoundField DataField="ChecklistQuestion" HeaderText="Checklist Question" />
-                            <asp:BoundField DataField="IsYes" HeaderText="Is Yes" />
-                            <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
-                            <asp:BoundField DataField="PhotoPath" HeaderText="Photo Path" />
+                            <asp:TemplateField HeaderText="Is Yes">
+    <ItemTemplate>
+        <%# Eval("IsYes") %>
+    </ItemTemplate>
+   <EditItemTemplate>
+    <asp:DropDownList 
+        ID="ddlIsYes" 
+        runat="server" 
+        onchange="toggleRemarksAndPhoto(this);">
+        <asp:ListItem Text="True" Value="True"></asp:ListItem>
+        <asp:ListItem Text="False" Value="False"></asp:ListItem>
+    </asp:DropDownList>
+</EditItemTemplate>
+
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Remarks">
+    <ItemTemplate>
+        <%# Eval("Remarks") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtRemarks" runat="server" CssClass="remarksField" Style="display: none;"></asp:TextBox>
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Photo Path">
+    <ItemTemplate>
+        <%# Eval("PhotoPath") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:FileUpload ID="filePhoto" runat="server" CssClass="photoField" Style="display: none;" />
+        <asp:Label ID="lblExistingPhoto" runat="server" Text='<%# Eval("PhotoPath") %>' Visible="false" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
                             <asp:BoundField DataField="JobID" HeaderText="Job ID" /> 
     <asp:BoundField DataField="JobName" HeaderText="Job Name" />
                             <asp:BoundField DataField="Final_Remarks" HeaderText="Final Remarks" />

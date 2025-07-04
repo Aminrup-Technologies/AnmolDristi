@@ -15,28 +15,26 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
-                // Set all Panels to invisible initially
-                pnlGasColor.Visible = false;
-                pnlNRV.Visible = false;
-                pnlISICylinder.Visible = false;
-                pnlUpright.Visible = false;
-                pnlTorchDamage.Visible = false;
-                pnlFlashback.Visible = false;
-                pnlLeak.Visible = false;
-                pnlSegregation.Visible = false;
-                pnlBarricade.Visible = false;
-                pnlMoved.Visible = false;
-                pnlFireExt.Visible = false;
-                pnlSpark.Visible = false;
-                pnlHose.Visible = false;
+                // All panels need to render for JS toggle to work
+                pnlGasColor.Visible = true;
+                pnlNRV.Visible = true;
+                pnlISICylinder.Visible = true;
+                pnlUpright.Visible = true;
+                pnlTorchDamage.Visible = true;
+                pnlFlashback.Visible = true;
+                pnlLeak.Visible = true;
+                pnlSegregation.Visible = true;
+                pnlBarricade.Visible = true;
+                pnlMoved.Visible = true;
+                pnlFireExt.Visible = true;
+                pnlSpark.Visible = true;
+                pnlHose.Visible = true;
             }
         }
 
 
- 
 
 
         protected void RbGasColor_CheckedChanged(object sender, EventArgs e)
@@ -134,6 +132,34 @@ ORDER BY gh.HeaderID DESC";
                 }
             }
         }
+        //private int _lastCAPANumber = -1;
+
+        //private string GenerateNewCAPAID(SqlConnection con, SqlTransaction transaction)
+        //{
+        //    if (_lastCAPANumber == -1)
+        //    {
+        //        string query = "SELECT MAX(CAPA_ID) FROM GasCutting_Checklist WHERE CAPA_ID IS NOT NULL";
+        //        using (SqlCommand cmd = new SqlCommand(query, con, transaction))
+        //        {
+        //            object result = cmd.ExecuteScalar();
+        //            if (result != DBNull.Value && result != null)
+        //            {
+        //                string lastID = result.ToString(); // e.g., "CAPA0012"
+        //                _lastCAPANumber = int.Parse(lastID.Substring(4));
+        //            }
+        //            else
+        //            {
+        //                _lastCAPANumber = 0;
+        //            }
+        //        }
+        //    }
+
+        //    _lastCAPANumber++; // increment for next CAPA
+        //    return "CAPA" + _lastCAPANumber.ToString("D4");
+        //}
+
+
+
         protected void SubmitGasCuttingIncidentData_Click(object sender, EventArgs e)
         {
             try
@@ -168,15 +194,16 @@ ORDER BY gh.HeaderID DESC";
 
                 try
                 {
-                    // Insert Header
-                    using (SqlCommand cmdHeader = new SqlCommand("sp_InsertGasCuttingHeader", conn, transaction))
+                    // ✅ Insert Header
+                    using (SqlCommand cmdHeader = new SqlCommand("MahimaGupta_CSMS.sp_InsertGasCuttingHeader", conn, transaction))
                     {
                         cmdHeader.CommandType = CommandType.StoredProcedure;
                         cmdHeader.Parameters.AddWithValue("@SiteName", txtNameOfSite.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@InspectionDate", Convert.ToDateTime(txtDate.Text.Trim()));
                         cmdHeader.Parameters.AddWithValue("@TagNo", txtTagNo.Text.Trim());
-                        cmdHeader.Parameters.AddWithValue("@JobID", txtJobID.Text.Trim());                 
+                        cmdHeader.Parameters.AddWithValue("@JobID", txtJobID.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@GasCutterName", txtGasCutterName.Text.Trim());
+
                         SqlParameter outputParam = new SqlParameter("@HeaderID", SqlDbType.Int)
                         {
                             Direction = ParameterDirection.Output
@@ -184,27 +211,31 @@ ORDER BY gh.HeaderID DESC";
                         cmdHeader.Parameters.Add(outputParam);
 
                         cmdHeader.ExecuteNonQuery();
+
+                        if (outputParam.Value == DBNull.Value || outputParam.Value == null)
+                            throw new Exception("HeaderID was not generated. Header insert failed.");
+
                         headerId = (int)outputParam.Value;
                     }
 
                     // Insert checklist items
-                    // Insert checklist items
-                    SaveChecklist("1. Gas Cylinders colour as per Colour Code", RbGasColorYes.Checked, txtGasColorRemarks, fuGasColor, conn, transaction, headerId);
-                    SaveChecklist("2. NRV/Flash back arrestor provided at regulator and torch side", RbNRVYes.Checked, txtNRVRemarks, fuNRV, conn, transaction, headerId);
-                    SaveChecklist("3. ISI marked Cylinder, Valves & Expired value of Cylinder", RbISICylinderYes.Checked, txtISICylinderRemarks, fuISICylinder, conn, transaction, headerId);
-                    SaveChecklist("4. Cylinder stored upright with cap", RbUprightYes.Checked, txtUprightRemarks, fuUpright, conn, transaction, headerId);
-                    SaveChecklist("5. Cylinder and Torch free from damage", RbTorchDamageYes.Checked, txtTorchDamageRemarks, fuTorchDamage, conn, transaction, headerId);
-                    SaveChecklist("6. Flashback arrester checked and within validity", RbFlashbackYes.Checked, txtFlashbackRemarks, fuFlashback, conn, transaction, headerId);
-                    SaveChecklist("7. No Gas leak from hose, connection or torch", RbLeakYes.Checked, txtLeakRemarks, fuLeak, conn, transaction, headerId);
-                    SaveChecklist("8. Proper segregation of filled and empty cylinders", RbSegregationYes.Checked, txtSegregationRemarks, fuSegregation, conn, transaction, headerId);
-                    SaveChecklist("9. Welding area barricaded with fire resistant curtain", RbBarricadeYes.Checked, txtBarricadeRemarks, fuBarricade, conn, transaction, headerId);
-                    SaveChecklist("10. Gas cutting cylinder moved only after closing valve and fixing valve cap", RbMovedYes.Checked, txtMovedRemarks, fuMoved, conn, transaction, headerId);
-                    SaveChecklist("11. Fire extinguisher and sand bucket provided at site", RbFireExtYes.Checked, txtFireExtRemarks, fuFireExt, conn, transaction, headerId);
-                    SaveChecklist("12. Cylinder kept away from heat, fire or electrical spark", RbSparkYes.Checked, txtSparkRemarks, fuSpark, conn, transaction, headerId);
-                    SaveChecklist("13. Hoses are in good condition without cracks or damage", RbHoseYes.Checked, txtHoseRemarks, fuHose, conn, transaction, headerId);
-
+                    SaveChecklist("1. Gas Cylinders colour as per Colour Code", RbGasColorYes.Checked, txtGasColorRemarks, fuGasColor, conn, transaction, headerId, chkGasColorCAPA);
+                    SaveChecklist("2. NRV/Flash back arrestor provided at regulator and torch side", RbNRVYes.Checked, txtNRVRemarks, fuNRV, conn, transaction, headerId, chkNRVCAPA);
+                    SaveChecklist("3. ISI marked Cylinder, Valves & Expired value of Cylinder", RbISICylinderYes.Checked, txtISICylinderRemarks, fuISICylinder, conn, transaction, headerId, chkISICylinderCAPA);
+                    SaveChecklist("4. Cylinder stored upright with cap", RbUprightYes.Checked, txtUprightRemarks, fuUpright, conn, transaction, headerId, chkUprightCAPA);
+                    SaveChecklist("5. Cylinder and Torch free from damage", RbTorchDamageYes.Checked, txtTorchDamageRemarks, fuTorchDamage, conn, transaction, headerId, chkTorchDamageCAPA);
+                    SaveChecklist("6. Flashback arrester checked and within validity", RbFlashbackYes.Checked, txtFlashbackRemarks, fuFlashback, conn, transaction, headerId, chkFlashbackCAPA);
+                    SaveChecklist("7. No Gas leak from hose, connection or torch", RbLeakYes.Checked, txtLeakRemarks, fuLeak, conn, transaction, headerId, chkLeakCAPA);
+                    SaveChecklist("8. Proper segregation of filled and empty cylinders", RbSegregationYes.Checked, txtSegregationRemarks, fuSegregation, conn, transaction, headerId, chkSegregationCAPA);
+                    SaveChecklist("9. Welding area barricaded with fire resistant curtain", RbBarricadeYes.Checked, txtBarricadeRemarks, fuBarricade, conn, transaction, headerId, chkBarricadeCAPA);
+                    SaveChecklist("10. Gas cutting cylinder moved only after closing valve and fixing valve cap", RbMovedYes.Checked, txtMovedRemarks, fuMoved, conn, transaction, headerId, chkMovedCAPA);
+                    SaveChecklist("11. Fire extinguisher and sand bucket provided at site", RbFireExtYes.Checked, txtFireExtRemarks, fuFireExt, conn, transaction, headerId, chkFireExtCAPA);
+                    SaveChecklist("12. Cylinder kept away from heat, fire or electrical spark", RbSparkYes.Checked, txtSparkRemarks, fuSpark, conn, transaction, headerId, chkSparkCAPA);
+                    SaveChecklist("13. Hoses are in good condition without cracks or damage", RbHoseYes.Checked, txtHoseRemarks, fuHose, conn, transaction, headerId, chkHoseCAPA);
 
                     transaction.Commit();
+
+                    // ✅ Set success message only after commit
                     lblMessage.Text = "Gas Cutting checklist submitted successfully!";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                 }
@@ -217,41 +248,72 @@ ORDER BY gh.HeaderID DESC";
             }
         }
 
-        private void SaveChecklist(string question, bool isYes, TextBox remarksBox, FileUpload photoUpload, SqlConnection conn, SqlTransaction transaction, int headerId)
+        private void SaveChecklist(string question, bool isYes, TextBox remarksBox, FileUpload uploadControl,
+    SqlConnection conn, SqlTransaction transaction, int headerId, CheckBox capaCheck)
         {
+            string remarks = remarksBox?.Text.Trim();
+            string photoPath = null;
+            object capaId = DBNull.Value;
+
             try
             {
-                string remarks = remarksBox != null ? remarksBox.Text.Trim() : "";
-                string photoPath = null;
-
-                if (!isYes && photoUpload.HasFile)
+                // Save photo if uploaded
+                if (uploadControl != null && uploadControl.HasFile)
                 {
-                    string filename = Path.GetFileName(photoUpload.FileName);
-                    string folderPath = Server.MapPath("~/Uploads/");
+                    string fileName = Path.GetFileName(uploadControl.FileName);
+                    string folderPath = HttpContext.Current.Server.MapPath("~/Uploads/");
+
                     Directory.CreateDirectory(folderPath);
-                    string fullPath = Path.Combine(folderPath, filename);
-                    photoUpload.SaveAs(fullPath);
-                    photoPath = "~/Uploads/" + filename;
+                    string savedPath = Path.Combine(folderPath, fileName);
+                    uploadControl.SaveAs(savedPath);
+
+                    photoPath = "~/Uploads/" + fileName;
                 }
 
-                using (SqlCommand cmd = new SqlCommand("sp_InsertGasCuttingChecklist", conn, transaction))
+                // Insert into CAPA Master only if Not OK and CAPA checkbox is checked
+                if (!isYes && capaCheck != null && capaCheck.Checked)
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@HeaderID", headerId);
-                    cmd.Parameters.AddWithValue("@Question", question);
-                    cmd.Parameters.AddWithValue("@IsYes", isYes);
-                    cmd.Parameters.AddWithValue("@Remarks", remarks);
-                    cmd.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@FinalRemarks", txtFinalRemarks.Text.Trim());
+                    using (SqlCommand cmdCAPA = new SqlCommand(@"
+                INSERT INTO tbl_CAPAMaster 
+                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                OUTPUT INSERTED.CAPAID
+                VALUES 
+                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, transaction))
+                    {
+                        cmdCAPA.Parameters.AddWithValue("@HeaderID", headerId);
+                        cmdCAPA.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
+                        cmdCAPA.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
+                        cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtGasCutterName.Text.Trim());  // You can change if needed
+                        cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
 
-                    cmd.ExecuteNonQuery();
+                        capaId = cmdCAPA.ExecuteScalar(); // Get new CAPAID
+                    }
+                }
+
+                // Insert checklist detail
+                using (SqlCommand cmdDetail = new SqlCommand("MahimaGupta_CSMS.sp_InsertGasCuttingChecklist", conn, transaction))
+                {
+                    cmdDetail.CommandType = CommandType.StoredProcedure;
+                    cmdDetail.Parameters.AddWithValue("@HeaderID", headerId);
+                    cmdDetail.Parameters.AddWithValue("@Question", question);
+                    cmdDetail.Parameters.AddWithValue("@IsYes", isYes ? 1 : 0);
+                    cmdDetail.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
+                    cmdDetail.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
+                    cmdDetail.Parameters.AddWithValue("@FinalRemarks", txtFinalRemarks.Text.Trim());
+                    cmdDetail.Parameters.AddWithValue("@CAPA_ID", capaId);
+
+                    cmdDetail.ExecuteNonQuery();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Optional: log individual question save errors
+                lblMessage.Text += $"<br/>Checklist Insert Error for: {question} → {ex.Message}";
+                throw;
             }
         }
+
+
+
 
 
 

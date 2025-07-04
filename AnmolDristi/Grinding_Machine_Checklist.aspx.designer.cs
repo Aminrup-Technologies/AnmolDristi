@@ -294,6 +294,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuForeHandle;
 
         /// <summary>
+        /// chkForeHandleCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkForeHandleCAPA;
+
+        /// <summary>
         /// RbWheelGuardYes control.
         /// </summary>
         /// <remarks>
@@ -337,6 +346,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuWheelGuard;
+
+        /// <summary>
+        /// chkWheelGuardCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkWheelGuardCAPA;
 
         /// <summary>
         /// RbGrindWheelYes control.
@@ -384,6 +402,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuGrindWheel;
 
         /// <summary>
+        /// chkGrindWheelCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkGrindWheelCAPA;
+
+        /// <summary>
         /// RbRearHandleYes control.
         /// </summary>
         /// <remarks>
@@ -427,6 +454,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuRearHandle;
+
+        /// <summary>
+        /// chkRearHandleCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkRearHandleCAPA;
 
         /// <summary>
         /// RbCordYes control.
@@ -474,6 +510,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuCord;
 
         /// <summary>
+        /// chkCordCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkCordCAPA;
+
+        /// <summary>
         /// RbTriggerYes control.
         /// </summary>
         /// <remarks>
@@ -517,6 +562,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuTrigger;
+
+        /// <summary>
+        /// chkTriggerCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkTriggerCAPA;
 
         /// <summary>
         /// RbSwitchLockYes control.
@@ -564,6 +618,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuSwitchLock;
 
         /// <summary>
+        /// chkSwitchLockCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSwitchLockCAPA;
+
+        /// <summary>
         /// RbPowerCableYes control.
         /// </summary>
         /// <remarks>
@@ -607,6 +670,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuPowerCable;
+
+        /// <summary>
+        /// chkPowerCableCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPowerCableCAPA;
 
         /// <summary>
         /// lblFinalRemarks control.

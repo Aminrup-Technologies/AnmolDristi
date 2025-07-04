@@ -204,6 +204,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuGasColor;
 
         /// <summary>
+        /// chkGasColorCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkGasColorCAPA;
+
+        /// <summary>
         /// RbNRVYes control.
         /// </summary>
         /// <remarks>
@@ -247,6 +256,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuNRV;
+
+        /// <summary>
+        /// chkNRVCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkNRVCAPA;
 
         /// <summary>
         /// RbISICylinderYes control.
@@ -294,6 +312,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuISICylinder;
 
         /// <summary>
+        /// chkISICylinderCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkISICylinderCAPA;
+
+        /// <summary>
         /// RbUprightYes control.
         /// </summary>
         /// <remarks>
@@ -337,6 +364,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuUpright;
+
+        /// <summary>
+        /// chkUprightCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkUprightCAPA;
 
         /// <summary>
         /// RbTorchDamageYes control.
@@ -384,6 +420,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuTorchDamage;
 
         /// <summary>
+        /// chkTorchDamageCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkTorchDamageCAPA;
+
+        /// <summary>
         /// RbFlashbackYes control.
         /// </summary>
         /// <remarks>
@@ -427,6 +472,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuFlashback;
+
+        /// <summary>
+        /// chkFlashbackCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkFlashbackCAPA;
 
         /// <summary>
         /// RbLeakYes control.
@@ -474,6 +528,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuLeak;
 
         /// <summary>
+        /// chkLeakCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkLeakCAPA;
+
+        /// <summary>
         /// RbSegregationYes control.
         /// </summary>
         /// <remarks>
@@ -517,6 +580,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuSegregation;
+
+        /// <summary>
+        /// chkSegregationCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSegregationCAPA;
 
         /// <summary>
         /// RbBarricadeYes control.
@@ -564,6 +636,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuBarricade;
 
         /// <summary>
+        /// chkBarricadeCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkBarricadeCAPA;
+
+        /// <summary>
         /// RbMovedYes control.
         /// </summary>
         /// <remarks>
@@ -607,6 +688,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuMoved;
+
+        /// <summary>
+        /// chkMovedCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkMovedCAPA;
 
         /// <summary>
         /// RbFireExtYes control.
@@ -654,6 +744,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuFireExt;
 
         /// <summary>
+        /// chkFireExtCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkFireExtCAPA;
+
+        /// <summary>
         /// RbSparkYes control.
         /// </summary>
         /// <remarks>
@@ -699,6 +798,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuSpark;
 
         /// <summary>
+        /// chkSparkCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSparkCAPA;
+
+        /// <summary>
         /// RbHoseYes control.
         /// </summary>
         /// <remarks>
@@ -742,6 +850,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuHose;
+
+        /// <summary>
+        /// chkHoseCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkHoseCAPA;
 
         /// <summary>
         /// lblFinalRemarks control.

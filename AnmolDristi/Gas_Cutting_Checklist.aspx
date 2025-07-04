@@ -20,6 +20,7 @@
             margin-top: 5px;
         }
     </style>
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -129,265 +130,364 @@
 
   <table class="table table-bordered">
 
-      <!-- 1. Gas Cylinders colour -->
-      <tr>
-          <td>1. Gas Cylinders colour as per Colour Code</td>
-          <td>
-              <asp:RadioButton ID="RbGasColorYes" GroupName="GasColor" runat="server" AutoPostBack="true" OnCheckedChanged="RbGasColor_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbGasColorNo" GroupName="GasColor" runat="server" AutoPostBack="true" OnCheckedChanged="RbGasColor_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlGasColor" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtGasColorRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuGasColor" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
+   <!-- GAS CYLINDER CHECKLIST - FULL CLIENT-SIDE LOGIC -->
 
-      <!-- 2. NRV/Flash back arrestor -->
-      <tr>
-          <td>2. NRV/Flash back arrestor provided at regulator and torch side</td>
-          <td>
-              <asp:RadioButton ID="RbNRVYes" GroupName="NRV" runat="server" AutoPostBack="true" OnCheckedChanged="RbNRV_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbNRVNo" GroupName="NRV" runat="server" AutoPostBack="true" OnCheckedChanged="RbNRV_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlNRV" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtNRVRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuNRV" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
+<!-- 1. Gas Cylinders colour -->
+<tr>
+    <td>1. Gas Cylinders colour as per Colour Code</td>
+    <td>
+        <asp:RadioButton ID="RbGasColorYes" GroupName="GasColor" runat="server" AutoPostBack="false" onclick="toggleGasColorPanel()" />
+        <span class="form-label d-inline">Yes</span>
+
+        <asp:RadioButton ID="RbGasColorNo" GroupName="GasColor" runat="server" AutoPostBack="false" onclick="toggleGasColorPanel()" />
+               <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlGasColor" runat="server">
+            <div id="divGasColorPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtGasColorRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuGasColor" runat="server" /><br />
+                <asp:CheckBox ID="chkGasColorCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
+
+<!-- 2. NRV/Flash back arrestor -->
+<tr>
+    <td>2. NRV/Flash back arrestor provided at regulator and torch side</td>
+    <td>
+        <asp:RadioButton ID="RbNRVYes" GroupName="NRV" runat="server" AutoPostBack="false" onclick="toggleNRVPanel()" />
+  <span class="form-label d-inline">Yes</span>
+
+        <asp:RadioButton ID="RbNRVNo" GroupName="NRV" runat="server" AutoPostBack="false" onclick="toggleNRVPanel()" />
+               <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlNRV" runat="server">
+            <div id="divNRVPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtNRVRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuNRV" runat="server" /><br />
+                <asp:CheckBox ID="chkNRVCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
       <!-- 3. ISI marked Cylinder -->
-      <tr>
-          <td>3. ISI marked Cylinder, Valves & Expired value of Cylinder</td>
-          <td>
-              <asp:RadioButton ID="RbISICylinderYes" GroupName="ISICylinder" runat="server" AutoPostBack="true" OnCheckedChanged="RbISICylinder_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbISICylinderNo" GroupName="ISICylinder" runat="server" AutoPostBack="true" OnCheckedChanged="RbISICylinder_CheckedChanged" />
+<tr>
+    <td>3. ISI marked Cylinder, Valves & Expired value of Cylinder</td>
+    <td>
+        <asp:RadioButton ID="RbISICylinderYes" GroupName="ISICylinder" runat="server" AutoPostBack="false" onclick="toggleISICylinderPanel()" />
+        <span class="form-label d-inline">Yes</span>
+        <asp:RadioButton ID="RbISICylinderNo" GroupName="ISICylinder" runat="server" AutoPostBack="false" onclick="toggleISICylinderPanel()" />
               <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlISICylinder" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtISICylinderRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuISICylinder" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
-            <!-- 4. Cylinder stored upright -->
-      <tr>
-          <td>4. Cylinder stored upright with cap</td>
-          <td>
-              <asp:RadioButton ID="RbUprightYes" GroupName="Upright" runat="server" AutoPostBack="true" OnCheckedChanged="RbUpright_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbUprightNo" GroupName="Upright" runat="server" AutoPostBack="true" OnCheckedChanged="RbUpright_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlUpright" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtUprightRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuUpright" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
+    </td>
+    <td>
+        <asp:Panel ID="pnlISICylinder" runat="server">
+            <div id="divISICylinderPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtISICylinderRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuISICylinder" runat="server" /><br />
+                <asp:CheckBox ID="chkISICylinderCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-      <!-- 5. Cylinder and Torch free from damage -->
-      <tr>
-          <td>5. Cylinder and Torch free from damage</td>
-          <td>
-              <asp:RadioButton ID="RbTorchDamageYes" GroupName="TorchDamage" runat="server" AutoPostBack="true" OnCheckedChanged="RbTorchDamage_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbTorchDamageNo" GroupName="TorchDamage" runat="server" AutoPostBack="true" OnCheckedChanged="RbTorchDamage_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlTorchDamage" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtTorchDamageRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuTorchDamage" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
 
-      <!-- 6. Flashback arrester checked -->
-      <tr>
-          <td>6. Flashback arrester checked and within validity</td>
-          <td>
-              <asp:RadioButton ID="RbFlashbackYes" GroupName="Flashback" runat="server" AutoPostBack="true" OnCheckedChanged="RbFlashback_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbFlashbackNo" GroupName="Flashback" runat="server" AutoPostBack="true" OnCheckedChanged="RbFlashback_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlFlashback" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtFlashbackRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuFlashback" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
 
-      <!-- 7. No Gas leak from hose -->
-      <tr>
-          <td>7. No Gas leak from hose, connection or torch</td>
-          <td>
-              <asp:RadioButton ID="RbLeakYes" GroupName="Leak" runat="server" AutoPostBack="true" OnCheckedChanged="RbLeak_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbLeakNo" GroupName="Leak" runat="server" AutoPostBack="true" OnCheckedChanged="RbLeak_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlLeak" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtLeakRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuLeak" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
 
-      <!-- 8. Proper segregation of filled and empty cylinders -->
-      <tr>
-          <td>8. Proper segregation of filled and empty cylinders</td>
-          <td>
-              <asp:RadioButton ID="RbSegregationYes" GroupName="Segregation" runat="server" AutoPostBack="true" OnCheckedChanged="RbSegregation_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbSegregationNo" GroupName="Segregation" runat="server" AutoPostBack="true" OnCheckedChanged="RbSegregation_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlSegregation" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtSegregationRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuSegregation" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
+      <!-- 4. Cylinder stored upright -->
+<tr>
+    <td>4. Cylinder stored upright with cap</td>
+    <td>
+        <asp:RadioButton ID="RbUprightYes" GroupName="Upright" runat="server" AutoPostBack="false" onclick="toggleUprightPanel()" />
+    <span class="form-label d-inline">Yes</span>
 
-      <!-- 9. Welding area barricaded -->
-      <tr>
-          <td>9. Welding area barricaded with fire resistant curtain</td>
-          <td>
-              <asp:RadioButton ID="RbBarricadeYes" GroupName="Barricade" runat="server" AutoPostBack="true" OnCheckedChanged="RbBarricade_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbBarricadeNo" GroupName="Barricade" runat="server" AutoPostBack="true" OnCheckedChanged="RbBarricade_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlBarricade" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtBarricadeRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuBarricade" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
+        <asp:RadioButton ID="RbUprightNo" GroupName="Upright" runat="server" AutoPostBack="false" onclick="toggleUprightPanel()" />
+           <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlUpright" runat="server">
+            <div id="divUprightPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtUprightRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuUpright" runat="server" /><br />
+                <asp:CheckBox ID="chkUprightCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-      <!-- 10. Gas cutting cylinder moved after closing valve -->
-      <tr>
-          <td>10. Gas cutting cylinder moved only after closing valve and fixing valve cap</td>
-          <td>
-              <asp:RadioButton ID="RbMovedYes" GroupName="Moved" runat="server" AutoPostBack="true" OnCheckedChanged="RbMoved_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbMovedNo" GroupName="Moved" runat="server" AutoPostBack="true" OnCheckedChanged="RbMoved_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlMoved" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtMovedRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuMoved" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
+<!-- 5. Cylinder and Torch free from damage -->
+<tr>
+    <td>5. Cylinder and Torch free from damage</td>
+    <td>
+        <asp:RadioButton ID="RbTorchDamageYes" GroupName="TorchDamage" runat="server" AutoPostBack="false" onclick="toggleTorchDamagePanel()" />
+  <span class="form-label d-inline">Yes</span>
 
-      <!-- 11. Fire extinguisher and sand bucket -->
-      <tr>
-          <td>11. Fire extinguisher and sand bucket provided at site</td>
-          <td>
-              <asp:RadioButton ID="RbFireExtYes" GroupName="FireExt" runat="server" AutoPostBack="true" OnCheckedChanged="RbFireExt_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbFireExtNo" GroupName="FireExt" runat="server" AutoPostBack="true" OnCheckedChanged="RbFireExt_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlFireExt" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtFireExtRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuFireExt" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
+        <asp:RadioButton ID="RbTorchDamageNo" GroupName="TorchDamage" runat="server" AutoPostBack="false" onclick="toggleTorchDamagePanel()" />
+            <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlTorchDamage" runat="server">
+            <div id="divTorchDamagePanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtTorchDamageRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuTorchDamage" runat="server" /><br />
+                <asp:CheckBox ID="chkTorchDamageCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-      <!-- 12. Cylinder kept away from heat/sparks -->
-      <tr>
-          <td>12. Cylinder kept away from heat, fire or electrical spark</td>
-          <td>
-              <asp:RadioButton ID="RbSparkYes" GroupName="Spark" runat="server" AutoPostBack="true" OnCheckedChanged="RbSpark_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbSparkNo" GroupName="Spark" runat="server" AutoPostBack="true" OnCheckedChanged="RbSpark_CheckedChanged" />
-              <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlSpark" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtSparkRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuSpark" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
+<!-- 6. Flashback arrester checked -->
+<tr>
+    <td>6. Flashback arrester checked and within validity</td>
+    <td>
+        <asp:RadioButton ID="RbFlashbackYes" GroupName="Flashback" runat="server" AutoPostBack="false" onclick="toggleFlashbackPanel()" />
+     <span class="form-label d-inline">Yes</span>
 
-      <!-- 13. Hoses in good condition -->
-      <tr>
-          <td>13. Hoses are in good condition without cracks or damage</td>
-          <td>
-              <asp:RadioButton ID="RbHoseYes" GroupName="Hose" runat="server" AutoPostBack="true" OnCheckedChanged="RbHose_CheckedChanged" />
-              <span class="form-label d-inline">Yes</span>
-              <asp:RadioButton ID="RbHoseNo" GroupName="Hose" runat="server" AutoPostBack="true" OnCheckedChanged="RbHose_CheckedChanged" />
+        <asp:RadioButton ID="RbFlashbackNo" GroupName="Flashback" runat="server" AutoPostBack="false" onclick="toggleFlashbackPanel()" />
+                <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlFlashback" runat="server">
+            <div id="divFlashbackPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtFlashbackRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuFlashback" runat="server" /><br />
+                <asp:CheckBox ID="chkFlashbackCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
+
+<!-- 7. No Gas leak from hose -->
+<tr>
+    <td>7. No Gas leak from hose, connection or torch</td>
+    <td>
+        <asp:RadioButton ID="RbLeakYes" GroupName="Leak" runat="server" AutoPostBack="false" onclick="toggleLeakPanel()" />
+<span class="form-label d-inline">Yes</span>
+
+        <asp:RadioButton ID="RbLeakNo" GroupName="Leak" runat="server" AutoPostBack="false" onclick="toggleLeakPanel()" />
+        <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlLeak" runat="server">
+            <div id="divLeakPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtLeakRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuLeak" runat="server" /><br />
+                <asp:CheckBox ID="chkLeakCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
+
+<!-- 8. Proper segregation of filled and empty cylinders -->
+<tr>
+    <td>8. Proper segregation of filled and empty cylinders</td>
+    <td>
+        <asp:RadioButton ID="RbSegregationYes" GroupName="Segregation" runat="server" AutoPostBack="false" onclick="toggleSegregationPanel()" />
+     <span class="form-label d-inline">Yes</span>
+
+        <asp:RadioButton ID="RbSegregationNo" GroupName="Segregation" runat="server" AutoPostBack="false" onclick="toggleSegregationPanel()" />
               <span class="form-label d-inline">No</span>
-          </td>
-          <td>
-              <asp:Panel ID="pnlHose" runat="server" Visible="false">
-                  <span class="form-label">Remarks</span>
-                  <asp:TextBox ID="txtHoseRemarks" runat="server" Width="200px" />
-                  <br />
-                  <span class="form-label">Upload Photo</span>
-                  <asp:FileUpload ID="fuHose" runat="server" />
-              </asp:Panel>
-          </td>
-      </tr>
+    </td>
+    <td>
+        <asp:Panel ID="pnlSegregation" runat="server">
+            <div id="divSegregationPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtSegregationRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuSegregation" runat="server" /><br />
+                <asp:CheckBox ID="chkSegregationCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
+
+<!-- 9. Welding area barricaded -->
+<tr>
+    <td>9. Welding area barricaded with fire resistant curtain</td>
+    <td>
+        <asp:RadioButton ID="RbBarricadeYes" GroupName="Barricade" runat="server" AutoPostBack="false" onclick="toggleBarricadePanel()" />
+<span class="form-label d-inline">Yes</span>
+
+        <asp:RadioButton ID="RbBarricadeNo" GroupName="Barricade" runat="server" AutoPostBack="false" onclick="toggleBarricadePanel()" />
+              <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlBarricade" runat="server">
+            <div id="divBarricadePanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtBarricadeRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuBarricade" runat="server" /><br />
+                <asp:CheckBox ID="chkBarricadeCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
+
+<!-- 10. Gas cutting cylinder moved after closing valve -->
+<tr>
+    <td>10. Gas cutting cylinder moved only after closing valve and fixing valve cap</td>
+    <td>
+        <asp:RadioButton ID="RbMovedYes" GroupName="Moved" runat="server" AutoPostBack="false" onclick="toggleMovedPanel()" />
+      <span class="form-label d-inline">Yes</span>
+
+        <asp:RadioButton ID="RbMovedNo" GroupName="Moved" runat="server" AutoPostBack="false" onclick="toggleMovedPanel()" />
+             <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlMoved" runat="server">
+            <div id="divMovedPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtMovedRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuMoved" runat="server" /><br />
+                <asp:CheckBox ID="chkMovedCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
+
+<!-- 11. Fire extinguisher and sand bucket -->
+<tr>
+    <td>11. Fire extinguisher and sand bucket provided at site</td>
+    <td>
+        <asp:RadioButton ID="RbFireExtYes" GroupName="FireExt" runat="server" AutoPostBack="false" onclick="toggleFireExtPanel()" />
+    <span class="form-label d-inline">Yes</span>
+
+        <asp:RadioButton ID="RbFireExtNo" GroupName="FireExt" runat="server" AutoPostBack="false" onclick="toggleFireExtPanel()" />
+        <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlFireExt" runat="server">
+            <div id="divFireExtPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtFireExtRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuFireExt" runat="server" /><br />
+                <asp:CheckBox ID="chkFireExtCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
+
+<!-- 12. Cylinder kept away from heat/sparks -->
+<tr>
+    <td>12. Cylinder kept away from heat, fire or electrical spark</td>
+    <td>
+        <asp:RadioButton ID="RbSparkYes" GroupName="Spark" runat="server" AutoPostBack="false" onclick="toggleSparkPanel()" />
+<span class="form-label d-inline">Yes</span>
+
+        <asp:RadioButton ID="RbSparkNo" GroupName="Spark" runat="server" AutoPostBack="false" onclick="toggleSparkPanel()" />
+               <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlSpark" runat="server">
+            <div id="divSparkPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtSparkRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuSpark" runat="server" /><br />
+                <asp:CheckBox ID="chkSparkCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
+
+<!-- 13. Hoses in good condition -->
+<tr>
+    <td>13. Hoses are in good condition without cracks or damage</td>
+    <td>
+        <asp:RadioButton ID="RbHoseYes" GroupName="Hose" runat="server" AutoPostBack="false" onclick="toggleHosePanel()" />
+   <span class="form-label d-inline">Yes</span>
+
+        <asp:RadioButton ID="RbHoseNo" GroupName="Hose" runat="server" AutoPostBack="false" onclick="toggleHosePanel()" />
+                <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlHose" runat="server">
+            <div id="divHosePanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtHoseRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuHose" runat="server" /><br />
+                <asp:CheckBox ID="chkHoseCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
+
   </table>
+
+
+<script type="text/javascript">
+    function togglePanel(yesId, noId, panelDivId) {
+        var yes = document.getElementById(yesId);
+        var no = document.getElementById(noId);
+        var panelDiv = document.getElementById(panelDivId);
+        if (yes && no && panelDiv) {
+            panelDiv.style.display = (no.checked) ? 'block' : 'none';
+        }
+    }
+
+    function toggleGasColorPanel() { togglePanel('<%= RbGasColorYes.ClientID %>', '<%= RbGasColorNo.ClientID %>', 'divGasColorPanel'); }
+    function toggleNRVPanel() { togglePanel('<%= RbNRVYes.ClientID %>', '<%= RbNRVNo.ClientID %>', 'divNRVPanel'); }
+    function toggleISICylinderPanel() { togglePanel('<%= RbISICylinderYes.ClientID %>', '<%= RbISICylinderNo.ClientID %>', 'divISICylinderPanel'); }
+    function toggleUprightPanel() { togglePanel('<%= RbUprightYes.ClientID %>', '<%= RbUprightNo.ClientID %>', 'divUprightPanel'); }
+    function toggleTorchDamagePanel() { togglePanel('<%= RbTorchDamageYes.ClientID %>', '<%= RbTorchDamageNo.ClientID %>', 'divTorchDamagePanel'); }
+    function toggleFlashbackPanel() { togglePanel('<%= RbFlashbackYes.ClientID %>', '<%= RbFlashbackNo.ClientID %>', 'divFlashbackPanel'); }
+    function toggleLeakPanel() { togglePanel('<%= RbLeakYes.ClientID %>', '<%= RbLeakNo.ClientID %>', 'divLeakPanel'); }
+    function toggleSegregationPanel() { togglePanel('<%= RbSegregationYes.ClientID %>', '<%= RbSegregationNo.ClientID %>', 'divSegregationPanel'); }
+    function toggleBarricadePanel() { togglePanel('<%= RbBarricadeYes.ClientID %>', '<%= RbBarricadeNo.ClientID %>', 'divBarricadePanel'); }
+    function toggleMovedPanel() { togglePanel('<%= RbMovedYes.ClientID %>', '<%= RbMovedNo.ClientID %>', 'divMovedPanel'); }
+    function toggleFireExtPanel() { togglePanel('<%= RbFireExtYes.ClientID %>', '<%= RbFireExtNo.ClientID %>', 'divFireExtPanel'); }
+    function toggleSparkPanel() { togglePanel('<%= RbSparkYes.ClientID %>', '<%= RbSparkNo.ClientID %>', 'divSparkPanel'); }
+    function toggleHosePanel() { togglePanel('<%= RbHoseYes.ClientID %>', '<%= RbHoseNo.ClientID %>', 'divHosePanel'); }
+
+    function confirmCAPA(checkbox) {
+        if (!checkbox.checked) {
+            alert("CAPA unchecked. Please ensure this is not a safety-critical issue.");
+        }
+    }
+</script>
+
+
+<script type="text/javascript">
+    function confirmCAPA(checkbox) {
+        if (!checkbox.checked) {
+            alert("CAPA is required. Proceeding without it is at your own risk.");
+        }
+    }
+</script>
 
                                 <!-- Final Remarks -->
 <div class="col-md-6">
@@ -499,6 +599,9 @@
             </div>
         </div>
     </div>
+ 
+
+
 </asp:Content>
 
 

@@ -183,167 +183,222 @@
 
 
                                 <table class="table table-bordered">
+<!-- 1. Fore handle -->
+<tr>
+    <td>1. Fore handle without damage</td>
+    <td>
+        <asp:RadioButton ID="RbForeHandleYes" GroupName="ForeHandle" runat="server" AutoPostBack="false" onclick="toggleForeHandlePanel()" />
+        <span class="form-label d-inline">Yes</span>
+        <asp:RadioButton ID="RbForeHandleNo" GroupName="ForeHandle" runat="server" AutoPostBack="false" onclick="toggleForeHandlePanel()" />
+        <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlForeHandle" runat="server">
+            <div id="divForeHandlePanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtForeHandleRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuForeHandle" runat="server" /><br />
+                <asp:CheckBox ID="chkForeHandleCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                                    <!-- 1. Fore handle -->
-                                    <tr>
-                                        <td>1. Fore handle without damage</td>
-                                        <td>
-                                            <asp:RadioButton ID="RbForeHandleYes" GroupName="ForeHandle" runat="server" AutoPostBack="true" OnCheckedChanged="RbForeHandle_CheckedChanged" />
-                                            <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="RbForeHandleNo" GroupName="ForeHandle" runat="server" AutoPostBack="true" OnCheckedChanged="RbForeHandle_CheckedChanged" />
-                                            <span class="form-label d-inline">No</span>
-                                        </td>
-                                        <td>
-                                            <asp:Panel ID="pnlForeHandle" runat="server" Visible="false">
-                                                <span class="form-label">Remarks</span>
-                                                <asp:TextBox ID="txtForeHandleRemarks" runat="server" Width="200px" />
-                                                <br />
-                                                <span class="form-label">Upload Photo</span>
-                                                <asp:FileUpload ID="fuForeHandle" runat="server" />
-                                            </asp:Panel>
-                                        </td>
-                                    </tr>
+<!-- 2. Wheel guard -->
+<tr>
+    <td>2. Wheel guard (covered 3/4th area)</td>
+    <td>
+        <asp:RadioButton ID="RbWheelGuardYes" GroupName="WheelGuard" runat="server" AutoPostBack="false" onclick="toggleWheelGuardPanel()" />
+        <span class="form-label d-inline">Yes</span>
+        <asp:RadioButton ID="RbWheelGuardNo" GroupName="WheelGuard" runat="server" AutoPostBack="false" onclick="toggleWheelGuardPanel()" />
+        <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlWheelGuard" runat="server">
+            <div id="divWheelGuardPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtWheelGuardRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuWheelGuard" runat="server" /><br />
+                <asp:CheckBox ID="chkWheelGuardCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                                    <!-- 2. Wheel guard -->
-                                    <tr>
-                                        <td>2. Wheel guard (covered 3/4th area)</td>
-                                        <td>
-                                            <asp:RadioButton ID="RbWheelGuardYes" GroupName="WheelGuard" runat="server" AutoPostBack="true" OnCheckedChanged="RbWheelGuard_CheckedChanged" />
-                                            <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="RbWheelGuardNo" GroupName="WheelGuard" runat="server" AutoPostBack="true" OnCheckedChanged="RbWheelGuard_CheckedChanged" />
-                                            <span class="form-label d-inline">No</span>
-                                        </td>
-                                        <td>
-                                            <asp:Panel ID="pnlWheelGuard" runat="server" Visible="false">
-                                                <span class="form-label">Remarks</span>
-                                                <asp:TextBox ID="txtWheelGuardRemarks" runat="server" Width="200px" />
-                                                <br />
-                                                <span class="form-label">Upload Photo</span>
-                                                <asp:FileUpload ID="fuWheelGuard" runat="server" />
-                                            </asp:Panel>
-                                        </td>
-                                    </tr>
+<!-- 3. Grinding wheel -->
+<tr>
+    <td>3. Grinding wheel without any crack and with valid expiry date</td>
+    <td>
+        <asp:RadioButton ID="RbGrindWheelYes" GroupName="GrindWheel" runat="server" AutoPostBack="false" onclick="toggleGrindWheelPanel()" />
+        <span class="form-label d-inline">Yes</span>
+        <asp:RadioButton ID="RbGrindWheelNo" GroupName="GrindWheel" runat="server" AutoPostBack="false" onclick="toggleGrindWheelPanel()" />
+        <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlGrindWheel" runat="server">
+            <div id="divGrindWheelPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtGrindWheelRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuGrindWheel" runat="server" /><br />
+                <asp:CheckBox ID="chkGrindWheelCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                                    <!-- 3. Grinding wheel -->
-                                    <tr>
-                                        <td>3. Grinding wheel without any crack and with valid expiry date</td>
-                                        <td>
-                                            <asp:RadioButton ID="RbGrindWheelYes" GroupName="GrindWheel" runat="server" AutoPostBack="true" OnCheckedChanged="RbGrindWheel_CheckedChanged" />
-                                            <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="RbGrindWheelNo" GroupName="GrindWheel" runat="server" AutoPostBack="true" OnCheckedChanged="RbGrindWheel_CheckedChanged" />
-                                            <span class="form-label d-inline">No</span>
-                                        </td>
-                                        <td>
-                                            <asp:Panel ID="pnlGrindWheel" runat="server" Visible="false">
-                                                <span class="form-label">Remarks</span>
-                                                <asp:TextBox ID="txtGrindWheelRemarks" runat="server" Width="200px" />
-                                                <br />
-                                                <span class="form-label">Upload Photo</span>
-                                                <asp:FileUpload ID="fuGrindWheel" runat="server" />
-                                            </asp:Panel>
-                                        </td>
-                                    </tr>
+<!-- 4. Rear handles -->
+<tr>
+    <td>4. Rear handles without damage</td>
+    <td>
+        <asp:RadioButton ID="RbRearHandleYes" GroupName="RearHandle" runat="server" AutoPostBack="false" onclick="toggleRearHandlePanel()" />
+        <span class="form-label d-inline">Yes</span>
+        <asp:RadioButton ID="RbRearHandleNo" GroupName="RearHandle" runat="server" AutoPostBack="false" onclick="toggleRearHandlePanel()" />
+        <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlRearHandle" runat="server">
+            <div id="divRearHandlePanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtRearHandleRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuRearHandle" runat="server" /><br />
+                <asp:CheckBox ID="chkRearHandleCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                                    <!-- 4. Rear handles -->
-                                    <tr>
-                                        <td>4. Rear handles without damage</td>
-                                        <td>
-                                            <asp:RadioButton ID="RbRearHandleYes" GroupName="RearHandle" runat="server" AutoPostBack="true" OnCheckedChanged="RbRearHandle_CheckedChanged" />
-                                            <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="RbRearHandleNo" GroupName="RearHandle" runat="server" AutoPostBack="true" OnCheckedChanged="RbRearHandle_CheckedChanged" />
-                                            <span class="form-label d-inline">No</span>
-                                        </td>
-                                        <td>
-                                            <asp:Panel ID="pnlRearHandle" runat="server" Visible="false">
-                                                <span class="form-label">Remarks</span>
-                                                <asp:TextBox ID="txtRearHandleRemarks" runat="server" Width="200px" />
-                                                <br />
-                                                <span class="form-label">Upload Photo</span>
-                                                <asp:FileUpload ID="fuRearHandle" runat="server" />
-                                            </asp:Panel>
-                                        </td>
-                                    </tr>
+<!-- 5. Cord strain reliever -->
+<tr>
+    <td>5. Presence of cord strain reliever (glands)</td>
+    <td>
+        <asp:RadioButton ID="RbCordYes" GroupName="Cord" runat="server" AutoPostBack="false" onclick="toggleCordPanel()" />
+        <span class="form-label d-inline">Yes</span>
+        <asp:RadioButton ID="RbCordNo" GroupName="Cord" runat="server" AutoPostBack="false" onclick="toggleCordPanel()" />
+        <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlCord" runat="server">
+            <div id="divCordPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtCordRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuCord" runat="server" /><br />
+                <asp:CheckBox ID="chkCordCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                                    <!-- 5. Cord strain reliever -->
-                                    <tr>
-                                        <td>5. Presence of cord strain reliever (glands)</td>
-                                        <td>
-                                            <asp:RadioButton ID="RbCordYes" GroupName="Cord" runat="server" AutoPostBack="true" OnCheckedChanged="RbCord_CheckedChanged" />
-                                            <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="RbCordNo" GroupName="Cord" runat="server" AutoPostBack="true" OnCheckedChanged="RbCord_CheckedChanged" />
-                                            <span class="form-label d-inline">No</span>
-                                        </td>
-                                        <td>
-                                            <asp:Panel ID="pnlCord" runat="server" Visible="false">
-                                                <span class="form-label">Remarks</span>
-                                                <asp:TextBox ID="txtCordRemarks" runat="server" Width="200px" />
-                                                <br />
-                                                <span class="form-label">Upload Photo</span>
-                                                <asp:FileUpload ID="fuCord" runat="server" />
-                                            </asp:Panel>
-                                        </td>
-                                    </tr>
+<!-- 6. Trigger switch -->
+<tr>
+    <td>6. Trigger switch without damage & working condition</td>
+    <td>
+        <asp:RadioButton ID="RbTriggerYes" GroupName="Trigger" runat="server" AutoPostBack="false" onclick="toggleTriggerPanel()" />
+        <span class="form-label d-inline">Yes</span>
+        <asp:RadioButton ID="RbTriggerNo" GroupName="Trigger" runat="server" AutoPostBack="false" onclick="toggleTriggerPanel()" />
+        <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlTrigger" runat="server">
+            <div id="divTriggerPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtTriggerRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuTrigger" runat="server" /><br />
+                <asp:CheckBox ID="chkTriggerCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                                    <!-- 6. Trigger switch -->
-                                    <tr>
-                                        <td>6. Trigger switch without damage & working condition</td>
-                                        <td>
-                                            <asp:RadioButton ID="RbTriggerYes" GroupName="Trigger" runat="server" AutoPostBack="true" OnCheckedChanged="RbTrigger_CheckedChanged" />
-                                            <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="RbTriggerNo" GroupName="Trigger" runat="server" AutoPostBack="true" OnCheckedChanged="RbTrigger_CheckedChanged" />
-                                            <span class="form-label d-inline">No</span>
-                                        </td>
-                                        <td>
-                                            <asp:Panel ID="pnlTrigger" runat="server" Visible="false">
-                                                <span class="form-label">Remarks</span>
-                                                <asp:TextBox ID="txtTriggerRemarks" runat="server" Width="200px" />
-                                                <br />
-                                                <span class="form-label">Upload Photo</span>
-                                                <asp:FileUpload ID="fuTrigger" runat="server" />
-                                            </asp:Panel>
-                                        </td>
-                                    </tr>
+<!-- 7. Switch lock -->
+<tr>
+    <td>7. Presence of switch lock</td>
+    <td>
+        <asp:RadioButton ID="RbSwitchLockYes" GroupName="SwitchLock" runat="server" AutoPostBack="false" onclick="toggleSwitchLockPanel()" />
+        <span class="form-label d-inline">Yes</span>
+        <asp:RadioButton ID="RbSwitchLockNo" GroupName="SwitchLock" runat="server" AutoPostBack="false" onclick="toggleSwitchLockPanel()" />
+        <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlSwitchLock" runat="server">
+            <div id="divSwitchLockPanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtSwitchLockRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuSwitchLock" runat="server" /><br />
+                <asp:CheckBox ID="chkSwitchLockCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                                    <!-- 7. Switch lock -->
-                                    <tr>
-                                        <td>7. Presence of switch lock</td>
-                                        <td>
-                                            <asp:RadioButton ID="RbSwitchLockYes" GroupName="SwitchLock" runat="server" AutoPostBack="true" OnCheckedChanged="RbSwitchLock_CheckedChanged" />
-                                            <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="RbSwitchLockNo" GroupName="SwitchLock" runat="server" AutoPostBack="true" OnCheckedChanged="RbSwitchLock_CheckedChanged" />
-                                            <span class="form-label d-inline">No</span>
-                                        </td>
-                                        <td>
-                                            <asp:Panel ID="pnlSwitchLock" runat="server" Visible="false">
-                                                <span class="form-label">Remarks</span>
-                                                <asp:TextBox ID="txtSwitchLockRemarks" runat="server" Width="200px" />
-                                                <br />
-                                                <span class="form-label">Upload Photo</span>
-                                                <asp:FileUpload ID="fuSwitchLock" runat="server" />
-                                            </asp:Panel>
-                                        </td>
-                                    </tr>
+<!-- 8. Power cable -->
+<tr>
+    <td>8. Power cable without cut & joined</td>
+    <td>
+        <asp:RadioButton ID="RbPowerCableYes" GroupName="PowerCable" runat="server" AutoPostBack="false" onclick="togglePowerCablePanel()" />
+        <span class="form-label d-inline">Yes</span>
+        <asp:RadioButton ID="RbPowerCableNo" GroupName="PowerCable" runat="server" AutoPostBack="false" onclick="togglePowerCablePanel()" />
+        <span class="form-label d-inline">No</span>
+    </td>
+    <td>
+        <asp:Panel ID="pnlPowerCable" runat="server">
+            <div id="divPowerCablePanel" style="display:none;">
+                <span class="form-label">Remarks</span>
+                <asp:TextBox ID="txtPowerCableRemarks" runat="server" Width="200px" /><br />
+                <span class="form-label">Upload Photo</span>
+                <asp:FileUpload ID="fuPowerCable" runat="server" /><br />
+                <asp:CheckBox ID="chkPowerCableCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
+                <span class="form-label">CAPA Required</span>
+            </div>
+        </asp:Panel>
+    </td>
+</tr>
 
-                                    <!-- 8. Power cable -->
-                                    <tr>
-                                        <td>8. Power cable without cut & joined</td>
-                                        <td>
-                                            <asp:RadioButton ID="RbPowerCableYes" GroupName="PowerCable" runat="server" AutoPostBack="true" OnCheckedChanged="RbPowerCable_CheckedChanged" />
-                                            <span class="form-label d-inline">Yes</span>
-                                            <asp:RadioButton ID="RbPowerCableNo" GroupName="PowerCable" runat="server" AutoPostBack="true" OnCheckedChanged="RbPowerCable_CheckedChanged" />
-                                            <span class="form-label d-inline">No</span>
-                                        </td>
-                                        <td>
-                                            <asp:Panel ID="pnlPowerCable" runat="server" Visible="false">
-                                                <span class="form-label">Remarks</span>
-                                                <asp:TextBox ID="txtPowerCableRemarks" runat="server" Width="200px" />
-                                                <br />
-                                                <span class="form-label">Upload Photo</span>
-                                                <asp:FileUpload ID="fuPowerCable" runat="server" />
-                                            </asp:Panel>
-                                        </td>
-                                    </tr>
                                 </table>
+
+                        <script type="text/javascript">
+                            function togglePanel(yesId, noId, panelDivId) {
+                                var yes = document.getElementById(yesId);
+                                var no = document.getElementById(noId);
+                                var panelDiv = document.getElementById(panelDivId);
+                                if (yes && no && panelDiv) {
+                                    panelDiv.style.display = (no.checked) ? 'block' : 'none';
+                                }
+                            }
+
+                            function toggleForeHandlePanel() { togglePanel('<%= RbForeHandleYes.ClientID %>', '<%= RbForeHandleNo.ClientID %>', 'divForeHandlePanel'); }
+                            function toggleWheelGuardPanel() { togglePanel('<%= RbWheelGuardYes.ClientID %>', '<%= RbWheelGuardNo.ClientID %>', 'divWheelGuardPanel'); }
+                            function toggleGrindWheelPanel() { togglePanel('<%= RbGrindWheelYes.ClientID %>', '<%= RbGrindWheelNo.ClientID %>', 'divGrindWheelPanel'); }
+                            function toggleRearHandlePanel() { togglePanel('<%= RbRearHandleYes.ClientID %>', '<%= RbRearHandleNo.ClientID %>', 'divRearHandlePanel'); }
+    function toggleCordPanel() { togglePanel('<%= RbCordYes.ClientID %>', '<%= RbCordNo.ClientID %>', 'divCordPanel'); }
+    function toggleTriggerPanel() { togglePanel('<%= RbTriggerYes.ClientID %>', '<%= RbTriggerNo.ClientID %>', 'divTriggerPanel'); }
+    function toggleSwitchLockPanel() { togglePanel('<%= RbSwitchLockYes.ClientID %>', '<%= RbSwitchLockNo.ClientID %>', 'divSwitchLockPanel'); }
+    function togglePowerCablePanel() { togglePanel('<%= RbPowerCableYes.ClientID %>', '<%= RbPowerCableNo.ClientID %>', 'divPowerCablePanel'); }
+
+                            function confirmCAPA(checkbox) {
+                                if (!checkbox.checked) {
+                                    alert("CAPA is required. Proceeding without it is at your own risk.");
+                                }
+                            }
+                        </script>
+
+
+
+                               
+
 
                                 <!-- Final Remarks -->
                                 <div class="col-md-6">

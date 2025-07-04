@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.IO;
 
 
 namespace AnmolDristi
@@ -51,7 +52,7 @@ ORDER BY gh.HeaderID DESC";
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        // Bind data to GridView
+                        
                         GvGasCuttingChecklist.DataSource = dt;
                         GvGasCuttingChecklist.DataBind();
                     }
@@ -73,19 +74,46 @@ ORDER BY gh.HeaderID DESC";
 
         protected void GvGasCuttingChecklist_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            int id = Convert.ToInt32(GvGasCuttingChecklist.DataKeys[e.RowIndex].Value);
+            int headerId = Convert.ToInt32(GvGasCuttingChecklist.DataKeys[e.RowIndex].Value);
             GridViewRow row = GvGasCuttingChecklist.Rows[e.RowIndex];
 
-            string siteName = ((TextBox)row.FindControl("txtSiteName")).Text;
-            string inspectionDate = ((TextBox)row.FindControl("txtInspectionDate")).Text;
-            string tagNo = ((TextBox)row.FindControl("txtTagNo")).Text;
-            string gasCutterName = ((TextBox)row.FindControl("txtGasCutterName")).Text;
-            string jobId = ((TextBox)row.FindControl("txtJobID")).Text;
-            string checklistQuestion = ((TextBox)row.FindControl("txtChecklistQuestion")).Text;
-            string isYes = ((TextBox)row.FindControl("txtIsYes")).Text;
-            string remarks = ((TextBox)row.FindControl("txtRemarks")).Text;
-            string photoPath = ((TextBox)row.FindControl("txtPhotoPath")).Text;
-            string finalRemarks = ((TextBox)row.FindControl("txtFinalRemarks")).Text;
+            // Extract header fields
+            string siteName = ((TextBox)row.FindControl("txtSiteName")).Text.Trim();
+            string tagNo = ((TextBox)row.FindControl("txtTagNo")).Text.Trim();
+            string jobId = ((TextBox)row.FindControl("txtJobId")).Text.Trim();
+            string gasCutterName = ((TextBox)row.FindControl("txtGasCutterName")).Text.Trim();
+
+            // Handle Inspection Date
+            string inspectionDateStr = ((TextBox)row.FindControl("txtInspectionDate")).Text.Trim();
+            DateTime inspectionDate;
+            bool validDate = DateTime.TryParseExact(inspectionDateStr, "yyyy-MM-dd",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None, out inspectionDate);
+            if (!validDate)
+                inspectionDate = DateTime.Now;
+
+            // Checklist Fields
+            string checklistQuestion = ((TextBox)row.FindControl("txtChecklistQuestion")).Text.Trim();
+            DropDownList ddlIsYes = (DropDownList)row.FindControl("ddlIsYes");
+            string isYes = ddlIsYes.SelectedValue;
+            TextBox txtRemarks = (TextBox)row.FindControl("txtRemarks");
+            FileUpload filePhoto = (FileUpload)row.FindControl("filePhoto");
+            Label lblExistingPhoto = (Label)row.FindControl("lblExistingPhoto");
+            string remarks = txtRemarks.Text.Trim();
+            string photoPath = lblExistingPhoto.Text;
+
+            // Upload new photo if present
+            if (filePhoto.HasFile)
+            {
+                string fileName = Path.GetFileName(filePhoto.FileName);
+                string folderPath = Server.MapPath("~/Uploads/");
+                Directory.CreateDirectory(folderPath);
+                string fullPath = Path.Combine(folderPath, fileName);
+                filePhoto.SaveAs(fullPath);
+                photoPath = "~/Uploads/" + fileName;
+            }
+
+            string finalRemarks = ((TextBox)row.FindControl("txtFinalRemarks")).Text.Trim();
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
@@ -93,31 +121,38 @@ ORDER BY gh.HeaderID DESC";
             {
                 conn.Open();
 
-                string updateQuery = @"
-            UPDATE GasCutting_Header 
-            SET SiteName = @SiteName, InspectionDate = @InspectionDate, TagNo = @TagNo,
-                GasCutterName = @GasCutterName, JobID = @JobID
-            WHERE HeaderID = @HeaderID;
+                string updateHeaderQuery = @"
+        UPDATE GasCutting_Header 
+        SET SiteName = @SiteName, InspectionDate = @InspectionDate, TagNo = @TagNo,
+            GasCutterName = @GasCutterName, JobID = @JobID
+        WHERE HeaderID = @HeaderID";
 
-            UPDATE GasCutting_Checklist
-            SET Question = @ChecklistQuestion, IsYes = @IsYes, Remarks = @Remarks, 
-                PhotoPath = @PhotoPath, FinalRemarks = @FinalRemarks
-            WHERE HeaderID = @HeaderID";
-
-                using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+                using (SqlCommand cmd = new SqlCommand(updateHeaderQuery, conn))
                 {
-                    cmd.Parameters.AddWithValue("@HeaderID", id);
+                    cmd.Parameters.AddWithValue("@HeaderID", headerId);
                     cmd.Parameters.AddWithValue("@SiteName", siteName);
                     cmd.Parameters.AddWithValue("@InspectionDate", inspectionDate);
                     cmd.Parameters.AddWithValue("@TagNo", tagNo);
                     cmd.Parameters.AddWithValue("@GasCutterName", gasCutterName);
                     cmd.Parameters.AddWithValue("@JobID", jobId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                
+                string updateChecklistQuery = @"
+        UPDATE GasCutting_Checklist
+        SET IsYes = @IsYes, Remarks = @Remarks, 
+            PhotoPath = @PhotoPath, FinalRemarks = @FinalRemarks
+        WHERE HeaderID = @HeaderID AND Question = @ChecklistQuestion";
+
+                using (SqlCommand cmd = new SqlCommand(updateChecklistQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@HeaderID", headerId);
                     cmd.Parameters.AddWithValue("@ChecklistQuestion", checklistQuestion);
                     cmd.Parameters.AddWithValue("@IsYes", isYes);
-                    cmd.Parameters.AddWithValue("@Remarks", remarks);
-                    cmd.Parameters.AddWithValue("@PhotoPath", photoPath);
-                    cmd.Parameters.AddWithValue("@FinalRemarks", finalRemarks);
-
+                    cmd.Parameters.AddWithValue("@Remarks", string.IsNullOrEmpty(remarks) ? (object)DBNull.Value : remarks);
+                    cmd.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(photoPath) ? (object)DBNull.Value : photoPath);
+                    cmd.Parameters.AddWithValue("@FinalRemarks", string.IsNullOrEmpty(finalRemarks) ? (object)DBNull.Value : finalRemarks);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -131,14 +166,14 @@ ORDER BY gh.HeaderID DESC";
         {
             object rawKey = GvGasCuttingChecklist.DataKeys[e.RowIndex].Value;
 
-            int id; // Declare first
+            int id; 
             if (rawKey != null && int.TryParse(rawKey.ToString(), out id))
             {
-                // Safe to use 'id'
+                
             }
             else
             {
-                // Handle error or return early
+               
                 return;
             }
 

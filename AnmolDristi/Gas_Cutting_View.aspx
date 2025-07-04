@@ -22,6 +22,31 @@
             display: inline-block;
         }
     </style>
+    <script type="text/javascript">
+    function toggleRemarksAndPhoto(ddl) {
+        var row = ddl.closest('tr');
+        var remarks = row.querySelector('.remarksField');
+        var photo = row.querySelector('.photoField');
+
+        if (ddl.value === "False") {
+            if (remarks) remarks.style.display = "inline-block";
+            if (photo) photo.style.display = "inline-block";
+        } else {
+            if (remarks) remarks.style.display = "none";
+            if (photo) photo.style.display = "none";
+        }
+    }
+
+    function applyInitialToggle() {
+        var allDropdowns = document.querySelectorAll('select[id*="ddlIsYes"]');
+        allDropdowns.forEach(toggleRemarksAndPhoto);
+    }
+
+    window.onload = function () {
+        setTimeout(applyInitialToggle, 100);
+    };
+    </script>
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -86,31 +111,41 @@
         </asp:TemplateField>
 
         <asp:TemplateField HeaderText="Is Yes">
-            <ItemTemplate>
-                <%# Eval("IsYes") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtIsYes" runat="server" Text='<%# Bind("IsYes") %>' />
-            </EditItemTemplate>
-        </asp:TemplateField>
+    <ItemTemplate>
+        <%# Eval("IsYes") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:DropDownList 
+            ID="ddlIsYes" 
+            runat="server" 
+            onchange="toggleRemarksAndPhoto(this);">
+            <asp:ListItem Text="True" Value="True"></asp:ListItem>
+            <asp:ListItem Text="False" Value="False"></asp:ListItem>
+        </asp:DropDownList>
+    </EditItemTemplate>
+</asp:TemplateField>
+
 
         <asp:TemplateField HeaderText="Remarks">
-            <ItemTemplate>
-                <%# Eval("Remarks") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtRemarks" runat="server" Text='<%# Bind("Remarks") %>' />
-            </EditItemTemplate>
-        </asp:TemplateField>
+    <ItemTemplate>
+        <%# Eval("Remarks") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtRemarks" runat="server" CssClass="remarksField" Style="display:none;"></asp:TextBox>
+    </EditItemTemplate>
+</asp:TemplateField>
 
-        <asp:TemplateField HeaderText="Photo Path">
-            <ItemTemplate>
-                <%# Eval("PhotoPath") %>
-            </ItemTemplate>
-            <EditItemTemplate>
-                <asp:TextBox ID="txtPhotoPath" runat="server" Text='<%# Bind("PhotoPath") %>' />
-            </EditItemTemplate>
-        </asp:TemplateField>
+<asp:TemplateField HeaderText="Photo Path">
+    <ItemTemplate>
+        <%# Eval("PhotoPath") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:FileUpload ID="filePhoto" runat="server" CssClass="photoField" Style="display: none;" />
+        <asp:Label ID="lblExistingPhoto" runat="server" Text='<%# Eval("PhotoPath") %>' Visible="false" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+
         <asp:TemplateField HeaderText="Final Remarks">
     <ItemTemplate>
         <%# Eval("FinalRemarks") %>
@@ -155,38 +190,7 @@
     </Columns>
 </asp:GridView>
 
-               <%-- <div class="x_content table-container">
-                    <div style="overflow-x: auto;">
-                        <asp:GridView ID="GvGasCuttingChecklist" runat="server" CssClass="table table-striped table-bordered"
-                            AutoGenerateColumns="False" DataKeyNames="HeaderID"
-                            OnRowEditing="GvGasCuttingChecklist_RowEditing"
-                            OnRowUpdating="GvGasCuttingChecklist_RowUpdating"
-                            OnRowCancelingEdit="GvGasCuttingChecklist_RowCancelingEdit"
-                            OnRowDeleting="GvGasCuttingChecklist_RowDeleting">
-
-                            <Columns>
-                                <asp:BoundField DataField="SiteName" HeaderText="Site" />
-                                <asp:BoundField DataField="InspectionDate" HeaderText="Date of Inspection" DataFormatString="{0:yyyy-MM-dd}" />
-                                <asp:BoundField DataField="TagNo" HeaderText="Tag No" />
-                                <asp:BoundField DataField="ChecklistQuestion" HeaderText="Checklist Question" />
-                                <asp:BoundField DataField="IsYes" HeaderText="Is Yes" />
-                                <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
-                                <asp:BoundField DataField="PhotoPath" HeaderText="Photo Path" />
-                                <asp:BoundField DataField="SubmittedDate" HeaderText="Submitted Date" DataFormatString="{0:yyyy-MM-dd}" />
-                                <asp:BoundField DataField="SubmittedTime" HeaderText="Submitted Time" DataFormatString="{0:hh\\:mm\\:ss}" />
-
-                                <asp:TemplateField HeaderText="Actions">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>
-                                        <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions" CommandName="Delete" OnClientClick="return confirm('Are you sure?');">Delete</asp:LinkButton>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success btn-actions" CommandName="Update">Update</asp:LinkButton>
-                                        <asp:LinkButton ID="btnCancel" runat="server" CssClass="btn btn-secondary btn-actions" CommandName="Cancel">Cancel</asp:LinkButton>
-                                    </EditItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>--%>
+              
                     </div>
                 </div>
             </div>

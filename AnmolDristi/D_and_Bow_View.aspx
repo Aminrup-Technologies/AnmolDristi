@@ -21,6 +21,30 @@
             display: inline-block;
         }
     </style>
+
+    <script type="text/javascript">
+    function toggleRemarksAndPhoto(dropdown, prefix) {
+        var selectedValue = dropdown.value;
+        var panel = dropdown.closest('tr').querySelector('[id*="pnl' + prefix + 'Details"]');
+        if (selectedValue === "False") {
+            panel.style.display = 'block';
+        } else {
+            panel.style.display = 'none';
+        }
+    }
+
+   
+    window.onload = function () {
+        const dropdowns = document.querySelectorAll("select[id*='ddlShacklesIsYes'], select[id*='ddlChainPulleyIsYes']");
+        dropdowns.forEach(dd => {
+            if (dd.value === "False") {
+                const prefix = dd.id.includes("Shackles") ? "Shackles" : "ChainPulley";
+                toggleRemarksAndPhoto(dd, prefix);
+            }
+        });
+    };
+    </script>
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -52,14 +76,67 @@
     <asp:BoundField DataField="JobName" HeaderText="Job Name" />
 
         <asp:BoundField DataField="ShacklesChecklistQuestion" HeaderText="Shackles Question" />
-        <asp:BoundField DataField="ShacklesIsYes" HeaderText="Shackles Is Yes" />
-        <asp:BoundField DataField="ShacklesRemarks" HeaderText="Shackles Remarks" />
-        <asp:BoundField DataField="ShacklesPhotoPath" HeaderText="Shackles Photo" />
+       <asp:TemplateField HeaderText="Shackles Is Yes">
+    <ItemTemplate>
+        <%# Eval("ShacklesIsYes") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:DropDownList ID="ddlShacklesIsYes" runat="server" CssClass="form-control" onchange="toggleRemarksAndPhoto(this, 'Shackles')">
+            <asp:ListItem Text="True" Value="True" />
+            <asp:ListItem Text="False" Value="False" />
+        </asp:DropDownList>
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Shackles Remarks & Photo">
+    <ItemTemplate>
+        <%# Eval("ShacklesRemarks") %> <br />
+        <%# Eval("ShacklesPhotoPath") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+    <asp:Panel ID="pnlShacklesDetails" runat="server" Style="display:none;">
+        <asp:TextBox ID="txtShacklesRemarks" runat="server" CssClass="form-control" 
+                     Text='<%# Bind("ShacklesRemarks") %>' placeholder="Enter Remarks" />
+        <asp:FileUpload ID="fileShacklesPhoto" runat="server" CssClass="form-control" />
+        <asp:Label ID="lblExistingShacklesPhoto" runat="server" 
+                   Text='<%# Eval("ShacklesPhotoPath") %>' Visible="false" />
+    </asp:Panel>
+</EditItemTemplate>
+
+</asp:TemplateField>
+
+
+
 
         <asp:BoundField DataField="ChainPulleyChecklistQuestion" HeaderText="Chain Pulley Question" />
-        <asp:BoundField DataField="ChainPulleyIsYes" HeaderText="Chain Pulley Is Yes" />
-        <asp:BoundField DataField="ChainPulleyRemarks" HeaderText="Chain Pulley Remarks" />
-        <asp:BoundField DataField="ChainPulleyPhotoPath" HeaderText="Chain Pulley Photo" />
+       <asp:TemplateField HeaderText="Chain Pulley Is Yes">
+    <ItemTemplate>
+        <%# Eval("ChainPulleyIsYes") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:DropDownList ID="ddlChainPulleyIsYes" runat="server" CssClass="form-control" onchange="toggleRemarksAndPhoto(this, 'ChainPulley')">
+            <asp:ListItem Text="True" Value="True" />
+            <asp:ListItem Text="False" Value="False" />
+        </asp:DropDownList>
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Chain Pulley Remarks & Photo">
+    <ItemTemplate>
+        <%# Eval("ChainPulleyRemarks") %> <br />
+        <%# Eval("ChainPulleyPhotoPath") %>
+    </ItemTemplate>
+   <EditItemTemplate>
+    <asp:Panel ID="pnlChainPulleyDetails" runat="server" Style="display:none;">
+        <asp:TextBox ID="txtChainPulleyRemarks" runat="server" CssClass="form-control" 
+                     Text='<%# Bind("ChainPulleyRemarks") %>' placeholder="Enter Remarks" />
+        <asp:FileUpload ID="fileChainPulleyPhoto" runat="server" CssClass="form-control" />
+        <asp:Label ID="lblExistingChainPulleyPhoto" runat="server" 
+                   Text='<%# Eval("ChainPulleyPhotoPath") %>' Visible="false" />
+    </asp:Panel>
+</EditItemTemplate>
+
+</asp:TemplateField>
 
 
 
