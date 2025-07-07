@@ -150,11 +150,35 @@ ORDER BY gh.HeaderID DESC";
                     lblMessage.Text = "Error: " + ex.Message;
                 }
             }
+        private string GenerateNewHeaderID()
+        {
+            string newID = "GM-001";
+            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+                string query = "SELECT TOP 1 HeaderID FROM GrindingMachine_Header WHERE HeaderID LIKE 'GM%' ORDER BY HeaderID DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        string lastID = result.ToString(); // e.g., GM005
+                        int number = int.Parse(lastID.Substring(2)); // 5
+                        newID = "GM-" + (number + 1).ToString("D3");   // GM006
+                    }
+                }
+            }
+
+            return newID;
+        }
 
         private void SaveGrindingMachineIncidentData()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            int headerId;
+            string headerId = GenerateNewHeaderID(); // now string like GM001
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -167,6 +191,7 @@ ORDER BY gh.HeaderID DESC";
                     using (SqlCommand cmdHeader = new SqlCommand("sp_InsertGrindingMachineHeader", conn, transaction))
                     {
                         cmdHeader.CommandType = CommandType.StoredProcedure;
+                        cmdHeader.Parameters.AddWithValue("@HeaderID", headerId);
                         cmdHeader.Parameters.AddWithValue("@Site", txtSite.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@DateOfInspection", txtDateOfInspection.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@InspectedBy", txtInspectedBy.Text.Trim());
@@ -174,20 +199,10 @@ ORDER BY gh.HeaderID DESC";
                         cmdHeader.Parameters.AddWithValue("@IdentificationNumber", txtIdentificationNumber.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@Location", txtLocation.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@Final_Remarks", txtFinalRemarks.Text.Trim());
-
                         cmdHeader.Parameters.AddWithValue("@JobID", txtJobID.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@JobName", txtJobName.Text.Trim());
 
-
-                        // Output parameter for HeaderID
-                        SqlParameter outputParam = new SqlParameter("@HeaderID", SqlDbType.Int)
-                        {
-                            Direction = ParameterDirection.Output
-                        };
-                        cmdHeader.Parameters.Add(outputParam);
-
                         cmdHeader.ExecuteNonQuery();
-                        headerId = (int)outputParam.Value;  // Get the generated HeaderID
                     }
 
                     SaveChecklist("1. Fore handle without damage", RbForeHandleYes.Checked, txtForeHandleRemarks, fuForeHandle, conn, transaction, headerId, chkForeHandleCAPA);
@@ -212,59 +227,8 @@ ORDER BY gh.HeaderID DESC";
             }
         }
 
-
-        //private void SaveChecklist(string question, bool isYes, TextBox remarksBox, FileUpload photoUpload,
-        //   SqlConnection conn, SqlTransaction transaction, int headerId, CheckBox capaCheck)
-        //{
-        //    string remarks = remarksBox?.Text.Trim();
-        //    string photoPath = null;
-        //    string capaId = null;
-
-        //    try
-        //    {
-        //        if (!isYes && photoUpload.HasFile)
-        //        {
-        //            string filename = Path.GetFileName(photoUpload.FileName);
-        //            string folderPath = Server.MapPath("~/Uploads/");
-        //            Directory.CreateDirectory(folderPath);
-        //            string fullPath = Path.Combine(folderPath, filename);
-        //            photoUpload.SaveAs(fullPath);
-        //            photoPath = "~/Uploads/" + filename;
-        //        }
-
-        //        // If CAPA required, pass null to let SP generate it internally
-        //        if (!isYes && capaCheck.Checked)
-        //        {
-        //            capaId = null; // Optional: can skip assigning, or pass DBNull
-        //        }
-
-        //        using (SqlCommand cmdDetail = new SqlCommand("sp_InsertGrindingMachineChecklist", conn, transaction))
-        //        {
-        //            cmdDetail.CommandType = CommandType.StoredProcedure;
-        //            cmdDetail.Parameters.AddWithValue("@HeaderID", headerId);
-        //            cmdDetail.Parameters.AddWithValue("@Question", question);
-        //            cmdDetail.Parameters.AddWithValue("@IsYes", isYes);
-        //            cmdDetail.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
-        //            cmdDetail.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
-        //            if (!isYes && capaCheck.Checked)
-        //            {
-        //                capaId = GenerateCAPAID(conn, transaction);
-        //            }
-        //            cmdDetail.Parameters.AddWithValue("@CAPA_ID", (object)capaId ?? DBNull.Value);
-
-
-        //            cmdDetail.ExecuteNonQuery();
-        //        }
-        //    }
-        //    catch (Exception exDetail)
-        //    {
-        //        lblMessage.Text += $"<br/>Checklist Insert Error for: {question} → {exDetail.Message}";
-        //        throw;
-        //    }
-        //}
-
         private void SaveChecklist(string question, bool isYes, TextBox remarksBox, FileUpload photoUpload,
-   SqlConnection conn, SqlTransaction transaction, int headerId, CheckBox capaCheck)
+           SqlConnection conn, SqlTransaction transaction, string headerId, CheckBox capaCheck)
         {
             string remarks = remarksBox?.Text.Trim();
             string photoPath = null;
@@ -283,7 +247,7 @@ ORDER BY gh.HeaderID DESC";
                     photoPath = "~/Uploads/" + filename;
                 }
 
-                // If Not OK and CAPA is required, insert into tbl_CAPAMaster
+                // Insert CAPA if required
                 if (!isYes && capaCheck != null && capaCheck.Checked)
                 {
                     SqlCommand cmdCAPA = new SqlCommand(@"
@@ -299,9 +263,9 @@ ORDER BY gh.HeaderID DESC";
                     cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInspectedBy.Text.Trim());
                     cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
 
-                    capaId = cmdCAPA.ExecuteScalar(); // Capture new CAPAID
+                    capaId = cmdCAPA.ExecuteScalar(); // Get newly created CAPA ID
                 }
- 
+
                 using (SqlCommand cmdDetail = new SqlCommand("sp_InsertGrindingMachineChecklist", conn, transaction))
                 {
                     cmdDetail.CommandType = CommandType.StoredProcedure;
@@ -321,6 +285,7 @@ ORDER BY gh.HeaderID DESC";
                 throw;
             }
         }
+
 
 
 

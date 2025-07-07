@@ -43,9 +43,8 @@ protected void Page_Load(object sender, EventArgs e)
             {
                 conn.Open();
                 string query = @"
-
 SELECT
-    h.Id AS BasicID, h.Site, h.TagNo, h.InspectionDate, h.JobID,
+    h.BasicID AS BasicID, h.Site, h.TagNo, h.InspectionDate, h.JobID,
     h.JobName,
 
     sd.Question AS ShacklesChecklistQuestion, 
@@ -59,10 +58,10 @@ SELECT
     cd.PhotoPath AS ChainPulleyPhotoPath
 
 FROM MahimaGupta_CSMS.ShacklesChecklist_BasicDetails h
-LEFT JOIN MahimaGupta_CSMS.ShacklesChecklist_DBow sd ON h.Id = sd.HeaderID
-LEFT JOIN MahimaGupta_CSMS.ShacklesChecklist_ChainPulley cd ON h.Id = cd.HeaderID
+LEFT JOIN MahimaGupta_CSMS.ShacklesChecklist_DBow sd ON h.BasicID = sd.HeaderID
+LEFT JOIN MahimaGupta_CSMS.ShacklesChecklist_ChainPulley cd ON h.BasicID = cd.HeaderID
 
-ORDER BY h.Id DESC";
+ORDER BY h.BasicID DESC";
 
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -184,7 +183,7 @@ ORDER BY h.Id DESC";
         private void SaveChecklistData()
         {
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            int headerId;
+            string headerId; // Now it's a string for DBC-001 format
 
             using (SqlConnection conn = new SqlConnection(connStr))
             {
@@ -193,7 +192,7 @@ ORDER BY h.Id DESC";
 
                 try
                 {
-                    // Insert Basic Details
+                    // Insert Basic Details and get DBC-XXX Header ID
                     using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.Insert_ShacklesChecklist_BasicDetails", conn, tran))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -201,27 +200,27 @@ ORDER BY h.Id DESC";
                         cmd.Parameters.AddWithValue("@TagNo", txtTagNo.Text.Trim());
                         cmd.Parameters.AddWithValue("@InspectionDate", txtDate.Text.Trim());
                         cmd.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
-                        cmd.Parameters.AddWithValue("@JobID", txtJobID.Text.Trim()); 
+                        cmd.Parameters.AddWithValue("@JobID", txtJobID.Text.Trim());
                         cmd.Parameters.AddWithValue("@JobName", txtJobName.Text.Trim());
 
-                        SqlParameter outParam = new SqlParameter("@BasicID", SqlDbType.Int)
+                        SqlParameter outParam = new SqlParameter("@BasicID", SqlDbType.VarChar, 10)
                         {
                             Direction = ParameterDirection.Output
                         };
                         cmd.Parameters.Add(outParam);
 
                         cmd.ExecuteNonQuery();
-                        headerId = (int)outParam.Value;
+                        headerId = outParam.Value.ToString(); // e.g., DBC-001
                     }
 
-                    // Insert Shackles Checklist Details (Table 2)
+                    //Insert Shackles Checklist (D & Bow)
                     SaveChecklistDetail("D & Bow shackle tested or not, tag fixed or not", rbTestedOk.Checked, txtTestedRemarks, fuTested, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow", chkTestedCAPA);
                     SaveChecklistDetail("Thread of the pin should not be damaged", rbThreadOk.Checked, txtThreadRemarks, fuThread, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow", chkThreadCAPA);
                     SaveChecklistDetail("No part should be worn more than 10% of original dimension", rbWornOk.Checked, txtWornRemarks, fuWorn, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow", chkWornCAPA);
                     SaveChecklistDetail("Strength of pin should be checked", rbStrengthOk.Checked, txtStrengthRemarks, fuStrength, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow", chkStrengthCAPA);
                     SaveChecklistDetail("No rusting on body or pin", rbRustOk.Checked, txtRustRemarks, fuRust, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_DBow", chkRustCAPA);
 
-                    // Insert Chain Pulley Block Checklist (Table 3)
+                    //  Insert Chain Pulley Block Checklist
                     SaveChecklistDetail("Chain block is tested or not, testing & due date of testing is ok or not", rbChainTestedOk.Checked, txtChainTestedRemarks, fuChainTested, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley", chkChainTestedCAPA);
                     SaveChecklistDetail("Any damaged chain links", rbChainDamageOk.Checked, txtChainDamageRemarks, fuChainDamage, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley", chkChainDamageCAPA);
                     SaveChecklistDetail("Chain & hook condition for any twist, wear, bend, corrosion & cracks", rbConditionOk.Checked, txtConditionRemarks, fuCondition, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley", chkConditionCAPA);
@@ -230,17 +229,21 @@ ORDER BY h.Id DESC";
                     SaveChecklistDetail("Any part of hook should not be worn 10% of original dimension", rbHookWearOk.Checked, txtHookWearRemarks, fuHookWear, conn, tran, headerId, "MahimaGupta_CSMS.Insert_ShacklesChecklist_ChainPulley", chkHookWearCAPA);
 
                     tran.Commit();
+                    lblMessage.ForeColor = System.Drawing.Color.Green;
+                    lblMessage.Text = "Checklist submitted successfully.";
                 }
-                catch
+                catch (Exception ex)
                 {
                     tran.Rollback();
-                    throw;
+                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                    lblMessage.Text = "Error: " + ex.Message;
                 }
             }
         }
 
+
         private void SaveChecklistDetail(string question, bool isYes, TextBox remarksBox, FileUpload uploadControl,
-                                   SqlConnection conn, SqlTransaction tran, int headerId, string spName,
+                                   SqlConnection conn, SqlTransaction tran, string headerId, string spName,
                                    CheckBox chkCAPA = null)
         {
             string remarks = remarksBox?.Text.Trim();
@@ -253,7 +256,7 @@ ORDER BY h.Id DESC";
                 if (uploadControl != null && uploadControl.HasFile)
                 {
                     string filename = Path.GetFileName(uploadControl.FileName);
-                    string folderPath = Server.MapPath("~/Uploads/");
+                    string folderPath = HttpContext.Current.Server.MapPath("~/Uploads/");
                     Directory.CreateDirectory(folderPath);
                     string fullPath = Path.Combine(folderPath, filename);
                     uploadControl.SaveAs(fullPath);
@@ -273,14 +276,14 @@ ORDER BY h.Id DESC";
                         cmdCAPA.Parameters.AddWithValue("@HeaderID", headerId);
                         cmdCAPA.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
                         cmdCAPA.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
-                        cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtSite.Text.Trim()); // ensure this control is available
+                        cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtSite.Text.Trim());
                         cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
 
-                        capaId = cmdCAPA.ExecuteScalar(); // Get CAPA ID
+                        capaId = cmdCAPA.ExecuteScalar();
                     }
                 }
 
-                // Insert into checklist table using passed SP
+                // Insert into checklist table
                 using (SqlCommand cmd = new SqlCommand(spName, conn, tran))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;

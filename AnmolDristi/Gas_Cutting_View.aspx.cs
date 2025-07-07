@@ -74,35 +74,33 @@ ORDER BY gh.HeaderID DESC";
 
         protected void GvGasCuttingChecklist_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            int headerId = Convert.ToInt32(GvGasCuttingChecklist.DataKeys[e.RowIndex].Value);
+            string headerId = GvGasCuttingChecklist.DataKeys[e.RowIndex].Value.ToString();
             GridViewRow row = GvGasCuttingChecklist.Rows[e.RowIndex];
 
-            // Extract header fields
             string siteName = ((TextBox)row.FindControl("txtSiteName")).Text.Trim();
             string tagNo = ((TextBox)row.FindControl("txtTagNo")).Text.Trim();
             string jobId = ((TextBox)row.FindControl("txtJobId")).Text.Trim();
             string gasCutterName = ((TextBox)row.FindControl("txtGasCutterName")).Text.Trim();
 
-            // Handle Inspection Date
             string inspectionDateStr = ((TextBox)row.FindControl("txtInspectionDate")).Text.Trim();
             DateTime inspectionDate;
-            bool validDate = DateTime.TryParseExact(inspectionDateStr, "yyyy-MM-dd",
-                System.Globalization.CultureInfo.InvariantCulture,
-                System.Globalization.DateTimeStyles.None, out inspectionDate);
-            if (!validDate)
+            if (!DateTime.TryParseExact(inspectionDateStr, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out inspectionDate))
+            {
                 inspectionDate = DateTime.Now;
+            }
 
-            // Checklist Fields
             string checklistQuestion = ((TextBox)row.FindControl("txtChecklistQuestion")).Text.Trim();
             DropDownList ddlIsYes = (DropDownList)row.FindControl("ddlIsYes");
-            string isYes = ddlIsYes.SelectedValue;
+            string selectedIsYes = ddlIsYes.SelectedValue;
+            int isYesInt = selectedIsYes == "True" ? 1 : 0;
+
             TextBox txtRemarks = (TextBox)row.FindControl("txtRemarks");
+            string remarks = txtRemarks.Text.Trim();
+
             FileUpload filePhoto = (FileUpload)row.FindControl("filePhoto");
             Label lblExistingPhoto = (Label)row.FindControl("lblExistingPhoto");
-            string remarks = txtRemarks.Text.Trim();
             string photoPath = lblExistingPhoto.Text;
 
-            // Upload new photo if present
             if (filePhoto.HasFile)
             {
                 string fileName = Path.GetFileName(filePhoto.FileName);
@@ -116,44 +114,93 @@ ORDER BY gh.HeaderID DESC";
             string finalRemarks = ((TextBox)row.FindControl("txtFinalRemarks")).Text.Trim();
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
+                SqlTransaction trans = conn.BeginTransaction();
 
-                string updateHeaderQuery = @"
-        UPDATE GasCutting_Header 
-        SET SiteName = @SiteName, InspectionDate = @InspectionDate, TagNo = @TagNo,
-            GasCutterName = @GasCutterName, JobID = @JobID
-        WHERE HeaderID = @HeaderID";
-
-                using (SqlCommand cmd = new SqlCommand(updateHeaderQuery, conn))
+                try
                 {
-                    cmd.Parameters.AddWithValue("@HeaderID", headerId);
-                    cmd.Parameters.AddWithValue("@SiteName", siteName);
-                    cmd.Parameters.AddWithValue("@InspectionDate", inspectionDate);
-                    cmd.Parameters.AddWithValue("@TagNo", tagNo);
-                    cmd.Parameters.AddWithValue("@GasCutterName", gasCutterName);
-                    cmd.Parameters.AddWithValue("@JobID", jobId);
-                    cmd.ExecuteNonQuery();
+                    // 1. Update Header
+                    SqlCommand updateHeader = new SqlCommand(@"
+                UPDATE GasCutting_Header 
+                SET SiteName = @SiteName, InspectionDate = @InspectionDate, TagNo = @TagNo, 
+                    GasCutterName = @GasCutterName, JobID = @JobID 
+                WHERE HeaderID = @HeaderID", conn, trans);
+
+                    updateHeader.Parameters.AddWithValue("@HeaderID", headerId);
+                    updateHeader.Parameters.AddWithValue("@SiteName", siteName);
+                    updateHeader.Parameters.AddWithValue("@InspectionDate", inspectionDate);
+                    updateHeader.Parameters.AddWithValue("@TagNo", tagNo);
+                    updateHeader.Parameters.AddWithValue("@GasCutterName", gasCutterName);
+                    updateHeader.Parameters.AddWithValue("@JobID", jobId);
+                    updateHeader.ExecuteNonQuery();
+
+                    // 2. Get current IsYes and CAPA_ID
+                    int currentIsYes = -1;
+                    object currentCAPAID = null;
+
+                    SqlCommand getCmd = new SqlCommand(@"
+                SELECT IsYes, CAPA_ID 
+                FROM GasCutting_Checklist 
+                WHERE HeaderID = @HeaderID AND Question = @ChecklistQuestion", conn, trans);
+                    getCmd.Parameters.AddWithValue("@HeaderID", headerId);
+                    getCmd.Parameters.AddWithValue("@ChecklistQuestion", checklistQuestion);
+
+                    using (SqlDataReader reader = getCmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            currentIsYes = Convert.ToInt32(reader["IsYes"]);
+                            currentCAPAID = reader["CAPA_ID"] == DBNull.Value ? null : reader["CAPA_ID"];
+                        }
+                    }
+
+                    object capaIDToUse = currentCAPAID;
+
+                    if (currentIsYes == 1 && isYesInt == 0)
+                    {
+                        // Changed from Yes to No → Insert CAPA
+                        SqlCommand insertCAPA = new SqlCommand(@"
+                    INSERT INTO tbl_CAPAMaster (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                    OUTPUT INSERTED.CAPAID
+                    VALUES (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, trans);
+
+                        insertCAPA.Parameters.AddWithValue("@HeaderID", headerId);
+                        insertCAPA.Parameters.AddWithValue("@PhotoPath", photoPath ?? "");
+                        insertCAPA.Parameters.AddWithValue("@Remarks", remarks ?? "");
+                        insertCAPA.Parameters.AddWithValue("@AssignedBy", "System");
+                        insertCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                        capaIDToUse = insertCAPA.ExecuteScalar();
+                    }
+                    else if (currentIsYes == 0 && isYesInt == 1)
+                    {
+                        // Changed from No to Yes → Clear remarks/photo
+                        remarks = "";
+                        photoPath = "";
+                    }
+
+                    // 3. Update Checklist
+                    SqlCommand updateChecklist = new SqlCommand(@"
+                UPDATE GasCutting_Checklist 
+                SET IsYes = @IsYes, Remarks = @Remarks, PhotoPath = @PhotoPath, FinalRemarks = @FinalRemarks, CAPA_ID = @CAPA_ID
+                WHERE HeaderID = @HeaderID AND Question = @ChecklistQuestion", conn, trans);
+
+                    updateChecklist.Parameters.AddWithValue("@IsYes", isYesInt);
+                    updateChecklist.Parameters.AddWithValue("@Remarks", string.IsNullOrEmpty(remarks) ? (object)DBNull.Value : remarks);
+                    updateChecklist.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(photoPath) ? (object)DBNull.Value : photoPath);
+                    updateChecklist.Parameters.AddWithValue("@FinalRemarks", string.IsNullOrEmpty(finalRemarks) ? (object)DBNull.Value : finalRemarks);
+                    updateChecklist.Parameters.AddWithValue("@CAPA_ID", capaIDToUse ?? DBNull.Value);
+                    updateChecklist.Parameters.AddWithValue("@HeaderID", headerId);
+                    updateChecklist.Parameters.AddWithValue("@ChecklistQuestion", checklistQuestion);
+                    updateChecklist.ExecuteNonQuery();
+
+                    trans.Commit();
                 }
-
-                
-                string updateChecklistQuery = @"
-        UPDATE GasCutting_Checklist
-        SET IsYes = @IsYes, Remarks = @Remarks, 
-            PhotoPath = @PhotoPath, FinalRemarks = @FinalRemarks
-        WHERE HeaderID = @HeaderID AND Question = @ChecklistQuestion";
-
-                using (SqlCommand cmd = new SqlCommand(updateChecklistQuery, conn))
+                catch
                 {
-                    cmd.Parameters.AddWithValue("@HeaderID", headerId);
-                    cmd.Parameters.AddWithValue("@ChecklistQuestion", checklistQuestion);
-                    cmd.Parameters.AddWithValue("@IsYes", isYes);
-                    cmd.Parameters.AddWithValue("@Remarks", string.IsNullOrEmpty(remarks) ? (object)DBNull.Value : remarks);
-                    cmd.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(photoPath) ? (object)DBNull.Value : photoPath);
-                    cmd.Parameters.AddWithValue("@FinalRemarks", string.IsNullOrEmpty(finalRemarks) ? (object)DBNull.Value : finalRemarks);
-                    cmd.ExecuteNonQuery();
+                    trans.Rollback();
                 }
             }
 
@@ -161,34 +208,24 @@ ORDER BY gh.HeaderID DESC";
             LoadGasCuttingIncidentDetails();
         }
 
-
         protected void GvGasCuttingChecklist_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            object rawKey = GvGasCuttingChecklist.DataKeys[e.RowIndex].Value;
-
-            int id; 
-            if (rawKey != null && int.TryParse(rawKey.ToString(), out id))
-            {
-                
-            }
-            else
-            {
-               
-                return;
-            }
+            string headerId = GvGasCuttingChecklist.DataKeys[e.RowIndex].Value.ToString();
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(@"
-            DELETE FROM GasCutting_Checklist WHERE HeaderID = @HeaderID;
-            DELETE FROM GasCutting_Header WHERE HeaderID = @HeaderID;", conn))
+                    DELETE FROM GasCutting_Checklist WHERE HeaderID = @HeaderID;
+                    DELETE FROM GasCutting_Header WHERE HeaderID = @HeaderID;", conn))
                 {
-                    cmd.Parameters.AddWithValue("@HeaderID", id);
+                    cmd.Parameters.AddWithValue("@HeaderID", headerId);
                     cmd.ExecuteNonQuery();
                 }
             }
+
+            LoadGasCuttingIncidentDetails();
         }
-    }}
+    }
+}

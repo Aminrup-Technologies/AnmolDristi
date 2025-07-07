@@ -73,103 +73,118 @@ namespace AnmolDristi
             LoadGrindingMachineIncidentDetails();
         }
 
+       
+
         protected void GvGrindingMachineChecklist_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            int headerId = Convert.ToInt32(GvGrindingMachineChecklist.DataKeys[e.RowIndex].Value);
+            string headerId = GvGrindingMachineChecklist.DataKeys[e.RowIndex].Value.ToString();
+
             GridViewRow row = GvGrindingMachineChecklist.Rows[e.RowIndex];
 
-            string site = ((TextBox)row.Cells[0].Controls[0]).Text;
-
-            // Parse DateOfInspection
-            DateTime dateOfInspection;
-            bool isValidDate = DateTime.TryParseExact(
-                ((TextBox)row.Cells[1].Controls[0]).Text,
-                "yyyy-MM-dd",
-                System.Globalization.CultureInfo.InvariantCulture,
-                System.Globalization.DateTimeStyles.None,
-                out dateOfInspection);
-            if (!isValidDate)
-                dateOfInspection = DateTime.Now;
-
-            string inspectedBy = ((TextBox)row.Cells[2].Controls[0]).Text;
-            string serialNo = ((TextBox)row.Cells[3].Controls[0]).Text;
-            string identificationNo = ((TextBox)row.Cells[4].Controls[0]).Text;
-            string location = ((TextBox)row.Cells[5].Controls[0]).Text;
-
-            // Checklist-specific fields
             string checklistQuestion = ((TextBox)row.Cells[6].Controls[0]).Text;
             DropDownList ddlIsYes = (DropDownList)row.FindControl("ddlIsYes");
             TextBox txtRemarks = (TextBox)row.FindControl("txtRemarks");
             FileUpload filePhoto = (FileUpload)row.FindControl("filePhoto");
             Label lblExistingPhoto = (Label)row.FindControl("lblExistingPhoto");
 
-            string isYes = ddlIsYes.SelectedValue;
-            string remarks = txtRemarks.Text;
-            string photoPath = lblExistingPhoto.Text;
+            string selectedIsYesStr = ddlIsYes.SelectedValue; // "True" or "False"
+            bool newIsYes = selectedIsYesStr == "True";
+            int newIsYesInt = newIsYes ? 1 : 0;
+
+            string newRemarks = txtRemarks.Text;
+            string newPhotoPath = lblExistingPhoto.Text;
 
             if (filePhoto.HasFile)
             {
                 string filename = Path.GetFileName(filePhoto.FileName);
-                string filepath = Server.MapPath("~/Uploads/") + filename;
-                filePhoto.SaveAs(filepath);
-                photoPath = "~/Uploads/" + filename;
+                string folderPath = Server.MapPath("~/Uploads/");
+                Directory.CreateDirectory(folderPath);
+                string fullPath = Path.Combine(folderPath, filename);
+                filePhoto.SaveAs(fullPath);
+                newPhotoPath = "~/Uploads/" + filename;
             }
-
-
-            string jobId = ((TextBox)row.Cells[10].Controls[0]).Text;
-            string jobName = ((TextBox)row.Cells[11].Controls[0]).Text;
-            string finalRemarks = ((TextBox)row.Cells[12].Controls[0]).Text;
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
+                SqlTransaction trans = conn.BeginTransaction();
 
-                // Update Header Table
-                string updateHeaderQuery = @"
-            UPDATE GrindingMachine_Header 
-            SET Site = @Site, DateOfInspection = @DateOfInspection, InspectedBy = @InspectedBy, 
-                SerialNo = @SerialNo, IdentificationNumber = @IdentificationNumber, 
-                Location = @Location, JobID = @JobID, JobName = @JobName, Final_Remarks = @FinalRemarks
-            WHERE HeaderID = @HeaderID";
-
-                using (SqlCommand cmd = new SqlCommand(updateHeaderQuery, conn))
+                try
                 {
-                    cmd.Parameters.AddWithValue("@HeaderID", headerId);
-                    cmd.Parameters.AddWithValue("@Site", site);
-                    cmd.Parameters.AddWithValue("@DateOfInspection", dateOfInspection);
-                    cmd.Parameters.AddWithValue("@InspectedBy", inspectedBy);
-                    cmd.Parameters.AddWithValue("@SerialNo", serialNo);
-                    cmd.Parameters.AddWithValue("@IdentificationNumber", identificationNo);
-                    cmd.Parameters.AddWithValue("@Location", location);
-                    cmd.Parameters.AddWithValue("@JobID", jobId);
-                    cmd.Parameters.AddWithValue("@JobName", jobName);
-                    cmd.Parameters.AddWithValue("@FinalRemarks", finalRemarks);
-                    cmd.ExecuteNonQuery();
+                    // Get current IsYes and CAPA_ID
+                    int currentIsYes = -1;
+                    object currentCAPAID = null;
+
+                    using (SqlCommand getCmd = new SqlCommand(
+                        "SELECT IsYes, CAPA_ID FROM GrindingMachine_Checklist WHERE HeaderID = @HeaderID AND Question = @Question", conn, trans))
+                    {
+                        getCmd.Parameters.AddWithValue("@HeaderID", headerId);
+                        getCmd.Parameters.AddWithValue("@Question", checklistQuestion);
+                        using (SqlDataReader reader = getCmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                currentIsYes = Convert.ToInt32(reader["IsYes"]);
+                                currentCAPAID = reader["CAPA_ID"] == DBNull.Value ? null : reader["CAPA_ID"];
+                            }
+                        }
+                    }
+
+                    object capaIDToUse = currentCAPAID;
+
+                    if (currentIsYes == 1 && newIsYesInt == 0)
+                    {
+                        // Changed from true → false: Insert new CAPA
+                        SqlCommand insertCAPA = new SqlCommand(@"
+                    INSERT INTO tbl_CAPAMaster (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                    OUTPUT INSERTED.CAPAID
+                    VALUES (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, trans);
+                        insertCAPA.Parameters.AddWithValue("@HeaderID", headerId);
+                        insertCAPA.Parameters.AddWithValue("@PhotoPath", newPhotoPath ?? "");
+                        insertCAPA.Parameters.AddWithValue("@Remarks", newRemarks ?? "");
+                        insertCAPA.Parameters.AddWithValue("@AssignedBy", "System"); // Or txtInspectedBy.Text
+                        insertCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                        capaIDToUse = insertCAPA.ExecuteScalar();
+                    }
+                    else if (currentIsYes == 0 && newIsYesInt == 1)
+                    {
+                        // Changed from false → true: clear remarks/photo only
+                        newRemarks = "";
+                        newPhotoPath = "";
+                        // Keep CAPA_ID unchanged
+                    }
+
+                    // Update Checklist
+                    SqlCommand updateChecklist = new SqlCommand(@"
+                UPDATE GrindingMachine_Checklist 
+                SET IsYes = @IsYes, Remarks = @Remarks, PhotoPath = @PhotoPath, CAPA_ID = @CAPA_ID
+                WHERE HeaderID = @HeaderID AND Question = @Question", conn, trans);
+
+                    updateChecklist.Parameters.AddWithValue("@IsYes", newIsYesInt);
+                    updateChecklist.Parameters.AddWithValue("@Remarks", (object)newRemarks ?? DBNull.Value);
+                    updateChecklist.Parameters.AddWithValue("@PhotoPath", (object)newPhotoPath ?? DBNull.Value);
+                    updateChecklist.Parameters.AddWithValue("@CAPA_ID", capaIDToUse ?? DBNull.Value);
+                    updateChecklist.Parameters.AddWithValue("@HeaderID", headerId);
+                    updateChecklist.Parameters.AddWithValue("@Question", checklistQuestion);
+
+                    updateChecklist.ExecuteNonQuery();
+
+                    trans.Commit();
                 }
-
-                // Update Checklist Table
-                string updateChecklistQuery = @"
-    UPDATE GrindingMachine_Checklist 
-    SET IsYes = @IsYes, Remarks = @Remarks, PhotoPath = @PhotoPath
-    WHERE HeaderID = @HeaderID AND Question = @ChecklistQuestion";
-
-
-                using (SqlCommand cmd = new SqlCommand(updateChecklistQuery, conn))
+                catch (Exception ex)
                 {
-                    cmd.Parameters.AddWithValue("@HeaderID", headerId);
-                    cmd.Parameters.AddWithValue("@ChecklistQuestion", checklistQuestion);
-                    cmd.Parameters.AddWithValue("@IsYes", isYes);
-                    cmd.Parameters.AddWithValue("@Remarks", remarks);
-                    cmd.Parameters.AddWithValue("@PhotoPath", photoPath);
-                    cmd.ExecuteNonQuery();
+                    trans.Rollback();
+                    
                 }
             }
 
             GvGrindingMachineChecklist.EditIndex = -1;
-            LoadGrindingMachineIncidentDetails();
+            LoadGrindingMachineIncidentDetails(); // Rebinds with updated values
         }
+
 
         protected void GvGrindingMachineChecklist_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {

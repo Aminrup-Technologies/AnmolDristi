@@ -68,26 +68,26 @@ namespace AnmolDristi
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
             {
                 conn.Open();
-                SqlTransaction tran = conn.BeginTransaction(); 
-                int headerId; 
+                SqlTransaction tran = conn.BeginTransaction();
+                string headerId;
 
                 try
                 {
-                    
+                    // Step 1: Insert Header
                     using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.usp_InsertJobSiteHeader", conn, tran))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@ChecklistDate", txtDate.Text.Trim());
                         cmd.Parameters.AddWithValue("@Area", txtArea.Text.Trim());
 
-                        SqlParameter outParam = new SqlParameter("@HeaderID", SqlDbType.Int)
+                        SqlParameter outParam = new SqlParameter("@HeaderID", SqlDbType.VarChar, 10)
                         {
                             Direction = ParameterDirection.Output
                         };
                         cmd.Parameters.Add(outParam);
 
                         cmd.ExecuteNonQuery();
-                        headerId = Convert.ToInt32(outParam.Value); 
+                        headerId = outParam.Value.ToString(); // Now it's a string like JSC-001
                     }
 
                     // Step 2: Insert Checklist Questions
@@ -182,7 +182,7 @@ namespace AnmolDristi
         //        }
         //    }
         private void SaveChecklist(string question, bool isYes, TextBox remarksBox, FileUpload photoUpload,
-    SqlConnection conn, SqlTransaction transaction, int headerId, CheckBox capaCheck)
+      SqlConnection conn, SqlTransaction transaction, string headerId, CheckBox capaCheck)
         {
             string remarks = remarksBox?.Text.Trim();
             string photoPath = null;
@@ -194,7 +194,7 @@ namespace AnmolDristi
                 if (photoUpload.HasFile)
                 {
                     string filename = Path.GetFileName(photoUpload.FileName);
-                    string folderPath = Server.MapPath("~/Uploads/");
+                    string folderPath = HttpContext.Current.Server.MapPath("~/Uploads/");
                     Directory.CreateDirectory(folderPath);
                     string fullPath = Path.Combine(folderPath, filename);
                     photoUpload.SaveAs(fullPath);
@@ -214,7 +214,7 @@ namespace AnmolDristi
                         cmdCAPA.Parameters.AddWithValue("@HeaderID", headerId);
                         cmdCAPA.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
                         cmdCAPA.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
-                        cmdCAPA.Parameters.AddWithValue("@AssignedBy", "Safety Officer"); // Replace if needed
+                        cmdCAPA.Parameters.AddWithValue("@AssignedBy", "Safety Officer"); // You may customize this
                         cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
 
                         capaId = cmdCAPA.ExecuteScalar(); // Capture generated CAPAID
@@ -225,7 +225,7 @@ namespace AnmolDristi
                 using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.usp_InsertJobSiteChecklistDetail", conn, transaction))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@HeaderID", headerId);
+                    cmd.Parameters.AddWithValue("@HeaderID", headerId); // string like JSC-001
                     cmd.Parameters.AddWithValue("@Question", question);
                     cmd.Parameters.AddWithValue("@IsYes", isYes ? 1 : 0);
                     cmd.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
@@ -241,6 +241,7 @@ namespace AnmolDristi
                 throw;
             }
         }
+
 
 
         protected void BtnReset_Click(object sender, EventArgs e)

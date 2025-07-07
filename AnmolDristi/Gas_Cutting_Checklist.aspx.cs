@@ -181,11 +181,35 @@ ORDER BY gh.HeaderID DESC";
         }
 
 
+        private string GenerateNewGasCuttingHeaderID()
+        {
+            string newID = "GS-001";
+            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+                string query = "SELECT TOP 1 HeaderID FROM GasCutting_Header WHERE HeaderID LIKE 'GS-%' ORDER BY HeaderID DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        string lastID = result.ToString();  // e.g., GS-005
+                        int num = int.Parse(lastID.Substring(3));  // "005" -> 5
+                        newID = "GS-" + (num + 1).ToString("D3");   // -> GS-006
+                    }
+                }
+            }
+
+            return newID;
+        }
 
         private void SaveGasCuttingData()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            int headerId;
+            string headerId = GenerateNewGasCuttingHeaderID();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -194,28 +218,18 @@ ORDER BY gh.HeaderID DESC";
 
                 try
                 {
-                    // ✅ Insert Header
+                    // Insert Header with custom HeaderID
                     using (SqlCommand cmdHeader = new SqlCommand("MahimaGupta_CSMS.sp_InsertGasCuttingHeader", conn, transaction))
                     {
                         cmdHeader.CommandType = CommandType.StoredProcedure;
+                        cmdHeader.Parameters.AddWithValue("@HeaderID", headerId);
                         cmdHeader.Parameters.AddWithValue("@SiteName", txtNameOfSite.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@InspectionDate", Convert.ToDateTime(txtDate.Text.Trim()));
                         cmdHeader.Parameters.AddWithValue("@TagNo", txtTagNo.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@JobID", txtJobID.Text.Trim());
                         cmdHeader.Parameters.AddWithValue("@GasCutterName", txtGasCutterName.Text.Trim());
 
-                        SqlParameter outputParam = new SqlParameter("@HeaderID", SqlDbType.Int)
-                        {
-                            Direction = ParameterDirection.Output
-                        };
-                        cmdHeader.Parameters.Add(outputParam);
-
                         cmdHeader.ExecuteNonQuery();
-
-                        if (outputParam.Value == DBNull.Value || outputParam.Value == null)
-                            throw new Exception("HeaderID was not generated. Header insert failed.");
-
-                        headerId = (int)outputParam.Value;
                     }
 
                     // Insert checklist items
@@ -249,7 +263,7 @@ ORDER BY gh.HeaderID DESC";
         }
 
         private void SaveChecklist(string question, bool isYes, TextBox remarksBox, FileUpload uploadControl,
-    SqlConnection conn, SqlTransaction transaction, int headerId, CheckBox capaCheck)
+    SqlConnection conn, SqlTransaction transaction, string headerId, CheckBox capaCheck)
         {
             string remarks = remarksBox?.Text.Trim();
             string photoPath = null;

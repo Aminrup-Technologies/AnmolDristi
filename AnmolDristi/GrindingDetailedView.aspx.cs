@@ -15,20 +15,11 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                string headerIdStr = Request.QueryString["HeaderID"];
-                if (!string.IsNullOrEmpty(headerIdStr))
+                string headerId = Request.QueryString["HeaderID"]; // CHANGED: treat as string directly
+                if (!string.IsNullOrEmpty(headerId))
                 {
-                    int headerId;
-                    if (int.TryParse(headerIdStr, out headerId))
-                    {
-                        BindGrindingHeader(headerId);
-                        BindGrindingChecklist(headerId);
-                    }
-                    else
-                    {
-                        // Invalid HeaderID format
-                        Response.Write("<div style='color:red;'>Invalid HeaderID parameter.</div>");
-                    }
+                    BindGrindingHeader(headerId);
+                    BindGrindingChecklist(headerId);
                 }
                 else
                 {
@@ -37,19 +28,19 @@ namespace AnmolDristi
             }
         }
 
-        private void BindGrindingHeader(int headerId)
+        private void BindGrindingHeader(string headerId) // CHANGED: string instead of int
         {
             string query = @"
-                SELECT Site, DateOfInspection, InspectedBy, SerialNo, IdentificationNumber, Location, Final_Remarks, JobID, JobName
-                FROM [CSMS].[MahimaGupta_CSMS].[GrindingMachine_Header]
-                WHERE HeaderID = @HeaderID";
+        SELECT Site, DateOfInspection, InspectedBy, SerialNo, IdentificationNumber, Location, Final_Remarks, JobID, JobName
+        FROM [CSMS].[MahimaGupta_CSMS].[GrindingMachine_Header]
+        WHERE HeaderID = @HeaderID";
 
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.Add("@HeaderID", System.Data.SqlDbType.Int).Value = headerId;
+                    cmd.Parameters.Add("@HeaderID", SqlDbType.VarChar).Value = headerId; // CHANGED: VarChar
                     conn.Open();
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
@@ -70,19 +61,19 @@ namespace AnmolDristi
             }
         }
 
-        private void BindGrindingChecklist(int headerId)
+        private void BindGrindingChecklist(string headerId) // CHANGED: string instead of int
         {
             string query = @"
-                SELECT Question, IsYes, Remarks, PhotoPath, EntryDate
-                FROM [CSMS].[MahimaGupta_CSMS].[GrindingMachine_Checklist]
-                WHERE HeaderID = @HeaderID";
+        SELECT Question, IsYes, Remarks, PhotoPath, EntryDate
+        FROM [CSMS].[MahimaGupta_CSMS].[GrindingMachine_Checklist]
+        WHERE HeaderID = @HeaderID";
 
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.Add("@HeaderID", System.Data.SqlDbType.Int).Value = headerId;
+                    cmd.Parameters.Add("@HeaderID", SqlDbType.VarChar).Value = headerId; // CHANGED: VarChar
                     conn.Open();
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
@@ -103,6 +94,8 @@ namespace AnmolDristi
             }
         }
 
+
+       
         protected void gvGrindingChecklist_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)

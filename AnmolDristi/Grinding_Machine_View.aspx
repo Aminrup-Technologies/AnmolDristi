@@ -90,12 +90,14 @@
     </ItemTemplate>
    <EditItemTemplate>
     <asp:DropDownList 
-        ID="ddlIsYes" 
-        runat="server" 
-        onchange="toggleRemarksAndPhoto(this);">
-        <asp:ListItem Text="True" Value="True"></asp:ListItem>
-        <asp:ListItem Text="False" Value="False"></asp:ListItem>
-    </asp:DropDownList>
+    ID="ddlIsYes" 
+    runat="server" 
+    SelectedValue='<%# Convert.ToBoolean(Eval("IsYes")) ? "True" : "False" %>'
+    onchange="toggleRemarksAndPhoto(this);">
+    <asp:ListItem Text="True" Value="True" />
+    <asp:ListItem Text="False" Value="False" />
+</asp:DropDownList>
+
 </EditItemTemplate>
 
 </asp:TemplateField>

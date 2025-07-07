@@ -20,18 +20,22 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                int headerId = 0;
-                if (Request.QueryString["headerId"] != null)
-                {
-                    int.TryParse(Request.QueryString["headerId"], out headerId);
-                }
+                string headerId = Request.QueryString["HeaderID"]; // CHANGED: treat as string
 
-                LoadChecklistDetails(headerId);
-                LoadHeaderInfo(headerId);
+                if (!string.IsNullOrEmpty(headerId))
+                {
+                    LoadHeaderInfo(headerId);
+                    LoadChecklistDetails(headerId);
+                }
+                else
+                {
+                    Response.Write("<div style='color:red;'>HeaderID parameter is missing or invalid in the URL.</div>");
+                }
             }
         }
 
-        private void LoadChecklistDetails(int headerId)
+
+        private void LoadChecklistDetails(string headerId) // CHANGED: string type
         {
             string query = @"SELECT Question, IsYes, Remarks, PhotoPath
                              FROM MahimaGupta_CSMS.JobSiteChecklistDetails
@@ -40,7 +44,7 @@ namespace AnmolDristi
             using (SqlConnection con = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@HeaderID", headerId);
+                cmd.Parameters.Add("@HeaderID", SqlDbType.VarChar).Value = headerId;
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     DataTable dt = new DataTable();
@@ -51,16 +55,16 @@ namespace AnmolDristi
             }
         }
 
-        private void LoadHeaderInfo(int headerId)
+        private void LoadHeaderInfo(string headerId) // CHANGED: string type
         {
             string query = @"SELECT ChecklistDate, Area, CreatedAt 
-                     FROM MahimaGupta_CSMS.JobSiteHeader
-                     WHERE HeaderID = @HeaderID";
+                             FROM MahimaGupta_CSMS.JobSiteHeader
+                             WHERE HeaderID = @HeaderID";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@HeaderID", headerId);
+                cmd.Parameters.Add("@HeaderID", SqlDbType.VarChar).Value = headerId;
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     DataTable dt = new DataTable();
@@ -70,7 +74,5 @@ namespace AnmolDristi
                 }
             }
         }
-
-    
-}
+    }
 }
