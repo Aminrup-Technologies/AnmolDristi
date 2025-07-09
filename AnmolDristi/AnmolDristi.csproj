@@ -93,6 +93,10 @@
     <Content Include="FireExtinguisherChecklistRpt.aspx" />
     <Content Include="FireExtinguisherChecklistUpdate.aspx" />
     <Content Include="FireExtinguisherChecklistView.aspx" />
+    <Content Include="FirstAidBox.aspx" />
+    <Content Include="FirstAidBoxRept.aspx" />
+    <Content Include="FirstAidBoxUpdate.aspx" />
+    <Content Include="FirstAidBoxView.aspx" />
     <Content Include="FullBodyHarnessInspection.aspx" />
     <Content Include="FullBodyHarnessInspection_Update.aspx" />
     <Content Include="FullBodyHarnessInspection_View.aspx" />
@@ -268,6 +272,34 @@
     </Compile>
     <Compile Include="FireExtinguisherChecklistView.aspx.designer.cs">
       <DependentUpon>FireExtinguisherChecklistView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FirstAidBox.aspx.cs">
+      <DependentUpon>FirstAidBox.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FirstAidBox.aspx.designer.cs">
+      <DependentUpon>FirstAidBox.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FirstAidBoxRept.aspx.cs">
+      <DependentUpon>FirstAidBoxRept.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FirstAidBoxRept.aspx.designer.cs">
+      <DependentUpon>FirstAidBoxRept.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FirstAidBoxUpdate.aspx.cs">
+      <DependentUpon>FirstAidBoxUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FirstAidBoxUpdate.aspx.designer.cs">
+      <DependentUpon>FirstAidBoxUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FirstAidBoxView.aspx.cs">
+      <DependentUpon>FirstAidBoxView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FirstAidBoxView.aspx.designer.cs">
+      <DependentUpon>FirstAidBoxView.aspx</DependentUpon>
     </Compile>
     <Compile Include="FullBodyHarnessInspection.aspx.cs">
       <DependentUpon>FullBodyHarnessInspection.aspx</DependentUpon>

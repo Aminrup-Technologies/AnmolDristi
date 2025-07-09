@@ -106,10 +106,11 @@
            <thead class="bg-info">
     <tr>
         <th style="white-space: nowrap;">SNo</th>
-        <th style="min-width: 200px;">Points</th>
+        <th style="min-width: 100px;">Points</th>
         <th>Status</th>
-        <th style="min-width: 150px;">Remarks</th>
-        <th style="min-width: 150px;">Upload Photo</th>
+        <th>Remarks</th>
+        <th style="min-width: 90px;">Upload Photo</th>
+        <th>Capa Report</th>
     </tr>
 </thead>
 
@@ -138,6 +139,9 @@
                  <asp:Image ID="imgPreview" runat="server" Width="100" Height="100" Visible="false" CssClass="mt-2 img-thumbnail" />
                   <asp:HiddenField ID="hfImagePath" runat="server" />
             </td>
+             <td>
+    <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+</td>
         </tr>
     </ItemTemplate>
 
@@ -159,11 +163,12 @@
         <table class="table table-bordered align-middle">
             <thead class="bg-info">
                 <tr>
-                    <th style="white-space: nowrap;">SNo</th>
-                    <th style="min-width: 200px;">Points</th>
-                    <th>Status</th>
-                    <th style="min-width: 150px;">Remarks</th>
-                    <th style="min-width: 150px;">Upload Photo</th>
+                     <th style="white-space: nowrap;">SNo</th>
+ <th style="min-width: 100px;">Points</th>
+ <th>Status</th>
+ <th>Remarks</th>
+ <th style="min-width: 90px;">Upload Photo</th>
+ <th>Capa Report</th>
                 </tr>
             </thead>
             <tbody>
@@ -191,6 +196,9 @@
                <asp:Image ID="imgPreview" runat="server" Width="100" Height="100" Visible="false"  CssClass="mt-2 img-thumbnail" />
   <asp:HiddenField ID="hfImagePath" runat="server" />
           </td>
+           <td>
+    <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+</td>
       </tr>
   </ItemTemplate>
 
@@ -212,11 +220,12 @@
         <table class="table table-bordered align-middle">
             <thead class="bg-info">
                 <tr>
-                    <th style="white-space: nowrap;">SNo</th>
-                    <th style="min-width: 200px;">Points</th>
-                    <th>Status</th>
-                    <th style="min-width: 150px;">Remarks</th>
-                    <th style="min-width: 150px;">Upload Photo</th>
+                     <th style="white-space: nowrap;">SNo</th>
+ <th style="min-width: 100px;">Points</th>
+ <th>Status</th>
+ <th>Remarks</th>
+ <th style="min-width: 90px;">Upload Photo</th>
+ <th>Capa Report</th>
                 </tr>
             </thead>
             <tbody>
@@ -243,6 +252,9 @@
                <asp:Image ID="imgPreview" runat="server" Width="100" Height="100" Visible="false"   CssClass="mt-2 img-thumbnail" />
   <asp:HiddenField ID="hfImagePath" runat="server" />
           </td>
+           <td>
+    <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+</td>
       </tr>
   </ItemTemplate>
 
@@ -263,10 +275,11 @@
             <thead class="bg-info">
                 <tr>
                     <th style="white-space: nowrap;">SNo</th>
-                    <th style="min-width: 200px;">Points</th>
-                    <th>Status</th>
-                    <th style="min-width: 150px;">Remarks</th>
-                    <th style="min-width: 150px;">Upload Photo</th>
+ <th style="min-width: 100px;">Points</th>
+ <th>Status</th>
+ <th>Remarks</th>
+ <th style="min-width: 90px;">Upload Photo</th>
+ <th>Capa Report</th>
                 </tr>
             </thead>
             <tbody>
@@ -293,6 +306,9 @@
                <asp:Image ID="imgPreview" runat="server" Width="100" Height="100" Visible="false"  CssClass="mt-2 img-thumbnail" />
   <asp:HiddenField ID="hfImagePath" runat="server" />
           </td>
+           <td>
+    <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+</td>
       </tr>
   </ItemTemplate>
 
@@ -313,10 +329,11 @@
             <thead class="bg-info">
                 <tr>
                     <th style="white-space: nowrap;">SNo</th>
-                    <th style="min-width: 200px;">Points</th>
-                    <th>Status</th>
-                    <th style="min-width: 150px;">Remarks</th>
-                    <th style="min-width: 150px;">Upload Photo</th>
+ <th style="min-width: 100px;">Points</th>
+ <th>Status</th>
+ <th>Remarks</th>
+ <th style="min-width: 90px;">Upload Photo</th>
+ <th>Capa Report</th>
                 </tr>
             </thead>
             <tbody>
@@ -344,6 +361,9 @@
               <asp:Image ID="imgPreview" runat="server" Width="100" Height="100" Visible="false"  CssClass="mt-2 img-thumbnail" />
                <asp:HiddenField ID="hfImagePath" runat="server" />
           </td>
+           <td>
+             <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+           </td>
       </tr>
   </ItemTemplate>
 
@@ -386,7 +406,41 @@
     </div>
 </div>
 
-<script type="text/javascript">
+     <script type="text/javascript">
+         window.onload = function () {
+             const radios = document.querySelectorAll('.status-option input[type="radio"], .status-option');
+
+             radios.forEach(radio => {
+                 radio.addEventListener("click", function () {
+                     const row = this.closest('tr');
+                     const value = this.value || this.textContent.trim(); 
+
+                     const txtRemarks = row.querySelector('.form-control.remarks');
+                     const fileUpload = row.querySelector('.fileUpload');
+                     const chkCapa = row.querySelector('.capa-checkbox input[type="checkbox"], .capa-checkbox');
+
+                     if (value === "No") {
+                         if (txtRemarks) txtRemarks.style.display = "block";
+                         if (fileUpload) fileUpload.style.display = "block";
+                         if (chkCapa) {
+                             chkCapa.style.display = "block";
+                             chkCapa.checked = true;
+                         }
+                     } else {
+                         if (txtRemarks) txtRemarks.style.display = "none";
+                         if (fileUpload) fileUpload.style.display = "none";
+                         if (chkCapa) {
+                             chkCapa.style.display = "none";
+                             chkCapa.checked = false;
+                         }
+                     }
+                 });
+             });
+         };
+     </script>
+
+
+<%--<script type="text/javascript">
     window.onload = function () {
         const radios = document.querySelectorAll('.status-option input[type="radio"]');
 
@@ -408,7 +462,9 @@
             });
         });
     };
-</script>
+</script>--%>
+
+
 <script type="text/javascript">
     function validateRemarksAndPhotos() {
         const rows = document.querySelectorAll("table tr"); // Adjust selector if needed

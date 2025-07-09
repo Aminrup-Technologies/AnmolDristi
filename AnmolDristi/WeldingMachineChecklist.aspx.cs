@@ -136,31 +136,53 @@ namespace AnmolDristi
             rptWorkArea.DataSource = dt;
             rptWorkArea.DataBind();
         }
+
+        private string GenerateWCHeaderID()
+        {
+            string id = "";
+            string cs = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT dbo.GenerateWCHeaderID()", con))
+                {
+                    con.Open();
+                    id = cmd.ExecuteScalar().ToString();
+                }
+            }
+            return id;
+        }
+       
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connStr))
             {
+                
                 con.Open();
 
-                // 1. Insert into WeldingChecklistHeader
+                // 1. Generate unique string ID for Header
+                string headerID = GenerateWCHeaderID(); // e.g., "HDR001"
+
+                // 2. Insert into WeldingChecklistHeader
                 string insertHeaderQuery = @"
-            INSERT INTO WeldingChecklistHeader (ChecklistDate, JobID, Location, EmployeeName, InspectedBy, Remarks)
-            OUTPUT INSERTED.HeaderID
-            VALUES (@ChecklistDate, @JobID, @Location, @EmployeeName, @InspectedBy, @Remarks)";
+                           INSERT INTO WeldingChecklistHeader 
+                           (HeaderID, ChecklistDate, JobID, Location, EmployeeName, InspectedBy, Remarks)
+                           VALUES 
+                           (@HeaderID, @ChecklistDate, @JobID, @Location, @EmployeeName, @InspectedBy, @Remarks)";
 
                 SqlCommand cmdHeader = new SqlCommand(insertHeaderQuery, con);
+                cmdHeader.Parameters.AddWithValue("@HeaderID", headerID);
                 cmdHeader.Parameters.AddWithValue("@ChecklistDate", Convert.ToDateTime(txtdate.Text));
                 cmdHeader.Parameters.AddWithValue("@JobID", txtjobId.Text);
                 cmdHeader.Parameters.AddWithValue("@Location", txtloc.Text);
-                cmdHeader.Parameters.AddWithValue("@EmployeeName", hfEmployeeName.Value.Trim());
+                cmdHeader.Parameters.AddWithValue("@EmployeeName", hfEmployeeName.Value.Trim());  
                 cmdHeader.Parameters.AddWithValue("@InspectedBy", txtInsBy.Text);
                 cmdHeader.Parameters.AddWithValue("@Remarks", txtnote.Text);
 
-                int headerID = (int)cmdHeader.ExecuteScalar();
+                cmdHeader.ExecuteNonQuery();
 
-                // 2. Save checklist items from all repeaters
+                // 3. Save checklist items from all repeaters
                 SaveChecklistItemsFromRepeater(rptChecklist, con, headerID);
                 SaveChecklistItemsFromRepeater(rptTerminals, con, headerID);
                 SaveChecklistItemsFromRepeater(rptCables, con, headerID);
@@ -175,7 +197,7 @@ namespace AnmolDristi
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "success", "alert('Checklist saved successfully!');", true);
         }
 
-        private void SaveChecklistItemsFromRepeater(Repeater rpt, SqlConnection con, int headerID)
+        private void SaveChecklistItemsFromRepeater(Repeater rpt, SqlConnection con, string headerID)
         {
             foreach (RepeaterItem item in rpt.Items)
             {
@@ -196,35 +218,60 @@ namespace AnmolDristi
 
                 TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
                 FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
+                CheckBox chkCapaReport = (CheckBox)item.FindControl("chkCapaReport");
 
                 bool isOk = rdoYes != null && rdoYes.Checked;
                 bool na = rdoNA != null && rdoNA.Checked;
 
                 string remarks = txtRemarks?.Text ?? "";
-                string photoPath = "";
+                //string photoPath = "";
 
+               
+                Label lblDescription = (Label)item.FindControl("lblDescription");
+                string description = lblDescription?.Text ?? "";
+                string checklistPhotoPath = "";
                 if (fileUpload != null && fileUpload.HasFile)
                 {
                     string fileName = Path.GetFileName(fileUpload.FileName);
                     string savePath = Server.MapPath("~/Uploads1/" + fileName);
                     fileUpload.SaveAs(savePath);
-                    photoPath = "~/Uploads1/" + fileName;
+                    checklistPhotoPath = "~/Uploads1/" + fileName;
                 }
-                Label lblDescription = (Label)item.FindControl("lblDescription");
-                string description = lblDescription?.Text ?? "";
+                object capaReportID = DBNull.Value;
+
+                
+                if (chkCapaReport != null && chkCapaReport.Checked)
+                {
+                    SqlCommand cmdCAPA = new SqlCommand(@"
+                        INSERT INTO tbl_CAPAMaster 
+                        (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                        OUTPUT INSERTED.CAPAID
+                        VALUES 
+                        (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)",con);
+
+                    cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
+                    cmdCAPA.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
+                    cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                    capaReportID = cmdCAPA.ExecuteScalar(); // Get the newly inserted CAPAID
+                }
+
 
                 string insertDetailQuery = @"
-            INSERT INTO WeldingChecklist (HeaderID, QuestionNumber, IsOk, Remarks, PhotoPath, NA,description)
-            VALUES (@HeaderID, @QuestionNumber, @IsOk, @Remarks, @PhotoPath, @NA,@description)";
+            INSERT INTO WeldingChecklist (HeaderID, QuestionNumber, IsOk, Remarks, PhotoPath, NA,description,CAPA_Report)
+            VALUES (@HeaderID, @QuestionNumber, @IsOk, @Remarks, @PhotoPath, @NA,@description,@CAPA_Report)";
 
                 SqlCommand cmdDetail = new SqlCommand(insertDetailQuery, con);
                 cmdDetail.Parameters.AddWithValue("@HeaderID", headerID);
                 cmdDetail.Parameters.AddWithValue("@QuestionNumber", questionNumber);
                 cmdDetail.Parameters.AddWithValue("@IsOk", isOk);
                 cmdDetail.Parameters.AddWithValue("@Remarks", remarks);
-                cmdDetail.Parameters.AddWithValue("@PhotoPath", photoPath);
+                cmdDetail.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
                 cmdDetail.Parameters.AddWithValue("@NA", na);
                 cmdDetail.Parameters.AddWithValue("@description", description);
+                cmdDetail.Parameters.AddWithValue("@Capa_Report", capaReportID);
                 cmdDetail.ExecuteNonQuery();
             }
         }

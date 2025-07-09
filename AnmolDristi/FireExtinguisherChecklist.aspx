@@ -149,10 +149,11 @@
            <thead class="bg-info">
     <tr>
         <th style="white-space: nowrap;">SNo</th>
-        <th style="min-width: 200px;">CheckList Points</th>
+        <th style="min-width: 100px;">CheckList Points</th>
         <th>Status</th>
-        <th style="min-width: 150px;">Remarks</th>
-        <th style="min-width: 150px;">Upload Photo</th>
+        <th style="min-width: 90px;">Remarks</th>
+        <th>Upload Photo</th>
+         <th>CAPA Report</th>
     </tr>
 </thead> 
             <tbody>
@@ -179,6 +180,9 @@
             <td>
                 <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
             </td>
+                <td>
+                     <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+               </td>
         </tr>
     </ItemTemplate>
 
@@ -206,7 +210,7 @@
      <div class="mb-3">
          <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="CLICK TO SAVE" ForeColor="Green" Font-Bold="true" Font-Size="Small"></asp:Label>
          <div class="input-group input-group-sm">
-             <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success mt-3" OnClientClick="return Checklistvalidate();"  ValidationGroup="submi" CausesValidation="true" OnClick="btnSubmit_Click" />
+             <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success mt-3"  ValidationGroup="submi" CausesValidation="true" OnClick="btnSubmit_Click"  OnClientClick="return valcheck();" />
              <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning  mt-3" CausesValidation="false" OnClick="BtnReset_Click" />
              <asp:Button ID="btn_home" runat="server" Text="Home" CssClass="btn btn-danger  mt-3" CausesValidation="false" PostBackUrl="~/Home.aspx" />
              <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
@@ -267,22 +271,31 @@
 
 <script type="text/javascript">
     window.onload = function () {
-        const radios = document.querySelectorAll('.status-option input[type="radio"]');
+        const radios = document.querySelectorAll('.status-option');
 
         radios.forEach(radio => {
             radio.addEventListener("click", function () {
                 const row = this.closest('tr');
-                const value = this.nextSibling.textContent.trim(); // Yes / No / NA
+                const value = this.textContent.trim(); // Yes / No / NA
 
-                const txtRemarks = row.querySelector('input[type="text"], textarea, .form-control.remarks');
-                const fileUpload = row.querySelector('input[type="file"], .fileUpload');
+                const txtRemarks = row.querySelector('.form-control.remarks');
+                const fileUpload = row.querySelector('.file-upload');
+                const chkCapa = row.querySelector('.capa-checkbox input[type="checkbox"]');
 
                 if (value === "No") {
                     if (txtRemarks) txtRemarks.style.display = "block";
                     if (fileUpload) fileUpload.style.display = "block";
+                    if (chkCapa) {
+                        chkCapa.parentElement.style.display = "block";
+                        chkCapa.checked = true;
+                    }
                 } else {
                     if (txtRemarks) txtRemarks.style.display = "none";
                     if (fileUpload) fileUpload.style.display = "none";
+                    if (chkCapa) {
+                        chkCapa.parentElement.style.display = "none";
+                        chkCapa.checked = false;
+                    }
                 }
             });
         });
@@ -290,8 +303,11 @@
 </script>
 
 
+
+
+
 <script type="text/javascript">
-    function validateeRemarkssAndPhotos() {
+    function RemarkssAndPhotos() {
         const rows = document.querySelectorAll("table tr"); // Adjust selector if needed
 
         for (let row of rows) {
@@ -322,8 +338,9 @@
 </script>
 
 
+
 <script type="text/javascript">
-    function Checklistvalidate() {
+    function valcheck() {
         var datee = document.getElementById('<%= txtdate.ClientID %>').value.trim();
         var sitee = document.getElementById('<%= txtloc.ClientID %>').value.trim();
         var jobIdd = document.getElementById('<%= txtjobId.ClientID %>').value.trim();
@@ -375,7 +392,7 @@
             alert("Please select Due Date.");
             return false;
         }
-        if (!validateeRemarkssAndPhotos()) {
+        if (!RemarkssAndPhotos()) {
             return false;
         }
 

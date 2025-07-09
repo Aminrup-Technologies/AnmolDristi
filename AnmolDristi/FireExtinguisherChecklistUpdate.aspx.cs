@@ -19,16 +19,19 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
-                int headerID;
-                if (int.TryParse(Request.QueryString["HeaderID"], out headerID))
+                string headerID = Request.QueryString["HeaderID"];
+
+                if (!string.IsNullOrEmpty(headerID))
                 {
                     LoadDetails(headerID);        // Load header
                     BindChecklist();              // Bind structure
                     LoadChecklistItems(headerID); // Load data into repeaters
                 }
             }
+
         }
         private void BindChecklist()
         {
@@ -43,7 +46,7 @@ namespace AnmolDristi
             rptChecklist.DataSource = dt;
             rptChecklist.DataBind();
         }
-        private void LoadDetails(int headerID)
+        private void LoadDetails(string headerID)
         {
             string query = @"SELECT HeaderID,ChecklistDate,JobID,Location,EmployeeName,InspectedBy ,Remarks from  FireExtinguisherHeader where HeaderID=@HeaderID ";
 
@@ -74,10 +77,10 @@ namespace AnmolDristi
                 }
             }
         }
-        private void LoadChecklistItems(int headerID)
+        private void LoadChecklistItems(string headerID)
         {
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = "SELECT ExtinguisherType,FE_SerialNo,CalibrationDate,DueDate,QuestionNumber,Description,IsOk,Remarks, PhotoPath,NA  FROM FireExtinguisherChecklist WHERE HeaderID = @HeaderID";
+            string query = "SELECT ExtinguisherType,FE_SerialNo,CalibrationDate,DueDate,QuestionNumber,Description,IsOk,Remarks, PhotoPath,NA,CAPA_Report  FROM FireExtinguisherChecklist WHERE HeaderID = @HeaderID";
 
             DataTable dt = new DataTable();
             using (SqlConnection con = new SqlConnection(connStr))
@@ -115,6 +118,7 @@ namespace AnmolDristi
                 txtDueDate.Text = dueDate.ToString("yyyy-MM-dd");
             }
         }
+
         private void LoadRepeaterWithData(Repeater repeater, DataTable checklistData)
         {
             foreach (RepeaterItem item in repeater.Items)
@@ -172,83 +176,73 @@ namespace AnmolDristi
                         txtRemarks.Style["display"] = "block";
                         fileUpload.Style["display"] = "block";
                     }
+
+                    // ✅ Load CAPA_Report value
+                    CheckBox chkCapaReport = (CheckBox)item.FindControl("chkCapaReport");
+                    if (chkCapaReport != null)
+                    {
+                        if (row.Table.Columns.Contains("CAPA_Report") && !string.IsNullOrEmpty(row["CAPA_Report"].ToString()))
+                        {
+                            chkCapaReport.Checked = true;
+                            chkCapaReport.Style["display"] = "inline-block";
+                        }
+                        else
+                        {
+                            chkCapaReport.Checked = false;
+                            chkCapaReport.Style["display"] = "none";
+                        }
+                    }
                 }
+            }
+        }
+
+        private string GenerateCapaaReportID(SqlConnection con)
+        {
+            string query = "SELECT MAX(CAPA_Report) FROM FireExtinguisherChecklist WHERE CAPA_Report IS NOT NULL AND CAPA_Report LIKE 'CAPA-%'";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                object result = cmd.ExecuteScalar();
+                int maxNumber = 0;
+
+                if (result != DBNull.Value && result != null)
+                {
+                    string lastId = result.ToString();
+                    if (lastId.StartsWith("CAPA-"))
+                    {
+                        int.TryParse(lastId.Substring(5), out maxNumber);
+                    }
+                }
+
+                return $"CAPA-{(maxNumber + 1):D3}";
             }
         }
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
             lblMsg.Text = "";
-            if (string.IsNullOrWhiteSpace(txtdate.Text))
+
+            if (string.IsNullOrWhiteSpace(txtdate.Text) || string.IsNullOrWhiteSpace(txtjobId.Text) ||
+                !System.Text.RegularExpressions.Regex.IsMatch(txtjobId.Text.Trim(), @"^\d+$") ||
+                string.IsNullOrWhiteSpace(txtloc.Text) || string.IsNullOrWhiteSpace(txtDocNo.Text) ||
+                string.IsNullOrWhiteSpace(txtInsBy.Text) || string.IsNullOrWhiteSpace(txtnote.Text) ||
+                string.IsNullOrWhiteSpace(txtCalibrationDate.Text) || string.IsNullOrWhiteSpace(txtsno.Text) ||
+                string.IsNullOrWhiteSpace(ddlType.Text) || string.IsNullOrWhiteSpace(txtDueDate.Text))
             {
-                lblMsg.Text = "Please select Date.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtjobId.Text))
-            {
-                lblMsg.Text = "Please enter Job ID.";
-                return;
-            }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(txtjobId.Text.Trim(), @"^\d+$"))
-            {
-                lblMsg.Text = "Job ID must contain digits only.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtloc.Text))
-            {
-                lblMsg.Text = "Please enter Location.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtDocNo.Text))
-            {
-                lblMsg.Text = "Employee name is missing.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtInsBy.Text))
-            {
-                lblMsg.Text = "Please enter Inspected By.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtnote.Text))
-            {
-                lblMsg.Text = "Please enter Remarks.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtCalibrationDate.Text))
-            {
-                lblMsg.Text = "Please enter Calibration Date.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtsno.Text))
-            {
-                lblMsg.Text = "Please enter FE Serial Number.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(ddlType.Text))
-            {
-                lblMsg.Text = "Please enter  Extinguisher Type.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtDueDate.Text))
-            {
-                lblMsg.Text = "Please enter Due Date.";
+                lblMsg.Text = "Please fill all required fields.";
                 return;
             }
 
+            string headerID = Request.QueryString["HeaderID"];
+            if (string.IsNullOrEmpty(headerID)) return;
 
-            int headerID;
-            if (!int.TryParse(Request.QueryString["HeaderID"], out headerID))
-            {
-                // Invalid header ID
-                return;
-            }
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connStr))
             {
                 con.Open();
 
-                // Update Header
+                // STEP 2: Update Header
                 SqlCommand cmdUpdateHeader = new SqlCommand(@"
             UPDATE FireExtinguisherHeader SET
                 ChecklistDate = @ChecklistDate,
@@ -269,23 +263,23 @@ namespace AnmolDristi
 
                 cmdUpdateHeader.ExecuteNonQuery();
 
-                // Delete existing checklist items first
+                // STEP 3: Delete old checklist
                 SqlCommand cmdDeleteChecklist = new SqlCommand("DELETE FROM FireExtinguisherChecklist WHERE HeaderID = @HeaderID", con);
                 cmdDeleteChecklist.Parameters.AddWithValue("@HeaderID", headerID);
                 cmdDeleteChecklist.ExecuteNonQuery();
 
-                // Save updated checklist items
+                // STEP 4: Re-insert checklist items, preserving CAPA if exists
                 SaveChecklistItems(rptChecklist, headerID, con);
-               
 
                 con.Close();
             }
 
-            // Redirect or show success message
             lblMsg.Text = "Checklist updated successfully.";
             lblMsg.ForeColor = System.Drawing.Color.Green;
         }
-        private void SaveChecklistItems(Repeater repeater, int headerID, SqlConnection con)
+
+        // Modified to accept old CAPA values
+        private void SaveChecklistItems(Repeater repeater, string headerID, SqlConnection con)
         {
             foreach (RepeaterItem item in repeater.Items)
             {
@@ -297,54 +291,114 @@ namespace AnmolDristi
                 FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
                 HiddenField hfImagePath = (HiddenField)item.FindControl("hfImagePath");
                 Label lblDescription = (Label)item.FindControl("lblDescription");
+                CheckBox chkCapa = (CheckBox)item.FindControl("chkCapaReport");
 
                 int questionNumber = Convert.ToInt32(hfQuestionNumber.Value);
                 bool isOk = rdoYes.Checked;
-                bool na = rdoNA.Checked;
+                bool na = (rdoNA != null && rdoNA.Checked);
                 string description = lblDescription?.Text?.Trim() ?? "";
-
-                string remarks = "";
-                string photoPath = "";
-
-                // Only allow remarks and photo if "No" is selected
-                if (rdoNo.Checked)
+                string remarks = txtRemarks?.Text ?? "";
+                string checklistPhotoPath = "";            
+                if (fileUpload.HasFile)
                 {
-                    remarks = txtRemarks.Text.Trim();
+                    string fileName = Path.GetFileName(fileUpload.FileName);
+                    string folderPath = Server.MapPath("~/Uploads1/");
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
 
-                    if (fileUpload.HasFile)
-                    {
-                        string fileName = Path.GetFileName(fileUpload.FileName);
-                        string savePath = Server.MapPath("~/Uploads/" + fileName);
-                        fileUpload.SaveAs(savePath);
-                        photoPath = "~/Uploads/" + fileName;
-                    }
-                    else
-                    {
-                        photoPath = hfImagePath?.Value ?? "";
-                    }
+                    string filePath = folderPath + fileName;
+                    fileUpload.SaveAs(filePath);
+                    checklistPhotoPath = "~/Uploads1/" + fileName;
+                }
+                else
+                {
+                        checklistPhotoPath = hfImagePath?.Value ?? "";
+                }
+                    object capaID = DBNull.Value;
+                //string capaReportID = null;
+                //string remarks = "";
+                //string photoPath = "";
+                //if (rdoNo.Checked)
+                //{
+                //    remarks = txtRemarks.Text.Trim();
+
+                //    if (fileUpload.HasFile)
+                //    {
+                //        string fileName = Path.GetFileName(fileUpload.FileName);
+                //        string savePath = Server.MapPath("~/Uploads/" + fileName);
+                //        fileUpload.SaveAs(savePath);
+                //        photoPath = "~/Uploads/" + fileName;
+                //    }
+                //    else
+                //    {
+                //        photoPath = hfImagePath?.Value ?? "";
+                //    }
+
+                //    if (chkCapaReport != null && chkCapaReport.Checked)
+                //    {
+                //        if (oldCapaReports.ContainsKey(questionNumber))
+                //        {
+                //            capaReportID = oldCapaReports[questionNumber]; // reuse old
+                //        }
+                //        else
+                //        {
+                //            capaReportID = GenerateCapaaReportID(con); // generate new
+                //        }
+                //    }
+                //}
+                if (na && chkCapa != null && chkCapa.Checked)
+                {
+                    SqlCommand cmdCAPA = new SqlCommand(@"
+            INSERT INTO tbl_CAPAMaster 
+            (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+            OUTPUT INSERTED.CAPAID
+            VALUES 
+            (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", con);
+
+                    cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
+                    cmdCAPA.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(checklistPhotoPath) ? DBNull.Value : (object)checklistPhotoPath);
+                    cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                    capaID = cmdCAPA.ExecuteScalar();
                 }
 
-            SqlCommand cmdInsert = new SqlCommand(@"
+                SqlCommand cmdInsert = new SqlCommand(@"
             INSERT INTO FireExtinguisherChecklist  
-            (HeaderID,ExtinguisherType,FE_SerialNo,CalibrationDate,DueDate , QuestionNumber, IsOk, NA, Remarks, PhotoPath, Description)
+            (HeaderID, ExtinguisherType, FE_SerialNo, CalibrationDate, DueDate, QuestionNumber, IsOk, NA, Remarks, PhotoPath, Description, CAPA_Report)
             VALUES 
-            (@HeaderID,@ExtinguisherType,@FE_SerialNo ,@CalibrationDate,@DueDate , @QuestionNumber, @IsOk, @NA, @Remarks, @PhotoPath, @Description)", con);
+            (@HeaderID, @ExtinguisherType, @FE_SerialNo, @CalibrationDate, @DueDate, @QuestionNumber, @IsOk, @NA, @Remarks, @PhotoPath, @Description, @CAPA_Report)", con);
 
                 cmdInsert.Parameters.AddWithValue("@HeaderID", headerID);
                 cmdInsert.Parameters.AddWithValue("@ExtinguisherType", ddlType.SelectedValue);
-                cmdInsert.Parameters.AddWithValue("@FE_SerialNo",txtsno.Text );
+                cmdInsert.Parameters.AddWithValue("@FE_SerialNo", txtsno.Text);
                 cmdInsert.Parameters.AddWithValue("@CalibrationDate", txtCalibrationDate.Text);
                 cmdInsert.Parameters.AddWithValue("@DueDate", txtDueDate.Text);
                 cmdInsert.Parameters.AddWithValue("@QuestionNumber", questionNumber);
                 cmdInsert.Parameters.AddWithValue("@IsOk", isOk);
                 cmdInsert.Parameters.AddWithValue("@NA", na);
                 cmdInsert.Parameters.AddWithValue("@Remarks", remarks);
-                cmdInsert.Parameters.AddWithValue("@PhotoPath", photoPath);
+                cmdInsert.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
                 cmdInsert.Parameters.AddWithValue("@Description", description);
+                cmdInsert.Parameters.AddWithValue("@CAPA_Report", capaID);
 
                 cmdInsert.ExecuteNonQuery();
             }
+            SqlCommand clearCAPAFields = new SqlCommand(@"
+                          UPDATE tbl_CAPAMaster 
+                          SET PhotoPath = NULL, Remarks = NULL 
+                          WHERE HeaderID = @HeaderID", con);
+
+            clearCAPAFields.Parameters.AddWithValue("@HeaderID", headerID);
+            clearCAPAFields.ExecuteNonQuery();
+
         }
+
+       
+
         protected void BtnBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("FireExtinguisherChecklistView.aspx");

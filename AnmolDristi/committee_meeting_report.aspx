@@ -1,45 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="committee_meeting_report.aspx.cs" Inherits="AnmolDristi.committee_meeting_report" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-  <%--  <style type="text/css">
-        .btn-fixed-size {
-            width: 100px;
-            text-align: center;
-            font-size: 14px;
-            padding: 5px 0;
-        }
-
-        .points-input {
-            margin-right: 10px;
-        }
-
-        .container {
-            padding: 20px;
-        }
-
-        .input-group-sm input, .form-control-sm {
-            width: 100%;
-        }
-
-        #gvMeetings th, #gvMeetings td {
-            white-space: nowrap;
-        }
-
-
-        .table-responsive {
-            width: 100%;
-            max-height: 400px; /* Adjust based on need */
-            overflow-x: auto;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        @media (max-width: 768px) {
-            .table-responsive {
-                max-height: 300px; /* Adjust based on your UI */
-            }
-        }
-    </style>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="right_col" role="main">

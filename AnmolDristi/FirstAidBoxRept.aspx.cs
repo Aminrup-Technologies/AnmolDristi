@@ -12,9 +12,8 @@ using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace AnmolDristi
 {
-    public partial class Committee_Report : Page
+    public partial class FirstAidBoxRept : System.Web.UI.Page
     {
-        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -22,12 +21,10 @@ namespace AnmolDristi
                 BindMeetingData();
                 RepeaterMeeting.DataBind();
             }
-
         }
-
         private void BindMeetingData()
         {
-            string meetingId = Request.QueryString["MeetingID"];
+            string meetingId = Request.QueryString["InspectionID"];
             if (!string.IsNullOrEmpty(meetingId))
             {
                 DataTable dtMeetings = GetMeetingById(meetingId);
@@ -45,11 +42,11 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                using (SqlCommand cmd = new SqlCommand(@"SELECT MeetingID, MeetingDate, MeetingTime, Venue, MeetingNo, ChairedBy ,Image_upload
-                                                  FROM Committee_MeetingReview 
-                                                  WHERE MeetingID = @MeetingID", con))
+                using (SqlCommand cmd = new SqlCommand(@"SELECT InspectionID, Location, InspectionDate,InspectedBy,EmployeeName,Remarks,TotalItemCount,PhotoPath
+                                                  FROM FirstAidInspectionHeader
+                                                  WHERE InspectionID = @InspectionID", con))
                 {
-                    cmd.Parameters.AddWithValue("@MeetingID", meetingId);
+                    cmd.Parameters.AddWithValue("@InspectionID", meetingId);
                     con.Open();
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     da.Fill(dt);
@@ -68,9 +65,9 @@ namespace AnmolDristi
                 DataRowView drv = e.Item.DataItem as DataRowView;
                 if (drv != null)
                 {
-                    string meetingId = drv["MeetingID"].ToString();
+                    string meetingId = drv["InspectionID"].ToString();
 
-                    Repeater repeaterAttendees = e.Item.FindControl("RepeaterAttendees") as Repeater;
+                    Repeater repeaterAttendees = e.Item.FindControl("RepeaterChecklist") as Repeater;
                     if (repeaterAttendees != null)
                     {
                         DataTable dtAttendees = GetAttendeesByMeetingId(meetingId);
@@ -95,9 +92,9 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT Name,Designation,Attendee_Type,AttendanceStatus FROM Committee_MeetingAttendance WHERE MeetingID = @MeetingID", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT QuestionNumber,description,IsOk,ItemName,PhotoPath FROM FirstAidChecklist WHERE InspectionID = @InspectionID", con))
                 {
-                    cmd.Parameters.AddWithValue("@MeetingID", meetingId);
+                    cmd.Parameters.AddWithValue("@InspectionID", meetingId);
                     con.Open();
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     da.Fill(dt);
@@ -113,9 +110,9 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT IssueDescription,ResponsiblePerson,TargetDate,AgendaTitle,ReviewDate,ReviewBy,Status FROM  Committee_MeetingIssues WHERE MeetingID = @MeetingID", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT ItemName,Quantity,ExpiryDate,LastRefilledDate,NextRefillDueDate FROM  FirstAidItemDetails WHERE InspectionID = @InspectionID", con))
                 {
-                    cmd.Parameters.AddWithValue("@MeetingID", meetingId);
+                    cmd.Parameters.AddWithValue("@InspectionID", meetingId);
                     con.Open();
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     da.Fill(dt);
