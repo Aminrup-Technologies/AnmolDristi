@@ -11,6 +11,7 @@ using System.Runtime.Remoting.Messaging;
 using static System.Net.Mime.MediaTypeNames;
 using System.IO;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace AnmolDristi
 {
@@ -20,15 +21,17 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                int headerID;
-                if (int.TryParse(Request.QueryString["HeaderID"], out headerID))
+                
+                string headerID = Request.QueryString["HeaderID"];
+
+                if (!string.IsNullOrEmpty(headerID))
                 {
                     LoadDetails(headerID);        // Load header
-                    BindChecklist();              // Bind structure
+                    BindChecklist();
                     BindChecklist_Terminals();
-                    BindChecklist_Cables();
-                    BindChecklist_ElectrodeHolder();
                     BindChecklist_WorkArea();
+                    BindChecklist_ElectrodeHolder();
+                    BindChecklist_Cables();
 
                     LoadChecklistItems(headerID); // Load data into repeaters
                 }
@@ -106,7 +109,7 @@ namespace AnmolDristi
             rptWorkArea.DataBind();
         }
 
-        private void LoadDetails(int headerID)
+        private void LoadDetails(string headerID)
         {
             string query = @"SELECT HeaderID,ChecklistDate,JobID,Location,EmployeeName,InspectedBy ,Remarks from  WeldingChecklistHeader where HeaderID=@HeaderID ";
 
@@ -138,7 +141,7 @@ namespace AnmolDristi
             }
         }
 
-        private void LoadChecklistItems(int headerID)
+        private void LoadChecklistItems(string headerID)
         {
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             string query = "SELECT * FROM WeldingChecklist WHERE HeaderID = @HeaderID";
@@ -218,21 +221,64 @@ namespace AnmolDristi
                 }
             }
         }
-       
+
+        //private string GenerateCapaaReportID(SqlConnection con)
+        //{
+        //    string query = "SELECT MAX(CAPA_Report) FROM WeldingChecklist WHERE CAPA_Report IS NOT NULL AND CAPA_Report LIKE 'CAPA-%'";
+
+        //    using (SqlCommand cmd = new SqlCommand(query, con))
+        //    {
+        //        object result = cmd.ExecuteScalar();
+        //        int maxNumber = 0;
+
+        //        if (result != DBNull.Value && result != null)
+        //        {
+        //            string lastId = result.ToString();
+        //            if (lastId.StartsWith("CAPA-"))
+        //            {
+        //                int.TryParse(lastId.Substring(5), out maxNumber);
+        //            }
+        //        }
+
+        //        return $"CAPA-{(maxNumber + 1):D3}";
+        //    }
+        //}
+
+
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            int headerID;
-            if (!int.TryParse(Request.QueryString["HeaderID"], out headerID))
-            {
-                // Invalid header ID
-                return;
-            }
+            //int headerID;
+            //if (!int.TryParse(Request.QueryString["HeaderID"], out headerID))
+            //{
+            //    // Invalid header ID
+            //    return;
+            //}
+            string headerID = Request.QueryString["HeaderID"];
+            if (string.IsNullOrEmpty(headerID)) return;
 
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connStr))
             {
                 con.Open();
+                //    // STEP 1: Collect old CAPA_Report values before delete
+                //    Dictionary<int, string> oldCapaReports = new Dictionary<int, string>();
+                //    SqlCommand cmdGetOldCAPA = new SqlCommand("SELECT QuestionNumber, CAPA_Report FROM WeldingChecklist WHERE HeaderID = @HeaderID", con);
+                //    cmdGetOldCAPA.Parameters.AddWithValue("@HeaderID", headerID);
+
+                //    using (SqlDataReader reader = cmdGetOldCAPA.ExecuteReader())
+                //    {
+                //        while (reader.Read())
+                //        {
+                //            int qNum = Convert.ToInt32(reader["QuestionNumber"]);
+                //            string capaId = reader["CAPA_Report"] as string;
+                //            if (!string.IsNullOrEmpty(capaId))
+                //            {
+                //                oldCapaReports[qNum] = capaId;
+                //            }
+                //        }
+                //    }
+
 
                 // Update Header
                 SqlCommand cmdUpdateHeader = new SqlCommand(@"
@@ -275,9 +321,11 @@ namespace AnmolDristi
             lblMsg.ForeColor = System.Drawing.Color.Green;
         }
 
-
-        private void SaveChecklistItems(Repeater repeater, int headerID, SqlConnection con)
+        //New capa which is generated in Update page in not getting inserted in Master_Capa.
+        private void SaveChecklistItems(Repeater repeater, string headerID, SqlConnection con)
         {
+
+           
             foreach (RepeaterItem item in repeater.Items)
             {
                 HiddenField hfQuestionNumber = (HiddenField)item.FindControl("hfQuestionNumber");
@@ -288,49 +336,118 @@ namespace AnmolDristi
                 FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
                 HiddenField hfImagePath = (HiddenField)item.FindControl("hfImagePath");
                 Label lblDescription = (Label)item.FindControl("lblDescription");
+                // CheckBox chkCapaReport = (CheckBox)item.FindControl("chkCapaReport");
+                CheckBox chkCapa = (CheckBox)item.FindControl("chkCapaReport");
 
                 int questionNumber = Convert.ToInt32(hfQuestionNumber.Value);
                 bool isOk = rdoYes.Checked;
-                bool na = rdoNA.Checked;
+                //bool na = rdoNA.Checked;
+                //string description = lblDescription?.Text?.Trim() ?? "";
+                //string remarks = "";
+                //string photoPath = "";
+                //string capaReportID = null;
+                bool na = (rdoNA != null && rdoNA.Checked);
+                string checklistPhotoPath = "";
                 string description = lblDescription?.Text?.Trim() ?? "";
-
-                string remarks = "";
-                string photoPath = "";
-
-                // Only allow remarks and photo if "No" is selected
-                if (rdoNo.Checked)
+                string remarks = txtRemarks?.Text ?? "";
+                if (fileUpload.HasFile)
                 {
-                    remarks = txtRemarks.Text.Trim();
+                    string fileName = Path.GetFileName(fileUpload.FileName);
+                    string folderPath = Server.MapPath("~/Uploads1/");
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
 
-                    if (fileUpload.HasFile)
-                    {
-                        string fileName = Path.GetFileName(fileUpload.FileName);
-                        string savePath = Server.MapPath("~/Uploads/" + fileName);
-                        fileUpload.SaveAs(savePath);
-                        photoPath = "~/Uploads/" + fileName;
-                    }
-                    else
-                    {
-                        photoPath = hfImagePath?.Value ?? "";
-                    }
+                    string filePath = folderPath + fileName;
+                    fileUpload.SaveAs(filePath);
+                    checklistPhotoPath = "~/Uploads1/" + fileName;
+                }
+                else
+                {
+                    checklistPhotoPath = hfImagePath?.Value ?? "";
+                }
+                object capaID = DBNull.Value;
+
+                //if (rdoNo.Checked)
+                //{
+                //    remarks = txtRemarks.Text.Trim();
+
+                //    if (fileUpload.HasFile)
+                //    {
+                //        string fileName = Path.GetFileName(fileUpload.FileName);
+                //        string savePath = Server.MapPath("~/Uploads/" + fileName);
+                //        fileUpload.SaveAs(savePath);
+                //        photoPath = "~/Uploads/" + fileName;
+                //    }
+                //    else
+                //    {
+                //        photoPath = hfImagePath?.Value ?? "";
+                //    }
+
+                //    if (chkCapaReport != null && chkCapaReport.Checked)
+                //    {
+                //        if (oldCapaReports.ContainsKey(questionNumber))
+                //        {
+                //            capaReportID = oldCapaReports[questionNumber]; // reuse old
+                //        }
+                //        else
+                //        {
+                //            capaReportID = GenerateCapaaReportID(con); // generate new
+                //        }
+                //    }
+                //}
+                if (na && chkCapa != null && chkCapa.Checked)
+                {
+                    SqlCommand cmdCAPA = new SqlCommand(@"
+            INSERT INTO tbl_CAPAMaster 
+            (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+            OUTPUT INSERTED.CAPAID
+            VALUES 
+            (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", con);
+
+                    cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
+                    cmdCAPA.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(checklistPhotoPath) ? DBNull.Value : (object)checklistPhotoPath);
+                    cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                    capaID = cmdCAPA.ExecuteScalar();
                 }
 
                 SqlCommand cmdInsert = new SqlCommand(@"
             INSERT INTO WeldingChecklist 
-            (HeaderID, QuestionNumber, IsOk, NA, Remarks, PhotoPath, Description)
+            (HeaderID, QuestionNumber, IsOk, NA, Remarks, PhotoPath, Description,CAPA_Report)
             VALUES 
-            (@HeaderID, @QuestionNumber, @IsOk, @NA, @Remarks, @PhotoPath, @Description)", con);
+            (@HeaderID, @QuestionNumber, @IsOk, @NA, @Remarks, @PhotoPath, @Description,@CAPA_Report)", con);
 
                 cmdInsert.Parameters.AddWithValue("@HeaderID", headerID);
                 cmdInsert.Parameters.AddWithValue("@QuestionNumber", questionNumber);
                 cmdInsert.Parameters.AddWithValue("@IsOk", isOk);
                 cmdInsert.Parameters.AddWithValue("@NA", na);
                 cmdInsert.Parameters.AddWithValue("@Remarks", remarks);
-                cmdInsert.Parameters.AddWithValue("@PhotoPath", photoPath);
+                cmdInsert.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
                 cmdInsert.Parameters.AddWithValue("@Description", description);
+                cmdInsert.Parameters.AddWithValue("@CAPA_Report", capaID);
 
                 cmdInsert.ExecuteNonQuery();
             }
+
+            //// 2. Delete old Checklist + CAPA
+            //SqlCommand delChecklist = new SqlCommand("DELETE FROM WeldingChecklist WHERE HeaderID = @HeaderID", con);
+            //delChecklist.Parameters.AddWithValue("@HeaderID", headerID);
+            //delChecklist.ExecuteNonQuery();
+
+            //SqlCommand delCAPA = new SqlCommand("DELETE FROM tbl_CAPAMaster WHERE HeaderID = @HeaderID", con, trans);
+            //delCAPA.Parameters.AddWithValue("@HeaderID", inspectionID);
+            //delCAPA.ExecuteNonQuery();
+            SqlCommand clearCAPAFields = new SqlCommand(@"
+                          UPDATE tbl_CAPAMaster 
+                          SET PhotoPath = NULL, Remarks = NULL 
+                          WHERE HeaderID = @HeaderID", con);
+
+            clearCAPAFields.Parameters.AddWithValue("@HeaderID", headerID);
+            clearCAPAFields.ExecuteNonQuery();
         }
 
         protected void BtnBack_Click(object sender, EventArgs e)

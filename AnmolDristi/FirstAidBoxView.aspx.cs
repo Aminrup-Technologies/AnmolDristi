@@ -16,7 +16,7 @@ using System.Runtime.Remoting.Messaging;
 
 namespace AnmolDristi
 {
-    public partial class WeldingChecklistView : System.Web.UI.Page
+    public partial class FirstAidBoxView : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,7 +31,7 @@ namespace AnmolDristi
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"SELECT HeaderID,ChecklistDate,JobID,Location,EmployeeName,InspectedBy  from WeldingChecklistHeader";
+                string query = @"SELECT InspectionID,InspectionDate,Location,EmployeeName,InspectedBy  from FirstAidInspectionHeader";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -45,10 +45,51 @@ namespace AnmolDristi
                 }
             }
         }
-
-        protected void BtnReset_Click(object sender, EventArgs e)
+        protected void btnView_Click(object sender, EventArgs e)
         {
-            Response.Redirect("WeldingChecklistView.aspx");
+            Button btnView = (Button)sender;
+            GridViewRow row = (GridViewRow)btnView.NamingContainer;
+            string InspectionID = btnView.CommandArgument.ToString(); 
+            Response.Redirect($"FirstAidBoxRept.aspx?InspectionID={InspectionID}");
+        }
+        protected void Btndelete_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            GridViewRow row = (GridViewRow)btn.NamingContainer;
+
+            string inspectionID = gvChecklist.DataKeys[row.RowIndex].Value.ToString();
+
+            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(connStr))
+            {
+                con.Open();
+
+                // Step 1: Delete child records first
+                SqlCommand deleteChecklistCmd = new SqlCommand("DELETE FROM FirstAidChecklist WHERE InspectionID = @InspectionID", con);
+                deleteChecklistCmd.Parameters.AddWithValue("@InspectionID", inspectionID);
+                deleteChecklistCmd.ExecuteNonQuery();
+                SqlCommand deleteChecklistCmdd = new SqlCommand("DELETE FROM FirstAidItemDetails WHERE InspectionID = @InspectionID", con);
+                deleteChecklistCmdd.Parameters.AddWithValue("@InspectionID", inspectionID);
+                deleteChecklistCmdd.ExecuteNonQuery();
+                // Step 2: Delete header records
+                SqlCommand deleteHeaderCmd = new SqlCommand("DELETE FROM FirstAidInspectionHeader WHERE InspectionID = @InspectionID", con);
+                deleteHeaderCmd.Parameters.AddWithValue("@InspectionID", inspectionID);
+                deleteHeaderCmd.ExecuteNonQuery();
+
+                con.Close();
+            }
+
+            // Rebind the GridView
+            LoadRecords();
+        }
+
+        protected void BtnEdit_Click(object sender, EventArgs e)
+        {
+            Button btnEdit = (Button)sender;
+            GridViewRow row = (GridViewRow)btnEdit.NamingContainer;
+            string InspectionID = btnEdit.CommandArgument.ToString();
+            Response.Redirect($"FirstAidBoxUpdate.aspx?InspectionID={InspectionID}");
         }
 
         protected void Btnsearch_Click(object sender, EventArgs e)
@@ -88,7 +129,7 @@ namespace AnmolDristi
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"SELECT HeaderID,ChecklistDate,JobID,Location,EmployeeName,InspectedBy  from  WeldingChecklistHeader where ChecklistDate BETWEEN @FromDate AND @ToDate ORDER BY ChecklistDate DESC";
+                string query = @"SELECT InspectionID,InspectionDate,Location,EmployeeName,InspectedBy  from  FirstAidInspectionHeader where InspectionDate BETWEEN @FromDate AND @ToDate ORDER BY InspectionDate DESC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -102,58 +143,10 @@ namespace AnmolDristi
                     gvChecklist.DataBind();
                 }
             }
-
-
         }
-
-        protected void Btndelete_Click(object sender, EventArgs e)
+        protected void BtnReset_Click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            GridViewRow row = (GridViewRow)btn.NamingContainer;
-
-            //int headerID = Convert.ToInt32(gvChecklist.DataKeys[row.RowIndex].Value);
-            string headerID = gvChecklist.DataKeys[row.RowIndex].Value.ToString();
-
-            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
-            using (SqlConnection con = new SqlConnection(connStr))
-            {
-                con.Open();
-
-                // Step 1: Delete child records first
-                SqlCommand deleteChecklistCmd = new SqlCommand("DELETE FROM WeldingChecklist WHERE HeaderID = @HeaderID", con);
-                deleteChecklistCmd.Parameters.AddWithValue("@HeaderID", headerID);
-                deleteChecklistCmd.ExecuteNonQuery();
-
-                // Step 2: Delete header record
-                SqlCommand deleteHeaderCmd = new SqlCommand("DELETE FROM WeldingChecklistHeader WHERE HeaderID = @HeaderID", con);
-                deleteHeaderCmd.Parameters.AddWithValue("@HeaderID", headerID);
-                deleteHeaderCmd.ExecuteNonQuery();
-
-                con.Close();
-            }
-
-            // Rebind the GridView
-            LoadRecords();
+            Response.Redirect("FirstAidBoxView.aspx");
         }
-
-        protected void BtnEdit_Click(object sender, EventArgs e)
-        {
-            Button btnEdit = (Button)sender;
-            GridViewRow row = (GridViewRow)btnEdit.NamingContainer;
-           // int HeaderID = Convert.ToInt32(btnEdit.CommandArgument);
-            string HeaderID = btnEdit.CommandArgument.ToString();
-            Response.Redirect($"WeldingChecklistUpdate.aspx?HeaderID={HeaderID}");
-        }
-        protected void btnView_Click(object sender, EventArgs e)
-        {
-            Button btnView = (Button)sender;
-            GridViewRow row = (GridViewRow)btnView.NamingContainer;
-            // int HeaderID = Convert.ToInt32(btnView.CommandArgument);
-            string HeaderID = btnView.CommandArgument.ToString();
-            // Redirect to update page with AuditID in query string
-            Response.Redirect($"WeldingChecklistRpt.aspx?HeaderID={HeaderID}");
-        }
-
     }
 }

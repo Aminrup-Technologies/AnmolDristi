@@ -55,7 +55,8 @@ namespace AnmolDristi
             Button btn = (Button)sender;
             GridViewRow row = (GridViewRow)btn.NamingContainer;
 
-            int headerID = Convert.ToInt32(gvChecklist.DataKeys[row.RowIndex].Value);
+           // int headerID = Convert.ToInt32(gvChecklist.DataKeys[row.RowIndex].Value);
+            string headerID = gvChecklist.DataKeys[row.RowIndex].Value.ToString();
 
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
@@ -84,15 +85,15 @@ namespace AnmolDristi
         {
             Button btnEdit = (Button)sender;
             GridViewRow row = (GridViewRow)btnEdit.NamingContainer;
-            int HeaderID = Convert.ToInt32(btnEdit.CommandArgument);
+            string HeaderID = btnEdit.CommandArgument.ToString();
             Response.Redirect($"FireExtinguisherChecklistUpdate.aspx?HeaderID={HeaderID}");
         }
         protected void btnView_Click(object sender, EventArgs e)
         {
             Button btnView = (Button)sender;
             GridViewRow row = (GridViewRow)btnView.NamingContainer;
-            int HeaderID = Convert.ToInt32(btnView.CommandArgument);
-
+            //int HeaderID = Convert.ToInt32(btnView.CommandArgument);
+            string HeaderID = btnView.CommandArgument.ToString();
             // Redirect to update page with AuditID in query string
             Response.Redirect($"FireExtinguisherChecklistRpt.aspx?HeaderID={HeaderID}");
         }
