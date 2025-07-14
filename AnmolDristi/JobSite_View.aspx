@@ -68,7 +68,7 @@
                 <div class="x_content table-container">
                     <div style="overflow-x: auto;">
         <asp:GridView ID="GridViewJobSiteChecklist" runat="server" CssClass="table table-bordered"
-            AutoGenerateColumns="False" DataKeyNames="HeaderID" 
+            AutoGenerateColumns="False" DataKeyNames="HeaderID,Question"
             OnRowEditing="GridViewJobSiteChecklist_RowEditing"
             OnRowUpdating="GridViewJobSiteChecklist_RowUpdating"
             OnRowCancelingEdit="GridViewJobSiteChecklist_RowCancelingEdit"

@@ -52,7 +52,7 @@ ORDER BY gh.HeaderID DESC";
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        
+
                         GvGasCuttingChecklist.DataSource = dt;
                         GvGasCuttingChecklist.DataBind();
                     }
@@ -210,17 +210,19 @@ ORDER BY gh.HeaderID DESC";
 
         protected void GvGasCuttingChecklist_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            string headerId = GvGasCuttingChecklist.DataKeys[e.RowIndex].Value.ToString();
+            string headerId = GvGasCuttingChecklist.DataKeys[e.RowIndex].Values["HeaderID"].ToString();
+            string checklistQuestion = GvGasCuttingChecklist.DataKeys[e.RowIndex].Values["ChecklistQuestion"].ToString();
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(@"
-                    DELETE FROM GasCutting_Checklist WHERE HeaderID = @HeaderID;
-                    DELETE FROM GasCutting_Header WHERE HeaderID = @HeaderID;", conn))
+            DELETE FROM GasCutting_Checklist 
+            WHERE HeaderID = @HeaderID AND Question = @ChecklistQuestion", conn))
                 {
                     cmd.Parameters.AddWithValue("@HeaderID", headerId);
+                    cmd.Parameters.AddWithValue("@ChecklistQuestion", checklistQuestion);
                     cmd.ExecuteNonQuery();
                 }
             }

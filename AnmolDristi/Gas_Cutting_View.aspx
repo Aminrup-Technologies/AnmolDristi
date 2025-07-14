@@ -66,7 +66,8 @@
                 <div style="overflow-x: auto;">
     
                 <asp:GridView ID="GvGasCuttingChecklist" runat="server" CssClass="table table-striped table-bordered"
-    AutoGenerateColumns="False" DataKeyNames="HeaderID"
+    AutoGenerateColumns="False" DataKeyNames="HeaderID,ChecklistQuestion"
+
     OnRowEditing="GvGasCuttingChecklist_RowEditing"
     OnRowUpdating="GvGasCuttingChecklist_RowUpdating"
     OnRowCancelingEdit="GvGasCuttingChecklist_RowCancelingEdit"

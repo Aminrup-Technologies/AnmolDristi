@@ -63,28 +63,48 @@
                 </div>
                 <div class="x_content table-container">
                     <div style="overflow-x: auto;">
-                     <asp:GridView ID="GvDandBowChecklist" runat="server" CssClass="table table-striped table-bordered"
+                   <asp:GridView ID="GvDandBowChecklist" runat="server" CssClass="table table-striped table-bordered"
     AutoGenerateColumns="False" DataKeyNames="BasicID" OnRowEditing="GvDandBowChecklist_RowEditing"
     OnRowUpdating="GvDandBowChecklist_RowUpdating" OnRowCancelingEdit="GvDandBowChecklist_RowCancelingEdit"
-    OnRowDeleting="GvDandBowChecklist_RowDeleting">
+    OnRowDeleting="GvDandBowChecklist_RowDeleting"
+    OnRowDataBound="GvDandBowChecklist_RowDataBound">
+
     <Columns>
         <asp:BoundField DataField="Site" HeaderText="Site" />
         <asp:BoundField DataField="TagNo" HeaderText="Tag No" />
         <asp:BoundField DataField="InspectionDate" HeaderText="Inspection Date" DataFormatString="{0:yyyy-MM-dd}" />
         
     <asp:BoundField DataField="JobID" HeaderText="Job ID" />
-    <asp:BoundField DataField="JobName" HeaderText="Job Name" />
+   <asp:TemplateField HeaderText="Job Name">
+    <ItemTemplate>
+        <%# Eval("JobName") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtJobName" runat="server" Text='<%# Bind("JobName") %>' />
+    </EditItemTemplate>
+</asp:TemplateField>
 
-        <asp:BoundField DataField="ShacklesChecklistQuestion" HeaderText="Shackles Question" />
+       <asp:TemplateField HeaderText="Shackles Question">
+    <ItemTemplate>
+        <%# Eval("ShacklesChecklistQuestion") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtShacklesQuestion" runat="server" CssClass="form-control"
+                     Text='<%# Bind("ShacklesChecklistQuestion") %>' />
+    </EditItemTemplate>
+</asp:TemplateField>
+
        <asp:TemplateField HeaderText="Shackles Is Yes">
     <ItemTemplate>
         <%# Eval("ShacklesIsYes") %>
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:DropDownList ID="ddlShacklesIsYes" runat="server" CssClass="form-control" onchange="toggleRemarksAndPhoto(this, 'Shackles')">
-            <asp:ListItem Text="True" Value="True" />
-            <asp:ListItem Text="False" Value="False" />
-        </asp:DropDownList>
+        <asp:DropDownList ID="ddlShacklesIsYes" runat="server" CssClass="form-control"
+    SelectedValue='<%# Bind("ShacklesIsYes") %>' onchange="toggleRemarksAndPhoto(this, 'Shackles')">
+    <asp:ListItem Text="True" Value="True" />
+    <asp:ListItem Text="False" Value="False" />
+</asp:DropDownList>
+
     </EditItemTemplate>
 </asp:TemplateField>
 
@@ -108,16 +128,27 @@
 
 
 
-        <asp:BoundField DataField="ChainPulleyChecklistQuestion" HeaderText="Chain Pulley Question" />
+        <asp:TemplateField HeaderText="Chain Pulley Question">
+    <ItemTemplate>
+        <%# Eval("ChainPulleyChecklistQuestion") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtChainPulleyQuestion" runat="server" CssClass="form-control"
+                     Text='<%# Bind("ChainPulleyChecklistQuestion") %>' />
+    </EditItemTemplate>
+</asp:TemplateField>
+
        <asp:TemplateField HeaderText="Chain Pulley Is Yes">
     <ItemTemplate>
         <%# Eval("ChainPulleyIsYes") %>
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:DropDownList ID="ddlChainPulleyIsYes" runat="server" CssClass="form-control" onchange="toggleRemarksAndPhoto(this, 'ChainPulley')">
-            <asp:ListItem Text="True" Value="True" />
-            <asp:ListItem Text="False" Value="False" />
-        </asp:DropDownList>
+        <asp:DropDownList ID="ddlChainPulleyIsYes" runat="server" CssClass="form-control"
+    SelectedValue='<%# Bind("ChainPulleyIsYes") %>' onchange="toggleRemarksAndPhoto(this, 'ChainPulley')">
+    <asp:ListItem Text="True" Value="True" />
+    <asp:ListItem Text="False" Value="False" />
+</asp:DropDownList>
+
     </EditItemTemplate>
 </asp:TemplateField>
 

@@ -188,7 +188,8 @@ namespace AnmolDristi
 
         protected void GvGrindingMachineChecklist_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int id = Convert.ToInt32(GvGrindingMachineChecklist.DataKeys[e.RowIndex].Value);
+            string id = GvGrindingMachineChecklist.DataKeys[e.RowIndex].Value.ToString();
+
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))

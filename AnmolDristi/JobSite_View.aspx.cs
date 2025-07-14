@@ -13,7 +13,7 @@ namespace AnmolDristi
 {
     public partial class JobSite_View : System.Web.UI.Page
     {
-       
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -43,13 +43,13 @@ namespace AnmolDristi
             }
         }
 
-      
-            protected void btnView_Click(object sender, EventArgs e)
+
+        protected void btnView_Click(object sender, EventArgs e)
         {
             LinkButton btn = (LinkButton)sender;
             string headerId = btn.CommandArgument;
 
-            
+
             Response.Redirect("JobSite_DetailedView.aspx?headerId=" + headerId);
         }
 
@@ -189,16 +189,20 @@ namespace AnmolDristi
 
         protected void GridViewJobSiteChecklist_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            string headerId = GridViewJobSiteChecklist.DataKeys[e.RowIndex].Value.ToString();
+            string headerId = GridViewJobSiteChecklist.DataKeys[e.RowIndex].Values["HeaderID"].ToString();
+            string question = GridViewJobSiteChecklist.DataKeys[e.RowIndex].Values["Question"].ToString();
 
             string cs = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(cs))
             {
                 conn.Open();
+
                 SqlCommand cmd = new SqlCommand(@"
-                    DELETE FROM MahimaGupta_CSMS.JobSiteChecklistDetails WHERE HeaderID = @HeaderID;
-                    DELETE FROM MahimaGupta_CSMS.JobSiteHeader WHERE HeaderID = @HeaderID;", conn);
+            DELETE FROM MahimaGupta_CSMS.JobSiteChecklistDetails 
+            WHERE HeaderID = @HeaderID AND Question = @Question", conn);
+
                 cmd.Parameters.AddWithValue("@HeaderID", headerId);
+                cmd.Parameters.AddWithValue("@Question", question);
                 cmd.ExecuteNonQuery();
             }
 
