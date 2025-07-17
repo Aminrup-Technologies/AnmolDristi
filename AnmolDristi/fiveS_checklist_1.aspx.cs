@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static AnmolDristi.DAL.Datasets.Checklist_details_dataset;
 
 namespace AnmolDristi
 {
@@ -150,9 +151,19 @@ namespace AnmolDristi
             _dataSource.Checklists.Rows[0].AcceptChanges();
             _dataSource.Checklists.Rows[0].SetModified();
 
-            ChecklistsTableAdapter checklisttable = new ChecklistsTableAdapter();
-            checklisttable.Update(_dataSource);
-            int i = 0;
+            //ChecklistsTableAdapter checklisttable = new ChecklistsTableAdapter();
+            //checklisttable.Update(_dataSource);
+            //int i = 0;
+
+            string CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            SqlDataAdapter daChecklistInfo = new SqlDataAdapter("SELECT * FROM ChecklistInfo WHERE Checklist_ID = @ChecklistID", CS);
+            daChecklistInfo.SelectCommand.Parameters.AddWithValue("@ChecklistID", ChecklistId.Value);
+            daChecklistInfo.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+            SqlCommandBuilder cbChecklistInfo = new SqlCommandBuilder(daChecklistInfo);
+            
+            daChecklistInfo.Fill(_dataSource.ChecklistInfo);
+
+
             foreach (RepeaterItem parentItem in DictionaryRepeater.Items)
             {
                 Repeater childRepeater = (Repeater)parentItem.FindControl("ChildRepeater");
@@ -165,58 +176,120 @@ namespace AnmolDristi
                     FileUpload photo = (FileUpload)item.FindControl("Before_pic");
                     Label Requirement = (Label)item.FindControl("Requirement");
                     Label ExistingImage = (Label)item.FindControl("Img");
+                    HiddenField hidChecklistInfoId = (HiddenField)item.FindControl("ChecklistInfoId");
+                    CheckBox CapaPoint = (CheckBox)item.FindControl("CapaPoint");
 
-                    var checklistInfoRow = _dataSource.ChecklistInfo.NewChecklistInfoRow();
-                    checklistInfoRow["ID"] = Convert.ToInt32(((HiddenField)item.FindControl("ChecklistInfoId")).Value);
-                    checklistInfoRow["Checklist_ID"] = Convert.ToInt32(ChecklistId.Value);
-                    checklistInfoRow["Group_Name"] = GrpDetails.Text;
 
-                    //Wrap the Requirement.Text assignment like this to guarantee it doesn't break regardless of database column length:
-                    //This ensures you're not violating the MaxLength constraint even if the database allows larger values but the in-memory schema is outdated or limited.
-                    string reqText = Requirement.Text;
-                    int maxLength = _dataSource.ChecklistInfo.Columns["Requirements"].MaxLength;
-                    if (maxLength > 0 && reqText.Length > maxLength)
-                    {
-                        reqText = reqText.Substring(0, maxLength);
-                    }
-                    checklistInfoRow["Requirements"] = reqText;
+                    int checklistInfoId = Convert.ToInt32(hidChecklistInfoId.Value);
+                    DataRow row = _dataSource.ChecklistInfo.Rows.Find(checklistInfoId);
 
-                    //checklistInfoRow["Requirements"] = Requirement.Text;
-                    checklistInfoRow["Result"] = Convert.ToBoolean(rbl.SelectedValue);
-                    checklistInfoRow["Remark"] = remark.Text;
+                    // CAPA logic
+                    bool oldResult = row["Result"] != DBNull.Value ? Convert.ToBoolean(row["Result"]) : true;
+                    string oldCapaId = row["CAPA_ID"] != DBNull.Value ? row["CAPA_ID"].ToString() : null;
+
+                    bool newResult = Convert.ToBoolean(rbl.SelectedValue);
+                    bool isCapaChecked = CapaPoint != null && CapaPoint.Checked;
+
+                    row["Group_Name"] = GrpDetails.Text;
+                    row["Requirements"] = Requirement.Text;
+
+                    row["Result"] = newResult;
+                    row["Remark"] = remark.Text;
 
                     if (photo.HasFile)
                     {
                         string filename = Path.GetFileName(photo.FileName);
                         string folderPath = Server.MapPath("~/uploads/");
-                        if (!Directory.Exists(folderPath))
-                        {
-                            Directory.CreateDirectory(folderPath);
-                        }
-
+                        if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
                         string filePath = Path.Combine(folderPath, filename);
                         photo.SaveAs(filePath);
-                        checklistInfoRow["Before_photo"] = filename;
+                        row["Before_photo"] = filename;
                     }
-                    else if (ExistingImage.Text != "" && rbl.SelectedValue == "false")
+                    else if (!string.IsNullOrEmpty(ExistingImage.Text) && !newResult)
                     {
-                        checklistInfoRow["Before_photo"] = ExistingImage.Text;
+                        row["Before_photo"] = ExistingImage.Text;
                     }
                     else
                     {
-                        checklistInfoRow["Before_photo"] = null;
+                        row["Before_photo"] = DBNull.Value;
+                    }
+                    string customId = "5S-" + ChecklistId.Value.ToString();
+                    row["Custom_ID"] = customId;
+                    
+
+                    if (!newResult && isCapaChecked)
+                    {
+                        // creating a new CAPA if previous result was OK and now changed to Not OK
+                        if (oldResult)  
+                        {
+                            using (SqlConnection con = new SqlConnection(CS))
+                            {
+                                con.Open();
+
+                                string filename = row["Before_photo"] != DBNull.Value ? row["Before_photo"].ToString() : null;
+
+                                string insertCapaSql = @"
+                                                INSERT INTO tbl_CAPAMaster 
+                                                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                                                VALUES 
+                                                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate);
+                                                SELECT SCOPE_IDENTITY();";
+
+                                using (SqlCommand capaCmd = new SqlCommand(insertCapaSql, con))
+                                {
+                                    capaCmd.Parameters.AddWithValue("@HeaderID", customId);
+                                    capaCmd.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(filename) ? (object)DBNull.Value : filename);
+                                    capaCmd.Parameters.AddWithValue("@Remarks", remark.Text);
+
+                                    // Safely retrieve AssignedBy from Session
+                                    string assignedBy = (Session["USERID"] != null) ? Session["USERID"].ToString() : "Unknown";
+                                    capaCmd.Parameters.AddWithValue("@AssignedBy", assignedBy);
+                                    capaCmd.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                                    object result = capaCmd.ExecuteScalar();
+                                    int newCapaId = Convert.ToInt32(result);
+                                    row["CAPA_ID"] = newCapaId;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Result is still Not OK, and was already Not OK before so that's why reusing the old CAPA ID
+                            row["CAPA_ID"] = oldCapaId;
+                        }
                     }
 
-                    _dataSource.ChecklistInfo.Rows.Add(checklistInfoRow);
-                    _dataSource.ChecklistInfo.Rows[i].AcceptChanges();
-                    _dataSource.ChecklistInfo.Rows[i].SetModified();
+                    else
+                    {
 
-                    i++;
+                        row["CAPA_ID"] = oldCapaId;
+
+                        if (!string.IsNullOrEmpty(oldCapaId))
+                        {
+                            using (SqlConnection con = new SqlConnection(CS))
+                            {
+                                con.Open();
+                                string updateIsYesSql = "UPDATE tbl_CAPAMaster SET IsYes = 1 WHERE HeaderID = @HeaderID";
+                                using (SqlCommand cmd = new SqlCommand(updateIsYesSql, con))
+                                {
+                                    cmd.Parameters.AddWithValue("@HeaderID", customId);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                    }
+
+
                 }
             }
 
+            ChecklistsTableAdapter checklisttable = new ChecklistsTableAdapter();
+            checklisttable.Update(_dataSource);
+
+
             ChecklistInfoTableAdapter checklistInfo = new ChecklistInfoTableAdapter();
             checklistInfo.Update(_dataSource);
+
 
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
@@ -270,6 +343,7 @@ namespace AnmolDristi
                             TextBox remark = (TextBox)item.FindControl("Remark_text");
                             FileUpload photo = (FileUpload)item.FindControl("Before_pic");
                             Label Requirement = (Label)item.FindControl("Requirement");
+                            CheckBox CapaPoint = (CheckBox)item.FindControl("CapaPoint");
 
                             var checklistInfoRow = _dataSource.ChecklistInfo.NewChecklistInfoRow();
                             checklistInfoRow["Checklist_ID"] = checklistId;
@@ -289,9 +363,10 @@ namespace AnmolDristi
                             checklistInfoRow["Result"] = Convert.ToBoolean(rbl.SelectedValue);
                             checklistInfoRow["Remark"] = remark.Text;
 
+                            string filename = "";
                             if (photo.HasFile)
                             {
-                                string filename = Path.GetFileName(photo.FileName);
+                                 filename = Path.GetFileName(photo.FileName);
                                 string folderPath = Server.MapPath("~/uploads/");
                                 if (!Directory.Exists(folderPath))
                                 {
@@ -301,6 +376,51 @@ namespace AnmolDristi
                                 string filePath = Path.Combine(folderPath, filename);
                                 photo.SaveAs(filePath);
                                 checklistInfoRow["Before_photo"] = filename;
+                            }
+
+                            string customId = "5S-" + checklistId.ToString();
+                            checklistInfoRow["Custom_ID"] = customId;
+
+                            // CAPA_ID logic
+                            bool isCapaChecked = CapaPoint != null && CapaPoint.Checked;
+                            if (rbl.SelectedValue == "false" && isCapaChecked) // Result is "Not OK" and CAPA is checked
+                            {
+                               
+                                if (sqlConnection.State != ConnectionState.Open)
+                                    sqlConnection.Open();
+
+                                // Insert into tbl_CAPAMaster and get CAPAID
+                                string insertCapaSql = @"
+                                INSERT INTO tbl_CAPAMaster 
+                                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate, SourceTable, Description)
+                                VALUES 
+                                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate, @SourceTable, @Description);
+                                SELECT SCOPE_IDENTITY();";
+
+                                using (SqlCommand capaCmd = new SqlCommand(insertCapaSql, sqlConnection))
+                                {
+                                    capaCmd.Parameters.AddWithValue("@HeaderID", customId);
+                                    capaCmd.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(filename) ? (object)DBNull.Value : filename);
+                                    capaCmd.Parameters.AddWithValue("@Remarks", remark.Text);
+
+                                    // Safely retrieve AssignedBy from Session
+                                    string assignedBy = (Session["USERID"] != null) ? Session["USERID"].ToString() : "Unknown";
+                                    capaCmd.Parameters.AddWithValue("@AssignedBy", assignedBy);
+                                    capaCmd.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                                    capaCmd.Parameters.AddWithValue("@SourceTable", "FiveS Checklist");
+                                    capaCmd.Parameters.AddWithValue("@Description", reqText);
+                                    
+
+                                    object result = capaCmd.ExecuteScalar();
+                                    int newCapaId = Convert.ToInt32(result);
+
+
+                                    checklistInfoRow["CAPA_ID"] = newCapaId;
+                                }
+                            }
+                            else
+                            {
+                                checklistInfoRow["CAPA_ID"] = DBNull.Value;
                             }
 
                             _dataSource.ChecklistInfo.Rows.Add(checklistInfoRow);
@@ -319,7 +439,6 @@ namespace AnmolDristi
                             });
                         </script>";
 
-                // RegisterStartupScript adds the JavaScript code to the page
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
             }
 

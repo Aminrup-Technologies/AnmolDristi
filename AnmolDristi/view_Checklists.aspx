@@ -101,7 +101,7 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">ATS/OHS/HKS-5SCL-01</h2>
+                            <h2 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">ATS/OHS/HKS-5SCL-01 REV : 00 ,EFT DATE : 01/01/2025</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>

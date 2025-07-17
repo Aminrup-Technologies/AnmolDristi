@@ -61,6 +61,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.SqlClient, Version=5.0.0.0, Culture=neutral, PublicKeyToken=23ec7fc2d6eaa4a5, processorArchitecture=MSIL" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -95,11 +96,15 @@
     <Content Include="packages.config" />
     <Content Include="qaqc_home.aspx" />
     <Content Include="Dristi.Master" />
+    <Content Include="QuickJCC_Checklist.aspx" />
+    <Content Include="Quick_JCCData.aspx" />
     <Content Include="uploads\no_image.jpg" />
     <Content Include="view_Checklists.aspx" />
     <Content Include="View_LiftingBelt.aspx" />
     <Content Include="View_LineWalk.aspx" />
     <Content Include="View_Maasmeeting.aspx" />
+    <Content Include="View_QJCC.aspx" />
+    <Content Include="WebData\OH4Y_Logo.png" />
     <Content Include="WebForm1.aspx" />
     <Content Include="DAL\Datasets\Checklist_details_dataset.xsc">
       <DependentUpon>Checklist_details_dataset.xsd</DependentUpon>
@@ -122,6 +127,17 @@
     </None>
     <Content Include="DAL\Datasets\DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
+    <Content Include="DAL\Datasets\DataSet3.xsc">
+      <DependentUpon>DataSet3.xsd</DependentUpon>
+    </Content>
+    <None Include="DAL\Datasets\DataSet3.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet3.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DAL\Datasets\DataSet3.xss">
+      <DependentUpon>DataSet3.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\abhisheksahu.aminruptechnologies.co.in - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
@@ -189,6 +205,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Datasets\DataSet3.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet3.xsd</DependentUpon>
     </Compile>
     <Compile Include="Edit_page.aspx.cs">
       <DependentUpon>Edit_page.aspx</DependentUpon>
@@ -309,6 +330,20 @@
     <Compile Include="qaqc_home.aspx.designer.cs">
       <DependentUpon>qaqc_home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="QuickJCC_Checklist.aspx.cs">
+      <DependentUpon>QuickJCC_Checklist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="QuickJCC_Checklist.aspx.designer.cs">
+      <DependentUpon>QuickJCC_Checklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Quick_JCCData.aspx.cs">
+      <DependentUpon>Quick_JCCData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Quick_JCCData.aspx.designer.cs">
+      <DependentUpon>Quick_JCCData.aspx</DependentUpon>
+    </Compile>
     <Compile Include="view_Checklists.aspx.cs">
       <DependentUpon>view_Checklists.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -336,6 +371,13 @@
     </Compile>
     <Compile Include="View_Maasmeeting.aspx.designer.cs">
       <DependentUpon>View_Maasmeeting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View_QJCC.aspx.cs">
+      <DependentUpon>View_QJCC.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View_QJCC.aspx.designer.cs">
+      <DependentUpon>View_QJCC.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>

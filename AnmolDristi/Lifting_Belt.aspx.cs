@@ -155,6 +155,8 @@ namespace AnmolDristi
 
                     var ChecklistId = tableAdapter.InsertLiftingBeltChecklist(txtDate.Text, txtJobsite.Text, txtJobID.Text, txtJobDescription.Text, DateTime.Now,txtAuditby.Text);
 
+                    //string ChecklistId = "LB-" + fullId.ToString(); 
+
                     foreach (RepeaterItem parentItem in DictionaryRepeater.Items)
                     {
                         Repeater ChildRepeater = (Repeater)parentItem.FindControl("ChildRepeater");
@@ -167,6 +169,7 @@ namespace AnmolDristi
                             FileUpload photo = (FileUpload)item.FindControl("Before_pic");
                             Label checkPoints = (Label)item.FindControl("Requirement");
                             TextBox note = (TextBox)item.FindControl("Note_text");
+                            CheckBox CapaPoint = (CheckBox)item.FindControl("CapaPoint");
 
                             var LiftingInfoRow = _dataset.LiftingBeltChecklistInfo.NewLiftingBeltChecklistInfoRow();
                             LiftingInfoRow["Checklist_ID"] = ChecklistId;
@@ -176,9 +179,10 @@ namespace AnmolDristi
                             LiftingInfoRow["Remarks"] = remark.Text.Trim();
                             LiftingInfoRow["Note"]= note.Text.Trim();
 
+                            string filename = "";
                             if (photo.HasFile)
                             {
-                                string filename = Path.GetFileName(photo.FileName);
+                                filename = Path.GetFileName(photo.FileName);
                                 string folderPath = Server.MapPath("~/uploads/");
                                 if (!Directory.Exists(folderPath))
                                 {
@@ -189,6 +193,52 @@ namespace AnmolDristi
                                 photo.SaveAs(filePath);
                                 LiftingInfoRow["BeforePhoto"] = filename;
                             }
+
+                            string customid = "LB-" + ChecklistId.ToString();
+                            LiftingInfoRow["Custom_ID"] = customid;
+
+                            //  CAPA_ID logic
+                            bool isCapaChecked = CapaPoint != null && CapaPoint.Checked;
+                            if (rbl.SelectedValue == "NotOK" && isCapaChecked) // Result is "Not OK" and CAPA is checked
+                            {
+
+                                if (sqlConnection.State != ConnectionState.Open)
+                                    sqlConnection.Open();
+
+                                // Insert into tbl_CAPAMaster and get CAPAID...
+                                string insertCapaSql = @"
+                                INSERT INTO tbl_CAPAMaster 
+                                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate, SourceTable, Description)
+                                VALUES 
+                                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate, @SourceTable, @Description);
+                                SELECT SCOPE_IDENTITY();";
+
+                                using (SqlCommand capaCmd = new SqlCommand(insertCapaSql, sqlConnection))
+                                {
+                                    capaCmd.Parameters.AddWithValue("@HeaderID", customid);
+                                    capaCmd.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(filename) ? (object)DBNull.Value : filename);
+                                    capaCmd.Parameters.AddWithValue("@Remarks", remark.Text);
+
+                                    // Safely retrieve AssignedBy from Session
+                                    string assignedBy = (Session["USERID"] != null) ? Session["USERID"].ToString() : "Unknown";
+                                    capaCmd.Parameters.AddWithValue("@AssignedBy", assignedBy);
+                                    capaCmd.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                                    capaCmd.Parameters.AddWithValue("@SourceTable", "Lifting Belt And Wire Rope Sling Checklist");
+                                    capaCmd.Parameters.AddWithValue("@Description", checkPoints.Text);
+
+
+                                    object result = capaCmd.ExecuteScalar();
+                                    int newCapaId = Convert.ToInt32(result);
+
+
+                                    LiftingInfoRow["CAPA_ID"] = newCapaId;
+                                }
+                            }
+                            else
+                            {
+                                LiftingInfoRow["CAPA_ID"] = DBNull.Value;
+                            }
+
 
                             _dataset.LiftingBeltChecklistInfo.Rows.Add(LiftingInfoRow);
 
@@ -204,7 +254,7 @@ namespace AnmolDristi
                             });
                         </script>";
 
-                    // RegisterStartupScript adds the JavaScript code to the page
+
                     ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
 
                 }
@@ -226,10 +276,16 @@ namespace AnmolDristi
             _dataset.LiftingBeltChecklist.Rows[0].AcceptChanges();
             _dataset.LiftingBeltChecklist.Rows[0].SetModified();
 
-            LiftingBeltChecklistTableAdapter tableAdapter = new LiftingBeltChecklistTableAdapter();
-            tableAdapter.Update(_dataset);
+            //new implementation...
+            string CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            SqlDataAdapter daChecklistInfo = new SqlDataAdapter("SELECT * FROM LiftingBeltChecklistInfo WHERE Checklist_ID = @ChecklistID", CS);
+            daChecklistInfo.SelectCommand.Parameters.AddWithValue("@ChecklistID", ChecklistId.Value);
+            daChecklistInfo.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+            SqlCommandBuilder cbChecklistInfo = new SqlCommandBuilder(daChecklistInfo);
 
-            int i = 0;
+            daChecklistInfo.Fill(_dataset.LiftingBeltChecklistInfo);
+
+
             foreach (RepeaterItem parentItem in DictionaryRepeater.Items)
             {
                 Repeater ChildRepeater = (Repeater)parentItem.FindControl("ChildRepeater");
@@ -243,10 +299,23 @@ namespace AnmolDristi
                     Label checkPoints = (Label)item.FindControl("Requirement");
                     Label existingimage = (Label)item.FindControl("Img");
                     TextBox note = (TextBox)item.FindControl("Note_text");
+                    HiddenField hidChecklistInfoId = (HiddenField)item.FindControl("ChecklistInfoId");
+                    CheckBox CapaPoint = (CheckBox)item.FindControl("CapaPoint");
 
-                    var checklistInfoRow = _dataset.LiftingBeltChecklistInfo.NewLiftingBeltChecklistInfoRow();
-                    checklistInfoRow["ID"] = Convert.ToInt32(((HiddenField)item.FindControl("ChecklistInfoId")).Value);
-                    checklistInfoRow["Checklist_ID"] = Convert.ToInt32(ChecklistId.Value);
+
+                    int checklistInfoId = Convert.ToInt32(hidChecklistInfoId.Value);
+
+                    DataRow checklistInfoRow = _dataset.LiftingBeltChecklistInfo.Rows.Find(checklistInfoId);
+
+                    // Getting old result (default to "OK" if null)...
+                    string oldResult = checklistInfoRow["Result"] != DBNull.Value ? checklistInfoRow["Result"].ToString() : "OK";
+
+                    // Checking if old CAPA ID exists...
+                    string oldCapaId = checklistInfoRow["CAPA_ID"] != DBNull.Value ? checklistInfoRow["CAPA_ID"].ToString() : null;
+
+
+                    //checklistInfoRow["ID"] = Convert.ToInt32(((HiddenField)item.FindControl("ChecklistInfoId")).Value);
+                    //checklistInfoRow["Checklist_ID"] = Convert.ToInt32(ChecklistId.Value);
                     checklistInfoRow["Description"] = Grp_detail.Text;
                     checklistInfoRow["CheckPoints"] = checkPoints.Text;
                     checklistInfoRow["Result"] = rbl.SelectedValue;
@@ -276,14 +345,80 @@ namespace AnmolDristi
                         checklistInfoRow["Beforephoto"] = null;
                     }
 
-                    _dataset.LiftingBeltChecklistInfo.Rows.Add(checklistInfoRow);
-                    _dataset.LiftingBeltChecklistInfo.Rows[i].AcceptChanges();
-                    _dataset.LiftingBeltChecklistInfo.Rows[i].SetModified();
+                    string customid = "LB-" + ChecklistId.Value.ToString();
+                    checklistInfoRow["Custom_ID"] = customid;
 
-                    i++;
+                    // Determining new result that is true = OK or NA, false = Not OK...
+                    bool newResult = rbl.SelectedValue == "OK" || rbl.SelectedValue == "NA";
+
+                    bool isCapaChecked = CapaPoint != null && CapaPoint.Checked;
+
+                    if (!newResult && isCapaChecked)
+                    {
+                        // Only inserting new CAPA row if result changed from OK/NA to Not OK...
+                        if (oldResult == "OK" || oldResult == "NA")
+                        {
+                            using (SqlConnection con = new SqlConnection(CS))
+                            {
+                                con.Open();
+
+                                string filename = checklistInfoRow["Beforephoto"] != DBNull.Value ? checklistInfoRow["Beforephoto"].ToString() : null;
+
+                                string insertCapaSql = @"
+                                            INSERT INTO tbl_CAPAMaster 
+                                            (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate, IsYes)
+                                            VALUES 
+                                            (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate, 0);
+                                            SELECT SCOPE_IDENTITY();";
+
+                                using (SqlCommand capaCmd = new SqlCommand(insertCapaSql, con))
+                                {
+                                    capaCmd.Parameters.AddWithValue("@HeaderID", customid);
+                                    capaCmd.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(filename) ? (object)DBNull.Value : filename);
+                                    capaCmd.Parameters.AddWithValue("@Remarks", remark.Text);
+                                    capaCmd.Parameters.AddWithValue("@AssignedBy", txtAuditby.Text);
+                                    capaCmd.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                                    object result = capaCmd.ExecuteScalar();
+                                    int newCapaId = Convert.ToInt32(result);
+                                    checklistInfoRow["CAPA_ID"] = newCapaId;
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // if still not ok just keeping the old one...
+                            checklistInfoRow["CAPA_ID"] = oldCapaId;
+                        }
+                    }
+                    else
+                    {
+                        // If result is OK or CAPA checkbox not checked...
+                        checklistInfoRow["CAPA_ID"] = oldCapaId;
+
+                        if (!string.IsNullOrEmpty(oldCapaId))
+                        {
+                            using (SqlConnection con = new SqlConnection(CS))
+                            {
+                                con.Open();
+
+                                string updateSql = "UPDATE tbl_CAPAMaster SET IsYes = 1 WHERE CAPAID = @CAPAID";
+                                using (SqlCommand cmd = new SqlCommand(updateSql, con))
+                                {
+                                    cmd.Parameters.AddWithValue("@CAPAID", Convert.ToInt32(oldCapaId));
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                    }
+
+
                 }
-
             }
+
+            LiftingBeltChecklistTableAdapter tableAdapter = new LiftingBeltChecklistTableAdapter();
+            tableAdapter.Update(_dataset);
 
             LiftingBeltChecklistInfoTableAdapter liftingInfo = new LiftingBeltChecklistInfoTableAdapter();
             liftingInfo.Update(_dataset);
@@ -297,7 +432,6 @@ namespace AnmolDristi
                             });
                         </script>";
 
-            // RegisterStartupScript adds the JavaScript code to the page
             ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
 
         }
@@ -327,7 +461,7 @@ namespace AnmolDristi
                     }
                     if (dataItem.Length > 6 && dataItem[6].GetValue(e.Item.DataItem) != null)
                     {
-                        ((TextBox)e.Item.Controls[19]).Text = dataItem[6].GetValue(e.Item.DataItem).ToString();
+                        ((TextBox)e.Item.Controls[23]).Text = dataItem[6].GetValue(e.Item.DataItem).ToString();
                     }
                 }
             }

@@ -24,6 +24,7 @@ namespace AnmolDristi
                     Response.Redirect("login.aspx");
                 }
 
+                System.Diagnostics.Debug.WriteLine("Page Load — Not PostBack");
                 string Linewalkid = Request.QueryString["id"];
                 if (!string.IsNullOrEmpty(Linewalkid))
                 {
@@ -38,6 +39,7 @@ namespace AnmolDristi
                
             }
 
+            
             if (ViewState["WalkStatusId"] != null)
             {
                 Save.Text = "Update";
@@ -313,14 +315,12 @@ namespace AnmolDristi
 
         protected void BtnSaveObservation_Click(object sender, EventArgs e)
         {
-            
+
             string Area = txtAreaLocation.Text.Trim();
             string Observation = txtObservation.Text.Trim();
             string Recommandation = txtRecommendation.Text.Trim();
-            //string Responsibility = txtResponsibility.Text.Trim();
-            //string TargetDate = DateTime.Parse(txtTargetDate.Text.Trim()).ToString("yyyy-MM-dd");
-            //string Remarks = txtRemarks.Text.Trim();
             string Snap = "";
+            bool generateCAPA = chkGenerateCAPA.Checked;
 
             if (fileSnap.HasFile)
             {
@@ -329,9 +329,8 @@ namespace AnmolDristi
                     Directory.CreateDirectory(folderPath);
 
                 string filename = Guid.NewGuid().ToString() + "_" + Path.GetFileName(fileSnap.FileName);
-                Snap =  filename;
+                Snap = filename;
                 fileSnap.SaveAs(Path.Combine(folderPath, filename));
-
                 lblExistingSnap.Text = "";
             }
             else if (!string.IsNullOrEmpty(lblExistingSnap.Text))
@@ -340,54 +339,138 @@ namespace AnmolDristi
             }
 
             int mainID = Convert.ToInt32(ViewState["WalkStatusId"]);
+            string statusToSave = "Open"; // Default status
+            int? capaIdToUse = null;
+            string customId = "LW-" + mainID;
 
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
             {
                 con.Open();
+
+                bool isUpdate = !string.IsNullOrEmpty(Entity_Id.Value);
+                int detailId = isUpdate ? Convert.ToInt32(Entity_Id.Value) : 0;
+
+                if (generateCAPA)
+                {
+                    int newCapaId;
+                    using (SqlCommand capaCmd = new SqlCommand(@"
+                INSERT INTO tbl_CAPAMaster (SourceTable, HeaderID,Remarks, Description, PhotoPath, AssignedBy)
+                VALUES (@SourceTable, @HeaderID, @Remarks, @Description, @PhotoPath, @AssignedBy);
+                SELECT SCOPE_IDENTITY();", con))
+                    {
+                        capaCmd.Parameters.AddWithValue("@SourceTable", "Line_walk");
+                        capaCmd.Parameters.AddWithValue("@HeaderID", customId);
+                        capaCmd.Parameters.AddWithValue("@Description", Observation);
+                        capaCmd.Parameters.AddWithValue("@Remarks", Recommandation);
+                        capaCmd.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(Snap) ? (object)DBNull.Value : Snap);
+
+                        // Safely retrieve AssignedBy from Session
+                        string assignedBy = (Session["USERID"] != null) ? Session["USERID"].ToString() : "Unknown";
+                        capaCmd.Parameters.AddWithValue("@AssignedBy", assignedBy);
+
+                        newCapaId = Convert.ToInt32(capaCmd.ExecuteScalar());
+                        capaIdToUse = newCapaId;
+                    }
+
+                    using (SqlCommand getStatusCmd = new SqlCommand("SELECT Status FROM tbl_CAPAMaster WHERE CAPAID = @CAPAID", con))
+                    {
+                        getStatusCmd.Parameters.AddWithValue("@CAPAID", capaIdToUse.Value);
+                        object statusObj = getStatusCmd.ExecuteScalar();
+                        if (statusObj != null)
+                            statusToSave = statusObj.ToString();
+                    }
+                }
+
                 SqlCommand cmd;
 
-                if (!string.IsNullOrEmpty(Entity_Id.Value))  
+                if (isUpdate)
                 {
-                    cmd = new SqlCommand(@"UPDATE Line_walk_details 
-                                   SET Location = @Location, 
-                                       Observation_Points = @Observation_Points, 
-                                       Recommendation_Points = @Recommendation_Points " +
-                                               (string.IsNullOrEmpty(Snap) ? "" : ", Snap_File_Path = @Snap_File_Path") +
-                                          " WHERE Detail_ID = @Detail_ID", con);
+                    cmd = new SqlCommand(@"
+                UPDATE Line_walk_details 
+                SET 
+                    Location = @Location,
+                    Observation_Points = @Observation_Points,
+                    Recommendation_Points = @Recommendation_Points,
+                    Generate_CAPA = @Generate_CAPA,
+                    Status = @Status,
+                    Custom_ID = 'LW-' + CAST(ID AS VARCHAR)
+                    " + (string.IsNullOrEmpty(Snap) ? "" : ", Snap_File_Path = @Snap_File_Path") + @"
+                    , CAPA_ID = @CAPA_ID
+                WHERE Detail_ID = @Detail_ID", con);
 
-                    cmd.Parameters.AddWithValue("@Detail_ID", Convert.ToInt32(Entity_Id.Value));
+                    cmd.Parameters.AddWithValue("@Detail_ID", detailId);
+
+                    if (!generateCAPA)
+                    {
+                        // If Unchecked capa checkbox IsYes = 1 in CAPA Master table 
+                        using (SqlCommand updateCapaCmd = new SqlCommand(@"
+                    UPDATE tbl_CAPAMaster 
+                    SET IsYes = 1 
+                    WHERE CAPAID = (
+                        SELECT CAPA_ID 
+                        FROM Line_walk_details 
+                        WHERE Detail_ID = @Detail_ID AND CAPA_ID IS NOT NULL
+                    )", con))
+                        {
+                            updateCapaCmd.Parameters.AddWithValue("@Detail_ID", detailId);
+                            updateCapaCmd.ExecuteNonQuery();
+                        }
+
+                        // catching the existing CAPA_ID from DB to preserve it(later used)
+                        using (SqlCommand getCapaCmd = new SqlCommand("SELECT CAPA_ID FROM Line_walk_details WHERE Detail_ID = @Detail_ID", con))
+                        {
+                            getCapaCmd.Parameters.AddWithValue("@Detail_ID", detailId);
+                            object existingCapaId = getCapaCmd.ExecuteScalar();
+                            capaIdToUse = existingCapaId != DBNull.Value ? Convert.ToInt32(existingCapaId) : (int?)null;
+                        }
+                    }
                 }
-                else  
+                else
                 {
-                    cmd = new SqlCommand(@"INSERT INTO Line_walk_details 
-                                   (ID, Location, Observation_Points, Recommendation_Points, Snap_File_Path,Status) 
-                                   VALUES 
-                                   (@ID, @Location, @Observation_Points, @Recommendation_Points, @Snap_File_Path,@Status)", con);
-                    cmd.Parameters.AddWithValue("@ID", mainID);
-                    cmd.Parameters.AddWithValue("@Status", "Open");
+                    cmd = new SqlCommand(@"
+                INSERT INTO Line_walk_details 
+                    (ID, Location, Observation_Points, Recommendation_Points, Snap_File_Path, Status, Generate_CAPA, CAPA_ID)
+                VALUES 
+                    (@ID, @Location, @Observation_Points, @Recommendation_Points, @Snap_File_Path, @Status, @Generate_CAPA, @CAPA_ID);
+                SELECT SCOPE_IDENTITY();", con);
                 }
 
+                cmd.Parameters.AddWithValue("@ID", mainID);
                 cmd.Parameters.AddWithValue("@Location", Area);
                 cmd.Parameters.AddWithValue("@Observation_Points", Observation);
                 cmd.Parameters.AddWithValue("@Recommendation_Points", Recommandation);
-                //cmd.Parameters.AddWithValue("@Responsibility", Responsibility);
-                // cmd.Parameters.AddWithValue("@Target_Date", TargetDate);
-                //cmd.Parameters.AddWithValue("@Remarks", Remarks);
+                cmd.Parameters.AddWithValue("@Status", statusToSave);
+                cmd.Parameters.AddWithValue("@Generate_CAPA", generateCAPA);
                 cmd.Parameters.AddWithValue("@Snap_File_Path", string.IsNullOrEmpty(Snap) ? (object)DBNull.Value : Snap);
+                cmd.Parameters.AddWithValue("@CAPA_ID", capaIdToUse.HasValue ? (object)capaIdToUse.Value : DBNull.Value);
 
+                if (isUpdate)
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    int newDetailId = Convert.ToInt32(cmd.ExecuteScalar());
 
-                cmd.ExecuteNonQuery();
+                    using (SqlCommand updateCustomCmd = new SqlCommand(@"
+                UPDATE Line_walk_details 
+                SET Custom_ID = @CustomID 
+                WHERE Detail_ID = @Detail_ID", con))
+                    {
+                        updateCustomCmd.Parameters.AddWithValue("@CustomID", customId);
+                        updateCustomCmd.Parameters.AddWithValue("@Detail_ID", newDetailId);
+                        updateCustomCmd.ExecuteNonQuery();
+                    }
+                }
             }
 
-            // Reset
+            // Reset UI
             Entity_Id.Value = "";
             txtAreaLocation.Text = "";
             txtObservation.Text = "";
+            chkGenerateCAPA.Checked = false;
             txtRecommendation.Text = "";
-            //txtResponsibility.Text = "";
-            //txtTargetDate.Text = "";
-            //txtRemarks.Text = "";
-            fileSnap.Attributes.Clear();  
+            fileSnap.Attributes.Clear();
             lblExistingSnap.Text = "";
 
             BindObservation(); 
@@ -488,7 +571,9 @@ namespace AnmolDristi
                             Target_Date = reader["Target_Date"] == DBNull.Value ? "" : Convert.ToDateTime(reader["Target_Date"]).ToString("yyyy-MM-dd"),
                             Remarks = reader["Remarks"],
                             Snap_File_Path = reader["Snap_File_Path"] == DBNull.Value ? "" : reader["Snap_File_Path"],
-                            ImmediateAction_Attachment = reader["ImmediateAction_Attachment"] == DBNull.Value ? "" : reader["ImmediateAction_Attachment"]
+                            ImmediateAction_Attachment = reader["ImmediateAction_Attachment"]?.ToString() ?? "",
+                            Generate_CAPA = Convert.ToBoolean(reader["Generate_CAPA"])
+
                         };
                     }
                     else
@@ -560,8 +645,8 @@ namespace AnmolDristi
 
         protected void gvObservations_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "DeleteObservation")
-            {
+             if (e.CommandName == "DeleteObservation")
+             {
                 int detailId = Convert.ToInt32(e.CommandArgument);
 
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
@@ -573,7 +658,7 @@ namespace AnmolDristi
                 }
 
                 BindObservation();
-            }
+             }
         }
 
         protected void Home_Click(object sender, EventArgs e)
@@ -583,112 +668,209 @@ namespace AnmolDristi
 
         protected void BtnImmediateAction_Click(object sender, EventArgs e)
         {
-                string remarks = txtRemarks.Text.Trim();
-                string attachmentFileName = "";
 
-                // For optional file upload
-                if (IAction_Attachment.HasFile)
-                {
-                    string folderPath = Server.MapPath("~/Uploads/");
-                    if (!Directory.Exists(folderPath))
-                        Directory.CreateDirectory(folderPath);
+            string remarks = txtRemarks.Text.Trim();
+            string attachmentFileName = "";
 
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(IAction_Attachment.FileName);
-                    attachmentFileName = uniqueFileName;
-                    IAction_Attachment.SaveAs(Path.Combine(folderPath, uniqueFileName));
-                }
+            if (IAction_Attachment.HasFile)
+            {
+                string folderPath = Server.MapPath("~/Uploads/");
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
 
-                        // Get Detail_ID to update
-                        if (string.IsNullOrEmpty(Entity_Id.Value))
-                        {
-                            // showing error if ID is missing.
-                            string errorScript = @"<script type='text/javascript'>
-                    new PNotify({
-                        title: 'Error',
-                        text: 'Unable to save. Record ID is missing.',
-                        type: 'error',
-                        styling: 'bootstrap3'
-                    });
-                </script>";
-                            ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
-                            return;
-                        }
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(IAction_Attachment.FileName);
+                attachmentFileName = uniqueFileName;
+                IAction_Attachment.SaveAs(Path.Combine(folderPath, uniqueFileName));
+            }
 
-                        int detailId = Convert.ToInt32(Entity_Id.Value);
+            if (string.IsNullOrEmpty(Entity_Id.Value))
+            {
+                string errorScript = @"<script type='text/javascript'>
+            new PNotify({
+                title: 'Error',
+                text: 'Unable to save. Record ID is missing.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
+        </script>";
+                ClientScript.RegisterStartupScript(this.GetType(), "ShowErrorNotification", errorScript, false);
+                return;
+            }
 
-                        using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
-                        {
-                            con.Open();
-
-                            
-                            string updateQuery = @"
-                                UPDATE Line_walk_details 
-                                SET Remarks = @Remarks,
-                                Status = 'Pending' "+
-                                (string.IsNullOrEmpty(attachmentFileName) ? "" : ", ImmediateAction_Attachment = @Attachment") +
-                                " WHERE Detail_ID = @Detail_ID";
-
-                            SqlCommand cmd = new SqlCommand(updateQuery, con);
-                            cmd.Parameters.AddWithValue("@Remarks", remarks);
-                            cmd.Parameters.AddWithValue("@Detail_ID", detailId);
-
-                            if (!string.IsNullOrEmpty(attachmentFileName))
-                                cmd.Parameters.AddWithValue("@Attachment", attachmentFileName);
-
-                            cmd.ExecuteNonQuery();
-                        }
-
-                         BindObservation();
-
-            
-                        txtRemarks.Text = "";
-                        IAction_Attachment.Attributes.Clear();
-
-                       
-                        string successScript = @"<script type='text/javascript'>
-                            new PNotify({
-                                title: 'Success',
-                                text: 'Immediate Action saved successfully!',
-                                type: 'success',
-                                styling: 'bootstrap3'
-                            });
-                        </script>";
-
-                        ClientScript.RegisterStartupScript(this.GetType(), "ShowSuccessNotification", successScript, false);
-        }
-
-        protected void BtnFutureAction_Click(object sender, EventArgs e)
-        {
-            string responsibility = txtResponsibility.Text.Trim();
-            string empName = txtRespoName.Text.Trim();
-            string targetDate = txtTargetDate.Text.Trim();
-
-            int detailId = Convert.ToInt32(Entity_Id.Value); 
+            int detailId = Convert.ToInt32(Entity_Id.Value);
+            string statusToSave = "Pending";
+            bool isGenerateCAPA = false;
+            int capaId = 0;
 
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(@"UPDATE Line_walk_details 
-                                          SET Responsibility = @Responsibility, 
-                                              Target_Date = @TargetDate, 
-                                              Status = 'In Progress'
-                                          WHERE Detail_ID = @DetailID", con);
 
-                cmd.Parameters.AddWithValue("@Responsibility", responsibility);
-                cmd.Parameters.AddWithValue("@TargetDate", targetDate);
-                cmd.Parameters.AddWithValue("@Remarks", empName); 
-                cmd.Parameters.AddWithValue("@DetailID", detailId);
+                SqlCommand getCapaInfoCmd = new SqlCommand("SELECT Generate_CAPA, ISNULL(CAPA_ID, 0) FROM Line_walk_details WHERE Detail_ID = @Detail_ID", con);
+                getCapaInfoCmd.Parameters.AddWithValue("@Detail_ID", detailId);
+
+                using (SqlDataReader reader = getCapaInfoCmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        isGenerateCAPA = Convert.ToBoolean(reader.GetValue(0));
+                        capaId = Convert.ToInt32(reader.GetValue(1));
+                    }
+                }
+
+                if (isGenerateCAPA && capaId > 0)
+                {
+                    SqlCommand statusCmd = new SqlCommand("SELECT Status FROM tbl_CAPAMaster WHERE CAPAID = @CAPAID", con);
+                    statusCmd.Parameters.AddWithValue("@CAPAID", capaId);
+                    object statusObj = statusCmd.ExecuteScalar();
+                    if (statusObj != null)
+                    {
+                        statusToSave = statusObj.ToString();
+                    }
+
+                    // Updating the tbl_CAPAMaster with CorrectiveAction, Photo, and Date.
+                    SqlCommand updateCapaCmd = new SqlCommand(@"
+                UPDATE tbl_CAPAMaster 
+                SET CorrectiveAction = @CorrectiveAction, 
+                    CA_Photo = @CAPhoto,
+                    CA_Date = @CADate
+                WHERE CAPAID = @CAPAID", con);
+
+                    updateCapaCmd.Parameters.AddWithValue("@CorrectiveAction", remarks);
+                    updateCapaCmd.Parameters.AddWithValue("@CAPAID", capaId);
+                    updateCapaCmd.Parameters.AddWithValue("@CADate", DateTime.Now);
+                    updateCapaCmd.Parameters.AddWithValue("@CAPhoto", string.IsNullOrEmpty(attachmentFileName) ? (object)DBNull.Value : attachmentFileName);
+
+                    updateCapaCmd.ExecuteNonQuery();
+                }
+
+                //  Updating the Line_walk_details with Remarks, Attachment, and Correct Status(if not checked...by default status)
+                string updateQuery = @"
+            UPDATE Line_walk_details 
+            SET Remarks = @Remarks,
+                Status = @Status" +
+                        (string.IsNullOrEmpty(attachmentFileName) ? "" : ", ImmediateAction_Attachment = @Attachment") +
+                    " WHERE Detail_ID = @Detail_ID";
+
+                SqlCommand cmd = new SqlCommand(updateQuery, con);
+                cmd.Parameters.AddWithValue("@Remarks", remarks);
+                cmd.Parameters.AddWithValue("@Status", statusToSave);
+                cmd.Parameters.AddWithValue("@Detail_ID", detailId);
+                if (!string.IsNullOrEmpty(attachmentFileName))
+                    cmd.Parameters.AddWithValue("@Attachment", attachmentFileName);
 
                 cmd.ExecuteNonQuery();
             }
 
-          
+            BindObservation();
+
+            txtRemarks.Text = "";
+            IAction_Attachment.Attributes.Clear();
+
+            string successScript = @"<script type='text/javascript'>
+        new PNotify({
+            title: 'Success',
+            text: 'Immediate Action saved successfully!',
+            type: 'success',
+            styling: 'bootstrap3'
+        });
+    </script>";
+
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowIASuccess", successScript, false);
+
+
+        }
+
+        protected void BtnFutureAction_Click(object sender, EventArgs e)
+        {
+           
+            string responsibility = txtResponsibility.Text.Trim();
+            string empName = txtRespoName.Text.Trim(); 
+            string targetDate = txtTargetDate.Text.Trim();
+
+            if (string.IsNullOrEmpty(Entity_Id.Value))
+                return;
+
+            int detailId = Convert.ToInt32(Entity_Id.Value);
+            string statusToSave = "In Progress";
+            bool isGenerateCAPA = false;
+            int capaId = 0;
+
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+            {
+                con.Open();
+
+                // Checking if CAPA is enabled for this detail
+                SqlCommand getCapaCmd = new SqlCommand("SELECT Generate_CAPA, ISNULL(CAPA_ID, 0) FROM Line_walk_details WHERE Detail_ID = @Detail_ID", con);
+                getCapaCmd.Parameters.AddWithValue("@Detail_ID", detailId);
+
+                using (SqlDataReader reader = getCapaCmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        isGenerateCAPA = Convert.ToBoolean(reader.GetValue(0));
+                        capaId = Convert.ToInt32(reader.GetValue(1));
+                    }
+                }
+
+                // If CAPA is checked and CAPA_ID exists, updating the tbl tbl_CAPAMaster and getting status from it.
+                if (isGenerateCAPA && capaId > 0)
+                {
+                    SqlCommand updateCapaCmd = new SqlCommand(@"
+                UPDATE tbl_CAPAMaster
+                SET ResponsiblePerson = @ResponsiblePerson,
+                    TargetCompletionDate = @TargetDate
+                WHERE CAPAID = @CAPAID", con);
+
+                    updateCapaCmd.Parameters.AddWithValue("@ResponsiblePerson", responsibility);
+                    updateCapaCmd.Parameters.AddWithValue("@TargetDate", targetDate);
+                    updateCapaCmd.Parameters.AddWithValue("@CAPAID", capaId);
+                    updateCapaCmd.ExecuteNonQuery();
+
+                    // Getting CAPA Status...
+                    SqlCommand statusCmd = new SqlCommand("SELECT Status FROM tbl_CAPAMaster WHERE CAPAID = @CAPAID", con);
+                    statusCmd.Parameters.AddWithValue("@CAPAID", capaId);
+                    object statusObj = statusCmd.ExecuteScalar();
+                    if (statusObj != null)
+                        statusToSave = statusObj.ToString();
+                }
+
+                // Updating the Line_walk_details
+                SqlCommand cmd = new SqlCommand(@"
+            UPDATE Line_walk_details 
+            SET Responsibility = @Responsibility, 
+                Target_Date = @TargetDate,
+                Remarks = @Remarks,
+                Status = @Status
+            WHERE Detail_ID = @DetailID", con);
+
+                cmd.Parameters.AddWithValue("@Responsibility", responsibility);
+                cmd.Parameters.AddWithValue("@TargetDate", targetDate);
+                cmd.Parameters.AddWithValue("@Remarks", empName); 
+                cmd.Parameters.AddWithValue("@Status", statusToSave);
+                cmd.Parameters.AddWithValue("@DetailID", detailId);
+                cmd.ExecuteNonQuery();
+            }
+
             txtResponsibility.Text = "";
             txtTargetDate.Text = "";
             txtRespoName.Text = "";
             ViewState["DetailID"] = null;
 
-            BindObservation(); 
+            BindObservation();
+
+            string successScript = @"<script type='text/javascript'>
+        new PNotify({
+            title: 'Success',
+            text: 'Future Action saved successfully!',
+            type: 'success',
+            styling: 'bootstrap3'
+        });
+    </script>";
+
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowFutureSuccess", successScript, false);
+
+
         }
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)

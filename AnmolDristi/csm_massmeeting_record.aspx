@@ -80,15 +80,15 @@
      <div class="right_col" role="main">
  <div class="container">
      <div class="page-title">
-         <div class="title_left">
-             <h5>Mass Meeting</h5>
+         <div class="title_left" style="text-align: center;">
+             <asp:Label ID="heading" runat="server" CssClass="h5 text-center font-weight-bold text-success" Text="MASS MEETING" />
          </div>
      </div>
      <div class="row">
          <div class="col-md-12 col-sm-12  ">
              <div class="x_panel">
                  <div class="x_title">
-                     <h2>ATS/DOC/MM/0010 || REV 00 || EFFT DATE- 19/12/18</h2>
+                     <h2 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">ATS/DOC/MM/0010 || REV 00 || EFFT DATE- 19/12/18</h2>
                      <ul class="nav navbar-right panel_toolbox">
                          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                      </ul>
@@ -285,8 +285,8 @@
                                                         Display="Dynamic" ForeColor="Red" />
                                                     <div class="input-group-sm">
                                                         <asp:RadioButtonList ID="rbAttendeeType" runat="server" RepeatDirection="Horizontal"
-                                                            RepeatLayout="Table" RepeatColumns="2" AutoPostBack="true"
-                                                            OnSelectedIndexChanged="rbAttendeeType_SelectedIndexChanged" ValidationGroup="add2">
+                                                            RepeatLayout="Table" RepeatColumns="2"
+                                                              ValidationGroup="add2">
                                                             <asp:ListItem Text="Internal" Value="Internal" />
                                                             <asp:ListItem Text="External" Value="External" />
                                                         </asp:RadioButtonList>
@@ -295,7 +295,7 @@
                                             </div>
 
                                             <!-- Attendee Details Panel -->
-                                            <asp:Panel ID="pnlDetails" runat="server" Visible="false">
+                                            <asp:Panel ID="pnlDetails" runat="server" Visible="true">
                                                 <div class="col-md-6">
                                                     <div class="mb-6">
                                                         <asp:Label ID="lbl_txtAttendeeCode" runat="server" AssociatedControlID="txtAttendeeCode"
@@ -386,6 +386,12 @@
                                                             <asp:TemplateField HeaderText="Actions">
                                                                 <ItemTemplate>
                                                                     <asp:LinkButton ID="lnkEdit" runat="server" Text="Edit" CommandName="EditAttendee" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' CssClass="btn btn-sm btn-primary" />
+                                                                <asp:LinkButton ID="lnkDelete" runat="server"
+                                                                                Text="Delete"
+                                                                                CommandName="DeleteAttendee"
+                                                                                CommandArgument='<%# ((GridViewRow)Container).RowIndex %>'
+                                                                                CssClass="btn btn-sm btn-danger"
+                                                                                OnClientClick="return confirm('Are you sure you want to delete this attendee?');" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                         </Columns>
@@ -404,7 +410,7 @@
                                                         Text="Click to Save" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
                                                     <div class="input-group">
                                                         <asp:Button ID="btnsave2" runat="server" Text="Save & proceed" CssClass="btn btn-success"
-                                                            CausesValidation="false"  OnClick="btnsave2_Click" ValidationGroup="add2"/>
+                                                              OnClick="btnsave2_Click" ValidationGroup="add2"/>
                                                         <asp:Label ID="lbl_btnsave22" runat="server" ForeColor="Green" />
                                                     </div>
                                                 </div>
@@ -453,7 +459,7 @@
                                                         <!-- Employee Type -->
                                                         <div class="col-md-3 mb-3">
                                                             <asp:Label ID="lblEmpType" runat="server" Text="Employee Type" ForeColor="Blue" Font-Bold="true" />
-                                                            <asp:RadioButtonList ID="rblEmpType" runat="server" RepeatDirection="Horizontal" CssClass="form-check-group ms-3 mt-2 d-flex align-items-center" AutoPostBack="true" OnSelectedIndexChanged="rblEmpType_SelectedIndexChanged1">
+                                                            <asp:RadioButtonList ID="rblEmpType" runat="server" RepeatDirection="Horizontal" CssClass="form-check-group ms-3 mt-2 d-flex align-items-center">
                                                                 <asp:ListItem Text="Internal" Value="Internal" />
                                                                 <asp:ListItem Text="External" Value="External" />
                                                             </asp:RadioButtonList>
@@ -472,7 +478,7 @@
                                                          <!-- Point Raised By -->
                                                           <div class="col-md-4 mb-3">
                                                               <asp:Label ID="lblPointBy" runat="server" Text="Point Raised By" ForeColor="Blue" Font-Bold="true" AssociatedControlID="txtPointBy" />
-                                                               <asp:TextBox ID="txtPointBy" runat="server" CssClass="form-control form-control-sm rounded" onblur="fetchEmployeeNameForPanel3()" ClientIDMode="Static" />
+                                                               <asp:TextBox ID="txtPointBy" runat="server" CssClass="form-control form-control-sm rounded" onBlur="fetchEmployeeNameForPanel3();" />
 
                                                           </div>
 
@@ -508,6 +514,16 @@
                                                                 ValidationGroup="momVal" 
                                                                 Display="Dynamic" />
                                                         </div>
+
+
+                                                        
+                                                        <!-- CAPA Checkbox -->
+                                                            <div class="col-md-2 mb-3">
+                                                                <div class="form-check">
+                                                                <asp:CheckBox ID="chkGenerateCAPA" runat="server" CssClass="form-check-input" OnClick="handleCAPACheckbox(this)" />
+                                                                <asp:Label AssociatedControlID="chkGenerateCAPA" runat="server" CssClass="form-check-label" Text="For generate CAPA Point, Please check the box!!" />
+                                                            </div>
+                                                         </div>
 
                                                        
 
@@ -555,7 +571,7 @@
                                                     <div style="max-height: 300px; overflow: auto;">
                                                     <asp:GridView ID="gvPoints" runat="server" AutoGenerateColumns="False"
                                                         CssClass="table table-striped table-bordered table-sm mt-3"
-                                                        ShowHeaderWhenEmpty="True" EmptyDataText="No points added" OnRowCommand="gvPoints_RowCommand" DataKeyNames="Id">
+                                                        ShowHeaderWhenEmpty="True" EmptyDataText="No points added" OnRowCommand="gvPoints_RowCommand" DataKeyNames="MOM_Id,IsCAPAGenerated">
                                                        <Columns>
                                                     <asp:TemplateField HeaderText="Point Title">
                                                         <ItemTemplate>
@@ -586,6 +602,17 @@
                                                             <asp:Label ID="lblRemarks" runat="server" Text='<%# Eval("Description") %>' />
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
+
+
+
+                                                           <asp:TemplateField HeaderText="Generate CAPA">
+                                                                <ItemTemplate>
+                                                                    <asp:CheckBox ID="chkGenerateCAPA" runat="server"
+                                                                                Checked='<%# Eval("IsCAPAGenerated") != DBNull.Value && Convert.ToBoolean(Eval("IsCAPAGenerated")) %>'
+                                                                                Enabled="false" /> 
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
+
 
                                                     
 
@@ -903,7 +930,7 @@
                 return;
             }
 
-            panelDetails.style.display = "block";
+            //panelDetails.style.display = "block";
 
             if (selectedValue.value === "Internal") {
                 employeeCodeField.disabled = false;
@@ -930,7 +957,7 @@
                 rb.addEventListener("change", toggleAttendeeFields);
             });
 
-            toggleAttendeeFields(); // Run it initially too
+            //toggleAttendeeFields(); // Run it initially too
         });
 
 
@@ -1084,7 +1111,7 @@
 
 
 
-        function fetchEmployeeName() {
+        <%--function fetchEmployeeName() {
             var empCode = document.getElementById('<%= txtPointBy.ClientID %>').value;
 
             if (empCode.trim() !== "") {
@@ -1093,7 +1120,7 @@
                     document.getElementById('<%= txtEmpName.ClientID %>').value = "Employee Name"; // Replace with actual name from DB
                 }, 500);
             }
-        }
+        }--%>
 
         function openAgendaPopup() {
             $('#agendaModal').modal('show'); // Open the Bootstrap modal
@@ -1135,39 +1162,41 @@
             $('#agendaModal').modal('hide'); // Close the Bootstrap modal
         }
 
-        function toggleMemberType(type) {
+        function toggleMemberType(type, clearFields = true) {
             var empCodeDiv = document.getElementById("divEmpCode");
             var txtPointBy = document.getElementById("<%= txtPointBy.ClientID %>");
             var txtPointByName = document.getElementById("<%= txtEmpName.ClientID %>");
 
             if (type === "Internal") {
-                //empCodeDiv.style.display = "block";
                 txtPointBy.disabled = false;
-                txtPointBy.value = "";
-                txtPointByName.value = "";
+                if (clearFields) {
+                    txtPointBy.value = "";
+                    txtPointByName.value = "";
+                }
             } else {
-                //empCodeDiv.style.display = "none";
                 txtPointBy.disabled = true;
-                txtPointBy.value = "";
-                txtPointByName.value = "";
+                if (clearFields) {
+                    txtPointBy.value = "";
+                    txtPointByName.value = "";
+                }
             }
         }
 
-        window.onload = function () {
-            var radios = document.querySelectorAll('input[name*="rblMemberType"]');
-            radios.forEach(function (radio) {
-                if (radio.checked) {
-                    toggleMemberType(radio.value);
-                }
 
+        Sys.Application.add_load(function () {
+            var radios = document.querySelectorAll('input[name*="rblEmpType"]');
+            radios.forEach(function (radio) {
                 radio.addEventListener("click", function () {
-                    toggleMemberType(this.value);
+                    toggleMemberType(this.value, true); // Re-bind on each partial postback
                 });
             });
-        };
+        });
 
 
-        function fetchEmployeeNameForPanel3() {
+
+
+
+       <%-- function fetchEmployeeNameForPanel3() {
             var empCode = document.getElementById("<%= txtPointBy.ClientID %>").value.trim();
             if (empCode === "") {
                 document.getElementById("<%= txtEmpName.ClientID %>").value = "";
@@ -1183,7 +1212,48 @@
                     document.getElementById("<%= txtEmpName.ClientID %>").value = data.d;
                 })
                 .catch(error => console.error('Error:', error));
+        }--%>
+
+
+        function fetchEmployeeNameForPanel3() {
+            var empCode = document.getElementById("<%= txtPointBy.ClientID %>").value.trim();
+
+            if (empCode === "") {
+                document.getElementById("<%= txtEmpName.ClientID %>").value = "";
+                  return;
+            }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "csm_massmeeting_record.aspx/GetEmployeeName",
+                        data: JSON.stringify({ empCode: empCode }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            var empName = response.d;
+                            document.getElementById("<%= txtEmpName.ClientID %>").value = empName || "";
+                            if (!empName) {
+                                showNotification("Info", "No employee found for this code.", "info");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error:", error);
+                            showNotification("Error", "Failed to fetch employee name.", "error");
+                        }
+                    });
         }
+
+               <%-- Sys.Application.add_load(function () {
+                    var txtPointBy = document.getElementById("<%= txtPointBy.ClientID %>");
+                    if (txtPointBy) {
+                        txtPointBy.removeEventListener("change", fetchEmployeeNameForPanel3);
+                        txtPointBy.addEventListener("change", fetchEmployeeNameForPanel3);
+                    }
+                });--%>
+
+
+
+
 
         function uploadFile() {
             var fileInput = document.getElementById("fuPhoto");
@@ -1230,6 +1300,19 @@
         });
 
 
-
     </script>
+
+
+
+    <script type="text/javascript">
+        function handleCAPACheckbox(checkbox) {
+            if (!checkbox.checked) {
+                var confirmResult = confirm("Disabling CAPA may compromise corrective action tracking. Proceed at your own risk.");
+                if (!confirmResult) {
+                    checkbox.checked = true; // Re-check it if user cancels
+                }
+            }
+        }
+    </script>
+
 </asp:Content>

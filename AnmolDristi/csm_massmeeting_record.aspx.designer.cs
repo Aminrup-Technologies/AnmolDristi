@@ -24,6 +24,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
+        /// heading control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label heading;
+
+        /// <summary>
         /// lbl_Date control.
         /// </summary>
         /// <remarks>
@@ -742,6 +751,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVtxtDescription;
+
+        /// <summary>
+        /// chkGenerateCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkGenerateCAPA;
 
         /// <summary>
         /// lblTime control.

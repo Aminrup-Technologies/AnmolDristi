@@ -122,6 +122,72 @@
 
 
 
+       <%-- function showDetailModal(detailId) {
+            $.ajax({
+                type: "POST",
+                url: "Line_Walk.aspx/GetLineWalkDetailById",
+                data: JSON.stringify({ detailId: detailId }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                        var data = response.d;
+                        
+                    if (data) {
+                        $('#<%=Entity_Id.ClientID %>').val(detailId);
+                        $('#<%=txtAreaLocation.ClientID %>').val(data.Location);
+                        $('#<%=txtObservation.ClientID %>').val(data.Observation_Points);
+                        $('#<%=txtRecommendation.ClientID %>').val(data.Recommendation_Points);
+                        $('#<%=txtResponsibility.ClientID %>').val(data.Responsibility);
+                        $('#<%=txtTargetDate.ClientID %>').val(data.Target_Date);
+                        $('#<%=txtRemarks.ClientID %>').val(data.Remarks);
+                        $('#<%=lblExistingSnap.ClientID %>').text(data.Snap_File_Path); // if you show image
+                        $('#lblImmediateAttachment').text(data.ImmediateAction_Attachment || '');
+
+                        //if (data.Snap_File_Path) {
+                           // ValidatorEnable(document.getElementById('<%=RFV_fileSnap.ClientID %>'), false);
+                         //} else {
+                           // ValidatorEnable(document.getElementById('<%=RFV_fileSnap.ClientID %>'), true);
+                        //}
+
+
+                        var snapValidator = document.getElementById('<%=RFV_fileSnap.ClientID %>');
+                        if (snapValidator) {
+                            ValidatorEnable(snapValidator, !data.Snap_File_Path);
+                        }
+
+
+                        // Open modal first
+                        $('#observationModal').modal('show');
+
+                        setTimeout(function () {
+                            const capaVal = data.Generate_CAPA;
+
+                            console.log("Raw checkbox value from DB:", capaVal);
+
+                            const isChecked = capaVal === true || capaVal === "true" || capaVal === 1 || capaVal === "1";
+
+                            const chk = document.getElementById('ContentPlaceHolder1_chkGenerateCAPA');
+                            if (chk) {
+                                chk.checked = isChecked;
+                                console.log("CAPA checkbox set to:", chk.checked);
+                            } else {
+                                console.warn("Checkbox not found.");
+                            }
+                        }, 100); // Keep the timeout short, just enough to ensure the modal is initialized
+
+
+                    } else {
+                        alert("No data found.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }--%>
+
+
+
         function showDetailModal(detailId) {
             $.ajax({
                 type: "POST",
@@ -133,31 +199,48 @@
                     var data = response.d;
                     if (data) {
                         $('#<%=Entity_Id.ClientID %>').val(detailId);
-                        $('#<%=txtAreaLocation.ClientID %>').val(data.Location);
-                        $('#<%=txtObservation.ClientID %>').val(data.Observation_Points);
-                        $('#<%=txtRecommendation.ClientID %>').val(data.Recommendation_Points);
-                        $('#<%=txtResponsibility.ClientID %>').val(data.Responsibility);
-                        $('#<%=txtTargetDate.ClientID %>').val(data.Target_Date);
-                        $('#<%=txtRemarks.ClientID %>').val(data.Remarks);
-                        $('#<%=lblExistingSnap.ClientID %>').text(data.Snap_File_Path); // if you show image
+                 $('#<%=txtAreaLocation.ClientID %>').val(data.Location);
+                 $('#<%=txtObservation.ClientID %>').val(data.Observation_Points);
+                 $('#<%=txtRecommendation.ClientID %>').val(data.Recommendation_Points);
+                 $('#<%=txtResponsibility.ClientID %>').val(data.Responsibility);
+                 $('#<%=txtTargetDate.ClientID %>').val(data.Target_Date);
+                 $('#<%=txtRemarks.ClientID %>').val(data.Remarks);
+                 $('#<%=lblExistingSnap.ClientID %>').text(data.Snap_File_Path); // if you show image
+                 $('#lblImmediateAttachment').text(data.ImmediateAction_Attachment || '');
 
-                        if (data.Snap_File_Path) {
-                            ValidatorEnable(document.getElementById('<%=RFV_fileSnap.ClientID %>'), false);
-                        } else {
-                            ValidatorEnable(document.getElementById('<%=RFV_fileSnap.ClientID %>'), true);
+                var snapValidator = document.getElementById('<%=RFV_fileSnap.ClientID %>');
+
+                         if (snapValidator) {
+                             ValidatorEnable(snapValidator, !data.Snap_File_Path);
                         }
 
+                 document.getElementById('<%= chkGenerateCAPA.ClientID %>').checked = data.Generate_CAPA;
 
-                        $('#detailModal').modal('show');
-                    } else {
-                        alert("No data found.");
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        }
+                 // Showing Immediate Action attachment file name (label)..
+                 if (data.ImmediateAction_Attachment) {
+                     $('#<%=lblImmediateAttachment.ClientID %>').text(data.ImmediateAction_Attachment);
+                 } else {
+                     $('#<%=lblImmediateAttachment.ClientID %>').text("");
+                 }
+
+
+                 $('#detailModal').modal('show');
+             } else {
+                 alert("No data found.");
+             }
+         },
+         error: function (xhr, status, error) {
+             console.error(error);
+         }
+     });
+        } 
+
+
+
+
+
+
+
 
         document.addEventListener("DOMContentLoaded", function () {
             var fileInput = document.getElementById("<%= fileSnap.ClientID %>");
@@ -494,6 +577,13 @@
                                                         <asp:RequiredFieldValidator ID="RFV_txtObservation" runat="server" ControlToValidate="txtObservation" ErrorMessage="* Observation required" ForeColor="Red" ValidationGroup="SaveObservation" Display="Dynamic" />
                                                     </div>
 
+                                                    <!-- CheckBox for CAPA -->
+                                                     <div class="form-group form-check mt-2">
+                                                         <asp:CheckBox ID="chkGenerateCAPA" runat="server" CssClass="form-check-input" OnClick="handleCAPACheckbox(this)" />
+                                                         <asp:Label ID="lblGenerateCAPA" runat="server" AssociatedControlID="chkGenerateCAPA"
+                                                             Text="For generate CAPA Point, Please check the box!!" CssClass="form-check-label text-primary font-weight-bold" />
+                                                     </div>
+
                                                     <div class="form-group">
                                                         <asp:Label ID="Snap_lbl" runat="server" Text="Attachment" ForeColor="Blue" Font-Bold="true" />
                                                         <asp:FileUpload ID="fileSnap" runat="server" CssClass="form-control-file" />
@@ -526,6 +616,7 @@
                                                     <div class="form-group">
                                                         <asp:Label ID="Attachment_lbl" runat="server" Text="Attachment" ForeColor="Blue" Font-Bold="true" />
                                                         <asp:FileUpload ID="IAction_Attachment" runat="server" CssClass="form-control-file" />
+                                                        <asp:Label ID="lblImmediateAttachment" runat="server" CssClass="text-muted" ClientIDMode="Static" />
                                                     </div>
 
                                                     <asp:Button ID="BtnImmediateAction" runat="server" Text="Save" CssClass="btn btn-success" ValidationGroup="SaveImmediate Action" OnClick="BtnImmediateAction_Click" />
@@ -566,6 +657,7 @@
                                     <Columns>
                                         <asp:BoundField DataField="Location" HeaderText="Area" />
                                         <asp:BoundField DataField="Observation_Points" HeaderText="Observation" />
+
                                         <asp:TemplateField HeaderText="Snap">
                                             <ItemTemplate>
                                                 <%-- //<a href='<%# ResolveUrl("~/Uploads/" + Eval("Snap_File_Path")) %>' target="_blank">View</a>--%>
@@ -586,6 +678,8 @@
                                         <asp:TemplateField HeaderText="Actions">
                                             <ItemTemplate>
                                                 <asp:Button ID="Edit_obsrv" runat="server" Text="Edit" CssClass="btn btn-sm btn-primary" OnClientClick='<%# "showObservationModal(" + Eval("Detail_ID") + "); return false;" %>' />
+                                                
+
                                                 <asp:LinkButton ID="Delete_observ" runat="server" Text="Delete" CssClass="btn btn-sm btn-danger" CommandName="DeleteObservation"
                                                     CommandArgument='<%# Eval("Detail_ID") %>'
                                                     OnClientClick="return confirm('Are you sure you want to delete this observation?');" />
@@ -608,4 +702,17 @@
             </div>
         </div>
     </div>
+
+
+    <script type="text/javascript">
+        function handleCAPACheckbox(checkbox) {
+            if (!checkbox.checked) {
+                var confirmResult = confirm("Disabling CAPA may compromise corrective action tracking. Proceed at your own risk.");
+                if (!confirmResult) {
+                    checkbox.checked = true; // Re-check it if user cancels
+                }
+            }
+        }
+    </script>
+
 </asp:Content>

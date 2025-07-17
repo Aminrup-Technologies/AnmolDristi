@@ -7,7 +7,7 @@
      <div class="container">
          <div class="page-title">
              <div class="title_left">
-                 <h5>Mass Meeting</h5>
+                 <h5 style="text-align: center; font-weight: bold;" class="text-success">MASS MEETING ALL DATA</h5>
              </div>
          </div>
 
@@ -17,7 +17,7 @@
              <div class="col-md-12 col-sm-12  ">
                  <div class="x_panel">
                      <div class="x_title">
-                         <h2>ATS/DOC/MM/0010 || REV 00 || EFFT DATE- 19/12/18</h2>
+                         <h2 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">ATS/DOC/MM/0010 || REV 00 || EFFT DATE- 19/12/18</h2>
                          <ul class="nav navbar-right panel_toolbox">
                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                          </ul>
@@ -30,7 +30,7 @@
                              <HeaderStyle CssClass="thead-dark" />
                              <Columns>
                                  <asp:BoundField DataField="ID" HeaderText="Meeting ID" />
-                                 <asp:BoundField DataField="Meeting_Date" HeaderText="Meeting Date" />
+                                 <asp:BoundField DataField="Meeting_Date" HeaderText="Meeting Date" DataFormatString="{0:yyyy-MM-dd}" />
                                  <asp:BoundField DataField="RegionCode" HeaderText="Work Region" />
                                  <asp:BoundField DataField="DeptCode" HeaderText="Department" />
                                  <asp:BoundField DataField="LocationCode" HeaderText="Location" />

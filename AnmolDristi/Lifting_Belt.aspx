@@ -93,6 +93,8 @@
                     case 'OK':
                         remarksPhoto.forEach(e => e.style.display = 'none');
                         if (note) note.style.display = '';
+                       
+                        ResetRemarks(remarksPhoto);
                         break;
                     case 'NotOK':
                         remarksPhoto.forEach(e => e.style.display = '');
@@ -101,6 +103,7 @@
                     case 'NA':
                         remarksPhoto.forEach(e => e.style.display = 'none');
                         if (note) note.style.display = 'none';
+                        ResetRemarks(remarksPhoto);
                         break;
                 }
             }
@@ -118,7 +121,25 @@
             });
         });
 
+        function ResetRemarks(remarksPhoto) {
+            remarksPhoto.forEach(group => {
+                //console.log(`Group:`, group);
+                const inputs = group.querySelectorAll('textarea');
+                inputs.forEach(input => {
+                        input.value = ''; 
+                });
+            });
+        }
 
+        //function ResetImageLabels(remarksPhoto) {
+        //    remarksPhoto.forEach(group => {
+        //        const imgLabel = group.querySelector('label[id$="Img"]');
+        //        if (imgLabel) {
+        //            imgLabel.innerText = ''; // Clear text
+        //            imgLabel.style.display = 'none'; // Hide if previously visible
+        //        }
+        //    });
+        //}
 
         function ResetChecklistForm() {
 
@@ -218,7 +239,7 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">DOC/ATS/TSK/QMS/GC/013</h2>
+                            <h2 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">DOC/ATS/TSK/QMS/GC/013 REV : 00 ,EFT DATE : 01/01/2025</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
@@ -331,6 +352,19 @@
                                                                     </div>
 
                                                                     <asp:Label ID="Img" CssClass="d-block mt-2 text-muted" runat="server" Visible="false" />
+
+
+
+                                                                     <!-- CAPA Applicable Checkbox  -->
+                                                                    <div class="form-check mt-2">
+                                                                        <asp:CheckBox ID="CapaPoint" runat="server" Checked="true" CssClass="form-check-input" OnClick="handleCAPACheckbox(this)" />
+                                                                        <asp:Label AssociatedControlID="CapaPoint" runat="server" CssClass="form-check-label" Text="CAPA Applicable" ForeColor="Black" />
+                                                                    </div>
+
+
+
+
+
                                                                 </div>
 
 
@@ -382,4 +416,21 @@
         </div>
 
     </div>
+
+
+    <script type="text/javascript">
+        function handleCAPACheckbox(checkbox) {
+            if (!checkbox.checked) {
+                var confirmResult = confirm("Disabling CAPA may compromise corrective action tracking. Proceed at your own risk.");
+                if (!confirmResult) {
+                    checkbox.checked = true; // Re-check it if user cancels
+                }
+            }
+        }
+    </script>
+
+
+
+
+
 </asp:Content>

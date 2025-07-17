@@ -37,7 +37,7 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h5>Mass Meeting</h5>
+                <h5 style="text-align: center; font-weight: bold;" class="text-success">Detailed View Page</h5>
             </div>
         </div>
 
@@ -47,7 +47,7 @@
             <div class="col-md-12 col-sm-12  ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>ATS/DOC/MM/0010 || REV 00 || EFFT DATE- 19/12/18</h2>
+                        <h2 style="text-align: left; padding-left: 20px; font-weight: bold;" class="text-success">ATS/DOC/MM/0010 || REV 00 || EFFT DATE- 19/12/18</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                         </ul>

@@ -393,6 +393,24 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtObservation;
 
         /// <summary>
+        /// chkGenerateCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkGenerateCAPA;
+
+        /// <summary>
+        /// lblGenerateCAPA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGenerateCAPA;
+
+        /// <summary>
         /// Snap_lbl control.
         /// </summary>
         /// <remarks>
@@ -508,6 +526,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload IAction_Attachment;
+
+        /// <summary>
+        /// lblImmediateAttachment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblImmediateAttachment;
 
         /// <summary>
         /// BtnImmediateAction control.

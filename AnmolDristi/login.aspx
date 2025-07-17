@@ -28,7 +28,7 @@
                     <section class="login_content">
                         <asp:Image ID="Img_CpLogo" runat="server" ImageUrl="#" Height="120" Width="180" />
                         <h1>
-                            <asp:Label ID="lbl_companyname" runat="server" Text="Abhishedk Sahu"></asp:Label></h1>
+                            <asp:Label ID="lbl_companyname" runat="server" Text="Abhishek Sahu"></asp:Label></h1>
                         <div class="form-horizontal">
                             <div class="form-group row">
                                 <asp:Label ID="Label1" runat="server" AssociatedControlID="txt_loginid" CssClass="control-label col-md-4 col-sm-6 label-align" Font-Bold="true" Text="USER ID"></asp:Label>

@@ -162,7 +162,7 @@
                 <div class="col-md-12 col-sm-12  ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <asp:Label runat="server" ForeColor="Green" Font-Bold="true">ATS/OHS/HKS-5SCL-01</asp:Label>
+                            <asp:Label runat="server" ForeColor="Green" Font-Bold="true">ATS/OHS/HKS-5SCL-01 REV : 00,EFT DATE :01/01/2025 </asp:Label>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
@@ -296,6 +296,12 @@
                                                                     <span class="text-danger rfv photo-error" style="display: none;">Photo is required</span>
                                                                     <span class="text-success photo-success" style="display: none;">Photo uploaded successfully</span>
 
+                                                                     <!-- CAPA Applicable Checkbox  -->
+                                                                    <div class="form-check mt-2">
+                                                                        <asp:CheckBox ID="CapaPoint" runat="server" Checked="true" CssClass="form-check-input" OnClick="handleCAPACheckbox(this)" />
+                                                                        <asp:Label AssociatedControlID="CapaPoint" runat="server" CssClass="form-check-label" Text="CAPA Applicable" />
+                                                                    </div>
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -320,5 +326,18 @@
             </div>
         </div>
     </div>
+
+
+    <script type="text/javascript">
+        function handleCAPACheckbox(checkbox) {
+            if (!checkbox.checked) {
+                var confirmResult = confirm("Disabling CAPA may compromise corrective action tracking. Proceed at your own risk.");
+                if (!confirmResult) {
+                    checkbox.checked = true; // Re-check it if user cancels
+                }
+            }
+        }
+    </script>
+
 
 </asp:Content>

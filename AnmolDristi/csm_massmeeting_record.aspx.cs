@@ -41,16 +41,20 @@ namespace AnmolDristi
                     if (!string.IsNullOrEmpty(Massmeetid))
                     {
                         ViewState["RecordId"] = Massmeetid;
+                        heading.Text = "UPDATE MASS MEETING DATA";
 
                         MainForm();
                         BindAttendeeGrid();
                         BindMOMGrid();
+                        pnlDetails.Visible = true;
                     }
 
                     PopulateAgendaDropdown();
 
                 }
-            }      
+            }
+
+            BindAttendeeGrid();
         }
 
         private void PopulateAgendaDropdown()
@@ -294,13 +298,13 @@ namespace AnmolDristi
             public string GatePassNo { get; set; }
         }
 
-        protected void rbAttendeeType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            bool isInternal = rbAttendeeType.SelectedValue == "Internal";
-            txtAttendeeCode.Text = isInternal ? "N/A" : "N/A";
-            txtAttendeeCode.Enabled = isInternal;
-            pnlDetails.Visible = true;
-        }
+        //protected void rbAttendeeType_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    bool isInternal = rbAttendeeType.SelectedValue == "Internal";
+        //    txtAttendeeCode.Text = isInternal ? "N/A" : "N/A";
+        //    txtAttendeeCode.Enabled = isInternal;
+        //    pnlDetails.Visible = true;
+        //}
 
         public class Attendee
         {
@@ -648,6 +652,7 @@ namespace AnmolDristi
 
         protected void gvAttendees_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+
             if (e.CommandName == "EditAttendee")
             {
                 int rowIndex = Convert.ToInt32(e.CommandArgument);
@@ -674,6 +679,13 @@ namespace AnmolDristi
 
                 pnlDetails.Visible = true;
 
+            }
+            else if (e.CommandName == "DeleteAttendee")
+            {
+                int rowIndex = Convert.ToInt32(e.CommandArgument);
+                int id = Convert.ToInt32(gvAttendees.DataKeys[rowIndex].Value);
+                DeleteAttendees(id);
+                BindAttendeeGrid();
             }
         }
             private void ClearAttendeeForm()
@@ -725,12 +737,80 @@ namespace AnmolDristi
                 return;
             }
 
+            string momId = hfMomId.Value;
+            string customId = "MM-" + meetingId;
+            bool isNowChecked = chkGenerateCAPA.Checked;
 
-
+            object previousCapaId = null;
+            bool wasPreviouslyChecked = false;
+            int? capaIdToSave = null;
 
             using (SqlConnection conn = new SqlConnection(connStr))
             {
-                string query = @"
+                conn.Open();
+
+                // Step 1: Fetch previous CAPA data
+                string fetchQuery = "SELECT CAPA_ID, IsCAPAGenerated FROM csm_massmeting_mom WHERE MOM_Id = @MOM_Id";
+                using (SqlCommand fetchCmd = new SqlCommand(fetchQuery, conn))
+                {
+                    fetchCmd.Parameters.AddWithValue("@MOM_Id", momId);
+                    using (SqlDataReader reader = fetchCmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            previousCapaId = reader["CAPA_ID"];
+                            wasPreviouslyChecked = reader["IsCAPAGenerated"] != DBNull.Value &&
+                                                   Convert.ToBoolean(reader["IsCAPAGenerated"]);
+                        }
+                    }
+                }
+
+                // === SCENARIO B: Now checked (Always insert a new CAPA)
+                if (isNowChecked)
+                {
+                    string insertCapa = @"
+                INSERT INTO tbl_CAPAMaster 
+                (HeaderID, Remarks, AssignedBy, AssignedDate, SourceTable, Description)
+                VALUES 
+                (@HeaderID, @Remarks, @AssignedBy, @AssignedDate, @SourceTable, @Description);
+                SELECT SCOPE_IDENTITY();";
+
+                    using (SqlCommand insertCmd = new SqlCommand(insertCapa, conn))
+                    {
+                        insertCmd.Parameters.AddWithValue("@HeaderID", customId);
+                        insertCmd.Parameters.AddWithValue("@Remarks", txtDescription.Text.Trim());
+                        insertCmd.Parameters.AddWithValue("@AssignedBy", txtEmpName.Text.Trim());
+                        insertCmd.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                        insertCmd.Parameters.AddWithValue("@SourceTable", "Mass Meeting");
+                        insertCmd.Parameters.AddWithValue("@Description", agendaTitle);
+
+                        object result = insertCmd.ExecuteScalar();
+                        int newCapaId;
+                        if (result != null && int.TryParse(result.ToString(), out newCapaId))
+                        {
+                            capaIdToSave = newCapaId;
+                        }
+                    }
+                }
+
+                // === SCENARIO A: Was checked, now unchecked → deactivate existing CAPA and keep CAPA_ID
+                else if (previousCapaId != null && previousCapaId != DBNull.Value)
+                {
+                    string deactivateQuery = "UPDATE tbl_CAPAMaster SET IsYes = 1 WHERE CAPAID = @CAPAID";
+                    using (SqlCommand deactivateCmd = new SqlCommand(deactivateQuery, conn))
+                    {
+                        deactivateCmd.Parameters.AddWithValue("@CAPAID", Convert.ToInt32(previousCapaId));
+                        int rows = deactivateCmd.ExecuteNonQuery();
+
+                        System.Diagnostics.Debug.WriteLine("Deactivated CAPA rows: " + rows); // ← Add this
+                    }
+
+                    capaIdToSave = Convert.ToInt32(previousCapaId);
+                }
+                // === SCENARIO C: Still unchecked, never checked → leave capaIdToSave = null
+
+                // Step 3: Update MOM record
+                string updateQuery = @"
             UPDATE csm_massmeting_mom
             SET 
                 MM_Id = @MM_Id,
@@ -739,10 +819,12 @@ namespace AnmolDristi
                 EmployeeName = @EmployeeName,
                 Description = @Description,
                 PointRaisedBy = @PointRaisedBy,
-                DiscussionTime = @DiscussionTime
-            WHERE Id = @Id";
+                DiscussionTime = @DiscussionTime,
+                IsCAPAGenerated = @IsCAPAGenerated,
+                CAPA_ID = @CAPA_ID
+            WHERE MOM_Id = @MOM_Id";
 
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
                 {
                     cmd.Parameters.AddWithValue("@MM_Id", meetingId);
                     cmd.Parameters.AddWithValue("@AgendaTitle", agendaTitle);
@@ -751,18 +833,20 @@ namespace AnmolDristi
                     cmd.Parameters.AddWithValue("@Description", txtDescription.Text.Trim());
                     cmd.Parameters.AddWithValue("@PointRaisedBy", txtPointBy.Text.Trim());
                     cmd.Parameters.AddWithValue("@DiscussionTime", ddlTime.SelectedValue);
-                    cmd.Parameters.AddWithValue("@Id", hfMomId.Value); // Primary key for edit
+                    cmd.Parameters.AddWithValue("@IsCAPAGenerated", isNowChecked);
+                    cmd.Parameters.AddWithValue("@CAPA_ID", capaIdToSave.HasValue ? (object)capaIdToSave : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@MOM_Id", momId);
 
-                    conn.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
 
+
             ShowPNotify("Success", "MOM point updated successfully.", "success");
 
             hfMomId.Value = string.Empty;
-            ClearPointFields();     
-            BindMOMGrid();    
+            ClearPointFields();
+            BindMOMGrid();
         }
 
 
@@ -779,6 +863,8 @@ namespace AnmolDristi
             }
 
             string momId = Guid.NewGuid().ToString(); // Generate new GUID for MOM_Id
+            string customId = "MM-" + meetingId;
+
 
             // Determine actual Agenda Title
             string agendaTitle = ddlAgendaTitle.SelectedValue == "Other"
@@ -791,12 +877,46 @@ namespace AnmolDristi
                 return;
             }
 
+            int? capaId = null;
+
             using (SqlConnection conn = new SqlConnection(connStr))
             {
+                conn.Open();
+
+                // ✅ If checkbox is checked, insert into CAPA master with customId
+                if (chkGenerateCAPA.Checked)
+                {
+                    string capaInsertQuery = @"
+                INSERT INTO tbl_CAPAMaster 
+                (HeaderID, Remarks, AssignedBy, AssignedDate, SourceTable,Description)
+                VALUES 
+                (@HeaderID, @Remarks, @AssignedBy, @AssignedDate, @SourceTable, @Description);
+                SELECT SCOPE_IDENTITY();";
+
+                    using (SqlCommand capaCmd = new SqlCommand(capaInsertQuery, conn))
+                    {
+                        capaCmd.Parameters.AddWithValue("@HeaderID", customId); // MM-<MM_Id>
+                        capaCmd.Parameters.AddWithValue("@Remarks", txtDescription.Text.Trim());
+                        capaCmd.Parameters.AddWithValue("@AssignedBy", txtEmpName.Text.Trim());
+                        capaCmd.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                        capaCmd.Parameters.AddWithValue("@SourceTable", "Mass Meeting");
+                        capaCmd.Parameters.AddWithValue("@Description", agendaTitle);
+
+                        object result = capaCmd.ExecuteScalar();
+                        int generatedCapaId;
+
+                        if (result != null && int.TryParse(result.ToString(), out generatedCapaId))
+                        {
+                            capaId = generatedCapaId;
+                        }
+                    }
+                }
+
+
                 string query = @"INSERT INTO csm_massmeting_mom
-                         (MOM_Id, MM_Id, AgendaTitle, EmployeeType, EmployeeName, Description, PointRaisedBy, DiscussionTime)
+                         (MOM_Id, MM_Id, AgendaTitle, EmployeeType, EmployeeName, Description, PointRaisedBy, DiscussionTime,IsCAPAGenerated,CAPA_ID,Custom_ID)
                          VALUES
-                         (@MOM_Id, @MM_Id, @AgendaTitle, @EmployeeType, @EmployeeName, @Description, @PointRaisedBy, @DiscussionTime)";
+                         (@MOM_Id, @MM_Id, @AgendaTitle, @EmployeeType, @EmployeeName, @Description, @PointRaisedBy, @DiscussionTime, @IsCAPAGenerated, @CAPA_ID, @Custom_ID)";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -808,8 +928,12 @@ namespace AnmolDristi
                     cmd.Parameters.AddWithValue("@Description", txtDescription.Text.Trim());
                     cmd.Parameters.AddWithValue("@PointRaisedBy", txtPointBy.Text.Trim());
                     cmd.Parameters.AddWithValue("@DiscussionTime", ddlTime.SelectedValue);
+                    cmd.Parameters.AddWithValue("@IsCAPAGenerated", chkGenerateCAPA.Checked);
+                    cmd.Parameters.AddWithValue("@CAPA_ID", capaId.HasValue ? (object)capaId.Value : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Custom_ID", customId);
 
-                    conn.Open();
+
+                    
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -891,13 +1015,24 @@ namespace AnmolDristi
                     txtOtherAgenda.Text = agendaTitle; // Fill custom agenda in textbox
                 }
 
+
+                string empType = ((Label)row.FindControl("lblEmployeeType")).Text;
+
                 rblEmpType.SelectedValue = ((Label)row.FindControl("lblEmployeeType")).Text;
-                txtEmployeeName.Text = ((Label)row.FindControl("lblEmployeeName")).Text;
+                txtEmpName.Text = ((Label)row.FindControl("lblEmployeeName")).Text;
                 txtDescription.Text = ((Label)row.FindControl("lblRemarks")).Text;
                 txtPointBy.Text = ((Label)row.FindControl("lblPointBy")).Text;
                 ddlTime.SelectedValue = ((Label)row.FindControl("lblDiscussionTime")).Text;
+                chkGenerateCAPA.Checked = gvPoints.DataKeys[index].Values["IsCAPAGenerated"] != DBNull.Value &&
+                          Convert.ToBoolean(gvPoints.DataKeys[index].Values["IsCAPAGenerated"]);
+
+
 
                 btnAddPoint.Text = "Update";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toggleEmpTypeJS",
+                       $"toggleMemberType('{empType}', false);", true);
+
             }
             else if (e.CommandName == "DeletePoint")
             {
@@ -957,17 +1092,36 @@ namespace AnmolDristi
         }
 
 
-        protected void rblEmpType_SelectedIndexChanged1(object sender, EventArgs e)
+        //protected void rblEmpType_SelectedIndexChanged1(object sender, EventArgs e)
+        //{
+        //    if (rblEmpType.SelectedValue == "External")
+        //    {
+        //        txtPointBy.Enabled = false;
+        //        txtPointBy.Text = string.Empty;
+        //    }
+        //    else
+        //    {
+        //        txtPointBy.Enabled = true;
+        //    }
+        //}
+
+        private void DeleteAttendees(int id)
         {
-            if (rblEmpType.SelectedValue == "External")
+            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
             {
-                txtPointBy.Enabled = false;
-                txtPointBy.Text = string.Empty;
+                string query = "DELETE FROM csm_massmeting_attendee WHERE Id = @Id";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
-            else
-            {
-                txtPointBy.Enabled = true;
-            }
+
+            ShowPNotify("Success", "Attendee deleted successfully.", "success");
+            BindMOMGrid();
         }
     }
 }
