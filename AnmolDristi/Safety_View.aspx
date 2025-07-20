@@ -64,6 +64,16 @@
                                 <asp:BoundField DataField="UnsafeActConditions" HeaderText="Unsafe Act" />
                                 <asp:BoundField DataField="SubmittedDate" HeaderText="Submission Date" />
                                 <asp:BoundField DataField="SubmittedTime" HeaderText="Submission Time" />
+<asp:TemplateField HeaderText="CAPA Required">
+    <ItemTemplate>
+        <asp:CheckBox ID="chkRequiresCAPA" runat="server" Enabled="false"
+            Checked='<%# Convert.ToBoolean(Eval("RequiresCAPA")) %>' />
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:CheckBox ID="chkRequiresCAPAEdit" runat="server"
+            Checked='<%# Convert.ToBoolean(Eval("RequiresCAPA")) %>' />
+    </EditItemTemplate>
+</asp:TemplateField>
 
  <asp:TemplateField HeaderText="View">
     <ItemTemplate>

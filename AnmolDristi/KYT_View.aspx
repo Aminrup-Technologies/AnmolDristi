@@ -40,12 +40,44 @@
                             OnRowUpdating="GvKYTRecords_RowUpdating" OnRowCancelingEdit="GvKYTRecords_RowCancelingEdit"
                             OnRowDeleting="GvKYTRecords_RowDeleting">
 
-                            <Columns>
-                                <asp:BoundField DataField="KYT_WorksiteName" HeaderText="Worksite" />
-                                <asp:BoundField DataField="KYT_Department" HeaderText="Department" />
-                                <asp:BoundField DataField="KYT_Location" HeaderText="Location" />
+                            
+                               <Columns>
+        <asp:TemplateField HeaderText="Worksite">
+            <ItemTemplate>
+                <%# Eval("KYT_WorksiteName") %>
+            </ItemTemplate>
+            <EditItemTemplate>
+                <asp:TextBox ID="txtWorksiteName" runat="server" Text='<%# Bind("KYT_WorksiteName") %>'></asp:TextBox>
+            </EditItemTemplate>
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Department">
+            <ItemTemplate>
+                <%# Eval("KYT_Department") %>
+            </ItemTemplate>
+            <EditItemTemplate>
+                <asp:TextBox ID="txtDepartment" runat="server" Text='<%# Bind("KYT_Department") %>'></asp:TextBox>
+            </EditItemTemplate>
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Location">
+            <ItemTemplate>
+                <%# Eval("KYT_Location") %>
+            </ItemTemplate>
+            <EditItemTemplate>
+                <asp:TextBox ID="txtLocation" runat="server" Text='<%# Bind("KYT_Location") %>'></asp:TextBox>
+            </EditItemTemplate>
+        </asp:TemplateField>
+
                                 <asp:BoundField DataField="KYT_Date" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />
-                                <asp:BoundField DataField="KYT_JobID" HeaderText="Job ID" />
+                   <asp:TemplateField HeaderText="Job ID">
+            <ItemTemplate>
+                <%# Eval("KYT_JobID") %>
+            </ItemTemplate>
+            <EditItemTemplate>
+                <asp:TextBox ID="txtJobID" runat="server" Text='<%# Bind("KYT_JobID") %>'></asp:TextBox>
+            </EditItemTemplate>
+        </asp:TemplateField>
                                 <asp:BoundField DataField="KYT_Activity" HeaderText="Activity" />
                                 <asp:BoundField DataField="KYT_SOPNo" HeaderText="SOP No" />
                                 <asp:BoundField DataField="KYT_Vendor" HeaderText="Vendor" />
@@ -55,6 +87,19 @@
                                 <asp:BoundField DataField="KYT_PriorityValue" HeaderText="Priority" />
                                 <asp:BoundField DataField="SubmissionDate" HeaderText="Submission Date" />
                                 <asp:BoundField DataField="SubmissionTime" HeaderText="Submission Time" />
+                                            
+            <asp:TemplateField HeaderText="Requires CAPA">
+    <ItemTemplate>
+        <asp:CheckBox ID="chkRequiresCAPAView" runat="server" Enabled="false"
+            Checked='<%# Convert.ToBoolean(Eval("RequiresCAPA")) %>' />
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:CheckBox ID="chkRequiresCAPAEdit" runat="server"
+            Checked='<%# Convert.ToBoolean(Eval("RequiresCAPA")) %>' />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+
 
  <asp:TemplateField HeaderText="View">
     <ItemTemplate>
@@ -65,6 +110,10 @@
             Target="_blank" />
     </ItemTemplate>
 </asp:TemplateField>
+
+         
+
+
 
                                 <asp:TemplateField HeaderText="Actions">
                                     <ItemTemplate>

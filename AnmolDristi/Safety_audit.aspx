@@ -118,6 +118,8 @@
                                 <div class="col-lg-12">
                                     <hr />
                                 </div>
+                                <asp:PlaceHolder ID="SectionPlaceHolder" runat="server"></asp:PlaceHolder>
+
 
                                 <!-- Team member section -->
                                 <div class="row col-lg-12">
@@ -395,6 +397,29 @@
                                         <button type="button" id="btnAddObservation" class="btn btn-primary btn-sm">Add More Observation</button>
                                     </div>
                                 </div>
+                               <div class="form-group mt-2">
+    <input type="checkbox" id="chkCAPARequired" checked onclick="confirmCAPA(this)" />
+    <label for="chkCAPARequired"><strong>CAPA ID Required</strong></label>
+</div>
+
+
+
+<script type="text/javascript">
+    function confirmCAPA(checkbox) {
+        if (!checkbox.checked) {
+            alert("CAPA is required. Proceeding without it is at your own risk.");
+        }
+    }
+
+    let capaCounter = 1; // You can initialize this based on server-side value via hidden field if needed
+
+    function generateClientCAPAID() {
+        let id = "SF" + capaCounter.toString().padStart(3, '0');
+        capaCounter++;
+        return id;
+    }
+</script>
+
 
                                 <div class="row col-lg-12" id="ObservationGrid"></div>
 
@@ -418,6 +443,10 @@
         let violationXSeverity = document.getElementById("<%= txtViolationXSeverity.ClientID %>")?.value || "";
         let fourAndFive = document.getElementById("<%= txtFourAndFive.ClientID %>")?.value || "";
         let unsafeActs = document.getElementById("<%= DropDownList6.ClientID %>")?.value || "";
+                                            
+        let capaRequired = document.getElementById("chkCAPARequired").checked;
+
+        let capaId = capaRequired ? generateClientCAPAID() : "";
 
         let observation = {
             Description: observationDescription,
@@ -426,7 +455,9 @@
             Severity: severity,
             ViolationXSeverity: violationXSeverity,
             FourAndFive: fourAndFive,
-            UnsafeActs: unsafeActs
+            UnsafeActs: unsafeActs,
+            CAPAID: capaId,
+            RequiresCAPA: capaRequired 
         };
 
         observations.push(observation);
@@ -451,6 +482,7 @@
                   <th>Violation X Severity</th>
                   <th>4 & 5</th>
                   <th>Unsafe Act Conditions</th>
+                  <th>CAPA ID</th>
               </tr>
           </thead>
           <tbody></tbody>`;
@@ -470,6 +502,7 @@
             <td>${violationXSeverity}</td>
             <td>${fourAndFive}</td>
             <td>${unsafeActs}</td>
+            <td>${capaId}</td>
         `;
 
         tbody.appendChild(newRow);

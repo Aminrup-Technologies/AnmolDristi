@@ -75,7 +75,7 @@ namespace AnmolDristi
 
         //protected void DdlDescriptionFields_SelectedIndexChanged(object sender, EventArgs e)
         //{
-            
+
         //    //pnlRadioButtons.Controls.Clear(); // Clear previous radio buttons
 
         //    string selectedValue = ddlDescriptionFields.SelectedValue;
@@ -120,6 +120,24 @@ namespace AnmolDristi
         //}
 
 
+        private string GenerateSafetyAuditCAPAID(SqlConnection conn, SqlTransaction transaction)
+        {
+            string newID = "SF001";
+            string query = "SELECT MAX(CAPAID) FROM SafetyAudit_Description WHERE CAPAID IS NOT NULL";
+
+            using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+            {
+                object result = cmd.ExecuteScalar();
+                if (result != DBNull.Value && result != null)
+                {
+                    string lastID = result.ToString(); // e.g., "SF010"
+                    int num = int.Parse(lastID.Substring(2)); // get 010 -> 10
+                    newID = "SF" + (num + 1).ToString("D3");
+                }
+            }
+
+            return newID;
+        }
 
 
 
@@ -133,16 +151,19 @@ namespace AnmolDristi
                 {
                     conn.Open();
                     string query = @"
-                     SELECT 
-                         sa.ID, sa.Department, sa.Section, sa.Date, sa.Time, 
-                         sa.ContractorVendorCode, sa.TotalContractorPeople, 
-                         sev.AuditID, sev.InternalEmployees,sev.ExternalMembers,
-                         sdesc.Description, sdesc.GoodCitizens, sdesc.NoOfViolations, sdesc.Severity,sdesc.ViolationXSeverity, sdesc.FourAndFive, sdesc.UnsafeActConditions, sdesc.SubmittedDate,
-            sdec.SubmittedTime
-                     FROM SafetyAudit_Main sa
-                     LEFT JOIN SafetyAudit_Severity sev ON sa.ID = sev.AuditID
-                     LEFT JOIN SafetyAudit_Description sdesc ON sa.ID = sdesc.AuditID
-                     ORDER BY sa.Date DESC";
+                    SELECT 
+    sa.ID, sa.Department, sa.Section, sa.Date, sa.Time, 
+    sa.ContractorVendorCode, sa.TotalContractorPeople, 
+    sev.AuditID, sev.InternalEmployees, sev.ExternalMembers,
+    sdesc.Description, sdesc.GoodCitizens, sdesc.NoOfViolations, 
+    sdesc.Severity, sdesc.ViolationXSeverity, sdesc.FourAndFive, 
+    sdesc.UnsafeActConditions, sdesc.SubmittedDate, sdesc.SubmittedTime,
+    sdesc.CAPAID  
+FROM SafetyAudit_Main sa
+LEFT JOIN SafetyAudit_Severity sev ON sa.ID = sev.AuditID
+LEFT JOIN SafetyAudit_Description sdesc ON sa.ID = sdesc.AuditID
+ORDER BY sa.Date DESC
+";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -167,15 +188,46 @@ namespace AnmolDristi
 
         protected void BtnAddSection_Click(object sender, EventArgs e)
         {
-            // Get current section count (you may want to store this in ViewState)
-            int sectionIndex = (int)(ViewState["SectionCount"] ?? 0);
-            sectionIndex++;
+            int sectionIndex = (int)(ViewState["SectionCount"] ?? 0) + 1;
             ViewState["SectionCount"] = sectionIndex;
 
-            AddSection(sectionIndex);
+            string capaId;
+
+            // Maintain a list of generated CAPAIDs in ViewState
+            if (ViewState["CAPAIDList"] == null)
+                ViewState["CAPAIDList"] = new List<string>();
+
+            List<string> capaIdList = (List<string>)ViewState["CAPAIDList"];
+            string lastGeneratedCAPAID = capaIdList.Count > 0 ? capaIdList.Last() : null;
+
+            if (string.IsNullOrEmpty(lastGeneratedCAPAID))
+            {
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+                {
+                    conn.Open();
+                    using (SqlTransaction tx = conn.BeginTransaction())
+                    {
+                        lastGeneratedCAPAID = GenerateSafetyAuditCAPAID(conn, tx);  // e.g., SF011
+                        tx.Commit();
+                    }
+                }
+            }
+            else
+            {
+                int num = int.Parse(lastGeneratedCAPAID.Substring(2));
+                lastGeneratedCAPAID = "SF" + (num + 1).ToString("D3"); // e.g., SF012
+            }
+
+            capaIdList.Add(lastGeneratedCAPAID);             // Save for future reference
+            ViewState["CAPAIDList"] = capaIdList;
+            capaId = lastGeneratedCAPAID;
+
+            AddSection(sectionIndex, capaId);
         }
 
-        private void AddSection(int index)
+
+        private void AddSection(int index, string capaId)
+
         {
             // Create a new table
             Table newSection = new Table();
@@ -238,9 +290,22 @@ namespace AnmolDristi
             newSection.Rows.Add(row2);
 
             // Add section to a PlaceHolder or Panel on your page
-         //   SectionPlaceHolder.Controls.Add(newSection);
-        }
+            //   SectionPlaceHolder.Controls.Add(newSection);
+            TableCell capaCell = new TableCell();
+            capaCell.Controls.Add(new Label
+            {
+                ID = $"lblCAPAID_{index}",
+                Text = capaId,
+                CssClass = "form-label text-primary"
+            });
+            TableRow capaRow = new TableRow();
+            capaRow.Cells.Add(new TableCell { Text = "<b>CAPA ID:</b>" });
+            capaRow.Cells.Add(capaCell);
+            newSection.Rows.Add(capaRow);
 
+            // Add to placeholder
+            SectionPlaceHolder.Controls.Add(newSection);
+        }
 
 
 
@@ -307,13 +372,11 @@ namespace AnmolDristi
 
 
 
-
         private void SaveSafetyAuditData()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             int auditID;
 
-           
             string department = txtDepartment.Text;
             string section = txtSection.Text;
             string date = txtDate.Text;
@@ -321,44 +384,28 @@ namespace AnmolDristi
             string vendorCode = txtContractorVendorCode.Text;
             int totalPeople = Convert.ToInt32(txtTotalContractorPeople.Text);
 
-            //string severityLevel = ddlSeverityLevel.SelectedValue;
-            //  string teamMembers = txtTeamMember1.Text;
-
-            //string description = txtDescription.Text;
-            //string goodCitizens = DropDownList1.SelectedValue;
-            //int noOfViolations = Convert.ToInt32(DropDownList2.Text);
-            //int severity = Convert.ToInt32(DropDownList3.Text);
-            //int violationSeverity = Convert.ToInt32(DropDownList4.Text);
-            //int fourAndFive = Convert.ToInt32(DropDownList5.Text);
-            //string unsafeAct = DropDownList6.SelectedValue;
-
             string observationDataJson = hdnObservationData.Value;
             List<Observation> observations = new List<Observation>();
 
             if (!string.IsNullOrEmpty(observationDataJson))
             {
-                //observations = JsonSerializer.Deserialize<List<Observation>>(observationDataJson);
                 observations = JsonConvert.DeserializeObject<List<Observation>>(observationDataJson);
             }
 
+            string internalEmployeesCSV = Request.Form["hdnInternalEmployees"];
+            string externalMembersCSV = Request.Form["hdnExternalMembers"];
 
-
-            string internalEmployeesCSV = Request.Form["hdnInternalEmployees"]; // Or from HiddenField
-            string externalMembersCSV = Request.Form["hdnExternalMembers"];     // Same here
-
-
-          
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 SqlTransaction transaction = conn.BeginTransaction();
+
                 try
                 {
-                    // Call stored procedure for main table
+                    // Insert into SafetyAudit_Main
                     using (SqlCommand cmd = new SqlCommand("[MahimaGupta_CSMS].usp_InsertSafetyAuditMain", conn, transaction))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-
 
                         cmd.Parameters.AddWithValue("@Department", department);
                         cmd.Parameters.AddWithValue("@Section", section);
@@ -367,7 +414,6 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@ContractorVendorCode", vendorCode);
                         cmd.Parameters.AddWithValue("@TotalContractorPeople", totalPeople);
 
-                        // Add the output parameter to capture the generated AuditID
                         SqlParameter outputIdParam = new SqlParameter("@AuditID", SqlDbType.Int)
                         {
                             Direction = ParameterDirection.Output
@@ -378,30 +424,50 @@ namespace AnmolDristi
                         auditID = (int)outputIdParam.Value;
                     }
 
-                    // Call stored procedure for severity table
+                    // Insert Team Members
                     using (SqlCommand cmd = new SqlCommand("[MahimaGupta_CSMS].usp_InsertSafetyAuditSeverity", conn, transaction))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@AuditID", auditID);
-                        //cmd.Parameters.AddWithValue("@SeverityLevel", severityLevel);
                         cmd.Parameters.AddWithValue("@InternalEmployees", string.IsNullOrEmpty(internalEmployeesCSV) ? (object)DBNull.Value : internalEmployeesCSV);
                         cmd.Parameters.AddWithValue("@ExternalMembers", string.IsNullOrEmpty(externalMembersCSV) ? (object)DBNull.Value : externalMembersCSV);
-
 
                         cmd.ExecuteNonQuery();
                     }
 
+                    String customid = "SF" + auditID.ToString();
 
-                    if (observations == null || !observations.Any())
-                    {
-                        Console.WriteLine("No observations to save.");
-                    }
-                    else
+                    int? newCapaid = null;
+                    // Insert Observations
+                    if (observations != null && observations.Any())
                     {
                         foreach (var obs in observations)
                         {
-                            string formattedDate = obs.SubmittedDate.ToString("dd-MM-yyyy");
+                            string capaId = null;
 
+                            if (obs.RequiresCAPA)
+                            {
+                                // Generate CAPA ID (e.g., SF001)
+                                capaId = GenerateSafetyAuditCAPAID(conn, transaction);
+
+                                // Insert into tbl_CAPAMaster
+                                using (SqlCommand cmdCAPA = new SqlCommand(@"
+INSERT INTO tbl_CAPAMaster 
+(HeaderID, Remarks, AssignedBy, AssignedDate)
+VALUES (@HeaderID, @Remarks, @AssignedBy, @AssignedDate); SELECT SCOPE_IDENTITY();", conn, transaction))
+                                {
+                                    cmdCAPA.Parameters.AddWithValue("@HeaderID", customid);
+                                    cmdCAPA.Parameters.AddWithValue("@Remarks", obs.Description ?? (object)DBNull.Value);
+                                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", "Admin");
+                                    cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                                   object result = cmdCAPA.ExecuteScalar();
+                                     newCapaid = Convert.ToInt32(result);
+                                }
+                            }
+
+                           
+                            // Insert into SafetyAudit_Description
                             using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.usp_InsertSafetyAuditDescription", conn, transaction))
                             {
                                 cmd.CommandType = CommandType.StoredProcedure;
@@ -414,12 +480,12 @@ namespace AnmolDristi
                                 cmd.Parameters.Add("@ViolationSeverity", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.ViolationXSeverity) ? (object)DBNull.Value : Convert.ToInt32(obs.ViolationXSeverity);
                                 cmd.Parameters.Add("@FourAndFive", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.FourAndFive) ? (object)DBNull.Value : Convert.ToInt32(obs.FourAndFive);
                                 cmd.Parameters.Add("@UnsafeAct", SqlDbType.NVarChar, 50).Value = obs.UnsafeActs ?? (object)DBNull.Value;
+                                cmd.Parameters.Add("@CAPAID", SqlDbType.NVarChar, 10).Value = newCapaid.ToString();
+                                cmd.Parameters.Add("@Custom_ID", SqlDbType.NVarChar, 50).Value = customid;
 
-                                //cmd.Parameters.AddWithValue("@SubmittedDate", obs.SubmittedDate == DateTime.MinValue ? DateTime.Now : obs.SubmittedDate);
-                                //cmd.Parameters.AddWithValue("@SubmittedTime", obs.SubmittedTime == TimeSpan.Zero ? DateTime.Now.TimeOfDay : obs.SubmittedTime);
                                 DateTime safeSubmittedDate = obs.SubmittedDate < new DateTime(1753, 1, 1)
-   ? DateTime.Now
-   : obs.SubmittedDate;
+                                    ? DateTime.Now
+                                    : obs.SubmittedDate;
 
                                 TimeSpan safeSubmittedTime = obs.SubmittedTime == TimeSpan.Zero
                                     ? DateTime.Now.TimeOfDay
@@ -428,26 +494,13 @@ namespace AnmolDristi
                                 cmd.Parameters.AddWithValue("@SubmittedDate", safeSubmittedDate);
                                 cmd.Parameters.AddWithValue("@SubmittedTime", safeSubmittedTime);
 
-                                //cmd.Parameters.AddWithValue("@SubmittedDate", string.IsNullOrEmpty(formattedDate) ? DateTime.Now : DateTime.Parse(formattedDate));
-                                //cmd.Parameters.AddWithValue("@SubmittedTime", obs.SubmittedTime == TimeSpan.Zero ? DateTime.Now.TimeOfDay : obs.SubmittedTime);
-
-
-
-                                //cmd.Parameters.Add("@SelectField", SqlDbType.NVarChar, 255).Value = selectField;
-                                //cmd.Parameters.Add("@Options", SqlDbType.NVarChar, 255).Value = string.IsNullOrEmpty(options) ? (object)DBNull.Value : options;
-
-                                //Console.WriteLine($"AuditID: {auditID}, Description: {description}, SelectField: {selectField}, Options: {options}");
                                 cmd.ExecuteNonQuery();
                             }
-
                         }
                     }
 
-                        transaction.Commit();
-                    
+                    transaction.Commit();
                 }
-
-
                 catch (Exception ex)
                 {
                     transaction.Rollback();
@@ -466,8 +519,9 @@ namespace AnmolDristi
             public string ViolationXSeverity { get; set; }
             public string FourAndFive { get; set; }
             public string UnsafeActs { get; set; }
-            public DateTime SubmittedDate { get; set; }     // Date
-            public TimeSpan SubmittedTime { get; set; }     // Time
+            public DateTime SubmittedDate { get; set; }
+            public TimeSpan SubmittedTime { get; set; }
+            public bool RequiresCAPA { get; set; }
         }
 
         protected void BtnReset_Click(object sender, EventArgs e)
@@ -481,19 +535,7 @@ namespace AnmolDristi
             txtExternalName.Text = "";
             hdnObservationData.Value = "";
 
-            //   txtInternalName.Text = "";
-            //txtTeamMember1.Text = "";
-            //ddlSeverityLevel.SelectedIndex = 0;
-            //txtDescription.Text = "";
-            //ddlDescriptionFields.SelectedIndex = 0;
-            //foreach (Control control in pnlRadioButtons.Controls)
-            //{
-            //    RadioButton rb = control as RadioButton;
-            //    if (rb != null)
-            //    {
-            //        rb.Checked = false; // Uncheck each radio button
-            //    }
-            //}
+        
 
             lblMessage.Text = "Form reset successfully!";
             lblMessage.ForeColor = System.Drawing.Color.Blue;

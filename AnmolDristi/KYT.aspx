@@ -44,16 +44,23 @@
                     return;
                 }
 
-                // Create observation object
+                let requiresCAPA = document.getElementById("chkRequiresCAPA").checked;
+                let capaID = requiresCAPA ? generateClientKYT_CAPAID() : "";
+
                 let observation = {
-                    //SlNo: parseInt(slNo),
                     Activity: activity,
                     HiddenHazards: hazard,
                     Consequence: consequence,
                     CounterMeasures: measures,
                     PriorityValue: priority,
-                    PhotographPath: photoName
+                    PhotographPath: photoName,
+                    RequiresCAPA: requiresCAPA,
+                    CAPAID: capaID // Add CAPA ID field
                 };
+
+                if (requiresCAPA) kytCapaCounter++;
+
+
 
                 // Push to array
                 kytData.push(observation);
@@ -84,6 +91,8 @@
                             <th>Counter Measures</th>
                             <th>Priority</th>
                             <th>Photograph</th>
+                            <th>CAPA ID</th>
+
                         </tr>
                     </thead>
                     <tbody></tbody>`;
@@ -93,12 +102,12 @@
                 const tbody = table.querySelector("tbody");
                 const newRow = document.createElement("tr");
 
-                [activity, hazard, consequence, measures, priority, photoName].forEach(text => {
-
+                [activity, hazard, consequence, measures, priority, photoName, capaID].forEach(text => {
                     const td = document.createElement("td");
                     td.textContent = text;
                     newRow.appendChild(td);
                 });
+
 
                 tbody.appendChild(newRow);
 
@@ -393,7 +402,25 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
+             <div class="form-group mt-2">
+    <input type="checkbox" id="chkRequiresCAPA" checked onclick="confirmKYT_CAPA(this)" />
+    <label for="chkRequiresCAPA"><strong>CAPA ID Required</strong></label>
+</div>
+ <script>
+     function confirmKYT_CAPA(checkbox) {
+         if (!checkbox.checked) {
+             alert("CAPA is required. Proceeding without it is at your own risk.");
+         }
+     }
+
+     let kytCapaCounter = 1;
+
+     function generateClientKYT_CAPAID() {
+         return "KY" + kytCapaCounter.toString().padStart(3, '0');
+     }
+ </script>
 
                                 <!-- KYT Add More Button -->
                                 <div class="row col-lg-12">
