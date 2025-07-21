@@ -78,6 +78,33 @@ namespace AnmolDristi
             rptChecklist.DataSource = dt;
             rptChecklist.DataBind();
         }
+        protected void rptChecklist_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                RadioButton rdoYes = (RadioButton)e.Item.FindControl("rdoYes");
+                RadioButton rdoNo = (RadioButton)e.Item.FindControl("rdoNo");
+                RadioButton rdoNA = (RadioButton)e.Item.FindControl("rdoNA");
+
+                if (rdoYes != null)
+                {
+                    rdoYes.InputAttributes.Add("value", "Yes");
+                    rdoYes.Attributes.Add("onclick", "toggleFields(this);");
+                }
+
+                if (rdoNo != null)
+                {
+                    rdoNo.InputAttributes.Add("value", "No");
+                    rdoNo.Attributes.Add("onclick", "toggleFields(this);");
+                }
+
+                if (rdoNA != null)
+                {
+                    rdoNA.InputAttributes.Add("value", "NA");
+                    rdoNA.Attributes.Add("onclick", "toggleFields(this);");
+                }
+            }
+        }
 
         private string GenerateFABHeaderID()
         {
@@ -127,11 +154,11 @@ namespace AnmolDristi
                 lblMsg.Text = "Please enter Job ID.";
                 return;
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(txtjobId.Text.Trim(), @"^\d+$"))
-            {
-                lblMsg.Text = "Job ID must contain digits only.";
-                return;
-            }
+            //if (!System.Text.RegularExpressions.Regex.IsMatch(txtjobId.Text.Trim(), @"^\d+$"))
+            //{
+            //    lblMsg.Text = "Job ID must contain digits only.";
+            //    return;
+            //}
             if (string.IsNullOrWhiteSpace(txtloc.Text))
             {
                 lblMsg.Text = "Please enter Location.";
@@ -327,6 +354,11 @@ namespace AnmolDristi
                 }
             }
         }
+
+
+
+
+
 
         //private void SaveChecklistItemsFromRepeater(Repeater rpt, SqlConnection con, string headerID)
         //{

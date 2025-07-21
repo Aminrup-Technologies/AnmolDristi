@@ -16,7 +16,7 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>First Aid Box Checklist | ATS/OHS/FACL-01
+                <h3>FirstAidBox Checklist | ATS/OHS/FACL-01 
                 </h3>
             </div>
         </div>
@@ -25,7 +25,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2 class="text-info h4">Step 1:Basic Details</h2>
+                        <h2 class="text-info h4">Step 1:Basic Details | Eff. Date:19/05/2025 | REVISION NO:00</h2>
                         <div class="clearfix"></div>
                     </div>
 
@@ -214,7 +214,7 @@
                 <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
             </td>
             <td>
-            <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+            <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" onclick="return confirmCAPAUncheck(this);" />
         </td>
         </tr>
     </ItemTemplate>
@@ -369,5 +369,14 @@
          alert("Issues have been added successfully!");
      }
  </script>
+
+<script type="text/javascript">
+    function confirmCAPAUncheck(checkbox) {
+        if (!checkbox.checked) {
+            return confirm("CAPA is required.Proceeding without it is at your own risk");
+        }
+        return true;
+    }
+</script>
 
 </asp:Content>

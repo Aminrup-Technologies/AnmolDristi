@@ -23,7 +23,8 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>FirstAidBox Checklist Update | ATS/OHS/FACL-01
+                <h3>FirstAidBox Checklist | ATS/OHS/FACL-01 | Eff. Date:19/05/2025 | REVISION NO:00
+               
                 </h3>
             </div>
         </div>

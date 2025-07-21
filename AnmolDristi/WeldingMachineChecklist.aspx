@@ -58,8 +58,8 @@
     <div class="mb-3">
         <asp:Label ID="lbl_txtjobId" runat="server" AssociatedControlID="txtjobId" Text="Job ID" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtjobId" runat="server" ErrorMessage="*" ControlToValidate="txtjobId" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
-        <div class="input-group-sm">
+        <%--<asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
+       --%> <div class="input-group-sm">
             <asp:TextBox ID="txtjobId" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
         </div>
     </div>
@@ -142,7 +142,7 @@
                 <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
             </td>
                        <td>
-      <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+      <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" onclick="return confirmCAPAUncheck(this);" />
 </td>
         </tr>
     </ItemTemplate>
@@ -198,7 +198,7 @@
               <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"  Style="display:none;" />
           </td>
                      <td>
-      <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+      <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" onclick="return confirmCAPAUncheck(this);" />
 </td>
       </tr>
   </ItemTemplate>
@@ -253,7 +253,7 @@
               <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
           </td>
                      <td>
-      <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+      <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" onclick="return confirmCAPAUncheck(this);" />
 </td>
       </tr>
   </ItemTemplate>
@@ -306,7 +306,7 @@
               <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
           </td>
            <td>
-      <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+      <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" onclick="return confirmCAPAUncheck(this);" />
 </td>
       </tr>
   </ItemTemplate>
@@ -360,7 +360,7 @@
               <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
           </td>
            <td>
-           <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+           <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" onclick="return confirmCAPAUncheck(this);" />
            </td>
       </tr>
   </ItemTemplate>
@@ -554,7 +554,7 @@
     var insp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
         var re = document.getElementById('<%= txtnote.ClientID %>').value.trim();
 
-        const digitsOnly = /^\d+$/;
+        //const digitsOnly = /^\d+$/;
 
         if (!date) {
             alert("Please select Date of Inspection.");
@@ -568,10 +568,10 @@
             alert("Please enter JobID.");
             return false;
         }
-        if (!digitsOnly.test(jobId)) {
-            alert("Job ID must contain digits only.");
-            return false;
-        }
+        //if (!digitsOnly.test(jobId)) {
+        //    alert("Job ID must contain digits only.");
+        //    return false;
+        //}
         if (!insp) {
             alert("Please enter Inspected by.");
             return false;
@@ -589,7 +589,14 @@
 </script>
 
 
-
+<script type="text/javascript">
+    function confirmCAPAUncheck(checkbox) {
+        if (!checkbox.checked) {
+            return confirm("CAPA is required.Proceeding without it is at your own risk");
+        }
+        return true;
+    }
+</script>
 
 
 

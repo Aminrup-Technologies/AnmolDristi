@@ -1,35 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="FullBodyHarnessInspection.aspx.cs" Inherits="AnmolDristi.FullBodyHarnessInspection" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
-    
-    .question-section {
-    padding: 20px;
-    background-color: #f7f7f7;
-    border-radius: 8px;
+       <style type="text/css">
+.assessment-label {
+    color: #004080;
+    font-weight: 600;
+    font-size: 0.9rem;
 }
-
-.question-block {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+.ab{
+    font-weight: bold;
 }
-
-    .table-responsive {
-    width: 100%;
-    max-height: 400px; /* Adjust based on need */
-    overflow-x: auto;
-    overflow-y: auto;
-    
-   }
-
-@media (max-width: 768px) {
-    .table-responsive {
-        max-height: 300px; /* Adjust based on your UI */
-    }
-}
-</style>
+       </style>
 
 </asp:Content>
 
@@ -49,7 +29,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         
-                        <h2>DOC/ATS/TSK/FBH/013 | Eff.Date: 01.02.2024</h2>
+                        <h2>DOC/ATS/TSK/FBH/013 | Eff.Date: 01.02.2024 | REVISION NO:00</h2>
                          <div class="clearfix"></div>
                       </div>
 
@@ -59,7 +39,7 @@
                                 <div class="row">             
       <div class="col-md-3">
      <div class="mb-3">
-         <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Date Of Inspection" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+         <asp:Label ID="lbl_txtdate" runat="server" AssociatedControlID="txtdate" Text="Date Of Inspection" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
          <asp:RequiredFieldValidator ID="RFV_txtdate" runat="server" ErrorMessage="*" ControlToValidate="txtdate" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
          <div class="input-group-sm">
              <asp:TextBox ID="txtdate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
@@ -68,7 +48,7 @@
  </div>
      <div class="col-md-3">
      <div class="mb-3">
-         <asp:Label ID="lbl_txtSite" runat="server" AssociatedControlID="txtSite" Text="Site" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+         <asp:Label ID="lbl_txtSite" runat="server" AssociatedControlID="txtSite" Text="Site" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
          <asp:RequiredFieldValidator ID="RFV_txtSite" runat="server" ErrorMessage="*" ControlToValidate="txtSite" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
          <div class="input-group-sm">
              <asp:TextBox ID="txtSite" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
@@ -77,9 +57,9 @@
  </div>
                                             <div class="col-md-3">
     <div class="mb-3">
-        <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
+       <%-- <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />--%>
 
         <div class="input-group-sm">
             <asp:TextBox ID="txtjobID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
@@ -90,7 +70,7 @@
        
 <div class="col-md-3">
     <div class="mb-3">
-        <asp:Label ID="lbl_txtInsBy" runat="server" AssociatedControlID="txtInsBy" Text="Inspection By(Emp Code)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="lbl_txtInsBy" runat="server" AssociatedControlID="txtInsBy" Text="Inspection By(Emp Code)" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtInsBy" runat="server" ErrorMessage="*" ControlToValidate="txtInsBy" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtInsBy" runat="server" CssClass="form-control form-control-sm rounded" OnKeyUp="fetchEmployeeName()"  AutoPostBack="false"></asp:TextBox>
@@ -101,7 +81,7 @@
 
 <div class="col-md-3">
     <div class="mb-3">
-        <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Employee Name" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Employee Name" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtDocNo" runat="server" ErrorMessage="*" ControlToValidate="txtDocNo" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtDocNo" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true"></asp:TextBox>
@@ -117,323 +97,83 @@
                               
                                     </div>
 
- <div class="x_title">
-     <h2>Inspection Checklist</h2>
+  <div class="x_title">
+     <h2 class="text-info h4">Inspection CheckList</h2>
      <div class="clearfix"></div>
  </div>
-                    
-                          <div class="col-md-6">
-      <div class="mb-3">
-    <asp:Label ID="lbl_txtIdentity" runat="server" AssociatedControlID="txtIdentity" Text="Identification No" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-    <asp:RequiredFieldValidator ID="RFV_txtIdentity" runat="server" ErrorMessage="*" ControlToValidate="txtIdentity" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-    <div class="input-group-sm">
-        <asp:TextBox ID="txtIdentity" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
-    </div>
-          </div>
-</div>
-                          <div class="col-md-6">
-      <div class="mb-3">
-    <asp:Label ID="lbl_txtLoc" runat="server" AssociatedControlID="txtLoc" Text="Location" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-    <asp:RequiredFieldValidator ID="RFV_txtLoc" runat="server" ErrorMessage="*" ControlToValidate="txtLoc" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-    <div class="input-group-sm">
-        <asp:TextBox ID="txtLoc" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
-    </div>
-          </div>
-</div>
 
-
-   <!-- Toggle Button -->
-<div onclick="toggleDropdown('pnlQuestionBody')" style="cursor:pointer; background-color:#F5FFFA; color:#000000; padding:10px; border-radius:5px 5px 0 0; font-size: 1.5rem; font-weight: bold;" >
-    Full Body Harness Checklist ▾
-</div>
-
-<!-- Collapsible Panel -->
-<asp:Panel ID="pnlQuestionBody" runat="server" CssClass="question-section" Style="display:none;" ClientIDMode="Static">
-
-    <!-- Point 1 -->
-    <div class="question-block">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="mb-3">
-                <asp:Label ID="lblPoint1" runat="server" Text="Point 1:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                <asp:Label ID="lblQ1" runat="server"  AssociatedControlID="" Text="Is the Harness conforming to IS: 3521 & also full body double lanyard type and length is not more than 1.8mtr?" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label>
-                <div class="input-group-sm">
-                    <asp:RadioButton ID="rdoQ1Ok" runat="server" GroupName="Q1" Text="OK" onclick="toggleVisibility('divQ1', false)" Checked="true" />
-                    <asp:RadioButton ID="rdoQ1NotOk" runat="server" GroupName="Q1" Text="Not OK" onclick="toggleVisibility('divQ1', true)" />
-                </div>
-            </div>
+                         <div class="col-md-6">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtIdentity" runat="server" AssociatedControlID="txtIdentity" Text="Identification No" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtIdentity"  runat="server" ErrorMessage="*" ControlToValidate="txtIdentity" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtIdentity" runat="server" CssClass="form-control form-control-sm rounded" ></asp:TextBox>
         </div>
     </div>
-
-    <div id="divQ1" style="display:none;">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_txtQ1Remarks" runat="server"  AssociatedControlID="txtQ1Remarks" Text="Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                  
-                    <div class="input-group-sm">
-                        <asp:TextBox ID="txtQ1Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_fuQ1" runat="server" Text="Photo Upload"  AssociatedControlID="fuQ1" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                 
-                    <div class="input-group-sm">
-                        <asp:FileUpload ID="fuQ1" runat="server" CssClass="form-control form-control-sm rounded"  />
-                    </div>
-                </div>
-            </div>
+</div>
+  <div class="col-md-6">
+    <div class="mb-3">
+        <asp:Label ID="lbltxtLoc" runat="server" AssociatedControlID="txtLoc" Text="Location" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtLoc"  runat="server" ErrorMessage="*" ControlToValidate="txtLoc" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtLoc" runat="server" CssClass="form-control form-control-sm rounded" ></asp:TextBox>
         </div>
     </div>
 </div>
 
- 
+                            
+<asp:Repeater ID="rptsChecklist" runat="server">   
+<HeaderTemplate>
+    <div class="table-responsive"> 
+        <table class="table table-bordered align-middle" >
+           <thead class="bg-info">
+    <tr>
+        <th style="white-space: nowrap;">SNo</th>
+        <th style="min-width: 100px;">Points</th>
+        <th>Status</th>
+        <th style="min-width: 90px;">Remarks</th>
+        <th>Upload Photo</th>
+         <th>CAPA Report</th>
+    </tr>
+</thead> 
+            <tbody>
+               
+</HeaderTemplate>
+    <ItemTemplate>
+        <tr>
+            <td><%# Eval("QuestionNumber") %>
+                <asp:HiddenField ID="hfQuestionNumber" runat="server" Value='<%# Eval("QuestionNumber") %>' />
+            </td>
+             <td class="ab"><asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>' /></td>
+            <td>
+                <asp:RadioButton ID="rdoYes" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
+                    Text="Yes" CssClass="assessment-label status-option" Checked="true" />
+                <asp:RadioButton ID="rdoNo" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
+                    Text="No" CssClass="assessment-label status-option" />
+                <asp:RadioButton ID="rdoNA" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
+                    Text="NA" CssClass="assessment-label status-option" />
+            </td>
+            <td>
+                <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarks" Style="display:none;" />
+            </td>
+            <td>
+                <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
+            </td>
+                <td>
+                     <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" onclick="return confirmCAPAUncheck(this);" />
+               </td>
+        </tr>
+    </ItemTemplate>
 
-    
-    <!-- Point 2 -->
-<div class="question-block">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="mb-3">
-                <asp:Label ID="lblPoint2" runat="server" Text="Point 2:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                <asp:Label ID="lblQ2" runat="server"  AssociatedControlID="" Text="Condition of Lanyard: A) No visible damage B) Burn C) Cut D) Worn/Torn out" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label><br />
-                <div class="input-group-sm">
-                    <asp:RadioButton ID="rdoQ2Ok" runat="server" GroupName="Q2" Text="OK" onclick="toggleVisibility('divQ2', false)" Checked="true" />
-                    <asp:RadioButton ID="rdoQ2NotOk" runat="server" GroupName="Q2" Text="Not OK" onclick="toggleVisibility('divQ2', true)" />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="divQ2" style="display:none;">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_txtQ2Remarks" runat="server"  AssociatedControlID="txtQ2Remarks" Text="Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                    <div class="input-group-sm">
-                    <asp:TextBox ID="txtQ2Remarks" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
-                         </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_fuQ2" runat="server"  AssociatedControlID="fuQ2" Text="Photo Upload" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                 
-                    <div class="input-group-sm">
-                    <asp:FileUpload ID="fuQ2" runat="server" CssClass="form-control form-control-sm rounded"  />
-                         </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <FooterTemplate>
+            </tbody>
+        </table>
+    </FooterTemplate>
+</asp:Repeater>
 
   
-    <!-- Point 3 -->
-<div class="question-block">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="mb-3">
-                <asp:Label ID="lblPoint3" runat="server" Text="Point 3:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                <asp:Label ID="lblQ3" runat="server"  AssociatedControlID="" Text="Condition of thimble and snap hook: A) No visible damage B) Smooth working of hook" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label><br />
-                <div class="input-group-sm">
-                    <asp:RadioButton ID="rdoQ3Ok" runat="server" GroupName="Q3" Text="OK" onclick="toggleVisibility('divQ3', false)" Checked="true" />
-                    <asp:RadioButton ID="rdoQ3NotOk" runat="server" GroupName="Q3" Text="Not OK" onclick="toggleVisibility('divQ3', true)" />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="divQ3" style="display:none;">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_txtQ3Remarks" runat="server"  AssociatedControlID="txtQ3Remarks" Text="Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                  
-                    <div class="input-group-sm">
-                    <asp:TextBox ID="txtQ3Remarks" runat="server" CssClass="form-control form-control-sm rounded" ></asp:TextBox>
-                         </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_fuQ3" runat="server"  AssociatedControlID="fuQ3" Text="Photo Upload" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                  
-                    <div class="input-group-sm">
-                    <asp:FileUpload ID="fuQ3" runat="server" CssClass="form-control form-control-sm rounded"  />
-                         </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-
-    <!-- Point 4 -->
-<div class="question-block">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="mb-3">
-                <asp:Label ID="lblPoint4" runat="server" Text="Point 4:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                <asp:Label ID="lblQ4" runat="server"  AssociatedControlID="" Text="Condition of stitching and buckles: A) Stitching is ok B) Rust free buckles" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label><br />
-                <div class="input-group-sm">
-                    <asp:RadioButton ID="rdoQ4Ok" runat="server" GroupName="Q4" Text="OK" onclick="toggleVisibility('divQ4', false)" Checked="true" />
-                    <asp:RadioButton ID="rdoQ4NotOk" runat="server" GroupName="Q4" Text="Not OK" onclick="toggleVisibility('divQ4', true)" />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="divQ4" style="display:none;">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_txtQ4Remarks" runat="server"  AssociatedControlID="txtQ4Remarks" Text="Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                 
-                    <div class="input-group-sm">
-                    <asp:TextBox ID="txtQ4Remarks" runat="server" CssClass="form-control form-control-sm rounded" ></asp:TextBox>
-                         </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_fuQ4" runat="server"  AssociatedControlID="fuQ4" Text="Photo Upload" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                    
-                    <div class="input-group-sm">
-                    <asp:FileUpload ID="fuQ4" runat="server" CssClass="form-control form-control-sm rounded"  />
-                         </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
- 
-    <!-- Point 5 -->
-<div class="question-block">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="mb-3">
-                <asp:Label ID="lblPoint5" runat="server" Text="Point 5:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                <asp:Label ID="lblQ5" runat="server"  AssociatedControlID="" Text="Condition of D-RINGS: A) Distortion B) Cracks C) Sharp edges D) Break" ForeColor="Black" Font-Bold="true" Font-Size="Small"></asp:Label><br />
-                <div class="input-group-sm">
-                    <asp:RadioButton ID="rdoQ5Ok" runat="server" GroupName="Q5" Text="OK" onclick="toggleVisibility('divQ5', false)" Checked="true" />
-                    <asp:RadioButton ID="rdoQ5NotOk" runat="server" GroupName="Q5" Text="Not OK" onclick="toggleVisibility('divQ5', true)" />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="divQ5" style="display:none;">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_txtQ5Remarks"  runat="server" AssociatedControlID="txtQ5Remarks" Text="Remarks" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                 
-                    <div class="input-group-sm">
-                    <asp:TextBox ID="txtQ5Remarks" runat="server" CssClass="form-control form-control-sm rounded" ></asp:TextBox>
-                </div>
-                    </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <asp:Label ID="lbl_fuQ5" runat="server" AssociatedControlID="fuQ5" Text="Photo Upload" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-               
-                    <div class="input-group-sm">
-                    <asp:FileUpload ID="fuQ5" runat="server" CssClass="form-control form-control-sm rounded" />
-                       </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
- 
-</asp:Panel>
-<script type="text/javascript">
-    function toggleDropdown(panelId) {
-        var panel = document.getElementById(panelId);
-        panel.style.display = (panel.style.display === "none") ? "block" : "none";
-    }
-
-    function toggleVisibility(divId, show) {
-        var div = document.getElementById(divId);
-        div.style.display = show ? "block" : "none";
-    }
-</script>
-
-          <div class="col-md-3">
-    <div class="mb-3">
-        <asp:Label ID="lbl_btnAddChecklist" runat="server" AssociatedControlID="btnAddChecklist"  ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <div class="input-group">
-            <asp:Button ID="btnAddChecklist" Text="Add Inspection" runat="server"  CssClass="btn btn-success btn-sm"   OnClientClick="return validateChecklist();"   OnClick="btnAddChecklist_Click" />
-             <asp:Label ID="lblMsg1" runat="server" ></asp:Label>
-        </div>
-    </div>
-</div>
-
-        <div class="table-responsive">
-<div class="col-md-4">
-    <div class="mb-3">
-   <asp:GridView ID="gvChecklist" runat="server" AutoGenerateColumns="False" DataKeyNames="IdentificationNo" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None" OnRowCreated="gvChecklist_RowCreated" >
-    <Columns>
-        <asp:BoundField HeaderText="Identification No" DataField="IdentificationNo" Visible="false" />
-        <asp:BoundField HeaderText="Location" DataField="Location" />
-        
-        <asp:BoundField HeaderText="Q1 Status" DataField="Q1Status" />
-        <asp:BoundField HeaderText="Q1 Remarks" DataField="Q1Remarks" Visible="false" />
-       
-        <asp:TemplateField HeaderText="Q1 Photo" Visible="false" >
-      <ItemTemplate>
-            <asp:Image ID="Q1Photo" runat="server" ImageUrl='<%# Eval("Q1Photo") %>' Width="50px" Height="50px" />
-        </ItemTemplate>                      
-      </asp:TemplateField>
-
-        <asp:BoundField HeaderText="Q2 Status" DataField="Q2Status" />
-        <asp:BoundField HeaderText="Q2 Remarks" DataField="Q2Remarks" Visible="false" />
-        
-          <asp:TemplateField HeaderText="Q2 Photo" Visible="false" >
-<ItemTemplate>
-      <asp:Image ID="Q2Photo" runat="server" ImageUrl='<%# Eval("Q2Photo") %>' Width="50px" Height="50px" />
-  </ItemTemplate>                      
-</asp:TemplateField>
-
-
-        <asp:BoundField HeaderText="Q3 Status" DataField="Q3Status" />
-        <asp:BoundField HeaderText="Q3 Remarks" DataField="Q3Remarks" Visible="false" />
-                 <asp:TemplateField HeaderText="Q3 Photo" Visible="false" >
-<ItemTemplate>
-      <asp:Image ID="Q3Photo" runat="server" ImageUrl='<%# Eval("Q3Photo") %>' Width="50px" Height="50px" />
-  </ItemTemplate>                      
-</asp:TemplateField>
-
-        <asp:BoundField HeaderText="Q4 Status" DataField="Q4Status" />
-        <asp:BoundField HeaderText="Q4 Remarks" DataField="Q4Remarks" Visible="false" />
-        
-                         <asp:TemplateField HeaderText="Q4 Photo" Visible="false" >
-<ItemTemplate>
-      <asp:Image ID="Q4Photo" runat="server" ImageUrl='<%# Eval("Q4Photo") %>' Width="50px" Height="50px" />
-  </ItemTemplate>                      
-</asp:TemplateField>
-
-        <asp:BoundField HeaderText="Q5 Status" DataField="Q5Status" />
-        <asp:BoundField HeaderText="Q5 Remarks" DataField="Q5Remarks" Visible="false" />
-                         <asp:TemplateField HeaderText="Q5 Photo" Visible="false" >
-<ItemTemplate>
-      <asp:Image ID="Q5Photo" runat="server" ImageUrl='<%# Eval("Q5Photo") %>' Width="50px" Height="50px" />
-  </ItemTemplate>                      
-</asp:TemplateField>
-       <asp:TemplateField HeaderText="Action">
-       <ItemTemplate>
-           <asp:Button ID="BtnDelIns" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelIns_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
-      </ItemTemplate>
-</asp:TemplateField>
-    </Columns>
-</asp:GridView>
-        </div>
-    </div>
-            </div>
 
 
     <div class="col-md-4">
@@ -466,72 +206,41 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    var rdoNotOkIds = [
-        '<%= rdoQ1NotOk.ClientID %>',
-        '<%= rdoQ2NotOk.ClientID %>',
-        '<%= rdoQ3NotOk.ClientID %>',
-        '<%= rdoQ4NotOk.ClientID %>',
-        '<%= rdoQ5NotOk.ClientID %>'
-    ];
-
-    var txtRemarkIds = [
-        '<%= txtQ1Remarks.ClientID %>',
-        '<%= txtQ2Remarks.ClientID %>',
-        '<%= txtQ3Remarks.ClientID %>',
-        '<%= txtQ4Remarks.ClientID %>',
-        '<%= txtQ5Remarks.ClientID %>'
-    ];
-
-    var fileUploadIds = [
-        '<%= fuQ1.ClientID %>',
-        '<%= fuQ2.ClientID %>',
-        '<%= fuQ3.ClientID %>',
-        '<%= fuQ4.ClientID %>',
-        '<%= fuQ5.ClientID %>'
-    ];
-</script>
 
 <script type="text/javascript">
-    function validateChecklist() {
-        var identity = document.getElementById('<%= txtIdentity.ClientID %>').value.trim();
-        var location = document.getElementById('<%= txtLoc.ClientID %>').value.trim();
+    window.onload = function () {
+        const radios = document.querySelectorAll('.status-option');
 
-        if (!identity) {
-            alert("Please enter Identification No.");
-            return false;
-        }
+        radios.forEach(radio => {
+            radio.addEventListener("click", function () {
+                const row = this.closest('tr');
+                const value = this.textContent.trim(); // Yes / No / NA
 
-        if (!location) {
-            alert("Please enter Location.");
-            return false;
-        }
+                const txtRemarks = row.querySelector('.form-control.remarks');
+                const fileUpload = row.querySelector('.file-upload');
+                const chkCapa = row.querySelector('.capa-checkbox input[type="checkbox"]');
 
-        for (var i = 0; i < 5; i++) {
-            var rdoNotOk = document.getElementById(rdoNotOkIds[i]);
-            var remarks = document.getElementById(txtRemarkIds[i]);
-            var fileUpload = document.getElementById(fileUploadIds[i]);
-
-            if (rdoNotOk && rdoNotOk.checked) {
-                if (remarks && remarks.value.trim() === "") {
-                    alert("Please enter remarks for Point " + (i + 1));
-                    remarks.focus();
-                    return false;
+                if (value === "No") {
+                    if (txtRemarks) txtRemarks.style.display = "block";
+                    if (fileUpload) fileUpload.style.display = "block";
+                    if (chkCapa) {
+                        chkCapa.parentElement.style.display = "block";
+                        chkCapa.checked = true;
+                    }
+                } else {
+                    if (txtRemarks) txtRemarks.style.display = "none";
+                    if (fileUpload) fileUpload.style.display = "none";
+                    if (chkCapa) {
+                        chkCapa.parentElement.style.display = "none";
+                        chkCapa.checked = false;
+                    }
                 }
-
-                if (fileUpload && fileUpload.value.trim() === "") {
-                    alert("Please upload a photo for Point " + (i + 1));
-                    fileUpload.focus();
-                    return false;
-                }
-            }
-        }
-
-        return true; 
-    }
-
-
+            });
+        });
+    };
 </script>
+
+
 <script type="text/javascript">
     function validatesChecklist() {
        <%-- var identity = document.getElementById('<%= txtIdentity.ClientID %>').value.trim();
@@ -542,17 +251,6 @@
         var jobId = document.getElementById('<%= txtjobID.ClientID %>').value.trim();
         var insp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
         var remark = document.getElementById('<%= txtnote.ClientID %>').value.trim();
-
-        //if (!identity) {
-        //    alert("Please enter Identification No.");
-        //    return false;
-        //}
-
-        //if (!location) {
-        //    alert("Please enter Location.");
-        //    return false;
-        //}
-
         if (!date) {
             alert("Please select Date of Inspection.");
             return false;
@@ -648,7 +346,14 @@
     }
 </script>
 
-
+<script type="text/javascript">
+    function confirmCAPAUncheck(checkbox) {
+        if (!checkbox.checked) {
+            return confirm("CAPA is required.Proceeding without it is at your own risk");
+        }
+        return true;
+    }
+</script>
 
   
 </asp:Content>

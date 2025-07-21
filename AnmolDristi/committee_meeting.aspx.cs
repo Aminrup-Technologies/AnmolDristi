@@ -16,9 +16,9 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+
         }
-       
+
 
         [WebMethod]
         public static object GetAttendeeDetails(string attendeeCode)
@@ -50,8 +50,6 @@ namespace AnmolDristi
             }
         }
 
-       
-
         protected void rbAttendeeType_SelectedIndexChanged(object sender, EventArgs e)
         {
             bool isInternal = rbAttendeeType.SelectedValue == "Internal";
@@ -70,13 +68,13 @@ namespace AnmolDristi
             {
                 dt = new DataTable();
                 dt.Columns.Add("SNo");
-               
+
                 dt.Columns.Add("EmployeeName");
                 dt.Columns.Add("AttendeeCode"); // Ensure AttendeeCode exists
                 dt.Columns.Add("AttendanceStatus");
                 dt.Columns.Add("AttendeeType");
                 dt.Columns.Add("Designation");
-               // dt.Columns.Add("ImagePath"); // Ensure ImagePath exists
+                // dt.Columns.Add("ImagePath"); // Ensure ImagePath exists
 
                 ViewState["Attendance"] = dt;
             }
@@ -121,7 +119,7 @@ namespace AnmolDristi
 
             DataRow dr = dt.NewRow();
             dr["SNo"] = serialNo;
-            
+
             dr["AttendeeType"] = rbAttendeeType.SelectedItem != null ? rbAttendeeType.SelectedItem.Text : "";
             dr["EmployeeName"] = txtEmployeeName.Text.Trim();
             dr["AttendeeCode"] = txtAttendeeCode.Text.Trim();
@@ -135,7 +133,7 @@ namespace AnmolDristi
             gvAttendees.DataBind();
 
             // Clear input fields for next attendee
-            
+
             rbAttendeeType.ClearSelection();
             ddlAttendanceStatus.SelectedIndex = 0;
             txtEmployeeName.Text = "";
@@ -150,12 +148,14 @@ namespace AnmolDristi
         {
             lblMsg2.Text = "";
             DataTable dts;
+
             if (ViewState["Issues"] == null)
             {
                 dts = new DataTable();
                 dts.Columns.Add("SNo");
                 dts.Columns.Add("AgendaTitle");
                 dts.Columns.Add("IssuesDiscussed");
+                dts.Columns.Add("Capa_Report"); // ✅ Added this column
                 dts.Columns.Add("ActionBy");
                 dts.Columns.Add("TargetDate");
                 dts.Columns.Add("ReviewDate");
@@ -166,38 +166,42 @@ namespace AnmolDristi
             {
                 dts = (DataTable)ViewState["Issues"];
             }
-            // Generating SNo dynamically
+
+            // ✅ Set Capa_Report as "Checked" or empty string
+            string capaStatus = chkQ3CAPA.Checked ? "Checked" : "";
+
             int serialNo = dts.Rows.Count + 1;
             string allIssues = hdnPointsDiscussed.Value.Trim();
 
             DataRow dr = dts.NewRow();
             dr["SNo"] = serialNo;
             dr["AgendaTitle"] = txtAgendaTitle.Text.Trim();
-            dr["ActionBy"] = txtActionBy.Text.Trim();
             dr["IssuesDiscussed"] = allIssues;
+            dr["Capa_Report"] = capaStatus; // ✅ Apply checkbox value
+            dr["ActionBy"] = txtActionBy.Text.Trim();
             dr["TargetDate"] = txtTargetDate.Text.Trim();
             dr["ReviewDate"] = txtReviewDate.Text.Trim();
             dr["ReviewBy"] = txtReviewBy.Text.Trim();
             dr["Status"] = ddlStatus.SelectedValue;
+
             dts.Rows.Add(dr);
 
             ViewState["Issues"] = dts;
             gvIssues.DataSource = dts;
             gvIssues.DataBind();
 
-            // Clear input fields for next attendee
-            txtActionBy.Text = "";
-            txtAgendaTitle.Text="";
-            txtReviewBy.Text = "";
-            txtTargetDate.Text = "";
+            // Clear input fields for next entry
+            txtAgendaTitle.Text = "";
             txtIssuesDes.Text = "";
             hdnPointsDiscussed.Value = "";
+            txtActionBy.Text = "";
+            txtReviewBy.Text = "";
+            txtTargetDate.Text = "";
             txtReviewDate.Text = "";
             ddlStatus.SelectedIndex = 0;
-
+            chkQ3CAPA.Checked = true; // Optional: Reset checkbox
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "showSuccessMessages();", true);
-
         }
         protected void BtnDelete_Click(object sender, EventArgs e)
         {
@@ -284,8 +288,6 @@ namespace AnmolDristi
                 }
             }
         }
-
-
         protected void BtnReset_Click(object sender, EventArgs e)
         {
             Response.Redirect("committee_meeting.aspx");
@@ -317,8 +319,6 @@ namespace AnmolDristi
                 return;
             }
 
-
-
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connStr))
             {
@@ -331,7 +331,6 @@ namespace AnmolDristi
 
                     if (imgupload.HasFile)
                     {
-                        // Validate file extension (optional but recommended)
                         string extension = Path.GetExtension(imgupload.FileName).ToLower();
                         if (extension != ".jpg" && extension != ".jpeg" && extension != ".png")
                         {
@@ -344,15 +343,11 @@ namespace AnmolDristi
                         {
                             string fileName = Path.GetFileName(imgupload.FileName);
                             string uploadFolder = Server.MapPath("~/Uploads1/");
-                            Directory.CreateDirectory(uploadFolder); // Create folder if not exists
+                            Directory.CreateDirectory(uploadFolder);
 
                             string filePath = Path.Combine(uploadFolder, fileName);
                             imgupload.SaveAs(filePath);
-
-                            // Save relative path to DB
                             imagePath = "~/Uploads1/" + fileName;
-
-                            // Optional session store
                             Session["UploadedFilePath"] = filePath;
                         }
                         catch (Exception ex)
@@ -363,13 +358,9 @@ namespace AnmolDristi
                         }
                     }
 
-
-                    
-
-                    // 1. Insert into Committee_MeetingReview (Parent Table)
                     string insertMeetingQuery = @"INSERT INTO Committee_MeetingReview (MeetingNo,Title,JobID,MeetingDate, MeetingTime, Venue, ChairedBy,Image_upload) 
-                                          OUTPUT INSERTED.MeetingID 
-                                          VALUES (@MeetingNo, @Title,@JobID, @MeetingDate, @MeetingTime, @Venue, @ChairedBy,@Image_upload)";
+                                  OUTPUT INSERTED.MeetingID 
+                                  VALUES (@MeetingNo, @Title,@JobID, @MeetingDate, @MeetingTime, @Venue, @ChairedBy,@Image_upload)";
 
                     int meetingID;
                     using (SqlCommand cmd = new SqlCommand(insertMeetingQuery, conn, transaction))
@@ -381,25 +372,22 @@ namespace AnmolDristi
                         cmd.Parameters.AddWithValue("@Venue", txtVenue.Text.Trim());
                         cmd.Parameters.AddWithValue("@ChairedBy", txtChairedBy.Text.Trim());
                         cmd.Parameters.AddWithValue("@JobID", txtjobID.Text.Trim());
-                        //cmd.Parameters.AddWithValue("@Image_upload", (object)imagePath ?? DBNull.Value);
-
                         if (!string.IsNullOrEmpty(imagePath))
                             cmd.Parameters.AddWithValue("@Image_upload", imagePath);
                         else
                             cmd.Parameters.AddWithValue("@Image_upload", DBNull.Value);
 
-
-                        meetingID = (int)cmd.ExecuteScalar(); // Get newly inserted MeetingID
+                        meetingID = (int)cmd.ExecuteScalar();
+                        System.Diagnostics.Debug.WriteLine("Meeting Inserted with ID: " + meetingID);
                     }
 
-                    // 2. Insert into Committee_MeetingAttendance (Attendees GridView)
                     if (ViewState["Attendance"] != null)
                     {
                         DataTable dtAttendees = (DataTable)ViewState["Attendance"];
                         foreach (DataRow row in dtAttendees.Rows)
                         {
                             string insertAttendeeQuery = @"INSERT INTO Committee_MeetingAttendance (MeetingID, Name, Designation, AttendeeCode, Attendee_Type, AttendanceStatus)
-                                                   VALUES (@MeetingID, @Name, @Designation, @AttendeeCode, @Attendee_Type, @AttendanceStatus)";
+                                           VALUES (@MeetingID, @Name, @Designation, @AttendeeCode, @Attendee_Type, @AttendanceStatus)";
 
                             using (SqlCommand cmd = new SqlCommand(insertAttendeeQuery, conn, transaction))
                             {
@@ -408,27 +396,52 @@ namespace AnmolDristi
                                 cmd.Parameters.AddWithValue("@Designation", row["Designation"].ToString());
                                 cmd.Parameters.AddWithValue("@AttendeeCode", row["AttendeeCode"].ToString());
                                 cmd.Parameters.AddWithValue("@Attendee_Type", row["AttendeeType"].ToString());
-                               // cmd.Parameters.AddWithValue("@Image_upload", row["ImagePath"].ToString());
                                 cmd.Parameters.AddWithValue("@AttendanceStatus", row["AttendanceStatus"].ToString());
 
-
                                 cmd.ExecuteNonQuery();
+                                System.Diagnostics.Debug.WriteLine("Inserted Attendance for: " + row["EmployeeName"].ToString());
                             }
                         }
                     }
 
-                    // 3. Insert into Committee_MeetingIssues (Issues GridView)
+                    object capaReportID = DBNull.Value;
+                    string customid = "COM-" + meetingID;
+
                     if (ViewState["Issues"] != null)
                     {
                         DataTable dtIssues = (DataTable)ViewState["Issues"];
+
                         foreach (DataRow row in dtIssues.Rows)
                         {
-                            string insertIssueQuery = @"INSERT INTO Committee_MeetingIssues (MeetingID, IssueDescription, ResponsiblePerson, TargetDate, ReviewDate, AgendaTitle, Status,ReviewBy)
-                                                VALUES (@MeetingID, @IssueDescription, @ResponsiblePerson, @TargetDate, @ReviewDate, @AgendaTitle, @Status,@ReviewBy)";
+                            capaReportID = DBNull.Value; // Reset for each row
+
+                            if (row["Capa_Report"].ToString() == "Checked")
+                            {
+                                // Insert into CAPA Master table
+                                SqlCommand cmdCAPA = new SqlCommand(@"
+INSERT INTO tbl_CAPAMaster (HeaderID, AssignedBy, AssignedDate, Description)
+OUTPUT INSERTED.CAPAID
+VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description)", conn, transaction);
+
+                                cmdCAPA.Parameters.AddWithValue("@HeaderID", customid);
+                                cmdCAPA.Parameters.AddWithValue("@AssignedBy", row["ReviewBy"].ToString());
+                                cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                                cmdCAPA.Parameters.AddWithValue("@Description", row["IssuesDiscussed"].ToString());
+
+                                capaReportID = cmdCAPA.ExecuteScalar();
+                            }
+
+                            // ✅ Include Capa_Report in the insert query
+                            string insertIssueQuery = @"
+INSERT INTO Committee_MeetingIssues 
+(MeetingID, IssueDescription, ResponsiblePerson, TargetDate, ReviewDate, AgendaTitle, Status, ReviewBy, HeaderID, Capa_Report)
+VALUES 
+(@MeetingID, @IssueDescription, @ResponsiblePerson, @TargetDate, @ReviewDate, @AgendaTitle, @Status, @ReviewBy, @HeaderID, @Capa_Report)";
 
                             using (SqlCommand cmd = new SqlCommand(insertIssueQuery, conn, transaction))
                             {
                                 cmd.Parameters.AddWithValue("@MeetingID", meetingID);
+                                cmd.Parameters.AddWithValue("@HeaderID", customid);
                                 cmd.Parameters.AddWithValue("@IssueDescription", row["IssuesDiscussed"].ToString());
                                 cmd.Parameters.AddWithValue("@ResponsiblePerson", row["ActionBy"].ToString());
                                 cmd.Parameters.AddWithValue("@TargetDate", Convert.ToDateTime(row["TargetDate"]));
@@ -436,30 +449,43 @@ namespace AnmolDristi
                                 cmd.Parameters.AddWithValue("@AgendaTitle", row["AgendaTitle"].ToString());
                                 cmd.Parameters.AddWithValue("@Status", row["Status"].ToString());
                                 cmd.Parameters.AddWithValue("@ReviewBy", row["ReviewBy"].ToString());
+                                cmd.Parameters.AddWithValue("@Capa_Report", capaReportID ?? DBNull.Value); // Use DBNull if null
 
                                 cmd.ExecuteNonQuery();
                             }
                         }
                     }
-
-                    transaction.Commit(); // Commit if everything is successful
+                    transaction.Commit();
                     lblMsg.Text = "Data saved successfully!";
                     lblMsg.ForeColor = System.Drawing.Color.Green;
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "showSuccess();", true);
                 }
                 catch (Exception ex)
                 {
-                    transaction.Rollback(); // Rollback if any error occurs
+                    transaction.Rollback();
                     lblMsg.Text = "Error: " + ex.Message;
                     lblMsg.ForeColor = System.Drawing.Color.Red;
+                    System.Diagnostics.Debug.WriteLine("Transaction Error: " + ex.Message);
                 }
             }
         }
 
 
-
     }
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

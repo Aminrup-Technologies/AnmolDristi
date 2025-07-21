@@ -46,7 +46,7 @@
     <div class="mb-3">
         <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
+        <%--<asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />--%>
 
         <div class="input-group-sm">
             <asp:TextBox ID="txtjobID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
@@ -262,7 +262,7 @@
     </div>
 </div>
 
-         <div class="col">
+         <div class="col-md-2">
          <div class="mb-3">
         <asp:Label ID="lbl_ddlStatus" runat="server" AssociatedControlID="ddlStatus" Text="Status" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_ddlStatus" runat="server" ErrorMessage="*" ControlToValidate="ddlStatus" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -279,6 +279,37 @@
         </div>
     </div>
 </div>
+
+                            <%-- <div class="col-md-2">--%>
+     <%--<div class="mb-3">
+         <asp:Label ID="lbl_chkQ3CAPA" runat="server" AssociatedControlID="chkQ3CAPA"
+                    Text="CAPA Report" ForeColor="Blue" Font-Bold="true" Font-Size="Small" CssClass="form-label d-block" />
+         <div class="form-check">
+             <asp:CheckBox ID="chkQ3CAPA" runat="server" Text="CAPA" CssClass="form-check-input me-2" Checked="true" />
+         </div>
+     </div>--%>
+<%-- </div>--%>
+    <div class="mb-3">
+    <asp:Label ID="lbl_chkQ3CAPA" runat="server" AssociatedControlID="chkQ3CAPA"
+               Text="CAPA Report" ForeColor="Blue" Font-Bold="true" Font-Size="Small" CssClass="form-label d-block" />
+    <div class="form-check">
+        <asp:CheckBox ID="chkQ3CAPA" runat="server" Text="CAPA" CssClass="form-check-input me-2"
+                      Checked="true" onclick="return confirmCAPAUncheck(this);" />
+    </div>
+</div>
+
+<script type="text/javascript">
+    function confirmCAPAUncheck(checkbox) {
+        if (!checkbox.checked) {
+            return confirm("CAPA is required.Proceeding without it is at your own risk");
+        }
+        return true;
+    }
+</script>
+
+
+       
+
      
 
 
@@ -289,6 +320,9 @@
                                     <asp:Button ID="btnAddObservation" runat="server" Text="Add Observation" CssClass="btn btn-primary" ValidationGroup="add" CausesValidation="true" OnClick="btnAddObservation_Click" OnClientClick="return validateObservationFields();"/>
                                     <asp:Label ID="lblMsg1" runat="server" ></asp:Label>
                                 </div>
+                        
+</div>
+
                             </asp:Panel>
 
                             <hr>
@@ -311,6 +345,7 @@
        
         <asp:BoundField DataField="Observation" HeaderText="Observation" />
         <asp:BoundField DataField="CorrectiveAction" HeaderText="Corrective Action"  />
+         <asp:BoundField DataField="Capa_Report" HeaderText="CAPA Status" />
       
         <asp:TemplateField HeaderText="Photo (After)">
             <ItemTemplate>
@@ -628,7 +663,7 @@
         var openwork = document.getElementById('<%= txtjobID.ClientID %>').value.trim();
 
         
-        var digitsOnly = /^\d+$/;
+        //var digitsOnly = /^\d+$/;
 
         if (!obsID) {
             alert("Please select Date");
@@ -644,10 +679,10 @@
             alert("Please enter Job ID.");
             return false;
         }
-        if (!digitsOnly.test(openwork)) {
-            alert("Job ID must contain digits only.");
-            return false;
-        }
+        //if (!digitsOnly.test(openwork)) {
+        //    alert("Job ID must contain digits only.");
+        //    return false;
+        //}
 
         return true;
     }

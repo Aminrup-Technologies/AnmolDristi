@@ -291,10 +291,14 @@ namespace AnmolDristi
                     //SqlCommand delCAPA = new SqlCommand("DELETE FROM tbl_CAPAMaster WHERE HeaderID = @HeaderID", con, trans);
                     //delCAPA.Parameters.AddWithValue("@HeaderID", inspectionID);
                     //delCAPA.ExecuteNonQuery();
+                    //SqlCommand clearCAPAFields = new SqlCommand(@"
+                    //      UPDATE tbl_CAPAMaster 
+                    //      SET PhotoPath = NULL, Remarks = NULL 
+                    //      WHERE HeaderID = @HeaderID", con, trans);
                     SqlCommand clearCAPAFields = new SqlCommand(@"
-                          UPDATE tbl_CAPAMaster 
-                          SET PhotoPath = NULL, Remarks = NULL 
-                          WHERE HeaderID = @HeaderID", con, trans);
+                                  UPDATE tbl_CAPAMaster 
+                                SET IsYes = 1
+                                WHERE CAPAID = @CAPAID", con,trans);
 
                     clearCAPAFields.Parameters.AddWithValue("@HeaderID", inspectionID);
                     clearCAPAFields.ExecuteNonQuery();

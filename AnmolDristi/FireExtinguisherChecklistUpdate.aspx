@@ -16,7 +16,7 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3> Fire Extinguisher Update Page
+                <h3> FireExtinguisher Update Page | DOC/ATS/QOS/004 |  Eff. Date:19/05/2025 | REVISION NO:00
                 </h3>
             </div>
         </div>
@@ -54,8 +54,8 @@
     <div class="mb-3">
         <asp:Label ID="lbl_txtjobId" runat="server" AssociatedControlID="txtjobId" Text="Job ID" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtjobId" runat="server" ErrorMessage="*" ControlToValidate="txtjobId" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
-        <div class="input-group-sm">
+       <%-- <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
+       --%> <div class="input-group-sm">
             <asp:TextBox ID="txtjobId" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
         </div>
     </div>
@@ -123,6 +123,7 @@
         </div>
     </div>
 </div>
+
      <div class="col-md-6">
     <div class="mb-3">
         <asp:Label ID="lbl_txtCalibrationDate" runat="server" AssociatedControlID="txtCalibrationDate" Text="Calibration Date" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -184,6 +185,7 @@
             </td>
              <td>
                 <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+                 <asp:HiddenField ID="hfCapaReportID" runat="server" />
             </td>
         </tr>
     </ItemTemplate>
@@ -203,6 +205,8 @@
         </div>
     </div>
 </div>
+
+
                 </div>
                     </div>
 

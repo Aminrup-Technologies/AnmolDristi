@@ -115,6 +115,7 @@ namespace AnmolDristi
                 dt.Columns.Add("OpenBy");               
                 dt.Columns.Add("Observation");
                 dt.Columns.Add("CorrectiveAction");
+                dt.Columns.Add("Capa_Report");
                 dt.Columns.Add("ClosingDate");
                 dt.Columns.Add("CloseBy");
                 dt.Columns.Add("TargetDate");
@@ -178,6 +179,10 @@ namespace AnmolDristi
             // Generating SNo dynamically
             int serialNo = dt.Rows.Count + 1;
 
+            // ✅ Set Capa_Report as "Checked" or empty string
+            string capaStatus = chkQ3CAPA.Checked ? "Checked" : "";
+
+
             // Create a new row and add data
             DataRow dr = dt.NewRow();
             dr["SNo"] = serialNo;
@@ -188,7 +193,7 @@ namespace AnmolDristi
 
             dr["Observation"] = txtObservation.Text.Trim();
             dr["CorrectiveAction"] = txtCorrectiveAction.Text.Trim();
-            
+            dr["Capa_Report"] = capaStatus; // ✅ Apply checkbox value
             dr["ClosingDate"] = txtClosingDate.Text.Trim();
             dr["TargetDate"] = txtTargetDate.Text.Trim();
             dr["CloseBy"] = txtCloseBy.Text.Trim();
@@ -277,10 +282,12 @@ namespace AnmolDristi
                 return;
             }
 
+           
+
             DataTable dt = (DataTable)ViewState["Observations"];
 
             // Remove duplicate rows before inserting
-            dt = dt.DefaultView.ToTable(true, "ObserverID", "Observation", "CorrectiveAction", "Status", "OpenByWorkman", "AssignedTo", "TargetDate", "OpenBy", "CloseBy", "ClosingDate", "OpeningDate", "PhotoBefore", "PhotoAfter");
+            dt = dt.DefaultView.ToTable(true, "ObserverID", "Observation", "CorrectiveAction", "Status", "OpenByWorkman", "AssignedTo", "TargetDate", "OpenBy", "CloseBy", "ClosingDate", "OpeningDate", "PhotoBefore", "PhotoAfter","Capa_Report");
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
@@ -317,10 +324,31 @@ namespace AnmolDristi
                         lblMsg.ForeColor = System.Drawing.Color.Red;
                         return;
                     }
+                    object capaReportID = DBNull.Value;
+                    string customid = "HKM-" + auditID;
 
                     // Step 2: Insert into AuditObservations Table
                     foreach (DataRow row in dt.Rows)
                     {
+                        capaReportID = DBNull.Value; // Reset for each row
+
+                        if (row["Capa_Report"].ToString() == "Checked")
+                        {
+                            // Insert into CAPA Master table
+                            SqlCommand cmdCAPA = new SqlCommand(@"
+INSERT INTO tbl_CAPAMaster (HeaderID, AssignedBy, AssignedDate, Description)
+OUTPUT INSERTED.CAPAID
+VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description)", conn, transaction);
+
+                            cmdCAPA.Parameters.AddWithValue("@HeaderID", customid);
+                            cmdCAPA.Parameters.AddWithValue("@AssignedBy", row["AssignedTo"].ToString());
+                            cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                            cmdCAPA.Parameters.AddWithValue("@Description", row["Observation"].ToString());
+
+                            capaReportID = cmdCAPA.ExecuteScalar();
+                        }
+
+
                         System.Diagnostics.Debug.WriteLine($"PhotoBefore: {row["PhotoBefore"]}");
                         System.Diagnostics.Debug.WriteLine($"PhotoAfter: {row["PhotoAfter"]}");
 
@@ -328,6 +356,7 @@ namespace AnmolDristi
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("@AuditID", auditID);
+                            cmd.Parameters.AddWithValue("@HeaderID", customid);
                             cmd.Parameters.AddWithValue("@ObserverID",row["ObserverID"].ToString());
                             cmd.Parameters.AddWithValue("@ObservationText",row["Observation"].ToString());
                             cmd.Parameters.AddWithValue("@CorrectiveAction",row["CorrectiveAction"].ToString());
@@ -336,6 +365,8 @@ namespace AnmolDristi
                             cmd.Parameters.AddWithValue("@CloseBy",row["CloseBy"].ToString());
                             cmd.Parameters.AddWithValue("@AssignedTo", row["AssignedTo"].ToString());
                             cmd.Parameters.AddWithValue("@OpenByWorkman", row["OpenByWorkman"].ToString());
+                            cmd.Parameters.AddWithValue("@Capa_Report", capaReportID ?? DBNull.Value); // Use DBNull if null
+
 
 
                             cmd.Parameters.AddWithValue("@ClosingDate",
@@ -370,6 +401,8 @@ namespace AnmolDristi
                     lblMsg.ForeColor = System.Drawing.Color.Red;
                 }
             }
+
+
         }
 
 

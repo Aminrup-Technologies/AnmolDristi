@@ -19,10 +19,15 @@
     
    }
 .btn-fixed-size {
-    width: 100px;
+/*    min-width: 70px;
     text-align: center;
     font-size: 14px;
+    padding: 5px 0;*/
+    min-width: 60px;
     padding: 5px 0;
+    text-align: center;
+    font-size: 14px;
+
 }
     </style>
 </asp:Content>
@@ -99,7 +104,7 @@
     <div class="mb-3">
         <asp:Label ID="lbl_txtjobID" runat="server" AssociatedControlID="txtjobID" Text="Job ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtjobID" runat="server" ErrorMessage="*" ControlToValidate="txtjobID" ValidationGroup="Submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-       <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
+       <%--<asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />--%>
 
         <div class="input-group-sm">
             <asp:TextBox ID="txtjobID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
@@ -110,6 +115,7 @@
    --%>
                                     </div>
 
+                         <br />
  <div class="x_title">
      <h2 class="text-info h4">Attendance Table</h2>
      <div class="clearfix"></div>
@@ -250,6 +256,7 @@
 
    
 
+                         <br />
   <div class="x_title">
      <h2 class="text-info h4">Meeting Issue Details</h2>
      <div class="clearfix"></div>
@@ -258,8 +265,10 @@
    
     <div class="field" id="Issues">
  
+        <div class="row">
+   
                                  
-      <div class="col-md-6">
+    <%--  <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtAgendaTitle" runat="server" AssociatedControlID="txtAgendaTitle" Text="Agenda Title" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtAgendaTitle" runat="server" ErrorMessage="*" ControlToValidate="txtAgendaTitle" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -268,12 +277,12 @@
         </div>
     </div>
 </div>                          
-     <div class="col-md-6">
+     <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtIssuesDes" runat="server" AssociatedControlID="txtIssuesDes" Text="Issues Discussed" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_" runat="server" ErrorMessage="*" ValidationGroup="add1" ControlToValidate="txtIssuesDes" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div id="PointsContainer" runat="server">
-            <div class="d-flex align-items-center mb-2">
+            <div class="d-flex align-items-center mb-2 gap-2">
                 <asp:TextBox ID="txtIssuesDes" runat="server" CssClass="form-control form-control-sm rounded points-input"></asp:TextBox>
                 <asp:Button ID="BtnAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-sm btn-fixed-size" OnClientClick="addbutton(); return false;" />
                 <asp:Button ID="BtnRemove" runat="server" Text="Remove" CssClass="btn btn-danger btn-sm btn-fixed-size" OnClientClick="removebutton(this); return false;" />
@@ -281,6 +290,7 @@
             </div>
         </div>
     </div>
+       
 
     <script type="text/javascript">
         function addbutton() {
@@ -346,6 +356,19 @@
 
 
 </div>
+
+            <div class="col-md-4">
+    <div class="mb-3">
+        <asp:Label ID="lbl_chkQ3CAPA" runat="server" AssociatedControlID="chkQ3CAPA"
+                   Text="CAPA Report" ForeColor="Blue" Font-Bold="true" Font-Size="Small"
+                   CssClass="form-label d-block"></asp:Label>
+        <div class="input-group-sm">
+            <asp:CheckBox ID="chkQ3CAPA" runat="server" Text="CAPA" CssClass="form-check-input me-2"  Checked="true" />
+        </div>
+    </div>
+</div>--%>
+
+
              <div class="col-md-6">
          <div class="mb-3">
         <asp:Label ID="lbl_txtReviewBy" runat="server" AssociatedControlID="txtReviewBy" Text="Point Raised By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
@@ -403,13 +426,125 @@
     </div>
 </div>
      
-                         
+              <!-- Agenda Title -->
+    <div class="col-md-4">
+        <div class="mb-3">
+            <asp:Label ID="lbl_txtAgendaTitle" runat="server" AssociatedControlID="txtAgendaTitle"
+                       Text="Agenda Title" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+            <asp:RequiredFieldValidator ID="RFV_txtAgendaTitle" runat="server" ErrorMessage="*" 
+                                        ControlToValidate="txtAgendaTitle" ValidationGroup="add1" 
+                                        Display="Dynamic" ForeColor="Red" />
+            <asp:TextBox ID="txtAgendaTitle" runat="server" CssClass="form-control form-control-sm rounded" />
+        </div>
+    </div>
+
+    <!-- Issues Discussed -->
+    <div class="col-md-4">
+        <div class="mb-3">
+            <asp:Label ID="lbl_txtIssuesDes" runat="server" AssociatedControlID="txtIssuesDes"
+                       Text="Issues Discussed" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+            <asp:RequiredFieldValidator ID="RFV_IssuesDes" runat="server" ErrorMessage="*" 
+                                        ValidationGroup="add1" ControlToValidate="txtIssuesDes" 
+                                        Display="Dynamic" ForeColor="Red" />
+            <div id="PointsContainer" runat="server">
+                <div class="d-flex align-items-center gap-2">
+                    <asp:TextBox ID="txtIssuesDes" runat="server" CssClass="form-control form-control-sm rounded points-input me-2" />
+                    <asp:Button ID="BtnAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-sm me-2"
+                                OnClientClick="addbutton(); return false;" />
+                    <asp:Button ID="BtnRemove" runat="server" Text="Remove" CssClass="btn btn-danger btn-sm"
+                                OnClientClick="removebutton(this); return false;" />
+                </div>
+            </div>
+        </div>
+         <script type="text/javascript">
+             function addbutton() {
+
+                 var container = document.getElementById('<%= PointsContainer.ClientID %>');
+
+                 if (!container) {
+                     console.error("Error: PointsContainer not found!");
+                     return;
+                 }
+
+                 var div = document.createElement("div");
+                 div.className = "d-flex align-items-center mb-2";
+
+                 var input = document.createElement("input");
+                 input.type = "text";
+                 input.className = "form-control form-control-sm points-input";
+                 input.placeholder = "Enter Points";
+
+                 var addBtn = document.createElement("button");
+                 addBtn.type = "button";
+                 addBtn.className = "btn btn-primary btn-sm btn-fixed-size";
+                 addBtn.textContent = "Add";
+                 addBtn.onclick = addbutton;
+
+                 var removeBtn = document.createElement("button");
+                 removeBtn.type = "button";
+                 removeBtn.className = "btn btn-danger btn-sm btn-fixed-size";
+                 removeBtn.textContent = "Remove";
+                 removeBtn.onclick = function () {
+                     removebutton(this);
+                 };
+
+                 div.appendChild(input);
+                 div.appendChild(addBtn);
+                 div.appendChild(removeBtn);
+                 container.appendChild(div);
+             }
+
+             function removebutton(button) {
+                 var container = document.getElementById('<%= PointsContainer.ClientID %>');
+                 if (container.children.length > 1) {
+                     button.parentNode.remove();
+                 }
+                 else {
+                     alert("At least one point is required.");
+                 }
+             }
+             function preparePoints() {
+                 var container = document.getElementById('<%= PointsContainer.ClientID %>');
+         var inputs = container.getElementsByTagName('input');
+         var pointsArray = [];
+
+         for (var i = 0; i < inputs.length; i++) {
+             if (inputs[i].type === "text" && inputs[i].value.trim() !== "") {
+                 pointsArray.push(inputs[i].value.trim());
+             }
+         }
+
+       document.getElementById('<%= hdnPointsDiscussed.ClientID %>').value = pointsArray.join(" , ");
+             }
+         </script>
+    </div>
+
+ 
+            <div class="col-md-4">
+                <div class="mb-3">
+    <asp:Label ID="lbl_chkQ3CAPA" runat="server" AssociatedControlID="chkQ3CAPA"
+               Text="CAPA Report" ForeColor="Blue" Font-Bold="true" Font-Size="Small" CssClass="form-label d-block" />
+    <div class="form-check">
+        <asp:CheckBox ID="chkQ3CAPA" runat="server" Text="CAPA" CssClass="form-check-input me-2"
+                      Checked="true" onclick="return confirmCAPAUncheck(this);" />
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    function confirmCAPAUncheck(checkbox) {
+        if (!checkbox.checked) {
+            return confirm("CAPA is required.Proceeding without it is at your own risk");
+        }
+        return true;
+    }
+</script>
+               
 
 
      </div>
 
 
-<div class="col-md-2">
+<%--<div class="col-md-2">
  <div class="mt-3">
      <asp:Button ID="btnAddIssues" runat="server" Text="Add Issues" CssClass="btn btn-primary" ValidationGroup="add1" CausesValidation="true"  OnClientClick="preparePoints();" OnClick="btnAddIssues_Click"  />
  <asp:Label ID="lblMsg2" runat="server" ></asp:Label>
@@ -421,9 +556,10 @@
     <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" DataKeyNames="SNo"  CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None" >
     <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
     <Columns>
-        <asp:BoundField DataField="SNo" HeaderText="SNo" Visible="false" />
+        <asp:BoundField DataField="SNo" HeaderText="SNo" Visible="true" />
         <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title" Visible="false" />
         <asp:BoundField DataField="IssuesDiscussed" HeaderText="Issues Discussed" />
+        <asp:BoundField DataField="Capa_Report" HeaderText="Capa_Report"  />
         <asp:BoundField DataField="ActionBy" HeaderText="Close By" />
         <asp:BoundField DataField="TargetDate" HeaderText="Target Date" Visible="false" />
         <asp:BoundField DataField="ReviewDate" HeaderText="Review Date" />
@@ -438,9 +574,55 @@
 </asp:GridView>
             </div>
         </div>
-        </div>
+        </div>--%>
 
-             
+  <br />
+
+
+                        <div class="col-md-2">
+    <div class="mt-3">
+        <asp:Button ID="btnAddIssues" runat="server" Text="Add Issues" CssClass="btn btn-primary"
+            ValidationGroup="add1" CausesValidation="true" OnClientClick="preparePoints();" OnClick="btnAddIssues_Click" />
+        <asp:Label ID="lblMsg2" runat="server"></asp:Label>
+    </div>
+</div>
+
+
+
+<div class="table-responsive">
+    <div class="col-md-4">
+        <div class="mb-3">
+            <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" DataKeyNames="SNo"
+                CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
+                <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
+                <Columns>
+                    <asp:BoundField DataField="SNo" HeaderText="SNo" Visible="false" />
+                    <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title" Visible="false" />
+                    <asp:BoundField DataField="IssuesDiscussed" HeaderText="Issues Discussed" />
+                    <asp:BoundField DataField="Capa_Report" HeaderText="CAPA Status" />
+                    <asp:BoundField DataField="ActionBy" HeaderText="Close By" />
+                    <asp:BoundField DataField="TargetDate" HeaderText="Target Date" Visible="false" />
+                    <asp:BoundField DataField="ReviewDate" HeaderText="Review Date" />
+                    <asp:BoundField DataField="ReviewBy" HeaderText="Point Raised By" />
+                    <asp:BoundField DataField="Status" HeaderText="Status" />
+                    <asp:TemplateField HeaderText="Action">
+                        <ItemTemplate>
+                            <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"
+                                OnClick="BtnDelete_Click"
+                                OnClientClick="return confirm('Are you sure you want to delete ?');" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </div>
+    </div>
+</div>
+
+                        
+
+
+
+
  <div class="x_title">
     <h2 class="text-info h4">Upload Your Meeting Image</h2>
     <div class="clearfix"></div>
@@ -607,7 +789,7 @@
         var chairedby = document.getElementById('<%= txtChairedBy.ClientID %>').value.trim(); 
         var img = document.getElementById('<%= imgupload.ClientID %>').value.trim();
 
-        var digitsOnly = /^\d+$/;
+        //var digitsOnly = /^\d+$/;
 
         if (!obsID) {
             alert("Please select Date");
@@ -634,10 +816,10 @@
             alert("Please enter Job ID.");
             return false;
         }
-        if (!digitsOnly.test(openwork)) {
-            alert("Job ID must contain digits only.");
-            return false;
-        }
+        //if (!digitsOnly.test(openwork)) {
+        //    alert("Job ID must contain digits only.");
+        //    return false;
+        //}
         if (!img) {
             alert("Please Upload Meeting Image.");
             return false;

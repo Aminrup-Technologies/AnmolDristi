@@ -176,54 +176,32 @@ namespace AnmolDristi
                         txtRemarks.Style["display"] = "block";
                         fileUpload.Style["display"] = "block";
                     }
+                    CheckBox chkCapa = (CheckBox)item.FindControl("chkCapaReport");
+                    HiddenField hfCapaReportID = (HiddenField)item.FindControl("hfCapaReportID");
 
-                    // ✅ Load CAPA_Report value
-                    CheckBox chkCapaReport = (CheckBox)item.FindControl("chkCapaReport");
-                    if (chkCapaReport != null)
+                    if (row["CAPA_Report"] != DBNull.Value)
                     {
-                        if (row.Table.Columns.Contains("CAPA_Report") && !string.IsNullOrEmpty(row["CAPA_Report"].ToString()))
-                        {
-                            chkCapaReport.Checked = true;
-                            chkCapaReport.Style["display"] = "inline-block";
-                        }
-                        else
-                        {
-                            chkCapaReport.Checked = false;
-                            chkCapaReport.Style["display"] = "none";
-                        }
+                        chkCapa.Checked = true;
+                        chkCapa.Style["display"] = "block";
+                        hfCapaReportID.Value = row["CAPA_Report"].ToString();
                     }
+                    else
+                    {
+                        chkCapa.Checked = false;
+                        chkCapa.Style["display"] = "none";
+                        hfCapaReportID.Value = "";
+                    }
+
                 }
             }
         }
 
-        private string GenerateCapaaReportID(SqlConnection con)
-        {
-            string query = "SELECT MAX(CAPA_Report) FROM FireExtinguisherChecklist WHERE CAPA_Report IS NOT NULL AND CAPA_Report LIKE 'CAPA-%'";
-
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                object result = cmd.ExecuteScalar();
-                int maxNumber = 0;
-
-                if (result != DBNull.Value && result != null)
-                {
-                    string lastId = result.ToString();
-                    if (lastId.StartsWith("CAPA-"))
-                    {
-                        int.TryParse(lastId.Substring(5), out maxNumber);
-                    }
-                }
-
-                return $"CAPA-{(maxNumber + 1):D3}";
-            }
-        }
-
+        
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
             lblMsg.Text = "";
 
             if (string.IsNullOrWhiteSpace(txtdate.Text) || string.IsNullOrWhiteSpace(txtjobId.Text) ||
-                !System.Text.RegularExpressions.Regex.IsMatch(txtjobId.Text.Trim(), @"^\d+$") ||
                 string.IsNullOrWhiteSpace(txtloc.Text) || string.IsNullOrWhiteSpace(txtDocNo.Text) ||
                 string.IsNullOrWhiteSpace(txtInsBy.Text) || string.IsNullOrWhiteSpace(txtnote.Text) ||
                 string.IsNullOrWhiteSpace(txtCalibrationDate.Text) || string.IsNullOrWhiteSpace(txtsno.Text) ||
@@ -278,7 +256,7 @@ namespace AnmolDristi
             lblMsg.ForeColor = System.Drawing.Color.Green;
         }
 
-        // Modified to accept old CAPA values
+        
         private void SaveChecklistItems(Repeater repeater, string headerID, SqlConnection con)
         {
             foreach (RepeaterItem item in repeater.Items)
@@ -316,46 +294,59 @@ namespace AnmolDristi
                 {
                         checklistPhotoPath = hfImagePath?.Value ?? "";
                 }
-                    object capaID = DBNull.Value;
-                //string capaReportID = null;
-                //string remarks = "";
-                //string photoPath = "";
-                //if (rdoNo.Checked)
-                //{
-                //    remarks = txtRemarks.Text.Trim();
 
-                //    if (fileUpload.HasFile)
-                //    {
-                //        string fileName = Path.GetFileName(fileUpload.FileName);
-                //        string savePath = Server.MapPath("~/Uploads/" + fileName);
-                //        fileUpload.SaveAs(savePath);
-                //        photoPath = "~/Uploads/" + fileName;
-                //    }
-                //    else
-                //    {
-                //        photoPath = hfImagePath?.Value ?? "";
-                //    }
 
-                //    if (chkCapaReport != null && chkCapaReport.Checked)
+
+
+                //        object capaID = DBNull.Value;
+
+                //    if (na && chkCapa != null && chkCapa.Checked)
                 //    {
-                //        if (oldCapaReports.ContainsKey(questionNumber))
-                //        {
-                //            capaReportID = oldCapaReports[questionNumber]; // reuse old
-                //        }
-                //        else
-                //        {
-                //            capaReportID = GenerateCapaaReportID(con); // generate new
-                //        }
+                //        SqlCommand cmdCAPA = new SqlCommand(@"
+                //INSERT INTO tbl_CAPAMaster 
+                //(HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                //OUTPUT INSERTED.CAPAID
+                //VALUES 
+                //(@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", con);
+
+                //        cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
+                //        cmdCAPA.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(checklistPhotoPath) ? DBNull.Value : (object)checklistPhotoPath);
+                //        cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
+                //        cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                //        cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                //        capaID = cmdCAPA.ExecuteScalar();
                 //    }
-                //}
-                if (na && chkCapa != null && chkCapa.Checked)
+                HiddenField hfCapaReportID = (HiddenField)item.FindControl("hfCapaReportID");
+                object capaID = DBNull.Value;
+
+                if (!string.IsNullOrEmpty(hfCapaReportID.Value))
+                {
+                    capaID = hfCapaReportID.Value;
+
+                    // If changed from No to Yes or NA, clear PhotoPath & Remarks
+                    if (rdoYes.Checked || rdoNA.Checked)
+                    {
+                        SqlCommand clearsCAPAFields = new SqlCommand(@"
+                                  UPDATE tbl_CAPAMaster 
+                                SET IsYes = 1
+                                WHERE CAPAID = @CAPAID", con);
+
+                        clearsCAPAFields.Parameters.AddWithValue("@CAPAID", hfCapaReportID.Value);
+                        clearsCAPAFields.ExecuteNonQuery();
+                        remarks = "";
+                        checklistPhotoPath = "";
+
+                    }
+                }
+                else if (rdoNo.Checked && chkCapa != null && chkCapa.Checked)
                 {
                     SqlCommand cmdCAPA = new SqlCommand(@"
-            INSERT INTO tbl_CAPAMaster 
-            (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
-            OUTPUT INSERTED.CAPAID
-            VALUES 
-            (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", con);
+        INSERT INTO tbl_CAPAMaster 
+        (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+        OUTPUT INSERTED.CAPAID
+        VALUES 
+        (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", con);
 
                     cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
                     cmdCAPA.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(checklistPhotoPath) ? DBNull.Value : (object)checklistPhotoPath);
@@ -365,6 +356,7 @@ namespace AnmolDristi
 
                     capaID = cmdCAPA.ExecuteScalar();
                 }
+
 
                 SqlCommand cmdInsert = new SqlCommand(@"
             INSERT INTO FireExtinguisherChecklist  
@@ -387,13 +379,7 @@ namespace AnmolDristi
 
                 cmdInsert.ExecuteNonQuery();
             }
-            SqlCommand clearCAPAFields = new SqlCommand(@"
-                          UPDATE tbl_CAPAMaster 
-                          SET PhotoPath = NULL, Remarks = NULL 
-                          WHERE HeaderID = @HeaderID", con);
-
-            clearCAPAFields.Parameters.AddWithValue("@HeaderID", headerID);
-            clearCAPAFields.ExecuteNonQuery();
+           
 
         }
 

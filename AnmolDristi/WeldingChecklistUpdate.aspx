@@ -55,8 +55,8 @@
      <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtjobId" runat="server" AssociatedControlID="txtjobId" Text="Job ID" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtjobId" runat="server" ErrorMessage="*" ControlToValidate="txtjobId" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
+        <%--<asp:RequiredFieldValidator ID="RFV_txtjobId" runat="server" ErrorMessage="*" ControlToValidate="txtjobId" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+       --%> <div class="input-group-sm">
             <asp:TextBox ID="txtjobId" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
         </div>
     </div>
@@ -141,6 +141,7 @@
             </td>
              <td>
     <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+                   <asp:HiddenField ID="hfCapaReportID" runat="server" />
 </td>
         </tr>
     </ItemTemplate>
@@ -198,6 +199,7 @@
           </td>
            <td>
     <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+                 <asp:HiddenField ID="hfCapaReportID" runat="server" />
 </td>
       </tr>
   </ItemTemplate>
@@ -254,6 +256,7 @@
           </td>
            <td>
     <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+                 <asp:HiddenField ID="hfCapaReportID" runat="server" />
 </td>
       </tr>
   </ItemTemplate>
@@ -308,6 +311,7 @@
           </td>
            <td>
     <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+                 <asp:HiddenField ID="hfCapaReportID" runat="server" />
 </td>
       </tr>
   </ItemTemplate>
@@ -363,6 +367,7 @@
           </td>
            <td>
              <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+                 <asp:HiddenField ID="hfCapaReportID" runat="server" />
            </td>
       </tr>
   </ItemTemplate>
@@ -516,10 +521,10 @@
             alert("Please enter JobID.");
             return false;
         }
-        if (!digitsOnly.test(jobId)) {
-            alert("Job ID must contain digits only.");
-            return false;
-        }
+        //if (!digitsOnly.test(jobId)) {
+        //    alert("Job ID must contain digits only.");
+        //    return false;
+        //}
         if (!insp) {
             alert("Please enter Inspected by.");
             return false;

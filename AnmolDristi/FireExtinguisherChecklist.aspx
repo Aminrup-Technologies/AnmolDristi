@@ -16,7 +16,8 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3> Fire Extinguisher Checklist
+                <h3> 
+                   Fire Extinguisher Checklist| DOC/ATS/QOS/004 
                 </h3>
             </div>
         </div>
@@ -26,7 +27,7 @@
                 <div class="x_panel">
                     <div class="x_title">  
                         <h2 class="text-info h4">
-                            Basic Details
+                            Basic Details | Eff. Date:19/05/2025 | REVISION NO:00
                         </h2>
                          <div class="clearfix"></div>
                       </div>
@@ -54,8 +55,8 @@
     <div class="mb-3">
         <asp:Label ID="lbl_txtjobId" runat="server" AssociatedControlID="txtjobId" Text="Job ID" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtjobId" runat="server" ErrorMessage="*" ControlToValidate="txtjobId" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
-        <div class="input-group-sm">
+       <%-- <asp:RegularExpressionValidator  ID="REV_txtjobID"  ControlToValidate="txtjobID"  ValidationExpression="^\d+$" ErrorMessage="Only digits are allowed"  ForeColor="Red"  runat="server" />
+        --%><div class="input-group-sm">
             <asp:TextBox ID="txtjobId" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
         </div>
     </div>
@@ -75,7 +76,7 @@
 </div>
 
  
-<div class="col-md-3">
+<div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Employee Name" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtDocNo" runat="server" ErrorMessage="*" ControlToValidate="txtDocNo" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -142,7 +143,7 @@
     </div>
 </div>
         
-<asp:Repeater ID="rptChecklist" runat="server">   
+<asp:Repeater ID="rptChecklist" runat="server" OnItemDataBound="rptChecklist_ItemDataBound">   
 <HeaderTemplate>
     <div class="table-responsive"> 
         <table class="table table-bordered align-middle" >
@@ -168,7 +169,7 @@
              <td class="ab"><asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>' /></td>
             <td>
                 <asp:RadioButton ID="rdoYes" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
-                    Text="Yes" CssClass="assessment-label status-option" Checked="true" />
+                    Text="Yes" CssClass="assessment-label status-option" Checked="true"  />
                 <asp:RadioButton ID="rdoNo" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
                     Text="No" CssClass="assessment-label status-option" />
                 <asp:RadioButton ID="rdoNA" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
@@ -181,7 +182,7 @@
                 <asp:FileUpload ID="fileUpload" runat="server" CssClass="file-upload"   Style="display:none;" />
             </td>
                 <td>
-                     <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+                     <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" onclick="return confirmCAPAUncheck(this);" />
                </td>
         </tr>
     </ItemTemplate>
@@ -192,7 +193,7 @@
     </FooterTemplate>
 </asp:Repeater>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="Lbl_txtnote" runat="server" AssociatedControlID="txtnote" Text="Remarks"  CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtnote" runat="server" ErrorMessage="*" ControlToValidate="txtnote" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -210,7 +211,7 @@
      <div class="mb-3">
          <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="CLICK TO SAVE" ForeColor="Green" Font-Bold="true" Font-Size="Small"></asp:Label>
          <div class="input-group input-group-sm">
-             <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success mt-3"  ValidationGroup="submi" CausesValidation="true" OnClick="btnSubmit_Click"  OnClientClick="return valcheck();" />
+             <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success mt-3"  ValidationGroup="submi" CausesValidation="true" OnClick="btnSubmit_Click"  OnClientClick="return validateChecklist();" />
              <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning  mt-3" CausesValidation="false" OnClick="BtnReset_Click" />
              <asp:Button ID="btn_home" runat="server" Text="Home" CssClass="btn btn-danger  mt-3" CausesValidation="false" PostBackUrl="~/Home.aspx" />
              <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
@@ -306,7 +307,7 @@
 
 
 
-<script type="text/javascript">
+<%--<script type="text/javascript">
     function RemarkssAndPhotos() {
         const rows = document.querySelectorAll("table tr"); // Adjust selector if needed
 
@@ -335,8 +336,60 @@
 
         return true;
     }
-</script>
+</script>--%>
 
+
+<script type="text/javascript">
+    function validateChecklist() {
+        var isValid = true;
+        var rows = document.querySelectorAll(".repeater-table tbody tr");
+
+        rows.forEach(function (row) {
+            var rdoYes = row.querySelector("input[type=radio][value='Yes']");
+            var rdoNo = row.querySelector("input[type=radio][value='No']");
+            var remarks = row.querySelector("input.remarks");
+            var fileUpload = row.querySelector("input[type=file]");
+
+            if (rdoNo && rdoNo.checked) {
+                if (!remarks || remarks.value.trim() === "") {
+                    alert("Please enter Remarks where 'No' is selected.");
+                    isValid = false;
+                    remarks.focus();
+                    return false;
+                }
+
+                if (!fileUpload || fileUpload.value.trim() === "") {
+                    alert("Please upload a Photo where 'No' is selected.");
+                    isValid = false;
+                    fileUpload.focus();
+                    return false;
+                }
+            }
+        });
+
+        return isValid;
+    }
+
+    function toggleFields(radio) {
+        var row = radio.closest("tr");
+        var remarks = row.querySelector("input.remarks");
+        var fileUpload = row.querySelector("input[type=file]");
+
+        if (radio.value === "No") {
+            if (remarks) remarks.style.display = "";
+            if (fileUpload) fileUpload.style.display = "";
+        } else {
+            if (remarks) {
+                remarks.style.display = "none";
+                remarks.value = "";
+            }
+            if (fileUpload) {
+                fileUpload.style.display = "none";
+                fileUpload.value = "";
+            }
+        }
+    }
+</script>
 
 
 <script type="text/javascript">
@@ -364,10 +417,10 @@
             alert("Please enter JobID.");
             return false;
         }
-        if (!digitsOnly.test(jobIdd)) {
-            alert("Job ID must contain digits only.");
-            return false;
-        }
+        //if (!digitsOnly.test(jobIdd)) {
+        //    alert("Job ID must contain digits only.");
+        //    return false;
+        //}
         if (!inspp) {
             alert("Please enter Inspected by.");
             return false;
@@ -392,10 +445,19 @@
             alert("Please select Due Date.");
             return false;
         }
-        if (!RemarkssAndPhotos()) {
-            return false;
-        }
+        //if (!RemarkssAndPhotos()) {
+        //    return false;
+        //}
 
+        return true;
+    }
+</script>
+
+<script type="text/javascript">
+    function confirmCAPAUncheck(checkbox) {
+        if (!checkbox.checked) {
+            return confirm("CAPA is required.Proceeding without it is at your own risk");
+        }
         return true;
     }
 </script>

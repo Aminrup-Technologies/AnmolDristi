@@ -1,26 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.Script.Services;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.IO;
-using System.Web.Script.Serialization;
-using System.Web.Services;
-using System.Web.Script.Services;
 
 namespace AnmolDristi
 {
     public partial class FullBodyHarnessInspection : System.Web.UI.Page
     {
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
+            if (!IsPostBack)
             {
-                txtDocNo.Text = hfEmployeeName.Value;
+                BindChecklist(); // ✅ First-time load only
+            }
+            else
+            {
+                txtDocNo.Text = hfEmployeeName.Value; // ✅ Restore name
             }
         }
 
@@ -62,8 +69,19 @@ namespace AnmolDristi
             return employeeName;
         }
 
-
-
+        private void BindChecklist()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("QuestionNumber", typeof(int));
+            dt.Columns.Add("Description", typeof(string));
+            dt.Rows.Add(1, "Is the Harness conforming to IS: 3521 & also full body double lanyard type and length is not more than 1.8mtr?");
+            dt.Rows.Add(2, "Condition of Lanyard: A) No visible damage B) Burn C) Cut D) Worn/Torn out");
+            dt.Rows.Add(3, "Condition of thimble and snap hook: A) No visible damage B) Smooth working of hook");
+            dt.Rows.Add(4, "Condition of stitching and buckles: A) Stitching is ok B) Rust free buckles");
+            dt.Rows.Add(5, "Condition of D-RINGS: A) Distortion B) Cracks C) Sharp edges D) Break");
+            rptsChecklist.DataSource = dt;
+            rptsChecklist.DataBind();
+        }
 
         protected void txtInsBy_TextChanged(object sender, EventArgs e)
         {
@@ -93,359 +111,185 @@ namespace AnmolDristi
                         else
                         {
                             txtDocNo.Text = "";
-                            // Optional: show a message or highlight error
+                            
                         }
                     }
                 }
             }
         }
 
-        protected void btnAddChecklist_Click(object sender, EventArgs e)
-        {
-            lblMsg1.Text = "";
-            DataTable dt;
-            if (ViewState["ChecklistData"] == null)
-            {
-                dt = new DataTable();
-                dt.Columns.Add("IdentificationNo");
-                dt.Columns.Add("Location");
-
-                dt.Columns.Add("Q1Status");
-                dt.Columns.Add("Q1Remarks");
-                dt.Columns.Add("Q1Photo");
-
-                dt.Columns.Add("Q2Status");
-                dt.Columns.Add("Q2Remarks");
-                dt.Columns.Add("Q2Photo");
-
-                dt.Columns.Add("Q3Status");
-                dt.Columns.Add("Q3Remarks");
-                dt.Columns.Add("Q3Photo");
-
-                dt.Columns.Add("Q4Status");
-                dt.Columns.Add("Q4Remarks");
-                dt.Columns.Add("Q4Photo");
-
-                dt.Columns.Add("Q5Status");
-                dt.Columns.Add("Q5Remarks");
-                dt.Columns.Add("Q5Photo");
-            }
-            else
-            {
-                dt = (DataTable)ViewState["ChecklistData"];
-            }
-
-            string Q1Photo = "";
-
-            if (fuQ1.HasFile)
-            {
-                string fileExtension = Path.GetExtension(fuQ1.FileName).ToLower();
-                if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
-                {
-                    lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
-                    lblMsg1.ForeColor = System.Drawing.Color.Red;
-                    return;
-                }
-
-                //string folderPath = Server.MapPath("~/images/");
-                string folderPath = Server.MapPath("~/images/");
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_Before" + fileExtension;
-                Q1Photo = "~/images/" + uniqueFileName;
-                fuQ1.SaveAs(folderPath + uniqueFileName);
-            }
-
-            string Q2Photo = "";
-
-            if (fuQ2.HasFile)
-            {
-                string fileExtension = Path.GetExtension(fuQ2.FileName).ToLower();
-                if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
-                {
-                    lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
-                    lblMsg1.ForeColor = System.Drawing.Color.Red;
-                    return;
-                }
-
-                //string folderPath = Server.MapPath("~/images/");
-                string folderPath = Server.MapPath("~/images/");
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_Before" + fileExtension;
-                Q2Photo = "~/images/" + uniqueFileName;
-                fuQ2.SaveAs(folderPath + uniqueFileName);
-            }
-
-            string Q3Photo = "";
-
-            if (fuQ3.HasFile)
-            {
-                string fileExtension = Path.GetExtension(fuQ3.FileName).ToLower();
-                if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
-                {
-                    lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
-                    lblMsg1.ForeColor = System.Drawing.Color.Red;
-                    return;
-                }
-
-                //string folderPath = Server.MapPath("~/images/");
-                string folderPath = Server.MapPath("~/images/");
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_Before" + fileExtension;
-                Q3Photo = "~/images/" + uniqueFileName;
-                fuQ3.SaveAs(folderPath + uniqueFileName);
-            }
-
-            string Q4Photo = "";
-
-            if (fuQ4.HasFile)
-            {
-                string fileExtension = Path.GetExtension(fuQ4.FileName).ToLower();
-                if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
-                {
-                    lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
-                    lblMsg1.ForeColor = System.Drawing.Color.Red;
-                    return;
-                }
-
-                //string folderPath = Server.MapPath("~/images/");
-                string folderPath = Server.MapPath("~/images/");
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_Before" + fileExtension;
-                Q4Photo = "~/images/" + uniqueFileName;
-                fuQ4.SaveAs(folderPath + uniqueFileName);
-            }
-
-            string Q5Photo = "";
-
-            if (fuQ5.HasFile)
-            {
-                string fileExtension = Path.GetExtension(fuQ5.FileName).ToLower();
-                if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
-                {
-                    lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
-                    lblMsg1.ForeColor = System.Drawing.Color.Red;
-                    return;
-                }
-
-                //string folderPath = Server.MapPath("~/images/");
-                string folderPath = Server.MapPath("~/images/");
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_Before" + fileExtension;
-                Q5Photo = "~/images/" + uniqueFileName;
-                fuQ5.SaveAs(folderPath + uniqueFileName);
-            }
-
-
-
-
-            DataRow dr = dt.NewRow();
-            dr["IdentificationNo"] = txtIdentity.Text.Trim();
-            dr["Location"] = txtLoc.Text.Trim();
-
-            dr["Q1Status"] = rdoQ1Ok.Checked ? "OK" : "Not OK";
-            dr["Q1Remarks"] = txtQ1Remarks.Text.Trim();
-            dr["Q1Photo"] = Q1Photo;
-
-            dr["Q2Status"] = rdoQ2Ok.Checked ? "OK" : "Not OK";
-            dr["Q2Remarks"] = txtQ2Remarks.Text.Trim();
-            dr["Q2Photo"] = Q2Photo;
-
-            dr["Q3Status"] = rdoQ3Ok.Checked ? "OK" : "Not OK";
-            dr["Q3Remarks"] = txtQ3Remarks.Text.Trim();
-            dr["Q3Photo"] = Q3Photo;
-
-            dr["Q4Status"] = rdoQ4Ok.Checked ? "OK" : "Not OK";
-            dr["Q4Remarks"] = txtQ4Remarks.Text.Trim();
-            dr["Q4Photo"] = Q4Photo;
-
-            dr["Q5Status"] = rdoQ5Ok.Checked ? "OK" : "Not OK";
-            dr["Q5Remarks"] = txtQ5Remarks.Text.Trim();
-            dr["Q5Photo"] = Q5Photo;
-
-            dt.Rows.Add(dr);
-            ViewState["ChecklistData"] = dt;
-
-            gvChecklist.DataSource = dt;
-            gvChecklist.DataBind();
-
-            
-            txtLoc.Text = "";
-            txtQ1Remarks.Text = "";
-            txtQ2Remarks.Text = "";
-            txtQ3Remarks.Text = "";
-            txtQ4Remarks.Text = "";
-            txtQ5Remarks.Text = "";
-            txtIdentity.Text = "";
-
-        }
-
-        protected void BtnDelIns_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            GridViewRow row = (GridViewRow)btn.NamingContainer;
-
-            if (gvChecklist.DataKeys.Count == 0 || row.RowIndex < 0 || row.RowIndex >= gvChecklist.DataKeys.Count)
-            {
-                return; // Prevent out-of-range errors
-            }
-
-            string identificationNo = gvChecklist.DataKeys[row.RowIndex].Value.ToString();
-            DataTable dt = ViewState["ChecklistData"] as DataTable; // Use the correct ViewState key
-
-            if (dt != null)
-            {
-                DataRow[] rows = dt.Select("IdentificationNo = '" + identificationNo.Replace("'", "''") + "'");
-                if (rows.Length > 0)
-                {
-                    dt.Rows.Remove(rows[0]);
-                    dt.AcceptChanges();
-                }
-
-                if (dt.Rows.Count == 0)
-                {
-                    ViewState["ChecklistData"] = null;
-                    gvChecklist.DataSource = null;
-                    gvChecklist.DataBind();
-                }
-                else
-                {
-                    ViewState["ChecklistData"] = dt;
-                    gvChecklist.DataSource = dt;
-                    gvChecklist.DataBind();
-                }
-            }
-        }
         protected void BtnReset_Click(object sender, EventArgs e)
         {
             Response.Redirect("FullBodyHarnessInspection.aspx");
         }
-      
+        private string GenerateHeaderID(int inspectionID)
+        {
+            return "FBH-" + inspectionID.ToString();
+        }
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
             lblMsg.Text = "";
-            if (ViewState["ChecklistData"] == null)
+            if (string.IsNullOrWhiteSpace(txtdate.Text))
             {
-                lblMsg1.Text = "No Checklist to save.Please Add Checklist";
-                lblMsg.Text = "No Checklist to save.Please Add Checklist";
-                lblMsg1.ForeColor = System.Drawing.Color.Red;
-                lblMsg.ForeColor = System.Drawing.Color.Red;
-                BtnSubmit.Enabled = true; 
+                lblMsg.Text = "Please select Date.";
                 return;
             }
+            if (string.IsNullOrWhiteSpace(txtjobID.Text))
+            {
+                lblMsg.Text = "Please enter Job ID.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtSite.Text))
+            {
+                lblMsg.Text = "Please enter Site.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(hfEmployeeName.Value))
+            {
+                lblMsg.Text = "Employee name is missing.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtInsBy.Text))
+            {
+                lblMsg.Text = "Please enter Inspected By.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtnote.Text))
+            {
+                lblMsg.Text = "Please enter Remarks.";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtIdentity.Text))
+            {
+                lblMsg.Text = "Please enter Identity No";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtLoc.Text))
+            {
+                lblMsg.Text = "Please enter Location";
+                return;
+            }
+
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(connStr))
             {
-                conn.Open();
+                con.Open();
 
-                SqlTransaction transaction = conn.BeginTransaction();
+                // 1. Insert into InspectionHeader
+                string insertHeaderQuery = @"
+            INSERT INTO InspectionHeader 
+            (EmployeeName, Site, Remarks, JobID, InspectedBy, DateOfInspection)
+            OUTPUT INSERTED.InspectionID
+            VALUES 
+            (@EmployeeName, @Site, @Remarks, @JobID, @InspectedBy, @DateOfInspection)";
 
+                SqlCommand cmdHeader = new SqlCommand(insertHeaderQuery, con);
+                cmdHeader.Parameters.AddWithValue("@EmployeeName", hfEmployeeName.Value.Trim());
+                cmdHeader.Parameters.AddWithValue("@Site", txtSite.Text.Trim());
+                cmdHeader.Parameters.AddWithValue("@InspectedBy", txtInsBy.Text.Trim());
+                cmdHeader.Parameters.AddWithValue("@JobID", txtjobID.Text.Trim());
+                cmdHeader.Parameters.AddWithValue("@Remarks", txtnote.Text.Trim());
+                cmdHeader.Parameters.AddWithValue("@DateOfInspection", Convert.ToDateTime(txtdate.Text.Trim()));
+
+                int inspectionID = (int)cmdHeader.ExecuteScalar(); // ✅ Executes insert and returns ID
+
+                // 2. Save checklist items
+                SaveChecklistItemsFromRepeater(rptsChecklist, con, inspectionID);
+
+                con.Close();
+            }
+
+            lblMsg.Text = "Data saved successfully!";
+        }
+        private void SaveChecklistItemsFromRepeater(Repeater rpt, SqlConnection con, int inspectionID)
+        {
+            using (SqlTransaction tran = con.BeginTransaction())
+            {
                 try
                 {
-                    string insertHeaderQuery = @"
-                                              INSERT INTO InspectionHeader 
-                                              (EmployeeName, Site, Remarks, JobID, InspectedBy, DateOfInspection)
-                                               OUTPUT INSERTED.InspectionID
-                                                 VALUES 
-                                               (@EmployeeName, @Site, @Remarks, @JobID, @InspectedBy, @DateOfInspection)";
-
-                    SqlCommand cmdHeader = new SqlCommand(insertHeaderQuery, conn, transaction);
-                    cmdHeader.Parameters.AddWithValue("@EmployeeName", hfEmployeeName.Value.Trim()); // ✅ Get from hidden field
-                    cmdHeader.Parameters.AddWithValue("@Site", txtSite.Text.Trim());
-                    cmdHeader.Parameters.AddWithValue("@InspectedBy", txtInsBy.Text.Trim());
-                    cmdHeader.Parameters.AddWithValue("@JobID", txtjobID.Text.Trim());
-                    cmdHeader.Parameters.AddWithValue("@Remarks", txtnote.Text.Trim());
-                    cmdHeader.Parameters.AddWithValue("@DateOfInspection", Convert.ToDateTime(txtdate.Text.Trim()));
-
-                    int inspectionID = (int)cmdHeader.ExecuteScalar();
-
-                    // 2. Insert into InspectionChecklist
-                    DataTable checklistData = ViewState["ChecklistData"] as DataTable;
-
-                    if (checklistData != null)
+                    foreach (RepeaterItem item in rpt.Items)
                     {
-                        foreach (DataRow row in checklistData.Rows)
+                        int questionNumber = 0;
+                        HiddenField hfQuestionNumber = (HiddenField)item.FindControl("hfQuestionNumber");
+                        if (hfQuestionNumber != null && !string.IsNullOrWhiteSpace(hfQuestionNumber.Value))
                         {
-                            for (int qNum = 1; qNum <= 5; qNum++)
-                            {
-                                string questionStatus = row[$"Q{qNum}Status"].ToString();
-                                string remarks = row[$"Q{qNum}Remarks"].ToString();
-                                string photoPath = row[$"Q{qNum}Photo"].ToString();
-
-                                string insertChecklistQuery = @"INSERT INTO InspectionChecklist 
-                            (Location, InspectionNo, InspectionID, QuestionNumber, IsOk, Remarks, PhotoPath)
-                            VALUES (@Location, @InspectionNo, @InspectionID, @QuestionNumber, @IsOk, @Remarks, @PhotoPath)";
-
-                                SqlCommand cmdChecklist = new SqlCommand(insertChecklistQuery, conn, transaction);
-                                cmdChecklist.Parameters.AddWithValue("@Location", row["Location"].ToString());
-                                cmdChecklist.Parameters.AddWithValue("@InspectionNo", row["IdentificationNo"].ToString());
-                                cmdChecklist.Parameters.AddWithValue("@InspectionID", inspectionID);
-                                cmdChecklist.Parameters.AddWithValue("@QuestionNumber", qNum);
-                                cmdChecklist.Parameters.AddWithValue("@IsOk", questionStatus == "OK" ? 1 : 0);
-                                cmdChecklist.Parameters.AddWithValue("@Remarks", remarks);
-                                cmdChecklist.Parameters.AddWithValue("@PhotoPath", photoPath);
-
-                                cmdChecklist.ExecuteNonQuery();
-                            }
+                            int.TryParse(hfQuestionNumber.Value, out questionNumber);
                         }
+
+                        RadioButton rdoYes = (RadioButton)item.FindControl("rdoYes");
+                        RadioButton rdoNA = (RadioButton)item.FindControl("rdoNA");
+                        TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
+                        FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
+                        CheckBox chkCapaReport = (CheckBox)item.FindControl("chkCapaReport");
+                        Label lblDescription = (Label)item.FindControl("lblDescription");
+
+                        string headerID = GenerateHeaderID(inspectionID);
+                        bool isOk = rdoYes != null && rdoYes.Checked;
+                        bool na = rdoNA != null && rdoNA.Checked;
+                        string remarks = txtRemarks?.Text ?? "";
+                        string description = lblDescription?.Text ?? "";
+
+                        string checklistPhotoPath = "";
+                        if (fileUpload != null && fileUpload.HasFile)
+                        {
+                            string fileName = Path.GetFileName(fileUpload.FileName);
+                            string savePath = Server.MapPath("~/Uploads1/" + fileName);
+                            fileUpload.SaveAs(savePath);
+                            checklistPhotoPath = "~/Uploads1/" + fileName;
+                        }
+
+                        object capaReportID = DBNull.Value;
+
+                        if (chkCapaReport != null && chkCapaReport.Checked)
+                        {
+                            SqlCommand cmdCAPA = new SqlCommand(@"
+                        INSERT INTO tbl_CAPAMaster 
+                        (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                        OUTPUT INSERTED.CAPAID
+                        VALUES 
+                        (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", con, tran);
+
+                            cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
+                            cmdCAPA.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
+                            cmdCAPA.Parameters.AddWithValue("@Remarks", remarks);
+                            cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                            cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                            capaReportID = cmdCAPA.ExecuteScalar(); // Get the newly inserted CAPAID
+                        }
+
+                        // ✅ Fix: Add connection and transaction to the SqlCommand
+                        SqlCommand cmdChecklist = new SqlCommand(@"
+                    INSERT INTO InspectionChecklist 
+                    (Location, InspectionNo, InspectionID, QuestionNumber, IsOk,NA, Remarks, PhotoPath, HeaderID, Capa_Report, Description)
+                    VALUES 
+                    (@Location, @InspectionNo, @InspectionID, @QuestionNumber, @IsOk,@NA, @Remarks, @PhotoPath, @HeaderID, @CapaReport, @Description)", con, tran);
+
+                        cmdChecklist.Parameters.AddWithValue("@Location", txtLoc.Text.Trim());
+                        cmdChecklist.Parameters.AddWithValue("@InspectionNo", txtIdentity.Text.Trim());
+                        cmdChecklist.Parameters.AddWithValue("@InspectionID", inspectionID);
+                        cmdChecklist.Parameters.AddWithValue("@QuestionNumber", questionNumber);
+                        cmdChecklist.Parameters.AddWithValue("@IsOk", isOk);
+                        cmdChecklist.Parameters.AddWithValue("@NA", na);
+                        cmdChecklist.Parameters.AddWithValue("@Remarks", remarks);
+                        cmdChecklist.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
+                        cmdChecklist.Parameters.AddWithValue("@HeaderID", headerID);
+                        cmdChecklist.Parameters.AddWithValue("@CapaReport", capaReportID);
+                        cmdChecklist.Parameters.AddWithValue("@Description", description);
+
+                        cmdChecklist.ExecuteNonQuery();
                     }
 
-                    transaction.Commit();
-                    lblMsg.Text = "Inspection data saved successfully!";
+                    tran.Commit();
                 }
                 catch (Exception ex)
                 {
-                    transaction.Rollback();
-                    lblMsg.Text = "Error: " + ex.Message;
+                    tran.Rollback();
+                    throw new Exception("Failed to save checklist items: " + ex.Message);
                 }
             }
         }
-
-
-        protected void gvChecklist_RowCreated(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.Header)
-            {
-                // Loop through header cells
-                for (int i = 0; i < e.Row.Cells.Count; i++)
-                {
-                    string headerText = e.Row.Cells[i].Text.ToUpper();
-
-                    if (headerText.Contains("Q1"))
-                        e.Row.Cells[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#AED6F1"); // Light Blue
-                    else if (headerText.Contains("Q2"))
-                        e.Row.Cells[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#A9DFBF"); // Light Green
-                    else if (headerText.Contains("Q3"))
-                        e.Row.Cells[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#F9E79F"); // Light Yellow
-                    else if (headerText.Contains("Q4"))
-                        e.Row.Cells[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#F5B7B1"); // Light Red
-                    else if (headerText.Contains("Q5"))
-                        e.Row.Cells[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#D2B4DE"); // Light Purple
-                    
-                }
-            }
-        }
-
 
     }
 }
