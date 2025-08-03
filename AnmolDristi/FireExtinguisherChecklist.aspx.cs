@@ -199,7 +199,32 @@ namespace AnmolDristi
                 lblMsg.Text = "Please enter Due Date.";
                 return;
             }
-            
+
+            // ✅ Validation for "No" selected rows
+            foreach (RepeaterItem item in rptChecklist.Items)
+            {
+                RadioButton rdoNo = (RadioButton)item.FindControl("rdoNo");
+                TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
+                FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
+                //Label lblDescription = (Label)item.FindControl("lblDescription");
+                System.Web.UI.WebControls.Label lblDescription = (System.Web.UI.WebControls.Label)item.FindControl("lblDescription");
+
+                if (rdoNo != null && rdoNo.Checked)
+                {
+                    if (txtRemarks != null && string.IsNullOrWhiteSpace(txtRemarks.Text))
+                    {
+                        lblMsg.Text = $"Please enter remarks for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+
+                    if (fileUpload != null && !fileUpload.HasFile)
+                    {
+                        lblMsg.Text = $"Please upload photo for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+                }
+            }
+
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connStr))

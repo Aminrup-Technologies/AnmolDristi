@@ -195,16 +195,18 @@
         <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
     <Columns>
         <asp:BoundField DataField="IssueID" HeaderText="SNo" Visible="false" />
-         <asp:TemplateField HeaderText="Agenda Title">
+        <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title" />
+         <asp:BoundField DataField="IssuesDiscussed" HeaderText="Issues Discussed" />
+         <%--<asp:TemplateField HeaderText="Agenda Title">
   <ItemTemplate>
  <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Eval("AgendaTitle") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
-  </asp:TemplateField>
-         <asp:TemplateField HeaderText="Issues Discussed">
+  </asp:TemplateField>--%>
+        <%-- <asp:TemplateField HeaderText="Issues Discussed">
   <ItemTemplate>
  <asp:TextBox ID="txtIssuesDiscussed" runat="server" Text='<%# Eval("IssuesDiscussed") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
-  </asp:TemplateField>
+  </asp:TemplateField>--%>
          <asp:TemplateField HeaderText="Action By">
   <ItemTemplate>
  <asp:TextBox ID="txtActionBy" runat="server" Text='<%# Eval("ActionBy") %>' CssClass="form-control gv-input" />

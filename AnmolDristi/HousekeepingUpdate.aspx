@@ -136,12 +136,14 @@
 </asp:TemplateField>
 
 
+        <asp:BoundField DataField="Observation" HeaderText="Observation" />
 
-        <asp:TemplateField HeaderText="Observation">
+
+       <%-- <asp:TemplateField HeaderText="Observation">
             <ItemTemplate>
                 <asp:TextBox ID="txtObservation" runat="server" Text='<%# Eval("Observation") %>' CssClass="form-control gv-input" />
             </ItemTemplate>
-        </asp:TemplateField>
+        </asp:TemplateField>--%>
 
         <asp:TemplateField HeaderText="Corrective Action">
             <ItemTemplate>

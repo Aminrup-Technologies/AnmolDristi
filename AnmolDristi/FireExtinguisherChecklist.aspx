@@ -211,7 +211,7 @@
      <div class="mb-3">
          <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="btnSubmit" Text="CLICK TO SAVE" ForeColor="Green" Font-Bold="true" Font-Size="Small"></asp:Label>
          <div class="input-group input-group-sm">
-             <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success mt-3"  ValidationGroup="submi" CausesValidation="true" OnClick="btnSubmit_Click"  OnClientClick="return validateChecklist();" />
+             <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-success mt-3"  ValidationGroup="submi" CausesValidation="true" OnClick="btnSubmit_Click"  OnClientClick="return validateFormBeforeSubmit();" />
              <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning  mt-3" CausesValidation="false" OnClick="BtnReset_Click" />
              <asp:Button ID="btn_home" runat="server" Text="Home" CssClass="btn btn-danger  mt-3" CausesValidation="false" PostBackUrl="~/Home.aspx" />
              <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
@@ -303,6 +303,37 @@
     };
 </script>
 
+<script type="text/javascript">
+        function validateFormBeforeSubmit() {
+            let isValid = true;
+            let errorMsg = "";
+
+            document.querySelectorAll("tr").forEach(row => {
+                const noRadio = row.querySelector("input[type=radio][value='No']");
+                const isNoChecked = noRadio && noRadio.checked;
+
+                if (isNoChecked) {
+                    const remarks = row.querySelector(".remarks");
+                    const fileUpload = row.querySelector(".file-upload");
+
+                    if (remarks && !remarks.value.trim()) {
+                        isValid = false;
+                        errorMsg = "Please fill in remarks for all 'No' responses.";
+                    }
+                    if (fileUpload && fileUpload.style.display !== "none" && fileUpload.files.length === 0) {
+                        isValid = false;
+                        errorMsg = "Please upload photo for all 'No' responses.";
+                    }
+                }
+            });
+
+            if (!isValid) {
+                alert(errorMsg);
+            }
+
+            return isValid;
+        }
+</script>
 
 
 
@@ -339,7 +370,7 @@
 </script>--%>
 
 
-<script type="text/javascript">
+<%--<script type="text/javascript">
     function validateChecklist() {
         var isValid = true;
         var rows = document.querySelectorAll(".repeater-table tbody tr");
@@ -389,7 +420,7 @@
             }
         }
     }
-</script>
+</script>--%>
 
 
 <script type="text/javascript">

@@ -194,7 +194,7 @@
                 <div class="mb-3">
                     <asp:Label ID="Lbl_BtnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" OnClientClick="return validatesChecklist();"   OnClick="BtnSubmit_Click" />
+                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm"  OnClick="BtnSubmit_Click" OnClientClick="return validateFormBeforeSubmit();" />
                         <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
@@ -241,13 +241,47 @@
 </script>
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
+        function validateFormBeforeSubmit() {
+            let isValid = true;
+            let errorMsg = "";
+
+            document.querySelectorAll("tr").forEach(row => {
+                const noRadio = row.querySelector("input[type=radio][value='No']");
+                const isNoChecked = noRadio && noRadio.checked;
+
+                if (isNoChecked) {
+                    const remarks = row.querySelector(".remarks");
+                    const fileUpload = row.querySelector(".file-upload");
+
+                    if (remarks && !remarks.value.trim()) {
+                        isValid = false;
+                        errorMsg = "Please fill in remarks for all 'No' responses.";
+                    }
+                    if (fileUpload && fileUpload.style.display !== "none" && fileUpload.files.length === 0) {
+                        isValid = false;
+                        errorMsg = "Please upload photo for all 'No' responses.";
+                    }
+                }
+            });
+
+            if (!isValid) {
+                alert(errorMsg);
+            }
+
+            return isValid;
+        }
+</script>
+
+
+
+<%--<script type="text/javascript">
     function validatesChecklist() {
        <%-- var identity = document.getElementById('<%= txtIdentity.ClientID %>').value.trim();
-        var location = document.getElementById('<%= txtLoc.ClientID %>').value.trim();--%>
+        var location = document.getElementById('<%= txtLoc.ClientID %>').value.trim();-
         var date = document.getElementById('<%= txtdate.ClientID %>').value.trim();
         var site = document.getElementById('<%= txtSite.ClientID %>').value.trim(); 
-        <%--var docNo = document.getElementById('<%= txtDocNo.ClientID %>').value.trim();--%>
+        <%--var docNo = document.getElementById('<%= txtDocNo.ClientID %>').value.trim();
         var jobId = document.getElementById('<%= txtjobID.ClientID %>').value.trim();
         var insp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
         var remark = document.getElementById('<%= txtnote.ClientID %>').value.trim();
@@ -295,7 +329,8 @@
         return true;
     }
 
-</script>
+</script>--%>
+
 
   <!-- Add the necessary jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

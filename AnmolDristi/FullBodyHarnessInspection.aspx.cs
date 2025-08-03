@@ -126,57 +126,52 @@ namespace AnmolDristi
         {
             return "FBH-" + inspectionID.ToString();
         }
+
+
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
             lblMsg.Text = "";
-            if (string.IsNullOrWhiteSpace(txtdate.Text))
+
+            // Pre-check validations
+            if (string.IsNullOrWhiteSpace(txtdate.Text)) { lblMsg.Text = "Please select Date."; return; }
+            if (string.IsNullOrWhiteSpace(txtjobID.Text)) { lblMsg.Text = "Please enter Job ID."; return; }
+            if (string.IsNullOrWhiteSpace(txtSite.Text)) { lblMsg.Text = "Please enter Site."; return; }
+            if (string.IsNullOrWhiteSpace(hfEmployeeName.Value)) { lblMsg.Text = "Employee name is missing."; return; }
+            if (string.IsNullOrWhiteSpace(txtInsBy.Text)) { lblMsg.Text = "Please enter Inspected By."; return; }
+            if (string.IsNullOrWhiteSpace(txtnote.Text)) { lblMsg.Text = "Please enter Remarks."; return; }
+            if (string.IsNullOrWhiteSpace(txtIdentity.Text)) { lblMsg.Text = "Please enter Identity No"; return; }
+            if (string.IsNullOrWhiteSpace(txtLoc.Text)) { lblMsg.Text = "Please enter Location"; return; }
+
+            // ✅ Validation for "No" selected rows
+            foreach (RepeaterItem item in rptsChecklist.Items)
             {
-                lblMsg.Text = "Please select Date.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtjobID.Text))
-            {
-                lblMsg.Text = "Please enter Job ID.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtSite.Text))
-            {
-                lblMsg.Text = "Please enter Site.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(hfEmployeeName.Value))
-            {
-                lblMsg.Text = "Employee name is missing.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtInsBy.Text))
-            {
-                lblMsg.Text = "Please enter Inspected By.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtnote.Text))
-            {
-                lblMsg.Text = "Please enter Remarks.";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtIdentity.Text))
-            {
-                lblMsg.Text = "Please enter Identity No";
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(txtLoc.Text))
-            {
-                lblMsg.Text = "Please enter Location";
-                return;
+                RadioButton rdoNo = (RadioButton)item.FindControl("rdoNo");
+                TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
+                FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
+                Label lblDescription = (Label)item.FindControl("lblDescription");
+
+                if (rdoNo != null && rdoNo.Checked)
+                {
+                    if (txtRemarks != null && string.IsNullOrWhiteSpace(txtRemarks.Text))
+                    {
+                        lblMsg.Text = $"Please enter remarks for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+
+                    if (fileUpload != null && !fileUpload.HasFile)
+                    {
+                        lblMsg.Text = $"Please upload photo for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+                }
             }
 
+            // Save to DB
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-
             using (SqlConnection con = new SqlConnection(connStr))
             {
                 con.Open();
 
-                // 1. Insert into InspectionHeader
                 string insertHeaderQuery = @"
             INSERT INTO InspectionHeader 
             (EmployeeName, Site, Remarks, JobID, InspectedBy, DateOfInspection)
@@ -192,9 +187,8 @@ namespace AnmolDristi
                 cmdHeader.Parameters.AddWithValue("@Remarks", txtnote.Text.Trim());
                 cmdHeader.Parameters.AddWithValue("@DateOfInspection", Convert.ToDateTime(txtdate.Text.Trim()));
 
-                int inspectionID = (int)cmdHeader.ExecuteScalar(); // ✅ Executes insert and returns ID
+                int inspectionID = (int)cmdHeader.ExecuteScalar();
 
-                // 2. Save checklist items
                 SaveChecklistItemsFromRepeater(rptsChecklist, con, inspectionID);
 
                 con.Close();
@@ -202,6 +196,83 @@ namespace AnmolDristi
 
             lblMsg.Text = "Data saved successfully!";
         }
+
+        //protected void BtnSubmit_Click(object sender, EventArgs e)
+        //{
+        //    lblMsg.Text = "";
+        //    if (string.IsNullOrWhiteSpace(txtdate.Text))
+        //    {
+        //        lblMsg.Text = "Please select Date.";
+        //        return;
+        //    }
+        //    if (string.IsNullOrWhiteSpace(txtjobID.Text))
+        //    {
+        //        lblMsg.Text = "Please enter Job ID.";
+        //        return;
+        //    }
+        //    if (string.IsNullOrWhiteSpace(txtSite.Text))
+        //    {
+        //        lblMsg.Text = "Please enter Site.";
+        //        return;
+        //    }
+        //    if (string.IsNullOrWhiteSpace(hfEmployeeName.Value))
+        //    {
+        //        lblMsg.Text = "Employee name is missing.";
+        //        return;
+        //    }
+        //    if (string.IsNullOrWhiteSpace(txtInsBy.Text))
+        //    {
+        //        lblMsg.Text = "Please enter Inspected By.";
+        //        return;
+        //    }
+        //    if (string.IsNullOrWhiteSpace(txtnote.Text))
+        //    {
+        //        lblMsg.Text = "Please enter Remarks.";
+        //        return;
+        //    }
+        //    if (string.IsNullOrWhiteSpace(txtIdentity.Text))
+        //    {
+        //        lblMsg.Text = "Please enter Identity No";
+        //        return;
+        //    }
+        //    if (string.IsNullOrWhiteSpace(txtLoc.Text))
+        //    {
+        //        lblMsg.Text = "Please enter Location";
+        //        return;
+        //    }
+
+        //    string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+        //    using (SqlConnection con = new SqlConnection(connStr))
+        //    {
+        //        con.Open();
+
+        //        // 1. Insert into InspectionHeader
+        //        string insertHeaderQuery = @"
+        //    INSERT INTO InspectionHeader 
+        //    (EmployeeName, Site, Remarks, JobID, InspectedBy, DateOfInspection)
+        //    OUTPUT INSERTED.InspectionID
+        //    VALUES 
+        //    (@EmployeeName, @Site, @Remarks, @JobID, @InspectedBy, @DateOfInspection)";
+
+        //        SqlCommand cmdHeader = new SqlCommand(insertHeaderQuery, con);
+        //        cmdHeader.Parameters.AddWithValue("@EmployeeName", hfEmployeeName.Value.Trim());
+        //        cmdHeader.Parameters.AddWithValue("@Site", txtSite.Text.Trim());
+        //        cmdHeader.Parameters.AddWithValue("@InspectedBy", txtInsBy.Text.Trim());
+        //        cmdHeader.Parameters.AddWithValue("@JobID", txtjobID.Text.Trim());
+        //        cmdHeader.Parameters.AddWithValue("@Remarks", txtnote.Text.Trim());
+        //        cmdHeader.Parameters.AddWithValue("@DateOfInspection", Convert.ToDateTime(txtdate.Text.Trim()));
+
+        //        int inspectionID = (int)cmdHeader.ExecuteScalar(); // ✅ Executes insert and returns ID
+
+        //        // 2. Save checklist items
+        //        SaveChecklistItemsFromRepeater(rptsChecklist, con, inspectionID);
+
+        //        con.Close();
+        //    }
+
+        //    lblMsg.Text = "Data saved successfully!";
+        //}
         private void SaveChecklistItemsFromRepeater(Repeater rpt, SqlConnection con, int inspectionID)
         {
             using (SqlTransaction tran = con.BeginTransaction())
