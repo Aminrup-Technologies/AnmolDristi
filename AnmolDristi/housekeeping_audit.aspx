@@ -21,7 +21,7 @@
 
                     <div class="x_content">
 
-                         <asp:Panel ID="pnlAuditForm" runat="server">
+                         <%--<asp:Panel ID="pnlAuditForm" runat="server">--%>
                                 <div class="row">  
                                     
       <div class="col-md-4">
@@ -71,7 +71,7 @@
         </h6>
     </div>
      
-<!-- Observer ID input -->
+<%--<!-- Observer ID input -->
 <div class="col-md-3">
     <div class="mb-3">
         <asp:Label ID="lbl_txtObserverID" runat="server" AssociatedControlID="txtObserverID" 
@@ -112,32 +112,107 @@
             <asp:HiddenField ID="hfEmployeeName" runat="server" />
         </div>
     </div>
-</div>
+</div>--%>
 
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
 
-
-
-
-      <%--<div class="col-md-3">
+<div class="col-md-3">
     <div class="mb-3">
-        <asp:Label ID="lbl_txtObserverID" runat="server" AssociatedControlID="txtObserverID" Text="Observer ID" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtObserverID" runat="server" ErrorMessage="*" ControlToValidate="txtObserverID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="REV_txtObserverID" runat="server" ControlToValidate="txtObserverID" ForeColor="Red" ValidationGroup="add" ErrorMessage="Numeric Only" ValidationExpression="^\d{1,25}$" Display="Dynamic"></asp:RegularExpressionValidator>
+      <asp:Label ID="lbl_txtObserverID" runat="server" AssociatedControlID="txtObserverID" Text="Observer ID (Emp Code)" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+       <asp:RequiredFieldValidator ID="RFV_txtObserverID" runat="server"  ErrorMessage="*" ControlToValidate="txtObserverID" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
         <div class="input-group-sm">
-            <asp:TextBox ID="txtObserverID" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
+            <asp:TextBox ID="txtObserverID" runat="server" CssClass="form-control form-control-sm rounded" onblur="fetchEmployeeName()" AutoPostBack="false"></asp:TextBox>
         </div>
-    </div>
-</div>    
-                                     <div class="col-md-3">
-    <div class="mb-3">
-        <asp:Label ID="lbl_txtOpenBy" runat="server" AssociatedControlID="txtOpenBy" Text="Open By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtOpenBy" runat="server" ErrorMessage="*" ControlToValidate="txtOpenBy" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtOpenBy" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
-        </div>
+        <asp:Label ID="lblEmployeeName" runat="server" Text="" ForeColor="Red" Font-Size="Small"></asp:Label>
     </div>
 </div>
---%>
+
+<div class="col-md-3">
+    <div class="mb-3">
+       <asp:Label ID="lbl_txtOpenBy" runat="server" AssociatedControlID="txtOpenBy" Text="Open By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+ <asp:RequiredFieldValidator ID="RFV_txtOpenBy" runat="server"  ErrorMessage="*" ControlToValidate="txtOpenBy" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtOpenBy" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true"></asp:TextBox>
+            <asp:HiddenField ID="hfEmployeeName" runat="server" />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function fetchEmployeeName() {
+        var empCode = document.getElementById('<%= txtObserverID.ClientID %>').value.trim();
+
+        // Clear previous values if code is empty
+        if (empCode === "") {
+            document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = "";
+            document.getElementById('<%= txtOpenBy.ClientID %>').value = "";
+            document.getElementById('<%= hfEmployeeName.ClientID %>').value = "";
+            return;
+        }
+
+        // Call the server-side PageMethod
+        PageMethods.GetEmployeeName(empCode,
+            function (result) {
+                if (result && result.trim() !== "") {
+                    // ✅ Set full name to Label, TextBox, and HiddenField
+                    //document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = result;
+                   // document.getElementById('<%= lblEmployeeName.ClientID %>').style.color = "green";
+
+                    document.getElementById('<%= txtOpenBy.ClientID %>').value = result;
+                    document.getElementById('<%= hfEmployeeName.ClientID %>').value = result;
+
+                    console.log("Full Name Fetched: " + result); // for debugging
+                } else {
+                    // ❌ Not found
+                    document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = "Invalid Employee Code!";
+                    document.getElementById('<%= lblEmployeeName.ClientID %>').style.color = "red";
+
+                    document.getElementById('<%= txtOpenBy.ClientID %>').value = "";
+                    document.getElementById('<%= hfEmployeeName.ClientID %>').value = "";
+                }
+            },
+            function (error) {
+                alert("Server error: " + error.get_message());
+                console.error("Error fetching employee name:", error);
+            }
+        );
+    }
+</script>
+
+<%--<script type="text/javascript">
+    function fetchEmployeeName() {
+        var empCode = document.getElementById('<%= txtObserverID.ClientID %>').value.trim();
+        if (empCode === "") {
+            document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = "";
+            document.getElementById('<%= txtOpenBy.ClientID %>').value = "";
+            document.getElementById('<%= hfEmployeeName.ClientID %>').value = "";
+            return;
+        }
+
+        PageMethods.GetEmployeeName(empCode, function (result) {
+            if (result !== "") {
+               // document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = result;
+               // document.getElementById('<%= lblEmployeeName.ClientID %>').style.color = "green";
+                document.getElementById('<%= txtOpenBy.ClientID %>').value = result;
+                document.getElementById('<%= hfEmployeeName.ClientID %>').value = result;
+            } else {
+                document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = "Invalid Employee Code!";
+                document.getElementById('<%= lblEmployeeName.ClientID %>').style.color = "red";
+                document.getElementById('<%= txtOpenBy.ClientID %>').value = "";
+                document.getElementById('<%= hfEmployeeName.ClientID %>').value = "";
+            }
+        }, function (error) {
+            alert("Error calling server: " + error.get_message());
+        });
+    }
+</script>--%>
+
+
+
+
+      
 
 
                                   <div class="col-md-3">
@@ -323,7 +398,7 @@
                         
 </div>
 
-                            </asp:Panel>
+                            <%--</asp:Panel>--%>
 
                             <hr>
     <div class="table-responsive">
@@ -401,9 +476,9 @@
  
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!-- JavaScript to fetch employee name -->
+<!-- JavaScript to fetch employee name 
 <script type="text/javascript">
     function fetchEmployeeName() {
         var observerId = document.getElementById('<%= txtObserverID.ClientID %>').value.trim();
@@ -449,7 +524,7 @@
             document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = '';
         }
     }
-</script>
+</script>--%>
 
 
 
@@ -594,16 +669,16 @@
         var assign = document.getElementById('<%= txtAssignedTo.ClientID %>').value.trim();
         var status = document.getElementById('<%= ddlStatus.ClientID %>').value.trim();
 
-        var digitsOnly = /^\d+$/;
+        //var digitsOnly = /^\d+$/;
 
         if (!obsID) {
             alert("Please enter Observer ID");
             return false;
         }
-        if (!digitsOnly.test(obsID)) {
-            alert("Observer ID must contain digits only.");
-            return false;
-        }
+        //if (!digitsOnly.test(obsID)) {
+        //    alert("Observer ID must contain digits only.");
+        //    return false;
+        //}
 
 
         if (!openby) {

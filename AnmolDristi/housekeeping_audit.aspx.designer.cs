@@ -15,15 +15,6 @@ namespace AnmolDristi
     {
 
         /// <summary>
-        /// pnlAuditForm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAuditForm;
-
-        /// <summary>
         /// lbl_txtdate control.
         /// </summary>
         /// <remarks>
@@ -105,6 +96,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtjobID;
 
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
         /// lbl_txtObserverID control.
         /// </summary>
         /// <remarks>
@@ -121,15 +121,6 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_txtObserverID;
-
-        /// <summary>
-        /// REV_txtObserverID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_txtObserverID;
 
         /// <summary>
         /// txtObserverID control.

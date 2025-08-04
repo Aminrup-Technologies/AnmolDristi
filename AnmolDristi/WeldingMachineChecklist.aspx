@@ -64,8 +64,60 @@
         </div>
     </div>
 </div>
-  
+
+<asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
+
 <div class="col-md-4">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtInsBy" runat="server" AssociatedControlID="txtInsBy" Text="Inspection By(Emp Code)" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtInsBy" runat="server" ErrorMessage="*" ControlToValidate="txtInsBy" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtInsBy" runat="server" CssClass="form-control form-control-sm rounded" onblur="fetchEmployeeName()" AutoPostBack="false"></asp:TextBox>
+        </div>
+        <asp:Label ID="lblEmployeeName" runat="server" Text="" ForeColor="Red" Font-Size="Small"></asp:Label>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="mb-3">
+        <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Employee Name" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
+        <asp:RequiredFieldValidator ID="RFV_txtDocNo" runat="server" ErrorMessage="*" ControlToValidate="txtDocNo" ValidationGroup="submi" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+        <div class="input-group-sm">
+            <asp:TextBox ID="txtDocNo" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true"></asp:TextBox>
+            <asp:HiddenField ID="hfEmployeeName" runat="server" />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function fetchEmployeeName() {
+        var empCode = document.getElementById('<%= txtInsBy.ClientID %>').value.trim();
+        if (empCode === "") {
+            document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = "";
+            document.getElementById('<%= txtDocNo.ClientID %>').value = "";
+            document.getElementById('<%= hfEmployeeName.ClientID %>').value = "";
+            return;
+        }
+
+        PageMethods.GetEmployeeName(empCode, function (result) {
+            if (result !== "") {
+               // document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = result;
+               // document.getElementById('<%= lblEmployeeName.ClientID %>').style.color = "green";
+                document.getElementById('<%= txtDocNo.ClientID %>').value = result;
+                document.getElementById('<%= hfEmployeeName.ClientID %>').value = result;
+            } else {
+                document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = "Invalid Employee Code!";
+                document.getElementById('<%= lblEmployeeName.ClientID %>').style.color = "red";
+                document.getElementById('<%= txtDocNo.ClientID %>').value = "";
+                document.getElementById('<%= hfEmployeeName.ClientID %>').value = "";
+            }
+        }, function (error) {
+            alert("Error calling server: " + error.get_message());
+        });
+    }
+</script>
+  
+<%--<div class="col-md-4">
     <div class="mb-3">
         <asp:Label ID="lbl_txtInsBy" runat="server" AssociatedControlID="txtInsBy" Text="Inspection By(Emp Code)" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtInsBy" runat="server" ErrorMessage="*" ControlToValidate="txtInsBy" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -88,7 +140,7 @@
             <asp:HiddenField ID="hfEmployeeName" runat="server" /> <!-- ✅ Hidden field to store actual name -->
         </div>
     </div>
-</div>
+</div>--%>
 
 
 
@@ -467,7 +519,7 @@
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- JavaScript to fetch employee name -->
 <script type="text/javascript">
@@ -512,7 +564,8 @@
             document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = '';
         }
     }
-</script>
+</script>--%>
+
 
 <script type="text/javascript">
     function validateRemarksAndPhotos() {

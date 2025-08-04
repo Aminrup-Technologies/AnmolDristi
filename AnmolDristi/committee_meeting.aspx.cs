@@ -16,39 +16,76 @@ namespace AnmolDristi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (IsPostBack)
+            {
+                txtEmployeeName.Text = txtEmployeeName.Text.Trim();  // already set by JS
+                txtdes.Text = txtdes.Text.Trim();
+            }
 
         }
-
-
-        [WebMethod]
-        public static object GetAttendeeDetails(string attendeeCode)
+        [System.Web.Services.WebMethod]
+        public static object GetAttendeeDetails(string empCode)
         {
-            string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connString))
-            {
-                string query = "SELECT Name, Designation FROM Committee_MeetingAttendance WHERE AttendeeCode = @AttendeeCode";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@AttendeeCode", attendeeCode);
-                    conn.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
+            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
-                    if (reader.Read())
+            string empName = "";
+            string deptId = "";
+
+            using (SqlConnection con = new SqlConnection(connStr))
+            {
+                string query = "SELECT EmployeeName, DepartmentId FROM MST_UserMaster WHERE EmployeeCode = @EmployeeCode";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@EmployeeCode", empCode);
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        return new
+                        if (reader.Read())
                         {
-                            success = true,
-                            name = reader["Name"].ToString(),
-                            designation = reader["Designation"].ToString()
-                        };
-                    }
-                    else
-                    {
-                        return new { success = false, message = "Attendee Code not found!" };
+                            empName = reader["EmployeeName"].ToString();
+                            deptId = reader["DepartmentId"].ToString();
+                        }
                     }
                 }
             }
+
+            return new
+            {
+                EmployeeName = empName,
+                Designation = deptId
+            };
         }
+
+
+        //[WebMethod]
+        //public static object GetAttendeeDetails(string attendeeCode)
+        //{
+        //    string connString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+        //    using (SqlConnection conn = new SqlConnection(connString))
+        //    {
+        //        string query = "SELECT Name, Designation FROM Committee_MeetingAttendance WHERE AttendeeCode = @AttendeeCode";
+        //        using (SqlCommand cmd = new SqlCommand(query, conn))
+        //        {
+        //            cmd.Parameters.AddWithValue("@AttendeeCode", attendeeCode);
+        //            conn.Open();
+        //            SqlDataReader reader = cmd.ExecuteReader();
+
+        //            if (reader.Read())
+        //            {
+        //                return new
+        //                {
+        //                    success = true,
+        //                    name = reader["Name"].ToString(),
+        //                    designation = reader["Designation"].ToString()
+        //                };
+        //            }
+        //            else
+        //            {
+        //                return new { success = false, message = "Attendee Code not found!" };
+        //            }
+        //        }
+        //    }
+        //}
 
         protected void rbAttendeeType_SelectedIndexChanged(object sender, EventArgs e)
         {

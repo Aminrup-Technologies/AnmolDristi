@@ -21,58 +21,51 @@ namespace AnmolDristi
         protected void Page_Load(object sender, EventArgs e)
         {
             
+            if (IsPostBack)
+            {
+                // Rebind name fetched via JS to server-side textbox so it's not lost
+                txtOpenBy.Text = hfEmployeeName.Value.Trim();
+            }
         }
 
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public static string GetEmployeeName(string inspectionId)
+
+        [System.Web.Services.WebMethod]
+        public static string GetEmployeeName(string empCode)
         {
-            string employeeName = string.Empty;
+            string empName = "";
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = "SELECT TOP 1 OpenBy FROM [CSMS].[dbo].[AuditObservations] WHERE ObserverID = @ObserverID";
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(connStr))
             {
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@ObserverID", inspectionId);
-
-                try
+                string query = "SELECT EmployeeName FROM MST_UserMaster WHERE EmployeeCode = @EmployeeCode";
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    conn.Open();
-                    var result = cmd.ExecuteScalar();
+                    cmd.Parameters.AddWithValue("@EmployeeCode", empCode);
+                    con.Open();
+                    object result = cmd.ExecuteScalar();
                     if (result != null)
                     {
-                        employeeName = result.ToString();
+                        empName = result.ToString();
                     }
-                    else
-                    {
-                        employeeName = "Invalid Observer ID";
-                    }
-                }
-                catch
-                {
-                    employeeName = "Error occurred while fetching data";
                 }
             }
 
-            return employeeName;
+            return empName;
         }
-
 
 
         //[WebMethod]
         //[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        //public static string GetEmployeeName(string observerId)
+        //public static string GetEmployeeName(string inspectionId)
         //{
         //    string employeeName = string.Empty;
-
         //    string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-        //    string query = "SELECT OpenBy FROM [CSMS].[dbo].[AuditObservations] WHERE ObserverID = @ObserverID";
+        //    string query = "SELECT TOP 1 OpenBy FROM [CSMS].[dbo].[AuditObservations] WHERE ObserverID = @ObserverID";
 
         //    using (SqlConnection conn = new SqlConnection(connStr))
         //    {
         //        SqlCommand cmd = new SqlCommand(query, conn);
-        //        cmd.Parameters.AddWithValue("@ObserverID", observerId);
+        //        cmd.Parameters.AddWithValue("@ObserverID", inspectionId);
 
         //        try
         //        {
@@ -84,7 +77,7 @@ namespace AnmolDristi
         //            }
         //            else
         //            {
-        //                employeeName = "No record found for the given Observer ID";
+        //                employeeName = "Invalid Observer ID";
         //            }
         //        }
         //        catch
@@ -95,6 +88,10 @@ namespace AnmolDristi
 
         //    return employeeName;
         //}
+
+
+
+
 
 
 

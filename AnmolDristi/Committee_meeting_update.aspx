@@ -138,22 +138,28 @@
         <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
     <Columns>
         <asp:BoundField DataField="AttendanceID" HeaderText="SNo" Visible="false" />
+
          <asp:TemplateField HeaderText="Attendee Type">
   <ItemTemplate>
- <asp:TextBox ID="txtAttendeeType" runat="server" Text='<%# Eval("Attendee_Type") %>' CssClass="form-control gv-input" />
+ <asp:TextBox ID="txtAttendeeType" runat="server" Text='<%# Eval("Attendee_Type") %>' CssClass="form-control gv-input" ReadOnly="true" />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Employee Name ">
   <ItemTemplate>
- <asp:TextBox ID="txtEmployeeName" runat="server" Text='<%# Eval("Name") %>' CssClass="form-control gv-input" />
+ <asp:TextBox ID="txtEmployeeName" runat="server" Text='<%# Eval("Name") %>' CssClass="form-control gv-input" ReadOnly="true" />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Attendee Code">
   <ItemTemplate>
- <asp:TextBox ID="txtAttendeeCode" runat="server" Text='<%# Eval("AttendeeCode") %>' CssClass="form-control gv-input" />
+ <asp:TextBox ID="txtAttendeeCode" runat="server" Text='<%# Eval("AttendeeCode") %>' CssClass="form-control gv-input"  ReadOnly="true" />
   </ItemTemplate>
   </asp:TemplateField>
-         <asp:TemplateField HeaderText="Attendance Status">
+         <asp:TemplateField HeaderText="Designation">
+  <ItemTemplate>
+ <asp:TextBox ID="txtDesignation" runat="server" Text='<%# Eval("Designation") %>' CssClass="form-control gv-input" ReadOnly="true" />
+  </ItemTemplate>
+  </asp:TemplateField>
+                 <asp:TemplateField HeaderText="Attendance Status">
    <ItemTemplate>
     <asp:DropDownList ID="ddlAttendanceStatus" runat="server" CssClass="form-control form-control-sm rounded gv-input" SelectedValue='<%# Eval("AttendanceStatus") %>' >
    <asp:ListItem Text="Select" Value="" />
@@ -162,11 +168,6 @@
 </asp:DropDownList>
        </ItemTemplate>
       </asp:TemplateField>
-         <asp:TemplateField HeaderText="Designation">
-  <ItemTemplate>
- <asp:TextBox ID="txtDesignation" runat="server" Text='<%# Eval("Designation") %>' CssClass="form-control gv-input" />
-  </ItemTemplate>
-  </asp:TemplateField>
       <asp:TemplateField HeaderText="Action">
         <ItemTemplate>
            <asp:Button ID="BtnDelAttendees" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelAttendees_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
@@ -195,18 +196,17 @@
         <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
     <Columns>
         <asp:BoundField DataField="IssueID" HeaderText="SNo" Visible="false" />
-        <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title" />
-         <asp:BoundField DataField="IssuesDiscussed" HeaderText="Issues Discussed" />
-         <%--<asp:TemplateField HeaderText="Agenda Title">
+       
+         <asp:TemplateField HeaderText="Agenda Title">
   <ItemTemplate>
- <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Eval("AgendaTitle") %>' CssClass="form-control gv-input" />
+ <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Eval("AgendaTitle") %>' CssClass="form-control gv-input" ReadOnly="true" />
   </ItemTemplate>
-  </asp:TemplateField>--%>
-        <%-- <asp:TemplateField HeaderText="Issues Discussed">
+  </asp:TemplateField>
+         <asp:TemplateField HeaderText="Issues Discussed">
   <ItemTemplate>
- <asp:TextBox ID="txtIssuesDiscussed" runat="server" Text='<%# Eval("IssuesDiscussed") %>' CssClass="form-control gv-input" />
+ <asp:TextBox ID="txtIssuesDiscussed" runat="server" Text='<%# Eval("IssuesDiscussed") %>' CssClass="form-control gv-input" ReadOnly="true" />
   </ItemTemplate>
-  </asp:TemplateField>--%>
+  </asp:TemplateField>
          <asp:TemplateField HeaderText="Action By">
   <ItemTemplate>
  <asp:TextBox ID="txtActionBy" runat="server" Text='<%# Eval("ActionBy") %>' CssClass="form-control gv-input" />

@@ -27,44 +27,73 @@ namespace AnmolDristi
                 BindChecklist_ElectrodeHolder();
                 BindChecklist_WorkArea();
             }
+            else
+            {
+                // On postback, rebind the name from hidden field to textbox so it doesn't disappear
+                txtDocNo.Text = hfEmployeeName.Value;
+            }
         }
 
-
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public static string GetEmployeeName(string inspectionId)
+        [System.Web.Services.WebMethod]
+        public static string GetEmployeeName(string empCode)
         {
-            string employeeName = string.Empty;
-
+            string empName = "";
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
-            string query = "SELECT EmployeeName FROM [CSMS].[dbo].[WeldingChecklistHeader] WHERE InspectedBy = @InspectedBy";
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (SqlConnection con = new SqlConnection(connStr))
             {
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@InspectedBy", inspectionId);
-
-                try
+                string query = "SELECT EmployeeName FROM MST_UserMaster WHERE EmployeeCode = @EmployeeCode";
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    conn.Open();
-                    var result = cmd.ExecuteScalar();
+                    cmd.Parameters.AddWithValue("@EmployeeCode", empCode);
+                    con.Open();
+                    object result = cmd.ExecuteScalar();
                     if (result != null)
                     {
-                        employeeName = result.ToString();
+                        empName = result.ToString();
                     }
-                    else
-                    {
-                        employeeName = "Invalid Inspection ID";
-                    }
-                }
-                catch
-                {
-                    employeeName = "Error occurred while fetching data";
                 }
             }
 
-            return employeeName;
+            return empName;
         }
+
+
+        //[WebMethod]
+        //[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        //public static string GetEmployeeName(string inspectionId)
+        //{
+        //    string employeeName = string.Empty;
+
+        //    string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+        //    string query = "SELECT EmployeeName FROM [CSMS].[dbo].[WeldingChecklistHeader] WHERE InspectedBy = @InspectedBy";
+
+        //    using (SqlConnection conn = new SqlConnection(connStr))
+        //    {
+        //        SqlCommand cmd = new SqlCommand(query, conn);
+        //        cmd.Parameters.AddWithValue("@InspectedBy", inspectionId);
+
+        //        try
+        //        {
+        //            conn.Open();
+        //            var result = cmd.ExecuteScalar();
+        //            if (result != null)
+        //            {
+        //                employeeName = result.ToString();
+        //            }
+        //            else
+        //            {
+        //                employeeName = "Invalid Inspection ID";
+        //            }
+        //        }
+        //        catch
+        //        {
+        //            employeeName = "Error occurred while fetching data";
+        //        }
+        //    }
+
+        //    return employeeName;
+        //}
 
         private void BindChecklist()
         {

@@ -68,7 +68,7 @@
         <div class="input-group-sm">
             <asp:TextBox ID="txtInsBy" runat="server" CssClass="form-control form-control-sm rounded" 
               OnKeyUp="fetchEmployeeName()" 
-              AutoPostBack="false"></asp:TextBox>
+              AutoPostBack="false" ReadOnly="true" ></asp:TextBox>
         </div>
         <asp:Label ID="lblEmployeeName" runat="server" Text="" ForeColor="Red" Font-Size="Small"></asp:Label> <!-- For error display -->
     </div>
@@ -80,7 +80,7 @@
         <asp:Label ID="lbl_txtDocNo" runat="server" AssociatedControlID="txtDocNo" Text="Employee Name" CssClass="assessment-label" Font-Bold="true" Font-Size="Small"></asp:Label>
         <asp:RequiredFieldValidator ID="RFV_txtDocNo" runat="server" ErrorMessage="*" ControlToValidate="txtDocNo" ValidationGroup="submit" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
-            <asp:TextBox ID="txtDocNo" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+            <asp:TextBox ID="txtDocNo" runat="server" CssClass="form-control form-control-sm rounded" ReadOnly="true" ></asp:TextBox>
             <asp:HiddenField ID="hfEmployeeName" runat="server" /> <!-- ✅ Hidden field to store actual name -->
         </div>
     </div>

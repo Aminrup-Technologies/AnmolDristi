@@ -90,17 +90,13 @@
 <asp:GridView ID="gvObservations" runat="server" DataKeyNames="ObserverID" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
     <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
     <Columns>
-        <asp:BoundField DataField="ObserverID" HeaderText="Oberver ID" Visible="false" />
+        <asp:BoundField DataField="ObserverID" HeaderText="Oberver ID"  />
+        
 
-        <asp:TemplateField HeaderText="Opening Date">
-            <ItemTemplate>
-                <asp:TextBox ID="txtOpeningDate" runat="server" Text='<%# Eval("OpeningDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control gv-input" />
-            </ItemTemplate>
-        </asp:TemplateField>
-
+        
         <asp:TemplateField HeaderText="Open By">
             <ItemTemplate>
-                <asp:TextBox ID="txtOpenBy" runat="server" Text='<%# Eval("OpenBy") %>' CssClass="form-control gv-input" />
+                <asp:TextBox ID="txtOpenBy" runat="server" Text='<%# Eval("OpenBy") %>' CssClass="form-control gv-input" ReadOnly="true" />
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Open By(Workman SL)">
@@ -108,6 +104,13 @@
         <asp:TextBox ID="txtOpenByWorkman" runat="server" Text='<%# Eval("OpenByWorkman") %>' CssClass="form-control gv-input" />
     </ItemTemplate>
 </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Opening Date">
+    <ItemTemplate>
+        <asp:TextBox ID="txtOpeningDate" runat="server" Text='<%# Eval("OpeningDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control gv-input" />
+    </ItemTemplate>
+</asp:TemplateField>
+
 
  <asp:TemplateField HeaderText="Target Date">
      <ItemTemplate>
@@ -136,14 +139,14 @@
 </asp:TemplateField>
 
 
-        <asp:BoundField DataField="Observation" HeaderText="Observation" />
+       
 
 
-       <%-- <asp:TemplateField HeaderText="Observation">
+        <asp:TemplateField HeaderText="Observation">
             <ItemTemplate>
-                <asp:TextBox ID="txtObservation" runat="server" Text='<%# Eval("Observation") %>' CssClass="form-control gv-input" />
+                <asp:TextBox ID="txtObservation" runat="server" Text='<%# Eval("Observation") %>' CssClass="form-control gv-input" ReadOnly="true" />
             </ItemTemplate>
-        </asp:TemplateField>--%>
+        </asp:TemplateField>
 
         <asp:TemplateField HeaderText="Corrective Action">
             <ItemTemplate>

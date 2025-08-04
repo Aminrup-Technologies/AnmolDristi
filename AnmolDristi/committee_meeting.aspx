@@ -149,8 +149,10 @@
                  <asp:RegularExpressionValidator ID="REV_txtAttendeeCode" runat="server" ControlToValidate="txtAttendeeCode" ForeColor="Red"  ErrorMessage="AlphaNumeric Only" ValidationExpression="^[a-zA-Z0-9.@]{0,25}$" Display="Dynamic"></asp:RegularExpressionValidator>
 
                  <div class="input-group-sm">
-                     <asp:TextBox ID="txtAttendeeCode" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
+                    <%-- <asp:TextBox ID="txtAttendeeCode" runat="server" CssClass="form-control form-control-sm rounded" ></asp:TextBox>--%>
+                     <asp:TextBox ID="txtAttendeeCode" runat="server" CssClass="form-control form-control-sm rounded" onblur="fetchAttendeeDetails()" />
                  </div>
+                 <asp:Label ID="lblEmployeeName" runat="server" Text="" ForeColor="Red" Font-Size="Small"></asp:Label>
              </div>
          </div>
 
@@ -162,6 +164,7 @@
                  <div class="input-group-sm">
                      <asp:TextBox ID="txtEmployeeName" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                  </div>
+
              </div>
          </div>
 
@@ -669,6 +672,7 @@
 </div>
     
 </div>
+            </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -697,39 +701,75 @@
         });
 
         // When Attendee Code is entered
-        txtAttendeeCode.on("blur", function () {
-            var attendeeCode = $(this).val().trim();
-            var isInternal = attendeeType.filter(":checked").val() === "Internal";
+        //txtAttendeeCode.on("blur", function () {
+        //    var attendeeCode = $(this).val().trim();
+        //    var isInternal = attendeeType.filter(":checked").val() === "Internal";
 
-            if (isInternal && attendeeCode !== "") {
-                $.ajax({
-                    type: "POST",
-                    url: "committee_meeting.aspx/GetAttendeeDetails",
-                    data: JSON.stringify({ attendeeCode: attendeeCode }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        if (response.d.success) {
-                            txtEmployeeName.val(response.d.name).prop("readonly", true);
-                            txtDesignation.val(response.d.designation).prop("readonly", true);
-                            $("#errorMsg").text("").hide();
-                        } else {
-                            txtEmployeeName.val("").prop("readonly", true);
-                            txtDesignation.val("").prop("readonly", true);
-                            $("#errorMsg").text(response.d.message).css("color", "red").show();
-                        }
-                    },
-                    error: function () {
-                        $("#errorMsg").text("Error fetching data").css("color", "red").show();
-                        txtEmployeeName.val("").prop("readonly", true);
-                        txtDesignation.val("").prop("readonly", true);
-                    }
-                });
-            }
-        });
+        //    if (isInternal && attendeeCode !== "") {
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "committee_meeting.aspx/GetAttendeeDetails",
+        //            data: JSON.stringify({ attendeeCode: attendeeCode }),
+        //            contentType: "application/json; charset=utf-8",
+        //            dataType: "json",
+        //            success: function (response) {
+        //                if (response.d.success) {
+        //                    txtEmployeeName.val(response.d.name).prop("readonly", true);
+        //                    txtDesignation.val(response.d.designation).prop("readonly", true);
+        //                    $("#errorMsg").text("").hide();
+        //                } else {
+        //                    txtEmployeeName.val("").prop("readonly", true);
+        //                    txtDesignation.val("").prop("readonly", true);
+        //                    $("#errorMsg").text(response.d.message).css("color", "red").show();
+        //                }
+        //            },
+        //            error: function () {
+        //                $("#errorMsg").text("Error fetching data").css("color", "red").show();
+        //                txtEmployeeName.val("").prop("readonly", true);
+        //                txtDesignation.val("").prop("readonly", true);
+        //            }
+        //        });
+        //    }
+        //});
     });
 </script>
+
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
     <script type="text/javascript">
+        function fetchAttendeeDetails() {
+            var empCode = document.getElementById('<%= txtAttendeeCode.ClientID %>').value.trim();
+
+        if (empCode === "") {
+            document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = "";
+            document.getElementById('<%= txtEmployeeName.ClientID %>').value = "";
+            document.getElementById('<%= txtdes.ClientID %>').value = "";
+            return;
+        }
+
+        PageMethods.GetAttendeeDetails(empCode,
+            function (result) {
+                if (result && result.EmployeeName) {
+                    // Populate fields
+                    document.getElementById('<%= txtEmployeeName.ClientID %>').value = result.EmployeeName;
+                    document.getElementById('<%= txtdes.ClientID %>').value = result.Designation;
+                    //document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = result.EmployeeName;
+                   // document.getElementById('<%= lblEmployeeName.ClientID %>').style.color = "green";
+                } else {
+                    // Show error
+                    document.getElementById('<%= lblEmployeeName.ClientID %>').innerText = "Invalid Attendee Code!";
+                    document.getElementById('<%= lblEmployeeName.ClientID %>').style.color = "red";
+                    document.getElementById('<%= txtEmployeeName.ClientID %>').value = "";
+                    document.getElementById('<%= txtdes.ClientID %>').value = "";
+                }
+            },
+            function (error) {
+                alert("Error: " + error.get_message());
+            }
+        );
+        }
+</script>
+
+<script type="text/javascript">
         function showSuccessMessage() {
             alert("Attendee details have been added successfully!");
         }
