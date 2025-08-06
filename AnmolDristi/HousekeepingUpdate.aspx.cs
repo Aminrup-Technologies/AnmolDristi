@@ -189,9 +189,17 @@ namespace AnmolDristi
         {
             Response.Redirect("housekeeping_audit_report.aspx");
         }
-        
+
         protected void BtnDelObservation_Click(object sender, EventArgs e)
         {
+            // Check if more than one row exists
+            if (gvObservations.Rows.Count <= 1)
+            {
+                lblMsg.Text = "At least one observation must remain. Deletion cancelled.";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
             // Identify the clicked button and get its row
             Button btn = (Button)sender;
             GridViewRow row = (GridViewRow)btn.NamingContainer;
@@ -224,7 +232,7 @@ namespace AnmolDristi
                 }
 
                 lblMsg.Text = "Observation deleted successfully!";
-                lblMsg.ForeColor = System.Drawing.Color.Red;
+                lblMsg.ForeColor = System.Drawing.Color.Green;
             }
             else
             {

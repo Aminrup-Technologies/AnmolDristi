@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Runtime.Remoting.Messaging;
 using static System.Net.Mime.MediaTypeNames;
-using System.IO;
-using System.Drawing;
-using System.Security.Cryptography;
 
 namespace AnmolDristi
 {
@@ -43,9 +44,8 @@ namespace AnmolDristi
         }
         private void LoadDetails(string headerID)
         {
+
             string query = @"SELECT InspectionID,InspectionDate,Location,EmployeeName,InspectedBy ,Remarks,PhotoPath from  FirstAidInspectionHeader where InspectionID=@InspectionID ";
-
-
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connStr))
@@ -163,12 +163,20 @@ namespace AnmolDristi
             }
         }
 
+
         protected void BtnDelete_Click(object sender, EventArgs e)
         {
+            // Check if more than one row exists
+            if (gvIssues.Rows.Count <= 1)
+            {
+                lblMsg.Text = "At least one item must remain. Deletion cancelled.";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
             Button btn = (Button)sender;
             GridViewRow row = (GridViewRow)btn.NamingContainer;
 
-            // Parse ItemDetailID (int) from DataKeys
             int itemDetailID = Convert.ToInt32(gvIssues.DataKeys[row.RowIndex].Value);
 
             if (itemDetailID > 0)
@@ -185,16 +193,46 @@ namespace AnmolDristi
                     }
                 }
 
-                
                 if (Request.QueryString["InspectionID"] != null)
                 {
                     string inspectionID = Request.QueryString["InspectionID"].ToString();
-                    LoadIssuesGrid(inspectionID); // <-- Make sure this is your actual method name
+                    LoadIssuesGrid(inspectionID); // Reload the GridView
                 }
             }
         }
 
-      
+        //protected void BtnDelete_Click(object sender, EventArgs e)
+        //{
+        //    Button btn = (Button)sender;
+        //    GridViewRow row = (GridViewRow)btn.NamingContainer;
+
+        //    // Parse ItemDetailID (int) from DataKeys
+        //    int itemDetailID = Convert.ToInt32(gvIssues.DataKeys[row.RowIndex].Value);
+
+        //    if (itemDetailID > 0)
+        //    {
+        //        string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+        //        using (SqlConnection con = new SqlConnection(connectionString))
+        //        {
+        //            string query = "DELETE FROM FirstAidItemDetails WHERE ItemDetailID = @ItemDetailID";
+        //            using (SqlCommand cmd = new SqlCommand(query, con))
+        //            {
+        //                cmd.Parameters.AddWithValue("@ItemDetailID", itemDetailID);
+        //                con.Open();
+        //                cmd.ExecuteNonQuery();
+        //            }
+        //        }
+
+
+        //        if (Request.QueryString["InspectionID"] != null)
+        //        {
+        //            string inspectionID = Request.QueryString["InspectionID"].ToString();
+        //            LoadIssuesGrid(inspectionID); // <-- Make sure this is your actual method name
+        //        }
+        //    }
+        //}
+
+
         private void LoadIssuesGrid(string headerID)
         {
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -226,6 +264,63 @@ namespace AnmolDristi
 
         protected void BtnUpdate_Click(object sender, EventArgs e)
         {
+            lblMsg.Text = "";
+
+            if (string.IsNullOrWhiteSpace(txtdate.Text))
+            {
+                lblMsg.Text = "Please select Date.";
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtVenue.Text))
+            {
+                lblMsg.Text = "Please enter Location.";
+                return;
+            }
+            //if (string.IsNullOrWhiteSpace(hfEmployeeName.Value))
+            //{
+            //    lblMsg.Text = "Employee name is missing.";
+            //    return;
+            //}
+            //if (string.IsNullOrWhiteSpace(txtInsBy.Text))
+            //{
+            //    lblMsg.Text = "Please enter Inspected By.";
+            //    return;
+            //}
+            if (string.IsNullOrWhiteSpace(txtnote.Text))
+            {
+                lblMsg.Text = "Please enter Remarks.";
+                return;
+            }
+            // ✅ Validation for "Yes" selected rows
+            foreach (RepeaterItem item in rptChecklist.Items)
+            {
+                RadioButton rdoYes = (RadioButton)item.FindControl("rdoYes");
+                TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
+                FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
+                HiddenField hfImagePath = (HiddenField)item.FindControl("hfImagePath");
+                System.Web.UI.WebControls.Label lblDescription = (System.Web.UI.WebControls.Label)item.FindControl("lblDescription");
+
+                if (rdoYes != null && rdoYes.Checked)
+                {
+                    if (txtRemarks != null && string.IsNullOrWhiteSpace(txtRemarks.Text))
+                    {
+                        lblMsg.Text = $"Please enter remarks for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+
+                    // Check if neither a new file is uploaded nor a previous path exists
+                    bool isNewFileUploaded = fileUpload != null && fileUpload.HasFile;
+                    bool isExistingImagePresent = hfImagePath != null && !string.IsNullOrWhiteSpace(hfImagePath.Value);
+
+                    if (!isNewFileUploaded && !isExistingImagePresent)
+                    {
+                        lblMsg.Text = $"Please upload photo for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+                }
+            }
+
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             string inspectionID = Request.QueryString["InspectionID"];
 
@@ -288,20 +383,15 @@ namespace AnmolDristi
                     delChecklist.Parameters.AddWithValue("@InspectionID", inspectionID);
                     delChecklist.ExecuteNonQuery();
 
-                    //SqlCommand delCAPA = new SqlCommand("DELETE FROM tbl_CAPAMaster WHERE HeaderID = @HeaderID", con, trans);
-                    //delCAPA.Parameters.AddWithValue("@HeaderID", inspectionID);
-                    //delCAPA.ExecuteNonQuery();
-                    //SqlCommand clearCAPAFields = new SqlCommand(@"
-                    //      UPDATE tbl_CAPAMaster 
-                    //      SET PhotoPath = NULL, Remarks = NULL 
-                    //      WHERE HeaderID = @HeaderID", con, trans);
-                    SqlCommand clearCAPAFields = new SqlCommand(@"
-                                  UPDATE tbl_CAPAMaster 
-                                SET IsYes = 1
-                                WHERE CAPAID = @CAPAID", con,trans);
+                    
+                     SqlCommand clearCAPAFields = new SqlCommand(@"
+                           UPDATE tbl_CAPAMaster 
+                                  SET IsYes = 1
+                              WHERE HeaderID = @HeaderID", con, trans);
 
                     clearCAPAFields.Parameters.AddWithValue("@HeaderID", inspectionID);
                     clearCAPAFields.ExecuteNonQuery();
+
 
                     foreach (RepeaterItem item in rptChecklist.Items)
                     {
@@ -318,24 +408,33 @@ namespace AnmolDristi
 
                         bool isOk = (rdoYes != null && rdoYes.Checked);
                         string checklistPhotoPath = "";
-                        //string txtRemarks = "";
-                        if (fileUpload.HasFile)
+                        if (isOk) // Only process image if status is YES
                         {
-                            string fileName = Path.GetFileName(fileUpload.FileName);
-                            string folderPath = Server.MapPath("~/Uploads1/");
-                            if (!Directory.Exists(folderPath))
+                            if (fileUpload.HasFile)
                             {
-                                Directory.CreateDirectory(folderPath);
-                            }
+                                string fileName = Path.GetFileName(fileUpload.FileName);
+                                string folderPath = Server.MapPath("~/Uploads1/");
+                                if (!Directory.Exists(folderPath))
+                                {
+                                    Directory.CreateDirectory(folderPath);
+                                }
 
-                            string filePath = folderPath + fileName;
-                            fileUpload.SaveAs(filePath);
-                            checklistPhotoPath = "~/Uploads1/" + fileName;
+                                string filePath = folderPath + fileName;
+                                fileUpload.SaveAs(filePath);
+                                checklistPhotoPath = "~/Uploads1/" + fileName;
+                            }
+                            else
+                            {
+                                checklistPhotoPath = hfImagePath?.Value ?? "";
+                            }
                         }
                         else
                         {
-                            checklistPhotoPath = hfImagePath?.Value ?? "";
+                            // Status is "No", force PhotoPath to be empty
+                            checklistPhotoPath = "";
+                           
                         }
+
                         object capaID = DBNull.Value;
 
                         // If YES is selected AND CAPA checkbox is checked, insert CAPA entry
@@ -365,8 +464,6 @@ namespace AnmolDristi
             (@InspectionID, @ItemName, @QuestionNumber, @Description, @IsOK, @PhotoPath, @Capa_Report)", con, trans);
 
                             cmdChecklist.Parameters.AddWithValue("@InspectionID", inspectionID);
-                            //cmdChecklist.Parameters.AddWithValue("@ItemName", txtRemarks.Text.Trim());  
-                            
                             cmdChecklist.Parameters.AddWithValue("@QuestionNumber", Convert.ToInt32(hfQNo.Value));
                             cmdChecklist.Parameters.AddWithValue("@Description", lblDesc.Text);
                             cmdChecklist.Parameters.AddWithValue("@IsOK", isOk);

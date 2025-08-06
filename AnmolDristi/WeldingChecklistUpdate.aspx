@@ -470,7 +470,7 @@
 </script>--%>
 
 
-<script type="text/javascript">
+<%--<script type="text/javascript">
     function validateRemarksAndPhotos() {
         const rows = document.querySelectorAll("table tr"); // Adjust selector if needed
 
@@ -490,6 +490,46 @@
                     }
 
                     
+                }
+            }
+        }
+
+        return true;
+    }
+</script>--%>
+
+<script type="text/javascript">
+    function validateRemarksAndPhotos() {
+        const rows = document.querySelectorAll("table tr");
+
+        for (let row of rows) {
+            const selectedRadio = row.querySelector('.status-option input[type="radio"]:checked');
+
+            if (selectedRadio) {
+                const labelText = selectedRadio.nextSibling.textContent.trim();
+
+                if (labelText === "No") {
+                    const txtRemarks = row.querySelector('input[type="text"], textarea, .form-control.remarks');
+
+                    // Check remarks
+                    if (!txtRemarks || (txtRemarks.style.display !== "none" && txtRemarks.value.trim() === "")) {
+                        alert("Please enter remarks for an item marked as 'No'.");
+                        txtRemarks.focus();
+                        return false;
+                    }
+
+                    // Get file upload and hidden image path (scoped properly)
+                    const fileUpload = row.querySelector('input[type="file"]');
+                    const hfImagePath = row.querySelector('input[type="hidden"][id*="hfImagePath"]'); // More specific
+
+                    const fileSelected = fileUpload && fileUpload.files.length > 0;
+                    const imagePathPresent = hfImagePath && hfImagePath.value.trim() !== "";
+
+                    if (!fileSelected && !imagePathPresent) {
+                        alert("Please upload a photo or ensure a photo is already uploaded for items marked as 'No'.");
+                        if (fileUpload) fileUpload.focus();
+                        return false;
+                    }
                 }
             }
         }

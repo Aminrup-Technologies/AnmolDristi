@@ -102,13 +102,51 @@ namespace AnmolDristi
                 }
             }
         }
-        
+
+        //protected void BtnDelAttendees_Click(object sender, EventArgs e)
+        //{
+        //    Button btn = (Button)sender;
+        //    GridViewRow row = (GridViewRow)btn.NamingContainer;
+
+
+        //    string attendeeId = gvAttendees.DataKeys[row.RowIndex].Value.ToString();
+
+        //    if (!string.IsNullOrEmpty(attendeeId))
+        //    {
+        //        string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+        //        using (SqlConnection con = new SqlConnection(connectionString))
+        //        {
+        //            string query = "DELETE FROM Committee_MeetingAttendance WHERE AttendanceID = @AttendanceID";
+        //            using (SqlCommand cmd = new SqlCommand(query, con))
+        //            {
+        //                cmd.Parameters.AddWithValue("@AttendanceID", attendeeId);
+        //                con.Open();
+        //                cmd.ExecuteNonQuery();
+        //                con.Close();
+        //            }
+        //        }
+
+        //        if (Request.QueryString["MeetingID"] != null)
+        //        {
+        //            int meetingID = Convert.ToInt32(Request.QueryString["MeetingID"]);
+        //            LoadAttendance(meetingID);  
+        //        }
+        //    }
+        //}
+
         protected void BtnDelAttendees_Click(object sender, EventArgs e)
         {
+            // Prevent deletion if only 1 attendee is left
+            if (gvAttendees.Rows.Count <= 1)
+            {
+                lblMsg.Text = "At least one attendee must remain. Deletion cancelled.";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
             Button btn = (Button)sender;
             GridViewRow row = (GridViewRow)btn.NamingContainer;
 
-            
             string attendeeId = gvAttendees.DataKeys[row.RowIndex].Value.ToString();
 
             if (!string.IsNullOrEmpty(attendeeId))
@@ -129,13 +167,29 @@ namespace AnmolDristi
                 if (Request.QueryString["MeetingID"] != null)
                 {
                     int meetingID = Convert.ToInt32(Request.QueryString["MeetingID"]);
-                    LoadAttendance(meetingID);  
+                    LoadAttendance(meetingID);
                 }
+
+                lblMsg.Text = "Attendee deleted successfully.";
+                lblMsg.ForeColor = System.Drawing.Color.Green;
+            }
+            else
+            {
+                lblMsg.Text = "Failed to delete: AttendanceID is empty.";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
             }
         }
 
         protected void BtnDelIssues_Click(object sender, EventArgs e)
         {
+            // Ensure there's more than one row
+            if (gvIssues.Rows.Count <= 1)
+            {
+                lblMsg.Text = "At least one issue must remain. Deletion cancelled.";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
             Button btn = (Button)sender;
             GridViewRow row = (GridViewRow)btn.NamingContainer;
 
@@ -163,8 +217,48 @@ namespace AnmolDristi
                     int meetingID = Convert.ToInt32(Request.QueryString["MeetingID"]);
                     LoadIssues(meetingID);
                 }
+
+                lblMsg.Text = "Issue deleted successfully.";
+                lblMsg.ForeColor = System.Drawing.Color.Green;
+            }
+            else
+            {
+                lblMsg.Text = "Failed to delete: IssueID is empty.";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
             }
         }
+
+        //protected void BtnDelIssues_Click(object sender, EventArgs e)
+        //{
+        //    Button btn = (Button)sender;
+        //    GridViewRow row = (GridViewRow)btn.NamingContainer;
+
+        //    // Use DataKeys to get the SNo (IssueID)
+        //    string issueId = gvIssues.DataKeys[row.RowIndex].Value.ToString();
+
+        //    if (!string.IsNullOrEmpty(issueId))
+        //    {
+        //        string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+        //        using (SqlConnection con = new SqlConnection(connectionString))
+        //        {
+        //            string query = "DELETE FROM Committee_MeetingIssues WHERE IssueID = @IssueID";
+        //            using (SqlCommand cmd = new SqlCommand(query, con))
+        //            {
+        //                cmd.Parameters.AddWithValue("@IssueID", issueId);
+        //                con.Open();
+        //                cmd.ExecuteNonQuery();
+        //                con.Close();
+        //            }
+        //        }
+
+        //        // Reload issues
+        //        if (Request.QueryString["MeetingID"] != null)
+        //        {
+        //            int meetingID = Convert.ToInt32(Request.QueryString["MeetingID"]);
+        //            LoadIssues(meetingID);
+        //        }
+        //    }
+        //}
         protected void Btnback_Click(object sender, EventArgs e)
         {
             Response.Redirect("committee_meeting_report.aspx");

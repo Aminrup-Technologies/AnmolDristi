@@ -254,7 +254,44 @@ namespace AnmolDristi
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            
+            if (string.IsNullOrWhiteSpace(txtdate.Text) || string.IsNullOrWhiteSpace(txtloc.Text) ||
+               string.IsNullOrWhiteSpace(txtjobId.Text) || string.IsNullOrWhiteSpace(txtDocNo.Text) ||
+               string.IsNullOrWhiteSpace(txtInsBy.Text) || string.IsNullOrWhiteSpace(txtnote.Text))
+
+            {
+                lblMsg.Text = "Please fill all required fields.";
+                return;
+            }
+
+            //✅ Validation for "No" selected rows
+            foreach (RepeaterItem item in rptChecklist.Items)
+            {
+                RadioButton rdoNo = (RadioButton)item.FindControl("rdoNo");
+                TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
+                FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
+                HiddenField hfImagePath = (HiddenField)item.FindControl("hfImagePath");
+                System.Web.UI.WebControls.Label lblDescription = (System.Web.UI.WebControls.Label)item.FindControl("lblDescription");
+
+                if (rdoNo != null && rdoNo.Checked)
+                {
+                    if (txtRemarks != null && string.IsNullOrWhiteSpace(txtRemarks.Text))
+                    {
+                        lblMsg.Text = $"Please enter remarks for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+
+                    // Check if neither a new file is uploaded nor a previous path exists
+                    bool isNewFileUploaded = fileUpload != null && fileUpload.HasFile;
+                    bool isExistingImagePresent = hfImagePath != null && !string.IsNullOrWhiteSpace(hfImagePath.Value);
+
+                    if (!isNewFileUploaded && !isExistingImagePresent)
+                    {
+                        lblMsg.Text = $"Please upload photo for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+                }
+            }
+
             string headerID = Request.QueryString["HeaderID"];
             if (string.IsNullOrEmpty(headerID)) return;
 
@@ -310,6 +347,7 @@ namespace AnmolDristi
         {
             foreach (RepeaterItem item in repeater.Items)
             {
+       
                 HiddenField hfQuestionNumber = (HiddenField)item.FindControl("hfQuestionNumber");
                 RadioButton rdoYes = (RadioButton)item.FindControl("rdoYes");
                 RadioButton rdoNo = (RadioButton)item.FindControl("rdoNo");
@@ -321,11 +359,12 @@ namespace AnmolDristi
                 CheckBox chkCapa = (CheckBox)item.FindControl("chkCapaReport");
 
                 int questionNumber = Convert.ToInt32(hfQuestionNumber.Value);
-                bool isOk = rdoYes.Checked;
+                //bool isOk = rdoYes.Checked;
+
                 bool na = (rdoNA != null && rdoNA.Checked);
-                string checklistPhotoPath = "";
                 string description = lblDescription?.Text?.Trim() ?? "";
                 string remarks = txtRemarks?.Text ?? "";
+                string checklistPhotoPath = "";
                 if (fileUpload.HasFile)
                 {
                     string fileName = Path.GetFileName(fileUpload.FileName);
@@ -343,6 +382,15 @@ namespace AnmolDristi
                 {
                     checklistPhotoPath = hfImagePath?.Value ?? "";
                 }
+                object isOkValue;
+                if (rdoYes.Checked)
+                {
+                    isOkValue = 1;
+                    remarks = "";
+                    checklistPhotoPath = "";
+                }
+                else
+                    isOkValue = 0;
 
                 HiddenField hfCapaReportID = (HiddenField)item.FindControl("hfCapaReportID");
                 object capaID = DBNull.Value;
@@ -363,9 +411,10 @@ namespace AnmolDristi
                         clearsCAPAFields.ExecuteNonQuery();
                         remarks = "";
                         checklistPhotoPath = "";
-                        
+
                     }
                 }
+
                 else if (rdoNo.Checked && chkCapa != null && chkCapa.Checked)
                 {
                     SqlCommand cmdCAPA = new SqlCommand(@"
@@ -384,9 +433,6 @@ namespace AnmolDristi
                     capaID = cmdCAPA.ExecuteScalar();
                 }
 
-
-
-
                 SqlCommand cmdInsert = new SqlCommand(@"
             INSERT INTO WeldingChecklist 
             (HeaderID, QuestionNumber, IsOk, NA, Remarks, PhotoPath, Description,CAPA_Report)
@@ -395,7 +441,7 @@ namespace AnmolDristi
 
                 cmdInsert.Parameters.AddWithValue("@HeaderID", headerID);
                 cmdInsert.Parameters.AddWithValue("@QuestionNumber", questionNumber);
-                cmdInsert.Parameters.AddWithValue("@IsOk", isOk);
+                cmdInsert.Parameters.AddWithValue("@IsOk", isOkValue);
                 cmdInsert.Parameters.AddWithValue("@NA", na);
                 cmdInsert.Parameters.AddWithValue("@Remarks", remarks);
                 cmdInsert.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);

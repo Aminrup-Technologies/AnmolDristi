@@ -210,6 +210,34 @@ namespace AnmolDristi
                 lblMsg.Text = "Please fill all required fields.";
                 return;
             }
+            // ✅ Validation for "No" selected rows
+            foreach (RepeaterItem item in rptChecklist.Items)
+            {
+                RadioButton rdoNo = (RadioButton)item.FindControl("rdoNo");
+                TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
+                FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
+                HiddenField hfImagePath = (HiddenField)item.FindControl("hfImagePath");
+                System.Web.UI.WebControls.Label lblDescription = (System.Web.UI.WebControls.Label)item.FindControl("lblDescription");
+
+                if (rdoNo != null && rdoNo.Checked)
+                {
+                    if (txtRemarks != null && string.IsNullOrWhiteSpace(txtRemarks.Text))
+                    {
+                        lblMsg.Text = $"Please enter remarks for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+
+                    // Check if neither a new file is uploaded nor a previous path exists
+                    bool isNewFileUploaded = fileUpload != null && fileUpload.HasFile;
+                    bool isExistingImagePresent = hfImagePath != null && !string.IsNullOrWhiteSpace(hfImagePath.Value);
+
+                    if (!isNewFileUploaded && !isExistingImagePresent)
+                    {
+                        lblMsg.Text = $"Please upload photo for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+                }
+            }
 
             string headerID = Request.QueryString["HeaderID"];
             if (string.IsNullOrEmpty(headerID)) return;
@@ -295,28 +323,6 @@ namespace AnmolDristi
                         checklistPhotoPath = hfImagePath?.Value ?? "";
                 }
 
-
-
-
-                //        object capaID = DBNull.Value;
-
-                //    if (na && chkCapa != null && chkCapa.Checked)
-                //    {
-                //        SqlCommand cmdCAPA = new SqlCommand(@"
-                //INSERT INTO tbl_CAPAMaster 
-                //(HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
-                //OUTPUT INSERTED.CAPAID
-                //VALUES 
-                //(@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", con);
-
-                //        cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
-                //        cmdCAPA.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(checklistPhotoPath) ? DBNull.Value : (object)checklistPhotoPath);
-                //        cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
-                //        cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
-                //        cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
-
-                //        capaID = cmdCAPA.ExecuteScalar();
-                //    }
                 HiddenField hfCapaReportID = (HiddenField)item.FindControl("hfCapaReportID");
                 object capaID = DBNull.Value;
 

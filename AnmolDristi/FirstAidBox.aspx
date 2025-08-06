@@ -321,7 +321,7 @@
                 <div class="mb-3">
                     <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Green" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" OnClientClick="return validatesFields();" />
+                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" OnClientClick="return validatesChecklist();" />
                         
                         <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                          <asp:Button ID="BtnView" runat="server" Text="View Page" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="BtnView_Click" />
@@ -385,7 +385,6 @@
 </script>--%>
 
 
-
 <script type="text/javascript">
     window.onload = function () {
         const radios = document.querySelectorAll('.status-option');
@@ -418,6 +417,86 @@
         });
     };
 </script>
+
+<script type="text/javascript">
+    function validateYesItems() {
+        const rows = document.querySelectorAll("table tr");
+
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const selectedRadio = row.querySelector('.status-option input[type="radio"]:checked');
+
+            if (selectedRadio) {
+                const value = selectedRadio.nextSibling.textContent.trim();
+
+                if (value === "Yes") {
+                    const txtItem = row.querySelector('input[type="text"], textarea, .form-control.remarks');
+                    const fileUpload = row.querySelector('input[type="file"]');
+                    const hfImagePath = row.querySelector('input[type="hidden"]');
+
+                    // Check for item name (remarks)
+                    if (!txtItem || txtItem.value.trim() === "") {
+                        alert("Please enter item name or remarks for selected 'Yes'.");
+                        txtItem?.focus();
+                        return false;
+                    }
+
+                    // Check for photo (new upload or existing path)
+                    const fileSelected = fileUpload && fileUpload.files.length > 0;
+                    const imagePathPresent = hfImagePath && hfImagePath.value.trim() !== "";
+
+                    if (!fileSelected && !imagePathPresent) {
+                        alert("Please upload a photo or ensure photo already exists for items marked as 'Yes'.");
+                        fileUpload?.focus();
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true; // Passed all validations
+    }
+</script>
+
+<script type="text/javascript">
+    function validatesChecklist() {
+        var date = document.getElementById('<%= txtdate.ClientID %>').value.trim();
+        var site = document.getElementById('<%= txtVenue.ClientID %>').value.trim();
+        var insp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
+        var re = document.getElementById('<%= txtnote.ClientID %>').value.trim();
+
+        const digitsOnly = /^\d+$/;
+
+        if (!date) {
+            alert("Please select Date of Inspection.");
+            return false;
+        }
+        if (!site) {
+            alert("Please enter Location.");
+            return false;
+        }
+        
+        //if (!digitsOnly.test(jobId)) {
+        //    alert("Job ID must contain digits only.");
+        //    return false;
+        //}
+        if (!insp) {
+            alert("Please enter Inspected by.");
+            return false;
+        }
+        if (!re) {
+            alert("Please give Remarks.");
+            return false;
+        }
+        if (!validateYesItems()) {
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+
 
  <script type="text/javascript">
      function showSuccessMessages() {

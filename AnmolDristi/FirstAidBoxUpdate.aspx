@@ -148,7 +148,8 @@
                     <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
                             <asp:Button ID="BtnDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm" OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
-                        </ItemTemplate>
+                             
+                       </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
@@ -259,7 +260,7 @@
                 <div class="mb-3">
                     <asp:Label ID="Lbl_BtnUpdate" runat="server" AssociatedControlID="BtnUpdate" Text="Click to Update" ForeColor="Red" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm" ValidationGroup="submi" CausesValidation="true" OnClick="BtnUpdate_Click" /> 
+                        <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm" ValidationGroup="submi" CausesValidation="true" OnClick="BtnUpdate_Click" OnClientClick="return validatessChecklist();" /> 
                          <asp:Button ID="BtnBack" runat="server" Text="View Page" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="BtnBack_Click" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         
@@ -304,6 +305,85 @@
         });
     };
 </script>
+
+    <script type="text/javascript">
+        function validateYesItems() {
+            const rows = document.querySelectorAll("table tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const selectedRadio = row.querySelector('.status-option input[type="radio"]:checked');
+
+                if (selectedRadio) {
+                    const value = selectedRadio.nextSibling.textContent.trim();
+
+                    if (value === "Yes") {
+                        const txtItem = row.querySelector('input[type="text"], textarea, .form-control.remarks');
+                        const fileUpload = row.querySelector('input[type="file"]');
+                        const hfImagePath = row.querySelector('input[type="hidden"]');
+
+                        // Check for item name (remarks)
+                        if (!txtItem || txtItem.value.trim() === "") {
+                            alert("Please enter item name or remarks for selected 'Yes'.");
+                            txtItem?.focus();
+                            return false;
+                        }
+
+                        // Check for photo (new upload or existing path)
+                        const fileSelected = fileUpload && fileUpload.files.length > 0;
+                        const imagePathPresent = hfImagePath && hfImagePath.value.trim() !== "";
+
+                        if (!fileSelected && !imagePathPresent) {
+                            alert("Please upload a photo or ensure photo already exists for items marked as 'Yes'.");
+                            fileUpload?.focus();
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true; // Passed all validations
+        }
+    </script>
+
+<script type="text/javascript">
+    function validatessChecklist() {
+        var date = document.getElementById('<%= txtdate.ClientID %>').value.trim();
+        var site = document.getElementById('<%= txtVenue.ClientID %>').value.trim();
+        var insp = document.getElementById('<%= txtInsBy.ClientID %>').value.trim(); 
+        var re = document.getElementById('<%= txtnote.ClientID %>').value.trim();
+
+        const digitsOnly = /^\d+$/;
+
+        if (!date) {
+            alert("Please select Date of Inspection.");
+            return false;
+        }
+        if (!site) {
+            alert("Please enter Location.");
+            return false;
+        }
+
+        //if (!digitsOnly.test(jobId)) {
+        //    alert("Job ID must contain digits only.");
+        //    return false;
+        //}
+        if (!insp) {
+            alert("Please enter Inspected by.");
+            return false;
+        }
+        if (!re) {
+            alert("Please give Remarks.");
+            return false;
+        }
+        if (!validateYesItems()) {
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
 
  <script type="text/javascript">
      function showSuccessMessages() {

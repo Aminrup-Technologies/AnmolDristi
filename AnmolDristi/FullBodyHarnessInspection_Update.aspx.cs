@@ -16,20 +16,7 @@ namespace AnmolDristi
 {
     public partial class FullBodyHarnessInspection_Update : System.Web.UI.Page
     {
-        //protected void Page_Load(object sender, EventArgs e)
-        //{
-        //    if (!IsPostBack)
-        //    {
-        //        if (Request.QueryString["InspectionID"] != null)
-        //        {
-        //            int inspectionID = Convert.ToInt32(Request.QueryString["InspectionID"]);
-        //            //LoadInspectionData(inspectionID);
-        //            BindChecklist(); 
-        //            LoadDetails(inspectionID);
-        //            LoadChecklistItems(inspectionID); // Load data into repeaters
-        //        }
-        //    }
-        //}
+       
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -49,8 +36,7 @@ namespace AnmolDristi
                 }
                 else
                 {
-                    // Optional: display a message or redirect
-                    // lblMsg.Text = "Invalid or missing InspectionID.";
+                    
                 }
             }
         }
@@ -267,6 +253,36 @@ namespace AnmolDristi
                 lblMsg.Text = "Please fill all required fields.";
                 return;
             }
+
+            // ✅ Validation for "No" selected rows
+            foreach (RepeaterItem item in rptsChecklist.Items)
+            {
+                RadioButton rdoNo = (RadioButton)item.FindControl("rdoNo");
+                TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
+                FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
+                HiddenField hfImagePath = (HiddenField)item.FindControl("hfImagePath");
+                System.Web.UI.WebControls.Label lblDescription = (System.Web.UI.WebControls.Label)item.FindControl("lblDescription");
+
+                if (rdoNo != null && rdoNo.Checked)
+                {
+                    if (txtRemarks != null && string.IsNullOrWhiteSpace(txtRemarks.Text))
+                    {
+                        lblMsg.Text = $"Please enter remarks for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+
+                    // Check if neither a new file is uploaded nor a previous path exists
+                    bool isNewFileUploaded = fileUpload != null && fileUpload.HasFile;
+                    bool isExistingImagePresent = hfImagePath != null && !string.IsNullOrWhiteSpace(hfImagePath.Value);
+
+                    if (!isNewFileUploaded && !isExistingImagePresent)
+                    {
+                        lblMsg.Text = $"Please upload photo for: \"{lblDescription.Text}\".";
+                        return;
+                    }
+                }
+            }
+
             int inspectionID = Convert.ToInt32(Request.QueryString["InspectionID"]); // assuming InspectionID is passed via query string
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
