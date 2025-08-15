@@ -113,7 +113,7 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT IssueDescription,ResponsiblePerson,TargetDate,AgendaTitle,ReviewDate,ReviewBy,Status FROM  Committee_MeetingIssues WHERE MeetingID = @MeetingID", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT IssueDescription,ResponsiblePerson,TargetDate,AgendaTitle,ReviewDate,ReviewBy,Status,Capa_Report FROM  Committee_MeetingIssues WHERE MeetingID = @MeetingID", con))
                 {
                     cmd.Parameters.AddWithValue("@MeetingID", meetingId);
                     con.Open();

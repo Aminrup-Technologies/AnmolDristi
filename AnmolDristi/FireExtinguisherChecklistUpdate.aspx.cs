@@ -349,16 +349,17 @@ namespace AnmolDristi
                 {
                     SqlCommand cmdCAPA = new SqlCommand(@"
         INSERT INTO tbl_CAPAMaster 
-        (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+        (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate,Description)
         OUTPUT INSERTED.CAPAID
         VALUES 
-        (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", con);
+        (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate,@Description)", con);
 
                     cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
                     cmdCAPA.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(checklistPhotoPath) ? DBNull.Value : (object)checklistPhotoPath);
                     cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
                     cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
                     cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                    cmdCAPA.Parameters.AddWithValue("@Description", lblDescription.Text);
 
                     capaID = cmdCAPA.ExecuteScalar();
                 }

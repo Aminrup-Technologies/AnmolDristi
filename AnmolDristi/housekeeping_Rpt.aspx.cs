@@ -65,7 +65,7 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT ObserverID,PhotoBefore,ObservationText,CorrectiveAction,PhotoAfter, Status,OpenBy,CloseBy,ClosingDate,OpeningDate,OpenByWorkman,TargetDate,AssignedTo FROM AuditObservations WHERE AuditID = @AuditID", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT ObserverID,PhotoBefore,ObservationText,CorrectiveAction,PhotoAfter, Status,OpenBy,CloseBy,ClosingDate,OpeningDate,OpenByWorkman,TargetDate,AssignedTo, CAPA_Report FROM AuditObservations WHERE AuditID = @AuditID", con))
                 {
                     cmd.Parameters.AddWithValue("@AuditID", meetingId);
                     con.Open();

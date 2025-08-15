@@ -198,6 +198,7 @@
                             <th>Image</th>
                              <th>Location</th>
                              <th>Inspection No</th>
+                            <th>Capa Report</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -210,7 +211,10 @@
                                     <td><%# Eval("Remarks") %></td>
                                     <td><asp:Image ID="imgUpload"  runat="server"  ImageUrl='<%# Eval("PhotoPath") %>'  Width="100"  Height="100"  Visible='<%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>'  /></td>
                                    <td><%# Eval("Location") %></td>
-                                   <td><%# Eval("InspectionNo") %></td>                                
+                                   <td><%# Eval("InspectionNo") %></td>  
+                                   <td> <a href='CAPA_MASTER.aspx?report=<%# Eval("Capa_Report") %>'> <%# Eval("Capa_Report") %> </a> </td>
+ 
+                           
                                 </tr>
                             </ItemTemplate>
                         </asp:Repeater>

@@ -194,6 +194,7 @@
                             <th>FE SerialNo</th>
                             <th>Calibration Date</th>
                             <th>Due Date</th>
+                            <th>Capa Report</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -210,6 +211,7 @@
                                     <td><%# Eval("FE_SerialNo") %></td>
                                     <td><%# Eval("CalibrationDate", "{0:yyyy-MM-dd}") %></td>
                                     <td><%# Eval("DueDate", "{0:yyyy-MM-dd}") %></td>
+                                     <td> <a href='CAPA_MASTER.aspx?report=<%# Eval("CAPA_Report") %>'> <%# Eval("CAPA_Report") %> </a> </td>
                                 </tr>
                             </ItemTemplate>
                         </asp:Repeater>

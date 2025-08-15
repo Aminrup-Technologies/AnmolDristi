@@ -196,6 +196,7 @@
                      <th>Expiry Date</th>
                     <th>LastRefilled Date</th>
                      <th>NextRefill Due Date</th>
+                     
                    
                     
                    
@@ -211,7 +212,6 @@
                              <td><%# Eval("ExpiryDate","{0:yyyy-MM-dd}") %></td>
                             <td><%# Eval("LastRefilledDate", "{0:yyyy-MM-dd}") %></td>
                             <td><%# Eval("NextRefillDueDate", "{0:yyyy-MM-dd}") %></td>
-                            
                            
                             
                            
@@ -235,6 +235,7 @@
                             <th>Status</th>
                             <th>Item Name</th>
                             <th>Image</th>
+                            <th>CAPA Report</th>
                             
                         </tr>
                     </thead>
@@ -247,7 +248,7 @@
                                     <td><%# Convert.ToBoolean(Eval("IsOk")) ? "✔️" : "❌" %></td>
                                     <td><%# Eval("ItemName") %></td>
                                     <td><asp:Image ID="imgUpload"  runat="server"  ImageUrl='<%# Eval("PhotoPath") %>'  Width="100"  Height="100"  Visible='<%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>'  /></td>           
-                                   
+                                    <td> <a href='CAPA_MASTER.aspx?report=<%# Eval("Capa_Report") %>'> <%# Eval("Capa_Report") %> </a> </td>
                                 </tr>
                             </ItemTemplate>
                         </asp:Repeater>

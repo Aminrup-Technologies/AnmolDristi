@@ -226,6 +226,7 @@
          <table class="center_1">
              <thead>
                  <tr class="center_1">
+                      
                      <th>Agenda Title</th>
                      <th>Issue Description</th>
                       <th>Point Raised By</th>
@@ -233,15 +234,16 @@
                      <th>Target Date</th>
                       <th>Review Date</th>
                      <th>Status</th>
-                     
-                    
-                    
+                    <th>Capa Report</th>
+                          
                  </tr>
              </thead>
              <tbody>
                  <asp:Repeater ID="RepeaterIssues" runat="server">
                      <ItemTemplate>
                          <tr class="center_1">
+                             <%--<td><%# Eval("Capa_Report") %></td>--%>
+                            
                              <td><%# Eval("AgendaTitle") %></td>
                              <td><%# Eval("IssueDescription") %></td>
                               <td><%# Eval("ReviewBy") %></td>
@@ -249,6 +251,7 @@
                              <td><%# Eval("TargetDate", "{0:yyyy-MM-dd}") %></td>
                              <td><%# Eval("ReviewDate", "{0:yyyy-MM-dd}") %></td>
                              <td><%# Eval("Status") %></td>
+                              <td> <a href='CAPA_MASTER.aspx?report=<%# Eval("Capa_Report") %>'> <%# Eval("Capa_Report") %> </a> </td>
                             
                              
                             

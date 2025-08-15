@@ -80,6 +80,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CAPA_MASTER.aspx" />
     <Content Include="committee_meeting.aspx" />
     <Content Include="committee_meeting_report.aspx" />
     <Content Include="Committee_meeting_update.aspx" />
@@ -171,6 +172,13 @@
     </Compile>
     <Compile Include="blank.aspx.designer.cs">
       <DependentUpon>blank.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CAPA_MASTER.aspx.cs">
+      <DependentUpon>CAPA_MASTER.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CAPA_MASTER.aspx.designer.cs">
+      <DependentUpon>CAPA_MASTER.aspx</DependentUpon>
     </Compile>
     <Compile Include="committee_meeting.aspx.cs">
       <DependentUpon>committee_meeting.aspx</DependentUpon>

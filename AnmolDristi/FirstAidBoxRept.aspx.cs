@@ -92,7 +92,7 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT QuestionNumber,description,IsOk,ItemName,PhotoPath FROM FirstAidChecklist WHERE InspectionID = @InspectionID", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT QuestionNumber,description,IsOk,ItemName,PhotoPath,Capa_Report FROM FirstAidChecklist WHERE InspectionID = @InspectionID", con))
                 {
                     cmd.Parameters.AddWithValue("@InspectionID", meetingId);
                     con.Open();

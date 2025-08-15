@@ -66,7 +66,7 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT QuestionNumber,IsOk,Remarks,PhotoPath,NA,description,ExtinguisherType,FE_SerialNo,CalibrationDate,DueDate FROM FireExtinguisherChecklist WHERE HeaderID = @HeaderID", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT QuestionNumber,IsOk,Remarks,PhotoPath,NA,description,ExtinguisherType,FE_SerialNo,CalibrationDate,DueDate,CAPA_Report FROM FireExtinguisherChecklist WHERE HeaderID = @HeaderID", con))
                 {
                     cmd.Parameters.AddWithValue("@HeaderID", meetingId);
                     con.Open();

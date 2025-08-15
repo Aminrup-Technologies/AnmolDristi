@@ -179,7 +179,6 @@
                            <tr class="center_1">
                                <th>Observer ID</th>
                                <th>Open By</th>
-                               
                                <th>OpenBy Workman</th>
                                <th>Photo Before</th>
                                <th>Observation Text</th>
@@ -190,6 +189,7 @@
                                <th>Opening Date</th>
                                <th>Closing Date</th>
                                <th>Target Date</th>
+                               <th>CAPA Rport</th>
                                
                            </tr>
                        </thead>
@@ -212,6 +212,8 @@
                                        <td><%# Eval("OpeningDate") %></td>
                                        <td><%# Eval("ClosingDate") %></td>
                                        <td><%# Eval("TargetDate") %></td>
+                                       <td> <a href='CAPA_MASTER.aspx?report=<%# Eval("CAPA_Report") %>'> <%# Eval("CAPA_Report") %> </a> </td>
+                            
                                    </tr>
                                </ItemTemplate>
                            </asp:Repeater>

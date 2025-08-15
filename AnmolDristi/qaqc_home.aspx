@@ -231,6 +231,12 @@
     <i class="fa fa-edit"></i>First Aid Box Checklist View
 
 </a>   
+                        <%--<a class="btn btn-app" href="CAPA_MASTER.aspx">
+    <span class="badge bg-green">Ok
+        <asp:Label ID="Label11" runat="server" Text="0" Visible="false"></asp:Label></span>
+    <i class="fa fa-edit"></i>CAPA Master
+
+</a>   --%>
         </div>
          
     </div>
