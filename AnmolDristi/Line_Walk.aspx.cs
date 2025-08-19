@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -350,35 +351,68 @@ namespace AnmolDristi
                 bool isUpdate = !string.IsNullOrEmpty(Entity_Id.Value);
                 int detailId = isUpdate ? Convert.ToInt32(Entity_Id.Value) : 0;
 
+                int? existingCapaId = null;
+                if (isUpdate)
+                {
+                    using (SqlCommand getCapaCmd = new SqlCommand("SELECT CAPA_ID FROM Line_walk_details WHERE Detail_ID = @Detail_ID", con))
+                    {
+                        getCapaCmd.Parameters.AddWithValue("@Detail_ID", detailId);
+                        object result = getCapaCmd.ExecuteScalar();
+                        if (result != DBNull.Value && result != null)
+                            existingCapaId = Convert.ToInt32(result);
+                    }
+                }
+
                 if (generateCAPA)
                 {
-                    int newCapaId;
-                    using (SqlCommand capaCmd = new SqlCommand(@"
-                INSERT INTO tbl_CAPAMaster (SourceTable, HeaderID,Remarks, Description, PhotoPath, AssignedBy)
-                VALUES (@SourceTable, @HeaderID, @Remarks, @Description, @PhotoPath, @AssignedBy);
-                SELECT SCOPE_IDENTITY();", con))
+                    if (existingCapaId.HasValue)
                     {
-                        capaCmd.Parameters.AddWithValue("@SourceTable", "Line_walk");
-                        capaCmd.Parameters.AddWithValue("@HeaderID", customId);
-                        capaCmd.Parameters.AddWithValue("@Description", Observation);
-                        capaCmd.Parameters.AddWithValue("@Remarks", Recommandation);
-                        capaCmd.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(Snap) ? (object)DBNull.Value : Snap);
-
-                        // Safely retrieve AssignedBy from Session
-                        string assignedBy = (Session["USERID"] != null) ? Session["USERID"].ToString() : "Unknown";
-                        capaCmd.Parameters.AddWithValue("@AssignedBy", assignedBy);
-
-                        newCapaId = Convert.ToInt32(capaCmd.ExecuteScalar());
-                        capaIdToUse = newCapaId;
+                        capaIdToUse = existingCapaId;
+                        using (SqlCommand getStatusCmd = new SqlCommand("SELECT Status FROM tbl_CAPAMaster WHERE CAPAID = @CAPAID", con))
+                        {
+                            getStatusCmd.Parameters.AddWithValue("@CAPAID", capaIdToUse.Value);
+                            object statusObj = getStatusCmd.ExecuteScalar();
+                            if (statusObj != null)
+                                statusToSave = statusObj.ToString();
+                        }
                     }
-
-                    using (SqlCommand getStatusCmd = new SqlCommand("SELECT Status FROM tbl_CAPAMaster WHERE CAPAID = @CAPAID", con))
+                    else
                     {
-                        getStatusCmd.Parameters.AddWithValue("@CAPAID", capaIdToUse.Value);
-                        object statusObj = getStatusCmd.ExecuteScalar();
-                        if (statusObj != null)
-                            statusToSave = statusObj.ToString();
+                        using (SqlCommand capaCmd = new SqlCommand(@"
+                    INSERT INTO tbl_CAPAMaster 
+                    (SourceTable, HeaderID, Remarks, Description, PhotoPath, AssignedBy, AssignedDate)
+                    VALUES 
+                    (@SourceTable, @HeaderID, @Remarks, @Description, @PhotoPath, @AssignedBy, @AssignedDate);
+                    SELECT SCOPE_IDENTITY();", con))
+                        {
+                            capaCmd.Parameters.AddWithValue("@SourceTable", "Line Walk");
+                            capaCmd.Parameters.AddWithValue("@HeaderID", customId);
+                            capaCmd.Parameters.AddWithValue("@Description", Observation);
+                            capaCmd.Parameters.AddWithValue("@Remarks", Recommandation);
+                            capaCmd.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(Snap) ? (object)DBNull.Value : Snap);
+                            capaCmd.Parameters.AddWithValue("@AssignedBy", Session["USERID"]?.ToString() ?? "Unknown");
+                            capaCmd.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+
+                            capaIdToUse = Convert.ToInt32(capaCmd.ExecuteScalar());
+                        }
+
+                        using (SqlCommand getStatusCmd = new SqlCommand("SELECT Status FROM tbl_CAPAMaster WHERE CAPAID = @CAPAID", con))
+                        {
+                            getStatusCmd.Parameters.AddWithValue("@CAPAID", capaIdToUse.Value);
+                            object statusObj = getStatusCmd.ExecuteScalar();
+                            if (statusObj != null)
+                                statusToSave = statusObj.ToString();
+                        }
                     }
+                }
+                else if (!generateCAPA && existingCapaId.HasValue)
+                {
+                    using (SqlCommand updateCapaCmd = new SqlCommand("UPDATE tbl_CAPAMaster SET IsYes = 1 WHERE CAPAID = @CAPAID", con))
+                    {
+                        updateCapaCmd.Parameters.AddWithValue("@CAPAID", existingCapaId.Value);
+                        updateCapaCmd.ExecuteNonQuery();
+                    }
+                    capaIdToUse = existingCapaId;
                 }
 
                 SqlCommand cmd;
@@ -394,36 +428,11 @@ namespace AnmolDristi
                     Generate_CAPA = @Generate_CAPA,
                     Status = @Status,
                     Custom_ID = 'LW-' + CAST(ID AS VARCHAR)
-                    " + (string.IsNullOrEmpty(Snap) ? "" : ", Snap_File_Path = @Snap_File_Path") + @"
-                    , CAPA_ID = @CAPA_ID
+                    " + (string.IsNullOrEmpty(Snap) ? "" : ", Snap_File_Path = @Snap_File_Path") + @",
+                    CAPA_ID = @CAPA_ID
                 WHERE Detail_ID = @Detail_ID", con);
 
                     cmd.Parameters.AddWithValue("@Detail_ID", detailId);
-
-                    if (!generateCAPA)
-                    {
-                        // If Unchecked capa checkbox IsYes = 1 in CAPA Master table 
-                        using (SqlCommand updateCapaCmd = new SqlCommand(@"
-                    UPDATE tbl_CAPAMaster 
-                    SET IsYes = 1 
-                    WHERE CAPAID = (
-                        SELECT CAPA_ID 
-                        FROM Line_walk_details 
-                        WHERE Detail_ID = @Detail_ID AND CAPA_ID IS NOT NULL
-                    )", con))
-                        {
-                            updateCapaCmd.Parameters.AddWithValue("@Detail_ID", detailId);
-                            updateCapaCmd.ExecuteNonQuery();
-                        }
-
-                        // catching the existing CAPA_ID from DB to preserve it(later used)
-                        using (SqlCommand getCapaCmd = new SqlCommand("SELECT CAPA_ID FROM Line_walk_details WHERE Detail_ID = @Detail_ID", con))
-                        {
-                            getCapaCmd.Parameters.AddWithValue("@Detail_ID", detailId);
-                            object existingCapaId = getCapaCmd.ExecuteScalar();
-                            capaIdToUse = existingCapaId != DBNull.Value ? Convert.ToInt32(existingCapaId) : (int?)null;
-                        }
-                    }
                 }
                 else
                 {
@@ -464,7 +473,6 @@ namespace AnmolDristi
                 }
             }
 
-            // Reset UI
             Entity_Id.Value = "";
             txtAreaLocation.Text = "";
             txtObservation.Text = "";
@@ -473,7 +481,7 @@ namespace AnmolDristi
             fileSnap.Attributes.Clear();
             lblExistingSnap.Text = "";
 
-            BindObservation(); 
+            BindObservation();
 
             string Data_SuccessScript = @"<script type='text/javascript'>
         new PNotify({
@@ -661,10 +669,7 @@ namespace AnmolDristi
              }
         }
 
-        protected void Home_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("qaqc_home.aspx");
-        }
+        
 
         protected void BtnImmediateAction_Click(object sender, EventArgs e)
         {
@@ -706,6 +711,23 @@ namespace AnmolDristi
             {
                 con.Open();
 
+
+
+                if (string.IsNullOrEmpty(attachmentFileName))
+                {
+                    SqlCommand getOldAttachment = new SqlCommand("SELECT ImmediateAction_Attachment FROM Line_walk_details WHERE Detail_ID = @Detail_ID", con);
+                    getOldAttachment.Parameters.AddWithValue("@Detail_ID", detailId);
+                    object oldFile = getOldAttachment.ExecuteScalar();
+                    if (oldFile != null && oldFile != DBNull.Value)
+                    {
+                        attachmentFileName = oldFile.ToString();
+                    }
+                }
+
+
+
+
+
                 SqlCommand getCapaInfoCmd = new SqlCommand("SELECT Generate_CAPA, ISNULL(CAPA_ID, 0) FROM Line_walk_details WHERE Detail_ID = @Detail_ID", con);
                 getCapaInfoCmd.Parameters.AddWithValue("@Detail_ID", detailId);
 
@@ -733,12 +755,14 @@ namespace AnmolDristi
                 UPDATE tbl_CAPAMaster 
                 SET CorrectiveAction = @CorrectiveAction, 
                     CA_Photo = @CAPhoto,
-                    CA_Date = @CADate
+                    CA_Date = @CADate,
+                    CA_ActionBy = @CA_ActionBy
                 WHERE CAPAID = @CAPAID", con);
 
                     updateCapaCmd.Parameters.AddWithValue("@CorrectiveAction", remarks);
                     updateCapaCmd.Parameters.AddWithValue("@CAPAID", capaId);
                     updateCapaCmd.Parameters.AddWithValue("@CADate", DateTime.Now);
+                    updateCapaCmd.Parameters.AddWithValue("@CA_ActionBy", Session["USERID"]?.ToString() ?? "Unknown");
                     updateCapaCmd.Parameters.AddWithValue("@CAPhoto", string.IsNullOrEmpty(attachmentFileName) ? (object)DBNull.Value : attachmentFileName);
 
                     updateCapaCmd.ExecuteNonQuery();
@@ -765,7 +789,7 @@ namespace AnmolDristi
             BindObservation();
 
             txtRemarks.Text = "";
-            IAction_Attachment.Attributes.Clear();
+            //IAction_Attachment.Attributes.Clear();
 
             string successScript = @"<script type='text/javascript'>
         new PNotify({
@@ -840,13 +864,12 @@ namespace AnmolDristi
             UPDATE Line_walk_details 
             SET Responsibility = @Responsibility, 
                 Target_Date = @TargetDate,
-                Remarks = @Remarks,
                 Status = @Status
             WHERE Detail_ID = @DetailID", con);
 
                 cmd.Parameters.AddWithValue("@Responsibility", responsibility);
                 cmd.Parameters.AddWithValue("@TargetDate", targetDate);
-                cmd.Parameters.AddWithValue("@Remarks", empName); 
+                //cmd.Parameters.AddWithValue("@Remarks", empName); 
                 cmd.Parameters.AddWithValue("@Status", statusToSave);
                 cmd.Parameters.AddWithValue("@DetailID", detailId);
                 cmd.ExecuteNonQuery();
@@ -895,6 +918,11 @@ namespace AnmolDristi
                     attachLink.NavigateUrl = "~/Uploads/" + attachPath;
                 }
             }
+        }
+
+        protected void Home_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("qaqc_home.aspx");
         }
     }
     

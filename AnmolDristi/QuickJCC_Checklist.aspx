@@ -652,7 +652,7 @@
 
                          <div class="text-center mt-4">
                              <asp:Button ID="submit" runat="server" Text="Submit" OnClick="submit_Click" CssClass="btn btn-success px-4 py-2" ValidationGroup="save" CausesValidation="true" OnClientClick="return validateAll();" />
-                             <asp:Button ID="reset" runat="server" Text="Reset" CssClass="btn btn-secondary px-4 py-2" OnClientClick="resetChecklist(); return false;" />
+                             <asp:Button ID="reset" runat="server" Text="Reset" CssClass="btn btn-secondary px-4 py-2" OnClientClick="confirmReset(); return false;"/>
                              <asp:Button runat="server" ID="home" Text="Home" CssClass="btn btn-primary px-4 py-2" OnClick="home_Click"  />
                          </div>
 
@@ -753,6 +753,10 @@
                 if (okRadio) okRadio.checked = true;
             });
 
+            document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(function (input) {
+                    input.value = "";
+                });
+
             // Clear all remarks textboxes
             document.querySelectorAll(".remark-input").forEach(function (textbox) {
                 textbox.value = "";
@@ -782,7 +786,24 @@
             document.querySelectorAll(".note-group textarea").forEach(function (textarea) {
                 textarea.value = "";
             });
+
+            document.querySelectorAll('.remarks-photo-group').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Ensure Note section is always visible
+            document.querySelectorAll('.note-group').forEach(section => {
+                section.style.display = 'block';
+            });
+
+            document.querySelectorAll("input[type=time]").forEach(el => el.value = "");
         }
+
+         function confirmReset() {
+               if (confirm('Are you sure you want to clear all fields?')) {
+               resetChecklist();
+     }
+ }
     </script>
 
 

@@ -157,7 +157,9 @@
 
                                                             <td><%# Eval("Requirements") %></td>
                                                             <td style="text-align:center">
-                                                                <asp:Label runat="server" ID="oknotok" Text='<%# Convert.ToBoolean(Eval("Result")) ? "OK" : "NOT OK" %>' /></td>
+                                                                <asp:Label runat="server" ID="oknotok" Text='<%# Convert.ToBoolean(Eval("Result")) ? "OK" : "NOT OK" %>' /></br>
+                                                                <asp:HyperLink runat="server" ID="lnkCapa" ForeColor="Black" ToolTip="View CAPA Details" />
+                                                            </td>
                                                             <td><%# Eval("Remark") %></td>
                                                             <td>
                                                                 <asp:Image ID="imgPhoto" runat="server" ImageUrl='<%# Eval("Before_photo") %>' Width="100" />

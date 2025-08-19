@@ -182,7 +182,23 @@
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                 cb.checked = false;
             });
+
+            // Hide remarks + photo + CAPA section
+            document.querySelectorAll('.remarks-photo-group').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            document.querySelectorAll('.note-group').forEach(section => {
+                section.style.display = 'block';
+            });
         }
+
+        function confirmReset() {
+            if (confirm('Are you sure you want to clear all fields?')) {
+                ResetChecklistForm();
+            }
+        }
+
 
 
         function validateChecklist(sender, args) {
@@ -404,7 +420,7 @@
 
                             <div class="text-center mt-4">
                                 <asp:Button ID="submit" runat="server" Text="Submit" OnClick="submit_Click" CssClass="btn btn-success px-4 py-2" ValidationGroup="save" />
-                                <asp:Button ID="reset" runat="server" Text="Reset" CssClass="btn btn-secondary px-4 py-2" OnClientClick="ResetChecklistForm(); return false;" />
+                                <asp:Button ID="reset" runat="server" Text="Reset" CssClass="btn btn-secondary px-4 py-2" OnClientClick="confirmReset(); return false;" />
                                 <asp:Button runat="server" ID="home" Text="Home" CssClass="btn btn-primary px-4 py-2" OnClick="home_Click" />
                             </div>
 

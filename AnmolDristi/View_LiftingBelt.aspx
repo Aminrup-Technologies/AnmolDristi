@@ -392,7 +392,8 @@
                                                             "status-badge status-unknown" 
                                                         %>'>
                                                             <%# Eval("IsOk") %>
-                                                        </span>
+                                                        </span></br>
+                                                            <asp:HyperLink runat="server" ID="lnkCapa" ForeColor="Black" ToolTip="View CAPA Details" />
                                                         </div>
 
                                                         <asp:PlaceHolder runat="server" Visible='<%# Eval("IsOk").ToString() == "OK" %>'>

@@ -67,6 +67,7 @@ namespace AnmolDristi
                             Requirements = x.Field<string>("Requirements"),
                             ID = x.Field<int>("ID"),
                             Result = x.Field<bool>("Result"),
+                            Capa_ID = x["Capa_ID"] == DBNull.Value ? "" : x["Capa_ID"].ToString(),
                             Remark = x.Field<string>("Remark"),
                             Before_photo = x.Field<string>("Before_photo")
                         }).ToList()
@@ -82,16 +83,19 @@ namespace AnmolDristi
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 Label statusLabel = (Label)e.Item.Controls[1];
+                HyperLink lnkCapa = (HyperLink)e.Item.FindControl("lnkCapa");
                 if (statusLabel.Text == "OK")
                 {
                     statusLabel.Text = "✅";
+                    lnkCapa.Visible = false;
                 }
                 else
                 {
                     statusLabel.Text = "❌";
+                    lnkCapa.Visible = true;
                 }
 
-                Image img = (Image)e.Item.Controls[3];
+                Image img = (Image)e.Item.Controls[5];
                 if (!string.IsNullOrEmpty(img.ImageUrl))
                 {
                     string relativePath = "~/uploads/" + img.ImageUrl;
@@ -112,6 +116,23 @@ namespace AnmolDristi
                 //    img.ImageUrl = "~/uploads/no_image.jpg"; // for empty ImageUrl
                 //    img.ToolTip = "No image provided";
                 //}
+
+                string capaId = DataBinder.Eval(e.Item.DataItem, "Capa_ID")?.ToString();
+
+                if (!string.IsNullOrEmpty(capaId))
+                {
+                    string currentId = Request.QueryString["id"];
+
+                    string url = $"CapaView.aspx?id={currentId}&capaid={capaId}";
+
+                    lnkCapa.NavigateUrl = url;
+                    lnkCapa.Text = capaId; 
+
+                }
+                else
+                {
+                    lnkCapa.Visible = false;
+                }
             }
         }
 

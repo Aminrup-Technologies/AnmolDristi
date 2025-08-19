@@ -75,6 +75,7 @@ namespace AnmolDristi
                 Requirement = x.Field<string>("CheckPoints"),
                 ChecklistInfoId = x.Field<int>("ID"),
                 IsOk = x.Field<string>("Result"),
+                Capa_ID = x["Capa_ID"] == DBNull.Value ? "" : x["Capa_ID"].ToString(),
                 Remark_text = x.Field<string>("Remarks"),
                 Before_pic = x.Field<string>("Beforephoto"),
                 Note = x.Field<string>("Note")
@@ -94,8 +95,9 @@ namespace AnmolDristi
             {
 
 
-                Image img = (Image)(((PlaceHolder)e.Item.Controls[5]).Controls[2]);
-                Label rmrk = (Label)(((PlaceHolder)e.Item.Controls[5]).Controls[1]);
+                Image img = (Image)(((PlaceHolder)e.Item.Controls[7]).Controls[2]);
+                Label rmrk = (Label)(((PlaceHolder)e.Item.Controls[7]).Controls[1]);
+                HyperLink lnkCapa = (HyperLink)e.Item.FindControl("lnkCapa");
                 if (!string.IsNullOrEmpty(img.ImageUrl))
                 {
                     string relativePath = "~/uploads/" + img.ImageUrl;
@@ -112,6 +114,23 @@ namespace AnmolDristi
                     //img.ToolTip = "Image not found";
                     img.Visible = false;
                     rmrk.Visible = false;
+                }
+
+                string capaId = DataBinder.Eval(e.Item.DataItem, "Capa_ID")?.ToString();
+
+                if (!string.IsNullOrEmpty(capaId))
+                {
+                    string currentId = Request.QueryString["id"];
+
+                    string url = $"CapaView.aspx?id={currentId}&capaid={capaId}";
+
+                    lnkCapa.NavigateUrl = url;
+                    lnkCapa.Text = "CAPA ID : " + capaId; 
+
+                }
+                else
+                {
+                    lnkCapa.Visible = false;
                 }
 
 

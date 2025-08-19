@@ -124,7 +124,7 @@ namespace AnmolDristi
                         string fullPath = Path.Combine(folderPath, uniqueFileName);
                         fuGroupPhoto.SaveAs(fullPath);
 
-                        photoPath = "~/Uploads/" + uniqueFileName;
+                        photoPath = uniqueFileName;
                     }
 
                     TimeSpan tsStart, tsEnd;
@@ -272,7 +272,7 @@ namespace AnmolDristi
                 ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
             }
 
-            Response.Redirect("Quick_JCCData.aspx");
+            //Response.Redirect("Quick_JCCData.aspx");
         }
 
 
@@ -547,7 +547,7 @@ namespace AnmolDristi
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Sucess',
-                                text: 'Checklist Saved Successfully!!',
+                                text: 'Checklist Updated Successfully!!',
                                 type: 'success',
                                 styling: 'bootstrap3'
                             });

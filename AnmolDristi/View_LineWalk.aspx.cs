@@ -85,6 +85,7 @@ TM_names,TM_Code,TM_Type
                 Remarks, 
                 Snap_File_Path,
               ImmediateAction_Attachment,
+              CAPA_ID,
               Status
             FROM Line_walk_details 
             WHERE ID = @WalkID", con);
@@ -132,17 +133,42 @@ TM_names,TM_Code,TM_Type
                     {
                         case "open":
                             lblStatus.ForeColor = System.Drawing.Color.Green;
+                            lblStatus.Font.Bold = true;
                             break;
                         case "pending":
                             lblStatus.ForeColor = System.Drawing.Color.Red;
+                            lblStatus.Font.Bold = true;
                             break;
                         case "in progress":
                             lblStatus.ForeColor = System.Drawing.Color.Orange;
+                            lblStatus.Font.Bold = true;
                             break;
                         default:
-                            lblStatus.ForeColor = System.Drawing.Color.Gray;
+                            lblStatus.ForeColor = System.Drawing.Color.Black;
+                            lblStatus.Font.Bold = true;
                             break;
                     }
+                }
+
+                // hyperlink control
+                HyperLink lnkCapa = (HyperLink)e.Row.FindControl("lnkCapa");
+
+                // current row values
+                object capaIdObj = DataBinder.Eval(e.Row.DataItem, "CAPA_ID");
+                object lineWalkIdObj = Request.QueryString["id"]; 
+
+                if (capaIdObj != DBNull.Value && capaIdObj != null && !string.IsNullOrEmpty(capaIdObj.ToString()))
+                {
+                    string capaId = capaIdObj.ToString();
+                    string lineWalkId = lineWalkIdObj != null ? lineWalkIdObj.ToString() : "";
+
+                    lnkCapa.Text = capaId;
+
+                    lnkCapa.NavigateUrl = $"~/CapaView.aspx?id={lineWalkId}&capaid={capaId}";
+                }
+                else
+                {
+                    lnkCapa.Visible = false;
                 }
             }
         }

@@ -80,7 +80,7 @@ namespace AnmolDristi
 
 
                     SqlCommand momCmd = new SqlCommand(@"
-                SELECT AgendaTitle, EmployeeType, EmployeeName, Description, PointRaisedBy, DiscussionTime
+                SELECT AgendaTitle, EmployeeType, EmployeeName, Description, PointRaisedBy,CAPA_ID, DiscussionTime
                 FROM csm_massmeting_mom
                 WHERE MM_Id = @MM_Id", con);
                     momCmd.Parameters.AddWithValue("@MM_Id", mmId);
@@ -95,6 +95,33 @@ namespace AnmolDristi
                 con.Close();
             }
         }
+
+        protected void gvMOM_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            { 
+            
+                HyperLink lnkCapa = (HyperLink)e.Row.FindControl("lnkCapa");
+
+            
+                object capaIdObj = DataBinder.Eval(e.Row.DataItem, "CAPA_ID");
+                object MassmeetingObj = Request.QueryString["id"];
+
+                if (capaIdObj != DBNull.Value && capaIdObj != null && !string.IsNullOrEmpty(capaIdObj.ToString()))
+                {
+                    string capaId = capaIdObj.ToString();
+                    string MassMeetingId = MassmeetingObj != null ? MassmeetingObj.ToString() : "";
+
+                    lnkCapa.Text = capaId;
+
+                    lnkCapa.NavigateUrl = $"~/CapaView.aspx?id={MassMeetingId}&capaid={capaId}";
+                }
+                else
+                {
+                    lnkCapa.Visible = false;
+                }
+            }
         }
+    }
         
     }

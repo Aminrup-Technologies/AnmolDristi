@@ -85,6 +85,7 @@
     <Content Include="fiveS_checklist_1.aspx" />
     <Content Include="fiveS_checklist_2.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="CapaView.aspx" />
     <Content Include="Lifting_Belt.aspx" />
     <Content Include="Lifting_BeltData.aspx" />
     <Content Include="Line_Walk.aspx" />
@@ -258,6 +259,13 @@
     </Compile>
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CapaView.aspx.cs">
+      <DependentUpon>CapaView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CapaView.aspx.designer.cs">
+      <DependentUpon>CapaView.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lifting_Belt.aspx.cs">
       <DependentUpon>Lifting_Belt.aspx</DependentUpon>

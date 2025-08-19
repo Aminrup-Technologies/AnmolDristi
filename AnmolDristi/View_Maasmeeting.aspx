@@ -11,10 +11,26 @@
                 <head>
                     <title>Mass Meeting Print</title>
                     <style>
-                        body { font-family: 'Segoe UI', sans-serif; padding: 20px; }
-                        h3 { text-align: center; margin-top: 20px; }
+                        body { font-family: 'Segoe UI', sans-serif; padding: 10px; }
+                          h5 {
+                            text-align: center;
+                            margin-top: 5px;
+                            padding: 10px 15px;
+                            color: #006400 !important;
+                            border: 2px solid #555;
+                            border-radius: 8px;
+                            display: inline-block;
+                            -webkit-print-color-adjust: exact !important;
+                            print-color-adjust: exact !important;
+                          }
                         table { width: 100%; margin-bottom: 20px; }
-                        th, td { padding: 8px; border: 1px solid #ccc; }
+                        th {
+                            background: #4a5568 !important;
+                        color: white;
+                        -webkit-print-color-adjust: exact !important;
+                        print-color-adjust: exact !important;
+                        }
+                        th, td { padding: 8px; border: 1px solid #ccc;}
                         .img-fluid { max-width: 100%; height: auto; }
                     </style>
                 </head>
@@ -61,6 +77,7 @@
                                     <h5 style="border: 2px solid black; padding: 5px; display: inline-block;color:black;">
                                       Mass Meeting Details
                                     </h5>
+                                     
 
                                 <div class="table-responsive">
                                     <table class="table table-sm table-bordered">
@@ -144,7 +161,7 @@
                                 <div class="table-responsive">
                                     <asp:GridView ID="gvMOM" runat="server" AutoGenerateColumns="False"
                                         CssClass="table table-bordered table-striped table-sm"
-                                        ShowHeaderWhenEmpty="True" EmptyDataText="No MOM entries found.">
+                                        ShowHeaderWhenEmpty="True" EmptyDataText="No MOM entries found." OnRowDataBound="gvMOM_RowDataBound">
                                         <HeaderStyle CssClass="thead-dark" />
                                         <Columns>
                                             <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title" />
@@ -152,6 +169,16 @@
                                             <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" />
                                             <asp:BoundField DataField="Description" HeaderText="Description" />
                                             <asp:BoundField DataField="PointRaisedBy" HeaderText="Point Raised By" />
+                                            <asp:TemplateField HeaderText="CAPA ID">
+                                                <ItemTemplate>
+                                                    <asp:HyperLink 
+                                                            runat="server" 
+                                                            ID="lnkCapa" 
+                                                            ForeColor="Black" 
+                                                            ToolTip="View CAPA Details"
+                                                           />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField DataField="DiscussionTime" HeaderText="Discussion Time(In Mins)" />
                                         </Columns>
                                     </asp:GridView>

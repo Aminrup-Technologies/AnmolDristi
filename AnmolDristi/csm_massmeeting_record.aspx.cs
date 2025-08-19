@@ -766,7 +766,7 @@ namespace AnmolDristi
                 }
 
                 // === SCENARIO B: Now checked (Always insert a new CAPA)
-                if (isNowChecked)
+                if (isNowChecked && !wasPreviouslyChecked)
                 {
                     string insertCapa = @"
                 INSERT INTO tbl_CAPAMaster 

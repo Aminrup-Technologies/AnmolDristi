@@ -258,7 +258,7 @@ namespace AnmolDristi
                     ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
 
                 }
-                Response.Redirect("Lifting_BeltData.aspx");
+                //Response.Redirect("Lifting_BeltData.aspx");
             }
         }
 
@@ -426,7 +426,7 @@ namespace AnmolDristi
             string Data_SuccessScript = @"<script type='text/javascript'>
                             new PNotify({
                                 title: 'Sucess',
-                                text: 'Checklist Saved Successfully!!',
+                                text: 'Checklist Updated Successfully!!',
                                 type: 'success',
                                 styling: 'bootstrap3'
                             });

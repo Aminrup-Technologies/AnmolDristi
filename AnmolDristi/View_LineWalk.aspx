@@ -122,7 +122,7 @@
                                         <td>
                                             <asp:Label runat="server" ID="jobdesc" /></td>
                                         <td>
-                                            <asp:Image ID="jobimg" runat="server" Width="200px" Visible="false"/></td>
+                                            <asp:Image ID="jobimg" runat="server" Width="100px" Visible="false"/></td>
                                         <td>
                                             <asp:Label ID="Auditby" runat="server" /></td>
                                     </tr>
@@ -163,6 +163,16 @@
                                         </asp:TemplateField>
                                         <asp:BoundField HeaderText="Responsibility" DataField="Responsibility" />
                                         <asp:BoundField HeaderText="TargetDate" DataField="Target_Date" DataFormatString="{0:yyyy-MM-dd}" />
+                                        <asp:TemplateField HeaderText="CAPA ID">
+                                            <ItemTemplate>
+                                                <asp:HyperLink 
+                                                        runat="server" 
+                                                        ID="lnkCapa" 
+                                                        ForeColor="Black" 
+                                                        ToolTip="View CAPA Details"
+                                                       />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <%--<asp:BoundField HeaderText="Status" DataField="Status" />--%>
                                         <asp:TemplateField HeaderText="Status">
                                             <ItemTemplate>
