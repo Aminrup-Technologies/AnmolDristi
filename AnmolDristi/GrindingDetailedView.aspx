@@ -116,6 +116,7 @@
                                 <asp:BoundField DataField="Final_Remarks" HeaderText="Final Remarks" />
                                 <asp:BoundField DataField="JobID" HeaderText="Job ID" />
                                 <asp:BoundField DataField="JobName" HeaderText="Job Name" />
+
                             </Columns>
                         </asp:GridView>
                     </div>
@@ -130,6 +131,17 @@
                                         <asp:Literal ID="litIsYes" runat="server"></asp:Literal>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                
+                      <asp:TemplateField HeaderText="CAPA ID">
+    <ItemTemplate>
+        <asp:HyperLink ID="lnkCapa" runat="server" 
+            NavigateUrl='<%# "Universal_Capa.aspx?CAPA_ID=" + Eval("CAPA_ID") %>'
+            Text='<%# Eval("CAPA_ID") %>' 
+            Target="_blank" />
+    </ItemTemplate>
+</asp:TemplateField>
+
+
                                 <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
                                 <asp:TemplateField HeaderText="Photo">
                                     <ItemTemplate>

@@ -64,7 +64,7 @@ namespace AnmolDristi
         private void BindGrindingChecklist(string headerId) // CHANGED: string instead of int
         {
             string query = @"
-        SELECT Question, IsYes, Remarks, PhotoPath, EntryDate
+        SELECT Question, IsYes,CAPA_ID, Remarks, PhotoPath, EntryDate
         FROM [CSMS].[MahimaGupta_CSMS].[GrindingMachine_Checklist]
         WHERE HeaderID = @HeaderID";
 
@@ -94,16 +94,15 @@ namespace AnmolDristi
             }
         }
 
-
-       
         protected void gvGrindingChecklist_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 DataRowView dataItem = (DataRowView)e.Row.DataItem;
+
+                // ✅ Handle IsYes (tick/cross)
                 bool isYes = dataItem["IsYes"] != DBNull.Value && Convert.ToBoolean(dataItem["IsYes"]);
                 Literal lit = (Literal)e.Row.FindControl("litIsYes");
-
                 if (lit != null)
                 {
                     lit.Text = isYes
@@ -111,6 +110,21 @@ namespace AnmolDristi
                         : "<span class='cross'>&#10008;</span>"; // ✖ red cross
                 }
 
+                // ✅ Handle CAPA_ID
+                Literal litCAPA = (Literal)e.Row.FindControl("litCAPAID");
+                if (litCAPA != null)
+                {
+                    if (!isYes && dataItem["CAPA_ID"] != DBNull.Value)   // show only if Not OK
+                    {
+                        litCAPA.Text = dataItem["CAPA_ID"].ToString();
+                    }
+                    else
+                    {
+                        litCAPA.Text = "";   // hide when OK or NULL
+                    }
+                }
+
+                // ✅ Handle Photo
                 Image img = (Image)e.Row.FindControl("imgPhoto");
                 if (img != null)
                 {
@@ -121,11 +135,10 @@ namespace AnmolDristi
                     }
                     else
                     {
-                        // Optionally set a default image or hide the image control if no path
                         img.Visible = false;
                     }
                 }
             }
         }
-    }
-}
+    }}
+

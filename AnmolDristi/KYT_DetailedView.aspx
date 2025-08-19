@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="x_content table-container">
-                    <asp:GridView ID="gvKYTDetails" runat="server" AutoGenerateColumns="False" ShowHeader="False">
+                    <asp:GridView ID="gvKYTDetails" runat="server" AutoGenerateColumns="False"  ShowHeader="False">
                         <Columns>
                             <asp:TemplateField>
                                 <ItemTemplate>
@@ -96,7 +96,23 @@
                                         <tr><td>Consequence:</td><td><%# Eval("KYT_Consequence") %></td></tr>
                                         <tr><td>Counter Measures:</td><td><%# Eval("KYT_CounterMeasures") %></td></tr>
                                         <tr><td>Priority Value:</td><td><%# Eval("KYT_PriorityValue") %></td></tr>
-                                        <tr><td>Photograph:</td>
+                                       
+                                        <tr>
+    <td>CAPAID:</td>
+    <td>
+        <asp:TemplateField HeaderText="CAPA ID">
+    <ItemTemplate>
+        <asp:HyperLink ID="lnkCapa" runat="server" 
+            NavigateUrl='<%# "Universal_Capa.aspx?CAPAID=" + Eval("CAPAID") %>'
+            Text='<%# Eval("CAPAID") %>' 
+            Target="_blank" />
+    </ItemTemplate>
+</asp:TemplateField>
+
+    </td>
+</tr>
+
+<tr><td>Photograph:</td>
                                             <td>
                                                 <asp:Image ID="imgKYTPhoto" runat="server" ImageUrl='<%# Eval("KYT_PhotographPath") %>' />
                                             </td>

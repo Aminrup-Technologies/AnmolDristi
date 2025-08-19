@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Web.UI.WebControls;
 
 namespace AnmolDristi
 {
@@ -26,13 +27,13 @@ namespace AnmolDristi
 
         private void LoadDBowChecklist(string headerId)
         {
-            string query = "SELECT Question, IsYes, Remarks, PhotoPath, CreatedDate FROM CSMS.MahimaGupta_CSMS.ShacklesChecklist_DBow WHERE HeaderID = @HeaderID";
+            string query = "SELECT Question, IsYes, CAPA_ID, Remarks, PhotoPath, CreatedDate " +
+                           "FROM CSMS.MahimaGupta_CSMS.ShacklesChecklist_DBow WHERE HeaderID = @HeaderID";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@HeaderID", headerId);
-
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     DataTable dt = new DataTable();
@@ -45,19 +46,67 @@ namespace AnmolDristi
 
         private void LoadChainPulleyChecklist(string headerId)
         {
-            string query = "SELECT Question, IsYes, Remarks, PhotoPath, CreatedDate FROM CSMS.MahimaGupta_CSMS.ShacklesChecklist_ChainPulley WHERE HeaderID = @HeaderID";
+            string query = "SELECT Question, IsYes, CAPA_ID, Remarks, PhotoPath, CreatedDate " +
+                           "FROM CSMS.MahimaGupta_CSMS.ShacklesChecklist_ChainPulley WHERE HeaderID = @HeaderID";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@HeaderID", headerId);
-
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     gvChainPulley.DataSource = dt;
                     gvChainPulley.DataBind();
+                }
+            }
+        }
+        protected void gvDBow_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                var dataItem = (DataRowView)e.Row.DataItem;
+
+                // CAPA hyperlink
+                HyperLink lnkCapa = (HyperLink)e.Row.FindControl("lnkCapa");
+                if (lnkCapa != null)
+                {
+                    bool isYes = dataItem["IsYes"] != DBNull.Value && Convert.ToBoolean(dataItem["IsYes"]);
+                    if (!isYes && dataItem["CAPA_ID"] != DBNull.Value)
+                    {
+                        lnkCapa.Text = dataItem["CAPA_ID"].ToString();
+                        lnkCapa.NavigateUrl = "Universal_Capa.aspx?CAPA_ID=" + dataItem["CAPA_ID"].ToString();
+                        lnkCapa.Visible = true;
+                    }
+                    else
+                    {
+                        lnkCapa.Visible = false;
+                    }
+                }
+            }
+        }
+
+        protected void gvChainPulley_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                var dataItem = (DataRowView)e.Row.DataItem;
+
+                HyperLink lnkCapa = (HyperLink)e.Row.FindControl("lnkCapa");
+                if (lnkCapa != null)
+                {
+                    bool isYes = dataItem["IsYes"] != DBNull.Value && Convert.ToBoolean(dataItem["IsYes"]);
+                    if (!isYes && dataItem["CAPA_ID"] != DBNull.Value)
+                    {
+                        lnkCapa.Text = dataItem["CAPA_ID"].ToString();
+                        lnkCapa.NavigateUrl = "Universal_Capa.aspx?CAPA_ID=" + dataItem["CAPA_ID"].ToString();
+                        lnkCapa.Visible = true;
+                    }
+                    else
+                    {
+                        lnkCapa.Visible = false;
+                    }
                 }
             }
         }

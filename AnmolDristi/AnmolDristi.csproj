@@ -116,6 +116,7 @@
     <Content Include="Safety_audit.aspx" />
     <Content Include="Safety_DetailedView.aspx" />
     <Content Include="Safety_View.aspx" />
+    <Content Include="Universal_Capa.aspx" />
     <Content Include="WebData\OH4Y_Logo.png" />
     <None Include="Properties\PublishProfiles\AnmolDristi.pubxml" />
     <None Include="Properties\PublishProfiles\mahimagupta.aminruptechnologies.co.in - Web Deploy.pubxml" />
@@ -394,6 +395,13 @@
     </Compile>
     <Compile Include="Safety_View.aspx.designer.cs">
       <DependentUpon>Safety_View.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Universal_Capa.aspx.cs">
+      <DependentUpon>Universal_Capa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Universal_Capa.aspx.designer.cs">
+      <DependentUpon>Universal_Capa.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

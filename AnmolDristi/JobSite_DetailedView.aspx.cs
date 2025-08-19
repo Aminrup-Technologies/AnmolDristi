@@ -34,12 +34,11 @@ namespace AnmolDristi
             }
         }
 
-
-        private void LoadChecklistDetails(string headerId) // CHANGED: string type
+        private void LoadChecklistDetails(string headerId)
         {
-            string query = @"SELECT Question, IsYes, Remarks, PhotoPath
-                             FROM MahimaGupta_CSMS.JobSiteChecklistDetails
-                             WHERE HeaderID = @HeaderID";
+            string query = @"SELECT Question, IsYes, Remarks, PhotoPath, CAPA_ID
+                     FROM MahimaGupta_CSMS.JobSiteChecklistDetails
+                     WHERE HeaderID = @HeaderID";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, con))
@@ -51,6 +50,24 @@ namespace AnmolDristi
                     da.Fill(dt);
                     gvChecklistDetails.DataSource = dt;
                     gvChecklistDetails.DataBind();
+                }
+            }
+        }
+        protected void gvChecklistDetails_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                HyperLink lnkCapaID = (HyperLink)e.Row.FindControl("lnkCapaID");
+                string capaID = DataBinder.Eval(e.Row.DataItem, "CAPAID").ToString();
+
+                if (!string.IsNullOrEmpty(capaID))
+                {
+                    lnkCapaID.NavigateUrl = "UniversalCapaForm.aspx?CAPAID=" + capaID;
+                    lnkCapaID.Target = "_blank"; // open in new tab
+                }
+                else
+                {
+                    lnkCapaID.Visible = false;
                 }
             }
         }

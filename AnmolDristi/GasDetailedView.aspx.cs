@@ -46,9 +46,9 @@ namespace AnmolDristi
 
         private void BindGasChecklist(string headerId)
         {
-            string query = @"SELECT Question, IsYes, Remarks, PhotoPath, FinalRemarks 
-                             FROM [CSMS].[MahimaGupta_CSMS].[GasCutting_Checklist] 
-                             WHERE HeaderID = @HeaderID";
+            string query = @"SELECT Question, IsYes, CAPA_ID, Remarks, PhotoPath, FinalRemarks 
+                     FROM [CSMS].[MahimaGupta_CSMS].[GasCutting_Checklist] 
+                     WHERE HeaderID = @HeaderID";
 
             using (SqlConnection conn = new SqlConnection(connStr))
             using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -71,9 +71,9 @@ namespace AnmolDristi
             {
                 var dataItem = (DataRowView)e.Row.DataItem;
 
+                // ✅ Handle IsYes tick/cross
                 bool isYes = dataItem["IsYes"] != DBNull.Value && Convert.ToBoolean(dataItem["IsYes"]);
                 Literal lit = (Literal)e.Row.FindControl("litIsYes");
-
                 if (lit != null)
                 {
                     lit.Text = isYes
@@ -81,11 +81,30 @@ namespace AnmolDristi
                         : "<span class='cross'>&#10008;</span>";
                 }
 
+                // ✅ Handle CAPA hyperlink visibility
+                HyperLink lnkCapa = (HyperLink)e.Row.FindControl("lnkCapa");
+                if (lnkCapa != null)
+                {
+                    if (!isYes && dataItem["CAPA_ID"] != DBNull.Value)
+                    {
+                        lnkCapa.Text = dataItem["CAPA_ID"].ToString();
+                        lnkCapa.NavigateUrl = "Universal_Capa.aspx?CAPA_ID=" + dataItem["CAPA_ID"].ToString();
+                        lnkCapa.Visible = true;
+                    }
+                    else
+                    {
+                        lnkCapa.Visible = false; // hide if Yes or NULL
+                    }
+                }
+
+                // ✅ Handle Photo
                 Image img = (Image)e.Row.FindControl("imgPhoto");
                 if (img != null)
                 {
                     string path = dataItem["PhotoPath"].ToString();
-                    img.ImageUrl = ResolveUrl(path);
+                    img.Visible = !string.IsNullOrEmpty(path);
+                    if (img.Visible)
+                        img.ImageUrl = ResolveUrl(path);
                 }
             }
         }

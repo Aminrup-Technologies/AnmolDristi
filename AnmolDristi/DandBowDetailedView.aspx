@@ -51,6 +51,18 @@
                 </span>
             </ItemTemplate>
         </asp:TemplateField>
+
+      
+        <asp:TemplateField HeaderText="CAPA ID">
+            <ItemTemplate>
+                <asp:HyperLink ID="lnkCapa" runat="server" 
+                    NavigateUrl='<%# "Universal_Capa.aspx?CAPA_ID=" + Eval("CAPA_ID") %>'
+                    Text='<%# Eval("CAPA_ID") %>' Target="_blank" />
+            </ItemTemplate>
+        </asp:TemplateField>
+
+
+
         <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
         <asp:TemplateField HeaderText="Photo">
             <ItemTemplate>
@@ -77,6 +89,20 @@
                 </span>
             </ItemTemplate>
         </asp:TemplateField>
+
+
+
+
+        
+        <asp:TemplateField HeaderText="CAPA ID">
+            <ItemTemplate>
+                <asp:HyperLink ID="lnkCapa" runat="server" 
+                    NavigateUrl='<%# "Universal_Capa.aspx?CAPA_ID=" + Eval("CAPA_ID") %>'
+                    Text='<%# Eval("CAPA_ID") %>' Target="_blank" />
+            </ItemTemplate>
+        </asp:TemplateField>
+
+
         <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
         <asp:TemplateField HeaderText="Photo">
             <ItemTemplate>

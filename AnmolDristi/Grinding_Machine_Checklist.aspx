@@ -383,10 +383,10 @@
                             function toggleWheelGuardPanel() { togglePanel('<%= RbWheelGuardYes.ClientID %>', '<%= RbWheelGuardNo.ClientID %>', 'divWheelGuardPanel'); }
                             function toggleGrindWheelPanel() { togglePanel('<%= RbGrindWheelYes.ClientID %>', '<%= RbGrindWheelNo.ClientID %>', 'divGrindWheelPanel'); }
                             function toggleRearHandlePanel() { togglePanel('<%= RbRearHandleYes.ClientID %>', '<%= RbRearHandleNo.ClientID %>', 'divRearHandlePanel'); }
-    function toggleCordPanel() { togglePanel('<%= RbCordYes.ClientID %>', '<%= RbCordNo.ClientID %>', 'divCordPanel'); }
-    function toggleTriggerPanel() { togglePanel('<%= RbTriggerYes.ClientID %>', '<%= RbTriggerNo.ClientID %>', 'divTriggerPanel'); }
-    function toggleSwitchLockPanel() { togglePanel('<%= RbSwitchLockYes.ClientID %>', '<%= RbSwitchLockNo.ClientID %>', 'divSwitchLockPanel'); }
-    function togglePowerCablePanel() { togglePanel('<%= RbPowerCableYes.ClientID %>', '<%= RbPowerCableNo.ClientID %>', 'divPowerCablePanel'); }
+                            function toggleCordPanel() { togglePanel('<%= RbCordYes.ClientID %>', '<%= RbCordNo.ClientID %>', 'divCordPanel'); }
+                            function toggleTriggerPanel() { togglePanel('<%= RbTriggerYes.ClientID %>', '<%= RbTriggerNo.ClientID %>', 'divTriggerPanel'); }
+                            function toggleSwitchLockPanel() { togglePanel('<%= RbSwitchLockYes.ClientID %>', '<%= RbSwitchLockNo.ClientID %>', 'divSwitchLockPanel'); }
+                            function togglePowerCablePanel() { togglePanel('<%= RbPowerCableYes.ClientID %>', '<%= RbPowerCableNo.ClientID %>', 'divPowerCablePanel'); }
 
                             function confirmCAPA(checkbox) {
                                 if (!checkbox.checked) {
@@ -508,4 +508,3 @@
         </div>
     </div>
 </asp:Content>
-

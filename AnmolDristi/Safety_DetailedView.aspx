@@ -108,7 +108,24 @@
                                             <tr><td>Unsafe Act Conditions:</td><td><%# Eval("UnsafeActConditions") %></td></tr>
                                             <tr><td>Submitted Date:</td><td><%# Eval("SubmittedDate", "{0:dd-MM-yyyy}") %></td></tr>
                                             <tr><td>Submitted Time:</td><td><%# Eval("SubmittedTime") %></td></tr>
+
+                                                                                    <tr>
+    <td>CAPAID:</td>
+    <td>
+        <asp:TemplateField HeaderText="CAPA ID">
+    <ItemTemplate>
+        <asp:HyperLink ID="lnkCapa" runat="server" 
+            NavigateUrl='<%# "Universal_Capa.aspx?CAPAID=" + Eval("CAPAID") %>'
+            Text='<%# Eval("CAPAID") %>' 
+            Target="_blank" />
+    </ItemTemplate>
+</asp:TemplateField>
+
+    </td>
+</tr>
                                         </table>
+
+
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
