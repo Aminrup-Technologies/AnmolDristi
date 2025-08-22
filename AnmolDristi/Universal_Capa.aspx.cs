@@ -39,7 +39,7 @@ namespace AnmolDristi
                     }
                 }
             }
-
+        //bole the variable name match krna aa 
             private void LoadCapaDetails(string capaId)
             {
                 string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;

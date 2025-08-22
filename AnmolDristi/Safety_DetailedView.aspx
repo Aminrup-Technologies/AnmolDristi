@@ -115,7 +115,7 @@
         <asp:TemplateField HeaderText="CAPA ID">
     <ItemTemplate>
         <asp:HyperLink ID="lnkCapa" runat="server" 
-            NavigateUrl='<%# "Universal_Capa.aspx?CAPAID=" + Eval("CAPAID") %>'
+            NavigateUrl='<%# "Universal_Capa.aspx?CAPA_ID=" + Eval("CAPAID") %>'
             Text='<%# Eval("CAPAID") %>' 
             Target="_blank" />
     </ItemTemplate>
@@ -123,6 +123,7 @@
 
     </td>
 </tr>
+                                            
                                         </table>
 
 
