@@ -127,15 +127,42 @@ namespace AnmolDristi
 
         private string BuildUploadPath(string fileName)
         {
-            return string.IsNullOrWhiteSpace(fileName) ? string.Empty : "~/Uploads/" + fileName;
+            if (string.IsNullOrWhiteSpace(fileName))
+                return string.Empty;
+
+            string uploadsPrefix = "~/Uploads/";
+
+            // Normalize path handle backslashes
+            fileName = fileName.Replace("\\", "/");  
+
+            // Remove duplicate prefix if already present
+            if (fileName.StartsWith(uploadsPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                fileName = fileName.Substring(uploadsPrefix.Length);
+            }
+
+            return uploadsPrefix + fileName.TrimStart('/', '\\');
         }
+
+
 
         private string BuildImagePath(string fileName, string defaultUrl)
         {
-            return string.IsNullOrWhiteSpace(fileName)
-                ? defaultUrl
-                : "~/Uploads/" + fileName;
+            if (string.IsNullOrWhiteSpace(fileName))
+                return defaultUrl;
+
+            string uploadsPrefix = "~/Uploads/";
+            fileName = fileName.Replace("\\", "/"); // normalize slashes
+
+            if (fileName.StartsWith(uploadsPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                // Already contains prefix → just normalize casing
+                fileName = fileName.Substring(uploadsPrefix.Length);
+            }
+
+            return uploadsPrefix + fileName.TrimStart('/', '\\');
         }
+
 
 
         private string FormatDate(string value)
