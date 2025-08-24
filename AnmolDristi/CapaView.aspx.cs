@@ -130,19 +130,21 @@ namespace AnmolDristi
             if (string.IsNullOrWhiteSpace(fileName))
                 return string.Empty;
 
-            string uploadsPrefix = "~/Uploads/";
+            fileName = fileName.Replace("\\", "/").Trim();
 
-            // Normalize path handle backslashes
-            fileName = fileName.Replace("\\", "/");  
-
-            // Remove duplicate prefix if already present
-            if (fileName.StartsWith(uploadsPrefix, StringComparison.OrdinalIgnoreCase))
+            // If already a virtual path (starts with ~/), keep as is
+            if (fileName.StartsWith("~/"))
             {
-                fileName = fileName.Substring(uploadsPrefix.Length);
+                return fileName;
             }
 
-            return uploadsPrefix + fileName.TrimStart('/', '\\');
+            // Clean dangerous relative paths
+            fileName = fileName.Replace("../", "").Replace("..\\", "");
+
+            // Otherwise, put it under Uploads
+            return "~/Uploads/" + fileName.TrimStart('/', '\\');
         }
+
 
 
 
@@ -151,17 +153,18 @@ namespace AnmolDristi
             if (string.IsNullOrWhiteSpace(fileName))
                 return defaultUrl;
 
-            string uploadsPrefix = "~/Uploads/";
-            fileName = fileName.Replace("\\", "/"); // normalize slashes
+            fileName = fileName.Replace("\\", "/").Trim();
 
-            if (fileName.StartsWith(uploadsPrefix, StringComparison.OrdinalIgnoreCase))
+            // If already a virtual path (starts with ~/), return as is
+            if (fileName.StartsWith("~/"))
             {
-                // Already contains prefix → just normalize casing
-                fileName = fileName.Substring(uploadsPrefix.Length);
+                return fileName;
             }
 
-            return uploadsPrefix + fileName.TrimStart('/', '\\');
+            // Otherwise, assume it belongs to Uploads
+            return "~/Uploads/" + fileName.TrimStart('/', '\\');
         }
+
 
 
 
