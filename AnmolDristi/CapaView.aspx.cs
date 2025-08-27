@@ -91,10 +91,10 @@ namespace AnmolDristi
                         txtUploadedPhotoName.Text = BuildUploadPath(SafeGetValue(reader, "CAPAFilePath"));
 
                         // Images
-                        imgtxtbox.ImageUrl = BuildImagePath(SafeGetValue(reader, "PhotoPath"), "https://cdn-icons-png.flaticon.com/512/4218/4218934.png");
-                        imgCorrectivePhoto.ImageUrl = BuildImagePath(SafeGetValue(reader, "CA_Photo"), "https://cdn-icons-png.flaticon.com/512/4218/4218934.png");
-                        imgPreventivePhoto.ImageUrl = BuildImagePath(SafeGetValue(reader, "PA_Photo"), "https://cdn-icons-png.flaticon.com/512/4218/4218934.png");
-                        imgUploadedPhoto.ImageUrl = BuildImagePath(SafeGetValue(reader, "CAPAFilePath"), "https://cdn-icons-png.flaticon.com/512/4218/4218934.png");
+                        imgtxtbox.ImageUrl = ResolveUrl(BuildImagePath(SafeGetValue(reader, "PhotoPath"), "https://cdn-icons-png.flaticon.com/512/4218/4218934.png"));
+                        imgCorrectivePhoto.ImageUrl = ResolveUrl(BuildImagePath(SafeGetValue(reader, "CA_Photo"), "https://cdn-icons-png.flaticon.com/512/4218/4218934.png"));
+                        imgPreventivePhoto.ImageUrl = ResolveUrl(BuildImagePath(SafeGetValue(reader, "PA_Photo"), "https://cdn-icons-png.flaticon.com/512/4218/4218934.png"));
+                        imgUploadedPhoto.ImageUrl = ResolveUrl(BuildImagePath(SafeGetValue(reader, "CAPAFilePath"), "https://cdn-icons-png.flaticon.com/512/4218/4218934.png"));
                     }
                     else
                     {
