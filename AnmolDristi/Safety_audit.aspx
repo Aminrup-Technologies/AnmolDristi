@@ -411,7 +411,7 @@
         }
     }
 
-    let capaCounter = 1; // You can initialize this based on server-side value via hidden field if needed
+    let capaCounter = 1; 
 
     function generateClientCAPAID() {
         let id = "SF" + capaCounter.toString().padStart(3, '0');

@@ -42,6 +42,9 @@
 
                             
                                <Columns>
+                                   
+        <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
+
         <asp:TemplateField HeaderText="Worksite">
             <ItemTemplate>
                 <%# Eval("KYT_WorksiteName") %>

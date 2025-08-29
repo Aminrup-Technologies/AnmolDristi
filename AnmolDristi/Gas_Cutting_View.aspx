@@ -74,6 +74,7 @@
     OnRowDeleting="GvGasCuttingChecklist_RowDeleting">
 
     <Columns>
+        <asp:BoundField DataField="HeaderID" HeaderText="Header ID" />
 
         <asp:TemplateField HeaderText="Site">
             <ItemTemplate>

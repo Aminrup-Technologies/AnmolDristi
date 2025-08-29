@@ -70,6 +70,7 @@
     OnRowDataBound="GvDandBowChecklist_RowDataBound">
 
     <Columns>
+            <asp:BoundField DataField="HeaderID" HeaderText="Header ID" /> 
         <asp:BoundField DataField="Site" HeaderText="Site" />
         <asp:BoundField DataField="TagNo" HeaderText="Tag No" />
         <asp:BoundField DataField="InspectionDate" HeaderText="Inspection Date" DataFormatString="{0:yyyy-MM-dd}" />

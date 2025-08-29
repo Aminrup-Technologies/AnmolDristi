@@ -77,6 +77,7 @@
                         OnRowDeleting="GvGrindingMachineChecklist_RowDeleting">
 
                         <Columns>
+                            <asp:BoundField DataField="HeaderID" HeaderText="Header ID" />
                             <asp:BoundField DataField="Site" HeaderText="Site" />
                             <asp:BoundField DataField="DateOfInspection" HeaderText="Date of Inspection" DataFormatString="{0:yyyy-MM-dd}" />
                             <asp:BoundField DataField="InspectedBy" HeaderText="Inspected By" />

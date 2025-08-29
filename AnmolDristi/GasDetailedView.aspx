@@ -1,6 +1,62 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="GasDetailedView.aspx.cs" Inherits="AnmolDristi.GasDetailedView" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+    function printChecklist() {
+        var printContents = document.getElementById("printableTable").innerHTML;
+        var printWindow = window.open('', '', 'height=800,width=1000');
+        printWindow.document.write('<html><head><title>Checklist Report</title>');
+
+        printWindow.document.write(`
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              font-size: 14px;
+              margin: 20px;
+            }
+            h1 {
+              text-align: center;
+              margin-top: 10px;
+              margin-bottom: 20px;
+              font-size: 22px;
+              text-decoration: underline;
+            }
+            table {
+              border-collapse: collapse;
+              width: 100%;
+              margin-bottom: 20px;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 6px;
+              text-align: left;
+              vertical-align: top;
+            }
+            th {
+              background-color: #f0f0f0;
+              font-weight: bold;
+            }
+            img {
+              max-width: 120px;
+              height: auto;
+            }
+            @media print {
+              body { margin: 0; }
+            }
+          </style>
+        `);
+
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<h1>KYT Report</h1>');
+        printWindow.document.write(printContents);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
+    }
+    </script>
+
     <style>
         .table-container {
             padding: 10px;
@@ -100,7 +156,8 @@
             <div class="x_panel">
                 <div class="x_title"><div class="clearfix"></div></div>
                 <div class="x_content table-container">
-
+                    <!-- Wrapped GridView in printableTable div -->
+                    <div id="printableTable">
                     <div class="section-title">Gas Cutting Basic Details</div>
                     <div class="responsive-wrapper">
                         <asp:GridView ID="gvGasHeader" runat="server" CssClass="custom-grid" AutoGenerateColumns="False" GridLines="Both" BorderWidth="1">
@@ -147,7 +204,11 @@
                             </Columns>
                         </asp:GridView>
                     </div>
-
+                        </div>
+                    <!-- Print Button -->
+                <div class="text-center mt-3">
+                    <button type="button" class="btn btn-primary" onclick="printChecklist()">Print Checklist</button>
+                </div>
                 </div>
             </div>
         </div>

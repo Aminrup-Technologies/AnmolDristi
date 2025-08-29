@@ -64,7 +64,9 @@
             <!-- Back Button -->
             <div class="row capa-back-btn">
                 <div class="col-12">
-                    <asp:Button ID="btnBack" runat="server" Text="← Back" CssClass="btn btn-secondary" PostBackUrl="~/bussiness/production/TargetPage.aspx" />
+                    <asp:Button ID="btnBack" runat="server" Text="← Back" CssClass="btn btn-secondary" OnClick="btnBack_Click" />
+
+<%--                    <asp:Button ID="btnBack" runat="server" Text="← Back" CssClass="btn btn-secondary" PostBackUrl="~/bussiness/production/TargetPage.aspx" />--%>
                 </div>
             </div>
 

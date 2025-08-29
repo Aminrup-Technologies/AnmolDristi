@@ -47,6 +47,8 @@
                             OnRowDeleting="GvSafetyAudit_RowDeleting">
 
                             <Columns>
+                                
+        <asp:BoundField DataField="AuditID" HeaderText="Audit ID" ReadOnly="True" />
                                 <asp:BoundField DataField="Department" HeaderText="Department" />
                                 <asp:BoundField DataField="Section" HeaderText="Section" />
                                 <asp:BoundField DataField="Date" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />

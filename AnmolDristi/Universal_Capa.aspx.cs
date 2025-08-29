@@ -39,8 +39,35 @@ namespace AnmolDristi
                     }
                 }
             }
-        //bole the variable name match krna aa 
-            private void LoadCapaDetails(string capaId)
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            string headerId = txtSourceRecordID.Text; // This is set in LoadCapaDetails()
+            string recordType = GetRecordType(headerId);
+
+            string redirectUrl = "~/bussiness/production/TargetPage.aspx"; // default fallback
+
+            if (recordType == "Grinding Machine Checklist")
+                redirectUrl = "~/GrindingDetailedView.aspx?HeaderID=" + headerId;
+
+            else if (recordType == "Gas Cutting Checklist")
+                redirectUrl = "~/GasDetailedView.aspx?HeaderID=" + headerId;
+
+            else if (recordType == "D and Bow Shackle + Chain Pulley Checklist")
+                redirectUrl = "~/DandBowDetailedView.aspx?HeaderID=" + headerId;
+
+            else if (recordType == "JobSite Checklist")
+                redirectUrl = "~/JobSiteDetailedView.aspx?HeaderID=" + headerId;
+
+            else if (recordType == "Safety audit")
+                redirectUrl = "~/Safety_DetailedView.aspx?AuditID=" + headerId;
+
+            else if (recordType == "Kyt form")
+                redirectUrl = "~/KytDetailedView.aspx?HeaderID=" + headerId;
+
+            Response.Redirect(redirectUrl);
+        }
+
+        private void LoadCapaDetails(string capaId)
             {
                 string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 

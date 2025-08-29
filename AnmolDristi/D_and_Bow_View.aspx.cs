@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Web.UI.WebControls;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 
 
 
@@ -42,8 +43,11 @@ namespace AnmolDristi
             {
                 conn.Open();
                 string query = @"
+
 SELECT
-    h.BasicID AS BasicID, h.Site, h.TagNo, h.InspectionDate, h.JobID,
+    h.BasicID AS BasicID,
+    h.BasicID AS HeaderID,   -- ✅ Added here
+    h.Site, h.TagNo, h.InspectionDate, h.JobID,
     h.JobName,
 
     sd.Question AS ShacklesChecklistQuestion, 
@@ -61,6 +65,7 @@ LEFT JOIN MahimaGupta_CSMS.ShacklesChecklist_DBow sd ON h.BasicID = sd.HeaderID
 LEFT JOIN MahimaGupta_CSMS.ShacklesChecklist_ChainPulley cd ON h.BasicID = cd.HeaderID
 
 ORDER BY h.BasicID DESC";
+
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
