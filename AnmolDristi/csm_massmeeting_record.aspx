@@ -258,9 +258,9 @@
 
                                         <div class="col-md-3">
                                             <div class="mb-3">
-                                                <asp:Label ID="lbl_btnsave1" runat="server" AssociatedControlID="btnsave1" Text="Click to Save" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                                <%--<asp:Label ID="lbl_btnsave1" runat="server" AssociatedControlID="btnsave1" Text="Click to Save" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>--%>
                                                 <div class="input-group">
-                                                    <asp:Button ID="btnsave1" runat="server" Text="Proceed Next" CssClass="btn btn-success" ValidationGroup="Save1" CausesValidation="true" OnClick="btnsave1_Click" />
+                                                    <asp:Button ID="btnsave1" runat="server" Text="Save" CssClass="btn btn-success mt-3" ValidationGroup="Save1" CausesValidation="true" OnClick="btnsave1_Click" />
                                                     <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
 
                                                 </div>

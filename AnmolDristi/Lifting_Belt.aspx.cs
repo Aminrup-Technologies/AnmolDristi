@@ -182,7 +182,7 @@ namespace AnmolDristi
                             string filename = "";
                             if (photo.HasFile)
                             {
-                                filename = Path.GetFileName(photo.FileName);
+                                filename = Guid.NewGuid().ToString() + "_" + Path.GetFileName(photo.FileName);
                                 string folderPath = Server.MapPath("~/uploads/");
                                 if (!Directory.Exists(folderPath))
                                 {
@@ -325,7 +325,7 @@ namespace AnmolDristi
 
                     if (photo.HasFile)
                     {
-                        string filename = Path.GetFileName(photo.FileName);
+                        string filename = Guid.NewGuid().ToString() + "_" + Path.GetFileName(photo.FileName);
                         string folderPath = Server.MapPath("~/uploads/");
                         if (!Directory.Exists(folderPath))
                         {

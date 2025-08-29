@@ -14,11 +14,38 @@
             myModal.show();
         }
 
+        //function showObservationModal(detailId) {
+        //    if (detailId != null) {
+        //        showDetailModal(detailId);
+        //    }
+        //    $('#observationModal').modal('show');
+        //}
+
         function showObservationModal(detailId) {
+            var modal = $('#observationModal');
+
             if (detailId != null) {
-                showDetailModal(detailId);
+                // 🟢 Edit Mode
+                showDetailModal(detailId); // loads data
+                modal.find('.modal-title').text('Edit Observation Details');
+            } else {
+                // 🟢 Add Mode → clear fields
+                modal.find('input[type=text], textarea, select').val('');
+                modal.find('input:checkbox, input:radio').prop('checked', false);
+                modal.find('input[type=file]').val('');
+                modal.find('input[type=date]').val('');
+                $('#lblExistingSnap').text('');
+                $('#lblImmediateAttachment').text('');
+                $('#txtRespoName').text('');
+
+             
+                // reset tab to first one
+                modal.find('.nav-tabs a[href="#opening"]').tab('show');
+
+                modal.find('.modal-title').text('Add Observation Details');
             }
-            $('#observationModal').modal('show');
+
+            modal.modal('show');
         }
 
         function closeObservationModal() {
@@ -387,7 +414,7 @@
                                     <asp:Label ID="Lbl_ID" runat="server" Text="Job ID" AssociatedControlID="TB_ID" ForeColor="Blue" Font-Bold="true" />
                                     <asp:TextBox ID="TB_ID" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RFV_TB_ID" runat="server" ControlToValidate="TB_ID" ErrorMessage="* Job ID required" ForeColor="Red" Display="Dynamic" ValidationGroup="Submit" />
-                                    <asp:RegularExpressionValidator ID="REV_TB_ID" runat="server" ControlToValidate="TB_ID" ErrorMessage="* Only letters & numbers" ForeColor="Red" ValidationExpression="^[a-zA-Z0-9 ]+$" Display="Dynamic" ValidationGroup="Submit" />
+                                    <%--<asp:RegularExpressionValidator ID="REV_TB_ID" runat="server" ControlToValidate="TB_ID" ErrorMessage="* Only letters & numbers" ForeColor="Red" ValidationExpression="^[a-zA-Z0-9 ]+$" Display="Dynamic" ValidationGroup="Submit" />--%>
                                 </div>
 
                                 <!-- Job Description -->
@@ -395,7 +422,7 @@
                                     <asp:Label ID="Lbl_JD" runat="server" Text="Job Description" AssociatedControlID="TB_JD" ForeColor="Blue" Font-Bold="true" />
                                     <asp:TextBox ID="TB_JD" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RFV_TB_JD" runat="server" ControlToValidate="TB_JD" ErrorMessage="* Description required" ForeColor="Red" Display="Dynamic" ValidationGroup="Submit" />
-                                    <asp:RegularExpressionValidator ID="REV_TB_JD" runat="server" ControlToValidate="TB_JD" ErrorMessage="* Only alphabets allowed" ForeColor="Red" ValidationExpression="^[a-zA-Z\s,\/]+$" Display="Dynamic" ValidationGroup="Submit" />
+                                    <%--<asp:RegularExpressionValidator ID="REV_TB_JD" runat="server" ControlToValidate="TB_JD" ErrorMessage="* Only alphabets allowed" ForeColor="Red" ValidationExpression="^[a-zA-Z\s,\/]+$" Display="Dynamic" ValidationGroup="Submit" />--%>
                                 </div>
                             </div>
 
@@ -414,8 +441,8 @@
                                     <asp:TextBox ID="TB_AuditBy" runat="server" CssClass="form-control form-control-sm rounded"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RFV_AuditBy" runat="server" ControlToValidate="TB_AuditBy"
                                         ErrorMessage="* Auditor name required" ForeColor="Red" Display="Dynamic" ValidationGroup="Submit" />
-                                    <asp:RegularExpressionValidator ID="REV_AuditBy" runat="server" ControlToValidate="TB_AuditBy"
-                                        ErrorMessage="* Only letters allowed" ForeColor="Red" ValidationExpression="^[a-zA-Z\s]+$" Display="Dynamic" ValidationGroup="Submit" />
+                                    <%--<asp:RegularExpressionValidator ID="REV_AuditBy" runat="server" ControlToValidate="TB_AuditBy"
+                                        ErrorMessage="* Only letters allowed" ForeColor="Red" ValidationExpression="^[a-zA-Z\s]+$" Display="Dynamic" ValidationGroup="Submit" />--%>
                                 </div>
                             </div>
 

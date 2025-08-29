@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="QuickJCC_Checklist.aspx.cs" Inherits="AnmolDristi.QuickJCC_Checklist" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dristi.Master" AutoEventWireup="true" CodeBehind="QuickJCC_Checklist.aspx.cs" Inherits="AnmolDristi.QuickJCC_Checklist"   %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 
@@ -363,6 +363,9 @@
                 })
             });
         }
+
+
+       
     </script>
 
 
@@ -393,7 +396,9 @@
                     <div class="x_content">
                         
 
-                   <asp:ScriptManager ID="ScriptManager1" runat="server" />
+                   <asp:ScriptManager ID="ScriptManager1" runat="server"  />
+
+                       
 
                                 <!-- Basic Details -->
                                 <h4 class="text-white bg-success border border-success p-2 rounded w-100" style="font-size: 24px;">Basic Details</h4>
@@ -409,14 +414,14 @@
                                         <asp:Label runat="server" AssociatedControlID="txtJobID" CssClass="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Job ID:</asp:Label>
                                         <asp:TextBox ID="txtJobID" runat="server" CssClass="form-control form-control-sm rounded" />
                                         <asp:RequiredFieldValidator ID="rfvJobID" runat="server"
-                                                 ControlToValidate="txtJobID" ErrorMessage="JobID is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save" />
+                                                 ControlToValidate="txtJobID" ErrorMessage="JobID is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save"  />
                                     </div>
 
                                     <div class="col-md-4 col-sm-12 mb-3">
                                         <asp:Label runat="server" AssociatedControlID="txtDepartment" CssClass="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Department:</asp:Label>
                                         <asp:TextBox ID="txtDepartment" runat="server" CssClass="form-control form-control-sm rounded" />
                                         <asp:RequiredFieldValidator ID="rfvDepartment" runat="server"
-                                           ControlToValidate="txtDepartment" ErrorMessage="Department is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save" />
+                                           ControlToValidate="txtDepartment" ErrorMessage="Department is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save"  />
                                         
                                     </div>
 
@@ -424,28 +429,28 @@
                                         <asp:Label runat="server" AssociatedControlID="txtLocation" CssClass="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Location:</asp:Label>
                                         <asp:TextBox ID="txtLocation" runat="server" CssClass="form-control form-control-sm rounded" />
                                         <asp:RequiredFieldValidator ID="rfvLocation" runat="server"
-                                             ControlToValidate ="txtLocation" ErrorMessage="Location is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save" />
+                                             ControlToValidate ="txtLocation" ErrorMessage="Location is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save"  />
                                     </div>
 
                                     <div class="col-md-4 col-sm-12 mb-3">
                                         <asp:Label runat="server" AssociatedControlID="txtStartTime" CssClass="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Job Start Time:</asp:Label>
                                         <asp:TextBox ID="txtStartTime" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Time" />
                                         <asp:RequiredFieldValidator ID="rfvStartTime" runat="server"
-                                               ControlToValidate ="txtStartTime" ErrorMessage="Start Time is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save" />
+                                               ControlToValidate ="txtStartTime" ErrorMessage="Start Time is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save"  />
                                     </div>
 
                                     <div class="col-md-4 col-sm-12 mb-3">
                                         <asp:Label runat="server" AssociatedControlID="txtEndTime" CssClass="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Job End Time:</asp:Label>
                                         <asp:TextBox ID="txtEndTime" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Time" />
                                         <asp:RequiredFieldValidator ID="rfvEndTime" runat="server"
-                                                  ControlToValidate ="txtEndTime" ErrorMessage="End Time is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save" />
+                                                  ControlToValidate ="txtEndTime" ErrorMessage="End Time is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save"  />
                                     </div>
 
                                     <div class="col-md-4 col-sm-12 mb-3">
                                         <asp:Label runat="server" AssociatedControlID="txtauditby" CssClass="form-label text-black" ForeColor="Blue" Font-Bold="true" Font-Size="Small">Audit By</asp:Label>
                                         <asp:TextBox ID="txtauditby" runat="server" CssClass="form-control form-control-sm rounded"/>
                                         <asp:RequiredFieldValidator ID="rfvauditby" runat="server"
-                                             ControlToValidate="txtauditby" ErrorMessage="Audit By is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save" />
+                                             ControlToValidate="txtauditby" ErrorMessage="Audit By is required" CssClass="text-danger" Display="Dynamic" ValidationGroup="save"  />
                                     </div>
 
 
@@ -478,6 +483,7 @@
                                                         ErrorMessage="Please select Employee Type."
                                                         Display="Dynamic"
                                                         CssClass="text-danger"
+                                                        
                                                         ValidationGroup="add" />
                                             </div>
 
@@ -529,10 +535,12 @@
                                             </Columns>
                                         </asp:GridView>
                                         <asp:HiddenField ID="hfEditEmpCode" runat="server" />
+
                                     </ContentTemplate>
 
                                     <Triggers>
                                         <asp:AsyncPostBackTrigger ControlID="btnAddTeamMember" EventName="Click" />
+                                         
                                     </Triggers>
                                     
                                 </asp:UpdatePanel>
@@ -663,6 +671,7 @@
                 </div>
             </div>
         </div>
+    
 
 
 
@@ -729,11 +738,8 @@
         if (typeof Sys !== "undefined" && Sys.WebForms) {
             Sys.Application.add_load(setupSingleEmpToggleHandler);
         }
-    </script>
 
 
-
-    <script type="text/javascript">
         function handleCAPACheckbox(checkbox) {
             if (!checkbox.checked) {
                 var confirmResult = confirm("Disabling CAPA may compromise corrective action tracking. Proceed at your own risk.");
@@ -742,10 +748,10 @@
                 }
             }
         }
-    </script>
+    
 
 
-    <script type="text/javascript">
+    
         function resetChecklist() {
             // Reset all radio buttons to "OK"
             document.querySelectorAll(".result-selector").forEach(function (rbl) {

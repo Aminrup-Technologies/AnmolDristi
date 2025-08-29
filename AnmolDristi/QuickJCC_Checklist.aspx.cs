@@ -58,7 +58,7 @@ namespace AnmolDristi
                 string checklistId = Request.QueryString["id"];
                 if (!string.IsNullOrEmpty(checklistId))
                 {
-                    LoadChecklistData(checklistId);
+                    LoadChecklistData(Convert.ToInt32(checklistId));
                     heading.Text = "UPDATE QUICK JCC CHECKLIST DATA";
                 }
                 else
@@ -66,6 +66,7 @@ namespace AnmolDristi
                     DictionaryRepeater.DataSource = grouped;
                     DictionaryRepeater.DataBind();
                 }
+
 
                 DataSet3 ds = ViewState["TeamDataset"] as DataSet3;
                 if (ds != null)
@@ -75,8 +76,8 @@ namespace AnmolDristi
                     gvTeamMembers.DataBind();
                 }
 
-
             }
+            
         }
 
         protected void submit_Click(object sender, EventArgs e)
@@ -189,7 +190,7 @@ namespace AnmolDristi
                             string filename = "";
                             if (photo.HasFile)
                             {
-                                filename = Path.GetFileName(photo.FileName);
+                                filename = Guid.NewGuid().ToString() + "_" + Path.GetFileName(photo.FileName);
                                 string folderPath = Server.MapPath("~/uploads/");
                                 if (!Directory.Exists(folderPath))
                                 {
@@ -276,7 +277,7 @@ namespace AnmolDristi
         }
 
 
-        private void LoadChecklistData(string checklistId)
+        private void LoadChecklistData(int checklistId)
         {
             string CS = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
@@ -304,7 +305,7 @@ namespace AnmolDristi
                         {
                             lblExistingPhoto.Text = reader["Photo"].ToString();
                         }
-                        hfChecklistID.Value = checklistId;
+                        hfChecklistID.Value = checklistId.ToString(); 
                     }
                 }
 
@@ -389,7 +390,15 @@ namespace AnmolDristi
 
             
             DataSet3 ds = ViewState["TeamDataset"] as DataSet3;
-           
+
+            int checklistid = Convert.ToInt32(hfChecklistID.Value);
+
+            foreach (var row in ds.JCC_Employee)
+            {
+                if (row.Checklist_ID == 0)
+                    row.Checklist_ID = checklistid;
+            }
+            
             JCC_EmployeeTableAdapter adapter = new JCC_EmployeeTableAdapter();
             adapter.Update(ds.JCC_Employee);
 
@@ -444,7 +453,7 @@ namespace AnmolDristi
 
                     if (photo.HasFile)
                     {
-                        string filename = Path.GetFileName(photo.FileName);
+                        string filename = Guid.NewGuid().ToString() + "_" + Path.GetFileName(photo.FileName);
                         string folderPath = Server.MapPath("~/uploads/");
                         if (!Directory.Exists(folderPath))
                         {
@@ -554,7 +563,7 @@ namespace AnmolDristi
                         </script>";
 
             // RegisterStartupScript adds the JavaScript code to the page
-            ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, true);
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowDataSuccessNotification", Data_SuccessScript, false);
         }
 
 
@@ -636,6 +645,7 @@ namespace AnmolDristi
                 var existingRow = _dataset.JCC_Employee.FirstOrDefault(r => r.Employee_Code == hfEditEmpCode.Value);
                 if (existingRow != null)
                 {
+                    existingRow.Employee_Code = txtEmpCode.Text.Trim();
                     existingRow.Employee_Name = txtEmpName.Text.Trim();
                     existingRow.Designation = txtDesignation.Text.Trim();
                     existingRow.Employee_Type = rblEmpType.SelectedValue;

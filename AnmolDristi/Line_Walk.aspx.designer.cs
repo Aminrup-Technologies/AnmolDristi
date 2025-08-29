@@ -87,15 +87,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_ID;
 
         /// <summary>
-        /// REV_TB_ID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_ID;
-
-        /// <summary>
         /// Lbl_JD control.
         /// </summary>
         /// <remarks>
@@ -121,15 +112,6 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_TB_JD;
-
-        /// <summary>
-        /// REV_TB_JD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_TB_JD;
 
         /// <summary>
         /// Lbl_Photo control.
@@ -184,15 +166,6 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV_AuditBy;
-
-        /// <summary>
-        /// REV_AuditBy control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV_AuditBy;
 
         /// <summary>
         /// Save control.
