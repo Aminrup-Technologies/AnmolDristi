@@ -383,8 +383,9 @@ namespace AnmolDristi
                     delChecklist.Parameters.AddWithValue("@InspectionID", inspectionID);
                     delChecklist.ExecuteNonQuery();
 
-                    
-                     SqlCommand clearCAPAFields = new SqlCommand(@"
+
+
+                    SqlCommand clearCAPAFields = new SqlCommand(@"
                            UPDATE tbl_CAPAMaster 
                                   SET IsYes = 1
                               WHERE HeaderID = @HeaderID", con, trans);
@@ -442,16 +443,17 @@ namespace AnmolDristi
                         {
                             SqlCommand cmdCAPA = new SqlCommand(@"
             INSERT INTO tbl_CAPAMaster 
-            (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+            (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate,Description)
             OUTPUT INSERTED.CAPAID
             VALUES 
-            (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", con, trans);
+            (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate,@Description)", con, trans);
 
                             cmdCAPA.Parameters.AddWithValue("@HeaderID", inspectionID);
                             cmdCAPA.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(checklistPhotoPath) ? DBNull.Value : (object)checklistPhotoPath);
                             cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
                             cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
                             cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                            cmdCAPA.Parameters.AddWithValue("@Description", lblDesc.Text);
 
                             capaID = cmdCAPA.ExecuteScalar();
                         }

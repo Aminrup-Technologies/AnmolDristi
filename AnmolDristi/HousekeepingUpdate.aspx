@@ -134,7 +134,7 @@
 
         <!-- Upload control to select a new image -->
         <br />
-        <asp:FileUpload ID="fuBeforePhoto" runat="server" />
+        <asp:FileUpload ID="fuBeforePhoto" runat="server" Enabled="false" />
     </ItemTemplate>
 </asp:TemplateField>
 
@@ -150,7 +150,7 @@
 
         <asp:TemplateField HeaderText="Corrective Action">
             <ItemTemplate>
-                <asp:TextBox ID="txtCorrectiveAction" runat="server" Text='<%# Eval("CorrectiveAction") %>' CssClass="form-control gv-input" />
+                <asp:TextBox ID="txtCorrectiveAction" runat="server" Text='<%# Eval("CorrectiveAction") %>' CssClass="form-control gv-input" ReadOnly="true" />
             </ItemTemplate>
         </asp:TemplateField>
        <asp:TemplateField HeaderText="Photo (After)">
@@ -166,7 +166,7 @@
 
         <!-- Upload control to select a new image -->
         <br />
-        <asp:FileUpload ID="fuAfterPhoto" runat="server" />
+        <asp:FileUpload ID="fuAfterPhoto" runat="server" Enabled="false" />
     </ItemTemplate>
 </asp:TemplateField>
 

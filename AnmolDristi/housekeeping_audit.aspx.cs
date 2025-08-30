@@ -333,14 +333,19 @@ namespace AnmolDristi
                         {
                             // Insert into CAPA Master table
                             SqlCommand cmdCAPA = new SqlCommand(@"
-INSERT INTO tbl_CAPAMaster (HeaderID, AssignedBy, AssignedDate, Description)
+INSERT INTO tbl_CAPAMaster (HeaderID, AssignedBy, AssignedDate, Description,CorrectiveAction,CA_Photo,PhotoPath)
 OUTPUT INSERTED.CAPAID
-VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description)", conn, transaction);
+VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description,@CorrectiveAction,@CA_Photo,@PhotoPath)", conn, transaction);
 
                             cmdCAPA.Parameters.AddWithValue("@HeaderID", customid);
                             cmdCAPA.Parameters.AddWithValue("@AssignedBy", row["AssignedTo"].ToString());
                             cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
                             cmdCAPA.Parameters.AddWithValue("@Description", row["Observation"].ToString());
+                            cmdCAPA.Parameters.AddWithValue("@CorrectiveAction", row["CorrectiveAction"].ToString());
+                            cmdCAPA.Parameters.AddWithValue("@CA_Photo",
+                                row["PhotoAfter"] == DBNull.Value || row["PhotoAfter"] == null ? (object)DBNull.Value : row["PhotoAfter"].ToString());
+                            cmdCAPA.Parameters.AddWithValue("@PhotoPath",
+                                row["PhotoBefore"] == DBNull.Value || row["PhotoBefore"] == null ? (object)DBNull.Value : row["PhotoBefore"].ToString());
 
                             capaReportID = cmdCAPA.ExecuteScalar();
                         }

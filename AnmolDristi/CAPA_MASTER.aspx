@@ -64,7 +64,7 @@
             <!-- Back Button -->
             <div class="row capa-back-btn">
                 <div class="col-12">
-                    <asp:Button ID="btnBack" runat="server" Text="← Back" CssClass="btn btn-secondary" PostBackUrl="~/bussiness/production/TargetPage.aspx" />
+                    <asp:Button ID="btnBack" runat="server" Text="← Back" CssClass="btn btn-secondary" OnClick="btnBack_Click" />
                 </div>
             </div>
 
@@ -88,6 +88,11 @@
                         <label class="capa-label">Description of the Issue</label>
                         <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" ReadOnly="true"></asp:TextBox>
                     </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="capa-label">Photo</label>
+                        <asp:TextBox ID="txtphoto" runat="server" CssClass="form-control mb-2" ReadOnly="true"></asp:TextBox>
+                         <asp:Image ID="imgphoto" runat="server" CssClass="capa-img-preview" ImageUrl="https://cdn-icons-png.flaticon.com/512/4218/4218934.png"/>
+                     </div>
                 </div>
             </div>
 
