@@ -81,10 +81,11 @@ namespace AnmolDristi
                             //txtSourceRecordID.Text = dr["HeaderID"].ToString();
                             txtRaisedBy.Text = dr["AssignedBy"].ToString();
                             txtDescription.Text = dr["Description"].ToString();
-                            
+
                             txtphoto.Text = dr["PhotoPath"].ToString();
                             if (!string.IsNullOrEmpty(dr["PhotoPath"].ToString()))
-                                imgphoto.ImageUrl = "~/Uploads/" + dr["PhotoPath"];
+                                imgphoto.ImageUrl = dr["PhotoPath"].ToString();
+
 
                             // Corrective Actions
                             txtCorrectiveActions.Text = dr["CorrectiveAction"].ToString();
@@ -92,7 +93,7 @@ namespace AnmolDristi
                             
                             txtCorrectivePhotoName.Text = dr["CA_Photo"].ToString();
                             if (!string.IsNullOrEmpty(dr["CA_Photo"].ToString()))
-                                imgCorrectivePhoto.ImageUrl = "~/Uploads/" + dr["CA_Photo"];
+                                imgCorrectivePhoto.ImageUrl = dr["CA_Photo"].ToString();
                             
                             
                             if (dr["CA_Date"] != DBNull.Value)
@@ -104,7 +105,7 @@ namespace AnmolDristi
                             txtPreventiveNote.Text = dr["PA_Note"].ToString();
                             txtPreventivePhotoName.Text = dr["PA_Photo"].ToString();
                             if (!string.IsNullOrEmpty(dr["PA_Photo"].ToString()))
-                                imgPreventivePhoto.ImageUrl = "~/Uploads/" + dr["PA_Photo"];
+                                imgPreventivePhoto.ImageUrl = dr["PA_Photo"].ToString();
                             if (dr["PA_Date"] != DBNull.Value)
                                 txtPreventiveDate.Text = Convert.ToDateTime(dr["PA_Date"]).ToString("yyyy-MM-dd");
                             txtPreventiveBy.Text = dr["PA_ActionBy"].ToString();
@@ -116,9 +117,9 @@ namespace AnmolDristi
                             txtStatus.Text = dr["Status"].ToString();
                             txtRemarks.Text = dr["CAPARemarks"].ToString();
 
-                            txtUploadedPhotoName.Text = dr["PA_Photo"].ToString();
-                            if (!string.IsNullOrEmpty(dr["PA_Photo"].ToString()))
-                                imgUploadedPhoto.ImageUrl = "~/Uploads/" + dr["PA_Photo"];
+                            txtUploadedPhotoName.Text = dr["CAPAFilePath"].ToString();
+                            if (!string.IsNullOrEmpty(dr["CAPAFilePath"].ToString()))
+                                imgUploadedPhoto.ImageUrl =dr["CAPAFilePath"].ToString();
 
                             txtReviewedBy.Text = dr["ReviewedBy"].ToString();
                             txtVerificationStatus.Text = dr["VerificationStatus"].ToString();
@@ -128,13 +129,14 @@ namespace AnmolDristi
             }
         }
 
+
         protected void btnBack_Click(object sender, EventArgs e)
         {
             string headerId = txtSourceRecordID.Text.Trim(); // Get Source Record ID (e.g. HKM-1091)
 
             if (string.IsNullOrEmpty(headerId))
             {
-                // If no headerId, go to home page (fallback)
+                // If no headerId, goto home page (fallback)
                 Response.Redirect("~/Default.aspx");
                 return;
             }
@@ -159,5 +161,8 @@ namespace AnmolDristi
             Response.Redirect(redirectUrl);
         }
 
+
+
     }
 }
+

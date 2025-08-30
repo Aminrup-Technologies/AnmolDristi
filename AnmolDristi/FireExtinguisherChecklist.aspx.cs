@@ -403,7 +403,8 @@ namespace AnmolDristi
                         SqlCommand cmdDetail = new SqlCommand(insertDetailQuery, con, tran);
                         cmdDetail.Parameters.AddWithValue("@HeaderID", headerID);
                         cmdDetail.Parameters.AddWithValue("@ExtinguisherType", ddlType.SelectedValue);
-                        cmdDetail.Parameters.AddWithValue("@FE_SerialNo", Convert.ToInt32(txtsno.Text));
+                        cmdDetail.Parameters.AddWithValue("@FE_SerialNo", txtsno.Text.Trim());
+                        // cmdDetail.Parameters.AddWithValue("@FE_SerialNo", Convert.ToInt32(txtsno.Text));
                         cmdDetail.Parameters.AddWithValue("@CalibrationDate", Convert.ToDateTime(txtCalibrationDate.Text));
                         cmdDetail.Parameters.AddWithValue("@DueDate", Convert.ToDateTime(txtDueDate.Text));
                         cmdDetail.Parameters.AddWithValue("@QuestionNumber", questionNumber);
