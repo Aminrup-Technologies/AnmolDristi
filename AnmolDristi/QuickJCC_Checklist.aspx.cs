@@ -672,10 +672,12 @@ namespace AnmolDristi
                     return;
                 }
 
+                string safeEmpCode = string.IsNullOrWhiteSpace(txtEmpCode.Text) ? "NA" : txtEmpCode.Text;
+
                 DataSet3.JCC_EmployeeRow row = _dataset.JCC_Employee.NewJCC_EmployeeRow();
                 row["Checklist_ID"] = 0;
                 row["Employee_Type"] = rblEmpType.SelectedValue;
-                row["Employee_Code"] = txtEmpCode.Text;
+                row["Employee_Code"] = safeEmpCode;
                 row["Employee_Name"] = txtEmpName.Text;
                 row["Designation"] = txtDesignation.Text;
 
