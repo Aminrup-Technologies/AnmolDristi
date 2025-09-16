@@ -128,13 +128,24 @@ namespace AnmolDristi
 
                     if (rows > 0)
                     {
-                        lblMsg.Text = "Record updated successfully.";
-                        lblMsg.ForeColor = System.Drawing.Color.Green;
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotify",
+                                            "new PNotify({ " +
+                                            "title: 'Success'," +
+                                            "text: 'Record updated successfully.'," +
+                                            "type: 'success'," +
+                                            "styling: 'bootstrap3'," +
+                                            "delay: 2000 });", true);
+
                     }
                     else
                     {
-                        lblMsg.Text = "Update failed. Please try again.";
-                        lblMsg.ForeColor = System.Drawing.Color.Red;
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotify",
+                                 "new PNotify({ " +
+                                 "title: 'Error'," +
+                                 "text: 'Update failed. Please try again.'," +
+                                 "type: 'error'," +
+                                 "styling: 'bootstrap3'," +
+                                 "delay: 3000 });", true);
                     }
                 }
             }

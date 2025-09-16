@@ -130,27 +130,6 @@ namespace AnmolDristi
                 }
             }
 
-
-            //string imagePath = "";
-            //if (imgupload.HasFile)
-            //{
-            //    string fileExtension = Path.GetExtension(imgupload.FileName).ToLower();
-            //    if (fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
-            //    {
-            //        lblMsg1.Text = "Error: Only JPG, JPEG, and PNG files are allowed.";
-            //        lblMsg1.ForeColor = System.Drawing.Color.Red;
-            //        return;
-            //    }
-
-            //    string folderPath = Server.MapPath("~/Uploads1/");
-            //    if (!Directory.Exists(folderPath))
-            //    {
-            //        Directory.CreateDirectory(folderPath);
-            //    }
-            //    string fileName = Path.GetFileName(imgupload.FileName);
-            //    imagePath = "~/Uploads1/" + fileName;
-            //    imgupload.SaveAs(folderPath + fileName);
-            //}
             // Generating SNo dynamically
             int serialNo = dt.Rows.Count + 1;
 
@@ -162,7 +141,7 @@ namespace AnmolDristi
             dr["AttendeeCode"] = txtAttendeeCode.Text.Trim();
             dr["AttendanceStatus"] = ddlAttendanceStatus.SelectedValue;
             dr["Designation"] = txtdes.Text.Trim();
-            //dr["ImagePath"] = imagePath; // Store image path
+        
             dt.Rows.Add(dr);
 
             ViewState["Attendance"] = dt;

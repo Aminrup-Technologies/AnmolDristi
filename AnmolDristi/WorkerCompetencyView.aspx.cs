@@ -26,7 +26,7 @@ namespace AnmolDristi
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"SELECT AssessmentID,Date,NameOfWorkman,Designation,TechnicalKnowledge,TechnicalSkills,ConsistencyInJob,JobQuality,SafetyAwareness from WorkerCompetencyAssessment";
+                string query = @"SELECT AssessmentID,Date,NameOfWorkman,Designation,TechnicalKnowledge,TechnicalSkills,ConsistencyInJob,JobQuality,SafetyAwareness from WorkerCompetencyAssessment ORDER BY AssessmentID DESC";
 
 
 

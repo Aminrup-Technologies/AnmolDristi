@@ -121,6 +121,13 @@
         <tr>
             <td colspan="3" style="height: 20px;"><h2 style="text-decoration: underline;">Assessment Report</h2></td>
         </tr>
+
+           <tr class="center">
+                <td>Assesment ID</td>
+                <td colspan="2"><%# Eval("AssessmentID") %></td>
+                 </tr>
+
+
        <tr class="center">
     <td>Date</td>
     <td colspan="2"><%# Eval("Date", "{0:yyyy-MM-dd}") %></td>

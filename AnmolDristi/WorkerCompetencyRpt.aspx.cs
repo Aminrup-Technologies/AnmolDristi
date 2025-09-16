@@ -43,7 +43,7 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                using (SqlCommand cmd = new SqlCommand(@"SELECT Date ,NameOfWorkman ,Designation ,TechnicalKnowledge ,TechnicalSkills ,ConsistencyInJob ,JobQuality ,SafetyAwareness ,TotalMark ,Score ,Percentage ,EvaluationCategory 
+                using (SqlCommand cmd = new SqlCommand(@"SELECT AssessmentID, Date ,NameOfWorkman ,Designation ,TechnicalKnowledge ,TechnicalSkills ,ConsistencyInJob ,JobQuality ,SafetyAwareness ,TotalMark ,Score ,Percentage ,EvaluationCategory 
                                                   FROM  WorkerCompetencyAssessment 
                                                   WHERE AssessmentID= @AssessmentID ", con))
                 {

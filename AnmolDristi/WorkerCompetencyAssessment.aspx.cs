@@ -98,15 +98,26 @@ VALUES
                         }
 
                         tx.Commit();
-                        lblMsg.ForeColor = Color.Green;
-                        lblMsg.Text = "Data saved successfully!";
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotify",
+                                         "new PNotify({ " +
+                                         "title: 'Success'," +
+                                         "text: 'Data saved successfully!'," +
+                                         "type: 'success'," +
+                                         "styling: 'bootstrap3'," +
+                                         "delay: 2000 });", true);
                     }
 
                     catch (Exception ex)
                     {
                         tx.Rollback();
-                        lblMsg.ForeColor = Color.Red;
-                        lblMsg.Text = "Error saving Data: " + ex.Message;
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotify",
+                                        "new PNotify({ " +
+                                        "title: 'Error'," +
+                                        "text: 'Error saving data: " + ex.Message.Replace("'", "\\'") + "'," +
+                                        "type: 'error'," +
+                                        "styling: 'bootstrap3'," +
+                                        "delay: 4000 });", true);
+
                     }
                 }
             }
