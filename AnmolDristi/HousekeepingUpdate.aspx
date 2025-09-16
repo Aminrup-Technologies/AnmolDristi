@@ -22,6 +22,33 @@
     box-sizing: border-box;
   }
 
+.classic-green input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #555;
+    background: #fff;
+    cursor: default;
+    position: relative;
+    vertical-align: middle;
+}
+
+.classic-green input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 0px;
+    width: 6px;
+    height: 12px;
+    border: solid green;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+
+
 
     </style>
 </asp:Content>
@@ -30,8 +57,13 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>Housekeeping Audit(5S) | DOC/ATS/OSH/CM-04 
-                </h3>
+               <asp:Label ID="lblTitle" runat="server" 
+                            Text="Update Housekeeping Audit(5S) | DOC/ATS/OSH/CM-04" 
+                            ForeColor="Green" 
+                            CssClass="text-center d-block" 
+                            Font-Size="Large" 
+                            Font-Bold="true">
+                        </asp:Label>
             </div>
         </div>
 
@@ -87,7 +119,7 @@
     <div class="col-md-12">
         <div class="mb-3">
 
-<asp:GridView ID="gvObservations" runat="server" DataKeyNames="ObserverID" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
+<asp:GridView ID="gvObservations" runat="server" DataKeyNames="SlNo,Capa_Report" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None" OnRowDataBound="gvObservations_RowDataBound">
     <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
     <Columns>
         <asp:BoundField DataField="ObserverID" HeaderText="Oberver ID"  />
@@ -107,14 +139,14 @@
 
         <asp:TemplateField HeaderText="Opening Date">
     <ItemTemplate>
-        <asp:TextBox ID="txtOpeningDate" runat="server" Text='<%# Eval("OpeningDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control gv-input" />
+        <asp:TextBox ID="txtOpeningDate" runat="server" Text='<%# Eval("OpeningDate", "{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control gv-input" />
     </ItemTemplate>
 </asp:TemplateField>
 
 
  <asp:TemplateField HeaderText="Target Date">
      <ItemTemplate>
-         <asp:TextBox ID="txtTargetDate" runat="server" Text='<%# Eval("TargetDate", "{0:yyyy-MM-ddTHH:mm}") %>' TextMode="DateTimeLocal" CssClass="form-control gv-input" />
+         <asp:TextBox ID="txtTargetDate" runat="server" Text='<%# Eval("TargetDate", "{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control gv-input" />
      </ItemTemplate>
  </asp:TemplateField>
 
@@ -128,13 +160,17 @@
             ImageUrl='<%# ResolveUrl(Eval("PhotoBefore").ToString()) %>' 
             Width="90px" Height="90px" Style="object-fit:cover;" />
 
-        <!-- Hidden field to retain existing image path -->
+        <%--<!-- Hidden field to retain existing image path -->
         <asp:Label ID="lblPhotoBefore" runat="server" 
-            Text='<%# Eval("PhotoBefore") %>' Visible="false" />
+            Text='<%# Eval("PhotoBefore") %>' Visible="false" />--%>
+
+        <!-- Hidden field to retain existing image path -->
+        <asp:HiddenField ID="hfBeforePhoto" runat="server" 
+            Value='<%# Eval("PhotoBefore") %>' />
 
         <!-- Upload control to select a new image -->
         <br />
-        <asp:FileUpload ID="fuBeforePhoto" runat="server" Enabled="false" />
+        <asp:FileUpload ID="fuBeforePhoto" runat="server" Enabled="true" onchange="previewFile(this, this.parentElement.querySelector('img'))"/>
     </ItemTemplate>
 </asp:TemplateField>
 
@@ -144,13 +180,13 @@
 
         <asp:TemplateField HeaderText="Observation">
             <ItemTemplate>
-                <asp:TextBox ID="txtObservation" runat="server" Text='<%# Eval("Observation") %>' CssClass="form-control gv-input" ReadOnly="true" />
+                <asp:TextBox ID="txtObservation" runat="server" Text='<%# Eval("Observation") %>' CssClass="form-control gv-input" TextMode="MultiLine"  />
             </ItemTemplate>
         </asp:TemplateField>
 
         <asp:TemplateField HeaderText="Corrective Action">
             <ItemTemplate>
-                <asp:TextBox ID="txtCorrectiveAction" runat="server" Text='<%# Eval("CorrectiveAction") %>' CssClass="form-control gv-input" ReadOnly="true" />
+                <asp:TextBox ID="txtCorrectiveAction" runat="server" Text='<%# Eval("CorrectiveAction") %>' CssClass="form-control gv-input" TextMode="MultiLine"   />
             </ItemTemplate>
         </asp:TemplateField>
        <asp:TemplateField HeaderText="Photo (After)">
@@ -160,13 +196,13 @@
             ImageUrl='<%# ResolveUrl(Eval("PhotoAfter").ToString()) %>' 
             Width="90px" Height="90px" Style="object-fit:cover;" />
 
-        <!-- Hidden field to retain existing image path -->
-        <asp:Label ID="lblPhotoAfter" runat="server" 
-            Text='<%# Eval("PhotoAfter") %>' Visible="false" />
+         <!-- Hidden field to retain existing image path -->
+         <asp:HiddenField ID="hfAfterPhoto" runat="server" 
+             Value='<%# Eval("PhotoAfter") %>' />
 
         <!-- Upload control to select a new image -->
         <br />
-        <asp:FileUpload ID="fuAfterPhoto" runat="server" Enabled="false" />
+        <asp:FileUpload ID="fuAfterPhoto" runat="server" Enabled="true" onchange="previewFile(this, this.parentElement.querySelector('img'))"  />
     </ItemTemplate>
 </asp:TemplateField>
 
@@ -190,19 +226,40 @@
     </ItemTemplate>
 </asp:TemplateField>
 
+   <asp:TemplateField HeaderText="CAPA Created">
+    <ItemTemplate>
+       <%--<asp:CheckBox ID="chkCapa" runat="server" Enabled="false" CssClass="gv-checkbox-green"  />--%>
+        <asp:CheckBox ID="chkCapa" runat="server" Enabled="false" CssClass="classic-green" />
+
+
+    </ItemTemplate>
+</asp:TemplateField>
+
+
         <asp:TemplateField HeaderText="Status">
-            <ItemTemplate>
-                <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm rounded gv-input" SelectedValue='<%# Eval("Status") %>'>
-                    <asp:ListItem Text="Select" Value="" />
-                    <asp:ListItem Text="Pending" Value="Pending" />
-                    <asp:ListItem Text="Completed" Value="Completed" />
-                    <asp:ListItem Text="In Progress" Value="In Progress" />
-                    <asp:ListItem Text="Approved" Value="Approved" />
-                    <asp:ListItem Text="Rejected" Value="Rejected" />
-                    <asp:ListItem Text="On Hold" Value="On Hold" />
-                </asp:DropDownList>
-            </ItemTemplate>
-        </asp:TemplateField>
+    <ItemTemplate>
+        <asp:DropDownList ID="ddlStatus" runat="server" 
+            CssClass="form-control form-control-sm rounded gv-input">
+            <asp:ListItem Text="Select" Value="" />
+            <asp:ListItem Text="Pending" Value="Pending" />
+            <asp:ListItem Text="Completed" Value="Completed" />
+            <asp:ListItem Text="In Progress" Value="In Progress" />
+            <asp:ListItem Text="Approved" Value="Approved" />
+            <asp:ListItem Text="Rejected" Value="Rejected" />
+            <asp:ListItem Text="On Hold" Value="On Hold" />
+            <asp:ListItem Text="Open" Value="Open" />
+            <asp:ListItem Text="Closed" Value="Closed" />
+            <asp:ListItem Text="CAPA Created" Value="CAPA Created" />
+        </asp:DropDownList>
+    </ItemTemplate>
+</asp:TemplateField>
+
+
+       
+
+
+
+
              <asp:TemplateField HeaderText="Action">
        <ItemTemplate>
            <asp:Button ID="BtnDelObservation" runat="server" Text="Delete" CssClass="btn btn-danger btn-sm"  OnClick="BtnDelObservation_Click" OnClientClick="return confirm('Are you sure you want to delete?');" />
@@ -210,6 +267,8 @@
 </asp:TemplateField>
     </Columns>
 </asp:GridView>
+
+            
             </div>
         </div>
     </div>
@@ -287,4 +346,19 @@
         return isValid;
     }
 </script>
+
+
+    <script>
+        function previewFile(input, imgElement) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imgElement.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
+
 </asp:Content>

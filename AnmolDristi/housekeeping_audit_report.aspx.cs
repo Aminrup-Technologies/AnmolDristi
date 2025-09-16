@@ -29,30 +29,57 @@ namespace AnmolDristi
             {
                 conn.Open();
                 string query = @"SELECT 
-                                 ai.AuditID,
-                                 ai.Title,
-                                 CONVERT(VARCHAR(10), ai.AuditDate, 23) AS AuditDate,
-                                 ai.Location,
-                                 ao.ObserverID,
-                                 ao.OpenBy,
-                                 ao.CloseBy
-                                 FROM AuditInfo ai
-                                 LEFT JOIN AuditObservations ao ON ai.AuditID = ao.AuditID";
+                            ai.AuditID,
+                            ai.Title,
+                            CONVERT(VARCHAR(10), ai.AuditDate, 23) AS AuditDate,
+                            ai.Location,
+                            ai.JobID,
+                            STRING_AGG(ao.ObservationText, ', ') AS Observations
+                        FROM AuditInfo ai
+                        LEFT JOIN AuditObservations ao ON ai.AuditID = ao.AuditID
+                        GROUP BY ai.AuditID, ai.Title, ai.AuditDate, ai.Location, ai.JobID";
 
-            
+
+
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
-                   
+
 
                     gvAudit.DataSource = dt;
                     gvAudit.DataBind();
                 }
             }
         }
+
+
+        //private void LoadAuditData()
+        //{
+        //    string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    {
+        //        using (SqlCommand cmd = new SqlCommand("GetAuditInfoWithObservations", conn)) // SP name
+        //        {
+        //            cmd.CommandType = CommandType.StoredProcedure;
+
+        //            // If your SP has parameters, you can add them like:
+        //            // cmd.Parameters.AddWithValue("@SomeParam", value);
+
+        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
+        //            DataTable dt = new DataTable();
+
+        //            da.Fill(dt);
+
+        //            gvAudit.DataSource = dt;
+        //            gvAudit.DataBind();
+        //        }
+        //    }
+        //}
+
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
             string fromDate = txtfromdate.Text.Trim();

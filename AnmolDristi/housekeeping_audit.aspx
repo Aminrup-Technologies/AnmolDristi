@@ -6,8 +6,14 @@
     <div class="container">
         <div class="page-title">
             <div class="title_left">
-                <h3>Housekeeping Audit(5S) | DOC/ATS/OSH/CM-04 
-                </h3>
+                <asp:Label ID="lblTitle" runat="server" 
+                        Text="Housekeeping Audit(5S) | DOC/ATS/OSH/CM-04" 
+                        ForeColor="Green" 
+                        CssClass="text-center d-block" 
+                        Font-Size="Large" 
+                        Font-Bold="true">
+                    </asp:Label>                                              
+                
             </div>
         </div>
 
@@ -324,6 +330,7 @@
         <asp:RequiredFieldValidator ID="RFV_txtTargetDate" runat="server" ErrorMessage="*" ControlToValidate="txtTargetDate" ValidationGroup="add" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
         <div class="input-group-sm">
             <asp:TextBox ID="txtTargetDate" runat="server" CssClass="form-control form-control-sm rounded" TextMode="Date"></asp:TextBox>
+            <asp:Label ID="lblTargetvalidation" runat="server" CssClass="text-danger" Style="display:none;"></asp:Label>
         </div>
     </div>
 </div>
@@ -392,7 +399,7 @@
    </div>
                                 <!-- Button -->
                                 <div class="mt-3">
-                                    <asp:Button ID="btnAddObservation" runat="server" Text="Add Observation" CssClass="btn btn-primary" ValidationGroup="add" CausesValidation="true" OnClick="btnAddObservation_Click" OnClientClick="return validateObservationFields();"/>
+                                    <asp:Button ID="btnAddObservation" runat="server" Text="Add Observation" CssClass="btn btn-primary" ValidationGroup="add" CausesValidation="true" OnClick="btnAddObservation_Click" OnClientClick="return validateObservationFields();" UseSubmitBehavior="true"/>
                                     <asp:Label ID="lblMsg1" runat="server" ></asp:Label>
                                 </div>
                         
@@ -459,7 +466,7 @@
                 <div class="mb-3">
                     <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" OnClientClick="return validatesFields();" />
+                        <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" UseSubmitBehavior="true" OnClick="BtnSubmit_Click" OnClientClick="return validatesFields();" />
                         <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
@@ -472,7 +479,7 @@
     </div>
 </div>
     
-</div>
+
  
 
 
@@ -531,12 +538,18 @@
 
 
 <script type="text/javascript">
-        function showSuccessMessage() {
-            alert("Observations have been added successfully!");
-        }
+    function showSuccessMessage() {
+        new PNotify({
+            title: 'Success',
+            text: 'Observations have been added successfully!',
+            type: 'success',
+            styling: 'bootstrap3',
+            delay: 2000 // notification closes automatically after 2 seconds
+        });
+    }
 </script>
   
-    <script>
+    <%--<script>
         function validateDates() {
             var openingDateInput = document.getElementById('<%= txtOpeningDate.ClientID %>');
             var closingDateInput = document.getElementById('<%= txtClosingDate.ClientID %>');
@@ -564,7 +577,68 @@
         window.onload = function () {
             validateDates();
         };
+    </script>--%>
+
+
+
+
+    <script>
+        function validateDates() {
+            var openingDateInput = document.getElementById('<%= txtOpeningDate.ClientID %>');
+        var closingDateInput = document.getElementById('<%= txtClosingDate.ClientID %>');
+        var targetDateInput = document.getElementById('<%= txtTargetDate.ClientID %>');
+        var validationLabel = document.getElementById('<%= lblDateValidation.ClientID %>');
+        var targetvalidation = document.getElementById('<%=lblTargetvalidation.ClientID %>');
+
+        var openingDate = openingDateInput.value;
+        var closingDate = closingDateInput.value;
+        var targetDate = targetDateInput.value;
+
+            validationLabel.style.display = 'none'; // hide by default
+            targetvalidation.style.display = 'none';
+
+        // Check Closing Date >= Opening Date
+        if (openingDate && closingDate) {
+            var open = new Date(openingDate);
+            var close = new Date(closingDate);
+
+            if (close < open) {
+                validationLabel.style.display = 'block';
+                validationLabel.innerText = 'Closing Date cannot be before Opening Date';
+                closingDateInput.value = "";
+                closingDateInput.focus();
+                return false;
+            }
+        }
+
+        // Check Target Date >= Closing Date
+        if (closingDate && targetDate) {
+            var close = new Date(closingDate);
+            var target = new Date(targetDate);
+
+            if (target < close) {
+                targetvalidation.style.display = 'block';
+                targetvalidation.innerText = 'Target Date cannot be before Closing Date';
+                targetDateInput.value = "";
+                targetDateInput.focus();
+                return false;
+            }
+        }
+    }
+
+    // Run validation on page load
+    window.onload = function () {
+        validateDates();
+    }
+
+    // Optional: also run on change of dates
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('<%= txtClosingDate.ClientID %>').addEventListener('change', validateDates);
+        document.getElementById('<%= txtTargetDate.ClientID %>').addEventListener('change', validateDates);
+    });
     </script>
+
+
 
 
    <script type="text/javascript">
@@ -762,6 +836,9 @@
         return true;
     }
 </script>
+
+
+   
 
 
 

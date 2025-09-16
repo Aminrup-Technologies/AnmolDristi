@@ -45,8 +45,13 @@
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Housekeeping Audit(5S) | DOC/ATS/OSH/CM-04 
-                    </h3>
+                     <asp:Label ID="lblTitle" runat="server" 
+                              Text="All Records of Housekeeping Audit(5S) | DOC/ATS/OSH/CM-04" 
+                              ForeColor="Green" 
+                              CssClass="text-center d-block" 
+                              Font-Size="Large" 
+                              Font-Bold="true">
+                          </asp:Label>
                 </div>
             </div>
 
@@ -103,13 +108,14 @@
 
                                             <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                                             <Columns>
-                                                <asp:BoundField DataField="AuditID" HeaderText="Audit ID" Visible="false" />
-                                                <asp:BoundField DataField="Title" HeaderText="Title"  Visible="false" />
-                                                <asp:BoundField DataField="AuditDate" HeaderText="Date" />
+                                                <asp:BoundField DataField="AuditID" HeaderText="Audit ID"  />
                                                 <asp:BoundField DataField="Location" HeaderText="Location" />
+                                                <asp:BoundField DataField="AuditDate" HeaderText="Date" />
+                                                <asp:BoundField DataField="JobID" HeaderText="JobID" />
+                                               <%-- <asp:BoundField DataField="Location" HeaderText="Location" />
                                                 <asp:BoundField DataField="ObserverID" HeaderText="Observer ID" />
                                                 <asp:BoundField DataField="OpenBy" HeaderText="Open By" />
-                                                <asp:BoundField DataField="CloseBy" HeaderText="Close By" />
+                                                <asp:BoundField DataField="CloseBy" HeaderText="Close By" />--%>
                                                 <asp:TemplateField HeaderText="Actions">
                                                     <ItemTemplate>
                                                         <asp:Button ID="BtnEdit" runat="server" Text="Edit" CssClass="btn btn-warning btn-sm" CommandArgument='<%# Eval("AuditID") %>' OnClick="BtnEdit_Click" />

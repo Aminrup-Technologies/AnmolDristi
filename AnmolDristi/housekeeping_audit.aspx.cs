@@ -24,7 +24,7 @@ namespace AnmolDristi
             if (IsPostBack)
             {
                 // Rebind name fetched via JS to server-side textbox so it's not lost
-                txtOpenBy.Text = hfEmployeeName.Value.Trim();
+                //txtOpenBy.Text = hfEmployeeName.Value.Trim();
             }
         }
 
@@ -283,9 +283,7 @@ namespace AnmolDristi
 
             DataTable dt = (DataTable)ViewState["Observations"];
 
-            // Remove duplicate rows before inserting
-            dt = dt.DefaultView.ToTable(true, "ObserverID", "Observation", "CorrectiveAction", "Status", "OpenByWorkman", "AssignedTo", "TargetDate", "OpenBy", "CloseBy", "ClosingDate", "OpeningDate", "PhotoBefore", "PhotoAfter","Capa_Report");
-
+            
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -294,25 +292,13 @@ namespace AnmolDristi
                 SqlTransaction transaction = conn.BeginTransaction();
                 try
                 {
-                    int auditID;
+                    //int auditID;
 
-                    // Step 1: Insert into AuditInfo Table (Does NOT include PhotoBefore or PhotoAfter)
-                    using (SqlCommand cmd = new SqlCommand("InsertAuditInfo", conn, transaction))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
+                    if (!string.IsNullOrEmpty(hfEmployeeName.Value))
+                        txtOpenBy.Text = hfEmployeeName.Value.Trim();
 
-                        SqlParameter outputAuditID = new SqlParameter("@AuditID", SqlDbType.Int)
-                        {
-                            Direction = ParameterDirection.Output
-                        };
-                        cmd.Parameters.Add(outputAuditID);
-                        cmd.Parameters.AddWithValue("@Location", txtLocation.Text.Trim());
-                        cmd.Parameters.AddWithValue("@AuditDate", Convert.ToDateTime(txtdate.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@JobID", txtjobID.Text.Trim());
+                    int auditID = InsertAuditInfo(txtLocation.Text.Trim(), Convert.ToDateTime(txtdate.Text.Trim()), txtjobID.Text.Trim(), conn, transaction);
 
-                        cmd.ExecuteNonQuery();
-                        auditID = Convert.ToInt32(outputAuditID.Value);
-                    }
 
                     if (auditID == 0)
                     {
@@ -323,31 +309,53 @@ namespace AnmolDristi
                     }
                     object capaReportID = DBNull.Value;
                     string customid = "HKM-" + auditID;
+                    
 
                     // Step 2: Insert into AuditObservations Table
                     foreach (DataRow row in dt.Rows)
                     {
-                        capaReportID = DBNull.Value; // Reset for each row
+                        capaReportID = DBNull.Value;
+                        string finalStatus = row["Status"].ToString();// Reset for each row
 
                         if (row["Capa_Report"].ToString() == "Checked")
                         {
                             // Insert into CAPA Master table
                             SqlCommand cmdCAPA = new SqlCommand(@"
-INSERT INTO tbl_CAPAMaster (HeaderID, AssignedBy, AssignedDate, Description,CorrectiveAction,CA_Photo,PhotoPath)
+INSERT INTO tbl_CAPAMaster (HeaderID, AssignedBy, AssignedDate, Description,CorrectiveAction,CA_Photo,PhotoPath,CA_ActionBy,CA_Date,TargetCompletionDate,ResponsiblePerson,SourceTable)
 OUTPUT INSERTED.CAPAID
-VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description,@CorrectiveAction,@CA_Photo,@PhotoPath)", conn, transaction);
+VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description,@CorrectiveAction,@CA_Photo,@PhotoPath,@CA_ActionBy,@CA_Date,@TargetCompletionDate,@ResponsiblePerson,@SourceTable)", conn, transaction);
 
                             cmdCAPA.Parameters.AddWithValue("@HeaderID", customid);
-                            cmdCAPA.Parameters.AddWithValue("@AssignedBy", row["AssignedTo"].ToString());
+                            cmdCAPA.Parameters.AddWithValue("@AssignedBy", row["ObserverID"].ToString());
                             cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
                             cmdCAPA.Parameters.AddWithValue("@Description", row["Observation"].ToString());
                             cmdCAPA.Parameters.AddWithValue("@CorrectiveAction", row["CorrectiveAction"].ToString());
+                            //cmdCAPA.Parameters.AddWithValue("@CA_Photo",
+                            //    row["PhotoAfter"] == DBNull.Value || row["PhotoAfter"] == null ? (object)DBNull.Value : row["PhotoAfter"].ToString());
                             cmdCAPA.Parameters.AddWithValue("@CA_Photo",
-                                row["PhotoAfter"] == DBNull.Value || row["PhotoAfter"] == null ? (object)DBNull.Value : row["PhotoAfter"].ToString());
+                                                    row["PhotoAfter"] == DBNull.Value || row["PhotoAfter"] == null
+                                                        ? (object)DBNull.Value
+                                                        : Path.GetFileName(row["PhotoAfter"].ToString()));
+
                             cmdCAPA.Parameters.AddWithValue("@PhotoPath",
                                 row["PhotoBefore"] == DBNull.Value || row["PhotoBefore"] == null ? (object)DBNull.Value : row["PhotoBefore"].ToString());
+                            cmdCAPA.Parameters.AddWithValue("@CA_ActionBy", row["ObserverID"].ToString());
+                            cmdCAPA.Parameters.AddWithValue("@CA_Date", row["OpeningDate"].ToString());
+                            cmdCAPA.Parameters.AddWithValue("@TargetCompletionDate", row["TargetDate"].ToString());
+                            cmdCAPA.Parameters.AddWithValue("@ResponsiblePerson", row["AssignedTo"].ToString());
+                            cmdCAPA.Parameters.AddWithValue("@SourceTable", "Housekeeping Audit(5S)");
 
                             capaReportID = cmdCAPA.ExecuteScalar();
+
+                            // Fetch status from CAPA table
+                            SqlCommand cmdStatus = new SqlCommand("SELECT Status FROM tbl_CAPAMaster WHERE CAPAID = @CAPAID", conn, transaction);
+                            cmdStatus.Parameters.AddWithValue("@CAPAID", capaReportID);
+                            object result = cmdStatus.ExecuteScalar();
+                            if (result != null)
+                            {
+                                finalStatus = result.ToString(); // overwrite with CAPA status
+                            }
+
                         }
 
 
@@ -362,7 +370,7 @@ VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description,@CorrectiveAction,@C
                             cmd.Parameters.AddWithValue("@ObserverID",row["ObserverID"].ToString());
                             cmd.Parameters.AddWithValue("@ObservationText",row["Observation"].ToString());
                             cmd.Parameters.AddWithValue("@CorrectiveAction",row["CorrectiveAction"].ToString());
-                            cmd.Parameters.AddWithValue("@Status",row["Status"].ToString());
+                            cmd.Parameters.AddWithValue("@Status", finalStatus);
                             cmd.Parameters.AddWithValue("@OpenBy",row["OpenBy"].ToString());
                             cmd.Parameters.AddWithValue("@CloseBy",row["CloseBy"].ToString());
                             cmd.Parameters.AddWithValue("@AssignedTo", row["AssignedTo"].ToString());
@@ -393,14 +401,32 @@ VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description,@CorrectiveAction,@C
 
 
                     transaction.Commit();
-                    lblMsg.Text = "Transaction completed successfully!";
-                    lblMsg.ForeColor = System.Drawing.Color.Green;
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotify",
+                                "new PNotify({ " +
+                                    "title: 'Success', " +
+                                    "text: 'Record Submitted successfully!', " +
+                                    "type: 'success', " +
+                                    "styling: 'bootstrap3', " +
+                                    "delay: 2000 " + // closes after 2 seconds
+                                "});", true);
+
+                    // Clear observations to prevent duplicate submission
+                    ViewState["Observations"] = null;
+                    gvObservations.DataSource = null;
+                    gvObservations.DataBind();
                 }
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    lblMsg.Text = "Transaction failed: " + ex.Message;
-                    lblMsg.ForeColor = System.Drawing.Color.Red;
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotifyError",
+                                    "new PNotify({ " +
+                                        "title: 'Error', " +
+                                        "text: 'Transaction failed: " + ex.Message.Replace("'", "\\'") + "', " + // escape single quotes
+                                        "type: 'error', " +
+                                        "styling: 'bootstrap3', " +
+                                        "delay: 2000 " + // closes after 2 seconds
+                                    "});", true);
+
                 }
             }
 
@@ -412,7 +438,28 @@ VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description,@CorrectiveAction,@C
         {
             Response.Redirect("housekeeping_audit.aspx");
         }
-        
+
+
+        private int InsertAuditInfo(string location, DateTime auditDate, string jobID, SqlConnection conn, SqlTransaction transaction)
+        {
+            using (SqlCommand cmd = new SqlCommand("InsertAuditInfo", conn, transaction))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter outputAuditID = new SqlParameter("@AuditID", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                cmd.Parameters.Add(outputAuditID);
+                cmd.Parameters.AddWithValue("@Location", location);
+                cmd.Parameters.AddWithValue("@AuditDate", auditDate);
+                cmd.Parameters.AddWithValue("@JobID", jobID);
+
+                cmd.ExecuteNonQuery();
+                return Convert.ToInt32(outputAuditID.Value);
+            }
+        }
+
+
     }
-    
+
 }

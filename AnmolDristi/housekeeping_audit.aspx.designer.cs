@@ -15,6 +15,15 @@ namespace AnmolDristi
     {
 
         /// <summary>
+        /// lblTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTitle;
+
+        /// <summary>
         /// lbl_txtdate control.
         /// </summary>
         /// <remarks>
@@ -436,6 +445,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTargetDate;
+
+        /// <summary>
+        /// lblTargetvalidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTargetvalidation;
 
         /// <summary>
         /// lbl_txtAssignedTo control.

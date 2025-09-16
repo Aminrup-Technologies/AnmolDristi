@@ -49,17 +49,17 @@ namespace AnmolDristi
                 }
             }
         }
-       
+
 
         private void LoadObservations(int auditID)
         {
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connStr))
             {
-                string query = @"SELECT ObserverID, OpeningDate, OpenBy, 
+                string query = @"SELECT SlNo,ObserverID, OpeningDate, OpenBy, 
                                 ObservationText AS Observation, CorrectiveAction,
                                 ClosingDate, CloseBy, Status,OpenByWorkman,TargetDate,AssignedTo,
-                                PhotoBefore, PhotoAfter
+                                PhotoBefore, PhotoAfter, Capa_Report
                          FROM AuditObservations 
                          WHERE AuditID = @AuditID";
 
@@ -98,7 +98,10 @@ namespace AnmolDristi
                 {
                     if (row.RowType == DataControlRowType.DataRow)
                     {
-                        string observerID = gvObservations.DataKeys[row.RowIndex].Value.ToString();
+                        string slNo = gvObservations.DataKeys[row.RowIndex].Value.ToString();
+                        string observerID = row.Cells[0].Text;
+                        string capaId = gvObservations.DataKeys[row.RowIndex]["Capa_Report"].ToString();
+
 
                         DateTime openingDate = DateTime.Parse(((TextBox)row.FindControl("txtOpeningDate")).Text);
                         string openBy = ((TextBox)row.FindControl("txtOpenBy")).Text;
@@ -113,8 +116,9 @@ namespace AnmolDristi
 
                         // Handle PhotoBefore
                         FileUpload fuBefore = (FileUpload)row.FindControl("fuBeforePhoto");
-                        Label lblBefore = (Label)row.FindControl("lblPhotoBefore");
-                        string beforePhotoPath = lblBefore.Text;
+                        HiddenField hfBefore = (HiddenField)row.FindControl("hfBeforePhoto");
+                        Image imgBefore = (Image)row.FindControl("imgBeforePhoto");
+                        string beforePhotoPath = hfBefore.Value; // preserve old path
 
                         if (fuBefore.HasFile)
                         {
@@ -126,20 +130,28 @@ namespace AnmolDristi
 
                         // Handle PhotoAfter
                         FileUpload fuAfter = (FileUpload)row.FindControl("fuAfterPhoto");
-                        Label lblAfter = (Label)row.FindControl("lblPhotoAfter");
-                        string afterPhotoPath = lblAfter.Text;
+                        HiddenField hfafter = (HiddenField)row.FindControl("hfAfterPhoto");
+                        Image imgAfter = (Image)row.FindControl("imgAfterPhoto");
+                        string afterPhotoPath = hfafter.Value;
 
                         if (fuAfter.HasFile)
                         {
                             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(fuAfter.FileName);
                             string savePath = Server.MapPath("~/images/") + fileName;
                             fuAfter.SaveAs(savePath);
-                            afterPhotoPath = "~/images/" + fileName;
+                            afterPhotoPath = fileName;
                         }
+
+
+
+
+
+
 
                         // Update AuditObservations
                         string updateObservation = @"
-                        UPDATE AuditObservations SET 
+                        UPDATE AuditObservations SET
+                        ObserverID = @ObserverID,
                         OpeningDate = @OpeningDate,
                         OpenBy = @OpenBy,
                         OpenByWorkman = @OpenByWorkman,
@@ -152,10 +164,11 @@ namespace AnmolDristi
                         AssignedTo = @AssignedTo,
                         PhotoBefore = @PhotoBefore,
                         PhotoAfter = @PhotoAfter
-                        WHERE ObserverID = @ObserverID";
+                        WHERE SlNo = @SlNo";
 
                         using (SqlCommand cmd = new SqlCommand(updateObservation, con))
                         {
+                            cmd.Parameters.AddWithValue("@SlNo", slNo);
                             cmd.Parameters.AddWithValue("@ObserverID", observerID);
                             cmd.Parameters.AddWithValue("@OpeningDate", openingDate);
                             cmd.Parameters.AddWithValue("@OpenBy", openBy);
@@ -171,6 +184,38 @@ namespace AnmolDristi
                             cmd.Parameters.AddWithValue("@PhotoAfter", afterPhotoPath);
                             cmd.ExecuteNonQuery();
                         }
+
+
+
+                        // ✅ Reverse Sync → tbl_CAPAMaster (using CAPAID = Capa_Report)
+                        string updateCapars = @"
+                                            UPDATE tbl_CAPAMaster SET
+                                                AssignedBy = @ObserverID,
+                                                AssignedDate = @OpeningDate,
+                                                Description = @ObservationText,
+                                                CorrectiveAction = @CorrectiveAction,
+                                                TargetCompletionDate = @TargetDate,
+                                                ResponsiblePerson = @AssignedTo,
+                                                PhotoPath = @PhotoBefore,
+                                                CA_Photo = @PhotoAfter
+                                            WHERE CAPAID = @CAPAID";
+
+                        using (SqlCommand cmd2 = new SqlCommand(updateCapars, con))
+                        {
+                            cmd2.Parameters.AddWithValue("@CAPAID", capaId);
+                            cmd2.Parameters.AddWithValue("@ObserverID", observerID);
+                            cmd2.Parameters.AddWithValue("@OpeningDate", openingDate);
+                            cmd2.Parameters.AddWithValue("@ObservationText", observation);
+                            cmd2.Parameters.AddWithValue("@CorrectiveAction", correctiveAction);
+                            cmd2.Parameters.AddWithValue("@TargetDate", targetDate);
+                            //cmd2.Parameters.AddWithValue("@Status", status);
+                            cmd2.Parameters.AddWithValue("@AssignedTo", assignedTo);
+                            cmd2.Parameters.AddWithValue("@PhotoBefore", beforePhotoPath);
+                            cmd2.Parameters.AddWithValue("@PhotoAfter", afterPhotoPath);
+                            cmd2.ExecuteNonQuery();
+                        }
+
+
                     }
                 }
 
@@ -179,8 +224,14 @@ namespace AnmolDristi
 
             LoadObservations(auditID);
 
-            lblMsg.Text = "Data updated successfully!";
-            lblMsg.ForeColor = System.Drawing.Color.Green;
+            //lblMsg.Text = "Data updated successfully!";
+            //lblMsg.ForeColor = System.Drawing.Color.Green;
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotify",
+              "new PNotify({ title: 'Success', text: 'Record updated successfully!', type: 'success', styling: 'bootstrap3', delay: 1000  });", true);
+
+
+
         }
 
 
@@ -241,12 +292,72 @@ namespace AnmolDristi
             }
         }
 
+        protected void gvObservations_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
 
+            if (e.Row.RowType != DataControlRowType.DataRow)
+                return;
 
+            // Find controls
+            DropDownList ddlStatus = (DropDownList)e.Row.FindControl("ddlStatus");
+            CheckBox chkCapa = (CheckBox)e.Row.FindControl("chkCapa"); 
+            if (ddlStatus == null)
+                return;
 
+            // Populate dropdown with all possible status values
+            ddlStatus.Items.Clear();
+            ddlStatus.Items.Add(new ListItem("Select", ""));
+            ddlStatus.Items.Add(new ListItem("Pending", "Pending"));
+            ddlStatus.Items.Add(new ListItem("Completed", "Completed"));
+            ddlStatus.Items.Add(new ListItem("In Progress", "In Progress"));
+            ddlStatus.Items.Add(new ListItem("Approved", "Approved"));
+            ddlStatus.Items.Add(new ListItem("Rejected", "Rejected"));
+            ddlStatus.Items.Add(new ListItem("On Hold", "On Hold"));
+            ddlStatus.Items.Add(new ListItem("Open", "Open"));
+            ddlStatus.Items.Add(new ListItem("Closed", "Closed"));
+            ddlStatus.Items.Add(new ListItem("Created", "Created"));
 
+            // Get DB values
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            string dbStatus = row["Status"]?.ToString();
+            object capaReportObj = row["Capa_Report"]; // can be null
 
+            // Ensure DB value is handled even if not in dropdown
+            if (!string.IsNullOrEmpty(dbStatus))
+            {
+                ListItem existingItem = ddlStatus.Items.FindByValue(dbStatus);
+                if (existingItem != null)
+                {
+                    ddlStatus.SelectedValue = dbStatus;
+                }
+                else
+                {
+                    // Add missing DB value dynamically
+                    ddlStatus.Items.Add(new ListItem(dbStatus, dbStatus));
+                    ddlStatus.SelectedValue = dbStatus;
+                }
+            }
+            else
+            {
+                ddlStatus.SelectedIndex = 0; // "Select"
+            }
 
+            // readonly if CAPA exists
+            if (capaReportObj != DBNull.Value && capaReportObj != null && !string.IsNullOrEmpty(capaReportObj.ToString()))
+            {
+                ddlStatus.Enabled = false; 
+                chkCapa.Checked = true;
+                
+
+            }
+            else
+            {
+                ddlStatus.Enabled = true; 
+                chkCapa.Checked = false;
+            }
+        }
+
+       
     }
 
 }
