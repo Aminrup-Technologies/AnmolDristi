@@ -134,24 +134,46 @@
     <div class="table-responsive">
          <div class="col-md-6">
              <div class="mb-3">
-    <asp:GridView ID="gvAttendees" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None"   DataKeyNames="AttendanceID"> 
+    <asp:GridView ID="gvAttendees" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None" DataKeyNames="AttendanceID" OnRowDataBound="gvAttendees_RowDataBound"> 
         <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
     <Columns>
         <asp:BoundField DataField="AttendanceID" HeaderText="SNo" Visible="false" />
 
-         <asp:TemplateField HeaderText="Attendee Type">
+         <%--<asp:TemplateField HeaderText="Attendee Type">
   <ItemTemplate>
- <asp:TextBox ID="txtAttendeeType" runat="server" Text='<%# Eval("Attendee_Type") %>' CssClass="form-control gv-input" ReadOnly="true" />
+ <asp:TextBox ID="txtAttendeeType" runat="server" Text='<%# Eval("Attendee_Type") %>' CssClass="form-control gv-input"  />
   </ItemTemplate>
-  </asp:TemplateField>
+  </asp:TemplateField>--%>
+
+
+
+        <asp:TemplateField HeaderText="Attendee Type">
+    <ItemTemplate>
+        <asp:DropDownList ID="ddlAttendeeType" runat="server" 
+            CssClass="form-control form-control-sm rounded gv-input"
+            AutoPostBack="true" OnSelectedIndexChanged="ddlAttendeeType_SelectedIndexChanged">
+            <asp:ListItem Text="Select" Value="" />
+            <asp:ListItem Text="Internal" Value="Internal" />
+            <asp:ListItem Text="External" Value="External" />
+        </asp:DropDownList>
+    </ItemTemplate>
+</asp:TemplateField>
+
+
+
+
+
+
+
+
          <asp:TemplateField HeaderText="Employee Name ">
   <ItemTemplate>
- <asp:TextBox ID="txtEmployeeName" runat="server" Text='<%# Eval("Name") %>' CssClass="form-control gv-input" ReadOnly="true" />
+ <asp:TextBox ID="txtEmployeeName" runat="server" Text='<%# Eval("Name") %>' CssClass="form-control gv-input"  />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Attendee Code">
   <ItemTemplate>
- <asp:TextBox ID="txtAttendeeCode" runat="server" Text='<%# Eval("AttendeeCode") %>' CssClass="form-control gv-input"  ReadOnly="true" />
+ <asp:TextBox ID="txtAttendeeCode" runat="server" Text='<%# Eval("AttendeeCode") %>' CssClass="form-control gv-input" AutoPostBack="true" OnTextChanged="txtAttendeeCode_TextChanged" />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Designation">
@@ -192,52 +214,88 @@
     <div class="table-responsive">
          <div class="col-md-6">
              <div class="mb-3">
-    <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None"   DataKeyNames="IssueID"> 
+    <asp:GridView ID="gvIssues" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None" DataKeyNames="IssueID,ReviewBy" OnRowDataBound="gvIssues_RowDataBound" OnRowUpdating="gvIssues_RowUpdating"> 
         <HeaderStyle BackColor="#2C3E50" ForeColor="#ECF0F1" Font-Bold="true" Font-Size="Small" Font-Names="Segoe UI" HorizontalAlign="Center" />
     <Columns>
         <asp:BoundField DataField="IssueID" HeaderText="SNo" Visible="false" />
        
          <asp:TemplateField HeaderText="Agenda Title">
   <ItemTemplate>
- <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Eval("AgendaTitle") %>' CssClass="form-control gv-input" ReadOnly="true" />
+ <asp:TextBox ID="txtAgendaTitle" runat="server" Text='<%# Eval("AgendaTitle") %>' CssClass="form-control gv-input"  />
   </ItemTemplate>
   </asp:TemplateField>
          <asp:TemplateField HeaderText="Issues Discussed">
   <ItemTemplate>
- <asp:TextBox ID="txtIssuesDiscussed" runat="server" Text='<%# Eval("IssuesDiscussed") %>' CssClass="form-control gv-input" ReadOnly="true" />
+ <asp:TextBox ID="txtIssuesDiscussed" runat="server" Text='<%# Eval("IssuesDiscussed") %>' CssClass="form-control gv-input"  />
   </ItemTemplate>
   </asp:TemplateField>
-         <asp:TemplateField HeaderText="Action By">
+         <asp:TemplateField HeaderText="Close By">
   <ItemTemplate>
  <asp:TextBox ID="txtActionBy" runat="server" Text='<%# Eval("ActionBy") %>' CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Responsiblity">
+            <ItemTemplate>
+                <asp:TextBox ID="txtresponsiblity" runat="server" Text='<%# Eval("Responsiblity") %>' CssClass="form-control gv-input" />
+            </ItemTemplate>
+        </asp:TemplateField>
          
          <asp:TemplateField HeaderText="Target Date">
   <ItemTemplate>
  <asp:TextBox ID="txtTargetDate" runat="server" Text='<%# Eval("TargetDate","{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control gv-input" />
   </ItemTemplate>
   </asp:TemplateField>
-                <asp:TemplateField HeaderText="Review Date">
+                <asp:TemplateField HeaderText="Closing Date">
  <ItemTemplate>
-<asp:TextBox ID="txtReviewDate" runat="server" Text='<%# Eval("ReviewDate","{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control gv-input" />
+<asp:TextBox ID="txtReviewDate" runat="server" Text='<%# Eval("CloseDate","{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control gv-input" />
  </ItemTemplate>
  </asp:TemplateField>
-  <asp:TemplateField HeaderText="Review By">
+
+
+ <%-- <asp:TemplateField HeaderText="Review By">
  <ItemTemplate>
 <asp:TextBox ID="txtReviewBy" runat="server" Text='<%# Eval("ReviewBy") %>'  CssClass="form-control gv-input" />
  </ItemTemplate>
- </asp:TemplateField>
+ </asp:TemplateField>--%>
+
+
+       <asp:TemplateField HeaderText="Point Raised By">
+    <ItemTemplate>
+        <asp:DropDownList ID="ddlReviewBy" runat="server" CssClass="form-control gv-input">
+        </asp:DropDownList>
+    </ItemTemplate>
+</asp:TemplateField>
+
+
+        <asp:TemplateField HeaderText="CAPA Created">
+    <ItemTemplate>
+        <asp:Label ID="lblCapaLinked" 
+            runat="server" 
+            Text='<%# Eval("Capa_Report") == DBNull.Value || Eval("Capa_Report") == null ? "No" : "Yes" %>' 
+            CssClass='<%# (Eval("Capa_Report") == DBNull.Value || Eval("Capa_Report") == null) 
+                        ? "badge bg-danger fs-6 px-3 py-2" 
+                        : "badge bg-success fs-6 px-3 py-2" %>' />
+    </ItemTemplate>
+</asp:TemplateField>
+
+
+
+
+
+
+
+
          <asp:TemplateField HeaderText="Status">
      <ItemTemplate>
-         <asp:DropDownList ID="ddlStattus" runat="server" CssClass="form-control form-control-sm rounded gv-input" SelectedValue='<%# Eval("Status") %>'>
+         <asp:DropDownList ID="ddlStattus" runat="server" CssClass="form-control form-control-sm rounded gv-input" SelectedValue='<%# Eval("Status") %>' AutoPostBack="true" onchange="toggleIssueFields(this)">
              <asp:ListItem Text="Select" Value="" />
-             <asp:ListItem Text="Pending" Value="Pending" />
-             <asp:ListItem Text="Completed" Value="Completed" />
-             <asp:ListItem Text="In Progress" Value="In Progress" />
-             <asp:ListItem Text="Approved" Value="Approved" />
-             <asp:ListItem Text="Rejected" Value="Rejected" />
-             <asp:ListItem Text="On Hold" Value="On Hold" />
+             <asp:ListItem Text="Created" Value="Created" />
+             <asp:ListItem Text="Open" Value="Open" />
+             <asp:ListItem Text="Assigned" Value="Assigned" />
+             <asp:ListItem Text="Closed" Value="Closed" />
+             <%--<asp:ListItem Text="Rejected" Value="Rejected" />
+             <asp:ListItem Text="On Hold" Value="On Hold" />--%>
          </asp:DropDownList>
      </ItemTemplate>
  </asp:TemplateField>
@@ -286,7 +344,7 @@
                 <div class="mb-3">
                     <asp:Label ID="lblbtnUpdate" runat="server" AssociatedControlID="btnUpdate" Text="Click to Update" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                     <div class="input-group input-group-sm">
-                        <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm"  ValidationGroup="add" CausesValidation="true" OnClientClick="return validateAttendeesAndIssues();" OnClick="btnUpdate_Click" />   
+                        <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="btn btn-success btn-sm"  ValidationGroup="add" CausesValidation="true" OnClientClick="return validateForm();" OnClick="btnUpdate_Click" />   
                         <asp:Button ID="Btnback" runat="server" Text="Back" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="Btnback_Click" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         
@@ -364,5 +422,207 @@
         return isValid;
     }
 </script>
+
+  <%-- <script type="text/javascript">
+       function validateForm() {
+           var isValid = true;
+           var errorMsg = "";
+
+           // ✅ Validate Attendees Grid
+           $("#<%= gvAttendees.ClientID %> tr").each(function () {
+            var ddlType = $(this).find("select[id*='ddlAttendeeType']");
+            var txtName = $(this).find("input[id*='txtEmployeeName']");
+            var txtCode = $(this).find("input[id*='txtAttendeeCode']");
+            var txtDesignation = $(this).find("input[id*='txtDesignation']");
+            var ddlStatus = $(this).find("select[id*='ddlAttendanceStatus']");
+
+            if (ddlType.length > 0) { // skip header row
+                var type = ddlType.val();
+                var name = txtName.val().trim();
+                var code = txtCode.val().trim();
+                var designation = txtDesignation.val().trim();
+                var status = ddlStatus.val();
+
+                if (!type) {
+                    isValid = false; errorMsg = "Attendee Type is required."; return false;
+                }
+                if (type === "Internal" && code === "") {
+                    isValid = false; errorMsg = "Employee Code is required for Internal attendees."; return false;
+                }
+                if (type === "External" && name === "") {
+                    isValid = false; errorMsg = "Employee Name is required for External attendees."; return false;
+                }
+                if (designation === "") {
+                    isValid = false; errorMsg = "Designation cannot be empty."; return false;
+                }
+                if (!status) {
+                    isValid = false; errorMsg = "Attendance Status is required."; return false;
+                }
+            }
+        });
+
+        // ✅ Validate Issues Grid
+        const issuesGrid = document.getElementById("<%= gvIssues.ClientID %>");
+           if (issuesGrid) {
+               const rows = issuesGrid.getElementsByTagName("tr");
+               for (let i = 1; i < rows.length; i++) { // skip header row
+                   const row = rows[i];
+                   const fields = [
+                       row.querySelector("input[id*='txtAgendaTitle']"),
+                       row.querySelector("input[id*='txtIssuesDiscussed']"),
+                       row.querySelector("input[id*='txtActionBy']"),
+                       row.querySelector("input[id*='txtTargetDate']"),
+                       row.querySelector("input[id*='txtReviewDate']"),
+                       row.querySelector("input[id*='txtReviewBy']"),
+                       row.querySelector("select[id*='ddlStattus']")
+                   ];
+
+                   fields.forEach(function (field) {
+                       if (field && !field.value.trim()) {
+                           field.classList.add("is-invalid");
+                           isValid = false;
+                           if (!errorMsg) errorMsg = "All Issue fields are required.";
+                       } else if (field) {
+                           field.classList.remove("is-invalid");
+                       }
+                   });
+               }
+           }
+
+           if (!isValid) {
+               new PNotify({
+                   title: 'Validation Error',
+                   text: errorMsg,
+                   type: 'error',
+                   styling: 'bootstrap3',
+                   delay: 2000
+               });
+           }
+
+           return isValid;
+       }
+   </script>--%>
+
+
+
+
+
+
+    <script type="text/javascript">
+      
+        function validateForm() {
+            var isValid = true;
+            var errorMsg = "";
+
+            // Validate Attendees Grid
+            $("#<%= gvAttendees.ClientID %> tr").each(function () {
+            var ddlType = $(this).find("select[id*='ddlAttendeeType']");
+            var txtName = $(this).find("input[id*='txtEmployeeName']");
+            var txtCode = $(this).find("input[id*='txtAttendeeCode']");
+            var txtDesignation = $(this).find("input[id*='txtDesignation']");
+            var ddlStatus = $(this).find("select[id*='ddlAttendanceStatus']");
+
+            if (ddlType.length > 0) {
+                var type = ddlType.val();
+                var name = txtName.val().trim();
+                var code = txtCode.val().trim();
+                var designation = txtDesignation.val().trim();
+                var status = ddlStatus.val();
+
+                if (!ddlType.prop("disabled") && !type) {
+                    isValid = false; errorMsg = "Attendee Type is required."; return false;
+                }
+                if (type === "Internal" && !txtCode.prop("disabled") && code === "") {
+                    isValid = false; errorMsg = "Employee Code is required for Internal attendees."; return false;
+                }
+                if (type === "External" && !txtName.prop("disabled") && name === "") {
+                    isValid = false; errorMsg = "Employee Name is required for External attendees."; return false;
+                }
+                if (!txtDesignation.prop("disabled") && designation === "") {
+                    isValid = false; errorMsg = "Designation cannot be empty."; return false;
+                }
+                if (!ddlStatus.prop("disabled") && !status) {
+                    isValid = false; errorMsg = "Attendance Status is required."; return false;
+                }
+            }
+        });
+
+        // Validate Issues Grid
+        const issuesGrid = document.getElementById("<%= gvIssues.ClientID %>");
+        if (issuesGrid) {
+            const rows = issuesGrid.getElementsByTagName("tr");
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+
+                const fields = [
+                    row.querySelector("input[id*='txtAgendaTitle']"),
+                    row.querySelector("input[id*='txtIssuesDiscussed']"),
+                    row.querySelector("input[id*='txtActionBy']"),
+                    row.querySelector("input[id*='txtTargetDate']"),
+                    row.querySelector("input[id*='txtReviewDate']"),
+                    row.querySelector("input[id*='txtReviewBy']"),
+                    row.querySelector("select[id*='ddlStattus']")
+                ];
+
+                fields.forEach(function (field) {
+                    if (field) {
+                        // Skip validation if field is disabled
+                        if (field.disabled) return;
+
+                        if (!field.value.trim()) {
+                            field.classList.add("is-invalid");
+                            isValid = false;
+                            if (!errorMsg) errorMsg = "All Issue fields are required.";
+                        } else {
+                            field.classList.remove("is-invalid");
+                        }
+                    }
+                });
+            }
+        }
+
+        if (!isValid) {
+            new PNotify({
+                title: 'Validation Error',
+                text: errorMsg,
+                type: 'error',
+                styling: 'bootstrap3',
+                delay: 2000
+            });
+        }
+
+        return isValid;
+    }
+
+    // Toggle ActionBy and ReviewDate based on Status
+    function toggleIssueFields(ddl) {
+        const row = ddl.closest("tr");
+        const actionBy = row.querySelector("input[id*='txtActionBy']");
+        const reviewDate = row.querySelector("input[id*='txtReviewDate']");
+
+        if (ddl.value === "Closed") {
+            if (actionBy) actionBy.disabled = false;
+            if (reviewDate) reviewDate.disabled = false;
+        } else {
+            if (actionBy) { actionBy.value = ""; actionBy.disabled = true; }
+            if (reviewDate) { reviewDate.value = ""; reviewDate.disabled = true; }
+        }
+    }
+
+    // toggle function to all ddlStattus 
+    $(document).ready(function () {
+        $("#<%= gvIssues.ClientID %> select[id*='ddlStattus']").each(function () {
+            toggleIssueFields(this); 
+            $(this).change(function () {
+                toggleIssueFields(this); 
+            });
+        });
+    });
+    </script>
+
+
+
+
+
 
 </asp:Content>

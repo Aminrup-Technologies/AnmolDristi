@@ -270,195 +270,145 @@
  
         <div class="row">
    
-                                 
-    <%--  <div class="col-md-4">
-    <div class="mb-3">
-        <asp:Label ID="lbl_txtAgendaTitle" runat="server" AssociatedControlID="txtAgendaTitle" Text="Agenda Title" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtAgendaTitle" runat="server" ErrorMessage="*" ControlToValidate="txtAgendaTitle" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtAgendaTitle" runat="server" CssClass="form-control form-control-sm rounded " ></asp:TextBox>
-        </div>
-    </div>
-</div>                          
-     <div class="col-md-4">
-    <div class="mb-3">
-        <asp:Label ID="lbl_txtIssuesDes" runat="server" AssociatedControlID="txtIssuesDes" Text="Issues Discussed" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_" runat="server" ErrorMessage="*" ValidationGroup="add1" ControlToValidate="txtIssuesDes" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div id="PointsContainer" runat="server">
-            <div class="d-flex align-items-center mb-2 gap-2">
-                <asp:TextBox ID="txtIssuesDes" runat="server" CssClass="form-control form-control-sm rounded points-input"></asp:TextBox>
-                <asp:Button ID="BtnAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-sm btn-fixed-size" OnClientClick="addbutton(); return false;" />
-                <asp:Button ID="BtnRemove" runat="server" Text="Remove" CssClass="btn btn-danger btn-sm btn-fixed-size" OnClientClick="removebutton(this); return false;" />
+                     
+                      <!-- Agenda Title -->
 
-            </div>
-        </div>
-    </div>
-       
-
-    <script type="text/javascript">
-        function addbutton() {
-
-            var container = document.getElementById('<%= PointsContainer.ClientID %>');
-
-            if (!container) {
-                console.error("Error: PointsContainer not found!");
-                return;
-            }
-
-            var div = document.createElement("div");
-            div.className = "d-flex align-items-center mb-2";
-
-            var input = document.createElement("input");
-            input.type = "text";
-            input.className = "form-control form-control-sm points-input";
-            input.placeholder = "Enter Points";
-
-            var addBtn = document.createElement("button");
-            addBtn.type = "button";
-            addBtn.className = "btn btn-primary btn-sm btn-fixed-size";
-            addBtn.textContent = "Add";
-            addBtn.onclick = addbutton;
-
-            var removeBtn = document.createElement("button");
-            removeBtn.type = "button";
-            removeBtn.className = "btn btn-danger btn-sm btn-fixed-size";
-            removeBtn.textContent = "Remove";
-            removeBtn.onclick = function () {
-                removebutton(this);
-            };
-
-            div.appendChild(input);
-            div.appendChild(addBtn);
-            div.appendChild(removeBtn);
-            container.appendChild(div);
-        }
-
-        function removebutton(button) {
-            var container = document.getElementById('<%= PointsContainer.ClientID %>');
-            if (container.children.length > 1) {
-                button.parentNode.remove();
-            }
-            else {
-                alert("At least one point is required.");
-            }
-        }
-        function preparePoints() {
-            var container = document.getElementById('<%= PointsContainer.ClientID %>');
-            var inputs = container.getElementsByTagName('input');
-            var pointsArray = [];
-
-            for (var i = 0; i < inputs.length; i++) {
-                if (inputs[i].type === "text" && inputs[i].value.trim() !== "") {
-                    pointsArray.push(inputs[i].value.trim());
-                }
-            }
-
-          document.getElementById('<%= hdnPointsDiscussed.ClientID %>').value = pointsArray.join(" , ");
-        }
-    </script>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <asp:Label ID="lbl_txtAgendaTitle" runat="server" AssociatedControlID="txtAgendaTitle"
+                                           Text="Agenda Title" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+                                <asp:RequiredFieldValidator ID="RFV_txtAgendaTitle" runat="server" ErrorMessage="*" 
+                                                            ControlToValidate="txtAgendaTitle" ValidationGroup="add1" 
+                                                            Display="Dynamic" ForeColor="Red" />
+                                <asp:TextBox ID="txtAgendaTitle" runat="server" CssClass="form-control form-control-sm rounded" />
+                            </div>
+                        </div>
 
 
-</div>
 
-            <div class="col-md-4">
-    <div class="mb-3">
-        <asp:Label ID="lbl_chkQ3CAPA" runat="server" AssociatedControlID="chkQ3CAPA"
-                   Text="CAPA Report" ForeColor="Blue" Font-Bold="true" Font-Size="Small"
-                   CssClass="form-label d-block"></asp:Label>
-        <div class="input-group-sm">
-            <asp:CheckBox ID="chkQ3CAPA" runat="server" Text="CAPA" CssClass="form-check-input me-2"  Checked="true" />
-        </div>
-    </div>
-</div>--%>
+                       <!-- Issues Discussed -->
+                         <div class="col-md-4">
+                             <div class="mb-3">
+                                 <asp:Label ID="lbl_txtIssuesDes" runat="server" AssociatedControlID="txtIssuesDes"
+                                            Text="Issues Discussed" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
+                                 <asp:RequiredFieldValidator ID="RFV_IssuesDes" runat="server" ErrorMessage="*" 
+                                                             ValidationGroup="add1" ControlToValidate="txtIssuesDes" 
+                                                             Display="Dynamic" ForeColor="Red" />
+                                 <div id="PointsContainer" runat="server">
+                                     <div class="d-flex align-items-center gap-2">
+                                         <asp:TextBox ID="txtIssuesDes" runat="server" CssClass="form-control form-control-sm rounded points-input me-2" TextMode="MultiLine" />
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
 
 
-             <div class="col-md-6">
-         <div class="mb-3">
-        <asp:Label ID="lbl_txtReviewBy" runat="server" AssociatedControlID="txtReviewBy" Text="Point Raised By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtReviewBy" runat="server" ErrorMessage="*" ControlToValidate="txtReviewBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtReviewBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
-        </div>
-    </div>
-</div>
+                       <!-- Point Raised By -->
+                       <div class="col-md-4">
+                            <div class="mb-3">
+                                <asp:Label ID="lbl_PointRaisedBy" runat="server" AssociatedControlID="ddlPointRaisedBy" 
+                                           Text="Point Raised By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                <asp:RequiredFieldValidator ID="RFV_ddlPointRaisedBy" runat="server" 
+                                           ErrorMessage="*" ControlToValidate="ddlPointRaisedBy" 
+                                           InitialValue="" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                <div class="input-group-sm">
+                                    <asp:DropDownList ID="ddlPointRaisedBy" runat="server" CssClass="form-control form-control-sm rounded">
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                        </div>
+   
+
+
+                       <!-- Status-->
+                      <div class="col-md-4">
+                             <div class="mb-3">
+                               <asp:Label ID="lbl_ddlStatus" runat="server" AssociatedControlID="ddlStatus" Text="Status" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                                <asp:RequiredFieldValidator ID="RFV_ddlStatus" runat="server" ErrorMessage="*" ControlToValidate="ddlStatus" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                 <div class="input-group-sm">
+                                   <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm rounded" onchange="toggleFields()">
+                                        <asp:ListItem Text="Select" Value="" />
+                                        <asp:ListItem Text="Created" Value="Created" />
+                                        <asp:ListItem Text="Open" Value="Open" />
+                                        <asp:ListItem Text="Assigned" Value="Assigned" />
+                                        <asp:ListItem Text="Closed" Value="Closed" />
+                                     <%--<asp:ListItem Text="Approved" Value="Approved" />
+                                     <asp:ListItem Text="Rejected" Value="Rejected" />
+                                     <asp:ListItem Text="On Hold" Value="On Hold" />--%>
+                                 </asp:DropDownList>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Responsible Person-->
+                  <div class="col-md-6">
+                     <div class="mb-3">
+                       <asp:Label ID="lblResponsiblePerson" runat="server" 
+                           AssociatedControlID="txtResponsiblePerson" 
+                           Text="Responsible Person (Emp Code)" 
+                           ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                        <asp:RequiredFieldValidator ID="RFV_ResponsiblePerson" runat="server" 
+                                   ErrorMessage="*" ControlToValidate="txtResponsiblePerson" 
+                                   ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                <div class="input-group-sm">
+                                    <asp:TextBox ID="txtResponsiblePerson" runat="server" 
+                                                 CssClass="form-control form-control-sm rounded" 
+                                                 AutoPostBack="true" OnTextChanged="txtResponsiblePerson_TextChanged">
+                                    </asp:TextBox>
+                                </div>
+                            <asp:Label ID="lblResponsibleName" runat="server" 
+                                       ForeColor="Green" Font-Bold="true"></asp:Label>
+                      </div>
+                    </div>
+
+
+                        <!-- Close By-->
                  <div class="col-md-6">
-         <div class="mb-3">
-        <asp:Label ID="lbl_txtActionBy" runat="server" AssociatedControlID="txtActionBy" Text="Close By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtActionBy" runat="server" ErrorMessage="*" ControlToValidate="txtActionBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtActionBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
-        </div>
-    </div>
-</div>
-                 <div class="col-md-4">
-         <div class="mb-3">
-        <asp:Label ID="lbl_txtTargetDate" runat="server" AssociatedControlID="txtTargetDate" Text="Target Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtTargetDate" runat="server" ErrorMessage="*" ControlToValidate="txtTargetDate" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtTargetDate" runat="server" CssClass="form-control form-control-sm rounded " TextMode="Date"></asp:TextBox>
-        </div>
-    </div>
-</div>
+                     <div class="mb-3">
+                            <asp:Label ID="lbl_txtActionBy" runat="server" AssociatedControlID="txtActionBy" Text="Close By" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                           <%-- <asp:RequiredFieldValidator ID="RFV_txtActionBy" runat="server" ErrorMessage="*" ControlToValidate="txtActionBy" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>--%>
+                                <div class="input-group-sm">
+                                    <asp:TextBox ID="txtActionBy" runat="server" CssClass="form-control form-control-sm rounded "></asp:TextBox>
+                                </div>
+                     </div>
+                </div>
 
+
+           <!-- Target Date-->
+                 <div class="col-md-4">
+                     <div class="mb-3">
+                        <asp:Label ID="lbl_txtTargetDate" runat="server" AssociatedControlID="txtTargetDate" Text="Target Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                        <asp:RequiredFieldValidator ID="RFV_txtTargetDate" runat="server" ErrorMessage="*" ControlToValidate="txtTargetDate" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                      <div class="input-group-sm">
+                          <asp:TextBox ID="txtTargetDate" runat="server" CssClass="form-control form-control-sm rounded " TextMode="Date"></asp:TextBox>
+                     </div>
+                   </div>
+                </div>
+
+
+            <!-- Closing Date-->
          <div class="col-md-4">
-         <div class="mb-3">
-        <asp:Label ID="lbl_txtReviewDate" runat="server" AssociatedControlID="txtReviewDate" Text="Review Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_txtReviewDate" runat="server" ErrorMessage="*" ControlToValidate="txtReviewDate" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-            <asp:TextBox ID="txtReviewDate" runat="server" CssClass="form-control form-control-sm rounded " TextMode="Date"></asp:TextBox>
-        </div>
-    </div>
-</div>
+                 <div class="mb-3">
+                    <asp:Label ID="lbl_txtReviewDate" runat="server" AssociatedControlID="txtReviewDate" Text="Review Date" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+                     <%--<asp:RequiredFieldValidator ID="RFV_txtReviewDate" runat="server" ErrorMessage="*" ControlToValidate="txtReviewDate" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>--%>
+                    <div class="input-group-sm">
+                       <asp:TextBox ID="txtReviewDate" runat="server" CssClass="form-control form-control-sm rounded " TextMode="Date"></asp:TextBox>
+                   </div>
+                </div>
+         </div>
 
     
-         <div class="col-md-4">
-         <div class="mb-3">
-        <asp:Label ID="lbl_ddlStatus" runat="server" AssociatedControlID="ddlStatus" Text="Status" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-        <asp:RequiredFieldValidator ID="RFV_ddlStatus" runat="server" ErrorMessage="*" ControlToValidate="ddlStatus" ValidationGroup="add1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
-        <div class="input-group-sm">
-             <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm rounded">
-                 <asp:ListItem Text="Select" Value="" />
-                 <asp:ListItem Text="Pending" Value="Pending" />
-                 <asp:ListItem Text="Completed" Value="Completed" />
-                 <asp:ListItem Text="In Progress" Value="In Progress" />
-                 <asp:ListItem Text="Approved" Value="Approved" />
-                 <asp:ListItem Text="Rejected" Value="Rejected" />
-                 <asp:ListItem Text="On Hold" Value="On Hold" />
-             </asp:DropDownList>
-        </div>
-    </div>
-</div>
+         
      
-              <!-- Agenda Title -->
-    <div class="col-md-4">
-        <div class="mb-3">
-            <asp:Label ID="lbl_txtAgendaTitle" runat="server" AssociatedControlID="txtAgendaTitle"
-                       Text="Agenda Title" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
-            <asp:RequiredFieldValidator ID="RFV_txtAgendaTitle" runat="server" ErrorMessage="*" 
-                                        ControlToValidate="txtAgendaTitle" ValidationGroup="add1" 
-                                        Display="Dynamic" ForeColor="Red" />
-            <asp:TextBox ID="txtAgendaTitle" runat="server" CssClass="form-control form-control-sm rounded" />
-        </div>
-    </div>
+             
 
-    <!-- Issues Discussed -->
-    <div class="col-md-4">
-        <div class="mb-3">
-            <asp:Label ID="lbl_txtIssuesDes" runat="server" AssociatedControlID="txtIssuesDes"
-                       Text="Issues Discussed" ForeColor="Blue" Font-Bold="true" Font-Size="Small" />
-            <asp:RequiredFieldValidator ID="RFV_IssuesDes" runat="server" ErrorMessage="*" 
-                                        ValidationGroup="add1" ControlToValidate="txtIssuesDes" 
-                                        Display="Dynamic" ForeColor="Red" />
-            <div id="PointsContainer" runat="server">
-                <div class="d-flex align-items-center gap-2">
-                    <asp:TextBox ID="txtIssuesDes" runat="server" CssClass="form-control form-control-sm rounded points-input me-2" />
-                    <asp:Button ID="BtnAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-sm me-2"
+   
+                    <%--<asp:Button ID="BtnAdd" runat="server" Text="Add" CssClass="btn btn-primary btn-sm me-2"
                                 OnClientClick="addbutton(); return false;" />
                     <asp:Button ID="BtnRemove" runat="server" Text="Remove" CssClass="btn btn-danger btn-sm"
-                                OnClientClick="removebutton(this); return false;" />
-                </div>
-            </div>
-        </div>
+                                OnClientClick="removebutton(this); return false;" />--%>
+               
          <script type="text/javascript">
              function addbutton() {
 
@@ -600,13 +550,27 @@
                 <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                 <Columns>
                     <asp:BoundField DataField="SNo" HeaderText="SNo" Visible="false" />
-                    <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title" Visible="false" />
+                    <asp:BoundField DataField="AgendaTitle" HeaderText="Agenda Title"  />
                     <asp:BoundField DataField="IssuesDiscussed" HeaderText="Issues Discussed" />
                     <asp:BoundField DataField="Capa_Report" HeaderText="CAPA Status" />
                     <asp:BoundField DataField="ActionBy" HeaderText="Close By" />
-                    <asp:BoundField DataField="TargetDate" HeaderText="Target Date" Visible="false" />
+                    <asp:BoundField DataField="TargetDate" HeaderText="Target Date"  />
                     <asp:BoundField DataField="ReviewDate" HeaderText="Review Date" />
-                    <asp:BoundField DataField="ReviewBy" HeaderText="Point Raised By" />
+                    <%--<asp:BoundField DataField="ReviewBy" HeaderText="Point Raised By" />--%>
+                    <asp:BoundField DataField="Responsiblity" HeaderText="Responsiblity" />
+
+
+
+                   
+        <asp:TemplateField HeaderText="Point Raised By">
+            <ItemTemplate>
+                <%# Eval("ReviewBy") %> )
+            </ItemTemplate>
+        </asp:TemplateField>
+
+
+
+
                     <asp:BoundField DataField="Status" HeaderText="Status" />
                     <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
@@ -672,7 +636,7 @@
 </div>
     
 </div>
-            </div>
+            
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -870,6 +834,22 @@
 </script>
 
 
+    <script type="text/javascript">
+        function toggleFields() {
+            var ddl = document.getElementById('<%= ddlStatus.ClientID %>');
+        var closeBy = document.getElementById('<%= txtActionBy.ClientID %>');
+        var reviewDate = document.getElementById('<%= txtReviewDate.ClientID %>');
 
+            if (ddl.value === "Closed") {
+                closeBy.disabled = false;
+                reviewDate.disabled = false;
+            } else {
+                closeBy.disabled = true;
+                reviewDate.disabled = true;
+                closeBy.value = "";
+                reviewDate.value = "";
+            }
+        }
+    </script>
    
 </asp:Content>

@@ -65,7 +65,7 @@
 
                                                 <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                                                 <Columns>
-                                                    <asp:BoundField DataField="MeetingID" HeaderText="Meeting ID" Visible="false" />
+                                                    <asp:BoundField DataField="MeetingID" HeaderText="Meeting ID"  />
                                                     <asp:BoundField DataField="MeetingDate" HeaderText="Date" />
                                                     <asp:BoundField DataField="MeetingTime" HeaderText="Time" />
                                                     <asp:BoundField DataField="MeetingNo" HeaderText="Meeting No" />

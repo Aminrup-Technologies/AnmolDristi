@@ -21,6 +21,7 @@ namespace AnmolDristi
                 if (Request.QueryString["MeetingID"] != null)
                 {
                     int meetingID = Convert.ToInt32(Request.QueryString["MeetingID"]);
+                    ViewState["MeetingID"] = meetingID;
                     LoadMeetingDetails(meetingID);
                     LoadAttendance(meetingID);
                     LoadIssues(meetingID);
@@ -85,7 +86,7 @@ namespace AnmolDristi
         private void LoadIssues(int meetingID)
         {
             string query = @"SELECT IssueID , AgendaTitle, IssueDescription AS IssuesDiscussed, 
-                            ResponsiblePerson AS ActionBy, TargetDate, ReviewDate, ReviewBy, Status 
+                            CloseBy AS ActionBy, TargetDate, CloseDate, ReviewBy, Status, Responsiblity, Capa_Report 
                      FROM Committee_MeetingIssues 
                      WHERE MeetingID = @MeetingID";
 
@@ -352,23 +353,10 @@ namespace AnmolDristi
                         string name = ((TextBox)row.FindControl("txtEmployeeName")).Text;
                         string designation = ((TextBox)row.FindControl("txtDesignation")).Text;
                         string code = ((TextBox)row.FindControl("txtAttendeeCode")).Text;
-                        string type = ((TextBox)row.FindControl("txtAttendeeType")).Text;
+                        string type = ((DropDownList)row.FindControl("ddlAttendeeType")).SelectedValue;
                         string status = ((DropDownList)row.FindControl("ddlAttendanceStatus")).SelectedValue;
 
-                        //FileUpload fu = (FileUpload)row.FindControl("fuimgPreview");
-                        //string imgPath = ((Label)row.FindControl("lblimgPreview")).Text;
-
-                        //if (fu.HasFile)
-                        //{
-                        //    string folderPath = Server.MapPath("~/Uploads1/");
-                        //    if (!Directory.Exists(folderPath))
-                        //        Directory.CreateDirectory(folderPath);
-
-                        //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(fu.FileName);
-                        //    string fullPath = folderPath + fileName;
-                        //    fu.SaveAs(fullPath);
-                        //    imgPath = "~/Uploads1/" + fileName;
-                        //}
+                       
 
                         SqlCommand cmdAtt = new SqlCommand(@"UPDATE Committee_MeetingAttendance 
                                                      SET Name = @Name, 
@@ -399,25 +387,34 @@ namespace AnmolDristi
                         //DateTime reviewDate = Convert.ToDateTime(((TextBox)row.FindControl("txtReviewDate")).Text);
                         string targetDateText = ((TextBox)row.FindControl("txtTargetDate")).Text.Trim();
                         string reviewDateText = ((TextBox)row.FindControl("txtReviewDate")).Text.Trim();
+                        string Responsiblity = ((TextBox)row.FindControl("txtresponsiblity")).Text.Trim();
 
                         DateTime targetDate;
                         DateTime reviewDate;
 
+                        object reviewDateParam = DBNull.Value;
+
+                        if (DateTime.TryParse(reviewDateText, out reviewDate))
+                            reviewDateParam = reviewDate;
+
                         bool isTargetDateValid = DateTime.TryParseExact(targetDateText, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out targetDate);
-                        bool isReviewDateValid = DateTime.TryParseExact(reviewDateText, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out reviewDate);
+                        //bool isReviewDateValid = DateTime.TryParseExact(reviewDateText, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out reviewDate);
 
                         
 
-                        string reviewBy = ((TextBox)row.FindControl("txtReviewBy")).Text;
+                        string reviewBy = ((DropDownList)row.FindControl("ddlReviewBy")).SelectedValue;
                         string status = ((DropDownList)row.FindControl("ddlStattus")).SelectedValue;
+
+                        object capaReportObj = row.DataItem != null ? ((DataRowView)row.DataItem)["Capa_Report"] : DBNull.Value;
 
                         SqlCommand cmdIssue = new SqlCommand(@"UPDATE Committee_MeetingIssues 
                                SET AgendaTitle = @Agenda, 
                                    IssueDescription = @IssueDesc, 
-                                   ResponsiblePerson = @ActionBy, 
+                                   CloseBy = @ActionBy, 
                                    TargetDate = @TargetDate, 
-                                   ReviewDate = @ReviewDate, 
+                                   CloseDate = @ReviewDate, 
                                    ReviewBy = @ReviewBy, 
+                                   Responsiblity =@Responsiblity,
                                    Status = @Status 
                                WHERE IssueID = @IssueID", con, transaction); 
 
@@ -425,33 +422,243 @@ namespace AnmolDristi
                         cmdIssue.Parameters.AddWithValue("@IssueDesc", issues);
                         cmdIssue.Parameters.AddWithValue("@ActionBy", actionBy);
                         cmdIssue.Parameters.AddWithValue("@TargetDate", targetDate);
-                        cmdIssue.Parameters.AddWithValue("@ReviewDate", reviewDate);
+                        cmdIssue.Parameters.AddWithValue("@ReviewDate", reviewDateParam);
                         cmdIssue.Parameters.AddWithValue("@ReviewBy", reviewBy);
                         cmdIssue.Parameters.AddWithValue("@Status", status);
                         cmdIssue.Parameters.AddWithValue("@IssueID", issueID);
+                        cmdIssue.Parameters.AddWithValue("@Responsiblity", Responsiblity);
                         cmdIssue.ExecuteNonQuery();
+
+
+                        // Update tbl_CAPAMaster if Capa_Report exists
+                        if (capaReportObj != DBNull.Value)
+                        {
+                            int capaID = Convert.ToInt32(capaReportObj);
+                            SqlCommand cmdCAPA = new SqlCommand(@"
+                                                            UPDATE tbl_CAPAMaster
+                                                            SET Description = @Description,
+                                                                ResponsiblePerson = @ResponsiblePerson,
+                                                                TargetCompletionDate = @TargetCompletionDate
+                                                            WHERE CAPAID = @CAPAID", con, transaction);
+
+                            cmdCAPA.Parameters.AddWithValue("@Description", issues);
+                            cmdCAPA.Parameters.AddWithValue("@ResponsiblePerson", Responsiblity);
+                            cmdCAPA.Parameters.AddWithValue("@TargetCompletionDate", targetDate);
+                            //cmdCAPA.Parameters.AddWithValue("@Status", status);
+                            cmdCAPA.Parameters.AddWithValue("@CAPAID", capaID);
+
+                            cmdCAPA.ExecuteNonQuery();
+                        }
+
                     }
 
                     transaction.Commit();
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotifySuccess",
+                        "new PNotify({ " +
+                        "title: 'Success'," +
+                        "text: 'Updated successfully!'," +
+                        "type: 'success'," +
+                        "styling: 'bootstrap3'," +
+                        "delay: 2000 });", true);
 
-                    lblMsg.ForeColor = System.Drawing.Color.Green;
-                    lblMsg.Text = "Updated successfully!";
                 }
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    lblMsg.ForeColor = System.Drawing.Color.Red;
-                    lblMsg.Text = "Error: " + ex.Message;
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotifyError",
+                                    "new PNotify({ " +
+                                    "title: 'Error'," +
+                                    "text: 'Error: " + ex.Message.Replace("'", "\\'") + "'," +  // escape single quotes
+                                    "type: 'error'," +
+                                    "styling: 'bootstrap3'," +
+                                    "delay: 4000 });", true);
+
+                }
+            }
+        }
+
+        protected void txtAttendeeCode_TextChanged(object sender, EventArgs e)
+        {
+            TextBox txtCode = (TextBox)sender;
+            GridViewRow row = (GridViewRow)txtCode.NamingContainer;
+
+            string empCode = txtCode.Text.Trim();
+            if (!string.IsNullOrEmpty(empCode))
+            {
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+                {
+                    conn.Open();
+                    string query = "SELECT EmployeeName, Designation FROM EmployeeMaster WHERE EmployeeCode = @Code";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Code", empCode);
+
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.Read())
+                    {
+                        // Find controls in the same row
+                        TextBox txtName = (TextBox)row.FindControl("txtEmployeeName");
+                        TextBox txtDesignation = (TextBox)row.FindControl("txtDesignation");
+
+                        txtName.Text = dr["EmployeeName"].ToString();
+                        txtDesignation.Text = dr["Designation"].ToString();
+                    }
+                    else
+                    {
+                        // Not found → clear
+                        ((TextBox)row.FindControl("txtEmployeeName")).Text = "";
+                        ((TextBox)row.FindControl("txtDesignation")).Text = "";
+                    }
+                }
+            }
+        }
+
+        protected void ddlAttendeeType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList ddl = (DropDownList)sender;
+            GridViewRow row = (GridViewRow)ddl.NamingContainer;
+
+            TextBox txtEmployeeName = (TextBox)row.FindControl("txtEmployeeName");
+            TextBox txtAttendeeCode = (TextBox)row.FindControl("txtAttendeeCode");
+
+            if (ddl.SelectedValue == "Internal")
+            {
+                txtEmployeeName.Enabled = false;
+                txtAttendeeCode.Enabled = true;
+            }
+            else if (ddl.SelectedValue == "External")
+            {
+                txtAttendeeCode.Text = "N/A";
+                txtAttendeeCode.Enabled = false;
+                txtEmployeeName.Enabled = true;
+            }
+        }
+
+        protected void gvAttendees_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DropDownList ddlAttendeeType = (DropDownList)e.Row.FindControl("ddlAttendeeType");
+                TextBox txtEmployeeName = (TextBox)e.Row.FindControl("txtEmployeeName");
+                TextBox txtAttendeeCode = (TextBox)e.Row.FindControl("txtAttendeeCode");
+
+                if (ddlAttendeeType != null)
+                {
+                    // Get saved value from DB
+                    string typeValue = DataBinder.Eval(e.Row.DataItem, "Attendee_Type")?.ToString();
+
+                    // Set dropdown
+                    if (!string.IsNullOrEmpty(typeValue) && ddlAttendeeType.Items.FindByValue(typeValue) != null)
+                    {
+                        ddlAttendeeType.SelectedValue = typeValue;
+                    }
+
+                    // Apply lock logic based on DB value
+                    if (typeValue == "Internal")
+                    {
+                        txtEmployeeName.Enabled = false;
+                        txtAttendeeCode.Enabled = true;
+                    }
+                    else if (typeValue == "External")
+                    {
+                        txtAttendeeCode.Text = "N/A";
+                        txtAttendeeCode.Enabled = false;
+                        txtEmployeeName.Enabled = true;
+                    }
+                }
+            }
+        }
+
+        protected void gvIssues_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType != DataControlRowType.DataRow) return;
+
+            string savedValue = DataBinder.Eval(e.Row.DataItem, "ReviewBy")?.ToString().Trim();
+
+            // Debug output to page
+            //Response.Write($"Row {e.Row.RowIndex} savedValue='{savedValue}'<br/>");
+
+            DropDownList ddlReviewBy = (DropDownList)e.Row.FindControl("ddlReviewBy");
+            if (ddlReviewBy == null) return;
+
+            int meetingID = Convert.ToInt32(ViewState["MeetingID"]);
+            DataTable dtAttendees = GetAttendees(meetingID);
+
+            ddlReviewBy.DataSource = dtAttendees;
+            ddlReviewBy.DataTextField = "DisplayName";
+            ddlReviewBy.DataValueField = "DisplayName";
+            ddlReviewBy.DataBind();
+
+            if (!string.IsNullOrEmpty(savedValue))
+            {
+                ListItem li = ddlReviewBy.Items.Cast<ListItem>()
+                                      .FirstOrDefault(x => x.Value.Trim() == savedValue);
+                if (li != null) li.Selected = true;
+            }
+        }
+
+
+       
+
+
+
+
+
+
+        private DataTable GetAttendees(int meetingID)
+        {
+            string query = @"
+        SELECT AttendeeCode,
+               Name + ' (' + AttendeeCode + ')' AS DisplayName
+        FROM Committee_MeetingAttendance
+        WHERE MeetingID = @MeetingID";
+
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@MeetingID", meetingID);
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    return dt;
                 }
             }
         }
 
 
+        protected void gvIssues_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = gvIssues.Rows[e.RowIndex];
+            DropDownList ddlReviewBy = (DropDownList)row.FindControl("ddlReviewBy");
 
+            string reviewByCode = ddlReviewBy.SelectedValue;     // ADMIN
+            string reviewByName = ddlReviewBy.SelectedItem.Text; // Administrator (ADMIN)
 
+        }
 
+        protected void ddlStattus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList ddl = (DropDownList)sender;
+            GridViewRow row = (GridViewRow)ddl.NamingContainer;
 
+            TextBox txtActionBy = (TextBox)row.FindControl("txtActionBy");
+            TextBox txtReviewDate = (TextBox)row.FindControl("txtReviewDate");
+            RequiredFieldValidator rfvActionBy = (RequiredFieldValidator)row.FindControl("RFV_txtActionBy");
+            RequiredFieldValidator rfvReviewDate = (RequiredFieldValidator)row.FindControl("RFV_txtReviewDate");
 
+            bool isClosed = ddl.SelectedValue == "Closed";
 
+            if (txtActionBy != null) txtActionBy.Enabled = isClosed;
+            if (txtReviewDate != null) txtReviewDate.Enabled = isClosed;
+
+            if (rfvActionBy != null) rfvActionBy.Enabled = isClosed;
+            if (rfvReviewDate != null) rfvReviewDate.Enabled = isClosed;
+
+            if (!isClosed)
+            {
+                if (txtActionBy != null) txtActionBy.Text = string.Empty;
+                if (txtReviewDate != null) txtReviewDate.Text = string.Empty;
+            }
+        }
     }
 }

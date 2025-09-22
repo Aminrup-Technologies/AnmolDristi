@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -97,67 +98,114 @@ namespace AnmolDristi
         }
         protected void btnAddAttendees_Click(object sender, EventArgs e)
         {
+
             lblMsg1.Text = "";
             DataTable dt;
 
-            // Ensure ViewState["Attendees"] is initialized
+            
             if (ViewState["Attendance"] == null)
             {
                 dt = new DataTable();
                 dt.Columns.Add("SNo");
-
                 dt.Columns.Add("EmployeeName");
-                dt.Columns.Add("AttendeeCode"); // Ensure AttendeeCode exists
+                dt.Columns.Add("AttendeeCode");
                 dt.Columns.Add("AttendanceStatus");
                 dt.Columns.Add("AttendeeType");
                 dt.Columns.Add("Designation");
-                // dt.Columns.Add("ImagePath"); // Ensure ImagePath exists
+                //dt.Columns.Add("ImagePath");
+                //dt.Columns.Add("EmployeeOrNot");
 
                 ViewState["Attendance"] = dt;
             }
             else
             {
                 dt = (DataTable)ViewState["Attendance"];
+            }
 
-                // Ensure all necessary columns exist before using them
-                string[] requiredColumns = { "SNo", "EmployeeOrNot", "EmployeeName", "AttendeeCode", "AttendanceStatus", "AttendeeType", "Designation", "ImagePath" };
-                foreach (string column in requiredColumns)
+            
+            string attendeeCode = txtAttendeeCode.Text.Trim();
+            string employeeName = txtEmployeeName.Text.Trim();
+            string attendanceStatus = ddlAttendanceStatus.SelectedValue;
+            string attendeeType = rbAttendeeType.SelectedValue;
+            string designation = txtdes.Text.Trim();
+            //string imagePath = ""; 
+            //string employeeOrNot = chkEmployee.Checked ? "Yes" : "No";
+
+
+            // Duplicate check
+            if (attendeeCode != "N/A") // internal employee
+            {
+                DataRow[] existingRows = dt.Select("AttendeeCode = '" + attendeeCode.Replace("'", "''") + "'");
+                if (existingRows.Length > 0)
                 {
-                    if (!dt.Columns.Contains(column))
-                    {
-                        dt.Columns.Add(column);
-                    }
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotify",
+                        "new PNotify({ title: 'Warning', text: 'This employee is already added!', type: 'warning', styling: 'bootstrap3', delay: 2000 });", true);
+                    return;
+                }
+            }
+            else // external attendee
+            {
+                string filter = "EmployeeName = '" + employeeName.Replace("'", "''") + "' AND Designation = '" + designation.Replace("'", "''") + "'";
+                DataRow[] existingRows = dt.Select(filter);
+                if (existingRows.Length > 0)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotify",
+                        "new PNotify({ title: 'Warning', text: 'This external attendee is already added!', type: 'warning', styling: 'bootstrap3', delay: 2000 });", true);
+                    return;
                 }
             }
 
-            // Generating SNo dynamically
-            int serialNo = dt.Rows.Count + 1;
-
+            // Add new row
             DataRow dr = dt.NewRow();
-            dr["SNo"] = serialNo;
+            dr["SNo"] = dt.Rows.Count + 1;
+            dr["EmployeeName"] = employeeName;
+            dr["AttendeeCode"] = attendeeCode;
+            dr["AttendanceStatus"] = attendanceStatus;
+            dr["AttendeeType"] = attendeeType;
+            dr["Designation"] = designation;
+            //dr["ImagePath"] = imagePath;
+            //dr["EmployeeOrNot"] = employeeOrNot;
 
-            dr["AttendeeType"] = rbAttendeeType.SelectedItem != null ? rbAttendeeType.SelectedItem.Text : "";
-            dr["EmployeeName"] = txtEmployeeName.Text.Trim();
-            dr["AttendeeCode"] = txtAttendeeCode.Text.Trim();
-            dr["AttendanceStatus"] = ddlAttendanceStatus.SelectedValue;
-            dr["Designation"] = txtdes.Text.Trim();
-        
             dt.Rows.Add(dr);
-
             ViewState["Attendance"] = dt;
+
             gvAttendees.DataSource = dt;
             gvAttendees.DataBind();
 
-            // Clear input fields for next attendee
-
-            rbAttendeeType.ClearSelection();
-            ddlAttendanceStatus.SelectedIndex = 0;
-            txtEmployeeName.Text = "";
-            txtAttendeeCode.Text = "";
-            txtdes.Text = "";
 
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "showSuccessMessage();", true);
+            // Bind to "Point Raised By" dropdown 
+            ddlPointRaisedBy.DataSource = dt;
+            ddlPointRaisedBy.DataTextField = "EmployeeName";   // show name
+            ddlPointRaisedBy.DataValueField = "AttendeeCode";  // keep code as value
+            ddlPointRaisedBy.DataBind();
+
+            foreach (ListItem item in ddlPointRaisedBy.Items)
+            {
+                if (!string.IsNullOrEmpty(item.Value) && item.Value != "N/A")
+                {
+                    // Internal employee: show Name (Code)
+                    item.Text = item.Text + " (" + item.Value + ")";
+                }
+                else if (item.Value == "N/A")
+                {
+                    // External attendee: show Name (N/A)
+                    item.Text = item.Text + " (N/A)";
+                }
+            }
+
+
+
+            ddlPointRaisedBy.Items.Insert(0, new ListItem("-- Select Attendee --", ""));
+
+
+
+
+            // Success notify
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotifySuccess",
+                "new PNotify({ title: 'Success', text: 'Attendee added successfully!', type: 'success', styling: 'bootstrap3', delay: 2000 });", true);
+
+
         }
 
         protected void btnAddIssues_Click(object sender, EventArgs e)
@@ -171,34 +219,38 @@ namespace AnmolDristi
                 dts.Columns.Add("SNo");
                 dts.Columns.Add("AgendaTitle");
                 dts.Columns.Add("IssuesDiscussed");
-                dts.Columns.Add("Capa_Report"); // ✅ Added this column
+                dts.Columns.Add("Capa_Report"); 
                 dts.Columns.Add("ActionBy");
                 dts.Columns.Add("TargetDate");
                 dts.Columns.Add("ReviewDate");
-                dts.Columns.Add("ReviewBy");
+                dts.Columns.Add("ReviewBy");     
+                dts.Columns.Add("ReviewByCode"); 
                 dts.Columns.Add("Status");
+                dts.Columns.Add("Responsiblity");
             }
             else
             {
                 dts = (DataTable)ViewState["Issues"];
             }
 
-            // ✅ Set Capa_Report as "Checked" or empty string
             string capaStatus = chkQ3CAPA.Checked ? "Checked" : "";
 
             int serialNo = dts.Rows.Count + 1;
-            string allIssues = hdnPointsDiscussed.Value.Trim();
+            //string allIssues = hdnPointsDiscussed.Value.Trim();
 
             DataRow dr = dts.NewRow();
             dr["SNo"] = serialNo;
             dr["AgendaTitle"] = txtAgendaTitle.Text.Trim();
-            dr["IssuesDiscussed"] = allIssues;
-            dr["Capa_Report"] = capaStatus; // ✅ Apply checkbox value
+            dr["IssuesDiscussed"] = txtIssuesDes.Text;
+            dr["Capa_Report"] = capaStatus; 
             dr["ActionBy"] = txtActionBy.Text.Trim();
             dr["TargetDate"] = txtTargetDate.Text.Trim();
             dr["ReviewDate"] = txtReviewDate.Text.Trim();
-            dr["ReviewBy"] = txtReviewBy.Text.Trim();
+            //  Save both attendee text and value
+            dr["ReviewBy"] = ddlPointRaisedBy.SelectedItem != null ? ddlPointRaisedBy.SelectedItem.Text : "";
+            dr["ReviewByCode"] = ddlPointRaisedBy.SelectedValue ?? "";
             dr["Status"] = ddlStatus.SelectedValue;
+            dr["Responsiblity"] = txtResponsiblePerson.Text.Trim();
 
             dts.Rows.Add(dr);
 
@@ -206,16 +258,16 @@ namespace AnmolDristi
             gvIssues.DataSource = dts;
             gvIssues.DataBind();
 
-            // Clear input fields for next entry
+            // Clear input fields 
             txtAgendaTitle.Text = "";
             txtIssuesDes.Text = "";
             hdnPointsDiscussed.Value = "";
             txtActionBy.Text = "";
-            txtReviewBy.Text = "";
+            ddlPointRaisedBy.SelectedIndex = 0;
             txtTargetDate.Text = "";
             txtReviewDate.Text = "";
             ddlStatus.SelectedIndex = 0;
-            chkQ3CAPA.Checked = true; // Optional: Reset checkbox
+            chkQ3CAPA.Checked = true; 
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "showSuccessMessages();", true);
         }
@@ -431,18 +483,23 @@ namespace AnmolDristi
                         {
                             capaReportID = DBNull.Value; // Reset for each row
 
+                            string tblnme = "Safety Committee Meeting";
+
                             if (row["Capa_Report"].ToString() == "Checked")
                             {
                                 // Insert into CAPA Master table
                                 SqlCommand cmdCAPA = new SqlCommand(@"
-INSERT INTO tbl_CAPAMaster (HeaderID, AssignedBy, AssignedDate, Description)
+INSERT INTO tbl_CAPAMaster (HeaderID, AssignedBy, AssignedDate, Description,SourceTable, ResponsiblePerson, TargetCompletionDate)
 OUTPUT INSERTED.CAPAID
-VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description)", conn, transaction);
+VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description,@SourceTable,@ResponsiblePerson, @TargetCompletionDate)", conn, transaction);
 
                                 cmdCAPA.Parameters.AddWithValue("@HeaderID", customid);
-                                cmdCAPA.Parameters.AddWithValue("@AssignedBy", row["ReviewBy"].ToString());
+                                cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"]?.ToString() ?? "");
                                 cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
                                 cmdCAPA.Parameters.AddWithValue("@Description", row["IssuesDiscussed"].ToString());
+                                cmdCAPA.Parameters.AddWithValue("@SourceTable", tblnme);
+                                cmdCAPA.Parameters.AddWithValue("@ResponsiblePerson", row["Responsiblity"].ToString());
+                                cmdCAPA.Parameters.AddWithValue("@TargetCompletionDate", row["TargetDate"].ToString());
 
                                 capaReportID = cmdCAPA.ExecuteScalar();
                             }
@@ -450,9 +507,9 @@ VALUES (@HeaderID, @AssignedBy, @AssignedDate, @Description)", conn, transaction
                             // ✅ Include Capa_Report in the insert query
                             string insertIssueQuery = @"
 INSERT INTO Committee_MeetingIssues 
-(MeetingID, IssueDescription, ResponsiblePerson, TargetDate, ReviewDate, AgendaTitle, Status, ReviewBy, HeaderID, Capa_Report)
+(MeetingID, IssueDescription, CloseBy, TargetDate, CloseDate, AgendaTitle, Status, ReviewBy, HeaderID, Capa_Report,Responsiblity)
 VALUES 
-(@MeetingID, @IssueDescription, @ResponsiblePerson, @TargetDate, @ReviewDate, @AgendaTitle, @Status, @ReviewBy, @HeaderID, @Capa_Report)";
+(@MeetingID, @IssueDescription, @ResponsiblePerson, @TargetDate, @ReviewDate, @AgendaTitle, @Status, @ReviewBy, @HeaderID, @Capa_Report,@Responsiblity)";
 
                             using (SqlCommand cmd = new SqlCommand(insertIssueQuery, conn, transaction))
                             {
@@ -461,32 +518,89 @@ VALUES
                                 cmd.Parameters.AddWithValue("@IssueDescription", row["IssuesDiscussed"].ToString());
                                 cmd.Parameters.AddWithValue("@ResponsiblePerson", row["ActionBy"].ToString());
                                 cmd.Parameters.AddWithValue("@TargetDate", Convert.ToDateTime(row["TargetDate"]));
-                                cmd.Parameters.AddWithValue("@ReviewDate", Convert.ToDateTime(row["ReviewDate"]));
+                                cmd.Parameters.AddWithValue("@ReviewDate",
+    string.IsNullOrWhiteSpace(row["ReviewDate"]?.ToString())
+        ? DBNull.Value
+        : (object)Convert.ToDateTime(row["ReviewDate"]));
+
                                 cmd.Parameters.AddWithValue("@AgendaTitle", row["AgendaTitle"].ToString());
                                 cmd.Parameters.AddWithValue("@Status", row["Status"].ToString());
                                 cmd.Parameters.AddWithValue("@ReviewBy", row["ReviewBy"].ToString());
                                 cmd.Parameters.AddWithValue("@Capa_Report", capaReportID ?? DBNull.Value); // Use DBNull if null
+                                cmd.Parameters.AddWithValue("@Responsiblity", row["Responsiblity"].ToString());
 
                                 cmd.ExecuteNonQuery();
                             }
                         }
                     }
                     transaction.Commit();
-                    lblMsg.Text = "Data saved successfully!";
-                    lblMsg.ForeColor = System.Drawing.Color.Green;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Popup", "showSuccess();", true);
+                    
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotifySuccess",
+                        "new PNotify({ " +
+                        "title: 'Success'," +
+                        "text: 'Data saved successfully!'," +
+                        "type: 'success'," +
+                        "styling: 'bootstrap3'," +
+                        "delay: 2000 });", true);
+
                 }
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    lblMsg.Text = "Error: " + ex.Message;
-                    lblMsg.ForeColor = System.Drawing.Color.Red;
                     System.Diagnostics.Debug.WriteLine("Transaction Error: " + ex.Message);
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "pnotifyError",
+                        "new PNotify({ " +
+                        "title: 'Error'," +
+                        "text: '" + ex.Message.Replace("'", "\\'") + "'," + 
+                        "type: 'error'," +
+                        "styling: 'bootstrap3'," +
+                        "delay: 4000 });", true);
                 }
             }
         }
 
+        protected void txtResponsiblePerson_TextChanged(object sender, EventArgs e)
+        {
+            string empCode = txtResponsiblePerson.Text.Trim();
 
+            if (!string.IsNullOrEmpty(empCode))
+            {
+                // Example: Fetch from DB using your TableAdapter or SqlCommand
+                string empName = GetEmployeeNameByCode(empCode);
+
+                if (!string.IsNullOrEmpty(empName))
+                {
+                    lblResponsibleName.Text = empName;
+                    lblResponsibleName.ForeColor = System.Drawing.Color.Green;
+                }
+                else
+                {
+                    lblResponsibleName.Text = "Invalid EmpCode";
+                    lblResponsibleName.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+        }
+
+        private string GetEmployeeNameByCode(string empCode)
+        {
+            string empName = string.Empty;
+
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT EmployeeName FROM EmployeeMaster WHERE EmployeeCode = @EmpCode", con))
+                {
+                    cmd.Parameters.AddWithValue("@EmpCode", empCode);
+                    con.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        empName = result.ToString();
+                    }
+                }
+            }
+            return empName;
+        }
     }
 }
 

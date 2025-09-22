@@ -95,7 +95,7 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT Name,Designation,Attendee_Type,AttendanceStatus FROM Committee_MeetingAttendance WHERE MeetingID = @MeetingID", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT Name,AttendeeCode,Designation,Attendee_Type,AttendanceStatus FROM Committee_MeetingAttendance WHERE MeetingID = @MeetingID", con))
                 {
                     cmd.Parameters.AddWithValue("@MeetingID", meetingId);
                     con.Open();
@@ -113,7 +113,7 @@ namespace AnmolDristi
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT IssueDescription,ResponsiblePerson,TargetDate,AgendaTitle,ReviewDate,ReviewBy,Status,Capa_Report FROM  Committee_MeetingIssues WHERE MeetingID = @MeetingID", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT IssueDescription,CloseBy,TargetDate,AgendaTitle,CloseDate,ReviewBy,Status,Capa_Report FROM  Committee_MeetingIssues WHERE MeetingID = @MeetingID", con))
                 {
                     cmd.Parameters.AddWithValue("@MeetingID", meetingId);
                     con.Open();

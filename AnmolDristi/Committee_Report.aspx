@@ -194,22 +194,21 @@
                             <tr class="center_1">
                                <%-- <th>Attendance ID</th>
                                 <th>Meeting ID</th>--%>
-                                <th>Name</th>
-                                <th>Designation</th>
-                              <%--  <th>Attendee Code</th>--%>
-                                <th>Attendee Type</th>
-                                <%--<th>Image</th>--%>
-                                <th>Attendance Status</th>
+                                 <th>Attendee Type</th>
+                                 <th>Attendee Code</th>
+                                 <th>Name</th>
+                                 <th>Designation</th>
+                                 <th>Attendance Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <asp:Repeater ID="RepeaterAttendees" runat="server">
                                 <ItemTemplate>
                                     <tr class="center_1">
-                                        <td><%# Eval("Name") %></td>
-                                        <td><%# Eval("Designation") %></td>
-                                       <%-- <td><%# Eval("AttendeeCode") %></td>--%>
-                                        <td><%# Eval("Attendee_Type") %></td>
+                                         <td><%# Eval("Attendee_Type") %></td>
+                                         <td><%# Eval("AttendeeCode") %></td>
+                                         <td><%# Eval("Name") %></td>
+                                         <td><%# Eval("Designation") %></td>
                                         <td><%# Eval("AttendanceStatus") %></td>
                                     </tr>
                                 </ItemTemplate>
@@ -247,9 +246,9 @@
                              <td><%# Eval("AgendaTitle") %></td>
                              <td><%# Eval("IssueDescription") %></td>
                               <td><%# Eval("ReviewBy") %></td>
-                             <td><%# Eval("ResponsiblePerson") %></td>
+                             <td><%# Eval("CloseBy") %></td>
                              <td><%# Eval("TargetDate", "{0:yyyy-MM-dd}") %></td>
-                             <td><%# Eval("ReviewDate", "{0:yyyy-MM-dd}") %></td>
+                             <td><%# Eval("CloseDate", "{0:yyyy-MM-dd}") %></td>
                              <td><%# Eval("Status") %></td>
                               <td> <a href='CAPA_MASTER.aspx?report=<%# Eval("Capa_Report") %>'> <%# Eval("Capa_Report") %> </a> </td>
                             
