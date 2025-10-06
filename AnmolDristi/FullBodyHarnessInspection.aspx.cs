@@ -193,8 +193,10 @@ namespace AnmolDristi
                 }
             }
 
-            // Save to DB
-            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            try
+            {
+                // Save to DB
+                string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connStr))
             {
                 con.Open();
@@ -221,7 +223,13 @@ namespace AnmolDristi
                 con.Close();
             }
 
-            lblMsg.Text = "Data saved successfully!";
+                // ✅ One PNotify after successful save
+                ShowPNotify("Success", "Data saved successfully!", "success");
+            }
+            catch (Exception ex)
+            {
+                ShowPNotify("Error", "Error while saving data: " + ex.Message, "error");
+            }
         }
 
         //protected void BtnSubmit_Click(object sender, EventArgs e)
@@ -316,15 +324,37 @@ namespace AnmolDristi
                         }
 
                         RadioButton rdoYes = (RadioButton)item.FindControl("rdoYes");
+                        RadioButton rdoNo = (RadioButton)item.FindControl("rdoNo");
                         RadioButton rdoNA = (RadioButton)item.FindControl("rdoNA");
                         TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
                         FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
                         CheckBox chkCapaReport = (CheckBox)item.FindControl("chkCapaReport");
                         Label lblDescription = (Label)item.FindControl("lblDescription");
 
+                        // --- Generate HeaderID ---
                         string headerID = GenerateHeaderID(inspectionID);
-                        bool isOk = rdoYes != null && rdoYes.Checked;
-                        bool na = rdoNA != null && rdoNA.Checked;
+
+                        // --- Determine status ---
+                        string status = ""; 
+                        if (rdoYes != null && rdoYes.Checked)
+                        {
+                            status = "Yes";
+                        }
+                        else if (rdoNo != null && rdoNo.Checked)
+                        {
+                            status = "No";
+                        }
+                        else if (rdoNA != null && rdoNA.Checked)
+                        {
+                            status = "NA";
+                        }
+
+                        // --- Convert to DB value for single column IsOk ---
+                        object isOkValue = status == "Yes" ? 1
+                                          : status == "No" ? 0
+                                          : (object)DBNull.Value; // NA
+
+
                         string remarks = txtRemarks?.Text ?? "";
                         string description = lblDescription?.Text ?? "";
 
@@ -351,7 +381,7 @@ namespace AnmolDristi
                             cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
                             cmdCAPA.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
                             cmdCAPA.Parameters.AddWithValue("@Remarks", remarks);
-                            cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                            cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"]?.ToString() ?? "");
                             cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
                             cmdCAPA.Parameters.AddWithValue("@Description", lblDescription.Text);
 
@@ -362,16 +392,16 @@ namespace AnmolDristi
                         // ✅ Fix: Add connection and transaction to the SqlCommand
                         SqlCommand cmdChecklist = new SqlCommand(@"
                     INSERT INTO InspectionChecklist 
-                    (Location, InspectionNo, InspectionID, QuestionNumber, IsOk,NA, Remarks, PhotoPath, HeaderID, Capa_Report, Description)
+                    (Location, InspectionNo, InspectionID, QuestionNumber, IsOk, Remarks, PhotoPath, HeaderID, Capa_Report, Description)
                     VALUES 
-                    (@Location, @InspectionNo, @InspectionID, @QuestionNumber, @IsOk,@NA, @Remarks, @PhotoPath, @HeaderID, @CapaReport, @Description)", con, tran);
+                    (@Location, @InspectionNo, @InspectionID, @QuestionNumber, @IsOk, @Remarks, @PhotoPath, @HeaderID, @CapaReport, @Description)", con, tran);
 
                         cmdChecklist.Parameters.AddWithValue("@Location", txtLoc.Text.Trim());
                         cmdChecklist.Parameters.AddWithValue("@InspectionNo", txtIdentity.Text.Trim());
                         cmdChecklist.Parameters.AddWithValue("@InspectionID", inspectionID);
                         cmdChecklist.Parameters.AddWithValue("@QuestionNumber", questionNumber);
-                        cmdChecklist.Parameters.AddWithValue("@IsOk", isOk);
-                        cmdChecklist.Parameters.AddWithValue("@NA", na);
+                        cmdChecklist.Parameters.AddWithValue("@IsOk", isOkValue);
+                        //cmdChecklist.Parameters.AddWithValue("@NA", na);
                         cmdChecklist.Parameters.AddWithValue("@Remarks", remarks);
                         cmdChecklist.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
                         cmdChecklist.Parameters.AddWithValue("@HeaderID", headerID);
@@ -390,6 +420,23 @@ namespace AnmolDristi
                 }
             }
         }
+
+        private void ShowPNotify(string title, string message, string type)
+        {
+            string script = $@"
+        new PNotify({{
+            title: '{title}',
+            text: '{message}',
+            type: '{type}',  // success | error | info | notice
+            styling: 'bootstrap3',
+            delay: 2500,
+            addclass: 'stack-topright'
+        }});";
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), script, true);
+        }
+
+
 
     }
 }

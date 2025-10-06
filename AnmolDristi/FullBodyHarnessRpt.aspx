@@ -207,7 +207,8 @@
                                 <tr class="center_1">
                                     <td><%# Eval("QuestionNumber") %></td>
                                      <td><asp:Label ID="lblDescription" runat="server" /></td>
-                                    <td><%# Convert.ToBoolean(Eval("IsOk")) ? "✔️" : "❌" %></td>
+                                    <td><%# Eval("IsOk") == DBNull.Value ? "NA" : 
+                                                                                   Convert.ToBoolean(Eval("IsOk")) ? "Yes" : "No" %></td>
                                     <td><%# Eval("Remarks") %></td>
                                     <td><asp:Image ID="imgUpload"  runat="server"  ImageUrl='<%# Eval("PhotoPath") %>'  Width="100"  Height="100"  Visible='<%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>'  /></td>
                                    <td><%# Eval("Location") %></td>

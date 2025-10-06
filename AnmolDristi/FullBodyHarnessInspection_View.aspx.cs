@@ -59,8 +59,8 @@ namespace AnmolDristi
                 string query = @"
             SELECT 
                 InspectionID, 
+                 JobID,
                 Site,
-                 EmployeeName,
                 InspectedBy, 
                 CONVERT(VARCHAR(10), DateOfInspection, 23) AS DateOfInspection 
             FROM [CSMS].[dbo].[InspectionHeader]
@@ -106,9 +106,9 @@ namespace AnmolDristi
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = @"SELECT TOP (5) [InspectionID], [EmployeeName], [Site], [InspectedBy], [DateOfInspection] 
+                string query = @"SELECT [InspectionID], [JobID], [Site], [InspectedBy], [DateOfInspection] 
                          FROM [CSMS].[dbo].[InspectionHeader] 
-                         ORDER BY DateOfInspection DESC";
+                         ORDER BY InspectionID  DESC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);

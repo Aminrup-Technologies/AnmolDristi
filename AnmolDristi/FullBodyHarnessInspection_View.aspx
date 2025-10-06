@@ -62,11 +62,11 @@
                  <asp:GridView ID="gvInspection" runat="server" AutoGenerateColumns="False" DataKeyNames="InspectionID" CssClass="table table-bordered table-sm table-hover table-striped nowrap" GridLines="None">
                      <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                      <Columns>
-                         <asp:BoundField DataField="InspectionID" HeaderText="Inspection ID" Visible="false" />
-                         <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" />
+                         <asp:BoundField DataField="InspectionID" HeaderText="Inspection ID"  />
+                         <asp:BoundField DataField="JobID" HeaderText="JobID" />
                          <asp:BoundField DataField="Site" HeaderText="Site" />
                          <asp:BoundField DataField="InspectedBy" HeaderText="Inspected By" />
-                         <asp:BoundField DataField="DateOfInspection" HeaderText="Date Of Inspection" />
+                         <asp:BoundField DataField="DateOfInspection" HeaderText="Date Of Inspection" DataFormatString="{0:yyyy-MM-dd}"  />
                          <asp:TemplateField HeaderText="Actions">
                              <ItemTemplate>
                                  <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn btn-warning btn-sm" CommandArgument='<%# Eval("InspectionID") %>' OnClick="BtnEdit_Click" />

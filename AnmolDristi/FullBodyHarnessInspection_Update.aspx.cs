@@ -172,12 +172,33 @@ namespace AnmolDristi
                     RadioButton rdoNo = (RadioButton)item.FindControl("rdoNo");
                     RadioButton rdoNA = (RadioButton)item.FindControl("rdoNA");
 
-                    if (Convert.ToBoolean(row["IsOk"]))
-                        rdoYes.Checked = true;
-                    else if (Convert.ToBoolean(row["NA"]))
-                        rdoNA.Checked = true;
+                    // Reset all to avoid leftover checks
+                    rdoYes.Checked = false;
+                    rdoNo.Checked = false;
+                    rdoNA.Checked = false;
+
+                   
+                    // NULL - N/A, True - Yes, False - No
+                    if (row["IsOk"] == DBNull.Value)
+                    {
+                        rdoNA.Checked = true;  // NULL means N/A
+                    }
                     else
-                        rdoNo.Checked = true;
+                    {
+                        bool isOk = Convert.ToBoolean(row["IsOk"]);
+
+                        if (isOk)
+                            rdoYes.Checked = true;   // 1 → Yes
+                        else
+                            rdoNo.Checked = true;    // 0 → No
+                    }
+
+                    //if (Convert.ToBoolean(row["IsOk"]))
+                    //    rdoYes.Checked = true;
+                    //else if (Convert.ToBoolean(row["NA"]))
+                    //    rdoNA.Checked = true;
+                    //else
+                    //    rdoNo.Checked = true;
 
                     TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
                     txtRemarks.Text = row["Remarks"].ToString();
@@ -208,7 +229,7 @@ namespace AnmolDristi
                     {
                         imgPreview.Visible = false;
                     }
-                    if (!Convert.ToBoolean(row["IsOk"]) && !Convert.ToBoolean(row["NA"]))
+                    if (!rdoYes.Checked && !rdoNA.Checked)
                     {
                         txtRemarks.Style["display"] = "block";
                         fileUpload.Style["display"] = "block";
@@ -216,7 +237,7 @@ namespace AnmolDristi
                     CheckBox chkCapa = (CheckBox)item.FindControl("chkCapaReport");
                     HiddenField hfCapaReportID = (HiddenField)item.FindControl("hfCapaReportID");
 
-                    if (row["CAPA_Report"] != DBNull.Value)
+                    if (row["CAPA_Report"] != DBNull.Value && rdoNo.Checked)
                     {
                         chkCapa.Checked = true;
                         chkCapa.Style["display"] = "block";
@@ -283,10 +304,16 @@ namespace AnmolDristi
                 }
             }
 
-            int inspectionID = Convert.ToInt32(Request.QueryString["InspectionID"]); // assuming InspectionID is passed via query string
-            string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            
+             int inspectionID = Convert.ToInt32(Request.QueryString["InspectionID"]); // assuming InspectionID is passed via query string
+
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+
+
 
             using (SqlConnection con = new SqlConnection(connStr))
             {
@@ -325,9 +352,13 @@ namespace AnmolDristi
                 con.Close();
             }
 
-            lblMsg.Text = "Checklist updated successfully.";
-            lblMsg.ForeColor = System.Drawing.Color.Green;
+            ShowPNotify("Success", "Data saved successfully!", "success");
         }
+            catch (Exception ex)
+            {
+                ShowPNotify("Error", "Error while saving data: " + ex.Message, "error");
+    }
+}
         private void SaveChecklistItems(Repeater repeater, int inspectionID, SqlConnection con)
         {
 
@@ -370,18 +401,27 @@ namespace AnmolDristi
                     checklistPhotoPath = hfImagePath?.Value ?? "";
                 }
                 //bool isOk = rdoYes.Checked;
-                object isOkValue;
-                if (rdoYes.Checked) { 
-                    isOkValue = 1;
-                    remarks = "";
-                    checklistPhotoPath = "";
-                }
-                else 
-                    isOkValue = 0;
-               
-               
+                // --- Determine IsOk value for single column ---
+                object isOkValue = DBNull.Value;
 
-                
+                // rdoYes → 1, rdoNo → 0, rdoNA → NULL
+                if (rdoYes != null && rdoYes.Checked)
+                {
+                    isOkValue = 1;
+                    remarks = "";          
+                    checklistPhotoPath = ""; 
+                }
+                else if (rdoNo != null && rdoNo.Checked)
+                {
+                    isOkValue = 0;
+                }
+                else if (rdoNA != null && rdoNA.Checked)
+                {
+                    isOkValue = DBNull.Value; // NA saved as NULL
+                }
+
+
+
 
                 HiddenField hfCapaReportID = (HiddenField)item.FindControl("hfCapaReportID");
                 object capaID = DBNull.Value;
@@ -427,15 +467,15 @@ namespace AnmolDristi
 
                 SqlCommand cmdInsert = new SqlCommand(@"
                                INSERT INTO InspectionChecklist  
-                              (HeaderID,Location,InspectionNo, InspectionID, QuestionNumber, IsOk, NA, Remarks, PhotoPath, Description, Capa_Report, DateOfChecklist)
+                              (HeaderID,Location,InspectionNo, InspectionID, QuestionNumber, IsOk,  Remarks, PhotoPath, Description, Capa_Report, DateOfChecklist)
                                VALUES 
-                               (@HeaderID,@Location,@InspectionNo, @InspectionID, @QuestionNumber, @IsOk, @NA, @Remarks, @PhotoPath, @Description, @CAPA_Report, @DateOfChecklist)", con);
+                               (@HeaderID,@Location,@InspectionNo, @InspectionID, @QuestionNumber, @IsOk, @Remarks, @PhotoPath, @Description, @CAPA_Report, @DateOfChecklist)", con);
 
                 cmdInsert.Parameters.AddWithValue("@HeaderID", headerID);
                 cmdInsert.Parameters.AddWithValue("@InspectionID", inspectionID);
                 cmdInsert.Parameters.AddWithValue("@QuestionNumber", questionNumber);
                 cmdInsert.Parameters.AddWithValue("@IsOk", isOkValue);
-                cmdInsert.Parameters.AddWithValue("@NA", na);
+                //cmdInsert.Parameters.AddWithValue("@NA", na);
                 cmdInsert.Parameters.AddWithValue("@Remarks", remarks);
                 cmdInsert.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
                 cmdInsert.Parameters.AddWithValue("@Description", description);
@@ -582,6 +622,29 @@ namespace AnmolDristi
 
 
         //}
+
+
+
+        private void ShowPNotify(string title, string message, string type)
+        {
+            string script = $@"
+        new PNotify({{
+            title: '{title}',
+            text: '{message}',
+            type: '{type}',  // success | error | info | notice
+            styling: 'bootstrap3',
+            delay: 2500,
+            addclass: 'stack-topright'
+        }});";
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), script, true);
+        }
+
+
+
+
+
+
 
 
     }
