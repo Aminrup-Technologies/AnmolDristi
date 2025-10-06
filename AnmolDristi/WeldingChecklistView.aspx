@@ -59,11 +59,11 @@
 
                 <HeaderStyle BackColor="#000080" ForeColor="#E0E0E0" Font-Bold="true" />
                 <Columns>
-                    <asp:BoundField DataField="HeaderID" HeaderText="SNo" Visible="false" />
-                    <asp:BoundField DataField="ChecklistDate" HeaderText="Date" />
+                    <asp:BoundField DataField="HeaderID" HeaderText="ID"  />
+                    <asp:BoundField DataField="ChecklistDate" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />
                     <asp:BoundField DataField="JobID" HeaderText="Job ID" />
                     <asp:BoundField DataField="Location" HeaderText="Location" />
-                    <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name"  />
+                    <%--<asp:BoundField DataField="EmployeeName" HeaderText="Employee Name"  />--%>
                     <asp:BoundField DataField="InspectedBy" HeaderText="Inspected By" />
                    <asp:TemplateField HeaderText="Actions">
                         <ItemTemplate>

@@ -456,7 +456,7 @@ namespace AnmolDristi
                     cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
                     cmdCAPA.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
                     cmdCAPA.Parameters.AddWithValue("@Remarks", remarks);
-                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"]?.ToString() ?? "");
                     cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
                     cmdCAPA.Parameters.AddWithValue("@Description", lblDescription.Text);
 

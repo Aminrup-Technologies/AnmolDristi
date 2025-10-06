@@ -223,7 +223,7 @@ namespace AnmolDristi
                 con.Close();
             }
 
-                // ✅ One PNotify after successful save
+                // PNotify after successful save
                 ShowPNotify("Success", "Data saved successfully!", "success");
             }
             catch (Exception ex)

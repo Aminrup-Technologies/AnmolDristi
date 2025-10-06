@@ -177,12 +177,26 @@ namespace AnmolDristi
                     RadioButton rdoNo = (RadioButton)item.FindControl("rdoNo");
                     RadioButton rdoNA = (RadioButton)item.FindControl("rdoNA");
 
-                    if (Convert.ToBoolean(row["IsOk"]))
-                        rdoYes.Checked = true;
-                    else if (Convert.ToBoolean(row["NA"]))
-                        rdoNA.Checked = true;
+                    // Reset all to avoid leftover checks
+                    rdoYes.Checked = false;
+                    rdoNo.Checked = false;
+                    rdoNA.Checked = false;
+
+
+                    // NULL - N/A, True - Yes, False - No
+                    if (row["IsOk"] == DBNull.Value)
+                    {
+                        rdoNA.Checked = true;  // NULL means N/A
+                    }
                     else
-                        rdoNo.Checked = true;
+                    {
+                        bool isOk = Convert.ToBoolean(row["IsOk"]);
+
+                        if (isOk)
+                            rdoYes.Checked = true;   // 1 → Yes
+                        else
+                            rdoNo.Checked = true;    // 0 → No
+                    }
 
                     TextBox txtRemarks = (TextBox)item.FindControl("txtRemarks");
                     txtRemarks.Text = row["Remarks"].ToString();
@@ -213,8 +227,8 @@ namespace AnmolDristi
                     {
                         imgPreview.Visible = false;
                     }
-                     if (!Convert.ToBoolean(row["IsOk"]) && !Convert.ToBoolean(row["NA"]))
-                     {
+                    if (!rdoYes.Checked && !rdoNA.Checked)
+                    {
                        txtRemarks.Style["display"] = "block";
                        fileUpload.Style["display"] = "block";
                      }
@@ -295,51 +309,56 @@ namespace AnmolDristi
             string headerID = Request.QueryString["HeaderID"];
             if (string.IsNullOrEmpty(headerID)) return;
 
-            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            try { 
+                    string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
-            using (SqlConnection con = new SqlConnection(connStr))
-            {
-                con.Open();
+                    using (SqlConnection con = new SqlConnection(connStr))
+                    {
+                        con.Open();
 
-                // Update Header
-                SqlCommand cmdUpdateHeader = new SqlCommand(@"
-            UPDATE WeldingChecklistHeader SET
-                ChecklistDate = @ChecklistDate,
-                JobID = @JobID,
-                Location = @Location,
-                EmployeeName = @EmployeeName,
-                InspectedBy = @InspectedBy,
-                Remarks = @Remarks
-            WHERE HeaderID = @HeaderID", con);
+                        // Update Header
+                        SqlCommand cmdUpdateHeader = new SqlCommand(@"
+                    UPDATE WeldingChecklistHeader SET
+                        ChecklistDate = @ChecklistDate,
+                        JobID = @JobID,
+                        Location = @Location,
+                        EmployeeName = @EmployeeName,
+                        InspectedBy = @InspectedBy,
+                        Remarks = @Remarks
+                    WHERE HeaderID = @HeaderID", con);
 
-                cmdUpdateHeader.Parameters.AddWithValue("@ChecklistDate", txtdate.Text);
-                cmdUpdateHeader.Parameters.AddWithValue("@JobID", txtjobId.Text);
-                cmdUpdateHeader.Parameters.AddWithValue("@Location", txtloc.Text);
-                cmdUpdateHeader.Parameters.AddWithValue("@EmployeeName", txtDocNo.Text);
-                cmdUpdateHeader.Parameters.AddWithValue("@InspectedBy", txtInsBy.Text);
-                cmdUpdateHeader.Parameters.AddWithValue("@Remarks", txtnote.Text);
-                cmdUpdateHeader.Parameters.AddWithValue("@HeaderID", headerID);
+                        cmdUpdateHeader.Parameters.AddWithValue("@ChecklistDate", txtdate.Text);
+                        cmdUpdateHeader.Parameters.AddWithValue("@JobID", txtjobId.Text);
+                        cmdUpdateHeader.Parameters.AddWithValue("@Location", txtloc.Text);
+                        cmdUpdateHeader.Parameters.AddWithValue("@EmployeeName", txtDocNo.Text);
+                        cmdUpdateHeader.Parameters.AddWithValue("@InspectedBy", txtInsBy.Text);
+                        cmdUpdateHeader.Parameters.AddWithValue("@Remarks", txtnote.Text);
+                        cmdUpdateHeader.Parameters.AddWithValue("@HeaderID", headerID);
 
-                cmdUpdateHeader.ExecuteNonQuery();
+                        cmdUpdateHeader.ExecuteNonQuery();
 
-                // Delete existing checklist items first
-                SqlCommand cmdDeleteChecklist = new SqlCommand("DELETE FROM WeldingChecklist WHERE HeaderID = @HeaderID", con);
-                cmdDeleteChecklist.Parameters.AddWithValue("@HeaderID", headerID);
-                cmdDeleteChecklist.ExecuteNonQuery();
+                        // Delete existing checklist items first
+                        SqlCommand cmdDeleteChecklist = new SqlCommand("DELETE FROM WeldingChecklist WHERE HeaderID = @HeaderID", con);
+                        cmdDeleteChecklist.Parameters.AddWithValue("@HeaderID", headerID);
+                        cmdDeleteChecklist.ExecuteNonQuery();
 
-                // Save updated checklist items
-                SaveChecklistItems(rptChecklist, headerID, con);
-                SaveChecklistItems(rptTerminals, headerID, con);
-                SaveChecklistItems(rptCables, headerID, con);
-                SaveChecklistItems(rptElectrodeHolder, headerID, con);
-                SaveChecklistItems(rptWorkArea, headerID, con);
+                        // Save updated checklist items
+                        SaveChecklistItems(rptChecklist, headerID, con);
+                        SaveChecklistItems(rptTerminals, headerID, con);
+                        SaveChecklistItems(rptCables, headerID, con);
+                        SaveChecklistItems(rptElectrodeHolder, headerID, con);
+                        SaveChecklistItems(rptWorkArea, headerID, con);
 
-                con.Close();
+                        con.Close();
+                    }
+
+                //  PNotify after successful save
+                ShowPNotify("Success", "Data saved successfully!", "success");
             }
-
-            // Redirect or show success message
-            lblMsg.Text = "Checklist updated successfully.";
-            lblMsg.ForeColor = System.Drawing.Color.Green;
+             catch (Exception ex)
+                {
+                    ShowPNotify("Error", "Error while saving data: " + ex.Message, "error");
+               }
         }
 
         
@@ -382,15 +401,25 @@ namespace AnmolDristi
                 {
                     checklistPhotoPath = hfImagePath?.Value ?? "";
                 }
-                object isOkValue;
-                if (rdoYes.Checked)
+                //bool isOk = rdoYes.Checked;
+                // --- Determine IsOk value for single column ---
+                object isOkValue = DBNull.Value;
+
+                // rdoYes → 1, rdoNo → 0, rdoNA → NULL
+                if (rdoYes != null && rdoYes.Checked)
                 {
                     isOkValue = 1;
                     remarks = "";
                     checklistPhotoPath = "";
                 }
-                else
+                else if (rdoNo != null && rdoNo.Checked)
+                {
                     isOkValue = 0;
+                }
+                else if (rdoNA != null && rdoNA.Checked)
+                {
+                    isOkValue = DBNull.Value; // NA saved as NULL
+                }
 
                 HiddenField hfCapaReportID = (HiddenField)item.FindControl("hfCapaReportID");
                 object capaID = DBNull.Value;
@@ -427,7 +456,7 @@ namespace AnmolDristi
                     cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
                     cmdCAPA.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(checklistPhotoPath) ? DBNull.Value : (object)checklistPhotoPath);
                     cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
-                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"]?.ToString() ?? "");
                     cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
                     cmdCAPA.Parameters.AddWithValue("@Description", lblDescription.Text);
 
@@ -437,14 +466,14 @@ namespace AnmolDristi
 
                 SqlCommand cmdInsert = new SqlCommand(@"
             INSERT INTO WeldingChecklist 
-            (HeaderID, QuestionNumber, IsOk, NA, Remarks, PhotoPath, Description,CAPA_Report)
+            (HeaderID, QuestionNumber, IsOk,  Remarks, PhotoPath, Description,CAPA_Report)
             VALUES 
-            (@HeaderID, @QuestionNumber, @IsOk, @NA, @Remarks, @PhotoPath, @Description,@CAPA_Report)", con);
+            (@HeaderID, @QuestionNumber, @IsOk,  @Remarks, @PhotoPath, @Description,@CAPA_Report)", con);
 
                 cmdInsert.Parameters.AddWithValue("@HeaderID", headerID);
                 cmdInsert.Parameters.AddWithValue("@QuestionNumber", questionNumber);
                 cmdInsert.Parameters.AddWithValue("@IsOk", isOkValue);
-                cmdInsert.Parameters.AddWithValue("@NA", na);
+                //cmdInsert.Parameters.AddWithValue("@NA", na);
                 cmdInsert.Parameters.AddWithValue("@Remarks", remarks);
                 cmdInsert.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
                 cmdInsert.Parameters.AddWithValue("@Description", description);
@@ -458,6 +487,21 @@ namespace AnmolDristi
         protected void BtnBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("WeldingChecklistView.aspx");
+        }
+
+        private void ShowPNotify(string title, string message, string type)
+        {
+            string script = $@"
+        new PNotify({{
+            title: '{title}',
+            text: '{message}',
+            type: '{type}',  // success | error | info | notice
+            styling: 'bootstrap3',
+            delay: 2500,
+            addclass: 'stack-topright'
+        }});";
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), script, true);
         }
 
 

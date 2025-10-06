@@ -183,7 +183,9 @@ namespace AnmolDristi
        
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
+            try
+            {
+                string connStr = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connStr))
             {
@@ -221,10 +223,14 @@ namespace AnmolDristi
                 con.Close();
             }
 
-           
-            lblMsg.Text = "Data saved successfully!";
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "success", "alert('Checklist saved successfully!');", true);
+            // PNotify after successful save
+            ShowPNotify("Success", "Data saved successfully!", "success");
         }
+            catch (Exception ex)
+            {
+                ShowPNotify("Error", "Error while saving data: " + ex.Message, "error");
+    }
+}
 
         private void SaveChecklistItemsFromRepeater(Repeater rpt, SqlConnection con, string headerID)
         {
@@ -249,8 +255,25 @@ namespace AnmolDristi
                 FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
                 CheckBox chkCapaReport = (CheckBox)item.FindControl("chkCapaReport");
 
-                bool isOk = rdoYes != null && rdoYes.Checked;
-                bool na = rdoNA != null && rdoNA.Checked;
+                // --- Determine status ---
+                string status = "";
+                if (rdoYes != null && rdoYes.Checked)
+                {
+                    status = "Yes";
+                }
+                else if (rdoNo != null && rdoNo.Checked)
+                {
+                    status = "No";
+                }
+                else if (rdoNA != null && rdoNA.Checked)
+                {
+                    status = "NA";
+                }
+
+                // --- Convert to DB value for single column IsOk ---
+                object isOkValue = status == "Yes" ? 1
+                                  : status == "No" ? 0
+                                  : (object)DBNull.Value; // NA
 
                 string remarks = txtRemarks?.Text ?? "";
                 //string photoPath = "";
@@ -281,7 +304,7 @@ namespace AnmolDristi
                     cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
                     cmdCAPA.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
                     cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
-                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"]?.ToString() ?? "");
                     cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
                     cmdCAPA.Parameters.AddWithValue("@Description", lblDescription.Text);
 
@@ -291,16 +314,16 @@ namespace AnmolDristi
 
 
                 string insertDetailQuery = @"
-            INSERT INTO WeldingChecklist (HeaderID, QuestionNumber, IsOk, Remarks, PhotoPath, NA,description,CAPA_Report)
-            VALUES (@HeaderID, @QuestionNumber, @IsOk, @Remarks, @PhotoPath, @NA,@description,@CAPA_Report)";
+            INSERT INTO WeldingChecklist (HeaderID, QuestionNumber, IsOk, Remarks, PhotoPath, description,CAPA_Report)
+            VALUES (@HeaderID, @QuestionNumber, @IsOk, @Remarks, @PhotoPath,@description,@CAPA_Report)";
 
                 SqlCommand cmdDetail = new SqlCommand(insertDetailQuery, con);
                 cmdDetail.Parameters.AddWithValue("@HeaderID", headerID);
                 cmdDetail.Parameters.AddWithValue("@QuestionNumber", questionNumber);
-                cmdDetail.Parameters.AddWithValue("@IsOk", isOk);
+                cmdDetail.Parameters.AddWithValue("@IsOk", isOkValue);
                 cmdDetail.Parameters.AddWithValue("@Remarks", remarks);
                 cmdDetail.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
-                cmdDetail.Parameters.AddWithValue("@NA", na);
+                //cmdDetail.Parameters.AddWithValue("@NA", na);
                 cmdDetail.Parameters.AddWithValue("@description", description);
                 cmdDetail.Parameters.AddWithValue("@Capa_Report", capaReportID);
                 cmdDetail.ExecuteNonQuery();
@@ -310,6 +333,21 @@ namespace AnmolDristi
         protected void BtnReset_Click(object sender, EventArgs e)
         {
             Response.Redirect("WeldingMachineChecklist.aspx");
+        }
+
+        private void ShowPNotify(string title, string message, string type)
+        {
+            string script = $@"
+        new PNotify({{
+            title: '{title}',
+            text: '{message}',
+            type: '{type}',  // success | error | info | notice
+            styling: 'bootstrap3',
+            delay: 2500,
+            addclass: 'stack-topright'
+        }});";
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), script, true);
         }
     }
 }
