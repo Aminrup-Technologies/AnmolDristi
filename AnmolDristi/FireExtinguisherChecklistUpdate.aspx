@@ -168,12 +168,12 @@
            <%-- <td class="ab"><%# Eval("Description") %></td>--%>
              <td class="ab"><asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>' /></td>
             <td>
-                <asp:RadioButton ID="rdoYes" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
-                    Text="Yes" CssClass="assessment-label status-option" Checked="true" />
-                <asp:RadioButton ID="rdoNo" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
-                    Text="No" CssClass="assessment-label status-option" />
-                <asp:RadioButton ID="rdoNA" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
-                    Text="NA" CssClass="assessment-label status-option" />
+                <asp:RadioButton ID="rdoYes" runat="server" Value="Yes" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
+                    Text="Yes" CssClass="assessment-label status-option" Checked="true" onclick="toggleFields(this)" />
+                <asp:RadioButton ID="rdoNo" runat="server" Value="No" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
+                    Text="No" CssClass="assessment-label status-option" onclick="toggleFields(this)" />
+                <asp:RadioButton ID="rdoNA" runat="server" Value="NA" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
+                    Text="NA" CssClass="assessment-label status-option" onclick="toggleFields(this)" />
             </td>
             <td>
                 <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarks" Style="display:none;" />
@@ -239,20 +239,20 @@
 
                     const txtRemarks = row.querySelector('.form-control.remarks');
                     const fileUpload = row.querySelector('.fileUpload'); // Corrected class name
-                    const chkCapa = row.querySelector('.capa-checkbox input[type="checkbox"], .capa-checkbox');
+                    const chkCapa = row.querySelector('.capa-checkbox input[type="checkbox"]');
 
                     if (value === "No") {
                         if (txtRemarks) txtRemarks.style.display = "block";
                         if (fileUpload) fileUpload.style.display = "block";
                         if (chkCapa) {
-                            chkCapa.style.display = "block";
+                            chkCapa.parentElement.style.display = "block";
                             chkCapa.checked = true;
                         }
                     } else {
                         if (txtRemarks) txtRemarks.style.display = "none";
                         if (fileUpload) fileUpload.style.display = "none";
                         if (chkCapa) {
-                            chkCapa.style.display = "none";
+                            chkCapa.parentElement.style.display = "none";
                             chkCapa.checked = false;
                         }
                     }
@@ -260,6 +260,57 @@
             });
         };
     </script>
+
+
+     <script type="text/javascript">
+         function toggleFields(radio) {
+             const row = radio.closest("tr");
+             const remarks = row.querySelector(".remarks");
+             const fileUpload = row.querySelector(".file-upload");
+             const capaCheckbox = row.querySelector(".capa-checkbox");
+             const imgPreview = row.querySelector(".img-thumbnail"); // 👈 target your <asp:Image>
+
+             if (radio.value === "No") {
+                 //  Enable Remarks & File Upload for "No"
+                 if (remarks) {
+                     remarks.disabled = false;
+                 }
+                 if (fileUpload) {
+                     fileUpload.style.display = "block";
+                 }
+                 //  Show and check CAPA checkbox
+                 if (capaCheckbox) {
+                     capaCheckbox.style.display = "inline-block";
+                     capaCheckbox.checked = true;
+                 }
+                 // Show image preview if available (optional)
+                 if (imgPreview && imgPreview.src) {
+                     imgPreview.style.display = "block";
+                 }
+
+             } else {
+                 //  Disable & clear for "Yes" or "N/A"
+                 if (remarks) {
+                     remarks.value = "";
+                     remarks.disabled = true;
+                 }
+                 if (fileUpload) {
+                     fileUpload.value = "";
+                     fileUpload.style.display = "none";
+                 }
+                 //  Hide and uncheck CAPA checkbox
+                 if (capaCheckbox) {
+                     capaCheckbox.checked = false;
+                     capaCheckbox.style.display = "none";
+                 }
+                 //  Hide image preview
+                 if (imgPreview) {
+                     imgPreview.src = ""; // clear image
+                     imgPreview.style.display = "none";
+                 }
+             }
+         }
+     </script>
 
 
 </asp:Content>

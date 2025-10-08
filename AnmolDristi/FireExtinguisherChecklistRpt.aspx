@@ -189,7 +189,6 @@
                             <th>IsOk</th>
                             <th>Remarks</th>
                             <th>Image</th>
-                            <th>NA</th>
                             <th>Extinguisher Type</th>
                             <th>FE SerialNo</th>
                             <th>Calibration Date</th>
@@ -203,10 +202,11 @@
                                 <tr class="center_1">
                                     <td><%# Eval("QuestionNumber") %></td>
                                      <td><%# Eval("description") %></td>
-                                    <td><%# Convert.ToBoolean(Eval("IsOk")) ? "✔️" : "❌" %></td>
+                                    <td><%# Eval("IsOk") == DBNull.Value ? "NA" : 
+                                                 Convert.ToBoolean(Eval("IsOk")) ? "Yes" : "No" %></td>
                                     <td><%# Eval("Remarks") %></td>
                                     <td><asp:Image ID="imgUpload"  runat="server"  ImageUrl='<%# Eval("PhotoPath") %>'  Width="100"  Height="100"  Visible='<%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>'  /></td>           
-                                    <td><%# Convert.ToBoolean(Eval("NA")) ? "✔️" : "" %></td>
+                                    <%--<td><%# Convert.ToBoolean(Eval("NA")) ? "✔️" : "" %></td>--%>
                                     <td><%# Eval("ExtinguisherType") %></td>
                                     <td><%# Eval("FE_SerialNo") %></td>
                                     <td><%# Eval("CalibrationDate", "{0:yyyy-MM-dd}") %></td>

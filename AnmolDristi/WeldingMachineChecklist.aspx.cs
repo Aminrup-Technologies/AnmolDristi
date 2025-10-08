@@ -291,15 +291,16 @@ namespace AnmolDristi
                 }
                 object capaReportID = DBNull.Value;
 
+                string tblnme = "Welding Machine Checklist";
                 
                 if (chkCapaReport != null && chkCapaReport.Checked)
                 {
                     SqlCommand cmdCAPA = new SqlCommand(@"
                         INSERT INTO tbl_CAPAMaster 
-                        (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate,Description)
+                        (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate,Description, SourceTable)
                         OUTPUT INSERTED.CAPAID
                         VALUES 
-                        (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate,@Description)", con);
+                        (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate,@Description,@SourceTable)", con);
 
                     cmdCAPA.Parameters.AddWithValue("@HeaderID", headerID);
                     cmdCAPA.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
@@ -307,6 +308,7 @@ namespace AnmolDristi
                     cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"]?.ToString() ?? "");
                     cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
                     cmdCAPA.Parameters.AddWithValue("@Description", lblDescription.Text);
+                    cmdCAPA.Parameters.AddWithValue("@SourceTable", tblnme);
 
 
                     capaReportID = cmdCAPA.ExecuteScalar(); // Get the newly inserted CAPAID

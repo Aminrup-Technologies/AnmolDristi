@@ -31,7 +31,7 @@ namespace AnmolDristi
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"SELECT HeaderID,ChecklistDate,JobID,Location,EmployeeName,InspectedBy  from FireExtinguisherHeader";
+                string query = @"SELECT HeaderID,ChecklistDate,JobID,Location,InspectedBy  from FireExtinguisherHeader ORDER BY HeaderID Desc ";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {

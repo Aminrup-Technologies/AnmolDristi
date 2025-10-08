@@ -489,20 +489,20 @@
 
                   const txtRemarks = row.querySelector('.form-control.remarks');
                   const fileUpload = row.querySelector('.fileUpload'); // Corrected class name
-                  const chkCapa = row.querySelector('.capa-checkbox input[type="checkbox"], .capa-checkbox');
+                  const chkCapa = row.querySelector('.capa-checkbox input[type="checkbox"]');
 
                   if (value === "No") {
                       if (txtRemarks) txtRemarks.style.display = "block";
                       if (fileUpload) fileUpload.style.display = "block";
                       if (chkCapa) {
-                          chkCapa.style.display = "block";
+                          chkCapa.parentElement.style.display = "block";
                           chkCapa.checked = true;
                       }
                   } else {
                       if (txtRemarks) txtRemarks.style.display = "none";
                       if (fileUpload) fileUpload.style.display = "none";
                       if (chkCapa) {
-                          chkCapa.style.display = "none";
+                          chkCapa.parentElement.style.display = "none";
                           chkCapa.checked = false;
                       }
                   }
@@ -520,25 +520,25 @@
           const imgPreview = row.querySelector(".img-thumbnail"); // 👈 target your <asp:Image>
 
           if (radio.value === "No") {
-              // ✅ Enable Remarks & File Upload for "No"
+              //  Enable Remarks & File Upload for "No"
               if (remarks) {
                   remarks.disabled = false;
               }
               if (fileUpload) {
                   fileUpload.style.display = "block";
               }
-              // ✅ Show and check CAPA checkbox
+              //  Show and check CAPA checkbox
               if (capaCheckbox) {
                   capaCheckbox.style.display = "inline-block";
                   capaCheckbox.checked = true;
               }
-              // ✅ Show image preview if available (optional)
+              //  Show image preview if available (optional)
               if (imgPreview && imgPreview.src) {
                   imgPreview.style.display = "block";
               }
 
           } else {
-              // ✅ Disable & clear for "Yes" or "N/A"
+              //  Disable & clear for "Yes" or "N/A"
               if (remarks) {
                   remarks.value = "";
                   remarks.disabled = true;
@@ -547,12 +547,12 @@
                   fileUpload.value = "";
                   fileUpload.style.display = "none";
               }
-              // ❌ Hide and uncheck CAPA checkbox
+              //  Hide and uncheck CAPA checkbox
               if (capaCheckbox) {
                   capaCheckbox.checked = false;
                   capaCheckbox.style.display = "none";
               }
-              // ❌ Hide image preview
+              //  Hide image preview
               if (imgPreview) {
                   imgPreview.src = ""; // clear image
                   imgPreview.style.display = "none";

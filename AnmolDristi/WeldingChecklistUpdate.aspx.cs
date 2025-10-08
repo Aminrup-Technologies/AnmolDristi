@@ -353,7 +353,7 @@ namespace AnmolDristi
                     }
 
                 //  PNotify after successful save
-                ShowPNotify("Success", "Data saved successfully!", "success");
+                ShowPNotify("Success", "Data Updated successfully!", "success");
             }
              catch (Exception ex)
                 {
@@ -441,6 +441,24 @@ namespace AnmolDristi
                         remarks = "";
                         checklistPhotoPath = "";
 
+                    }
+                    else if (rdoNo.Checked)
+                    {
+                        // ✅ Update existing CAPA details if user changed remarks/photo
+                        SqlCommand cmdUpdateCAPA = new SqlCommand(@"
+                                                            UPDATE tbl_CAPAMaster
+                                                            SET Remarks = @Remarks,
+                                                                PhotoPath = @PhotoPath,
+                                                                Description = @Description
+                                                            WHERE CAPAID = @CAPAID", con);
+
+                        cmdUpdateCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
+                        cmdUpdateCAPA.Parameters.AddWithValue("@PhotoPath",
+                            string.IsNullOrEmpty(checklistPhotoPath) ? DBNull.Value : (object)checklistPhotoPath);
+                        cmdUpdateCAPA.Parameters.AddWithValue("@Description", lblDescription.Text);
+                        cmdUpdateCAPA.Parameters.AddWithValue("@CAPAID", capaID);
+
+                        cmdUpdateCAPA.ExecuteNonQuery();
                     }
                 }
 

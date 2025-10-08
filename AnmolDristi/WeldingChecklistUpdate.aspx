@@ -140,7 +140,7 @@
                   <asp:HiddenField ID="hfImagePath" runat="server" />
             </td>
              <td>
-    <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+    <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" Checked="true" />
                    <asp:HiddenField ID="hfCapaReportID" runat="server" />
 </td>
         </tr>
@@ -198,7 +198,7 @@
   <asp:HiddenField ID="hfImagePath" runat="server" />
           </td>
            <td>
-    <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" />
+    <asp:CheckBox ID="chkCapaReport" runat="server" CssClass="capa-checkbox" Text="CAPA Report" Style="display:none;" Checked="true" />
                  <asp:HiddenField ID="hfCapaReportID" runat="server" />
 </td>
       </tr>
@@ -422,20 +422,20 @@
 
                      const txtRemarks = row.querySelector('.form-control.remarks');
                      const fileUpload = row.querySelector('.fileUpload');
-                     const chkCapa = row.querySelector('.capa-checkbox input[type="checkbox"], .capa-checkbox');
+                     const chkCapa = row.querySelector('.capa-checkbox input[type="checkbox"]');
 
                      if (value === "No") {
                          if (txtRemarks) txtRemarks.style.display = "block";
                          if (fileUpload) fileUpload.style.display = "block";
                          if (chkCapa) {
-                             chkCapa.style.display = "block";
+                             chkCapa.parentElement.style.display = "block";
                              chkCapa.checked = true;
                          }
                      } else {
                          if (txtRemarks) txtRemarks.style.display = "none";
                          if (fileUpload) fileUpload.style.display = "none";
                          if (chkCapa) {
-                             chkCapa.style.display = "none";
+                             chkCapa.parentElement.style.display = "none";
                              chkCapa.checked = false;
                          }
                      }
@@ -586,11 +586,13 @@
              const row = radio.closest("tr");
              const remarks = row.querySelector(".remarks");
              const fileUpload = row.querySelector(".file-upload");
+             const chkCapa = row.querySelector('.capa-checkbox input[type="checkbox"], .capa-checkbox');
 
              if (radio.value === "No") {
                  // ✅ Enable for "No"
                  if (remarks) {
                      remarks.disabled = false;
+                     chkCapa.checked = true;
                  }
                  if (fileUpload) {
                      fileUpload.style.display = "block";
