@@ -108,7 +108,7 @@
                 <HeaderStyle BackColor="#004080" ForeColor="#E0E0E0" Font-Bold="true" />
 
                 <Columns>
-                    <asp:BoundField DataField="ItemDetailID" HeaderText="SNo"  />
+                    <asp:BoundField DataField="ItemDetailID" HeaderText="SNo" Visible="false"  />
 
                     <asp:TemplateField HeaderText="Item Name">
                         <ItemTemplate>
@@ -193,9 +193,11 @@
              <td class="ab"><asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>' /></td>
             <td>
                 <asp:RadioButton ID="rdoYes" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
-                    Text="Yes" CssClass="assessment-label status-option" />
+                    Text="Yes" CssClass="assessment-label status-option" value="Yes"
+                    onclick="toggleFields(this)"  />
                 <asp:RadioButton ID="rdoNo" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
-                    Text="No" CssClass="assessment-label status-option"  checked="true"/>
+                    Text="No" CssClass="assessment-label status-option" value="No"
+                    onclick="toggleFields(this)"   checked="true"/>
             </td>
             <td>
                 <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarks" Style="display:none;" />
@@ -312,7 +314,8 @@
 
             for (let i = 0; i < rows.length; i++) {
                 const row = rows[i];
-                const selectedRadio = row.querySelector('.status-option input[type="radio"]:checked');
+                //const selectedRadio = row.querySelector('.status-option input[type="radio"]:checked');
+                const selectedRadio = row.querySelector('input[type="radio"]:checked');
 
                 if (selectedRadio) {
                     const value = selectedRadio.nextSibling.textContent.trim();
@@ -330,12 +333,35 @@
                         }
 
                         // Check for photo (new upload or existing path)
-                        const fileSelected = fileUpload && fileUpload.files.length > 0;
-                        const imagePathPresent = hfImagePath && hfImagePath.value.trim() !== "";
+                        //const fileSelected = fileUpload && fileUpload.files.length > 0;
+                        //const imagePathPresent = hfImagePath && hfImagePath.value.trim() !== "";
+
+                        //if (!fileSelected && !imagePathPresent) {
+                        //    alert("Please upload a photo or ensure photo already exists for items marked as 'Yes'.");
+                        //    fileUpload?.focus();
+                        //    return false;
+                        //}
+
+                        // Check photo
+                        let fileSelected = false;
+                        if (fileUpload && fileUpload.files) {
+                            fileSelected = fileUpload.files.length > 0;
+                        }
+
+                        const imagePathValue = hfImagePath && hfImagePath.value ? hfImagePath.value.trim() : "";
+                        const imagePathPresent =
+                            imagePathValue !== "" &&
+                            imagePathValue.toLowerCase() !== "null" &&
+                            imagePathValue.toLowerCase() !== "undefined" &&
+                            imagePathValue !== "0" &&
+                            !imagePathValue.startsWith("~/"); // 🚫 ignore local virtual paths
+
+
+                        console.log("File selected:", fileSelected, "Image path present:", imagePathPresent);
 
                         if (!fileSelected && !imagePathPresent) {
                             alert("Please upload a photo or ensure photo already exists for items marked as 'Yes'.");
-                            fileUpload?.focus();
+                            if (fileUpload) fileUpload.focus();
                             return false;
                         }
                     }
@@ -380,6 +406,40 @@
             return false;
         }
 
+        // ✅ Photo validation (ignore if already uploaded)
+        var rows = document.querySelectorAll('tr'); // Adjust if you have a specific Repeater container
+        let photoMissing = false;
+
+        rows.forEach(function (row) {
+            var fileInput = row.querySelector('input[type="file"]');
+            if (fileInput && fileInput.offsetParent !== null) {
+
+                var hasNewPhoto = fileInput.value.trim() !== "";
+                var hasExistingPhoto = false;
+
+                // Check for hidden field or <img> preview
+                var hidden = row.querySelector('input.existing-photo');
+                if (hidden && hidden.value.trim() !== "") {
+                    hasExistingPhoto = true;
+                }
+
+                var img = row.querySelector('img');
+                if (img && img.src && !img.src.toLowerCase().includes("noimage")) {
+                    hasExistingPhoto = true;
+                }
+
+                // Require at least one
+                if (!hasNewPhoto && !hasExistingPhoto) {
+                    photoMissing = true;
+                }
+            }
+        });
+
+        if (photoMissing) {
+            alert("Please upload all required photos before saving.");
+            return false;
+        }
+
         return true;
     }
 </script>
@@ -387,8 +447,30 @@
 
  <script type="text/javascript">
      function showSuccessMessages() {
-         alert("Issues have been added successfully!");
+         alert("Items have been added successfully!");
      }
  </script>
+
+     <script type="text/javascript">
+         function toggleFields(radio) {
+             const row = radio.closest("tr");
+             const remarks = row.querySelector(".remarks");
+             const fileUpload = row.querySelector(".file-upload");
+
+             if (radio.value === "Yes") {
+                 // ✅ Show when Yes
+                 remarks.style.display = "block";
+                 fileUpload.style.display = "block";
+                 //remarks.required = true;
+
+             } else if (radio.value === "No") {
+                 // 🚫 Hide and clear when No
+                 remarks.style.display = "none";
+                 remarks.value = "";
+                 fileUpload.style.display = "none";
+                 fileUpload.value = ""; // clear uploaded file
+             }
+         }
+     </script>
 
 </asp:Content>

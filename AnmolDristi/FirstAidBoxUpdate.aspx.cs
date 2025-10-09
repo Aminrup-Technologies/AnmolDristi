@@ -451,7 +451,7 @@ namespace AnmolDristi
                             cmdCAPA.Parameters.AddWithValue("@HeaderID", inspectionID);
                             cmdCAPA.Parameters.AddWithValue("@PhotoPath", string.IsNullOrEmpty(checklistPhotoPath) ? DBNull.Value : (object)checklistPhotoPath);
                             cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
-                            cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                            cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"]?.ToString() ?? "");
                             cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
                             cmdCAPA.Parameters.AddWithValue("@Description", lblDesc.Text);
 
@@ -509,8 +509,7 @@ namespace AnmolDristi
                     }
 
                     trans.Commit();
-                    lblMsg.Text = "Inspection updated successfully.";
-                    lblMsg.ForeColor = System.Drawing.Color.Green;
+                    ShowPNotify("Success", "Data Updated successfully!", "success");
                 }
                 catch (Exception ex)
                 {
@@ -519,6 +518,25 @@ namespace AnmolDristi
                     lblMsg.ForeColor = System.Drawing.Color.Red;
                 }
             }
+        }
+
+
+        private void ShowPNotify(string title, string message, string type)
+        {
+            string script = $@"
+            new PNotify({{
+                title: '{title}',
+                text: '{message}',
+                type: '{type}', 
+                styling: 'bootstrap3',
+                delay: 2500,
+                addclass: 'stack-topright'
+            }});";
+
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), script, true);
+
+
         }
 
     }

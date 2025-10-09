@@ -258,9 +258,11 @@
              <td class="ab"><asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>' /></td>
             <td>
                 <asp:RadioButton ID="rdoYes" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
-                    Text="Yes" CssClass="assessment-label status-option" />
+                    Text="Yes" CssClass="assessment-label status-option" value="Yes"
+                    onclick="toggleFields(this)"  />
                 <asp:RadioButton ID="rdoNo" runat="server" GroupName='<%# "grp_" + Eval("QuestionNumber") %>'
-                    Text="No" CssClass="assessment-label status-option" checked="true"/>
+                    Text="No" CssClass="assessment-label status-option" value="No"
+                    onclick="toggleFields(this)"  checked="true"/>
             </td>
             <td>
                 <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarks" Style="display:none;" />
@@ -324,7 +326,7 @@
                         <asp:Button ID="BtnSubmit" runat="server" Text="Submit" CssClass="btn btn-success btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" OnClientClick="return validatesChecklist();" />
                         
                         <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
-                         <asp:Button ID="BtnView" runat="server" Text="View Page" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="BtnView_Click" />
+                         <%--<asp:Button ID="BtnView" runat="server" Text="View Page" CssClass="btn btn-primary btn-sm" CausesValidation="false" OnClick="BtnView_Click" />--%>
                         <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/Home.aspx" />
                         <asp:Label ID="lblMsg" runat="server" ForeColor="Green"></asp:Label>
                         
@@ -512,5 +514,25 @@
         return true;
     }
 </script>
+
+    <script type="text/javascript">
+        function toggleFields(radio) {
+            const row = radio.closest("tr");
+            const remarks = row.querySelector(".remarks");
+            const fileUpload = row.querySelector(".file-upload");
+
+            if (radio.value === "Yes") {
+                //  Show when Yes
+                remarks.style.display = "block";
+                fileUpload.style.display = "block";
+            } else if (radio.value === "No") {
+                //  Hide and clear when No
+                remarks.style.display = "none";
+                remarks.value = "";
+                fileUpload.style.display = "none";
+                fileUpload.value = ""; // clear uploaded file
+            }
+        }
+    </script>
 
 </asp:Content>

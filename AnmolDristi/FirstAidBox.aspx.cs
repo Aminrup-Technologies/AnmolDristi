@@ -403,22 +403,25 @@ namespace AnmolDristi
                             checklistPhotoPath = "~/Uploads1/" + fileName;
                         }
 
+
+                        string tblnme = "First Aid Box Checklist";
                         // If CAPA checkbox is checked, insert CAPA and get generated ID
                         if (chkCapaReport != null && chkCapaReport.Checked)
                         {
                             SqlCommand cmdCAPA = new SqlCommand(@"
                         INSERT INTO tbl_CAPAMaster 
-                        (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate,Description)
+                        (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate,Description,SourceTable)
                         OUTPUT INSERTED.CAPAID
                         VALUES 
-                        (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate,@Description)", con, tran);
+                        (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate,@Description,@SourceTable)", con, tran);
 
                             cmdCAPA.Parameters.AddWithValue("@HeaderID", inspectionID);
                             cmdCAPA.Parameters.AddWithValue("@PhotoPath", checklistPhotoPath);
                             cmdCAPA.Parameters.AddWithValue("@Remarks", txtRemarks.Text.Trim());
-                            cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInsBy.Text.Trim());
+                            cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"]?.ToString() ?? "");
                             cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
                             cmdCAPA.Parameters.AddWithValue("@Description", lblDesc.Text);
+                            cmdCAPA.Parameters.AddWithValue("@SourceTable", tblnme);
 
                             capaReportID = cmdCAPA.ExecuteScalar();   // Get the newly inserted CAPAID
                         }
@@ -442,14 +445,13 @@ namespace AnmolDristi
                     }
 
                     tran.Commit();
-                    lblMsg.Text = "Data saved successfully!";
-                    lblMsg.ForeColor = System.Drawing.Color.Green;
+                    // PNotify after successful save
+                    ShowPNotify("Success", "Data saved successfully!", "success");
                 }
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    lblMsg.Text = "Error: " + ex.Message;
-                    lblMsg.ForeColor = System.Drawing.Color.Red;
+                    ShowPNotify("Error", "Error while saving data: " + ex.Message, "error");
                 }
             }
         }
@@ -466,6 +468,25 @@ namespace AnmolDristi
         protected void BtnView_Click(object sender, EventArgs e)
         {
             Response.Redirect("FirstAidBoxView.aspx");
+        }
+
+
+        private void ShowPNotify(string title, string message, string type)
+        {
+            string script = $@"
+            new PNotify({{
+                title: '{title}',
+                text: '{message}',
+                type: '{type}', 
+                styling: 'bootstrap3',
+                delay: 2500,
+                addclass: 'stack-topright'
+            }});";
+
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), script, true);
+
+
         }
     }
 }
