@@ -112,15 +112,21 @@ ORDER BY i.IncidentID DESC;
             try
             {
                 InsertIncidentData(); // Save form data
-                lblMessage.ForeColor = System.Drawing.Color.Green;
-                lblMessage.Text = "Incident data saved successfully!";
+                                      //lblMessage.ForeColor = System.Drawing.Color.Green;
+                                      //lblMessage.Text = "Incident data saved successfully!";
+
+                //  Show success notification
+                ScriptManager.RegisterStartupScript(this, GetType(), "saveSuccess",
+                    "new PNotify({ title: 'Success', text: 'Incident data saved successfully!', type: 'success', styling: 'bootstrap3', delay: 2500 });", true);
+
 
                 LoadIncidentData(); // Refresh GridView with new data
             }
             catch (Exception ex)
             {
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-                lblMessage.Text = "Error: " + ex.Message;
+                //  Show error notification
+                ScriptManager.RegisterStartupScript(this, GetType(), "saveError",
+                    $"new PNotify({{ title: 'Error', text: 'Error while saving: {ex.Message.Replace("'", "")}', type: 'error', styling: 'bootstrap3' }});", true);
             }
         }
 
@@ -168,7 +174,7 @@ ORDER BY i.IncidentID DESC;
             string section = txtSection.Text;
             string nameOfPersonInvolved = txtPersonInvolved.Text;
             string anyWitness = rblWitness.SelectedValue;
-            string witnessNames = txtWitness1.Text;
+            string witnessNames = hfWitnessList.Value;
             string reportedBy = txtReportedBy.Text;
             string vendorName = txtVendorName.Text;
             DateTime submittedDateTime = DateTime.Now;
@@ -177,7 +183,8 @@ ORDER BY i.IncidentID DESC;
 
             int totalInjuredPersons = int.Parse(txtInjuredPersons.Text);
 
-            string investigationTeamMembers = txtInvestigationMember1.Text;
+            string investigationTeamMembers = hfInvestigationTeamList.Value;
+
 
             string taskAndDescription = txtTaskDescription.Text;
 

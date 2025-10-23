@@ -229,7 +229,7 @@
                                 </div>
 
                                 <!-- Witness Name Section (Initially Hidden) -->
-                                <div class="col-md-3" id="witnessSection" style="display: none;">
+                               <%-- <div class="col-md-3" id="witnessSection" style="display: none;">
                                     <div class="mb-3">
                                         <asp:Label ID="lblWitnessName" runat="server" Text="Witness Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div id="witnessContainer">
@@ -238,7 +238,7 @@
                                                 <%--<asp:PlaceHolder ID="phWitnessNames" runat="server"></asp:PlaceHolder>
                                                 <asp:Button ID="btnAddWitness" runat="server" Text="Add Witness" OnClick="BtnAddWitness_Click" />--%>
 
-                                                <asp:TextBox ID="txtWitness1" runat="server" CssClass="form-control form-control-sm witness-input"></asp:TextBox>
+                                                <%--<asp:TextBox ID="txtWitness1" runat="server" CssClass="form-control form-control-sm witness-input"></asp:TextBox>
                                                 <!-- RequiredFieldValidator for Witness -->
                                                 <asp:RequiredFieldValidator ID="rfvWitness1" runat="server"
                                                     ControlToValidate="txtWitness1"
@@ -251,10 +251,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>--%>
 
                                 <!-- CSS to Fix Button Sizes and Add Proper Spacing -->
-                                <style>
+                               <%-- <style>
                                     .btn-fixed-size {
                                         width: 100px; /* Ensures both buttons are equal width */
                                         text-align: center;
@@ -265,10 +265,10 @@
                                     .witness-input {
                                         margin-right: 10px; /* Add spacing between input box and Add button */
                                     }
-                                </style>
+                                </style>--%>
 
                                 <!-- JavaScript -->
-                                <script type="text/javascript">
+                                <%--<script type="text/javascript">
                                     function toggleWitnessSection() {
                                         var witnessSection = document.getElementById("witnessSection");
                                         var radioButtons = document.getElementsByName("<%= rblWitness.UniqueID %>");
@@ -320,7 +320,146 @@
                                             alert("At least one witness name is required.");
                                         }
                                     }
-                                </script>
+                                </script>--%>
+
+
+
+
+<!-- Witness Name Section (Initially Hidden) -->
+<div class="col-md-3" id="witnessSection" style="display: none;">
+    <div class="mb-3">
+        <asp:Label ID="lblWitnessName" runat="server" Text="Witness Name:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+        <!-- Input + Add Button -->
+        <div class="d-flex align-items-center mb-2">
+            <asp:TextBox ID="txtWitness1" runat="server" CssClass="form-control form-control-sm witness-input" placeholder="Enter Witness Name"></asp:TextBox>
+
+            <button type="button" class="btn btn-primary btn-sm ms-2" onclick="addWitness()" CausesValidation="false" UseSubmitBehavior="false">Add</button>
+            <asp:HiddenField ID="hfWitnessList" runat="server" />
+        </div>
+
+        <!-- Witness list will appear here -->
+        <div id="witnessList"></div>
+    </div>
+</div>
+
+<!-- ✅ CSS -->
+<style>
+    .witness-input {
+        flex: 1;
+        margin-right: 12px; 
+    }
+
+    .add-witness-btn {
+    min-width: 90px;       /* keeps consistent size */
+    text-align: center;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+
+    #witnessList {
+        margin-top: 8px;
+    }
+
+    /* Each added witness row */
+    .witness-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 6px 10px;
+        margin-bottom: 6px;
+    }
+
+    .witness-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        margin-right: 10px;
+        flex: 1;
+        word-break: break-word;
+    }
+
+    .btn-remove {
+        padding: 2px 8px;
+        font-size: 12px;
+        border-radius: 4px;
+    }
+</style>
+
+<script type="text/javascript">
+    function toggleWitnessSection() {
+        var witnessSection = document.getElementById("witnessSection");
+        var radioButtons = document.getElementsByName("<%= rblWitness.UniqueID %>");
+
+        for (var i = 0; i < radioButtons.length; i++) {
+            if (radioButtons[i].checked && radioButtons[i].value === "Yes") {
+                witnessSection.style.display = "block";
+            } else if (radioButtons[i].checked && radioButtons[i].value === "No") {
+                witnessSection.style.display = "none";
+            }
+        }
+    }
+
+    function addWitness() {
+        var input = document.getElementById("<%= txtWitness1.ClientID %>");
+    var name = input.value.trim();
+    if (name === "") {
+        alert("Please enter a witness name.");
+        return;
+    }
+
+    var container = document.getElementById("witnessList");
+
+    var div = document.createElement("div");
+    div.className = "witness-item";
+
+    var label = document.createElement("span");
+    label.textContent = name;
+    label.className = "witness-name";
+
+    var removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "btn btn-danger btn-sm btn-remove";
+    removeBtn.textContent = "Remove";
+    removeBtn.onclick = function () {
+        container.removeChild(div);
+        updateWitnessHiddenField();
+    };
+
+    div.appendChild(label);
+    div.appendChild(removeBtn);
+    container.appendChild(div);
+
+    input.value = "";
+
+    updateWitnessHiddenField();
+}
+
+function updateWitnessHiddenField() {
+    var names = [];
+    document.querySelectorAll("#witnessList .witness-name").forEach(span => {
+        names.push(span.textContent.trim());
+    });
+    document.getElementById("<%= hfWitnessList.ClientID %>").value = names.join(", ");
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -441,7 +580,7 @@
 
 
                                 <!-- Investigation Team Members -->
-                                <div class="col-md-3">
+                               <%-- <div class="col-md-3">
                                     <div class="mb-3">
                                         <asp:Label ID="lblInvestigationTeam" runat="server" Text="Investigation Team Members:" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
                                         <div id="investigationTeamContainer">
@@ -519,7 +658,139 @@
                                             alert("At least one team member is required.");
                                         }
                                     }
-                                </script>
+                                </script>--%>
+
+
+
+
+
+
+                                <!-- Investigation Team Members -->
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <asp:Label ID="lblInvestigationTeam" runat="server" 
+                                                    Text="Investigation Team Members:" 
+                                                    ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
+
+                                                <!-- Input + Add Button -->
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <asp:TextBox ID="txtInvestigationMember1" runat="server"
+                                                        CssClass="form-control form-control-sm investigation-input"
+                                                        placeholder="Enter Team Member"></asp:TextBox>
+
+                                                    <button type="button" class="btn btn-primary btn-sm add-investigation-btn" onclick="addInvestigationMember()">Add</button>
+                                                    <asp:HiddenField ID="hfInvestigationTeamList" runat="server" />
+                                                </div>
+
+                                                <!-- List of members -->
+                                                <div id="investigationTeamList"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- ✅ CSS -->
+                                        <style>
+                                            .investigation-input {
+                                                flex: 1;
+                                                margin-right: 12px; /* Space between textbox and button */
+                                            }
+
+                                            .add-investigation-btn {
+                                                min-width: 90px;
+                                                text-align: center;
+                                                padding: 5px 10px;
+                                                font-size: 14px;
+                                            }
+
+                                            #investigationTeamList {
+                                                margin-top: 8px;
+                                            }
+
+                                            /* Each added member row */
+                                            .investigation-item {
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: space-between;
+                                                background-color: #f8f9fa;
+                                                border: 1px solid #ddd;
+                                                border-radius: 6px;
+                                                padding: 6px 10px;
+                                                margin-bottom: 6px;
+                                            }
+
+                                            .investigation-name {
+                                                font-size: 14px;
+                                                font-weight: 500;
+                                                color: #333;
+                                                margin-right: 10px;
+                                                flex: 1;
+                                                word-break: break-word;
+                                            }
+
+                                            .btn-remove {
+                                                padding: 2px 8px;
+                                                font-size: 12px;
+                                                border-radius: 4px;
+                                            }
+                                        </style>
+
+                                        <!-- ✅ JavaScript -->
+                                        <script type="text/javascript">
+                                            function addInvestigationMember() {
+                                                var input = document.getElementById("<%= txtInvestigationMember1.ClientID %>");
+                                                var name = input.value.trim();
+                                                if (name === "") {
+                                                    alert("Please enter a team member name.");
+                                                    return;
+                                                }
+
+                                                var container = document.getElementById("investigationTeamList");
+
+                                                var div = document.createElement("div");
+                                                div.className = "investigation-item";
+
+                                                var label = document.createElement("span");
+                                                label.textContent = name;
+                                                label.className = "investigation-name";
+
+                                                var removeBtn = document.createElement("button");
+                                                removeBtn.type = "button";
+                                                removeBtn.className = "btn btn-danger btn-sm btn-remove";
+                                                removeBtn.textContent = "Remove";
+                                                removeBtn.onclick = function () {
+                                                    container.removeChild(div);
+                                                    updateInvestigationHiddenField(); // update hidden field when removing
+                                                };
+
+                                                div.appendChild(label);
+                                                div.appendChild(removeBtn);
+                                                container.appendChild(div);
+
+                                                input.value = "";
+
+                                                updateInvestigationHiddenField(); // update hidden field when adding
+                                            }
+
+
+                                        </script>
+
+                                   <script>
+                                       function updateInvestigationHiddenField() {
+                                           var members = [];
+                                           document.querySelectorAll("#investigationTeamList .investigation-name").forEach(span => {
+                                               members.push(span.textContent.trim());
+                                           });
+                                           document.getElementById("<%= hfInvestigationTeamList.ClientID %>").value = members.join(", ");
+                                       }
+
+
+                                   </script>
+
+
+
+
+
+
+
 
 
                                 <div class="col-md-12">
@@ -1110,19 +1381,35 @@
                                     }
 
                                     // Witness section validation (if visible)
-                                    var witnessSection = document.getElementById("witnessSection");
+                                    //var witnessSection = document.getElementById("witnessSection");
+                                    //if (witnessSection && witnessSection.style.display !== "none") {
+                                    //    var witnessInputs = witnessSection.querySelectorAll("input[type='text']");
+                                    //    witnessInputs.forEach(function (input, index) {
+                                    //        if (input.value.trim() === "") {
+                                    //            isValid = false;
+                                    //            errorMessage += "- Please enter Witness Name #" + (index + 1) + ".\n";
+                                    //            input.classList.add("is-invalid");
+                                    //        } else {
+                                    //            input.classList.remove("is-invalid");
+                                    //        }
+                                    //    });
+                                    //}
+
+
+
+
+                                    var witnessHidden = document.getElementById("<%= hfWitnessList.ClientID %>");
                                     if (witnessSection && witnessSection.style.display !== "none") {
-                                        var witnessInputs = witnessSection.querySelectorAll("input[type='text']");
-                                        witnessInputs.forEach(function (input, index) {
-                                            if (input.value.trim() === "") {
-                                                isValid = false;
-                                                errorMessage += "- Please enter Witness Name #" + (index + 1) + ".\n";
-                                                input.classList.add("is-invalid");
-                                            } else {
-                                                input.classList.remove("is-invalid");
-                                            }
-                                        });
+                                        if (!witnessHidden.value.trim()) {
+                                            isValid = false;
+                                            errorMessage += "- Please enter at least one Witness Name.\n";
+                                        }
                                     }
+
+
+
+
+
 
                                     // Investigation Team Members validation
                                     var investigationContainer = document.getElementById("investigationTeamContainer");

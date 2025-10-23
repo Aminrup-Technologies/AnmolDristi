@@ -64,6 +64,96 @@ table.table {
             margin-top: 20px;
         }
     </style>
+
+   <%-- <style>
+.table-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    width: 100%;
+    overflow: auto; /* ✅ Enables both horizontal and vertical scrollbars */
+    max-height: 80vh; /* ✅ Prevents page scrolling, keeps table within viewport */
+    scrollbar-width: thin; /* Firefox support */
+    scrollbar-color: #007bff #f1f1f1; /* Firefox scrollbar color */
+}
+
+/* ✅ Custom scrollbar for Chrome, Edge, Safari */
+.table-container::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 5px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background-color: #0056b3;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+/* ✅ Table styling */
+table.table {
+    width: 98%;
+    min-width: 1400px;
+    max-width: 2400px;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-bottom: 25px;
+    background-color: #fff;
+}
+
+table.table th,
+table.table td {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+    color: #000;
+}
+
+table.table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+}
+
+table.table td:first-child {
+    font-weight: bold;
+    width: 35%;
+    white-space: nowrap;
+}
+
+table.table td {
+    background-color: #f9f9f9;
+}
+
+table.table tr:nth-child(even) td {
+    background-color: #f2f2f2;
+}
+
+img#imgEvidence {
+    border: 1px solid #ccc;
+    padding: 4px;
+    border-radius: 4px;
+    max-width: 150px;
+    height: auto;
+}
+
+.table + .table {
+    margin-top: 20px;
+}
+</style>--%>
+
+
+
+
+
 </asp:Content>
 
 
@@ -89,6 +179,7 @@ table.table {
                                 <asp:TemplateField>
                                     <ItemTemplate>
                                         <!-- Incident Basic Details -->
+                                        
                                         <table class="table table-bordered mb-4">
                                             <tr><th colspan="2">Incident Basic Details</th></tr>
                                             <tr><td>Incident ID:</td><td><%# Eval("IncidentID") %></td></tr>
@@ -132,6 +223,7 @@ table.table {
                                             <tr><td>Immediate Actions:</td><td><%# Eval("CorrectiveActions") %></td></tr>
                                             <tr><td>Preventive Actions:</td><td><%# Eval("PreventiveActions") %></td></tr>
                                         </table>
+                                      
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

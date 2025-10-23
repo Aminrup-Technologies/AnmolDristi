@@ -222,13 +222,13 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtWitness1;
 
         /// <summary>
-        /// rfvWitness1 control.
+        /// hfWitnessList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvWitness1;
+        protected global::System.Web.UI.WebControls.HiddenField hfWitnessList;
 
         /// <summary>
         /// lblReportedBy control.
@@ -393,13 +393,13 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtInvestigationMember1;
 
         /// <summary>
-        /// rfvInvestigationMember1 control.
+        /// hfInvestigationTeamList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvInvestigationMember1;
+        protected global::System.Web.UI.WebControls.HiddenField hfInvestigationTeamList;
 
         /// <summary>
         /// lblTaskDescription control.
