@@ -213,33 +213,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvVender;
 
         /// <summary>
-        /// btn_panel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_panel1;
-
-        /// <summary>
-        /// btn_reset1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_reset1;
-
-        /// <summary>
-        /// btn_home1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_home1;
-
-        /// <summary>
         /// Label1 control.
         /// </summary>
         /// <remarks>
@@ -247,6 +220,24 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
+
+        /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
+        /// updPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updPanel;
 
         /// <summary>
         /// lblActivity control.
@@ -267,15 +258,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtActivity;
 
         /// <summary>
-        /// rfvActivity control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvActivity;
-
-        /// <summary>
         /// lblHiddenHazards control.
         /// </summary>
         /// <remarks>
@@ -292,15 +274,6 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtHiddenHazards;
-
-        /// <summary>
-        /// rfvHiddenHazards control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvHiddenHazards;
 
         /// <summary>
         /// lblConsequence control.
@@ -321,15 +294,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtConsequence;
 
         /// <summary>
-        /// rfvConsequence control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvConsequence;
-
-        /// <summary>
         /// lblCounterMeasures control.
         /// </summary>
         /// <remarks>
@@ -346,15 +310,6 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCounterMeasures;
-
-        /// <summary>
-        /// rfvCounterMeasures control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCounterMeasures;
 
         /// <summary>
         /// lblPriority control.
@@ -375,15 +330,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.DropDownList ddlPriority;
 
         /// <summary>
-        /// rfvPriority control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPriority;
-
-        /// <summary>
         /// lblPhotograph control.
         /// </summary>
         /// <remarks>
@@ -402,22 +348,31 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.FileUpload fuPhotograph;
 
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// chkGenerateCAPA control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.CheckBox chkGenerateCAPA;
 
         /// <summary>
-        /// hfKYTGridData control.
+        /// btnSaveObservation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfKYTGridData;
+        protected global::System.Web.UI.WebControls.Button btnSaveObservation;
+
+        /// <summary>
+        /// gvObservations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvObservations;
 
         /// <summary>
         /// btnSubmit control.

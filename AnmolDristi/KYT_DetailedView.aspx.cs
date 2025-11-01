@@ -21,11 +21,12 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                string jobId = Request.QueryString["JobId"];
-                if (!string.IsNullOrEmpty(jobId))
+                string id = Request.QueryString["ID"];
+                if (!string.IsNullOrEmpty(id))
                 {
-                    LoadKYTData(jobId);
+                    LoadKYTData(id);
                 }
+
             }
         }
 
@@ -45,8 +46,10 @@ namespace AnmolDristi
                         string jobId = Request.QueryString["JobId"];  // 🔹 Current JobId
 
                         lnkCapa.Text = capaId;
-                       
-                        lnkCapa.NavigateUrl = $"Universal_Capa.aspx?JobId={jobId}&CAPAID={capaId}";
+
+                        string kytId = Request.QueryString["ID"]; 
+                        lnkCapa.NavigateUrl = $"Universal_Capa.aspx?KYTID={kytId}&CAPAID={capaId}";
+
                     }
                     else
                     {
@@ -57,25 +60,38 @@ namespace AnmolDristi
         }
 
 
-        private void LoadKYTData(string jobId)
+        private void LoadKYTData(string ID)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
 
                 SqlCommand cmd = new SqlCommand(@"
-    SELECT 
-        t1.KYT_WorksiteName, t1.KYT_Department, t1.KYT_Location, t1.KYT_Date,
-        t1.KYT_JobID, t1.KYT_SOPNo, t1.KYT_Vendor,
-        t2.KYT_Activity, t2.KYT_HiddenHazards, t2.KYT_Consequence, t2.KYT_CounterMeasures,
-        t2.KYT_PriorityValue, t2.KYT_PhotographPath, t2.SubmissionDate, t2.SubmissionTime,
-        t2.CAPAID   -- 🔹 Added CAPAID here
-    FROM [MahimaGupta_CSMS].[KYT_Table1] t1
-    INNER JOIN [MahimaGupta_CSMS].[KYT_Table2] t2 ON t1.ID = t2.ID
-    WHERE t1.KYT_JobID = @JobId", conn);
+                            SELECT 
+                                t1.KYT_WorksiteName,
+                                t1.KYT_Department,
+                                t1.KYT_Location,
+                                t1.KYT_Date,
+                                t1.KYT_JobID,
+                                t1.KYT_SOPNo,
+                                t1.KYT_Vendor,
+                                t2.KYT_Activity,
+                                t2.KYT_HiddenHazards,
+                                t2.KYT_Consequence,
+                                t2.KYT_CounterMeasures,
+                                t2.KYT_PriorityValue,
+                                t2.KYT_PhotographPath,
+                                t2.SubmissionDate,
+                                t2.SubmissionTime,
+                                t2.CAPAID
+                            FROM [MahimaGupta_CSMS].[KYT_Table1] t1
+                            INNER JOIN [MahimaGupta_CSMS].[KYT_Table2] t2 
+                                ON t1.ID = t2.ID     
+                            WHERE t1.ID = @ID", conn);
 
 
-                cmd.Parameters.AddWithValue("@JobId", jobId);
+
+                cmd.Parameters.AddWithValue("@ID", ID);
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();

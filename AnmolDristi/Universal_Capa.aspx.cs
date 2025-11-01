@@ -85,7 +85,7 @@ namespace AnmolDristi
                         // HeaderID prefix mapping
                         string headerId = reader["HeaderID"].ToString();
                         txtSourceRecordID.Text = headerId;
-                        txtSourceRecordType.Text = GetRecordType(headerId);
+                        txtSourceRecordType.Text = reader["SourceTable"].ToString();
 
                         // General Details
                         txtRaisedBy.Text = reader["AssignedBy"].ToString();
@@ -127,17 +127,18 @@ namespace AnmolDristi
                 }
             }
 
-            private string GetRecordType(string headerId)
+        private string GetRecordType(string headerId)
+        {
+            foreach (var prefix in prefixMap.Keys)
             {
-                foreach (var prefix in prefixMap.Keys)
+                if (headerId.StartsWith(prefix))
                 {
-                    if (headerId.StartsWith(prefix))
-                    {
-                        return prefixMap[prefix];
-                    }
+                    return prefixMap[prefix];
                 }
-                return "Unknown Type";
             }
+            return "Unknown Type";
         }
     }
+    }
+
 

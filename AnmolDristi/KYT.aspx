@@ -24,7 +24,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script type="text/javascript">
+    <%--<script type="text/javascript">
         let kytData = [];
         document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("btnAddKYT").addEventListener("click", function () {
@@ -91,7 +91,7 @@
                             <th>Counter Measures</th>
                             <th>Priority</th>
                             <th>Photograph</th>
-                            <th>CAPA ID</th>
+                            
 
                         </tr>
                     </thead>
@@ -102,7 +102,7 @@
                 const tbody = table.querySelector("tbody");
                 const newRow = document.createElement("tr");
 
-                [activity, hazard, consequence, measures, priority, photoName, capaID].forEach(text => {
+                [activity, hazard, consequence, measures, priority, photoName].forEach(text => {
                     const td = document.createElement("td");
                     td.textContent = text;
                     newRow.appendChild(td);
@@ -122,7 +122,7 @@
                 document.getElementById("<%= fuPhotograph.ClientID %>").value = "";
             });
         });
-    </script>
+    </script>--%>
 
     <div class="right_col" role="main">
         <div class="container">
@@ -285,11 +285,11 @@
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <div class="input-group input-group-sm">
+                                       <%-- <div class="input-group input-group-sm">
                                             <asp:Button ID="btn_panel1" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="btn_panel1_Click" />
                                             <asp:Button ID="btn_reset1" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" PostBackUrl="~/KYT.aspx" />
                                             <asp:Button ID="btn_home1" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
-                                        </div>
+                                        </div>--%>
                                         <asp:Label ID="Label1" runat="server" ForeColor="Red" Font-Bold="true" />
 
                                     </div>
@@ -306,11 +306,11 @@
                                 </div>
 
 
-                                <div class="col-lg-12">
+                               <div class="col-lg-12">
                                     <hr />
                                 </div>
 
-                                <div class="col-lg-12 small">
+                               <%--  <div class="col-lg-12 small">
                                     
                                 <!-- Activity -->
                                 <div class="col-md-3">
@@ -340,7 +340,7 @@
                                                 </asp:RequiredFieldValidator>
                                             </div>
                                         </div>
-                                    </div>--%>
+                                    </div>
 
                                     <div class="col-md-3">
                                         <div class="mb-3">
@@ -429,7 +429,180 @@
                                     </div>
                                 </div>
 
-                                <asp:HiddenField ID="hfKYTGridData" runat="server" />
+                                <asp:HiddenField ID="hfKYTGridData" runat="server" />--%>
+
+
+
+
+
+<asp:ScriptManager ID="ScriptManager1" runat="server" />
+
+
+<asp:UpdatePanel ID="updPanel" runat="server">
+    <ContentTemplate>
+
+        <!-- ===== Row 1 ===== -->
+         <div class="col-lg-12 small">
+            <!-- Activity -->
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <asp:Label ID="lblActivity" runat="server" Text="Activity:"
+                        ForeColor="Blue" Font-Bold="true" Font-Size="Small" CssClass="form-label" />
+                    <div class="input-group-sm">
+                        <asp:TextBox ID="txtActivity" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Activity"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden Hazards -->
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <asp:Label ID="lblHiddenHazards" runat="server" Text="Hidden Hazards:"
+                        ForeColor="Blue" Font-Bold="true" Font-Size="Small" CssClass="form-label" />
+                    <div class="input-group-sm">
+                        <asp:TextBox ID="txtHiddenHazards" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Hidden Hazards"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consequence -->
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <asp:Label ID="lblConsequence" runat="server" Text="Consequence:"
+                        ForeColor="Blue" Font-Bold="true" Font-Size="Small" CssClass="form-label" />
+                    <div class="input-group-sm">
+                        <asp:TextBox ID="txtConsequence" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Consequence"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+        
+
+        <!-- ===== Row 2 ===== -->
+      
+            <!-- Counter Measures -->
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <asp:Label ID="lblCounterMeasures" runat="server" Text="Counter Measures:"
+                        ForeColor="Blue" Font-Bold="true" Font-Size="Small" CssClass="form-label" />
+                    <div class="input-group-sm">
+                        <asp:TextBox ID="txtCounterMeasures" runat="server" CssClass="form-control form-control-sm rounded" Placeholder="Enter Counter Measures"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Priority -->
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <asp:Label ID="lblPriority" runat="server" Text="Priority:"
+                        ForeColor="Blue" Font-Bold="true" Font-Size="Small" CssClass="form-label" />
+                    <div class="input-group-sm">
+                        <asp:DropDownList ID="ddlPriority" runat="server" CssClass="form-control form-control-sm rounded">
+                            <asp:ListItem Text="Select" Value="" />
+                            <asp:ListItem Text="Low" Value="Low" />
+                            <asp:ListItem Text="Medium" Value="Medium" />
+                            <asp:ListItem Text="High" Value="High" />
+                        </asp:DropDownList>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Photograph -->
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <asp:Label ID="lblPhotograph" runat="server" Text="Upload Photograph:"
+                        ForeColor="Blue" Font-Bold="true" Font-Size="Small" CssClass="form-label" />
+                    <div class="input-group-sm">
+                        <asp:FileUpload ID="fuPhotograph" runat="server" CssClass="form-control form-control-sm rounded" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- === CAPA Checkbox Section === -->
+<div class="row col-lg-12 ml-5"> 
+    <asp:CheckBox 
+        ID="chkGenerateCAPA" 
+        runat="server"  
+        CssClass="form-check-input" 
+        onclick="confirmKYT_CAPA(this)" />
+    <label for="chkGenerateCAPA" class="form-check-label" 
+           style="color: blue; font-weight: bold; font-size: small;">
+        Generate CAPA
+    </label>
+</div>
+
+
+
+        <!-- ===== Save Button Row ===== -->
+        <div class="row col-lg-12">
+    <div class="col-12 text-center">
+                <asp:Button ID="btnSaveObservation" runat="server"
+                    Text="Add Observation"
+                    CssClass="btn btn-primary btn-sm px-4 fw-bold shadow-sm"
+                    OnClick="btnSaveObservation_Click" />
+            </div>
+        </div>
+
+   
+
+        <!-- ===== Observations Grid ===== -->
+        <asp:GridView ID="gvObservations" runat="server" AutoGenerateColumns="False"
+            CssClass="table table-bordered table-hover table-sm mt-3 text-center align-middle shadow-sm">
+            <Columns>
+                <asp:BoundField DataField="Activity" HeaderText="Activity" />
+                <asp:BoundField DataField="HiddenHazards" HeaderText="Hidden Hazards" />
+                <asp:BoundField DataField="Consequence" HeaderText="Consequence" />
+                <asp:BoundField DataField="CounterMeasures" HeaderText="Counter Measures" />
+                <asp:BoundField DataField="Priority" HeaderText="Priority" />
+                <asp:TemplateField HeaderText="Photograph">
+                    <ItemTemplate>
+                        <asp:Image ID="imgPhoto" runat="server" Width="80" Height="80"
+                            ImageUrl='<%# ResolveUrl(Eval("PhotographPath").ToString()) %>'
+                                                 CssClass="border rounded shadow-sm" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+
+    </ContentTemplate>
+
+    <Triggers>
+        <asp:PostBackTrigger ControlID="btnSaveObservation" />
+    </Triggers>
+
+</asp:UpdatePanel>
+
+
+
+
+
+<script>
+    function confirmKYT_CAPA(checkbox) {
+        if (!checkbox.checked) {
+            alert("CAPA is recommended for this KYT. Proceeding without it is at your own risk.");
+        }
+    }
+
+   
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 <script type="text/javascript">
                                     function validateFormBeforeSubmit() {
                                         var isValid = true;
@@ -446,7 +619,7 @@
                                             { id: '<%= txtSOPNo.ClientID %>', type: 'textbox', name: 'SOP NO' },
                                             { id: '<%= txtVender.ClientID %>', type: 'textbox', name: 'Vendor' },
                                           
-                                          //  { id: '<%= txtHiddenHazards.ClientID %>', type: 'textbox', name: 'Hidden Hazards' },
+                                          // { id: '<%= txtHiddenHazards.ClientID %>', type: 'textbox', name: 'Hidden Hazards' },
                                           //  { id: '<%= txtConsequence.ClientID %>', type: 'textbox', name: 'Consequence' },
                                           //  { id: '<%= txtCounterMeasures.ClientID %>', type: 'textbox', name: 'Counter Measures' },
                                           //  { id: '<%= ddlPriority.ClientID %>', type: 'dropdown', name: 'Priority' },

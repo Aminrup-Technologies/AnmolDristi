@@ -160,7 +160,7 @@
                                             <tr>
                                                 <td>Photograph:</td>
                                                 <td>
-                                                    <asp:Image ID="imgKYTPhoto" runat="server" ImageUrl='<%# Eval("KYT_PhotographPath") %>' />
+                                                    <asp:Image ID="imgKYTPhoto" runat="server" ImageUrl='<%# Eval("KYT_PhotographPath") %>' Width="100px" />
                                                 </td>
                                             </tr>
                                             <tr><td>Submission Date:</td><td><%# Eval("SubmissionDate", "{0:dd-MM-yyyy}") %></td></tr>
