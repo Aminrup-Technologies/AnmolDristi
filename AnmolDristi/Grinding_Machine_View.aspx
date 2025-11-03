@@ -74,17 +74,17 @@
                     <asp:GridView ID="GvGrindingMachineChecklist" runat="server" CssClass="table table-striped table-bordered"
                         AutoGenerateColumns="False" DataKeyNames="HeaderID" OnRowEditing="GvGrindingMachineChecklist_RowEditing"
                         OnRowUpdating="GvGrindingMachineChecklist_RowUpdating" OnRowCancelingEdit="GvGrindingMachineChecklist_RowCancelingEdit"
-                        OnRowDeleting="GvGrindingMachineChecklist_RowDeleting">
+                        OnRowDeleting="GvGrindingMachineChecklist_RowDeleting" OnRowDataBound="GvGrindingMachineChecklist_RowDataBound">
 
                         <Columns>
-                            <asp:BoundField DataField="HeaderID" HeaderText="Header ID" />
-                            <asp:BoundField DataField="Site" HeaderText="Site" />
-                            <asp:BoundField DataField="DateOfInspection" HeaderText="Date of Inspection" DataFormatString="{0:yyyy-MM-dd}" />
-                            <asp:BoundField DataField="InspectedBy" HeaderText="Inspected By" />
-                            <asp:BoundField DataField="SerialNo" HeaderText="Serial No" />
-                            <asp:BoundField DataField="IdentificationNumber" HeaderText="Identification No" />
-                            <asp:BoundField DataField="Location" HeaderText="Location" />
-                            <asp:BoundField DataField="ChecklistQuestion" HeaderText="Checklist Question" />
+                            <asp:BoundField DataField="HeaderID" HeaderText="Header ID" ReadOnly="true" />
+                            <asp:BoundField DataField="Site" HeaderText="Site" ReadOnly="true"  />
+                            <asp:BoundField DataField="DateOfInspection" HeaderText="Date of Inspection" DataFormatString="{0:yyyy-MM-dd}" ReadOnly="true"  />
+                            <asp:BoundField DataField="InspectedBy" HeaderText="Inspected By" ReadOnly="true"  />
+                            <asp:BoundField DataField="SerialNo" HeaderText="Serial No" ReadOnly="true" />
+                            <asp:BoundField DataField="IdentificationNumber" HeaderText="Identification No" ReadOnly="true"  />
+                            <asp:BoundField DataField="Location" HeaderText="Location" ReadOnly="true"  />
+                            <asp:BoundField DataField="ChecklistQuestion" HeaderText="Checklist Question" ReadOnly="true"  />
                             <asp:TemplateField HeaderText="Is Yes">
     <ItemTemplate>
         <%# Eval("IsYes") %>
@@ -108,13 +108,13 @@
         <%# Eval("Remarks") %>
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:TextBox ID="txtRemarks" runat="server" CssClass="remarksField" Style="display: none;"></asp:TextBox>
+        <asp:TextBox ID="txtRemarks" runat="server" CssClass="remarksField" Style="display: none;" Text='<%# Bind("Remarks") %>'></asp:TextBox>
     </EditItemTemplate>
 </asp:TemplateField>
 
 <asp:TemplateField HeaderText="Photo Path">
     <ItemTemplate>
-        <%# Eval("PhotoPath") %>
+        <asp:Literal ID="litPhoto" runat="server" />
     </ItemTemplate>
     <EditItemTemplate>
         <asp:FileUpload ID="filePhoto" runat="server" CssClass="photoField" Style="display: none;" />

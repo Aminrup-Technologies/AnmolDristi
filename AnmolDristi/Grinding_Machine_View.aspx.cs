@@ -81,7 +81,16 @@ namespace AnmolDristi
 
             GridViewRow row = GvGrindingMachineChecklist.Rows[e.RowIndex];
 
-            string checklistQuestion = ((TextBox)row.Cells[6].Controls[0]).Text;
+            //string checklistQuestion = ((TextBox)row.Cells[6].Controls[0]).Text;
+
+
+            // ✅ SAFEST WAY: use FindControl instead of Cells[6]
+            //TextBox txtChecklistQuestion = (TextBox)row.FindControl("txtChecklistQuestion");
+            //string checklistQuestion = txtChecklistQuestion != null ? txtChecklistQuestion.Text : row.Cells[6].Text.Trim();
+
+            string checklistQuestion = row.Cells[7].Text;
+
+
             DropDownList ddlIsYes = (DropDownList)row.FindControl("ddlIsYes");
             TextBox txtRemarks = (TextBox)row.FindControl("txtRemarks");
             FileUpload filePhoto = (FileUpload)row.FindControl("filePhoto");
@@ -102,6 +111,21 @@ namespace AnmolDristi
                 string fullPath = Path.Combine(folderPath, filename);
                 filePhoto.SaveAs(fullPath);
                 newPhotoPath = "~/Uploads/" + filename;
+            }
+            else
+            {
+                // No new photo uploaded
+                // If existing label has a photo path, keep it
+                if (string.IsNullOrWhiteSpace(lblExistingPhoto.Text))
+                {
+                    // If nothing existed before, keep it empty
+                    newPhotoPath = "";
+                }
+                else
+                {
+                    // Keep old one
+                    newPhotoPath = lblExistingPhoto.Text;
+                }
             }
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -136,6 +160,15 @@ namespace AnmolDristi
 
                     if (currentIsYes == 1 && newIsYesInt == 0)
                     {
+
+                        // Remarks are mandatory when IsYes = false
+                        if (string.IsNullOrWhiteSpace(newRemarks))
+                            throw new Exception("Remarks cannot be empty when marking as Not OK.");
+
+
+
+
+
                         // Changed from true → false: Insert new CAPA
                         SqlCommand insertCAPA = new SqlCommand(@"
                     INSERT INTO tbl_CAPAMaster (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
@@ -144,7 +177,7 @@ namespace AnmolDristi
                         insertCAPA.Parameters.AddWithValue("@HeaderID", headerId);
                         insertCAPA.Parameters.AddWithValue("@PhotoPath", newPhotoPath ?? "");
                         insertCAPA.Parameters.AddWithValue("@Remarks", newRemarks ?? "");
-                        insertCAPA.Parameters.AddWithValue("@AssignedBy", "System"); // Or txtInspectedBy.Text
+                        insertCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"] ?? "System"); // Or txtInspectedBy.Text
                         insertCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
 
                         capaIDToUse = insertCAPA.ExecuteScalar();
@@ -155,6 +188,18 @@ namespace AnmolDristi
                         newRemarks = "";
                         newPhotoPath = "";
                         // Keep CAPA_ID unchanged
+
+                        // Update CAPA to mark as resolved (IsYes = 1)
+                        if (currentCAPAID != null)
+                        {
+                            SqlCommand updateCAPA = new SqlCommand(
+                                "UPDATE tbl_CAPAMaster SET IsYes = 1 WHERE CAPAID = @CAPAID", conn, trans);
+                            updateCAPA.Parameters.AddWithValue("@CAPAID", currentCAPAID);
+                            updateCAPA.ExecuteNonQuery();
+                        }
+
+
+
                     }
 
                     // Update Checklist
@@ -173,11 +218,32 @@ namespace AnmolDristi
                     updateChecklist.ExecuteNonQuery();
 
                     trans.Commit();
+
+                    //  success
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-success", @"
+                        new PNotify({
+                            title: 'Update Successful',
+                            text: 'Checklist updated successfully.',
+                            type: 'success',
+                            styling: 'bootstrap3',
+                            delay: 2500
+                        });
+                    ", true);
+
                 }
                 catch (Exception ex)
                 {
                     trans.Rollback();
-                    
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-error", $@"
+                            new PNotify({{
+                                title: 'Update Failed',
+                                text: 'Error: {ex.Message.Replace("'", " ")}',
+                                type: 'error',
+                                styling: 'bootstrap3',
+                                delay: 3000
+                            }});
+                        ", true);
+
                 }
             }
 
@@ -205,6 +271,42 @@ namespace AnmolDristi
             }
 
             LoadGrindingMachineIncidentDetails();
+        }
+
+        protected void GvGrindingMachineChecklist_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Skip if the row is in edit mode
+                if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+                    return;
+
+                bool isYes = Convert.ToBoolean(DataBinder.Eval(e.Row.DataItem, "IsYes"));
+                string photoPath = Convert.ToString(DataBinder.Eval(e.Row.DataItem, "PhotoPath"));
+
+                Literal litPhoto = (Literal)e.Row.FindControl("litPhoto");
+                if (litPhoto == null) return;
+
+                if (isYes)
+                {
+                    // If "Yes" → show nothing
+                    litPhoto.Text = "";
+                }
+                else
+                {
+                    // If "No"
+                    if (string.IsNullOrWhiteSpace(photoPath))
+                    {
+                        litPhoto.Text = "<span style='color:gray;'>No photo uploaded</span>";
+                    }
+                    else
+                    {
+                        litPhoto.Text = $"<a href='{ResolveUrl(photoPath)}' target='_blank'>" +
+                                        $"<img src='{ResolveUrl(photoPath)}' " +
+                                        $"style='width:80px;height:80px;border:1px solid #ccc;border-radius:8px;object-fit:cover;' /></a>";
+                    }
+                }
+            }
         }
     }
 }

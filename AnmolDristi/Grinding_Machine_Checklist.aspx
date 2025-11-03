@@ -377,6 +377,30 @@
                                 if (yes && no && panelDiv) {
                                     panelDiv.style.display = (no.checked) ? 'block' : 'none';
                                 }
+
+
+                                // Clear all text inputs, textareas, and file uploads inside the panel
+                                var inputs = panelDiv.querySelectorAll('input[type="text"], textarea, input[type="file"]');
+                                inputs.forEach(function (input) {
+                                    if (input.type === "file") {
+                                        input.value = ''; // Clear file upload
+                                    } else {
+                                        input.value = ''; // Clear text/remark fields
+                                    }
+                                });
+
+                                // Optional: If there's an <img> preview for the photo, hide it
+                                var imgs = panelDiv.querySelectorAll('img');
+                                imgs.forEach(function (img) {
+                                    img.src = '';
+                                    img.style.display = 'none';
+                                });
+
+
+
+
+
+
                             }
 
                             function toggleForeHandlePanel() { togglePanel('<%= RbForeHandleYes.ClientID %>', '<%= RbForeHandleNo.ClientID %>', 'divForeHandlePanel'); }
@@ -393,6 +417,34 @@
                                     alert("CAPA is required. Proceeding without it is at your own risk.");
                                 }
                             }
+
+
+
+                            // === Set default state on page load ===
+                            window.onload = function () {
+                                var yesButtons = document.querySelectorAll('input[type="radio"][id*="Yes"]');
+                                yesButtons.forEach(function (rb) {
+                                    rb.checked = true; // Set all “Yes” options as default
+                                });
+
+                                // Hide all related panels initially
+                                document.querySelectorAll('div[id^="div"]').forEach(function (panel) {
+                                    panel.style.display = 'none';
+                                });
+
+                                // Call each toggle function once to ensure state is consistent
+                                toggleForeHandlePanel();
+                                toggleWheelGuardPanel();
+                                toggleGrindWheelPanel();
+                                toggleRearHandlePanel();
+                                toggleCordPanel();
+                                toggleTriggerPanel();
+                                toggleSwitchLockPanel();
+                                togglePowerCablePanel();
+                            };
+
+
+
                         </script>
 
 

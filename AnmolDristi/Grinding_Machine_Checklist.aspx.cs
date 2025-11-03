@@ -465,18 +465,37 @@ namespace AnmolDristi
             try
             {
                 SaveGrindingMachineIncidentData(); // Save form data
-                lblMessage.ForeColor = System.Drawing.Color.Green;
-                lblMessage.Text = "Grinding Machine checklist saved successfully!";
+                //lblMessage.ForeColor = System.Drawing.Color.Green;
+                //lblMessage.Text = "Grinding Machine checklist saved successfully!";
                 BtnSubmit.Enabled = false;
                 BtnSubmit.Text = "Saved";
                 BtnSubmit.CssClass = "btn btn-success";
 
                 LoadGrindingMachineIncidentDetails(); // Refresh GridView
+
+                //  success
+                ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-success", @"
+                        new PNotify({
+                            title: 'Update Successful',
+                            text: 'Checklist saved successfully.',
+                            type: 'success',
+                            styling: 'bootstrap3',
+                            delay: 2500
+                        });
+                    ", true);
             }
             catch (Exception ex)
             {
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-                lblMessage.Text = "Error: " + ex.Message;
+                //  error
+                ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-error", $@"
+                            new PNotify({{
+                                title: 'Update Failed',
+                                text: 'Error: {ex.Message.Replace("'", " ")}',
+                                type: 'error',
+                                styling: 'bootstrap3',
+                                delay: 3000
+                            }});
+                        ", true);
             }
         }
         private void SaveGrindingMachineIncidentData()
@@ -546,19 +565,22 @@ namespace AnmolDristi
                 photoPath = "~/Uploads/" + filename;
             }
 
+            
             // CAPA insert if needed
             if (!isYes && capaCheck != null && capaCheck.Checked)
             {
                 using (SqlCommand cmdCAPA = new SqlCommand(@"
-                    INSERT INTO tbl_CAPAMaster (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                    INSERT INTO tbl_CAPAMaster (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate,Description,SourceTable)
                     OUTPUT INSERTED.CAPAID
-                    VALUES (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, transaction))
+                    VALUES (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate, @Description, @SourceTable)", conn, transaction))
                 {
                     cmdCAPA.Parameters.AddWithValue("@HeaderID", headerId);
                     cmdCAPA.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
                     cmdCAPA.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
-                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtInspectedBy.Text.Trim());
+                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"] ?? "System");
                     cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                    cmdCAPA.Parameters.AddWithValue("@Description", question);
+                    cmdCAPA.Parameters.AddWithValue("@SourceTable", "Grinding Machine Checklist");
 
                     capaId = cmdCAPA.ExecuteScalar();
                 }
