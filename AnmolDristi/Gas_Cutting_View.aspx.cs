@@ -112,16 +112,14 @@ ORDER BY gh.HeaderID DESC";
             }
             else
             {
-                // No new photo uploaded
-                // If existing label has a photo path, keep it
                 if (string.IsNullOrWhiteSpace(lblExistingPhoto.Text))
                 {
-                    // If nothing existed before, keep it empty
+                    
                     photoPath = "";
                 }
                 else
                 {
-                    // Keep old one
+                 
                     photoPath = lblExistingPhoto.Text;
                 }
             }
@@ -136,7 +134,7 @@ ORDER BY gh.HeaderID DESC";
 
                 try
                 {
-                    // 1. Update Header
+                   
                     SqlCommand updateHeader = new SqlCommand(@"
                 UPDATE GasCutting_Header 
                 SET SiteName = @SiteName, InspectionDate = @InspectionDate, TagNo = @TagNo, 
@@ -151,7 +149,7 @@ ORDER BY gh.HeaderID DESC";
                     updateHeader.Parameters.AddWithValue("@JobID", jobId);
                     updateHeader.ExecuteNonQuery();
 
-                    // 2. Get current IsYes and CAPA_ID
+                   
                     int currentIsYes = -1;
                     object currentCAPAID = null;
 
@@ -175,7 +173,7 @@ ORDER BY gh.HeaderID DESC";
 
                     if (currentIsYes == 1 && isYesInt == 0)
                     {
-                        // Changed from Yes to No → Insert CAPA
+                        
                         SqlCommand insertCAPA = new SqlCommand(@"
                     INSERT INTO tbl_CAPAMaster (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
                     OUTPUT INSERTED.CAPAID
@@ -191,11 +189,11 @@ ORDER BY gh.HeaderID DESC";
                     }
                     else if (currentIsYes == 0 && isYesInt == 1)
                     {
-                        // Changed from No to Yes → Clear remarks/photo
+                       
                         remarks = "";
                         photoPath = "";
 
-                        // Update CAPA to mark as resolved (IsYes = 1)
+                        
                         if (currentCAPAID != null)
                         {
                             SqlCommand updateCAPA = new SqlCommand(
@@ -205,7 +203,7 @@ ORDER BY gh.HeaderID DESC";
                         }
                     }
 
-                    // 3. Update Checklist
+                 
                     SqlCommand updateChecklist = new SqlCommand(@"
                 UPDATE GasCutting_Checklist 
                 SET IsYes = @IsYes, Remarks = @Remarks, PhotoPath = @PhotoPath, FinalRemarks = @FinalRemarks, CAPA_ID = @CAPA_ID

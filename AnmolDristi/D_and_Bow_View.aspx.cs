@@ -42,29 +42,72 @@ namespace AnmolDristi
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
+                //                string query = @"
+
+                //SELECT
+                //    h.BasicID AS BasicID,
+                //    h.BasicID AS HeaderID,   -- ✅ Added here
+                //    h.Site, h.TagNo, h.InspectionDate, h.JobID,
+                //    h.JobName,
+
+                //    sd.Question AS ShacklesChecklistQuestion, 
+                //    sd.IsYes AS ShacklesIsYes, 
+                //    sd.Remarks AS ShacklesRemarks, 
+                //    sd.PhotoPath AS ShacklesPhotoPath,
+
+                //    cd.Question AS ChainPulleyChecklistQuestion,
+                //    cd.IsYes AS ChainPulleyIsYes,
+                //    cd.Remarks AS ChainPulleyRemarks,
+                //    cd.PhotoPath AS ChainPulleyPhotoPath
+
+                //FROM MahimaGupta_CSMS.ShacklesChecklist_BasicDetails h
+                //LEFT JOIN MahimaGupta_CSMS.ShacklesChecklist_DBow sd ON h.BasicID = sd.HeaderID
+                //LEFT JOIN MahimaGupta_CSMS.ShacklesChecklist_ChainPulley cd ON h.BasicID = cd.HeaderID
+
+                //ORDER BY h.BasicID DESC";
+
+
                 string query = @"
+SELECT
+    h.BasicID AS BasicID,
+    h.BasicID AS HeaderID,
+    h.Site,
+    h.TagNo,
+    h.InspectionDate,
+    h.JobID,
+    h.JobName,
+    'Shackles' AS EquipmentType,
+    sd.Question AS ChecklistQuestion,
+    sd.IsYes AS IsYes,
+    sd.Remarks AS Remarks,
+    sd.PhotoPath AS PhotoPath
+FROM MahimaGupta_CSMS.ShacklesChecklist_BasicDetails h
+INNER JOIN MahimaGupta_CSMS.ShacklesChecklist_DBow sd ON h.BasicID = sd.HeaderID
+
+UNION ALL
 
 SELECT
     h.BasicID AS BasicID,
-    h.BasicID AS HeaderID,   -- ✅ Added here
-    h.Site, h.TagNo, h.InspectionDate, h.JobID,
+    h.BasicID AS HeaderID,
+    h.Site,
+    h.TagNo,
+    h.InspectionDate,
+    h.JobID,
     h.JobName,
-
-    sd.Question AS ShacklesChecklistQuestion, 
-    sd.IsYes AS ShacklesIsYes, 
-    sd.Remarks AS ShacklesRemarks, 
-    sd.PhotoPath AS ShacklesPhotoPath,
-
-    cd.Question AS ChainPulleyChecklistQuestion,
-    cd.IsYes AS ChainPulleyIsYes,
-    cd.Remarks AS ChainPulleyRemarks,
-    cd.PhotoPath AS ChainPulleyPhotoPath
-
+    'Chain Pulley' AS EquipmentType,
+    cd.Question AS ChecklistQuestion,
+    cd.IsYes AS IsYes,
+    cd.Remarks AS Remarks,
+    cd.PhotoPath AS PhotoPath
 FROM MahimaGupta_CSMS.ShacklesChecklist_BasicDetails h
-LEFT JOIN MahimaGupta_CSMS.ShacklesChecklist_DBow sd ON h.BasicID = sd.HeaderID
-LEFT JOIN MahimaGupta_CSMS.ShacklesChecklist_ChainPulley cd ON h.BasicID = cd.HeaderID
+INNER JOIN MahimaGupta_CSMS.ShacklesChecklist_ChainPulley cd ON h.BasicID = cd.HeaderID
 
-ORDER BY h.BasicID DESC";
+ORDER BY HeaderID DESC, EquipmentType;
+";
+
+
+
+
 
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -94,158 +137,312 @@ ORDER BY h.BasicID DESC";
 
         protected void GvDandBowChecklist_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            //try
+            //{
+            //    //Response.Write("Update Event Triggered!<br>");
+
+            //    string id = GvDandBowChecklist.DataKeys[e.RowIndex].Value.ToString();
+            // //   Response.Write("Row ID: " + id + "<br>");
+
+            //    GridViewRow row = GvDandBowChecklist.Rows[e.RowIndex];
+
+            //    string equipmentType = GvDandBowChecklist.DataKeys[row.RowIndex]["EquipmentType"].ToString();
+
+
+
+
+
+            //    string jobName = ((TextBox)row.FindControl("txtJobName")).Text.Trim();
+            //  //  Response.Write("JobName: " + jobName + "<br>");
+
+            //    // Shackles Section
+            //    string shacklesQuestion = ((TextBox)row.FindControl("txtShacklesQuestion")).Text.Trim();
+            //    DropDownList ddlShacklesIsYes = (DropDownList)row.FindControl("ddlShacklesIsYes");
+            //    int newShacklesIsYes = ddlShacklesIsYes.SelectedValue == "True" ? 1 : 0;
+            //    string shacklesRemarks = ((TextBox)row.FindControl("txtShacklesRemarks")).Text.Trim();
+            //    FileUpload fileShacklesPhoto = (FileUpload)row.FindControl("fileShacklesPhoto");
+            //    Label lblExistingShacklesPhoto = (Label)row.FindControl("lblExistingShacklesPhoto");
+            //    string shacklesPhotoPath = lblExistingShacklesPhoto.Text;
+
+            //    if (fileShacklesPhoto.HasFile)
+            //    {
+            //        string fileName = Path.GetFileName(fileShacklesPhoto.FileName);
+            //        string path = Server.MapPath("~/Uploads/");
+            //        Directory.CreateDirectory(path);
+            //        string fullPath = Path.Combine(path, fileName);
+            //        fileShacklesPhoto.SaveAs(fullPath);
+            //        shacklesPhotoPath = "~/Uploads/" + fileName;
+            //       // Response.Write("Shackles Photo Uploaded: " + shacklesPhotoPath + "<br>");
+            //    }
+
+            //    // Chain Pulley Section
+            //    string chainPulleyQuestion = ((TextBox)row.FindControl("txtChainPulleyQuestion")).Text.Trim();
+            //    DropDownList ddlChainPulleyIsYes = (DropDownList)row.FindControl("ddlChainPulleyIsYes");
+            //    int newChainPulleyIsYes = ddlChainPulleyIsYes.SelectedValue == "True" ? 1 : 0;
+            //    string chainPulleyRemarks = ((TextBox)row.FindControl("txtChainPulleyRemarks")).Text.Trim();
+            //    FileUpload fileChainPulleyPhoto = (FileUpload)row.FindControl("fileChainPulleyPhoto");
+            //    Label lblExistingChainPulleyPhoto = (Label)row.FindControl("lblExistingChainPulleyPhoto");
+            //    string chainPulleyPhotoPath = lblExistingChainPulleyPhoto.Text;
+
+            //    if (fileChainPulleyPhoto.HasFile)
+            //    {
+            //        string fileName = Path.GetFileName(fileChainPulleyPhoto.FileName);
+            //        string path = Server.MapPath("~/Uploads/");
+            //        Directory.CreateDirectory(path);
+            //        string fullPath = Path.Combine(path, fileName);
+            //        fileChainPulleyPhoto.SaveAs(fullPath);
+            //        chainPulleyPhotoPath = "~/Uploads/" + fileName;
+            //       // Response.Write("Chain Pulley Photo Uploaded: " + chainPulleyPhotoPath + "<br>");
+            //    }
+
+            //    using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
+            //    {
+            //        conn.Open();
+            //        SqlTransaction trans = conn.BeginTransaction();
+            //      //  Response.Write("DB Connection Opened.<br>");
+
+            //        try
+            //        {
+            //            // 1. Update Header
+            //            SqlCommand updateHeader = new SqlCommand(@"
+            //        UPDATE MahimaGupta_CSMS.ShacklesChecklist_BasicDetails
+            //        SET JobName = @JobName
+            //        WHERE BasicID = @ID
+            //    ", conn, trans);
+            //            updateHeader.Parameters.AddWithValue("@JobName", jobName);
+            //           // updateHeader.Parameters.AddWithValue("@ID", Convert.ToInt32(id));
+            //            updateHeader.Parameters.AddWithValue("@ID", id);
+            //            int headerRows = updateHeader.ExecuteNonQuery();
+
+            //            // 2. Get Old Values
+            //            int currentShacklesIsYes = -1;
+            //            int currentChainPulleyIsYes = -1;
+
+            //            SqlCommand getOld = new SqlCommand(@"
+            //        SELECT 
+            //            (SELECT IsYes FROM MahimaGupta_CSMS.ShacklesChecklist_DBow WHERE HeaderID = @ID AND Question = @SQ) AS OldShackles,
+            //            (SELECT IsYes FROM MahimaGupta_CSMS.ShacklesChecklist_ChainPulley WHERE HeaderID = @ID AND Question = @CQ) AS OldPulley
+            //    ", conn, trans);
+            //            getOld.Parameters.AddWithValue("@ID", id);
+            //            getOld.Parameters.AddWithValue("@SQ", shacklesQuestion);
+            //            getOld.Parameters.AddWithValue("@CQ", chainPulleyQuestion);
+
+            //            using (SqlDataReader reader = getOld.ExecuteReader())
+            //            {
+            //                if (reader.Read())
+            //                {
+            //                    currentShacklesIsYes = reader["OldShackles"] != DBNull.Value ? Convert.ToInt32(reader["OldShackles"]) : -1;
+            //                    currentChainPulleyIsYes = reader["OldPulley"] != DBNull.Value ? Convert.ToInt32(reader["OldPulley"]) : -1;
+
+            //                   // Response.Write("Current Shackles IsYes: " + currentShacklesIsYes + "<br>");
+            //                  //  Response.Write("Current Chain Pulley IsYes: " + currentChainPulleyIsYes + "<br>");
+            //                }
+            //                else
+            //                {
+            //                   // Response.Write("Old values not found!<br>");
+            //                }
+            //            }
+
+            //            // 3. Update Shackles
+            //            SqlCommand updateShackles = new SqlCommand(@"
+            //        UPDATE MahimaGupta_CSMS.ShacklesChecklist_DBow
+            //        SET IsYes = @IsYes, Remarks = @Remarks, PhotoPath = @PhotoPath, CAPA_ID = @CAPA_ID
+            //        WHERE HeaderID = @ID AND Question = @Question
+            //    ", conn, trans);
+            //            updateShackles.Parameters.AddWithValue("@ID", id);
+            //            updateShackles.Parameters.AddWithValue("@IsYes", newShacklesIsYes);
+            //            updateShackles.Parameters.AddWithValue("@Remarks", newShacklesIsYes == 1 ? (object)DBNull.Value : (object)shacklesRemarks ?? DBNull.Value);
+            //            updateShackles.Parameters.AddWithValue("@PhotoPath", newShacklesIsYes == 1 ? (object)DBNull.Value : (object)shacklesPhotoPath ?? DBNull.Value);
+
+            //            updateShackles.Parameters.AddWithValue("@Question", shacklesQuestion);
+            //            updateShackles.Parameters.AddWithValue("@CAPA_ID", DBNull.Value);
+
+            //            int shacklesRows = updateShackles.ExecuteNonQuery();
+
+
+            //            // 4. Update Chain Pulley
+            //            SqlCommand updatePulley = new SqlCommand(@"
+            //        UPDATE MahimaGupta_CSMS.ShacklesChecklist_ChainPulley
+            //        SET IsYes = @IsYes, Remarks = @Remarks, PhotoPath = @PhotoPath, CAPA_ID = @CAPA_ID
+            //        WHERE HeaderID = @ID AND Question = @Question
+            //    ", conn, trans);
+            //            updatePulley.Parameters.AddWithValue("@ID", id);
+            //            updatePulley.Parameters.AddWithValue("@IsYes", newChainPulleyIsYes);
+            //            updatePulley.Parameters.AddWithValue("@Remarks", newChainPulleyIsYes == 1 ? (object)DBNull.Value : (object)chainPulleyRemarks ?? DBNull.Value);
+            //            updatePulley.Parameters.AddWithValue("@PhotoPath", newChainPulleyIsYes == 1 ? (object)DBNull.Value : (object)chainPulleyPhotoPath ?? DBNull.Value);
+
+            //            updatePulley.Parameters.AddWithValue("@Question", chainPulleyQuestion);
+            //            updatePulley.Parameters.AddWithValue("@CAPA_ID", DBNull.Value);
+
+            //            int pulleyRows = updatePulley.ExecuteNonQuery();
+            //           // Response.Write("Chain Pulley Update Rows Affected: " + pulleyRows + "<br>");
+
+            //            trans.Commit();
+            //          //  Response.Write("<b>Transaction Committed Successfully.</b><br>");
+            //        }
+            //        catch (Exception innerEx)
+            //        {
+            //            trans.Rollback();
+            //           // Response.Write("<b>Inner Exception during transaction:</b> " + innerEx.Message + "<br>");
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Response.Write("<b>Outer Exception:</b> " + ex.Message + "<br>");
+            //}
+
+            //GvDandBowChecklist.EditIndex = -1;
+            //LoadDandBowChecklistDetails();
+
+
             try
             {
-                //Response.Write("Update Event Triggered!<br>");
-
+              
                 string id = GvDandBowChecklist.DataKeys[e.RowIndex].Value.ToString();
-             //   Response.Write("Row ID: " + id + "<br>");
+                string equipmentType = GvDandBowChecklist.DataKeys[e.RowIndex]["EquipmentType"].ToString();
 
                 GridViewRow row = GvDandBowChecklist.Rows[e.RowIndex];
 
-                string jobName = ((TextBox)row.FindControl("txtJobName")).Text.Trim();
-              //  Response.Write("JobName: " + jobName + "<br>");
+                
+                string question = ((TextBox)row.FindControl("txtShacklesQuestion"))?.Text.Trim();
+                DropDownList ddlIsYes = (DropDownList)row.FindControl("ddlShacklesIsYes");
+                int isYes = ddlIsYes != null && ddlIsYes.SelectedValue == "True" ? 1 : 0;
 
-                // Shackles Section
-                string shacklesQuestion = ((TextBox)row.FindControl("txtShacklesQuestion")).Text.Trim();
-                DropDownList ddlShacklesIsYes = (DropDownList)row.FindControl("ddlShacklesIsYes");
-                int newShacklesIsYes = ddlShacklesIsYes.SelectedValue == "True" ? 1 : 0;
-                string shacklesRemarks = ((TextBox)row.FindControl("txtShacklesRemarks")).Text.Trim();
-                FileUpload fileShacklesPhoto = (FileUpload)row.FindControl("fileShacklesPhoto");
-                Label lblExistingShacklesPhoto = (Label)row.FindControl("lblExistingShacklesPhoto");
-                string shacklesPhotoPath = lblExistingShacklesPhoto.Text;
+                string remarks = ((TextBox)row.FindControl("txtShacklesRemarks"))?.Text.Trim();
+                FileUpload fileUpload = (FileUpload)row.FindControl("fileShacklesPhoto");
+                Label lblExistingPhoto = (Label)row.FindControl("lblExistingShacklesPhoto");
+                string photoPath = lblExistingPhoto?.Text ?? string.Empty;
 
-                if (fileShacklesPhoto.HasFile)
+          
+                if (fileUpload != null && fileUpload.HasFile)
                 {
-                    string fileName = Path.GetFileName(fileShacklesPhoto.FileName);
-                    string path = Server.MapPath("~/Uploads/");
-                    Directory.CreateDirectory(path);
-                    string fullPath = Path.Combine(path, fileName);
-                    fileShacklesPhoto.SaveAs(fullPath);
-                    shacklesPhotoPath = "~/Uploads/" + fileName;
-                   // Response.Write("Shackles Photo Uploaded: " + shacklesPhotoPath + "<br>");
+                    string fileName = Path.GetFileName(fileUpload.FileName);
+                    string uploadPath = Server.MapPath("~/Uploads/");
+                    Directory.CreateDirectory(uploadPath);
+                    string fullPath = Path.Combine(uploadPath, fileName);
+                    fileUpload.SaveAs(fullPath);
+                    photoPath = "~/Uploads/" + fileName;
                 }
 
-                // Chain Pulley Section
-                string chainPulleyQuestion = ((TextBox)row.FindControl("txtChainPulleyQuestion")).Text.Trim();
-                DropDownList ddlChainPulleyIsYes = (DropDownList)row.FindControl("ddlChainPulleyIsYes");
-                int newChainPulleyIsYes = ddlChainPulleyIsYes.SelectedValue == "True" ? 1 : 0;
-                string chainPulleyRemarks = ((TextBox)row.FindControl("txtChainPulleyRemarks")).Text.Trim();
-                FileUpload fileChainPulleyPhoto = (FileUpload)row.FindControl("fileChainPulleyPhoto");
-                Label lblExistingChainPulleyPhoto = (Label)row.FindControl("lblExistingChainPulleyPhoto");
-                string chainPulleyPhotoPath = lblExistingChainPulleyPhoto.Text;
-
-                if (fileChainPulleyPhoto.HasFile)
-                {
-                    string fileName = Path.GetFileName(fileChainPulleyPhoto.FileName);
-                    string path = Server.MapPath("~/Uploads/");
-                    Directory.CreateDirectory(path);
-                    string fullPath = Path.Combine(path, fileName);
-                    fileChainPulleyPhoto.SaveAs(fullPath);
-                    chainPulleyPhotoPath = "~/Uploads/" + fileName;
-                   // Response.Write("Chain Pulley Photo Uploaded: " + chainPulleyPhotoPath + "<br>");
-                }
-
+                
                 using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString))
                 {
                     conn.Open();
                     SqlTransaction trans = conn.BeginTransaction();
-                  //  Response.Write("DB Connection Opened.<br>");
 
                     try
                     {
-                        // 1. Update Header
-                        SqlCommand updateHeader = new SqlCommand(@"
-                    UPDATE MahimaGupta_CSMS.ShacklesChecklist_BasicDetails
-                    SET JobName = @JobName
-                    WHERE BasicID = @ID
-                ", conn, trans);
-                        updateHeader.Parameters.AddWithValue("@JobName", jobName);
-                       // updateHeader.Parameters.AddWithValue("@ID", Convert.ToInt32(id));
-                        updateHeader.Parameters.AddWithValue("@ID", id);
-                        int headerRows = updateHeader.ExecuteNonQuery();
-                       
-                        // 2. Get Old Values
-                        int currentShacklesIsYes = -1;
-                        int currentChainPulleyIsYes = -1;
+                        
+                        string targetTable = equipmentType.Equals("Shackles", StringComparison.OrdinalIgnoreCase)
+                            ? "MahimaGupta_CSMS.ShacklesChecklist_DBow"
+                            : "MahimaGupta_CSMS.ShacklesChecklist_ChainPulley";
 
-                        SqlCommand getOld = new SqlCommand(@"
-                    SELECT 
-                        (SELECT IsYes FROM MahimaGupta_CSMS.ShacklesChecklist_DBow WHERE HeaderID = @ID AND Question = @SQ) AS OldShackles,
-                        (SELECT IsYes FROM MahimaGupta_CSMS.ShacklesChecklist_ChainPulley WHERE HeaderID = @ID AND Question = @CQ) AS OldPulley
-                ", conn, trans);
-                        getOld.Parameters.AddWithValue("@ID", id);
-                        getOld.Parameters.AddWithValue("@SQ", shacklesQuestion);
-                        getOld.Parameters.AddWithValue("@CQ", chainPulleyQuestion);
+                        
+                        SqlCommand fetchCmd = new SqlCommand($@"
+                SELECT IsYes, CAPA_ID 
+                FROM {targetTable} 
+                WHERE HeaderID = @ID AND Question = @Question", conn, trans);
+                        fetchCmd.Parameters.AddWithValue("@ID", id);
+                        fetchCmd.Parameters.AddWithValue("@Question", question);
 
-                        using (SqlDataReader reader = getOld.ExecuteReader())
+                        int oldIsYes = 1;
+                        int? currentCAPAID = null;
+
+                        using (SqlDataReader reader = fetchCmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                currentShacklesIsYes = reader["OldShackles"] != DBNull.Value ? Convert.ToInt32(reader["OldShackles"]) : -1;
-                                currentChainPulleyIsYes = reader["OldPulley"] != DBNull.Value ? Convert.ToInt32(reader["OldPulley"]) : -1;
-
-                               // Response.Write("Current Shackles IsYes: " + currentShacklesIsYes + "<br>");
-                              //  Response.Write("Current Chain Pulley IsYes: " + currentChainPulleyIsYes + "<br>");
-                            }
-                            else
-                            {
-                               // Response.Write("Old values not found!<br>");
+                                oldIsYes = Convert.ToInt32(reader["IsYes"]);
+                                if (reader["CAPA_ID"] != DBNull.Value)
+                                    currentCAPAID = Convert.ToInt32(reader["CAPA_ID"]);
                             }
                         }
 
-                        // 3. Update Shackles
-                        SqlCommand updateShackles = new SqlCommand(@"
-                    UPDATE MahimaGupta_CSMS.ShacklesChecklist_DBow
-                    SET IsYes = @IsYes, Remarks = @Remarks, PhotoPath = @PhotoPath, CAPA_ID = @CAPA_ID
-                    WHERE HeaderID = @ID AND Question = @Question
-                ", conn, trans);
-                        updateShackles.Parameters.AddWithValue("@ID", id);
-                        updateShackles.Parameters.AddWithValue("@IsYes", newShacklesIsYes);
-                        updateShackles.Parameters.AddWithValue("@Remarks", newShacklesIsYes == 1 ? (object)DBNull.Value : (object)shacklesRemarks ?? DBNull.Value);
-                        updateShackles.Parameters.AddWithValue("@PhotoPath", newShacklesIsYes == 1 ? (object)DBNull.Value : (object)shacklesPhotoPath ?? DBNull.Value);
+                        int? capaIDToUse = currentCAPAID;
 
-                        updateShackles.Parameters.AddWithValue("@Question", shacklesQuestion);
-                        updateShackles.Parameters.AddWithValue("@CAPA_ID", DBNull.Value);
+                        if (oldIsYes == 1 && isYes == 0) 
+                        {
+                            SqlCommand insertCAPA = new SqlCommand(@"
+                    INSERT INTO tbl_CAPAMaster (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                    OUTPUT INSERTED.CAPAID
+                    VALUES (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, trans);
 
-                        int shacklesRows = updateShackles.ExecuteNonQuery();
-                        
+                            insertCAPA.Parameters.AddWithValue("@HeaderID", id);
+                            insertCAPA.Parameters.AddWithValue("@PhotoPath", photoPath ?? "");
+                            insertCAPA.Parameters.AddWithValue("@Remarks", remarks ?? "");
+                            insertCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"] ?? "System");
+                            insertCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
 
-                        // 4. Update Chain Pulley
-                        SqlCommand updatePulley = new SqlCommand(@"
-                    UPDATE MahimaGupta_CSMS.ShacklesChecklist_ChainPulley
-                    SET IsYes = @IsYes, Remarks = @Remarks, PhotoPath = @PhotoPath, CAPA_ID = @CAPA_ID
-                    WHERE HeaderID = @ID AND Question = @Question
-                ", conn, trans);
-                        updatePulley.Parameters.AddWithValue("@ID", id);
-                        updatePulley.Parameters.AddWithValue("@IsYes", newChainPulleyIsYes);
-                        updatePulley.Parameters.AddWithValue("@Remarks", newChainPulleyIsYes == 1 ? (object)DBNull.Value : (object)chainPulleyRemarks ?? DBNull.Value);
-                        updatePulley.Parameters.AddWithValue("@PhotoPath", newChainPulleyIsYes == 1 ? (object)DBNull.Value : (object)chainPulleyPhotoPath ?? DBNull.Value);
+                            capaIDToUse = Convert.ToInt32(insertCAPA.ExecuteScalar());
+                        }
+                        else if (oldIsYes == 0 && isYes == 1 && currentCAPAID.HasValue) // No → Yes → Mark CAPA Closed
+                        {
+                            SqlCommand updateCAPA = new SqlCommand(
+                                "UPDATE tbl_CAPAMaster SET IsYes = 1 WHERE CAPAID = @CAPAID", conn, trans);
+                            updateCAPA.Parameters.AddWithValue("@CAPAID", currentCAPAID.Value);
+                            updateCAPA.ExecuteNonQuery();
+                        }
 
-                        updatePulley.Parameters.AddWithValue("@Question", chainPulleyQuestion);
-                        updatePulley.Parameters.AddWithValue("@CAPA_ID", DBNull.Value);
+                      
+                        SqlCommand cmd = new SqlCommand($@"
+                UPDATE {targetTable}
+                SET 
+                    IsYes = @IsYes,
+                    Remarks = @Remarks,
+                    PhotoPath = @PhotoPath,
+                    CAPA_ID = @CAPA_ID
+                WHERE HeaderID = @ID AND Question = @Question", conn, trans);
 
-                        int pulleyRows = updatePulley.ExecuteNonQuery();
-                       // Response.Write("Chain Pulley Update Rows Affected: " + pulleyRows + "<br>");
+                        cmd.Parameters.AddWithValue("@ID", id);
+                        cmd.Parameters.AddWithValue("@IsYes", isYes);
+                        cmd.Parameters.AddWithValue("@Remarks", remarks ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@PhotoPath", string.IsNullOrWhiteSpace(photoPath) ? (object)DBNull.Value : photoPath);
+
+                        cmd.Parameters.AddWithValue("@CAPA_ID", (object)capaIDToUse ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Question", question);
+
+                        int rows = cmd.ExecuteNonQuery();
+
+                        if (rows == 0)
+                            throw new Exception($"No record found for {equipmentType} with ID {id} and Question '{question}'.");
 
                         trans.Commit();
-                      //  Response.Write("<b>Transaction Committed Successfully.</b><br>");
+                        ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-success", @"
+                        new PNotify({
+                            title: 'Update Successful',
+                            text: 'Checklist updated successfully.',
+                            type: 'success',
+                            styling: 'bootstrap3',
+                            delay: 2500
+                        });
+                    ", true);
                     }
-                    catch (Exception innerEx)
+                    catch (Exception ex)
                     {
                         trans.Rollback();
-                       // Response.Write("<b>Inner Exception during transaction:</b> " + innerEx.Message + "<br>");
+                        ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-error", $@"
+                            new PNotify({{
+                                title: 'Update Failed',
+                                text: 'Error: {ex.Message.Replace("'", " ")}',
+                                type: 'error',
+                                styling: 'bootstrap3',
+                                delay: 3000
+                            }});
+                        ", true);
                     }
                 }
+
+                
+                GvDandBowChecklist.EditIndex = -1;
+                LoadDandBowChecklistDetails();
             }
             catch (Exception ex)
             {
-                Response.Write("<b>Outer Exception:</b> " + ex.Message + "<br>");
+                Response.Write("<b>Error:</b> " + ex.Message);
             }
-
-            GvDandBowChecklist.EditIndex = -1;
-            LoadDandBowChecklistDetails();
         }
+
         protected void GvDandBowChecklist_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow &&

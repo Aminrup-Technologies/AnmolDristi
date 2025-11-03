@@ -24,13 +24,41 @@
 
     <script type="text/javascript">
     function toggleRemarksAndPhoto(dropdown, prefix) {
+        //var selectedValue = dropdown.value;
+        //var panel = dropdown.closest('tr').querySelector('[id*="pnl' + prefix + 'Details"]');
+        //if (selectedValue === "False") {
+        //    panel.style.display = 'block';
+        //} else {
+        //    panel.style.display = 'none';
+        //}
+
+
+
         var selectedValue = dropdown.value;
         var panel = dropdown.closest('tr').querySelector('[id*="pnl' + prefix + 'Details"]');
+
+        if (!panel) return;
+
+        // Find input fields inside the panel
+        var remarkBox = panel.querySelector('input[type="text"], textarea');
+        var fileUpload = panel.querySelector('input[type="file"]');
+        var existingPhoto = panel.querySelector('label[id*="lblExisting"]');
+
         if (selectedValue === "False") {
+            // Show remark/photo section
             panel.style.display = 'block';
         } else {
+            // Hide and clear fields when switching to "True"
             panel.style.display = 'none';
+            if (remarkBox) remarkBox.value = "";
+            if (fileUpload) fileUpload.value = "";
+            if (existingPhoto) existingPhoto.textContent = "";
         }
+
+
+
+
+
     }
 
    
@@ -64,13 +92,15 @@
                 <div class="x_content table-container">
                     <div style="overflow-x: auto;">
                    <asp:GridView ID="GvDandBowChecklist" runat="server" CssClass="table table-striped table-bordered"
-    AutoGenerateColumns="False" DataKeyNames="BasicID" OnRowEditing="GvDandBowChecklist_RowEditing"
+    AutoGenerateColumns="False" DataKeyNames="BasicID,EquipmentType" OnRowEditing="GvDandBowChecklist_RowEditing"
     OnRowUpdating="GvDandBowChecklist_RowUpdating" OnRowCancelingEdit="GvDandBowChecklist_RowCancelingEdit"
     OnRowDeleting="GvDandBowChecklist_RowDeleting"
     OnRowDataBound="GvDandBowChecklist_RowDataBound">
 
     <Columns>
             <asp:BoundField DataField="HeaderID" HeaderText="Header ID" /> 
+        <asp:BoundField DataField="EquipmentType" HeaderText="Equipment Type" />
+
         <asp:BoundField DataField="Site" HeaderText="Site" />
         <asp:BoundField DataField="TagNo" HeaderText="Tag No" />
         <asp:BoundField DataField="InspectionDate" HeaderText="Inspection Date" DataFormatString="{0:yyyy-MM-dd}" />
@@ -87,21 +117,21 @@
 
        <asp:TemplateField HeaderText="Shackles Question">
     <ItemTemplate>
-        <%# Eval("ShacklesChecklistQuestion") %>
+        <%# Eval("ChecklistQuestion") %>
     </ItemTemplate>
     <EditItemTemplate>
         <asp:TextBox ID="txtShacklesQuestion" runat="server" CssClass="form-control"
-                     Text='<%# Bind("ShacklesChecklistQuestion") %>' />
+                     Text='<%# Bind("ChecklistQuestion") %>' />
     </EditItemTemplate>
 </asp:TemplateField>
 
        <asp:TemplateField HeaderText="Shackles Is Yes">
     <ItemTemplate>
-        <%# Eval("ShacklesIsYes") %>
+        <%# Eval("IsYes") %>
     </ItemTemplate>
     <EditItemTemplate>
         <asp:DropDownList ID="ddlShacklesIsYes" runat="server" CssClass="form-control"
-    SelectedValue='<%# Bind("ShacklesIsYes") %>' onchange="toggleRemarksAndPhoto(this, 'Shackles')">
+    SelectedValue='<%# Bind("IsYes") %>' onchange="toggleRemarksAndPhoto(this, 'Shackles')">
     <asp:ListItem Text="True" Value="True" />
     <asp:ListItem Text="False" Value="False" />
 </asp:DropDownList>
@@ -111,16 +141,16 @@
 
 <asp:TemplateField HeaderText="Shackles Remarks & Photo">
     <ItemTemplate>
-        <%# Eval("ShacklesRemarks") %> <br />
-        <%# Eval("ShacklesPhotoPath") %>
+        <%# Eval("Remarks") %> <br />
+        <%# Eval("PhotoPath") %>
     </ItemTemplate>
     <EditItemTemplate>
     <asp:Panel ID="pnlShacklesDetails" runat="server" Style="display:none;">
         <asp:TextBox ID="txtShacklesRemarks" runat="server" CssClass="form-control" 
-                     Text='<%# Bind("ShacklesRemarks") %>' placeholder="Enter Remarks" />
+                     Text='<%# Bind("Remarks") %>' placeholder="Enter Remarks" />
         <asp:FileUpload ID="fileShacklesPhoto" runat="server" CssClass="form-control" />
         <asp:Label ID="lblExistingShacklesPhoto" runat="server" 
-                   Text='<%# Eval("ShacklesPhotoPath") %>' Visible="false" />
+                   Text='<%# Eval("PhotoPath") %>' Visible="false" />
     </asp:Panel>
 </EditItemTemplate>
 
@@ -129,7 +159,14 @@
 
 
 
-        <asp:TemplateField HeaderText="Chain Pulley Question">
+
+
+
+
+
+
+
+       <%-- <asp:TemplateField HeaderText="Chain Pulley Question">
     <ItemTemplate>
         <%# Eval("ChainPulleyChecklistQuestion") %>
     </ItemTemplate>
@@ -168,7 +205,7 @@
     </asp:Panel>
 </EditItemTemplate>
 
-</asp:TemplateField>
+</asp:TemplateField>--%>
 
 
 

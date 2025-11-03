@@ -375,10 +375,26 @@
                                 var yes = document.getElementById(yesId);
                                 var no = document.getElementById(noId);
                                 var panelDiv = document.getElementById(panelDivId);
-                                if (yes && no && panelDiv) {
-                                    panelDiv.style.display = (no.checked) ? 'block' : 'none';
+
+                                if (!yes || !no || !panelDiv) return;
+
+                                if (no.checked) {
+                                    panelDiv.style.display = 'block';
+                                } else {
+                                    panelDiv.style.display = 'none';
+                                    // ✅ Clear fields when switching from Not Ok → Ok
+                                    var inputs = panelDiv.querySelectorAll('input[type="text"], textarea, input[type="file"]');
+                                    inputs.forEach(function (input) {
+                                        input.value = '';
+                                    });
+                                    var imgs = panelDiv.querySelectorAll('img');
+                                    imgs.forEach(function (img) {
+                                        img.src = '';
+                                        img.style.display = 'none';
+                                    });
                                 }
                             }
+
 
                             // D & Bow Shackles Checklist
                             function toggleTestedPanel() {
@@ -404,27 +420,27 @@
                             // Chain Pulley Block Checklist
                             function toggleChainTestedPanel() {
                                 togglePanel('<%= rbChainTestedOk.ClientID %>', '<%= rbChainTestedNotOk.ClientID %>', 'divChainTestedPanel');
-    }
-
-    function toggleChainDamagePanel() {
-        togglePanel('<%= rbChainDamageOk.ClientID %>', '<%= rbChainDamageNotOk.ClientID %>', 'divChainDamagePanel');
-    }
-
-    function toggleConditionPanel() {
-        togglePanel('<%= rbConditionOk.ClientID %>', '<%= rbConditionNotOk.ClientID %>', 'divConditionPanel');
-    }
-
-    function toggleLatchPanel() {
-        togglePanel('<%= rbLatchOk.ClientID %>', '<%= rbLatchNotOk.ClientID %>', 'divLatchPanel');
-    }
-
-    function togglePadeyePanel() {
-        togglePanel('<%= rbPadeyeOk.ClientID %>', '<%= rbPadeyeNotOk.ClientID %>', 'divPadeyePanel');
-    }
-
-    function toggleHookWearPanel() {
-        togglePanel('<%= rbHookWearOk.ClientID %>', '<%= rbHookWearNotOk.ClientID %>', 'divHookWearPanel');
                             }
+
+                            function toggleChainDamagePanel() {
+                                togglePanel('<%= rbChainDamageOk.ClientID %>', '<%= rbChainDamageNotOk.ClientID %>', 'divChainDamagePanel');
+                            }
+
+                            function toggleConditionPanel() {
+                                togglePanel('<%= rbConditionOk.ClientID %>', '<%= rbConditionNotOk.ClientID %>', 'divConditionPanel');
+                            }
+
+                            function toggleLatchPanel() {
+                                togglePanel('<%= rbLatchOk.ClientID %>', '<%= rbLatchNotOk.ClientID %>', 'divLatchPanel');
+                            }
+
+                            function togglePadeyePanel() {
+                                togglePanel('<%= rbPadeyeOk.ClientID %>', '<%= rbPadeyeNotOk.ClientID %>', 'divPadeyePanel');
+                            }
+
+                            function toggleHookWearPanel() {
+                                togglePanel('<%= rbHookWearOk.ClientID %>', '<%= rbHookWearNotOk.ClientID %>', 'divHookWearPanel');
+                                                    }
 
                             // CAPA Warning
                             function confirmCAPA(checkbox) {
@@ -432,6 +448,40 @@
                                     alert("CAPA is required. Proceeding without it is at your own risk.");
                                 }
                             }
+
+
+                            window.onload = function () {
+                                var yesButtons = Array.from(document.querySelectorAll('input[type="radio"]'))
+                                    .filter(rb => rb.id.endsWith("Ok") && !rb.id.endsWith("NotOk"));
+
+                                yesButtons.forEach(function (rb) {
+                                    rb.checked = true;
+                                });
+
+                                document.querySelectorAll('div[id^="div"]').forEach(function (panel) {
+                                    panel.style.display = 'none';
+                                });
+
+                                // Call toggle functions
+                                toggleTestedPanel();
+                                toggleThreadPanel();
+                                toggleWornPanel();
+                                toggleStrengthPanel();
+                                toggleRustPanel();
+                                toggleChainTestedPanel();
+                                toggleChainDamagePanel();
+                                toggleLatchPanel();
+                                togglePadeyePanel();
+                                toggleHookWearPanel();
+                            };
+
+
+
+
+
+
+
+
                         </script>
 
 

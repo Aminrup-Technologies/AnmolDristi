@@ -171,11 +171,11 @@ ORDER BY gh.HeaderID DESC";
                 BtnSubmit.Text = "Saved";
                 BtnSubmit.CssClass = "btn btn-success";
 
-                LoadGasCuttingIncidentDetails(); // Refresh GridView
-                                                 //  success
+                LoadGasCuttingIncidentDetails(); 
+                                               
                 ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-success", @"
                         new PNotify({
-                            title: 'Update Successful',
+                            title: 'Successful',
                             text: 'Checklist saved successfully.',
                             type: 'success',
                             styling: 'bootstrap3',
@@ -187,7 +187,7 @@ ORDER BY gh.HeaderID DESC";
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-error", $@"
                             new PNotify({{
-                                title: 'Update Failed',
+                                title: 'Failed',
                                 text: 'Error: {ex.Message.Replace("'", " ")}',
                                 type: 'error',
                                 styling: 'bootstrap3',
@@ -266,15 +266,28 @@ ORDER BY gh.HeaderID DESC";
 
                     transaction.Commit();
 
-                    // ✅ Set success message only after commit
-                    lblMessage.Text = "Gas Cutting checklist submitted successfully!";
-                    lblMessage.ForeColor = System.Drawing.Color.Green;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-success", @"
+                        new PNotify({
+                            title: 'Successful',
+                            text: 'Checklist saved successfully.',
+                            type: 'success',
+                            styling: 'bootstrap3',
+                            delay: 2500
+                        });
+                    ", true);
                 }
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    lblMessage.Text = "Error: " + ex.Message;
-                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-error", $@"
+                            new PNotify({{
+                                title: ' Failed',
+                                text: 'Error: {ex.Message.Replace("'", " ")}',
+                                type: 'error',
+                                styling: 'bootstrap3',
+                                delay: 3000
+                            }});
+                        ", true);
                 }
             }
         }
