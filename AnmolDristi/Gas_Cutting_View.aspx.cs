@@ -110,8 +110,23 @@ ORDER BY gh.HeaderID DESC";
                 filePhoto.SaveAs(fullPath);
                 photoPath = "~/Uploads/" + fileName;
             }
+            else
+            {
+                // No new photo uploaded
+                // If existing label has a photo path, keep it
+                if (string.IsNullOrWhiteSpace(lblExistingPhoto.Text))
+                {
+                    // If nothing existed before, keep it empty
+                    photoPath = "";
+                }
+                else
+                {
+                    // Keep old one
+                    photoPath = lblExistingPhoto.Text;
+                }
+            }
 
-            string finalRemarks = ((TextBox)row.FindControl("txtFinalRemarks")).Text.Trim();
+                string finalRemarks = ((TextBox)row.FindControl("txtFinalRemarks")).Text.Trim();
 
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -169,7 +184,7 @@ ORDER BY gh.HeaderID DESC";
                         insertCAPA.Parameters.AddWithValue("@HeaderID", headerId);
                         insertCAPA.Parameters.AddWithValue("@PhotoPath", photoPath ?? "");
                         insertCAPA.Parameters.AddWithValue("@Remarks", remarks ?? "");
-                        insertCAPA.Parameters.AddWithValue("@AssignedBy", "System");
+                        insertCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"] ?? "System");
                         insertCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
 
                         capaIDToUse = insertCAPA.ExecuteScalar();
@@ -179,6 +194,15 @@ ORDER BY gh.HeaderID DESC";
                         // Changed from No to Yes → Clear remarks/photo
                         remarks = "";
                         photoPath = "";
+
+                        // Update CAPA to mark as resolved (IsYes = 1)
+                        if (currentCAPAID != null)
+                        {
+                            SqlCommand updateCAPA = new SqlCommand(
+                                "UPDATE tbl_CAPAMaster SET IsYes = 1 WHERE CAPAID = @CAPAID", conn, trans);
+                            updateCAPA.Parameters.AddWithValue("@CAPAID", currentCAPAID);
+                            updateCAPA.ExecuteNonQuery();
+                        }
                     }
 
                     // 3. Update Checklist
@@ -197,10 +221,29 @@ ORDER BY gh.HeaderID DESC";
                     updateChecklist.ExecuteNonQuery();
 
                     trans.Commit();
+
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-success", @"
+                        new PNotify({
+                            title: 'Update Successful',
+                            text: 'Checklist updated successfully.',
+                            type: 'success',
+                            styling: 'bootstrap3',
+                            delay: 2500
+                        });
+                    ", true);
                 }
-                catch
+                catch(Exception ex)
                 {
                     trans.Rollback();
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-error", $@"
+                            new PNotify({{
+                                title: 'Update Failed',
+                                text: 'Error: {ex.Message.Replace("'", " ")}',
+                                type: 'error',
+                                styling: 'bootstrap3',
+                                delay: 3000
+                            }});
+                        ", true);
                 }
             }
 
@@ -228,6 +271,44 @@ ORDER BY gh.HeaderID DESC";
             }
 
             LoadGasCuttingIncidentDetails();
+        }
+
+        protected void GvGasCuttingChecklist_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Skip if the row is in edit mode
+                if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+                    return;
+
+                object isYesObj = DataBinder.Eval(e.Row.DataItem, "IsYes");
+                bool isYes = (isYesObj != DBNull.Value && isYesObj != null) && Convert.ToBoolean(isYesObj);
+
+                string photoPath = Convert.ToString(DataBinder.Eval(e.Row.DataItem, "PhotoPath"));
+
+                Literal litPhoto = (Literal)e.Row.FindControl("litPhoto");
+                if (litPhoto == null) return;
+
+                if (isYes)
+                {
+                    // If "Yes" → show nothing
+                    litPhoto.Text = "";
+                }
+                else
+                {
+                    // If "No"
+                    if (string.IsNullOrWhiteSpace(photoPath))
+                    {
+                        litPhoto.Text = "<span style='color:gray;'>No photo uploaded</span>";
+                    }
+                    else
+                    {
+                        litPhoto.Text = $"<a href='{ResolveUrl(photoPath)}' target='_blank'>" +
+                                        $"<img src='{ResolveUrl(photoPath)}' " +
+                                        $"style='width:80px;height:80px;border:1px solid #ccc;border-radius:8px;object-fit:cover;' /></a>";
+                    }
+                }
+            }
         }
     }
 }

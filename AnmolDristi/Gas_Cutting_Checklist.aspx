@@ -116,6 +116,7 @@
         </div>
     </div>
 </div>
+                                </div>
 
 
 
@@ -123,7 +124,7 @@
     <!-- Row for Step 2 heading -->
   <div class="row">
       <div class="col-md-12">
-          <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 3: Gas Cylinder Checklist</h3>
+          <h3 style="color: teal; font-weight: bold; margin-top: 20px;">Step 2: Gas Cylinder Checklist</h3>
           <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
       </div>
   </div>
@@ -454,10 +455,43 @@
         var yes = document.getElementById(yesId);
         var no = document.getElementById(noId);
         var panelDiv = document.getElementById(panelDivId);
-        if (yes && no && panelDiv) {
-            panelDiv.style.display = (no.checked) ? 'block' : 'none';
+
+        if (!yes || !no || !panelDiv) return;
+
+        if (no.checked) {
+            panelDiv.style.display = 'block';
+        } else {
+            panelDiv.style.display = 'none';
+
+            // ✅ Clear all inputs and images *only when hiding the panel*
+            var inputs = panelDiv.querySelectorAll('input[type="text"], textarea, input[type="file"]');
+            inputs.forEach(function (input) {
+                if (input.type === "file") {
+                    input.value = '';
+                } else {
+                    input.value = '';
+                }
+            });
+
+            var imgs = panelDiv.querySelectorAll('img');
+            imgs.forEach(function (img) {
+                img.src = '';
+                img.style.display = 'none';
+            });
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     function toggleGasColorPanel() { togglePanel('<%= RbGasColorYes.ClientID %>', '<%= RbGasColorNo.ClientID %>', 'divGasColorPanel'); }
     function toggleNRVPanel() { togglePanel('<%= RbNRVYes.ClientID %>', '<%= RbNRVNo.ClientID %>', 'divNRVPanel'); }
@@ -477,7 +511,44 @@
         if (!checkbox.checked) {
             alert("CAPA unchecked. Please ensure this is not a safety-critical issue.");
         }
+
     }
+    // === ✅ Default state logic: run on page load ===
+    window.onload = function () {
+        var yesButtons = document.querySelectorAll('input[type="radio"][id*="Yes"]');
+        yesButtons.forEach(function (rb) {
+            rb.checked = true; // Set all “Yes” options as default
+        });
+
+        // Hide all related panels initially
+        document.querySelectorAll('div[id^="div"]').forEach(function (panel) {
+            panel.style.display = 'none';
+        });
+
+        // Run all toggle functions once to apply initial state
+        toggleGasColorPanel();
+        toggleNRVPanel();
+        toggleISICylinderPanel();
+        toggleUprightPanel();
+        toggleTorchDamagePanel();
+        toggleFlashbackPanel();
+        toggleLeakPanel();
+        toggleSegregationPanel();
+        toggleBarricadePanel();
+        toggleMovedPanel();
+        toggleFireExtPanel();
+        toggleSparkPanel();
+        toggleHosePanel();
+    };
+
+
+
+
+
+
+
+
+
 </script>
 
 

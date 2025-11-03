@@ -165,18 +165,35 @@ ORDER BY gh.HeaderID DESC";
             try
             {
                 SaveGasCuttingData(); // Save form data
-                lblMessage.ForeColor = System.Drawing.Color.Green;
-                lblMessage.Text = "Gas Cutting checklist saved successfully!";
+                //lblMessage.ForeColor = System.Drawing.Color.Green;
+                //lblMessage.Text = "Gas Cutting checklist saved successfully!";
                 BtnSubmit.Enabled = false;
                 BtnSubmit.Text = "Saved";
                 BtnSubmit.CssClass = "btn btn-success";
 
                 LoadGasCuttingIncidentDetails(); // Refresh GridView
+                                                 //  success
+                ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-success", @"
+                        new PNotify({
+                            title: 'Update Successful',
+                            text: 'Checklist saved successfully.',
+                            type: 'success',
+                            styling: 'bootstrap3',
+                            delay: 2500
+                        });
+                    ", true);
             }
             catch (Exception ex)
             {
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-                lblMessage.Text = "Error: " + ex.Message;
+                ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-error", $@"
+                            new PNotify({{
+                                title: 'Update Failed',
+                                text: 'Error: {ex.Message.Replace("'", " ")}',
+                                type: 'error',
+                                styling: 'bootstrap3',
+                                delay: 3000
+                            }});
+                        ", true);
             }
         }
 
@@ -289,16 +306,18 @@ ORDER BY gh.HeaderID DESC";
                 {
                     using (SqlCommand cmdCAPA = new SqlCommand(@"
                 INSERT INTO tbl_CAPAMaster 
-                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate,Description,SourceTable,)
                 OUTPUT INSERTED.CAPAID
                 VALUES 
-                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, transaction))
+                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate, @Description, @SourceTable)", conn, transaction))
                     {
                         cmdCAPA.Parameters.AddWithValue("@HeaderID", headerId);
                         cmdCAPA.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
                         cmdCAPA.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
-                        cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtGasCutterName.Text.Trim());  // You can change if needed
+                        cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"] ?? "System");
                         cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                        cmdCAPA.Parameters.AddWithValue("@Description", question);
+                        cmdCAPA.Parameters.AddWithValue("@SourceTable", "Gass Cutting Checklist");
 
                         capaId = cmdCAPA.ExecuteScalar(); // Get new CAPAID
                     }

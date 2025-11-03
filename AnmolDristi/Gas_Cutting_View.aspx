@@ -71,17 +71,17 @@
     OnRowEditing="GvGasCuttingChecklist_RowEditing"
     OnRowUpdating="GvGasCuttingChecklist_RowUpdating"
     OnRowCancelingEdit="GvGasCuttingChecklist_RowCancelingEdit"
-    OnRowDeleting="GvGasCuttingChecklist_RowDeleting">
+    OnRowDeleting="GvGasCuttingChecklist_RowDeleting" OnRowDataBound="GvGasCuttingChecklist_RowDataBound">
 
     <Columns>
-        <asp:BoundField DataField="HeaderID" HeaderText="Header ID" />
+        <asp:BoundField DataField="HeaderID" HeaderText="Header ID" ReadOnly="true" />
 
         <asp:TemplateField HeaderText="Site">
             <ItemTemplate>
                 <%# Eval("SiteName") %>
             </ItemTemplate>
             <EditItemTemplate>
-                <asp:TextBox ID="txtSiteName" runat="server" Text='<%# Bind("SiteName") %>' />
+                <asp:TextBox ID="txtSiteName" runat="server" Text='<%# Bind("SiteName") %>' ReadOnly="true" />
             </EditItemTemplate>
         </asp:TemplateField>
 
@@ -90,7 +90,7 @@
                 <%# Eval("InspectionDate", "{0:yyyy-MM-dd}") %>
             </ItemTemplate>
             <EditItemTemplate>
-                <asp:TextBox ID="txtInspectionDate" runat="server" Text='<%# Bind("InspectionDate", "{0:yyyy-MM-dd}") %>' />
+                <asp:TextBox ID="txtInspectionDate" runat="server" Text='<%# Bind("InspectionDate", "{0:yyyy-MM-dd}") %>' ReadOnly="true" />
             </EditItemTemplate>
         </asp:TemplateField>
 
@@ -99,7 +99,7 @@
                 <%# Eval("TagNo") %>
             </ItemTemplate>
             <EditItemTemplate>
-                <asp:TextBox ID="txtTagNo" runat="server" Text='<%# Bind("TagNo") %>' />
+                <asp:TextBox ID="txtTagNo" runat="server" Text='<%# Bind("TagNo") %>' ReadOnly="true" />
             </EditItemTemplate>
         </asp:TemplateField>
 
@@ -108,7 +108,7 @@
                 <%# Eval("ChecklistQuestion") %>
             </ItemTemplate>
             <EditItemTemplate>
-                <asp:TextBox ID="txtChecklistQuestion" runat="server" Text='<%# Bind("ChecklistQuestion") %>' />
+                <asp:TextBox ID="txtChecklistQuestion" runat="server" Text='<%# Bind("ChecklistQuestion") %>' ReadOnly="true" />
             </EditItemTemplate>
         </asp:TemplateField>
 
@@ -139,7 +139,7 @@
 
 <asp:TemplateField HeaderText="Photo Path">
     <ItemTemplate>
-        <%# Eval("PhotoPath") %>
+       <asp:Literal ID="litPhoto" runat="server" />
     </ItemTemplate>
     <EditItemTemplate>
         <asp:FileUpload ID="filePhoto" runat="server" CssClass="photoField" Style="display: none;" />
@@ -153,7 +153,7 @@
         <%# Eval("FinalRemarks") %>
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:TextBox ID="txtFinalRemarks" runat="server" Text='<%# Bind("FinalRemarks") %>' />
+        <asp:TextBox ID="txtFinalRemarks" runat="server" Text='<%# Bind("FinalRemarks") %>' ReadOnly="true" />
     </EditItemTemplate>
 </asp:TemplateField>
 
@@ -162,7 +162,7 @@
         <%# Eval("JobId") %>
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:TextBox ID="txtJobId" runat="server" Text='<%# Bind("JobId") %>' />
+        <asp:TextBox ID="txtJobId" runat="server" Text='<%# Bind("JobId") %>' ReadOnly="true" />
     </EditItemTemplate>
 </asp:TemplateField>
 
@@ -171,7 +171,7 @@
         <%# Eval("GasCutterName") %>
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:TextBox ID="txtGasCutterName" runat="server" Text='<%# Bind("GasCutterName") %>' />
+        <asp:TextBox ID="txtGasCutterName" runat="server" Text='<%# Bind("GasCutterName") %>' ReadOnly="true" />
     </EditItemTemplate>
 </asp:TemplateField>
 

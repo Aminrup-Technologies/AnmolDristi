@@ -122,9 +122,9 @@
     </EditItemTemplate>
 </asp:TemplateField>
 
-                            <asp:BoundField DataField="JobID" HeaderText="Job ID" /> 
-    <asp:BoundField DataField="JobName" HeaderText="Job Name" />
-                            <asp:BoundField DataField="Final_Remarks" HeaderText="Final Remarks" />
+                            <asp:BoundField DataField="JobID" HeaderText="Job ID" ReadOnly="true" /> 
+    <asp:BoundField DataField="JobName" HeaderText="Job Name" ReadOnly="true" />
+                            <asp:BoundField DataField="Final_Remarks" HeaderText="Final Remarks" ReadOnly="true" />
 
 
           <asp:TemplateField HeaderText="Actions">
