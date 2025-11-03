@@ -382,7 +382,7 @@
                                     panelDiv.style.display = 'block';
                                 } else {
                                     panelDiv.style.display = 'none';
-                                    // ✅ Clear fields when switching from Not Ok → Ok
+                                    
                                     var inputs = panelDiv.querySelectorAll('input[type="text"], textarea, input[type="file"]');
                                     inputs.forEach(function (input) {
                                         input.value = '';
