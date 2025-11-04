@@ -72,7 +72,7 @@
             OnRowEditing="GridViewJobSiteChecklist_RowEditing"
             OnRowUpdating="GridViewJobSiteChecklist_RowUpdating"
             OnRowCancelingEdit="GridViewJobSiteChecklist_RowCancelingEdit"
-            OnRowDeleting="GridViewJobSiteChecklist_RowDeleting">
+            OnRowDeleting="GridViewJobSiteChecklist_RowDeleting" OnRowDataBound="GridViewJobSiteChecklist_RowDataBound">
            <Columns>
     <asp:TemplateField HeaderText="Header ID">
         <ItemTemplate>
@@ -119,7 +119,7 @@
             ID="ddlIsYes" 
             runat="server" 
             CssClass="form-control" 
-            onchange="toggleRemarksAndPhoto(this);">
+            onchange="toggleRemarksAndPhoto(this);" SelectedValue='<%# Bind("IsYes") %>' style="width:150px;" >
             <asp:ListItem Text="True" Value="True"></asp:ListItem>
             <asp:ListItem Text="False" Value="False"></asp:ListItem>
         </asp:DropDownList>
@@ -132,16 +132,16 @@
         <%# Eval("Remarks") %>
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarksField" Style="display: none;"></asp:TextBox>
+        <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control remarksField" Style="display: none;" Text='<%# Bind("Remarks") %>'></asp:TextBox>
     </EditItemTemplate>
 </asp:TemplateField>
 
 <asp:TemplateField HeaderText="Photo Path">
     <ItemTemplate>
-        <%# Eval("PhotoPath") %>
+        <asp:Literal ID="litPhoto" runat="server" />
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:FileUpload ID="filePhoto" runat="server" CssClass="form-control photoField" Style="display: none;" />
+        <asp:FileUpload ID="filePhoto" runat="server" CssClass="photoField" Style="display: none;" />
         <asp:Label ID="lblExistingPhoto" runat="server" Text='<%# Eval("PhotoPath") %>' Visible="false" />
     </EditItemTemplate>
 </asp:TemplateField>

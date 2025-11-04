@@ -124,14 +124,29 @@ namespace AnmolDristi
 
 
                     tran.Commit();
-                    lblMessage.ForeColor = System.Drawing.Color.Green;
-                    lblMessage.Text = "Checklist submitted successfully.";
+                    //  success
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-success", @"
+                        new PNotify({
+                            title: 'Successful',
+                            text: 'Checklist saved successfully.',
+                            type: 'success',
+                            styling: 'bootstrap3',
+                            delay: 2500
+                        });
+                    ", true);
                 }
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    lblMessage.ForeColor = System.Drawing.Color.Red;
-                    lblMessage.Text = "Error: " + ex.Message;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-error", $@"
+                            new PNotify({{
+                                title: 'Failed',
+                                text: 'Error: {ex.Message.Replace("'", " ")}',
+                                type: 'error',
+                                styling: 'bootstrap3',
+                                delay: 3000
+                            }});
+                        ", true);
                 }
             }
         }

@@ -131,7 +131,7 @@
     </ItemTemplate>
     <EditItemTemplate>
         <asp:DropDownList ID="ddlShacklesIsYes" runat="server" CssClass="form-control"
-    SelectedValue='<%# Bind("IsYes") %>' onchange="toggleRemarksAndPhoto(this, 'Shackles')">
+    SelectedValue='<%# Bind("IsYes") %>' onchange="toggleRemarksAndPhoto(this, 'Shackles')" style="width:150px;">
     <asp:ListItem Text="True" Value="True" />
     <asp:ListItem Text="False" Value="False" />
 </asp:DropDownList>

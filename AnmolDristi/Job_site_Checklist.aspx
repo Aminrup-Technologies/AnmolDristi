@@ -45,7 +45,7 @@
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <asp:Label ID="lblDate" runat="server" Text="Date:" CssClass="form-label" />
-                                <asp:TextBox ID="txtDate" runat="server" CssClass="form-control" TextMode="Date" />
+                                <asp:TextBox ID="txtDate" runat="server" CssClass="form-control" TextMode="Date" ValidationGroup="Submit" />
                                 <asp:RequiredFieldValidator ID="rfvDate" runat="server" ControlToValidate="txtDate" ErrorMessage="Date required." ForeColor="Red" Display="Dynamic" />
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <asp:Label ID="lblArea" runat="server" Text="Section / Area:" CssClass="form-label" />
-                                <asp:TextBox ID="txtArea" runat="server" CssClass="form-control" Placeholder="Enter area e.g., Mech/CP" />
+                                <asp:TextBox ID="txtArea" runat="server" CssClass="form-control" Placeholder="Enter area e.g., Mech/CP" ValidationGroup="Submit" />
                                 <asp:RequiredFieldValidator ID="rfvArea" runat="server" ControlToValidate="txtArea" ErrorMessage="Area required." ForeColor="Red" Display="Dynamic" />
                             </div>
                         </div>
@@ -76,7 +76,7 @@
     <td>
         <asp:RadioButton ID="rbMechGuardOk" GroupName="MechGuard" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleMechGuardPanel()" />
         <asp:RadioButton ID="rbMechGuardNotOk" GroupName="MechGuard" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleMechGuardPanel()" />
-        <asp:RadioButton ID="rbMechGuardNA" GroupName="MechGuard" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbMechGuardNA" GroupName="MechGuard" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlMechGuard" runat="server">
@@ -96,7 +96,7 @@
     <td>
         <asp:RadioButton ID="rbExposedPartsOk" GroupName="ExposedParts" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleExposedPartsPanel()" />
         <asp:RadioButton ID="rbExposedPartsNotOk" GroupName="ExposedParts" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleExposedPartsPanel()" />
-        <asp:RadioButton ID="rbExposedPartsNA" GroupName="ExposedParts" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbExposedPartsNA" GroupName="ExposedParts" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlExposedParts" runat="server">
@@ -116,7 +116,7 @@
     <td>
         <asp:RadioButton ID="rbSharpPartsOk" GroupName="SharpParts" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleSharpPartsPanel()" />
         <asp:RadioButton ID="rbSharpPartsNotOk" GroupName="SharpParts" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleSharpPartsPanel()" />
-        <asp:RadioButton ID="rbSharpPartsNA" GroupName="SharpParts" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbSharpPartsNA" GroupName="SharpParts" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlSharpParts" runat="server">
@@ -136,7 +136,7 @@
     <td>
         <asp:RadioButton ID="rbAnchoredOk" GroupName="Anchored" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleAnchoredPanel()" />
         <asp:RadioButton ID="rbAnchoredNotOk" GroupName="Anchored" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleAnchoredPanel()" />
-        <asp:RadioButton ID="rbAnchoredNA" GroupName="Anchored" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbAnchoredNA" GroupName="Anchored" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlAnchored" runat="server">
@@ -161,7 +161,7 @@
     <td>
         <asp:RadioButton ID="rbMarkingFixOk" GroupName="MarkingFix" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleMarkingFixPanel()" />
         <asp:RadioButton ID="rbMarkingFixNotOk" GroupName="MarkingFix" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleMarkingFixPanel()" />
-        <asp:RadioButton ID="rbMarkingFixNA" GroupName="MarkingFix" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbMarkingFixNA" GroupName="MarkingFix" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlMarkingFix" runat="server">
@@ -181,7 +181,7 @@
     <td>
         <asp:RadioButton ID="rbMarkingVisibleOk" GroupName="MarkingVisible" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleMarkingVisiblePanel()" />
         <asp:RadioButton ID="rbMarkingVisibleNotOk" GroupName="MarkingVisible" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleMarkingVisiblePanel()" />
-        <asp:RadioButton ID="rbMarkingVisibleNA" GroupName="MarkingVisible" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbMarkingVisibleNA" GroupName="MarkingVisible" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlMarkingVisible" runat="server">
@@ -201,7 +201,7 @@
     <td>
         <asp:RadioButton ID="rbMarkingSafeOk" GroupName="MarkingSafe" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleMarkingSafePanel()" />
         <asp:RadioButton ID="rbMarkingSafeNotOk" GroupName="MarkingSafe" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleMarkingSafePanel()" />
-        <asp:RadioButton ID="rbMarkingSafeNA" GroupName="MarkingSafe" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbMarkingSafeNA" GroupName="MarkingSafe" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlMarkingSafe" runat="server">
@@ -221,7 +221,7 @@
     <td>
         <asp:RadioButton ID="rbGuardingRotatingOk" GroupName="GuardingRotating" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleGuardingRotatingPanel()" />
         <asp:RadioButton ID="rbGuardingRotatingNotOk" GroupName="GuardingRotating" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleGuardingRotatingPanel()" />
-        <asp:RadioButton ID="rbGuardingRotatingNA" GroupName="GuardingRotating" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbGuardingRotatingNA" GroupName="GuardingRotating" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlGuardingRotating" runat="server">
@@ -241,7 +241,7 @@
     <td>
         <asp:RadioButton ID="rbWorkmenPositionOk" GroupName="WorkmenPosition" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleWorkmenPositionPanel()" />
         <asp:RadioButton ID="rbWorkmenPositionNotOk" GroupName="WorkmenPosition" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleWorkmenPositionPanel()" />
-        <asp:RadioButton ID="rbWorkmenPositionNA" GroupName="WorkmenPosition" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbWorkmenPositionNA" GroupName="WorkmenPosition" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlWorkmenPosition" runat="server">
@@ -261,7 +261,7 @@
     <td>
         <asp:RadioButton ID="rbExecutorOk" GroupName="Executor" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleExecutorPanel()" />
         <asp:RadioButton ID="rbExecutorNotOk" GroupName="Executor" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleExecutorPanel()" />
-        <asp:RadioButton ID="rbExecutorNA" GroupName="Executor" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbExecutorNA" GroupName="Executor" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlExecutor" runat="server">
@@ -281,7 +281,7 @@
     <td>
         <asp:RadioButton ID="rbOtherPointsOk" GroupName="OtherPoints" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleOtherPointsPanel()" />
         <asp:RadioButton ID="rbOtherPointsNotOk" GroupName="OtherPoints" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleOtherPointsPanel()" />
-        <asp:RadioButton ID="rbOtherPointsNA" GroupName="OtherPoints" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbOtherPointsNA" GroupName="OtherPoints" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlOtherPoints" runat="server">
@@ -304,7 +304,7 @@
     <td>
         <asp:RadioButton ID="rbGroundedOk" GroupName="Grounded" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleGroundedPanel()" />
         <asp:RadioButton ID="rbGroundedNotOk" GroupName="Grounded" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleGroundedPanel()" />
-        <asp:RadioButton ID="rbGroundedNA" GroupName="Grounded" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbGroundedNA" GroupName="Grounded" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlGrounded" runat="server">
@@ -324,7 +324,7 @@
     <td>
         <asp:RadioButton ID="rbShockHazardOk" GroupName="ShockHazard" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleShockHazardPanel()" />
         <asp:RadioButton ID="rbShockHazardNotOk" GroupName="ShockHazard" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleShockHazardPanel()" />
-        <asp:RadioButton ID="rbShockHazardNA" GroupName="ShockHazard" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbShockHazardNA" GroupName="ShockHazard" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlShockHazard" runat="server">
@@ -344,7 +344,7 @@
     <td>
         <asp:RadioButton ID="rbWiresLabeledOk" GroupName="WiresLabeled" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleWiresLabeledPanel()" />
         <asp:RadioButton ID="rbWiresLabeledNotOk" GroupName="WiresLabeled" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleWiresLabeledPanel()" />
-        <asp:RadioButton ID="rbWiresLabeledNA" GroupName="WiresLabeled" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbWiresLabeledNA" GroupName="WiresLabeled" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlWiresLabeled" runat="server">
@@ -364,7 +364,7 @@
     <td>
         <asp:RadioButton ID="rbFloorCordFreeOk" GroupName="FloorCordFree" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleFloorCordFreePanel()" />
         <asp:RadioButton ID="rbFloorCordFreeNotOk" GroupName="FloorCordFree" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleFloorCordFreePanel()" />
-        <asp:RadioButton ID="rbFloorCordFreeNA" GroupName="FloorCordFree" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbFloorCordFreeNA" GroupName="FloorCordFree" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlFloorCordFree" runat="server">
@@ -389,7 +389,7 @@
     <td>
         <asp:RadioButton ID="rbEnvSafeOk" GroupName="EnvSafe" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleEnvSafePanel()" />
         <asp:RadioButton ID="rbEnvSafeNotOk" GroupName="EnvSafe" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleEnvSafePanel()" />
-        <asp:RadioButton ID="rbEnvSafeNA" GroupName="EnvSafe" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbEnvSafeNA" GroupName="EnvSafe" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlEnvSafe" runat="server">
@@ -410,7 +410,7 @@
     <td>
         <asp:RadioButton ID="rbLightingOk" GroupName="Lighting" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleLightingPanel()" />
         <asp:RadioButton ID="rbLightingNotOk" GroupName="Lighting" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleLightingPanel()" />
-        <asp:RadioButton ID="rbLightingNA" GroupName="Lighting" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbLightingNA" GroupName="Lighting" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlLighting" runat="server">
@@ -432,7 +432,7 @@
     <td>
         <asp:RadioButton ID="rbFloorSafeOk" GroupName="FloorSafe" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleFloorSafePanel()" />
         <asp:RadioButton ID="rbFloorSafeNotOk" GroupName="FloorSafe" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleFloorSafePanel()" />
-        <asp:RadioButton ID="rbFloorSafeNA" GroupName="FloorSafe" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbFloorSafeNA" GroupName="FloorSafe" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlFloorSafe" runat="server">
@@ -456,7 +456,7 @@
     <td>
         <asp:RadioButton ID="rbMasterCutoffOk" GroupName="MasterCutoff" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleMasterCutoffPanel()" />
         <asp:RadioButton ID="rbMasterCutoffNotOk" GroupName="MasterCutoff" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleMasterCutoffPanel()" />
-        <asp:RadioButton ID="rbMasterCutoffNA" GroupName="MasterCutoff" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbMasterCutoffNA" GroupName="MasterCutoff" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlMasterCutoff" runat="server">
@@ -476,7 +476,7 @@
     <td>
         <asp:RadioButton ID="rbStartStopOk" GroupName="StartStop" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleStartStopPanel()" />
         <asp:RadioButton ID="rbStartStopNotOk" GroupName="StartStop" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleStartStopPanel()" />
-        <asp:RadioButton ID="rbStartStopNA" GroupName="StartStop" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbStartStopNA" GroupName="StartStop" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlStartStop" runat="server">
@@ -496,7 +496,7 @@
     <td>
         <asp:RadioButton ID="rbEmergencyEquipOk" GroupName="EmergencyEquip" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleEmergencyEquipPanel()" />
         <asp:RadioButton ID="rbEmergencyEquipNotOk" GroupName="EmergencyEquip" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleEmergencyEquipPanel()" />
-        <asp:RadioButton ID="rbEmergencyEquipNA" GroupName="EmergencyEquip" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbEmergencyEquipNA" GroupName="EmergencyEquip" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlEmergencyEquip" runat="server">
@@ -520,7 +520,7 @@
     <td>
         <asp:RadioButton ID="rbTrainingJobOk" GroupName="TrainingJob" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleTrainingJobPanel()" />
         <asp:RadioButton ID="rbTrainingJobNotOk" GroupName="TrainingJob" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleTrainingJobPanel()" />
-        <asp:RadioButton ID="rbTrainingJobNA" GroupName="TrainingJob" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbTrainingJobNA" GroupName="TrainingJob" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlTrainingJob" runat="server">
@@ -540,7 +540,7 @@
     <td>
         <asp:RadioButton ID="rbTrainingFeaturesOk" GroupName="TrainingFeatures" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleTrainingFeaturesPanel()" />
         <asp:RadioButton ID="rbTrainingFeaturesNotOk" GroupName="TrainingFeatures" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleTrainingFeaturesPanel()" />
-        <asp:RadioButton ID="rbTrainingFeaturesNA" GroupName="TrainingFeatures" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbTrainingFeaturesNA" GroupName="TrainingFeatures" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlTrainingFeatures" runat="server">
@@ -560,7 +560,7 @@
     <td>
         <asp:RadioButton ID="rbTrainingResponseOk" GroupName="TrainingResponse" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleTrainingResponsePanel()" />
         <asp:RadioButton ID="rbTrainingResponseNotOk" GroupName="TrainingResponse" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleTrainingResponsePanel()" />
-        <asp:RadioButton ID="rbTrainingResponseNA" GroupName="TrainingResponse" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbTrainingResponseNA" GroupName="TrainingResponse" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlTrainingResponse" runat="server">
@@ -580,7 +580,7 @@
     <td>
         <asp:RadioButton ID="rbTrainingManualsOk" GroupName="TrainingManuals" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleTrainingManualsPanel()" />
         <asp:RadioButton ID="rbTrainingManualsNotOk" GroupName="TrainingManuals" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleTrainingManualsPanel()" />
-        <asp:RadioButton ID="rbTrainingManualsNA" GroupName="TrainingManuals" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbTrainingManualsNA" GroupName="TrainingManuals" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlTrainingManuals" runat="server">
@@ -596,16 +596,92 @@
 
 </table>
 
+
+
+
+                    <script type="text/javascript">
+                        function validateDandBowChecklist() {
+                            var dateBox = document.getElementById('<%= txtDate.ClientID %>');
+        var areaBox = document.getElementById('<%= txtArea.ClientID %>');
+
+                            var dateValue = dateBox.value.trim();
+                            var areaValue = areaBox.value.trim();
+
+                            // Clear any previous error borders
+                            dateBox.style.borderColor = '';
+                            areaBox.style.borderColor = '';
+
+                            // === Validation Logic ===
+                            if (dateValue === "") {
+                                alert("Please select a Date.");
+                                dateBox.style.borderColor = "red";
+                                dateBox.focus();
+                                return false;
+                            }
+
+                            if (areaValue === "") {
+                                alert("Please enter Section / Area.");
+                                areaBox.style.borderColor = "red";
+                                areaBox.focus();
+                                return false;
+                            }
+
+                            // ✅ If both fields are valid, allow postback
+                            return true;
+                        }
+                    </script>
+
+
+
+
+
+
                     <script type="text/javascript">
     // Shared Toggle Logic
-    function togglePanel(yesId, noId, panelDivId) {
-        var yes = document.getElementById(yesId);
-        var no = document.getElementById(noId);
-        var panelDiv = document.getElementById(panelDivId);
-        if (yes && no && panelDiv) {
-            panelDiv.style.display = (no.checked) ? 'block' : 'none';
-        }
-    }
+    //function togglePanel(yesId, noId, panelDivId) {
+    //    var yes = document.getElementById(yesId);
+    //    var no = document.getElementById(noId);
+    //    var panelDiv = document.getElementById(panelDivId);
+    //    if (yes && no && panelDiv) {
+    //        panelDiv.style.display = (no.checked) ? 'block' : 'none';
+    //    }
+                        //}
+
+
+
+
+                        function togglePanel(yesId, noId, panelDivId) {
+                            var yes = document.getElementById(yesId);
+                            var no = document.getElementById(noId);
+                            var panelDiv = document.getElementById(panelDivId);
+
+                            if (!yes || !no || !panelDiv) return;
+
+                            if (no.checked) {
+                                panelDiv.style.display = 'block';
+                            } else {
+                                panelDiv.style.display = 'none';
+
+                                var inputs = panelDiv.querySelectorAll('input[type="text"], textarea, input[type="file"]');
+                                inputs.forEach(function (input) {
+                                    input.value = '';
+                                });
+                                var imgs = panelDiv.querySelectorAll('img');
+                                imgs.forEach(function (img) {
+                                    img.src = '';
+                                    img.style.display = 'none';
+                                });
+                            }
+                        }
+
+
+
+
+
+
+
+
+
 
     // Mechanical Hazard Panels
                         function toggleMechGuardPanel() {
@@ -614,54 +690,122 @@
 
                         function toggleExposedPartsPanel() {
                             togglePanel('<%= rbExposedPartsOk.ClientID %>', '<%= rbExposedPartsNotOk.ClientID %>', 'divExposedPartsPanel');
-}
+                        }
 
-function toggleSharpPartsPanel() {
-    togglePanel('<%= rbSharpPartsOk.ClientID %>', '<%= rbSharpPartsNotOk.ClientID %>', 'divSharpPartsPanel');
-}
+                        function toggleSharpPartsPanel() {
+                            togglePanel('<%= rbSharpPartsOk.ClientID %>', '<%= rbSharpPartsNotOk.ClientID %>', 'divSharpPartsPanel');
+                        }
 
-function toggleAnchoredPanel() {
-    togglePanel('<%= rbAnchoredOk.ClientID %>', '<%= rbAnchoredNotOk.ClientID %>', 'divAnchoredPanel');
-}
+                        function toggleAnchoredPanel() {
+                            togglePanel('<%= rbAnchoredOk.ClientID %>', '<%= rbAnchoredNotOk.ClientID %>', 'divAnchoredPanel');
+                        }
     
-    // Vibration Measurement Hazards
-    function toggleMarkingFixPanel() { togglePanel('<%= rbMarkingFixOk.ClientID %>', '<%= rbMarkingFixNotOk.ClientID %>', 'divMarkingFixPanel'); }
-    function toggleMarkingVisiblePanel() { togglePanel('<%= rbMarkingVisibleOk.ClientID %>', '<%= rbMarkingVisibleNotOk.ClientID %>', 'divMarkingVisiblePanel'); }
-    function toggleMarkingSafePanel() { togglePanel('<%= rbMarkingSafeOk.ClientID %>', '<%= rbMarkingSafeNotOk.ClientID %>', 'divMarkingSafePanel'); }
-    function toggleGuardingRotatingPanel() { togglePanel('<%= rbGuardingRotatingOk.ClientID %>', '<%= rbGuardingRotatingNotOk.ClientID %>', 'divGuardingRotatingPanel'); }
-    function toggleWorkmenPositionPanel() { togglePanel('<%= rbWorkmenPositionOk.ClientID %>', '<%= rbWorkmenPositionNotOk.ClientID %>', 'divWorkmenPositionPanel'); }
-    function toggleExecutorPanel() { togglePanel('<%= rbExecutorOk.ClientID %>', '<%= rbExecutorNotOk.ClientID %>', 'divExecutorPanel'); }
-    function toggleOtherPointsPanel() { togglePanel('<%= rbOtherPointsOk.ClientID %>', '<%= rbOtherPointsNotOk.ClientID %>', 'divOtherPointsPanel'); }
+                            // Vibration Measurement Hazards
+                            function toggleMarkingFixPanel() { togglePanel('<%= rbMarkingFixOk.ClientID %>', '<%= rbMarkingFixNotOk.ClientID %>', 'divMarkingFixPanel'); }
+                            function toggleMarkingVisiblePanel() { togglePanel('<%= rbMarkingVisibleOk.ClientID %>', '<%= rbMarkingVisibleNotOk.ClientID %>', 'divMarkingVisiblePanel'); }
+                            function toggleMarkingSafePanel() { togglePanel('<%= rbMarkingSafeOk.ClientID %>', '<%= rbMarkingSafeNotOk.ClientID %>', 'divMarkingSafePanel'); }
+                            function toggleGuardingRotatingPanel() { togglePanel('<%= rbGuardingRotatingOk.ClientID %>', '<%= rbGuardingRotatingNotOk.ClientID %>', 'divGuardingRotatingPanel'); }
+                            function toggleWorkmenPositionPanel() { togglePanel('<%= rbWorkmenPositionOk.ClientID %>', '<%= rbWorkmenPositionNotOk.ClientID %>', 'divWorkmenPositionPanel'); }
+                            function toggleExecutorPanel() { togglePanel('<%= rbExecutorOk.ClientID %>', '<%= rbExecutorNotOk.ClientID %>', 'divExecutorPanel'); }
+                            function toggleOtherPointsPanel() { togglePanel('<%= rbOtherPointsOk.ClientID %>', '<%= rbOtherPointsNotOk.ClientID %>', 'divOtherPointsPanel'); }
 
-    // Electrical Hazards
-    function toggleGroundedPanel() { togglePanel('<%= rbGroundedOk.ClientID %>', '<%= rbGroundedNotOk.ClientID %>', 'divGroundedPanel'); }
-    function toggleShockHazardPanel() { togglePanel('<%= rbShockHazardOk.ClientID %>', '<%= rbShockHazardNotOk.ClientID %>', 'divShockHazardPanel'); }
-    function toggleWiresLabeledPanel() { togglePanel('<%= rbWiresLabeledOk.ClientID %>', '<%= rbWiresLabeledNotOk.ClientID %>', 'divWiresLabeledPanel'); }
-    function toggleFloorCordFreePanel() { togglePanel('<%= rbFloorCordFreeOk.ClientID %>', '<%= rbFloorCordFreeNotOk.ClientID %>', 'divFloorCordFreePanel'); }
+                            // Electrical Hazards
+                            function toggleGroundedPanel() { togglePanel('<%= rbGroundedOk.ClientID %>', '<%= rbGroundedNotOk.ClientID %>', 'divGroundedPanel'); }
+                            function toggleShockHazardPanel() { togglePanel('<%= rbShockHazardOk.ClientID %>', '<%= rbShockHazardNotOk.ClientID %>', 'divShockHazardPanel'); }
+                            function toggleWiresLabeledPanel() { togglePanel('<%= rbWiresLabeledOk.ClientID %>', '<%= rbWiresLabeledNotOk.ClientID %>', 'divWiresLabeledPanel'); }
+                            function toggleFloorCordFreePanel() { togglePanel('<%= rbFloorCordFreeOk.ClientID %>', '<%= rbFloorCordFreeNotOk.ClientID %>', 'divFloorCordFreePanel'); }
 
-    // Other Hazards
-    function toggleEnvSafePanel() { togglePanel('<%= rbEnvSafeOk.ClientID %>', '<%= rbEnvSafeNotOk.ClientID %>', 'divEnvSafePanel'); }
-                        function toggleLightingPanel() {
-                            togglePanel('<%= rbLightingOk.ClientID %>', '<%= rbLightingNotOk.ClientID %>', 'divLightingPanel');}
-    function toggleFloorSafePanel() { togglePanel('<%= rbFloorSafeOk.ClientID %>', '<%= rbFloorSafeNotOk.ClientID %>', 'divFloorSafePanel'); }
+                            // Other Hazards
+                            function toggleEnvSafePanel() { togglePanel('<%= rbEnvSafeOk.ClientID %>', '<%= rbEnvSafeNotOk.ClientID %>', 'divEnvSafePanel'); }
+                                                function toggleLightingPanel() {
+                                                    togglePanel('<%= rbLightingOk.ClientID %>', '<%= rbLightingNotOk.ClientID %>', 'divLightingPanel');}
+                            function toggleFloorSafePanel() { togglePanel('<%= rbFloorSafeOk.ClientID %>', '<%= rbFloorSafeNotOk.ClientID %>', 'divFloorSafePanel'); }
 
-    // Safeguards
-    function toggleMasterCutoffPanel() { togglePanel('<%= rbMasterCutoffOk.ClientID %>', '<%= rbMasterCutoffNotOk.ClientID %>', 'divMasterCutoffPanel'); }
-    function toggleStartStopPanel() { togglePanel('<%= rbStartStopOk.ClientID %>', '<%= rbStartStopNotOk.ClientID %>', 'divStartStopPanel'); }
-    function toggleEmergencyEquipPanel() { togglePanel('<%= rbEmergencyEquipOk.ClientID %>', '<%= rbEmergencyEquipNotOk.ClientID %>', 'divEmergencyEquipPanel'); }
+                            // Safeguards
+                            function toggleMasterCutoffPanel() { togglePanel('<%= rbMasterCutoffOk.ClientID %>', '<%= rbMasterCutoffNotOk.ClientID %>', 'divMasterCutoffPanel'); }
+                            function toggleStartStopPanel() { togglePanel('<%= rbStartStopOk.ClientID %>', '<%= rbStartStopNotOk.ClientID %>', 'divStartStopPanel'); }
+                            function toggleEmergencyEquipPanel() { togglePanel('<%= rbEmergencyEquipOk.ClientID %>', '<%= rbEmergencyEquipNotOk.ClientID %>', 'divEmergencyEquipPanel'); }
 
-    // Training
-    function toggleTrainingJobPanel() { togglePanel('<%= rbTrainingJobOk.ClientID %>', '<%= rbTrainingJobNotOk.ClientID %>', 'divTrainingJobPanel'); }
-    function toggleTrainingFeaturesPanel() { togglePanel('<%= rbTrainingFeaturesOk.ClientID %>', '<%= rbTrainingFeaturesNotOk.ClientID %>', 'divTrainingFeaturesPanel'); }
-    function toggleTrainingResponsePanel() { togglePanel('<%= rbTrainingResponseOk.ClientID %>', '<%= rbTrainingResponseNotOk.ClientID %>', 'divTrainingResponsePanel'); }
-    function toggleTrainingManualsPanel() { togglePanel('<%= rbTrainingManualsOk.ClientID %>', '<%= rbTrainingManualsNotOk.ClientID %>', 'divTrainingManualsPanel'); }
+                            // Training
+                            function toggleTrainingJobPanel() { togglePanel('<%= rbTrainingJobOk.ClientID %>', '<%= rbTrainingJobNotOk.ClientID %>', 'divTrainingJobPanel'); }
+                            function toggleTrainingFeaturesPanel() { togglePanel('<%= rbTrainingFeaturesOk.ClientID %>', '<%= rbTrainingFeaturesNotOk.ClientID %>', 'divTrainingFeaturesPanel'); }
+                            function toggleTrainingResponsePanel() { togglePanel('<%= rbTrainingResponseOk.ClientID %>', '<%= rbTrainingResponseNotOk.ClientID %>', 'divTrainingResponsePanel'); }
+                            function toggleTrainingManualsPanel() { togglePanel('<%= rbTrainingManualsOk.ClientID %>', '<%= rbTrainingManualsNotOk.ClientID %>', 'divTrainingManualsPanel'); }
 
-    // CAPA checkbox confirmation
-    function confirmCAPA(checkbox) {
-        if (!checkbox.checked) {
-            alert("CAPA is required. Proceeding without it is at your own risk.");
-        }
-    }
+                            // CAPA checkbox confirmation
+                            function confirmCAPA(checkbox) {
+                                if (!checkbox.checked) {
+                                    alert("CAPA is required. Proceeding without it is at your own risk.");
+                                }
+                        }
+
+
+
+                        window.onload = function () {
+                            var yesButtons = Array.from(document.querySelectorAll('input[type="radio"]'))
+                                .filter(rb => rb.id.endsWith("Ok") && !rb.id.endsWith("NotOk"));
+
+                            yesButtons.forEach(function (rb) {
+                                rb.checked = true;
+                            });
+
+                            document.querySelectorAll('div[id^="div"]').forEach(function (panel) {
+                                panel.style.display = 'none';
+                            });
+
+
+                            toggleMechGuardPanel();
+                            toggleExposedPartsPanel();
+                            toggleSharpPartsPanel();
+                            toggleAnchoredPanel();
+                            toggleMarkingFixPanel();
+                            toggleMarkingVisiblePanel();
+                            toggleMarkingSafePanel();
+                            toggleGuardingRotatingPanel();
+                            toggleWorkmenPositionPanel();
+                            toggleExecutorPanel();
+                            toggleOtherPointsPanel();
+                            toggleGroundedPanel();
+                            toggleShockHazardPanel();
+                            toggleWiresLabeledPanel();
+                            toggleFloorCordFreePanel();
+                            toggleEnvSafePanel();
+                            toggleFloorSafePanel();
+                            toggleMasterCutoffPanel();
+                            toggleStartStopPanel();
+                            toggleEmergencyEquipPanel();
+                            toggleTrainingJobPanel();
+                            toggleTrainingFeaturesPanel();
+                            toggleTrainingResponsePanel();
+                            toggleTrainingManualsPanel();
+
+                        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     </script>
 
 

@@ -94,7 +94,7 @@
     ID="ddlIsYes" 
     runat="server" 
     SelectedValue='<%# Convert.ToBoolean(Eval("IsYes")) ? "True" : "False" %>'
-    onchange="toggleRemarksAndPhoto(this);">
+    onchange="toggleRemarksAndPhoto(this);" style="width:150px;">
     <asp:ListItem Text="True" Value="True" />
     <asp:ListItem Text="False" Value="False" />
 </asp:DropDownList>

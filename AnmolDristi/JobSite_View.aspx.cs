@@ -124,19 +124,21 @@ namespace AnmolDristi
 
                     object capaIDToUse = currentCAPAID;
 
+
                     if (currentIsYes == 1 && newIsYes == 0)
                     {
                         // True → False → Create CAPA
                         using (SqlCommand insertCAPA = new SqlCommand(@"
-                            INSERT INTO tbl_CAPAMaster (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                            INSERT INTO tbl_CAPAMaster (HeaderID, PhotoPath, Description, AssignedBy, AssignedDate, SourceTable)
                             OUTPUT INSERTED.CAPAID
-                            VALUES (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, trans))
+                            VALUES (@HeaderID, @PhotoPath, @Description, @AssignedBy, @AssignedDate, @SourceTable)", conn, trans))
                         {
                             insertCAPA.Parameters.AddWithValue("@HeaderID", headerId);
                             insertCAPA.Parameters.AddWithValue("@PhotoPath", photoPath ?? "");
-                            insertCAPA.Parameters.AddWithValue("@Remarks", remarks ?? "");
-                            insertCAPA.Parameters.AddWithValue("@AssignedBy", "System");
+                            insertCAPA.Parameters.AddWithValue("@Description", question ?? "");
+                            insertCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"] ?? "System");
                             insertCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                            insertCAPA.Parameters.AddWithValue("@SourceTable", "Job Site Checklist");
                             capaIDToUse = insertCAPA.ExecuteScalar();
                         }
                     }
@@ -145,6 +147,15 @@ namespace AnmolDristi
                         // False → True → Clear remarks/photo
                         remarks = "";
                         photoPath = "";
+
+                        // Update CAPA to mark as resolved (IsYes = 1)
+                        if (currentCAPAID != null)
+                        {
+                            SqlCommand updateCAPA = new SqlCommand(
+                                "UPDATE tbl_CAPAMaster SET IsYes = 1 WHERE CAPAID = @CAPAID", conn, trans);
+                            updateCAPA.Parameters.AddWithValue("@CAPAID", currentCAPAID);
+                            updateCAPA.ExecuteNonQuery();
+                        }
                     }
 
                     // 2. Update Header (optional if editable)
@@ -175,11 +186,29 @@ namespace AnmolDristi
                     }
 
                     trans.Commit();
+                    //  success
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-success", @"
+                        new PNotify({
+                            title: 'Update Successful',
+                            text: 'Checklist updated successfully.',
+                            type: 'success',
+                            styling: 'bootstrap3',
+                            delay: 2500
+                        });
+                    ", true);
                 }
-                catch
+                catch(Exception ex)
                 {
                     trans.Rollback();
-                    // Handle/log the error as needed
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-error", $@"
+                            new PNotify({{
+                                title: 'Update Failed',
+                                text: 'Error: {ex.Message.Replace("'", " ")}',
+                                type: 'error',
+                                styling: 'bootstrap3',
+                                delay: 3000
+                            }});
+                        ", true);
                 }
             }
 
@@ -207,6 +236,42 @@ namespace AnmolDristi
             }
 
             LoadChecklist();
+        }
+
+        protected void GridViewJobSiteChecklist_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Skip if the row is in edit mode
+                if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+                    return;
+
+                bool isYes = Convert.ToBoolean(DataBinder.Eval(e.Row.DataItem, "IsYes"));
+                string photoPath = Convert.ToString(DataBinder.Eval(e.Row.DataItem, "PhotoPath"));
+
+                Literal litPhoto = (Literal)e.Row.FindControl("litPhoto");
+                if (litPhoto == null) return;
+
+                if (isYes)
+                {
+                    // If "Yes" → show nothing
+                    litPhoto.Text = "";
+                }
+                else
+                {
+                    // If "No"
+                    if (string.IsNullOrWhiteSpace(photoPath))
+                    {
+                        litPhoto.Text = "<span style='color:gray;'>No photo uploaded</span>";
+                    }
+                    else
+                    {
+                        litPhoto.Text = $"<a href='{ResolveUrl(photoPath)}' target='_blank'>" +
+                                        $"<img src='{ResolveUrl(photoPath)}' " +
+                                        $"style='width:80px;height:80px;border:1px solid #ccc;border-radius:8px;object-fit:cover;' /></a>";
+                    }
+                }
+            }
         }
     }
 }
