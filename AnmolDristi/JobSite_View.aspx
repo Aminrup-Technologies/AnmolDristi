@@ -88,7 +88,7 @@
             <%# Eval("ChecklistDate", "{0:yyyy-MM-dd}") %>
         </ItemTemplate>
         <EditItemTemplate>
-            <asp:TextBox ID="txtChecklistDate" runat="server" Text='<%# Bind("ChecklistDate", "{0:yyyy-MM-dd}") %>' CssClass="form-control" />
+            <asp:TextBox ID="txtChecklistDate" runat="server" Text='<%# Bind("ChecklistDate", "{0:yyyy-MM-dd}") %>' CssClass="form-control" TextMode="Date" />
         </EditItemTemplate>
     </asp:TemplateField>
 

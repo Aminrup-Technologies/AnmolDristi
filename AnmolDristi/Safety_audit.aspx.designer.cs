@@ -285,6 +285,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtGoodCitizens;
 
         /// <summary>
+        /// Revcitizens control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator Revcitizens;
+
+        /// <summary>
         /// txtViolations control.
         /// </summary>
         /// <remarks>
@@ -292,6 +301,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtViolations;
+
+        /// <summary>
+        /// Revviolation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator Revviolation;
 
         /// <summary>
         /// txtSeverity control.
@@ -303,6 +321,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtSeverity;
 
         /// <summary>
+        /// RegularExpressionValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
+
+        /// <summary>
         /// txtViolationXSeverity control.
         /// </summary>
         /// <remarks>
@@ -312,6 +339,15 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtViolationXSeverity;
 
         /// <summary>
+        /// revviolatonSeverity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revviolatonSeverity;
+
+        /// <summary>
         /// txtFourAndFive control.
         /// </summary>
         /// <remarks>
@@ -319,6 +355,15 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFourAndFive;
+
+        /// <summary>
+        /// Revfourandfive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator Revfourandfive;
 
         /// <summary>
         /// DropDownList6 control.

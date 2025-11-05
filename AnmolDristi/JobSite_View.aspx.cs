@@ -102,8 +102,30 @@ namespace AnmolDristi
 
                 try
                 {
-                    // 1. Get previous IsYes and CAPA_ID
-                    int currentIsYes = -1;
+                    string upquery = @"UPDATE JobSiteHeader SET ChecklistDate=@ChecklistDate, Area =@Area WHERE HeaderID = @HeaderID";
+                    // Step 1: Insert Header
+                    using (SqlCommand cmd = new SqlCommand(upquery, conn, trans))
+                    {
+                        //cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@HeaderID", headerId);
+                        cmd.Parameters.AddWithValue("@ChecklistDate", checklistDate);
+                        cmd.Parameters.AddWithValue("@Area", area);
+                        cmd.ExecuteNonQuery();
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+                        // 1. Get previous IsYes and CAPA_ID
+                        int currentIsYes = -1;
                     object currentCAPAID = null;
 
                     using (SqlCommand getCmd = new SqlCommand(@"

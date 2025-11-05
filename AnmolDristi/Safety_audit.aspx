@@ -183,10 +183,10 @@
                                             </tr>
                                         </table>
                                     </div>
-                                    <button type="button" class="btn btn-success btn-sm mt-2" onclick="saveMembersToDB()">Save Members</button>
+                                    <button type="button" class="btn btn-success btn-sm mt-2" onclick="addMember()">Save Members</button>
                                 </div>
 
-                                <script type="text/javascript">
+                               <%-- <script type="text/javascript">
                                     var membersList = [];
                                     function toggleFields() {
                                         var isOwnEmployee = document.getElementById('<%= rbOwnEmployee.ClientID %>').checked;
@@ -314,7 +314,142 @@
                                         });
                                     }
 
+                                </script>--%>
+
+
+
+
+
+                                <script type="text/javascript">
+                                    var membersList = [];
+
+                                    function toggleFields() {
+                                        var isOwnEmployee = document.getElementById('<%= rbOwnEmployee.ClientID %>').checked;
+                                        document.getElementById('employeeCodeDiv').style.display = isOwnEmployee ? 'block' : 'none';
+                                        document.getElementById('externalMemberDiv').style.display = isOwnEmployee ? 'none' : 'block';
+                                    }
+
+                                    function fetchEmployeeName() {
+                                        var empCode = document.getElementById('<%= txtEmployeeCode.ClientID %>').value.trim();
+                                        if (empCode === "") {
+                                            document.getElementById('lblEmployeeName').innerText = "";
+                                            return;
+                                        }
+
+                                        if (typeof PageMethods !== "undefined") {
+                                            PageMethods.GetEmployeeName(empCode, function (response) {
+                                                document.getElementById('lblEmployeeName').innerText =
+                                                    response ? "Employee Name: " + response : "Employee not found.";
+                                                if (!response) {
+                                                    showNotification("Warning", "Employee not found!", "warning");
+                                                }
+                                            }, function (error) {
+                                                console.error("Error fetching employee name:", error);
+                                                showNotification("Error", "Failed to fetch employee name.", "error");
+                                            });
+                                        }
+                                    }
+
+                                    function addMember() {
+                                        var isOwnEmployee = document.getElementById('<%= rbOwnEmployee.ClientID %>').checked;
+        var empCode = document.getElementById('<%= txtEmployeeCode.ClientID %>').value.trim();
+        var empName = isOwnEmployee
+            ? document.getElementById('lblEmployeeName').innerText.replace("Employee Name: ", "").trim()
+            : document.getElementById('<%= txtExternalName.ClientID %>').value.trim();
+
+        if (isOwnEmployee && (empCode === "" || empName === "")) {
+            showNotification("Warning", "Please enter a valid Employee Code.", "warning");
+            return;
+        }
+        if (!isOwnEmployee && empName === "") {
+            showNotification("Warning", "Please enter the Name for the External Member.", "warning");
+            return;
+        }
+
+        membersList.push({
+            type: isOwnEmployee ? "Own Employee" : "External Member",
+            code: empCode,
+            name: empName
+        });
+
+        updateGridView();
+
+        document.getElementById('<%= txtEmployeeCode.ClientID %>').value = "";
+        document.getElementById('lblEmployeeName').innerText = "";
+        document.getElementById('<%= txtExternalName.ClientID %>').value = "";
+
+        showNotification("Success", "Member added successfully!", "success");
+    }
+
+    function updateGridView() {
+        var grid = document.getElementById("membersGrid");
+        grid.innerHTML = "<tr><th>SL</th><th>Type</th><th>Employee Code</th><th>Name</th><th>Action</th></tr>";
+
+        membersList.forEach((member, index) => {
+            grid.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${member.type}</td>
+                    <td>${member.code}</td>
+                    <td>${member.name}</td>
+                    <td><button type="button" class="btn btn-danger btn-sm" onclick="removeMember(${index})">Remove</button></td>
+                </tr>`;
+        });
+
+        // Update hidden fields every time the list changes
+        saveMembersToHiddenFields();
+    }
+
+    function removeMember(index) {
+        membersList.splice(index, 1);
+        updateGridView();
+        showNotification("Info", "Member removed successfully!", "info");
+    }
+
+    function saveMembersToHiddenFields() {
+        var internalEmployees = [];
+        var externalMembers = [];
+
+        membersList.forEach(member => {
+            if (member.type === "Own Employee")
+                internalEmployees.push(member.code);
+            else
+                externalMembers.push(member.name);
+        });
+
+        // Set hidden field values
+        document.getElementById('<%= hdnInternalEmployees.ClientID %>').value = internalEmployees.join(",");
+        document.getElementById('<%= hdnExternalMembers.ClientID %>').value = externalMembers.join(",");
+                                    }
+
+                                    function showNotification(title, text, type) {
+                                        new PNotify({
+                                            title: title,
+                                            text: text,
+                                            type: type,
+                                            styling: 'bootstrap3',
+                                            delay: 2000
+                                        });
+                                    }
                                 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                 <div class="col-lg-12">
                                     <hr />
@@ -351,30 +486,60 @@
                 <td><b>Good Citizens</b></td>
                 <td>
                     <asp:TextBox ID="txtGoodCitizens" runat="server" CssClass="form-control form-control-sm rounded" />
+                    <asp:RegularExpressionValidator 
+                            ID="Revcitizens" runat="server" 
+                            ControlToValidate="txtGoodCitizens"
+                            ValidationExpression="^\d*$"
+                            ErrorMessage="Only numbers allowed"
+                            ForeColor="Red" Display="Dynamic" />
                 </td>
             </tr>
             <tr>
                 <td><b>No. of Violations</b></td>
                 <td>
                     <asp:TextBox ID="txtViolations" runat="server" CssClass="form-control form-control-sm rounded" />
+                    <asp:RegularExpressionValidator 
+                            ID="Revviolation" runat="server" 
+                            ControlToValidate="txtViolations"
+                            ValidationExpression="^\d*$"
+                            ErrorMessage="Only numbers allowed"
+                            ForeColor="Red" Display="Dynamic" />
                 </td>
             </tr>
             <tr>
                 <td><b>Severity</b></td>
                 <td>
                     <asp:TextBox ID="txtSeverity" runat="server" CssClass="form-control form-control-sm rounded" />
+                    <asp:RegularExpressionValidator 
+                            ID="RegularExpressionValidator1" runat="server" 
+                            ControlToValidate="txtSeverity"
+                            ValidationExpression="^\d*$"
+                            ErrorMessage="Only numbers allowed"
+                            ForeColor="Red" Display="Dynamic" />
                 </td>
             </tr>
             <tr>
                 <td><b>Violation X Severity</b></td>
                 <td>
                     <asp:TextBox ID="txtViolationXSeverity" runat="server" CssClass="form-control form-control-sm rounded" />
+                    <asp:RegularExpressionValidator 
+                        ID="revviolatonSeverity" runat="server" 
+                        ControlToValidate="txtViolationXSeverity"
+                        ValidationExpression="^\d*$"
+                        ErrorMessage="Only numbers allowed"
+                        ForeColor="Red" Display="Dynamic" />
                 </td>
             </tr>
             <tr>
                 <td><b>4 & 5</b></td>
                 <td>
                     <asp:TextBox ID="txtFourAndFive" runat="server" CssClass="form-control form-control-sm rounded" />
+                     <asp:RegularExpressionValidator 
+                             ID="Revfourandfive" runat="server" 
+                             ControlToValidate="txtFourAndFive"
+                             ValidationExpression="^\d*$"
+                             ErrorMessage="Only numbers allowed"
+                             ForeColor="Red" Display="Dynamic" />
                 </td>
             </tr>
             <tr>
@@ -391,6 +556,11 @@
     </div>
 </div>
 
+                                 <div class="row col-lg-12">
+                                      <input type="checkbox" id="chkCAPARequired" checked onclick="confirmCAPA(this)" />
+                                         <label for="chkCAPARequired"><strong>Generate CAPA</strong></label>
+                                     </div>
+
 
                                 <div class="row col-lg-12">
                                     <div class="col-12 text-center">
@@ -398,8 +568,7 @@
                                     </div>
                                 </div>
                                <div class="form-group mt-2">
-    <input type="checkbox" id="chkCAPARequired" checked onclick="confirmCAPA(this)" />
-    <label for="chkCAPARequired"><strong>CAPA ID Required</strong></label>
+    
 </div>
 
 
@@ -446,7 +615,7 @@
                                             
         let capaRequired = document.getElementById("chkCAPARequired").checked;
 
-        let capaId = capaRequired ? generateClientCAPAID() : "";
+        //let capaId = capaRequired ? generateClientCAPAID() : "";
 
         let observation = {
             Description: observationDescription,
@@ -456,7 +625,7 @@
             ViolationXSeverity: violationXSeverity,
             FourAndFive: fourAndFive,
             UnsafeActs: unsafeActs,
-            CAPAID: capaId,
+            //CAPAID: capaId,
             RequiresCAPA: capaRequired 
         };
 
@@ -482,7 +651,7 @@
                   <th>Violation X Severity</th>
                   <th>4 & 5</th>
                   <th>Unsafe Act Conditions</th>
-                  <th>CAPA ID</th>
+                  
               </tr>
           </thead>
           <tbody></tbody>`;
@@ -502,7 +671,7 @@
             <td>${violationXSeverity}</td>
             <td>${fourAndFive}</td>
             <td>${unsafeActs}</td>
-            <td>${capaId}</td>
+           
         `;
 
         tbody.appendChild(newRow);

@@ -42,38 +42,169 @@
                 <div class="x_content table-container">
                     <div style="overflow-x: auto;">
                         <asp:GridView ID="GvSafetyAudit" runat="server" CssClass="table table-striped table-bordered"
-                            AutoGenerateColumns="False" DataKeyNames="AuditID" OnRowEditing="GvSafetyAudit_RowEditing"
+                            AutoGenerateColumns="False" DataKeyNames="DescriptionID,AuditID" OnRowEditing="GvSafetyAudit_RowEditing"
                             OnRowUpdating="GvSafetyAudit_RowUpdating" OnRowCancelingEdit="GvSafetyAudit_RowCancelingEdit"
                             OnRowDeleting="GvSafetyAudit_RowDeleting">
 
                             <Columns>
                                 
         <asp:BoundField DataField="AuditID" HeaderText="Audit ID" ReadOnly="True" />
-                                <asp:BoundField DataField="Department" HeaderText="Department" />
-                                <asp:BoundField DataField="Section" HeaderText="Section" />
-                                <asp:BoundField DataField="Date" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />
-                                <asp:BoundField DataField="Time" HeaderText="Time" />
-                                <asp:BoundField DataField="ContractorVendorCode" HeaderText="Vendor Code" />
-                                <asp:BoundField DataField="TotalContractorPeople" HeaderText="Contractor Count" />
-                                <asp:BoundField DataField="InternalEmployees" HeaderText="Internal Members" />
-                                <asp:BoundField DataField="ExternalMembers" HeaderText="External Members" />
-                                <asp:BoundField DataField="Description" HeaderText="Description" />
-                                <asp:BoundField DataField="GoodCitizens" HeaderText="Good Citizens" />
-                                <asp:BoundField DataField="NoOfViolations" HeaderText="Violations" />
-                                <asp:BoundField DataField="Severity" HeaderText="Severity" />
-                                <asp:BoundField DataField="ViolationXSeverity" HeaderText="Violation Severity" />
-                                <asp:BoundField DataField="FourAndFive" HeaderText="4 & 5" />
-                                <asp:BoundField DataField="UnsafeActConditions" HeaderText="Unsafe Act" />
-                                <asp:BoundField DataField="SubmittedDate" HeaderText="Submission Date" />
-                                <asp:BoundField DataField="SubmittedTime" HeaderText="Submission Time" />
+                                <asp:TemplateField HeaderText="Department">
+    <ItemTemplate><%# Eval("Department") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtDepartment" runat="server" Text='<%# Bind("Department") %>' CssClass="form-control form-control-sm" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Section">
+    <ItemTemplate><%# Eval("Section") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtSection" runat="server" Text='<%# Bind("Section") %>' CssClass="form-control form-control-sm" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Date">
+    <ItemTemplate><%# Eval("Date", "{0:yyyy-MM-dd}") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtDate" runat="server" Text='<%# Bind("Date", "{0:yyyy-MM-dd}") %>' TextMode="Date" CssClass="form-control form-control-sm" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Time">
+    <ItemTemplate><%# Eval("Time") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtTime" runat="server" Text='<%# Bind("Time") %>' TextMode="Time" CssClass="form-control form-control-sm" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Vendor Code">
+    <ItemTemplate><%# Eval("ContractorVendorCode") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtVendorCode" runat="server" Text='<%# Bind("ContractorVendorCode") %>' CssClass="form-control form-control-sm" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Contractor Count">
+    <ItemTemplate><%# Eval("TotalContractorPeople") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtTotalContractorPeople" runat="server" Text='<%# Bind("TotalContractorPeople") %>' CssClass="form-control form-control-sm" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Internal Members">
+    <ItemTemplate><%# Eval("InternalEmployees") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtInternalEmployees" runat="server" Text='<%# Bind("InternalEmployees") %>' CssClass="form-control form-control-sm" Style="min-width: 150px;" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="External Members">
+    <ItemTemplate><%# Eval("ExternalMembers") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtExternalMembers" runat="server" Text='<%# Bind("ExternalMembers") %>' CssClass="form-control form-control-sm" Style="min-width: 150px;" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Description">
+    <ItemTemplate><%# Eval("Description") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtDescription" runat="server" Text='<%# Bind("Description") %>' CssClass="form-control form-control-sm" TextMode="MultiLine"  Style="min-height:190px; width:100%;" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Good Citizens">
+    <ItemTemplate><%# Eval("GoodCitizens") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtGoodCitizens" runat="server" Text='<%# Bind("GoodCitizens") %>' CssClass="form-control form-control-sm" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Violations">
+    <ItemTemplate><%# Eval("NoOfViolations") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtNoOfViolations" runat="server" Text='<%# Bind("NoOfViolations") %>' CssClass="form-control form-control-sm" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Severity">
+    <ItemTemplate><%# Eval("Severity") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtSeverity" runat="server" Text='<%# Bind("Severity") %>' CssClass="form-control form-control-sm" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Violation Severity">
+    <ItemTemplate><%# Eval("ViolationXSeverity") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtViolationXSeverity" runat="server" Text='<%# Bind("ViolationXSeverity") %>' CssClass="form-control form-control-sm" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="4 & 5">
+    <ItemTemplate><%# Eval("FourAndFive") %></ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtFourAndFive" runat="server" Text='<%# Bind("FourAndFive") %>' CssClass="form-control form-control-sm" Style="min-width: 50px;" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Unsafe Act/Condition">
+    <ItemTemplate>
+        <%# Eval("UnsafeActConditions") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:DropDownList ID="ddlUnsafeActConditions" runat="server"
+            CssClass="form-select form-select-sm"
+            SelectedValue='<%# Bind("UnsafeActConditions") %>'>
+            <asp:ListItem Text="Unsafe Act" Value="Unsafe Act"></asp:ListItem>
+            <asp:ListItem Text="Unsafe Condition" Value="Unsafe Condition"></asp:ListItem>
+        </asp:DropDownList>
+    </EditItemTemplate>
+</asp:TemplateField>
+
+
+
+  <asp:TemplateField HeaderText="Submission Date">
+    <ItemTemplate>
+        <%# Eval("SubmittedDate", "{0:yyyy-MM-dd}") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtSubmittedDate" runat="server" Style="min-width: 120px;" 
+            Text='<%# Bind("SubmittedDate", "{0:yyyy-MM-dd}") %>' 
+            CssClass="form-control form-control-sm" 
+            Enabled="false" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+      <asp:TemplateField HeaderText="Submission Time">
+    <ItemTemplate>
+        <%# Eval("SubmittedTime") != DBNull.Value 
+            ? TimeSpan.Parse(Eval("SubmittedTime").ToString()).ToString(@"hh\:mm") 
+            : "" %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:TextBox ID="txtSubmittedTime" runat="server"
+            Text='<%# Eval("SubmittedTime") != DBNull.Value 
+                ? TimeSpan.Parse(Eval("SubmittedTime").ToString()).ToString(@"hh\:mm") 
+                : "" %>'
+            CssClass="form-control form-control-sm"
+            
+            Enabled="false" />
+    </EditItemTemplate>
+</asp:TemplateField>
+
+
+
+
+
+
 <asp:TemplateField HeaderText="CAPA Required">
     <ItemTemplate>
         <asp:CheckBox ID="chkRequiresCAPA" runat="server" Enabled="false"
-            Checked='<%# Convert.ToBoolean(Eval("RequiresCAPA")) %>' />
+            Checked='<%# (Eval("GenerateCAPA") != DBNull.Value) && Convert.ToBoolean(Eval("GenerateCAPA")) %>' />
     </ItemTemplate>
     <EditItemTemplate>
         <asp:CheckBox ID="chkRequiresCAPAEdit" runat="server"
-            Checked='<%# Convert.ToBoolean(Eval("RequiresCAPA")) %>' />
+            Checked='<%# (Eval("GenerateCAPA") != DBNull.Value) && Convert.ToBoolean(Eval("GenerateCAPA")) %>'  />
     </EditItemTemplate>
 </asp:TemplateField>
 

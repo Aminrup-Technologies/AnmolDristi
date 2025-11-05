@@ -221,16 +221,18 @@ namespace AnmolDristi
                 {
                     using (SqlCommand cmdCAPA = new SqlCommand(@"
                 INSERT INTO tbl_CAPAMaster 
-                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate, Description, SourceTable)
                 OUTPUT INSERTED.CAPAID
                 VALUES 
-                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, transaction))
+                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate, @Description)", conn, transaction))
                     {
                         cmdCAPA.Parameters.AddWithValue("@HeaderID", headerId);
                         cmdCAPA.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
                         cmdCAPA.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
-                        cmdCAPA.Parameters.AddWithValue("@AssignedBy", "Safety Officer"); // You may customize this
+                        cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"] ?? "System"); 
                         cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                        cmdCAPA.Parameters.AddWithValue("@Description", question);
+                        cmdCAPA.Parameters.AddWithValue("@SourceTable", "Job Site Checklist");
 
                         capaId = cmdCAPA.ExecuteScalar(); // Capture generated CAPAID
                     }
@@ -240,7 +242,7 @@ namespace AnmolDristi
                 using (SqlCommand cmd = new SqlCommand("MahimaGupta_CSMS.usp_InsertJobSiteChecklistDetail", conn, transaction))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@HeaderID", headerId); // string like JSC-001
+                    cmd.Parameters.AddWithValue("@HeaderID", headerId); 
                     cmd.Parameters.AddWithValue("@Question", question);
                     cmd.Parameters.AddWithValue("@IsYes", isYes ? 1 : 0);
                     cmd.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);

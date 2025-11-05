@@ -1,13 +1,13 @@
-﻿using System;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Data;
-using System.Web.UI.WebControls;
-using System.Web.Services;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
-
-using Newtonsoft.Json;
+using System.Web.Services;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 
 namespace AnmolDristi
@@ -392,8 +392,8 @@ ORDER BY sa.Date DESC
                 observations = JsonConvert.DeserializeObject<List<Observation>>(observationDataJson);
             }
 
-            string internalEmployeesCSV = Request.Form["hdnInternalEmployees"];
-            string externalMembersCSV = Request.Form["hdnExternalMembers"];
+            string internalEmployeesCSV = hdnInternalEmployees.Value;
+            string externalMembersCSV = hdnExternalMembers.Value;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -437,29 +437,32 @@ ORDER BY sa.Date DESC
 
                     String customid = "SF" + auditID.ToString();
 
-                    int? newCapaid = null;
+                    
                     // Insert Observations
                     if (observations != null && observations.Any())
                     {
                         foreach (var obs in observations)
                         {
-                            string capaId = null;
+                            //string newCapaid = null;
+                            int? newCapaid = null;
 
                             if (obs.RequiresCAPA)
                             {
                                 // Generate CAPA ID (e.g., SF001)
-                                capaId = GenerateSafetyAuditCAPAID(conn, transaction);
+                                //capaId = GenerateSafetyAuditCAPAID(conn, transaction);
 
                                 // Insert into tbl_CAPAMaster
                                 using (SqlCommand cmdCAPA = new SqlCommand(@"
-INSERT INTO tbl_CAPAMaster 
-(HeaderID, Remarks, AssignedBy, AssignedDate)
-VALUES (@HeaderID, @Remarks, @AssignedBy, @AssignedDate); SELECT SCOPE_IDENTITY();", conn, transaction))
+                                                INSERT INTO tbl_CAPAMaster 
+                                                (HeaderID, Remarks, AssignedBy, AssignedDate, Description, SourceTable)
+                                                VALUES (@HeaderID, @Remarks, @AssignedBy, @AssignedDate,@Description,@SourceTable); SELECT SCOPE_IDENTITY();", conn, transaction))
                                 {
                                     cmdCAPA.Parameters.AddWithValue("@HeaderID", customid);
                                     cmdCAPA.Parameters.AddWithValue("@Remarks", obs.Description ?? (object)DBNull.Value);
-                                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", "Admin");
+                                    cmdCAPA.Parameters.AddWithValue("@AssignedBy", Session["UserName"] ?? "System");
                                     cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                                    cmdCAPA.Parameters.AddWithValue("@Description", obs.Description);
+                                    cmdCAPA.Parameters.AddWithValue("@SourceTable", "Safety Audit");
 
                                    object result = cmdCAPA.ExecuteScalar();
                                      newCapaid = Convert.ToInt32(result);
@@ -480,8 +483,13 @@ VALUES (@HeaderID, @Remarks, @AssignedBy, @AssignedDate); SELECT SCOPE_IDENTITY(
                                 cmd.Parameters.Add("@ViolationSeverity", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.ViolationXSeverity) ? (object)DBNull.Value : Convert.ToInt32(obs.ViolationXSeverity);
                                 cmd.Parameters.Add("@FourAndFive", SqlDbType.Int).Value = string.IsNullOrEmpty(obs.FourAndFive) ? (object)DBNull.Value : Convert.ToInt32(obs.FourAndFive);
                                 cmd.Parameters.Add("@UnsafeAct", SqlDbType.NVarChar, 50).Value = obs.UnsafeActs ?? (object)DBNull.Value;
-                                cmd.Parameters.Add("@CAPAID", SqlDbType.NVarChar, 10).Value = newCapaid.ToString();
+                                // CAPAID should be null when not generated
+
+                                cmd.Parameters.Add("@CAPAID", SqlDbType.NVarChar, 10).Value =
+                                    newCapaid.HasValue ? newCapaid.ToString() : (object)DBNull.Value;
+
                                 cmd.Parameters.Add("@Custom_ID", SqlDbType.NVarChar, 50).Value = customid;
+                                cmd.Parameters.Add("@GenerateCAPA", SqlDbType.Bit).Value = obs.RequiresCAPA;
 
                                 DateTime safeSubmittedDate = obs.SubmittedDate < new DateTime(1753, 1, 1)
                                     ? DateTime.Now
@@ -500,11 +508,29 @@ VALUES (@HeaderID, @Remarks, @AssignedBy, @AssignedDate); SELECT SCOPE_IDENTITY(
                     }
 
                     transaction.Commit();
+                    //  success
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-success", @"
+                        new PNotify({
+                            title: 'Successful',
+                            text: 'Form saved successfully.',
+                            type: 'success',
+                            styling: 'bootstrap3',
+                            delay: 2500
+                        });
+                    ", true);
                 }
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw new Exception("Transaction failed: " + ex.Message);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pnotify-error", $@"
+                            new PNotify({{
+                                title: 'Failed',
+                                text: 'Error: {ex.Message.Replace("'", " ")}',
+                                type: 'error',
+                                styling: 'bootstrap3',
+                                delay: 3000
+                            }});
+                        ", true);
                 }
             }
         }
