@@ -87,15 +87,6 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtEmployeeID;
 
         /// <summary>
-        /// rfvEmployeeID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEmployeeID;
-
-        /// <summary>
         /// lblEmployeeName control.
         /// </summary>
         /// <remarks>
@@ -112,15 +103,6 @@ namespace AnmolDristi
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEmployeeName;
-
-        /// <summary>
-        /// rfvEmployeeName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEmployeeName;
 
         /// <summary>
         /// lblDesignation control.
@@ -141,22 +123,13 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.TextBox txtDesignation;
 
         /// <summary>
-        /// rfvDesignation control.
+        /// lblAwardCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDesignation;
-
-        /// <summary>
-        /// lbl_awardcategory control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_awardcategory;
+        protected global::System.Web.UI.WebControls.Label lblAwardCategory;
 
         /// <summary>
         /// ddlAwardCategory control.
@@ -177,31 +150,22 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAwardCategory;
 
         /// <summary>
-        /// lblUploadImages control.
+        /// lblPhoto control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUploadImages;
+        protected global::System.Web.UI.WebControls.Label lblPhoto;
 
         /// <summary>
-        /// phImageUploadControls control.
+        /// fuPhoto control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phImageUploadControls;
-
-        /// <summary>
-        /// rptUploadedImages control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptUploadedImages;
+        protected global::System.Web.UI.WebControls.FileUpload fuPhoto;
 
         /// <summary>
         /// BtnAddEmployee control.
@@ -213,13 +177,13 @@ namespace AnmolDristi
         protected global::System.Web.UI.WebControls.Button BtnAddEmployee;
 
         /// <summary>
-        /// BtnRemoveEmployee control.
+        /// GvEmployees control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnRemoveEmployee;
+        protected global::System.Web.UI.WebControls.GridView GvEmployees;
 
         /// <summary>
         /// Lbl_btnSubmit control.

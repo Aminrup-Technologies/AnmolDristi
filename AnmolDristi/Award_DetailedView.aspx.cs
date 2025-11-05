@@ -34,25 +34,22 @@ namespace AnmolDristi
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 string query = @"
-                    SELECT 
-                        a.DateOfAwardDistribution,
-                        a.EventName,
-                        a.EmpId,
-                        a.EmpName,
-                        a.Designation,
-                        a.Award_ID,
-                        a.SubmittedDate,
-                        a.SubmittedTime,
-                        a.ImagePath,
-                        ac.AwardDescription
-                    FROM AwardDistributionDetails a
-                    LEFT JOIN AwardCategoryDescription ac
-                        ON a.Award_ID = ac.Award_ID
-                    WHERE a.ADR_ID = @ADR_ID";
+    SELECT
+        d.ADR_ID,
+        d.EmpId,
+        d.EmpName,
+        d.Designation,
+        d.ImagePath,
+        d.AwardCategory
+    FROM AwardDistributionDetails d
+    INNER JOIN AwardDistributionHeader h
+        ON d.Award_ID = h.Award_ID
+    WHERE d.Award_ID = @Award_ID";
+
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@ADR_ID", adrId);
+                    cmd.Parameters.AddWithValue("@Award_ID", adrId);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     sda.Fill(dt);

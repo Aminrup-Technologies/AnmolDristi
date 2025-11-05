@@ -103,7 +103,7 @@ namespace AnmolDristi
                 try
                 {
                     string upquery = @"UPDATE JobSiteHeader SET ChecklistDate=@ChecklistDate, Area =@Area WHERE HeaderID = @HeaderID";
-                    // Step 1: Insert Header
+                    
                     using (SqlCommand cmd = new SqlCommand(upquery, conn, trans))
                     {
                         //cmd.CommandType = CommandType.StoredProcedure;
@@ -124,7 +124,7 @@ namespace AnmolDristi
 
 
 
-                        // 1. Get previous IsYes and CAPA_ID
+                        //  Get previous IsYes and CAPA_ID
                         int currentIsYes = -1;
                     object currentCAPAID = null;
 
@@ -149,7 +149,7 @@ namespace AnmolDristi
 
                     if (currentIsYes == 1 && newIsYes == 0)
                     {
-                        // True → False → Create CAPA
+                    
                         using (SqlCommand insertCAPA = new SqlCommand(@"
                             INSERT INTO tbl_CAPAMaster (HeaderID, PhotoPath, Description, AssignedBy, AssignedDate, SourceTable)
                             OUTPUT INSERTED.CAPAID
@@ -166,11 +166,11 @@ namespace AnmolDristi
                     }
                     else if (currentIsYes == 0 && newIsYes == 1)
                     {
-                        // False → True → Clear remarks/photo
+                    
                         remarks = "";
                         photoPath = "";
 
-                        // Update CAPA to mark as resolved (IsYes = 1)
+                       
                         if (currentCAPAID != null)
                         {
                             SqlCommand updateCAPA = new SqlCommand(
@@ -180,7 +180,7 @@ namespace AnmolDristi
                         }
                     }
 
-                    // 2. Update Header (optional if editable)
+                    
                     using (SqlCommand updateHeader = new SqlCommand(@"
                         UPDATE MahimaGupta_CSMS.JobSiteHeader
                         SET ChecklistDate = @ChecklistDate, Area = @Area
@@ -192,7 +192,7 @@ namespace AnmolDristi
                         updateHeader.ExecuteNonQuery();
                     }
 
-                    // 3. Update Checklist
+                  
                     using (SqlCommand updateDetails = new SqlCommand(@"
                         UPDATE MahimaGupta_CSMS.JobSiteChecklistDetails
                         SET IsYes = @IsYes, Remarks = @Remarks, PhotoPath = @PhotoPath, CAPA_ID = @CAPA_ID

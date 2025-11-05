@@ -27,7 +27,7 @@
                 <div class="x_content table-container">
                     <div style="overflow-x: auto;">
                     <asp:GridView ID="GvAwards" runat="server" CssClass="table table-bordered"
-                        AutoGenerateColumns="False" DataKeyNames="ADR_ID"
+                        AutoGenerateColumns="False" DataKeyNames="ADR_ID,Award_ID"
                         OnRowEditing="GvAwards_RowEditing"
                         OnRowUpdating="GvAwards_RowUpdating"
                         OnRowCancelingEdit="GvAwards_RowCancelingEdit"
@@ -35,8 +35,25 @@
 
                         <Columns>
 
+
+                              <asp:TemplateField HeaderText="Award ID">
+                                      <ItemTemplate><%# Eval("Award_ID") %></ItemTemplate>
+                                      <EditItemTemplate>
+                                          <asp:TextBox ID="txtAward_ID" runat="server" Text='<%# Bind("Award_ID") %>' CssClass="form-control" />
+                                      </EditItemTemplate>
+                                  </asp:TemplateField>
+
+
+
+
                             <asp:TemplateField HeaderText="Award Date">
                                 <ItemTemplate><%# Eval("DateOfAwardDistribution", "{0:yyyy-MM-dd}") %></ItemTemplate>
+                                 <EditItemTemplate>
+        <asp:TextBox ID="txtDateOfAwardDistribution" runat="server" 
+                     Text='<%# Bind("DateOfAwardDistribution", "{0:yyyy-MM-dd}") %>' 
+                     CssClass="form-control" 
+                     TextMode="Date" />
+    </EditItemTemplate>
                             </asp:TemplateField>
 
                             <asp:TemplateField HeaderText="Event">
@@ -67,14 +84,29 @@
                                 </EditItemTemplate>
                             </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Award ID">
-                                <ItemTemplate><%# Eval("Award_ID") %></ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="txtAward_ID" runat="server" Text='<%# Bind("Award_ID") %>' CssClass="form-control" />
-                                </EditItemTemplate>
-                            </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Submission Date">
+
+                                <asp:TemplateField HeaderText="Award Category">
+                                            <ItemTemplate>
+                                                <%# Eval("AwardCategory") %>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:DropDownList ID="ddlEditAwardCategory" runat="server" 
+                                                    CssClass="form-control" 
+                                                    SelectedValue='<%# Bind("AwardCategory") %>'>
+                                                     <asp:ListItem Text="Top Performer Award" Value="Top Performer Award"></asp:ListItem>
+                                                     <asp:ListItem Text="Perfect Attendance Awards" Value="Perfect Attendance Awards"></asp:ListItem>
+                                                     <asp:ListItem Text="Safety Awards" Value="Safety Awards"></asp:ListItem>
+                                                     <asp:ListItem Text="Volunteer Awards" Value="Volunteer Awards"></asp:ListItem>
+                                                    <asp:ListItem Text="Team Recognition" Value="Team Recognition"></asp:ListItem>
+                                                </asp:DropDownList>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+
+
+                          
+
+                          <%--  <asp:TemplateField HeaderText="Submission Date">
                                 <ItemTemplate><%# Eval("SubmittedDate", "{0:yyyy-MM-dd}") %></ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:TextBox ID="txtSubmittedDate" runat="server" Text='<%# Bind("SubmittedDate", "{0:yyyy-MM-dd}") %>' CssClass="form-control" />
@@ -86,7 +118,7 @@
                                 <EditItemTemplate>
                                     <asp:TextBox ID="txtSubmittedTime" runat="server" Text='<%# Bind("SubmittedTime") %>' CssClass="form-control" />
                                 </EditItemTemplate>
-                            </asp:TemplateField>
+                            </asp:TemplateField>--%>
 
                             <asp:TemplateField HeaderText="Image Path">
                                 <ItemTemplate><%# Eval("ImagePath") %></ItemTemplate>
@@ -98,7 +130,7 @@
          <asp:TemplateField HeaderText="View">
     <ItemTemplate>
         <asp:HyperLink ID="lnkViewAward" runat="server"
-            NavigateUrl='<%# Eval("ADR_ID", "~/Award_DetailedView.aspx?id={0}") %>'
+            NavigateUrl='<%# Eval("Award_ID", "~/Award_DetailedView.aspx?id={0}") %>'
             Text="View"
             CssClass="btn btn-info btn-actions"
             Target="_blank" />

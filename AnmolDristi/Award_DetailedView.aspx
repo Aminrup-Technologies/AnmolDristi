@@ -86,10 +86,13 @@
                                 <ItemTemplate>
                                     <table class="table table-bordered mb-4">
                                         <tr><th colspan="2">Award Information</th></tr>
+                                        <tr><td>Award ID:</td><td><%# Eval("Award_ID") %></td></tr>
                                         <tr><td>Award Date:</td><td><%# Eval("DateOfAwardDistribution", "{0:dd-MM-yyyy}") %></td></tr>
                                         <tr><td>Event Name:</td><td><%# Eval("EventName") %></td></tr>
-                                        <tr><td>Award ID:</td><td><%# Eval("Award_ID") %></td></tr>
-                                        <tr><td>Award Description:</td><td><%# Eval("AwardDescription") %></td></tr>
+                                         <tr><td>Submitted Date:</td><td><%# Eval("SubmittedDate", "{0:dd-MM-yyyy}") %></td></tr>
+                                        <tr><td>Submitted Time:</td><td><%# Eval("SubmittedTime") %></td></tr>
+                                        
+                                        <%--<tr><td>Award Description:</td><td><%# Eval("AwardDescription") %></td></tr>--%>
                                     </table>
 
                                     <table class="table table-bordered mb-4">
@@ -97,18 +100,19 @@
                                         <tr><td>Employee ID:</td><td><%# Eval("EmpId") %></td></tr>
                                         <tr><td>Employee Name:</td><td><%# Eval("EmpName") %></td></tr>
                                         <tr><td>Designation:</td><td><%# Eval("Designation") %></td></tr>
+                                        <tr><td>Designation:</td><td><%# Eval("AwardCategory") %></td></tr>
+                                        <tr><td>Photographs:</td><td><img src='<%# Eval("ImagePath") %>' alt="Photo" style="max-width:150px; max-height:150px;" /></td></tr>
                                     </table>
 
-                                    <table class="table table-bordered mb-4">
+                                    <%--<table class="table table-bordered mb-4">
                                         <tr><th colspan="2">Submission Details</th></tr>
-                                        <tr><td>Submitted Date:</td><td><%# Eval("SubmittedDate", "{0:dd-MM-yyyy}") %></td></tr>
-                                        <tr><td>Submitted Time:</td><td><%# Eval("SubmittedTime") %></td></tr>
+                                      
                                         <tr><td>Uploaded Image:</td>
                                             <td>
                                                 <asp:Image ID="imgAward" runat="server" ImageUrl='<%# Eval("ImagePath") %>' />
                                             </td>
                                         </tr>
-                                    </table>
+                                    </table>--%>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
