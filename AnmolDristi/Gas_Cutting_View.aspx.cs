@@ -89,7 +89,7 @@ ORDER BY gh.HeaderID DESC";
                 inspectionDate = DateTime.Now;
             }
 
-            string checklistQuestion = ((TextBox)row.FindControl("txtChecklistQuestion")).Text.Trim();
+            string checklistQuestion = ((Label)row.FindControl("txtChecklistQuestion")).Text.Trim();
             DropDownList ddlIsYes = (DropDownList)row.FindControl("ddlIsYes");
             string selectedIsYes = ddlIsYes.SelectedValue;
             int isYesInt = selectedIsYes == "True" ? 1 : 0;

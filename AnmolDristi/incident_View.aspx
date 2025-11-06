@@ -2,106 +2,17 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-   <%-- <style>
-        .form-label {
-            font-weight: bold;
-            color: blue;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .table-container {
-            margin-top: 20px;
-        }
-
-        .btn-actions {
-            margin-right: 5px;
-        }
-    </style>--%>
-
-<%--<style>
-    .form-label {
-        font-weight: bold;
-        color: blue;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    /* ✅ Table container setup */
-    .table-container {
-        overflow-x: auto;        /* Only horizontal scrolling */
-        overflow-y: hidden;      /* No vertical scroll */
-        white-space: nowrap;
-        position: sticky;        /* Key: makes it stick in its parent */
-        bottom: 0;               /* Sticks to bottom of viewport */
-        background: #fff;        /* Prevents content showing through */
-        z-index: 100;            /* Keeps it above other content */
-        padding-bottom: 5px;     /* Small gap for scrollbar */
-        border-top: 1px solid #ccc;
-        scrollbar-width: thin;   /* Firefox */
-        scrollbar-color: #007bff #f1f1f1;
-    }
-
-    /* ✅ Custom scrollbar for Chrome/Edge/Safari */
-    .table-container::-webkit-scrollbar {
-        height: 10px;
-    }
-
-    .table-container::-webkit-scrollbar-thumb {
-        background: linear-gradient(90deg, #007bff, #0056b3);
-        border-radius: 8px;
-    }
-
-    .table-container::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(90deg, #0056b3, #004099);
-    }
-
-    .table-container::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 8px;
-    }
-
-    table.table {
-        min-width: 1400px;
-        width: 100%;
-        border-collapse: collapse;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-    }
-
-    table.table th,
-    table.table td {
-        padding: 10px 12px;
-        border: 1px solid #ddd;
-        vertical-align: top;
-        color: #000;
-    }
-
-    table.table th {
-        background-color: #007bff;
-        color: white;
-        font-weight: bold;
-        text-align: left;
-    }
-
-    table.table td:first-child {
-        font-weight: bold;
-        width: 35%;
-        white-space: nowrap;
-    }
-
-    table.table tr:nth-child(even) td {
-        background-color: #f2f2f2;
-    }
-
-    .btn-actions {
-        margin-right: 5px;
-    }
-</style>--%>
-
-
+  
 <style>
 /* Scrollable container */
+
+.large-textbox {
+    min-height: 150px;
+    width: auto;/* overrides Rows if you want exact height */
+    font-size: 15px;
+    
+}
+
 
 .gridview-scroll table th{
     position:sticky;
@@ -121,7 +32,7 @@
 .gridview-scroll table {
     width: 100% !important;
     border-collapse: collapse !important;
-    font-size: 20px !important;        /* bigger text */
+    font-size: 15px !important;        /* bigger text */
 }
 
 .gridview-scroll table th,
@@ -281,7 +192,7 @@
                                         <%# Eval("Location") %>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtLocation" runat="server" Text='<%# Bind("Location") %>' CssClass="form-control w-100 large-textbox" TextMode="MultiLine" Rows="8" 
+                                        <asp:TextBox ID="txtLocation" runat="server" Text='<%# Bind("Location") %>' CssClass="form-control w-100 large-textbox"  
                                              />
                                     </EditItemTemplate>
                                 </asp:TemplateField>
@@ -513,24 +424,25 @@
                                         <%# Eval("SubmittedTime", "{0:hh\\:mm}") %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="View">
+
+                                 <asp:TemplateField HeaderText="Actions">
                     <ItemTemplate>
                         <asp:HyperLink ID="lnkView" runat="server" 
                             NavigateUrl='<%# Eval("IncidentID", "~/incident_DetailedView.aspx?IncidentId={0}") %>' 
                             Text="View" 
-                            CssClass="btn btn-info btn-actions" 
+                            CssClass="btn btn-info btn-actions btn-sm" 
                             Target="_blank" />
-                    </ItemTemplate>
-                </asp:TemplateField>
+                    
+                
 
-                                <asp:TemplateField HeaderText="Actions">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>
-                                        <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions" CommandName="Delete" OnClientClick="return confirm('Are you want to delete the record?');">Delete</asp:LinkButton>
+                               
+                                   
+                                        <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions btn-sm" CommandName="Edit">Edit</asp:LinkButton>
+                                        <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions btn-sm" CommandName="Delete" OnClientClick="return confirm('Are you want to delete the record?');">Delete</asp:LinkButton>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success btn-actions" CommandName="Update">Update</asp:LinkButton>
-                                        <asp:LinkButton ID="btnCancel" runat="server" CssClass="btn btn-secondary btn-actions" CommandName="Cancel">Cancel</asp:LinkButton>
+                                        <asp:LinkButton ID="btnUpdate" runat="server" CssClass="btn btn-success btn-actions btn-sm" CommandName="Update">Update</asp:LinkButton>
+                                        <asp:LinkButton ID="btnCancel" runat="server" CssClass="btn btn-secondary btn-actions btn-sm" CommandName="Cancel">Cancel</asp:LinkButton>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

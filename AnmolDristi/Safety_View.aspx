@@ -23,6 +23,88 @@
             display: inline-block;
         }
     </style>
+    <style>
+/* Scrollable container */
+
+.gridview-scroll table th{
+    position:sticky;
+}
+.gridview-scroll {
+    max-height: 600px !important;       /* taller container */
+    max-width: 100%;         
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: #fff;
+}
+
+/* Table styling - bigger text and padding */
+.gridview-scroll table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 15px !important;        /* bigger text */
+}
+
+.gridview-scroll table th,
+.gridview-scroll table td {
+    padding: 18px 22px !important;     /* bigger cells */
+}
+
+/* Fixed header */
+.gridview-scroll table thead th {
+    position: sticky !important;
+    top: 0;
+    background-color: #e0e0ff !important; /* header color */
+    font-weight: bold;
+    font-size: 20px !important;
+    z-index: 2;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.05);
+}
+
+/* Chrome, Edge, Safari scrollbar - bigger & visible */
+.gridview-scroll::-webkit-scrollbar {
+    width: 22px;   /* vertical scrollbar */
+    height: 22px;  /* horizontal scrollbar */
+}
+
+.gridview-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 12px;
+}
+
+.gridview-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6c63ff, #4b47b8);
+    border-radius: 12px;
+    border: 4px solid #f1f1f1;
+}
+
+.gridview-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4b47b8, #3b3b9c);
+}
+
+.gridview-scroll {
+    overflow-y: scroll !important;  /* always show vertical scrollbar */
+}
+
+
+/* Firefox scrollbar */
+.gridview-scroll {
+    scrollbar-width: auto;   
+    scrollbar-color: #6c63ff #f1f1f1;
+}
+
+.large-textbox {
+    width: 100%;      /* full width of the parent container */
+    max-width: 100%;  /* ensures it doesn’t overflow */
+    height: 200px;    /* optional: increase height */
+    resize: vertical; /* user can resize vertically if needed */
+}
+</style>
+
+
+
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -41,6 +123,7 @@
                 </div>
                 <div class="x_content table-container">
                     <div style="overflow-x: auto;">
+                         <div class="gridview-scroll">
                         <asp:GridView ID="GvSafetyAudit" runat="server" CssClass="table table-striped table-bordered"
                             AutoGenerateColumns="False" DataKeyNames="DescriptionID,AuditID" OnRowEditing="GvSafetyAudit_RowEditing"
                             OnRowUpdating="GvSafetyAudit_RowUpdating" OnRowCancelingEdit="GvSafetyAudit_RowCancelingEdit"
@@ -232,6 +315,7 @@
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
+                             </div>
                     </div>
                 </div>
             </div>

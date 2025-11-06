@@ -1549,7 +1549,7 @@ function updateWitnessHiddenField() {
                                     <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" />
                                 </div>
                             </div>
-
+</div>
                         </div>
                     </div>
                 </div>

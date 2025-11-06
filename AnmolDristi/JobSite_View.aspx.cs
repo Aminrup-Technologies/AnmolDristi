@@ -72,7 +72,7 @@ namespace AnmolDristi
 
             string checklistDate = ((TextBox)row.FindControl("txtChecklistDate")).Text;
             string area = ((TextBox)row.FindControl("txtArea")).Text;
-            string question = ((TextBox)row.FindControl("txtQuestion")).Text;
+            string question = ((Label)row.FindControl("txtQuestion")).Text;
             string isYesStr = ((DropDownList)row.FindControl("ddlIsYes")).SelectedValue;
             bool isYes = isYesStr == "True";
             int newIsYes = isYes ? 1 : 0;

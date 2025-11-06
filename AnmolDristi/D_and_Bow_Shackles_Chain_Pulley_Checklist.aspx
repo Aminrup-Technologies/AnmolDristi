@@ -109,7 +109,7 @@
         </div>
     </div>
 </div>
-
+</div>
 
 
                         <!-- Row for Step 2 heading -->
@@ -126,7 +126,7 @@
     <td>
         <asp:RadioButton ID="rbTestedOk" GroupName="Tested" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleTestedPanel()" />
         <asp:RadioButton ID="rbTestedNotOk" GroupName="Tested" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleTestedPanel()" />
-        <asp:RadioButton ID="rbTestedNA" GroupName="Tested" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbTestedNA" GroupName="Tested" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
         <asp:Panel ID="pnlTested" runat="server">
@@ -147,7 +147,7 @@
     <td>
         <asp:RadioButton ID="rbThreadOk" GroupName="Thread" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleThreadPanel()" />
         <asp:RadioButton ID="rbThreadNotOk" GroupName="Thread" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleThreadPanel()" />
-        <asp:RadioButton ID="rbThreadNA" GroupName="Thread" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbThreadNA" GroupName="Thread" Text="NA" runat="server" Visible="false"  />
     </td>
     <td>
         <asp:Panel ID="pnlThread" runat="server">
@@ -168,7 +168,7 @@
     <td>
         <asp:RadioButton ID="rbWornOk" GroupName="Worn" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleWornPanel()" />
         <asp:RadioButton ID="rbWornNotOk" GroupName="Worn" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleWornPanel()" />
-        <asp:RadioButton ID="rbWornNA" GroupName="Worn" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbWornNA" GroupName="Worn" Text="NA" runat="server" Visible="false"  />
     </td>
     <td>
         <asp:Panel ID="pnlWorn" runat="server">
@@ -189,7 +189,7 @@
     <td>
         <asp:RadioButton ID="rbStrengthOk" GroupName="Strength" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleStrengthPanel()" />
         <asp:RadioButton ID="rbStrengthNotOk" GroupName="Strength" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleStrengthPanel()" />
-        <asp:RadioButton ID="rbStrengthNA" GroupName="Strength" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbStrengthNA" GroupName="Strength" Text="NA" runat="server" Visible="false"  />
     </td>
     <td>
         <asp:Panel ID="pnlStrength" runat="server">
@@ -210,7 +210,7 @@
     <td>
         <asp:RadioButton ID="rbRustOk" GroupName="Rust" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleRustPanel()" />
         <asp:RadioButton ID="rbRustNotOk" GroupName="Rust" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleRustPanel()" />
-        <asp:RadioButton ID="rbRustNA" GroupName="Rust" Text="NA" runat="server" />
+        <asp:RadioButton ID="rbRustNA" GroupName="Rust" Text="NA" runat="server" Visible="false"  />
     </td>
     <td>
         <asp:Panel ID="pnlRust" runat="server">
@@ -249,7 +249,7 @@
         <td>
             <asp:RadioButton ID="rbChainTestedOk" GroupName="ChainTested" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleChainTestedPanel()" />
             <asp:RadioButton ID="rbChainTestedNotOk" GroupName="ChainTested" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleChainTestedPanel()" />
-            <asp:RadioButton ID="rbChainTestedNA" GroupName="ChainTested" Text="NA" runat="server" />
+            <asp:RadioButton ID="rbChainTestedNA" GroupName="ChainTested" Text="NA" runat="server" Visible="false"  />
         </td>
         <td>
             <asp:Panel ID="pnlChainTested" runat="server">
@@ -270,7 +270,7 @@
         <td>
             <asp:RadioButton ID="rbChainDamageOk" GroupName="ChainDamage" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleChainDamagePanel()" />
             <asp:RadioButton ID="rbChainDamageNotOk" GroupName="ChainDamage" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleChainDamagePanel()" />
-            <asp:RadioButton ID="rbChainDamageNA" GroupName="ChainDamage" Text="NA" runat="server" />
+            <asp:RadioButton ID="rbChainDamageNA" GroupName="ChainDamage" Text="NA" runat="server" Visible="false"  />
         </td>
         <td>
             <asp:Panel ID="pnlChainDamage" runat="server">
@@ -291,7 +291,7 @@
         <td>
             <asp:RadioButton ID="rbConditionOk" GroupName="Condition" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleConditionPanel()" />
             <asp:RadioButton ID="rbConditionNotOk" GroupName="Condition" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleConditionPanel()" />
-            <asp:RadioButton ID="rbConditionNA" GroupName="Condition" Text="NA" runat="server" />
+            <asp:RadioButton ID="rbConditionNA" GroupName="Condition" Text="NA" runat="server" Visible="false"  />
         </td>
         <td>
             <asp:Panel ID="pnlCondition" runat="server">
@@ -312,7 +312,7 @@
         <td>
             <asp:RadioButton ID="rbLatchOk" GroupName="Latch" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleLatchPanel()" />
             <asp:RadioButton ID="rbLatchNotOk" GroupName="Latch" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleLatchPanel()" />
-            <asp:RadioButton ID="rbLatchNA" GroupName="Latch" Text="NA" runat="server" />
+            <asp:RadioButton ID="rbLatchNA" GroupName="Latch" Text="NA" runat="server" Visible="false"  />
         </td>
         <td>
             <asp:Panel ID="pnlLatch" runat="server">
@@ -333,7 +333,7 @@
         <td>
             <asp:RadioButton ID="rbPadeyeOk" GroupName="Padeye" Text="Ok" runat="server" AutoPostBack="false" onclick="togglePadeyePanel()" />
             <asp:RadioButton ID="rbPadeyeNotOk" GroupName="Padeye" Text="Not Ok" runat="server" AutoPostBack="false" onclick="togglePadeyePanel()" />
-            <asp:RadioButton ID="rbPadeyeNA" GroupName="Padeye" Text="NA" runat="server" />
+            <asp:RadioButton ID="rbPadeyeNA" GroupName="Padeye" Text="NA" runat="server" Visible="false"  />
         </td>
         <td>
             <asp:Panel ID="pnlPadeye" runat="server">
@@ -354,7 +354,7 @@
         <td>
             <asp:RadioButton ID="rbHookWearOk" GroupName="HookWear" Text="Ok" runat="server" AutoPostBack="false" onclick="toggleHookWearPanel()" />
             <asp:RadioButton ID="rbHookWearNotOk" GroupName="HookWear" Text="Not Ok" runat="server" AutoPostBack="false" onclick="toggleHookWearPanel()" />
-            <asp:RadioButton ID="rbHookWearNA" GroupName="HookWear" Text="NA" runat="server" />
+            <asp:RadioButton ID="rbHookWearNA" GroupName="HookWear" Text="NA" runat="server" Visible="false"  />
         </td>
         <td>
             <asp:Panel ID="pnlHookWear" runat="server">
@@ -562,30 +562,30 @@
                         </script>
 
                         
-                        
-                        
-                        <div class="col-md-3">
+                        </div>
+                        <div class="row">
+                        <div class="col-md-12 text-center">
                                     <div class="mb-3">
-                                        <asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>
-                                        <div class="input-group input-group-sm">
+                                        <%--<asp:Label ID="Lbl_btnSubmit" runat="server" AssociatedControlID="BtnSubmit" Text="Click to SAVE" ForeColor="Blue" Font-Bold="true" Font-Size="Small"></asp:Label>--%>
+                                        <div class="btn-group" role="group">
 <%--                                            <asp:Button ID="BtnSubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm" ValidationGroup="Submit" CausesValidation="true" OnClick="BtnSubmit_Click" />--%>
 
                                           <asp:Button ID="BtnSubmit" runat="server" Text="Save" 
-    CssClass="btn btn-primary btn-sm"
-    ValidationGroup="Submit" CausesValidation="true"
-    OnClientClick="return validateDandBowChecklist();"
-    OnClick="BtnSubmit_Click" />
+                                                        CssClass="btn btn-primary btn-sm"
+                                                        ValidationGroup="Submit" CausesValidation="true"
+                                                        OnClientClick="return validateDandBowChecklist();"
+                                                        OnClick="BtnSubmit_Click" />
 
 
-                                            <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm" CausesValidation="false" OnClick="BtnReset_Click" />
-                                            <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger" CausesValidation="false" PostBackUrl="~/home.aspx" />
+                                            <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="btn btn-warning btn-sm ml-2" CausesValidation="false" OnClick="BtnReset_Click" />
+                                            <asp:Button ID="btn_home" runat="server" Text="HOME" CssClass="btn btn-sm btn-danger ml-2" CausesValidation="false" PostBackUrl="~/home.aspx" />
                                         </div>
                                         <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" />
                                     </div>
                                 </div>
-
-                    </div>
-                </div>
+                            </div>
+                    
+                
             </div>
         </div>
     </div>

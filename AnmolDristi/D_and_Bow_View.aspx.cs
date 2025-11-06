@@ -305,7 +305,7 @@ ORDER BY HeaderID DESC, EquipmentType;
                 GridViewRow row = GvDandBowChecklist.Rows[e.RowIndex];
 
                 
-                string question = ((TextBox)row.FindControl("txtShacklesQuestion"))?.Text.Trim();
+                string question = ((Label)row.FindControl("txtShacklesQuestion"))?.Text.Trim();
                 DropDownList ddlIsYes = (DropDownList)row.FindControl("ddlShacklesIsYes");
                 int isYes = ddlIsYes != null && ddlIsYes.SelectedValue == "True" ? 1 : 0;
 
