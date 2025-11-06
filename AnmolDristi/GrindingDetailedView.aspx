@@ -202,10 +202,25 @@
 
                                 <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
                                 <asp:TemplateField HeaderText="Photo">
-                                    <ItemTemplate>
-                                        <asp:Image ID="imgPhoto" runat="server" CssClass="photo-img" ImageUrl='<%# Eval("PhotoPath") %>' />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
+    <ItemTemplate>
+        <!-- Show photo only when IsYes == 0 AND PhotoPath is not null/empty -->
+        <asp:Image ID="imgPhoto" runat="server" Width="60" Height="60"
+            ImageUrl='<%# Eval("PhotoPath") != DBNull.Value && !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) 
+                        ? Eval("PhotoPath").ToString() 
+                        : "" %>'
+            Visible='<%# Convert.ToInt32(Eval("IsYes")) == 0 &&
+                      Eval("PhotoPath") != DBNull.Value &&
+                      !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>' />
+
+        <!-- Show label only when IsYes == 0 AND PhotoPath is null/empty -->
+        <asp:Label ID="lblNoPhoto" runat="server" Text="No photo uploaded" ForeColor="Gray"
+            Visible='<%# Convert.ToInt32(Eval("IsYes")) == 0 &&
+                      (Eval("PhotoPath") == DBNull.Value ||
+                       string.IsNullOrEmpty(Eval("PhotoPath").ToString())) %>' />
+    </ItemTemplate>
+</asp:TemplateField>
+
+
                                 <asp:BoundField DataField="EntryDate" HeaderText="Entry Date" DataFormatString="{0:yyyy-MM-dd}" />
                             </Columns>
                         </asp:GridView>

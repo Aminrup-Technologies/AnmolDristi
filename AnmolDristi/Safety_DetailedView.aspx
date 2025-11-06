@@ -73,7 +73,7 @@
 
                 <div class="x_content table-container">
                     <div style="overflow-x: auto;">
-                        <asp:GridView ID="gvSafetyAuditDetails" runat="server" AutoGenerateColumns="False" ShowHeader="False">
+                       <%-- <asp:GridView ID="gvSafetyAuditDetails" runat="server" AutoGenerateColumns="False" ShowHeader="False">
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
@@ -130,7 +130,86 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
-                        </asp:GridView>
+                        </asp:GridView>--%>
+
+
+
+
+
+                   
+<h4 class="text-primary mt-3 mb-2">Audit Header Details</h4>
+<asp:GridView ID="gvAuditMain" runat="server" AutoGenerateColumns="False"
+    CssClass="table table-bordered table-striped mb-4" HeaderStyle-CssClass="table-dark">
+    <Columns>
+        <asp:BoundField DataField="Department" HeaderText="Department" />
+        <asp:BoundField DataField="Section" HeaderText="Section" />
+        <asp:BoundField DataField="Date" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />
+        <asp:BoundField DataField="Time" HeaderText="Time" />
+        <asp:BoundField DataField="ContractorVendorCode" HeaderText="Vendor Code" />
+        <asp:BoundField DataField="TotalContractorPeople" HeaderText="Total People" />
+    </Columns>
+</asp:GridView>
+
+
+
+<h4 class="text-primary mt-3 mb-2">Participants</h4>
+<asp:GridView ID="gvAuditSeverity" runat="server" AutoGenerateColumns="False"
+    CssClass="table table-bordered table-striped mb-4" HeaderStyle-CssClass="table-dark">
+    <Columns>
+        <asp:BoundField DataField="InternalEmployees" HeaderText="Internal Employees" />
+        <asp:BoundField DataField="ExternalMembers" HeaderText="External Members" />
+    </Columns>
+</asp:GridView>
+
+
+<h4 class="text-primary mt-3 mb-2">Audit Observations</h4>
+<asp:GridView ID="gvAuditDescription" runat="server" AutoGenerateColumns="False"
+    CssClass="table table-bordered table-striped" HeaderStyle-CssClass="table-dark">
+    <Columns>
+        <asp:BoundField DataField="Description" HeaderText="Description" />
+        <asp:BoundField DataField="GoodCitizens" HeaderText="Good Citizens" />
+        <asp:BoundField DataField="NoOfViolations" HeaderText="No. of Violations" />
+        <asp:BoundField DataField="Severity" HeaderText="Severity" />
+        <asp:BoundField DataField="ViolationXSeverity" HeaderText="Violation × Severity" />
+        <asp:BoundField DataField="FourAndFive" HeaderText="Four & Five" />
+        <asp:BoundField DataField="UnsafeActConditions" HeaderText="Unsafe Acts/Conditions" />
+        <asp:BoundField DataField="SubmittedDate" HeaderText="Submitted Date" DataFormatString="{0:yyyy-MM-dd}" />
+        <asp:BoundField DataField="SubmittedTime" HeaderText="Submitted Time" />
+
+        <asp:TemplateField HeaderText="CAPA ID">
+            <ItemTemplate>
+                <asp:HyperLink ID="lnkCAPA" runat="server"
+                    Text='<%# Eval("CAPAID") %>'
+                    NavigateUrl='<%# Eval("CAPAID", "Universal_Capa.aspx?CAPA_ID={0}") %>'
+                    Target="_blank"
+                    Visible='<%# Eval("CAPAID") != DBNull.Value && Eval("CAPAID").ToString() != "" %>'>
+                </asp:HyperLink>
+                <asp:Label ID="lblNoCapa" runat="server" Text="-" 
+                    Visible='<%# Eval("CAPAID") == DBNull.Value || Eval("CAPAID").ToString() == "" %>' />
+            </ItemTemplate>
+        </asp:TemplateField>
+
+        
+        <asp:TemplateField HeaderText="CAPA Active">
+            <ItemTemplate>
+                <span style='<%# Convert.ToBoolean(Eval("GenerateCAPA")) ? "color:green;" : "color:red;" %>'>
+                    <%# Convert.ToBoolean(Eval("GenerateCAPA")) ? "✔️" : "❌" %>
+                </span>
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+</asp:GridView>
+
+
+
+
+
+
+
+
+
+
+
                     </div>
                 </div>
             </div>

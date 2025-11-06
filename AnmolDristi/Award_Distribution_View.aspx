@@ -127,25 +127,14 @@
                                 </EditItemTemplate>
                             </asp:TemplateField>
 
-         <asp:TemplateField HeaderText="View">
+        <asp:TemplateField HeaderText="Actions">
     <ItemTemplate>
         <asp:HyperLink ID="lnkViewAward" runat="server"
             NavigateUrl='<%# Eval("Award_ID", "~/Award_DetailedView.aspx?id={0}") %>'
             Text="View"
             CssClass="btn btn-info btn-actions"
             Target="_blank" />
-    </ItemTemplate>
-</asp:TemplateField>
-
-
-
-                           <asp:TemplateField HeaderText="Actions">
-    <ItemTemplate>
-       <asp:HyperLink ID="btnView" runat="server" CssClass="btn btn-info btn-actions"
-    NavigateUrl='<%# Eval("ADR_ID", "Award_report.aspx?id={0}") %>'>
-    View
-</asp:HyperLink>
-
+    
         <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-warning btn-actions" CommandName="Edit">Edit</asp:LinkButton>
         <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-danger btn-actions" CommandName="Delete"
             OnClientClick="return confirm('Are you sure?');">Delete</asp:LinkButton>

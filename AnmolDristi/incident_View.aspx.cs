@@ -107,8 +107,10 @@ protected void gvIncidentData_RowCancelingEdit(object sender, GridViewCancelEdit
                 int incidentID = Convert.ToInt32(gvIncidentData.DataKeys[e.RowIndex].Values["IncidentID"]);
                 GridViewRow row = gvIncidentData.Rows[e.RowIndex];
 
-                   // Fetch updated values from GridView
-                string incidentClassification = ((TextBox)row.FindControl("txtIncidentClassification")).Text;
+                // Fetch updated values from GridView
+                DropDownList ddlIncidentClassification = (DropDownList)row.FindControl("ddlIncidentClassification");
+                string incidentClassification = ddlIncidentClassification.SelectedValue;
+
                 string dateOfIncident = ((TextBox)row.FindControl("txtDateOfIncident")).Text;
                 string timeOfIncident = ((TextBox)row.FindControl("txtTimeOfIncident")).Text;
                 string location = ((TextBox)row.FindControl("txtLocation")).Text;

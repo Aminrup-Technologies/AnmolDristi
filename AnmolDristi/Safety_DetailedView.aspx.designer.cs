@@ -15,12 +15,30 @@ namespace AnmolDristi
     {
 
         /// <summary>
-        /// gvSafetyAuditDetails control.
+        /// gvAuditMain control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvSafetyAuditDetails;
+        protected global::System.Web.UI.WebControls.GridView gvAuditMain;
+
+        /// <summary>
+        /// gvAuditSeverity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvAuditSeverity;
+
+        /// <summary>
+        /// gvAuditDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvAuditDescription;
     }
 }

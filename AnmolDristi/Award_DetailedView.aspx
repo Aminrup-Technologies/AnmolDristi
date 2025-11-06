@@ -2,66 +2,133 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
     <style>
-        .table-container {
-            display: flex;
-            justify-content: center;
-            padding: 20px 0;
-            overflow-x: auto;
+
+    .header-table th {
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .header-table td {
+        text-align: center;
+        background-color: #f8f9fa;
+        font-weight: 500;
+    }
+
+    .award-table th {
+        background-color: #17a2b8;
+        color: white;
+        font-weight: 600;
+    }
+
+    .award-table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .award-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    hr.my-4 {
+        border: 0;
+        height: 2px;
+        background: #dee2e6;
+        margin: 30px 0;
+    }
+</style>
+
+    <style>
+    /* ===== Header Box Styling ===== */
+    .header-box {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .header-box h5 {
+        font-weight: 600;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    h3,h2{
+        color:#007bff;
+        font-weight:bold;
+    }
+
+    .header-box p {
+        margin: 0;
+        line-height: 1.6;
+        color: #495057;
+    }
+
+    .header-box strong {
+        color: #343a40;
+    }
+
+    /* ===== Table Styling ===== */
+    .award-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        background: #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .award-table th {
+        background: #007bff;
+        color: white;
+        text-align: left;
+        padding: 10px;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .award-table td {
+        padding: 8px 10px;
+        border-bottom: 1px solid #dee2e6;
+        font-size: 14px;
+        color: #212529;
+        vertical-align: middle;
+    }
+
+    .award-table tr:hover {
+        background-color: #f8f9fa;
+        transition: 0.2s ease-in-out;
+    }
+
+    /* ===== Image Styling ===== */
+    .award-table img {
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+        object-fit: cover;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+        .header-box {
+            padding: 10px;
         }
 
-        table.table {
-            width: 100%;
-            min-width: 1250px;
-            max-width: 1400px;
-            border-collapse: collapse;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            margin-bottom: 25px;
-            background-color: #fff;
+        .award-table th, .award-table td {
+            font-size: 13px;
+            padding: 6px;
         }
 
-        table.table th,
-        table.table td {
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-            color: #000;
+        .award-table img {
+            width: 50px;
+            height: 50px;
         }
+    }
+</style>
 
-        table.table th {
-            background-color: #007bff;
-            color: white;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        table.table td:first-child {
-            font-weight: bold;
-            width: 35%;
-            white-space: nowrap;
-        }
-
-        table.table td {
-            background-color: #f9f9f9;
-        }
-
-        table.table tr:nth-child(even) td {
-            background-color: #f2f2f2;
-        }
-
-        img#imgAward {
-            border: 1px solid #ccc;
-            padding: 4px;
-            border-radius: 4px;
-            max-width: 150px;
-            height: auto;
-        }
-
-        .table + .table {
-            margin-top: 20px;
-        }
-    </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -69,7 +136,7 @@
         <div class="container">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Award Distribution Details</h3>
+                    <h3 class="text-center mb-4">Award Distribution Details</h3>
                 </div>
             </div>
 
@@ -80,43 +147,70 @@
                 </div>
 
                 <div class="x_content table-container">
-                    <asp:GridView ID="gvAwardDetails" runat="server" AutoGenerateColumns="False" ShowHeader="False">
-                        <Columns>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <table class="table table-bordered mb-4">
-                                        <tr><th colspan="2">Award Information</th></tr>
-                                        <tr><td>Award ID:</td><td><%# Eval("Award_ID") %></td></tr>
-                                        <tr><td>Award Date:</td><td><%# Eval("DateOfAwardDistribution", "{0:dd-MM-yyyy}") %></td></tr>
-                                        <tr><td>Event Name:</td><td><%# Eval("EventName") %></td></tr>
-                                         <tr><td>Submitted Date:</td><td><%# Eval("SubmittedDate", "{0:dd-MM-yyyy}") %></td></tr>
-                                        <tr><td>Submitted Time:</td><td><%# Eval("SubmittedTime") %></td></tr>
-                                        
-                                        <%--<tr><td>Award Description:</td><td><%# Eval("AwardDescription") %></td></tr>--%>
-                                    </table>
+                  
 
-                                    <table class="table table-bordered mb-4">
-                                        <tr><th colspan="2">Recipient Details</th></tr>
-                                        <tr><td>Employee ID:</td><td><%# Eval("EmpId") %></td></tr>
-                                        <tr><td>Employee Name:</td><td><%# Eval("EmpName") %></td></tr>
-                                        <tr><td>Designation:</td><td><%# Eval("Designation") %></td></tr>
-                                        <tr><td>Designation:</td><td><%# Eval("AwardCategory") %></td></tr>
-                                        <tr><td>Photographs:</td><td><img src='<%# Eval("ImagePath") %>' alt="Photo" style="max-width:150px; max-height:150px;" /></td></tr>
-                                    </table>
+            <asp:Repeater ID="rptHeader" runat="server" OnItemDataBound="rptHeader_ItemDataBound">
+                <ItemTemplate>
+                    <table class="table table-bordered table-sm header-table mb-3">
+            <thead class="table-light">
+                <tr>
+                    <th>Award ID</th>
+                    <th>Award Date</th>
+                    <th>Event Name</th>
+                    <th>Submitted Date</th>
+                    <th>Submitted Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><%# Eval("Award_ID") %></td>
+                    <td><%# Eval("DateOfAwardDistribution", "{0:yyyy-MM-dd}") %></td>
+                    <td><%# Eval("EventName") %></td>
+                    <td><%# Eval("SubmittedDate", "{0:yyyy-MM-dd}") %></td>
+                    <td>
+    <%# Eval("SubmittedTime") != DBNull.Value 
+        ? DateTime.Today.Add(TimeSpan.Parse(Eval("SubmittedTime").ToString())).ToString("hh:mm tt") 
+        : "" %>
+</td>
 
-                                    <%--<table class="table table-bordered mb-4">
-                                        <tr><th colspan="2">Submission Details</th></tr>
-                                      
-                                        <tr><td>Uploaded Image:</td>
-                                            <td>
-                                                <asp:Image ID="imgAward" runat="server" ImageUrl='<%# Eval("ImagePath") %>' />
-                                            </td>
-                                        </tr>
-                                    </table>--%>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
+                </tr>
+            </tbody>
+        </table>
+                    </div>
+
+                    <asp:Repeater ID="rptDetails" runat="server" DataSource='<%# Eval("Awardees") %>'>
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-striped award-table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Employee ID</th>
+                                        <th>Employee Name</th>
+                                        <th>Designation</th>
+                                        <th>Award Category</th>
+                                        <th>Photo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("EmpId") %></td>
+                                <td><%# Eval("EmpName") %></td>
+                                <td><%# Eval("Designation") %></td>
+                                <td><%# Eval("AwardCategory") %></td>
+                                <td>
+                                    <asp:Image ID="imgPhoto" runat="server" ImageUrl='<%# Eval("ImagePath") %>' 
+                                        Width="70px" Height="70px" AlternateText="No Image" />
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                        <FooterTemplate>
+                                </tbody>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                </ItemTemplate>
+            </asp:Repeater>
                 </div>
             </div>
         </div>

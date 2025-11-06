@@ -97,6 +97,30 @@
                     <div style="overflow-x: auto;">
     <div class="container mt-4">
 
+
+         <asp:Label ID="lblTitle3" runat="server" Text="Basic Details Checklist" CssClass="title-label"></asp:Label>
+ <asp:GridView ID="gvBasicDetails" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
+     HeaderStyle-CssClass="grid-header">
+     <Columns>
+         <asp:BoundField DataField="Site" HeaderText="Site" />
+         <asp:BoundField DataField="TagNo" HeaderText="Tag No" />
+         <asp:BoundField DataField="InspectionDate" HeaderText="Inspection Date" DataFormatString="{0:yyyy-MM-dd}" />
+         <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
+         <asp:BoundField DataField="JobID" HeaderText="Job ID" />
+         <asp:BoundField DataField="JobName" HeaderText="Job Name" />
+     </Columns>
+ </asp:GridView>
+
+
+
+
+
+
+
+
+
+
+
 <asp:Label ID="lblTitle2" runat="server" Text="D-Bow Checklist" CssClass="title-label"></asp:Label>
 <asp:GridView ID="gvDBow" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
     HeaderStyle-CssClass="grid-header">
@@ -122,15 +146,23 @@
 
 
         <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
-        <asp:TemplateField HeaderText="Photo">
-            <ItemTemplate>
-                <asp:Image ID="imgPhoto" runat="server" Width="60" Height="60"
-                    ImageUrl='<%# string.IsNullOrEmpty(Eval("PhotoPath").ToString()) ? "" : Eval("PhotoPath").ToString() %>'
-                    Visible='<%# !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>' />
-                <asp:Label ID="lblNoPhoto" runat="server" Text="No photo uploaded"
-                    Visible='<%# string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>' ForeColor="Gray" />
-            </ItemTemplate>
-        </asp:TemplateField>
+       <asp:TemplateField HeaderText="Photo">
+    <ItemTemplate>
+        <asp:Image ID="imgPhoto" runat="server" Width="60" Height="60"
+            ImageUrl='<%# Eval("PhotoPath") != DBNull.Value && !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) 
+                        ? Eval("PhotoPath").ToString() 
+                        : "" %>'
+            Visible='<%# Convert.ToInt32(Eval("IsYes")) == 0 && 
+                      Eval("PhotoPath") != DBNull.Value && 
+                      !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>' />
+
+        <asp:Label ID="lblNoPhoto" runat="server" Text="No photo uploaded" ForeColor="Gray"
+            Visible='<%# Convert.ToInt32(Eval("IsYes")) == 0 && 
+                      (Eval("PhotoPath") == DBNull.Value || 
+                       string.IsNullOrEmpty(Eval("PhotoPath").ToString())) %>' />
+    </ItemTemplate>
+</asp:TemplateField>
+
         <asp:BoundField DataField="CreatedDate" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />
     </Columns>
 </asp:GridView>
@@ -162,7 +194,7 @@
 
 
         <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
-        <asp:TemplateField HeaderText="Photo">
+       <%-- <asp:TemplateField HeaderText="Photo">
             <ItemTemplate>
                 <asp:Image ID="imgPhoto" runat="server" Width="60" Height="60"
                     ImageUrl='<%# string.IsNullOrEmpty(Eval("PhotoPath").ToString()) ? "" : Eval("PhotoPath").ToString() %>'
@@ -170,24 +202,47 @@
                 <asp:Label ID="lblNoPhoto" runat="server" Text="No photo uploaded"
                     Visible='<%# string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>' ForeColor="Gray" />
             </ItemTemplate>
-        </asp:TemplateField>
+        </asp:TemplateField>--%>
+
+
+
+        <asp:TemplateField HeaderText="Photo">
+    <ItemTemplate>
+        <asp:Image ID="imgPhoto" runat="server" Width="60" Height="60"
+            ImageUrl='<%# Eval("PhotoPath") != DBNull.Value && !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) 
+                        ? Eval("PhotoPath").ToString() 
+                        : "" %>'
+            Visible='<%# Convert.ToInt32(Eval("IsYes")) == 0 && 
+                      Eval("PhotoPath") != DBNull.Value && 
+                      !string.IsNullOrEmpty(Eval("PhotoPath").ToString()) %>' />
+
+        <asp:Label ID="lblNoPhoto" runat="server" Text="No photo uploaded" ForeColor="Gray"
+            Visible='<%# Convert.ToInt32(Eval("IsYes")) == 0 && 
+                      (Eval("PhotoPath") == DBNull.Value || 
+                       string.IsNullOrEmpty(Eval("PhotoPath").ToString())) %>' />
+    </ItemTemplate>
+</asp:TemplateField>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <asp:BoundField DataField="CreatedDate" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />
     </Columns>
 </asp:GridView>
 
 
-        <asp:Label ID="lblTitle3" runat="server" Text="Basic Details Checklist" CssClass="title-label"></asp:Label>
-        <asp:GridView ID="gvBasicDetails" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover"
-            HeaderStyle-CssClass="grid-header">
-            <Columns>
-                <asp:BoundField DataField="Site" HeaderText="Site" />
-                <asp:BoundField DataField="TagNo" HeaderText="Tag No" />
-                <asp:BoundField DataField="InspectionDate" HeaderText="Inspection Date" DataFormatString="{0:yyyy-MM-dd}" />
-                <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
-                <asp:BoundField DataField="JobID" HeaderText="Job ID" />
-                <asp:BoundField DataField="JobName" HeaderText="Job Name" />
-            </Columns>
-        </asp:GridView>
+       
     </div>
 </div>
                         <!-- Print Button -->

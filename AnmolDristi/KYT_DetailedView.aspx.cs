@@ -66,40 +66,51 @@ namespace AnmolDristi
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand(@"
-                            SELECT 
-                                t1.KYT_WorksiteName,
-                                t1.KYT_Department,
-                                t1.KYT_Location,
-                                t1.KYT_Date,
-                                t1.KYT_JobID,
-                                t1.KYT_SOPNo,
-                                t1.KYT_Vendor,
-                                t2.KYT_Activity,
-                                t2.KYT_HiddenHazards,
-                                t2.KYT_Consequence,
-                                t2.KYT_CounterMeasures,
-                                t2.KYT_PriorityValue,
-                                t2.KYT_PhotographPath,
-                                t2.SubmissionDate,
-                                t2.SubmissionTime,
-                                t2.CAPAID
-                            FROM [MahimaGupta_CSMS].[KYT_Table1] t1
-                            INNER JOIN [MahimaGupta_CSMS].[KYT_Table2] t2 
-                                ON t1.ID = t2.ID     
-                            WHERE t1.ID = @ID", conn);
+                // ---- Table 1 (Header Info) ----
+                SqlCommand cmd1 = new SqlCommand(@"
+            SELECT 
+                [ID],
+                [KYT_WorksiteName],
+                [KYT_Department],
+                [KYT_Location],
+                [KYT_Date],
+                [KYT_JobID],
+                [KYT_SOPNo],
+                [KYT_Vendor]
+            FROM [CSMS].[MahimaGupta_CSMS].[KYT_Table1]
+            WHERE [ID] = @ID", conn);
 
+                cmd1.Parameters.AddWithValue("@ID", ID);
+                DataTable dt1 = new DataTable();
+                new SqlDataAdapter(cmd1).Fill(dt1);
 
+                gvKYTHeader.DataSource = dt1;
+                gvKYTHeader.DataBind();
 
-                cmd.Parameters.AddWithValue("@ID", ID);
+                // ---- Table 2 (Detail Info) ----
+                SqlCommand cmd2 = new SqlCommand(@"
+            SELECT 
+                [KYT_Activity],
+                [KYT_HiddenHazards],
+                [KYT_Consequence],
+                [KYT_CounterMeasures],
+                [KYT_PriorityValue],
+                [KYT_PhotographPath],
+                [SubmissionDate],
+                [SubmissionTime],
+                [CAPAID]
+            FROM [CSMS].[MahimaGupta_CSMS].[KYT_Table2]
+            WHERE [ID] = @ID", conn);
 
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+                cmd2.Parameters.AddWithValue("@ID", ID);
+                DataTable dt2 = new DataTable();
+                new SqlDataAdapter(cmd2).Fill(dt2);
 
-                gvKYTDetails.DataSource = dt;
+                gvKYTDetails.DataSource = dt2;
                 gvKYTDetails.DataBind();
             }
         }
+
+
     }
 }

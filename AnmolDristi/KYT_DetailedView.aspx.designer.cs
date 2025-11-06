@@ -15,6 +15,33 @@ namespace AnmolDristi
     {
 
         /// <summary>
+        /// lblHeader1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblHeader1;
+
+        /// <summary>
+        /// gvKYTHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvKYTHeader;
+
+        /// <summary>
+        /// lblHeader2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblHeader2;
+
+        /// <summary>
         /// gvKYTDetails control.
         /// </summary>
         /// <remarks>

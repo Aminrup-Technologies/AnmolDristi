@@ -18,10 +18,11 @@ namespace AnmolDristi
         {
             if (!IsPostBack)
             {
-                string auditId = Request.QueryString["AuditID"];
-                if (!string.IsNullOrEmpty(auditId))
+                string auditID = Request.QueryString["AuditID"];
+
+                if (!string.IsNullOrEmpty(auditID))
                 {
-                    LoadSafetyAuditData(auditId);
+                    LoadSafetyAuditData(auditID);
                 }
             }
         }
@@ -42,36 +43,81 @@ namespace AnmolDristi
             }
         }
 
-        private void LoadSafetyAuditData(string auditId)
+        private void LoadSafetyAuditData(string auditID)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(@"
-    SELECT
-        t1.ID AS AuditID,
-        t1.Department, t1.Section, t1.Date, t1.Time,
-        t1.ContractorVendorCode, t1.TotalContractorPeople,
-        t2.InternalEmployees, t2.ExternalMembers,
-        t3.Description, t3.GoodCitizens, t3.NoOfViolations, t3.Severity,
-        t3.ViolationXSeverity, t3.FourAndFive, t3.UnsafeActConditions,
-        t3.SubmittedDate, t3.SubmittedTime,
-        t3.CAPAID   -- ✅ Add CAPAID here
-    FROM [MahimaGupta_CSMS].[SafetyAudit_Main] t1
-    LEFT JOIN [MahimaGupta_CSMS].[SafetyAudit_Severity] t2 ON t1.ID = t2.AuditID
-    LEFT JOIN [MahimaGupta_CSMS].[SafetyAudit_Description] t3 ON t1.ID = t3.AuditID
-    WHERE t1.ID = @AuditID", conn);
 
+                // === 1️⃣ SafetyAudit_Main ===
+                string queryMain = @"
+            SELECT 
+                ID,
+                Department,
+                Section,
+                Date,
+                Time,
+                ContractorVendorCode,
+                TotalContractorPeople
+            FROM [MahimaGupta_CSMS].[SafetyAudit_Main]
+            WHERE ID = @AuditID";
 
-                cmd.Parameters.AddWithValue("@AuditID", auditId);
+                SqlDataAdapter daMain = new SqlDataAdapter(queryMain, conn);
+                daMain.SelectCommand.Parameters.AddWithValue("@AuditID", auditID);
+                DataTable dtMain = new DataTable();
+                daMain.Fill(dtMain);
 
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+                gvAuditMain.DataSource = dtMain;
+                gvAuditMain.DataBind();
 
-                gvSafetyAuditDetails.DataSource = dt;
-                gvSafetyAuditDetails.DataBind();
+                // === 2️⃣ SafetyAudit_Severity ===
+                string querySeverity = @"
+            SELECT 
+                ID,
+                AuditID,
+                InternalEmployees,
+                ExternalMembers
+            FROM [MahimaGupta_CSMS].[SafetyAudit_Severity]
+            WHERE AuditID = @AuditID";
+
+                SqlDataAdapter daSeverity = new SqlDataAdapter(querySeverity, conn);
+                daSeverity.SelectCommand.Parameters.AddWithValue("@AuditID", auditID);
+                DataTable dtSeverity = new DataTable();
+                daSeverity.Fill(dtSeverity);
+
+                gvAuditSeverity.DataSource = dtSeverity;
+                gvAuditSeverity.DataBind();
+
+                // === 3️⃣ SafetyAudit_Description === (multiple rows possible)
+                string queryDescription = @"
+            SELECT 
+                ID,
+                AuditID,
+                Description,
+                GoodCitizens,
+                NoOfViolations,
+                Severity,
+                ViolationXSeverity,
+                FourAndFive,
+                UnsafeActConditions,
+                SubmittedDate,
+                SubmittedTime,
+                CAPAID,
+                Custom_ID,
+                GenerateCAPA
+            FROM [MahimaGupta_CSMS].[SafetyAudit_Description]
+            WHERE AuditID = @AuditID
+            ORDER BY ID";
+
+                SqlDataAdapter daDescription = new SqlDataAdapter(queryDescription, conn);
+                daDescription.SelectCommand.Parameters.AddWithValue("@AuditID", auditID);
+                DataTable dtDescription = new DataTable();
+                daDescription.Fill(dtDescription);
+
+                gvAuditDescription.DataSource = dtDescription;
+                gvAuditDescription.DataBind();
             }
         }
+
     }
 }

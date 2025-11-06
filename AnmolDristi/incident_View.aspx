@@ -220,13 +220,23 @@
 
 
                                 <asp:TemplateField HeaderText="Classification">
-                                    <ItemTemplate>
-                                        <%# Eval("IncidentClassification") %>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="txtIncidentClassification" runat="server" Text='<%# Bind("IncidentClassification") %>' CssClass="form-control" TextMode="MultiLine" />
-                                    </EditItemTemplate>
-                                </asp:TemplateField>
+    <ItemTemplate>
+        <%# Eval("IncidentClassification") %>
+    </ItemTemplate>
+    <EditItemTemplate>
+        <asp:DropDownList ID="ddlIncidentClassification" runat="server"
+            CssClass="form-select" SelectedValue='<%# Bind("IncidentClassification") %>'>
+    
+            <asp:ListItem Text="Near Miss" Value="Near Miss"></asp:ListItem>
+            <asp:ListItem Text="First Aid Case" Value="First Aid Case"></asp:ListItem>
+            <asp:ListItem Text="Minor Injury" Value="Minor Injury"></asp:ListItem>
+            <asp:ListItem Text="Lost Time Injury" Value="Lost Time Injury"></asp:ListItem>
+            <asp:ListItem Text="Fatal" Value="Fatal"></asp:ListItem>
+            <asp:ListItem Text="Property Damage" Value="Property Damage"></asp:ListItem>
+        </asp:DropDownList>
+    </EditItemTemplate>
+</asp:TemplateField>
+
 
 
                                 <asp:TemplateField HeaderText="Incident Date">

@@ -124,7 +124,7 @@
                 <div class="x_content table-container">
                     <!--  Wrapped GridView in printableTable div -->
                     <div id="printableTable">
-                        <asp:GridView ID="gvKYTDetails" runat="server" AutoGenerateColumns="False" ShowHeader="False">
+                       <%-- <asp:GridView ID="gvKYTDetails" runat="server" AutoGenerateColumns="False" ShowHeader="False">
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
@@ -169,7 +169,91 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
-                        </asp:GridView>
+                        </asp:GridView>--%>
+
+
+
+
+
+
+
+
+
+
+
+<asp:Label ID="lblHeader1" runat="server" Text="KYT Header Details" CssClass="title-label text-center bold" ></asp:Label>
+<asp:GridView ID="gvKYTHeader" runat="server" AutoGenerateColumns="false"
+    CssClass="table table-bordered table-hover" HeaderStyle-CssClass="grid-header">
+    <Columns>
+        <asp:BoundField DataField="ID" HeaderText="KYT ID" />
+        <asp:BoundField DataField="KYT_WorksiteName" HeaderText="Worksite Name" />
+        <asp:BoundField DataField="KYT_Department" HeaderText="Department" />
+        <asp:BoundField DataField="KYT_Location" HeaderText="Location" />
+        <asp:BoundField DataField="KYT_Date" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd}" />
+        <asp:BoundField DataField="KYT_JobID" HeaderText="Job ID" />
+        <asp:BoundField DataField="KYT_SOPNo" HeaderText="SOP No" />
+        <asp:BoundField DataField="KYT_Vendor" HeaderText="Vendor" />
+    </Columns>
+</asp:GridView>
+
+
+
+                        <asp:Label ID="lblHeader2" runat="server" Text="KYT Activity Details" CssClass="title-label"></asp:Label>
+<asp:GridView ID="gvKYTDetails" runat="server" AutoGenerateColumns="false"
+    CssClass="table table-bordered table-hover" HeaderStyle-CssClass="grid-header">
+    <Columns>
+        <asp:BoundField DataField="KYT_Activity" HeaderText="Activity" />
+        <asp:BoundField DataField="KYT_HiddenHazards" HeaderText="Hidden Hazards" />
+        <asp:BoundField DataField="KYT_Consequence" HeaderText="Consequence" />
+        <asp:BoundField DataField="KYT_CounterMeasures" HeaderText="Counter Measures" />
+        <asp:BoundField DataField="KYT_PriorityValue" HeaderText="Priority Value" />
+
+        <asp:TemplateField HeaderText="Photo">
+            <ItemTemplate>
+                <asp:Image ID="imgPhoto" runat="server" Width="60" Height="60"
+                    ImageUrl='<%# string.IsNullOrEmpty(Eval("KYT_PhotographPath").ToString()) ? "" : Eval("KYT_PhotographPath").ToString() %>'
+                    Visible='<%# !string.IsNullOrEmpty(Eval("KYT_PhotographPath").ToString()) %>' />
+                <asp:Label ID="lblNoPhoto" runat="server" Text="No photo uploaded" ForeColor="Gray"
+                    Visible='<%# string.IsNullOrEmpty(Eval("KYT_PhotographPath").ToString()) %>' />
+            </ItemTemplate>
+        </asp:TemplateField>
+
+        <asp:BoundField DataField="SubmissionDate" HeaderText="Submission Date" DataFormatString="{0:yyyy-MM-dd}" />
+        <asp:BoundField DataField="SubmissionTime" HeaderText="Submission Time" />
+
+        <asp:TemplateField HeaderText="CAPA ID">
+            <ItemTemplate>
+                <asp:HyperLink ID="lnkCapa" runat="server"
+                    NavigateUrl='<%# "Universal_Capa.aspx?CAPA_ID=" + Eval("CAPAID") %>'
+                    Text='<%# Eval("CAPAID") %>' Target="_blank" />
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+</asp:GridView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     </div>
                 </div>
 
