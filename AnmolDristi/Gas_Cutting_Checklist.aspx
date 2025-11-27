@@ -129,6 +129,7 @@
       </div>
   </div>
 
+                            <div class="table-responsive">
   <table class="table table-bordered">
 
    <!-- GAS CYLINDER CHECKLIST - FULL CLIENT-SIDE LOGIC -->
@@ -448,6 +449,7 @@
 </tr>
 
   </table>
+                                </div>
 
 
 <script type="text/javascript">

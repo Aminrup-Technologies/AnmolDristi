@@ -277,21 +277,24 @@ ORDER BY h.BasicID DESC";
                     photoPath = "~/Uploads/" + filename;
                 }
 
+
+                string tblname = "D & Bow Shackles Chain Pulley Checklist";
                 // Insert into CAPA master if required
                 if (!isYes && chkCAPA != null && chkCAPA.Checked)
                 {
                     using (SqlCommand cmdCAPA = new SqlCommand(@"
                 INSERT INTO tbl_CAPAMaster 
-                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate)
+                (HeaderID, PhotoPath, Remarks, AssignedBy, AssignedDate, SourceTable)
                 OUTPUT INSERTED.CAPAID
                 VALUES 
-                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate)", conn, tran))
+                (@HeaderID, @PhotoPath, @Remarks, @AssignedBy, @AssignedDate, @SourceTable)", conn, tran))
                     {
                         cmdCAPA.Parameters.AddWithValue("@HeaderID", headerId);
                         cmdCAPA.Parameters.AddWithValue("@PhotoPath", (object)photoPath ?? DBNull.Value);
                         cmdCAPA.Parameters.AddWithValue("@Remarks", (object)remarks ?? DBNull.Value);
                         cmdCAPA.Parameters.AddWithValue("@AssignedBy", txtSite.Text.Trim());
                         cmdCAPA.Parameters.AddWithValue("@AssignedDate", DateTime.Now);
+                        cmdCAPA.Parameters.AddWithValue("@SourceTable", tblname);
 
                         capaId = cmdCAPA.ExecuteScalar();
                     }

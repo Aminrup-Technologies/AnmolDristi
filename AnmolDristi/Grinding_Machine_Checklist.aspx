@@ -181,7 +181,7 @@
                                     </div>
                                 </div>
 
-
+                                <div class="table-responsive">
                                 <table class="table table-bordered">
 <!-- 1. Fore handle -->
 <tr>
@@ -196,7 +196,7 @@
         <asp:Panel ID="pnlForeHandle" runat="server">
             <div id="divForeHandlePanel" style="display:none;">
                 <span class="form-label">Remarks</span>
-                <asp:TextBox ID="txtForeHandleRemarks" runat="server" Width="200px" /><br />
+                <asp:TextBox ID="txtForeHandleRemarks" runat="server"  TextMode="MultiLine" /><br />
                 <span class="form-label">Upload Photo</span>
                 <asp:FileUpload ID="fuForeHandle" runat="server" /><br />
                 <asp:CheckBox ID="chkForeHandleCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -219,7 +219,7 @@
         <asp:Panel ID="pnlWheelGuard" runat="server">
             <div id="divWheelGuardPanel" style="display:none;">
                 <span class="form-label">Remarks</span>
-                <asp:TextBox ID="txtWheelGuardRemarks" runat="server" Width="200px" /><br />
+                <asp:TextBox ID="txtWheelGuardRemarks" runat="server"  TextMode="MultiLine" /><br />
                 <span class="form-label">Upload Photo</span>
                 <asp:FileUpload ID="fuWheelGuard" runat="server" /><br />
                 <asp:CheckBox ID="chkWheelGuardCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -242,7 +242,7 @@
         <asp:Panel ID="pnlGrindWheel" runat="server">
             <div id="divGrindWheelPanel" style="display:none;">
                 <span class="form-label">Remarks</span>
-                <asp:TextBox ID="txtGrindWheelRemarks" runat="server" Width="200px" /><br />
+                <asp:TextBox ID="txtGrindWheelRemarks" runat="server" Width="200px" TextMode="MultiLine" /><br />
                 <span class="form-label">Upload Photo</span>
                 <asp:FileUpload ID="fuGrindWheel" runat="server" /><br />
                 <asp:CheckBox ID="chkGrindWheelCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -265,7 +265,7 @@
         <asp:Panel ID="pnlRearHandle" runat="server">
             <div id="divRearHandlePanel" style="display:none;">
                 <span class="form-label">Remarks</span>
-                <asp:TextBox ID="txtRearHandleRemarks" runat="server" Width="200px" /><br />
+                <asp:TextBox ID="txtRearHandleRemarks" runat="server" Width="200px" TextMode="MultiLine" /><br />
                 <span class="form-label">Upload Photo</span>
                 <asp:FileUpload ID="fuRearHandle" runat="server" /><br />
                 <asp:CheckBox ID="chkRearHandleCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -288,7 +288,7 @@
         <asp:Panel ID="pnlCord" runat="server">
             <div id="divCordPanel" style="display:none;">
                 <span class="form-label">Remarks</span>
-                <asp:TextBox ID="txtCordRemarks" runat="server" Width="200px" /><br />
+                <asp:TextBox ID="txtCordRemarks" runat="server" Width="200px" TextMode="MultiLine" /><br />
                 <span class="form-label">Upload Photo</span>
                 <asp:FileUpload ID="fuCord" runat="server" /><br />
                 <asp:CheckBox ID="chkCordCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -311,7 +311,7 @@
         <asp:Panel ID="pnlTrigger" runat="server">
             <div id="divTriggerPanel" style="display:none;">
                 <span class="form-label">Remarks</span>
-                <asp:TextBox ID="txtTriggerRemarks" runat="server" Width="200px" /><br />
+                <asp:TextBox ID="txtTriggerRemarks" runat="server" Width="200px" TextMode="MultiLine" /><br />
                 <span class="form-label">Upload Photo</span>
                 <asp:FileUpload ID="fuTrigger" runat="server" /><br />
                 <asp:CheckBox ID="chkTriggerCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -334,7 +334,7 @@
         <asp:Panel ID="pnlSwitchLock" runat="server">
             <div id="divSwitchLockPanel" style="display:none;">
                 <span class="form-label">Remarks</span>
-                <asp:TextBox ID="txtSwitchLockRemarks" runat="server" Width="200px" /><br />
+                <asp:TextBox ID="txtSwitchLockRemarks" runat="server" Width="200px" TextMode="MultiLine" /><br />
                 <span class="form-label">Upload Photo</span>
                 <asp:FileUpload ID="fuSwitchLock" runat="server" /><br />
                 <asp:CheckBox ID="chkSwitchLockCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -357,7 +357,7 @@
         <asp:Panel ID="pnlPowerCable" runat="server">
             <div id="divPowerCablePanel" style="display:none;">
                 <span class="form-label">Remarks</span>
-                <asp:TextBox ID="txtPowerCableRemarks" runat="server" Width="200px" /><br />
+                <asp:TextBox ID="txtPowerCableRemarks" runat="server" Width="200px" TextMode="MultiLine" /><br />
                 <span class="form-label">Upload Photo</span>
                 <asp:FileUpload ID="fuPowerCable" runat="server" /><br />
                 <asp:CheckBox ID="chkPowerCableCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -368,6 +368,7 @@
 </tr>
 
                                 </table>
+                                    </div>
 
                         <script type="text/javascript">
                             function togglePanel(yesId, noId, panelDivId) {

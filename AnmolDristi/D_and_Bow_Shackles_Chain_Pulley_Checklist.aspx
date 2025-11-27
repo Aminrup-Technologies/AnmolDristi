@@ -19,6 +19,19 @@
         .form-control {
             margin-top: 5px;
         }
+    textarea.form-control {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-wrap: break-word;
+}
+
+        .responsive-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+
     </style>
 </asp:Content>
 
@@ -120,7 +133,8 @@
                             </div>
                         </div>
 
-                        <table class="table table-bordered">
+                        <div class="table-responsive">
+                        <table class="table table-bordered" >
                           <tr>
     <td>1. D & Bow shackle tested or not, tag fixed or not</td>
     <td>
@@ -129,10 +143,15 @@
         <asp:RadioButton ID="rbTestedNA" GroupName="Tested" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
-        <asp:Panel ID="pnlTested" runat="server">
+        <asp:Panel ID="pnlTested" runat="server" CssClass="responsive-panel" style="overflow:auto" >
             <div id="divTestedPanel" style="display:none;">
                 <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                <asp:TextBox ID="txtTestedRemarks" runat="server" CssClass="form-control" /><br />
+           <asp:TextBox ID="txtTestedRemarks" runat="server"
+    CssClass="form-control"
+    TextMode="MultiLine"></asp:TextBox>
+
+
+
                 <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                 <asp:FileUpload ID="fuTested" runat="server" /><br />
                 <asp:CheckBox ID="chkTestedCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -153,7 +172,7 @@
         <asp:Panel ID="pnlThread" runat="server">
             <div id="divThreadPanel" style="display:none;">
                 <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                <asp:TextBox ID="txtThreadRemarks" runat="server" CssClass="form-control" /><br />
+                <asp:TextBox ID="txtThreadRemarks" runat="server" CssClass="form-control" TextMode="MultiLine" /><br />
                 <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                 <asp:FileUpload ID="fuThread" runat="server" /><br />
                 <asp:CheckBox ID="chkThreadCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -174,7 +193,7 @@
         <asp:Panel ID="pnlWorn" runat="server">
             <div id="divWornPanel" style="display:none;">
                 <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                <asp:TextBox ID="txtWornRemarks" runat="server" CssClass="form-control" /><br />
+                <asp:TextBox ID="txtWornRemarks" runat="server" CssClass="form-control" TextMode="MultiLine" /><br />
                 <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                 <asp:FileUpload ID="fuWorn" runat="server" /><br />
                 <asp:CheckBox ID="chkWornCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -195,7 +214,7 @@
         <asp:Panel ID="pnlStrength" runat="server">
             <div id="divStrengthPanel" style="display:none;">
                 <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                <asp:TextBox ID="txtStrengthRemarks" runat="server" CssClass="form-control" /><br />
+                <asp:TextBox ID="txtStrengthRemarks" runat="server" CssClass="form-control" TextMode="MultiLine" /><br />
                 <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                 <asp:FileUpload ID="fuStrength" runat="server" /><br />
                 <asp:CheckBox ID="chkStrengthCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -216,7 +235,7 @@
         <asp:Panel ID="pnlRust" runat="server">
             <div id="divRustPanel" style="display:none;">
                 <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                <asp:TextBox ID="txtRustRemarks" runat="server" CssClass="form-control" /><br />
+                <asp:TextBox ID="txtRustRemarks" runat="server" CssClass="form-control" TextMode="MultiLine" /><br />
                 <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                 <asp:FileUpload ID="fuRust" runat="server" /><br />
                 <asp:CheckBox ID="chkRustCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -226,6 +245,7 @@
     </td>
 </tr>
 </table>
+                            </div>
 
 
 
@@ -242,7 +262,7 @@
   </div>
                         
                         
-         
+         <div class="table-responsive">
      <table class="table table-bordered">
     <tr>
         <td>1. Chain block is tested or not, Testing & due date of testing is ok or not</td>
@@ -255,7 +275,7 @@
             <asp:Panel ID="pnlChainTested" runat="server">
                 <div id="divChainTestedPanel" style="display:none;">
                     <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                    <asp:TextBox ID="txtChainTestedRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:TextBox ID="txtChainTestedRemarks" runat="server" CssClass="form-control" TextMode="MultiLine" /><br />
                     <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                     <asp:FileUpload ID="fuChainTested" runat="server" /><br />
                     <asp:CheckBox ID="chkChainTestedCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -276,7 +296,7 @@
             <asp:Panel ID="pnlChainDamage" runat="server">
                 <div id="divChainDamagePanel" style="display:none;">
                     <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                    <asp:TextBox ID="txtChainDamageRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:TextBox ID="txtChainDamageRemarks" runat="server" CssClass="form-control" TextMode="MultiLine" /><br />
                     <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                     <asp:FileUpload ID="fuChainDamage" runat="server" /><br />
                     <asp:CheckBox ID="chkChainDamageCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -297,7 +317,7 @@
             <asp:Panel ID="pnlCondition" runat="server">
                 <div id="divConditionPanel" style="display:none;">
                     <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                    <asp:TextBox ID="txtConditionRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:TextBox ID="txtConditionRemarks" runat="server" CssClass="form-control" TextMode="MultiLine" /><br />
                     <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                     <asp:FileUpload ID="fuCondition" runat="server" /><br />
                     <asp:CheckBox ID="chkConditionCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -318,7 +338,7 @@
             <asp:Panel ID="pnlLatch" runat="server">
                 <div id="divLatchPanel" style="display:none;">
                     <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                    <asp:TextBox ID="txtLatchRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:TextBox ID="txtLatchRemarks" runat="server" CssClass="form-control" TextMode="MultiLine" /><br />
                     <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                     <asp:FileUpload ID="fuLatch" runat="server" /><br />
                     <asp:CheckBox ID="chkLatchCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -339,7 +359,7 @@
             <asp:Panel ID="pnlPadeye" runat="server">
                 <div id="divPadeyePanel" style="display:none;">
                     <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                    <asp:TextBox ID="txtPadeyeRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:TextBox ID="txtPadeyeRemarks" runat="server" CssClass="form-control" TextMode="MultiLine" /><br />
                     <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                     <asp:FileUpload ID="fuPadeye" runat="server" /><br />
                     <asp:CheckBox ID="chkPadeyeCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -360,7 +380,7 @@
             <asp:Panel ID="pnlHookWear" runat="server">
                 <div id="divHookWearPanel" style="display:none;">
                     <asp:Label runat="server" Text="Remarks:" CssClass="form-label" /><br />
-                    <asp:TextBox ID="txtHookWearRemarks" runat="server" CssClass="form-control" /><br />
+                    <asp:TextBox ID="txtHookWearRemarks" runat="server" CssClass="form-control" TextMode="MultiLine" /><br />
                     <asp:Label runat="server" Text="Upload Photo:" CssClass="form-label" /><br />
                     <asp:FileUpload ID="fuHookWear" runat="server" /><br />
                     <asp:CheckBox ID="chkHookWearCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
@@ -370,6 +390,7 @@
         </td>
     </tr>
 </table>
+             </div>
                         <script type="text/javascript">
                             function togglePanel(yesId, noId, panelDivId) {
                                 var yes = document.getElementById(yesId);

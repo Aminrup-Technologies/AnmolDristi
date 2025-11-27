@@ -20,6 +20,23 @@
             font-weight: bold;
             margin-top: 20px;
         }
+  .responsive-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+  textarea.form-control {
+    width: 100% !important;
+    min-height: 80px !important;
+    box-sizing: border-box !important;
+}
+  .w-100-panel {
+    width: 100% !important;
+    min-width: 200px !important;   /* adjust as needed */
+    box-sizing: border-box !important;
+}
+              
+
+
     </style>
 </asp:Content>
 
@@ -66,6 +83,8 @@
         <hr style="border: 0; border-top: 2px solid #c2c2c2; margin: 10px 0 20px 0;" />
     </div>
 </div>
+
+                    <div class="table-responsive">
 <table class="table table-bordered">
  <!-- Mechanical Hazards -->
     <tr><th colspan="3">MECHANICAL HAZARDS</th></tr>
@@ -79,9 +98,10 @@
         <asp:RadioButton ID="rbMechGuardNA" GroupName="MechGuard" Text="NA" runat="server" Visible="false" />
     </td>
     <td>
-        <asp:Panel ID="pnlMechGuard" runat="server">
-            <div id="divMechGuardPanel" style="display: none;">
-                <asp:TextBox ID="txtMechGuardRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+        <asp:Panel ID="pnlMechGuard" runat="server" CssClass="responsive-panel w-100-panel"  style="overflow:auto">
+            <div id="divMechGuardPanel" style="display: none;"  >
+                <asp:TextBox ID="txtMechGuardRemarks" runat="server"  CssClass="form-control"
+        TextMode="MultiLine" Placeholder="Remarks"  />
                 <asp:FileUpload ID="fuMechGuard" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkMechGuardCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -101,7 +121,7 @@
     <td>
         <asp:Panel ID="pnlExposedParts" runat="server">
             <div id="divExposedPartsPanel" style="display: none;">
-                <asp:TextBox ID="txtExposedPartsRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtExposedPartsRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine" />
                 <asp:FileUpload ID="fuExposedParts" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkExposedPartsCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -121,7 +141,7 @@
     <td>
         <asp:Panel ID="pnlSharpParts" runat="server">
             <div id="divSharpPartsPanel" style="display: none;">
-                <asp:TextBox ID="txtSharpPartsRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtSharpPartsRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuSharpParts" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkSharpPartsCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -141,7 +161,7 @@
     <td>
         <asp:Panel ID="pnlAnchored" runat="server">
             <div id="divAnchoredPanel" style="display: none;">
-                <asp:TextBox ID="txtAnchoredRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtAnchoredRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuAnchored" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkAnchoredCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -166,7 +186,7 @@
     <td>
         <asp:Panel ID="pnlMarkingFix" runat="server">
             <div id="divMarkingFixPanel" style="display: none;">
-                <asp:TextBox ID="txtMarkingFixRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtMarkingFixRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuMarkingFix" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkMarkingFixCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -186,7 +206,7 @@
     <td>
         <asp:Panel ID="pnlMarkingVisible" runat="server">
             <div id="divMarkingVisiblePanel" style="display: none;">
-                <asp:TextBox ID="txtMarkingVisibleRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtMarkingVisibleRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuMarkingVisible" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkMarkingVisibleCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -206,7 +226,7 @@
     <td>
         <asp:Panel ID="pnlMarkingSafe" runat="server">
             <div id="divMarkingSafePanel" style="display: none;">
-                <asp:TextBox ID="txtMarkingSafeRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtMarkingSafeRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuMarkingSafe" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkMarkingSafeCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -226,7 +246,7 @@
     <td>
         <asp:Panel ID="pnlGuardingRotating" runat="server">
             <div id="divGuardingRotatingPanel" style="display: none;">
-                <asp:TextBox ID="txtGuardingRotatingRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtGuardingRotatingRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuGuardingRotating" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkGuardingRotatingCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -246,7 +266,7 @@
     <td>
         <asp:Panel ID="pnlWorkmenPosition" runat="server">
             <div id="divWorkmenPositionPanel" style="display: none;">
-                <asp:TextBox ID="txtWorkmenPositionRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtWorkmenPositionRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuWorkmenPosition" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkWorkmenPositionCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -266,7 +286,7 @@
     <td>
         <asp:Panel ID="pnlExecutor" runat="server">
             <div id="divExecutorPanel" style="display: none;">
-                <asp:TextBox ID="txtExecutorRemarks" runat="server" CssClass="form-control" Placeholder="Remarks (Contractor/TSK, Comments)" />
+                <asp:TextBox ID="txtExecutorRemarks" runat="server" CssClass="form-control" Placeholder="Remarks (Contractor/TSK, Comments)" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuExecutor" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkExecutorCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -286,7 +306,7 @@
     <td>
         <asp:Panel ID="pnlOtherPoints" runat="server">
             <div id="divOtherPointsPanel" style="display: none;">
-                <asp:TextBox ID="txtOtherPointsRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtOtherPointsRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuOtherPoints" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkOtherPointsCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -309,7 +329,7 @@
     <td>
         <asp:Panel ID="pnlGrounded" runat="server">
             <div id="divGroundedPanel" style="display: none;">
-                <asp:TextBox ID="txtGroundedRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtGroundedRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuGrounded" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkGroundedCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -329,7 +349,7 @@
     <td>
         <asp:Panel ID="pnlShockHazard" runat="server">
             <div id="divShockHazardPanel" style="display: none;">
-                <asp:TextBox ID="txtShockHazardRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtShockHazardRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuShockHazard" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkShockHazardCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -349,7 +369,7 @@
     <td>
         <asp:Panel ID="pnlWiresLabeled" runat="server">
             <div id="divWiresLabeledPanel" style="display: none;">
-                <asp:TextBox ID="txtWiresLabeledRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtWiresLabeledRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuWiresLabeled" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkWiresLabeledCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -369,7 +389,7 @@
     <td>
         <asp:Panel ID="pnlFloorCordFree" runat="server">
             <div id="divFloorCordFreePanel" style="display: none;">
-                <asp:TextBox ID="txtFloorCordFreeRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtFloorCordFreeRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuFloorCordFree" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkFloorCordFreeCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -394,7 +414,7 @@
     <td>
         <asp:Panel ID="pnlEnvSafe" runat="server">
             <div id="divEnvSafePanel" style="display: none;">
-                <asp:TextBox ID="txtEnvSafeRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtEnvSafeRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuEnvSafe" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkEnvSafeCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -415,7 +435,7 @@
     <td>
         <asp:Panel ID="pnlLighting" runat="server">
             <div id="divLightingPanel" style="display: none;">
-                <asp:TextBox ID="txtLightingRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtLightingRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuLighting" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkLightingCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -437,7 +457,7 @@
     <td>
         <asp:Panel ID="pnlFloorSafe" runat="server">
             <div id="divFloorSafePanel" style="display: none;">
-                <asp:TextBox ID="txtFloorSafeRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtFloorSafeRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuFloorSafe" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkFloorSafeCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -461,7 +481,7 @@
     <td>
         <asp:Panel ID="pnlMasterCutoff" runat="server">
             <div id="divMasterCutoffPanel" style="display: none;">
-                <asp:TextBox ID="txtMasterCutoffRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtMasterCutoffRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuMasterCutoff" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkMasterCutoffCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -481,7 +501,7 @@
     <td>
         <asp:Panel ID="pnlStartStop" runat="server">
             <div id="divStartStopPanel" style="display: none;">
-                <asp:TextBox ID="txtStartStopRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtStartStopRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuStartStop" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkStartStopCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -501,7 +521,7 @@
     <td>
         <asp:Panel ID="pnlEmergencyEquip" runat="server">
             <div id="divEmergencyEquipPanel" style="display: none;">
-                <asp:TextBox ID="txtEmergencyEquipRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtEmergencyEquipRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuEmergencyEquip" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkEmergencyEquipCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -525,7 +545,7 @@
     <td>
         <asp:Panel ID="pnlTrainingJob" runat="server">
             <div id="divTrainingJobPanel" style="display: none;">
-                <asp:TextBox ID="txtTrainingJobRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtTrainingJobRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuTrainingJob" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkTrainingJobCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -545,7 +565,7 @@
     <td>
         <asp:Panel ID="pnlTrainingFeatures" runat="server">
             <div id="divTrainingFeaturesPanel" style="display: none;">
-                <asp:TextBox ID="txtTrainingFeaturesRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtTrainingFeaturesRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuTrainingFeatures" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkTrainingFeaturesCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -565,7 +585,7 @@
     <td>
         <asp:Panel ID="pnlTrainingResponse" runat="server">
             <div id="divTrainingResponsePanel" style="display: none;">
-                <asp:TextBox ID="txtTrainingResponseRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtTrainingResponseRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuTrainingResponse" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkTrainingResponseCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -585,7 +605,7 @@
     <td>
         <asp:Panel ID="pnlTrainingManuals" runat="server">
             <div id="divTrainingManualsPanel" style="display: none;">
-                <asp:TextBox ID="txtTrainingManualsRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" />
+                <asp:TextBox ID="txtTrainingManualsRemarks" runat="server" CssClass="form-control" Placeholder="Remarks" TextMode="MultiLine"  />
                 <asp:FileUpload ID="fuTrainingManuals" runat="server" CssClass="form-control" />
                 <asp:CheckBox ID="chkTrainingManualsCAPA" runat="server" Checked="true" onclick="confirmCAPA(this)" />
                 <span class="form-label">CAPA Required</span>
@@ -595,6 +615,7 @@
 </tr>
 
 </table>
+                        </div>
 
 
 
